@@ -5,30 +5,139 @@ description: Friendly summary of player-facing 1MoreBlock plugin features.
 
 These are the current player-facing feature docs copied from the private project documentation. Staff can open the raw reference links for exact config, permission, and debug details.
 
-| Feature | Category | Summary |
-| --- | --- | --- |
-| [AFKShrine](https://github.com/mrfdev/1MB-Plugins-Docs/blob/main/project-docs/docs/plugins/afkshrine.md) | Player Fun | Visual AFK effects, persistent opt-outs, selectable particle presets, and reward/quest tracking. |
-| [RecordingMode](https://github.com/mrfdev/1MB-Plugins-Docs/blob/main/project-docs/docs/plugins/recordingmode.md) | Player Fun | Per-player recording quiet mode for personal messages, TPA requests, money requests, staff messages, tips, and optional live map hiding. |
-| [SellStreaks](https://github.com/mrfdev/1MB-Plugins-Docs/blob/main/project-docs/docs/plugins/sellstreaks.md) | Player Fun | CMI sell streaks, daily market goals, and varied-material rewards. |
-| [ScheduledTips](https://github.com/mrfdev/1MB-Plugins-Docs/blob/main/project-docs/docs/plugins/scheduledtips.md) | Player Fun | Clickable rotating tips with per-player dismiss and visibility controls. |
-| [Visit](https://github.com/mrfdev/1MB-Plugins-Docs/blob/main/project-docs/docs/plugins/visit.md) | Player Fun | Player-owned hidden CMI visit warps with safe arrival messages, titles, particles, and sounds. |
-| [PassportDiscovery](https://github.com/mrfdev/1MB-Plugins-Docs/blob/main/project-docs/docs/plugins/passportdiscovery.md) | Player Fun | Umbrella discovery passport for worlds, warps, visits, biomes, blocks, items, consumables, tools, weapons, armor, kills, mounts, and exploration. |
-| [SocialGatherings](https://github.com/mrfdev/1MB-Plugins-Docs/blob/main/project-docs/docs/plugins/socialgatherings.md) | Player Fun | Configurable social parties around CMI sit, portals, sleepovers, dinner tables, campfires, beaches, hats, music, elytra, balloons, cookouts, fishing, mining, farming, vehicles, archery, gardens, libraries, forges, and markets. |
-| [JourneyMap](https://github.com/mrfdev/1MB-Plugins-Docs/blob/main/project-docs/docs/plugins/journeymap.md) | Player Fun | Playtime eras, badges, milestones, and optional rewards powered by CMI/PlaceholderAPI playtime data. |
-| [KitStreaks](https://github.com/mrfdev/1MB-Plugins-Docs/blob/main/project-docs/docs/plugins/kitstreaks.md) | Player Fun | CMI kit claim streaks with configurable tracks, milestone calendars, and optional rewards. |
-| [MessageFont](https://github.com/mrfdev/1MB-Plugins-Docs/blob/main/project-docs/docs/plugins/messagefont.md) | Player Fun | Temporary CMI private-message font preferences with recipient plain-mode accessibility opt-out. |
-| [Nick](https://github.com/mrfdev/1MB-Plugins-Docs/blob/main/project-docs/docs/plugins/nick.md) | Player Fun | Safer `/nick` GUI and CMI nickname wrapper with curated colors, gradients, cooldowns, related-name checks, history, favorites, ratings, logs, and unlockable styles. |
-| [Emotes](https://github.com/mrfdev/1MB-Plugins-Docs/blob/main/project-docs/docs/plugins/emotemenu.md) | Player Fun | GUI browser, Paper dialog search, target picker, disabled-emote admin review, and CMI CustomAlias import for server emotes. |
-| [PvPToggle](https://github.com/mrfdev/1MB-Plugins-Docs/blob/main/project-docs/docs/plugins/pvptoggle.md) | Player Fun | Per-player `/pvp` state, CMI combat awareness, shared playerdata, particles, and migration compatibility for the old standalone plugin. |
-| [Boosters](https://github.com/mrfdev/1MB-Plugins-Docs/blob/main/project-docs/docs/plugins/boosters.md) | Player Fun | `/rate` booster status and admin control for mcMMO, Jobs, and PyroWelcomesPro Points detection, replacing the old standalone Boosters plugin. |
-| [NameMC](https://github.com/mrfdev/1MB-Plugins-Docs/blob/main/project-docs/docs/plugins/namemc.md) | Player Fun | `/namemc` NameMC like verification, one-time CMI/LuckPerms rewards, legacy permissions, and `%onembnamemc_*%` placeholders. |
-| [Trades](https://github.com/mrfdev/1MB-Plugins-Docs/blob/main/project-docs/docs/plugins/trades.md) | Player Fun | `/trade` GUI exchanges for item, money, and EXP hand-ins, migrated from the old standalone 1MBTrades plugin. |
-| [VoteTokens](https://github.com/mrfdev/1MB-Plugins-Docs/blob/main/project-docs/docs/plugins/votetokens.md) | Player Fun | `/votetokens` secure vote-token GUI trades with tier/layer progress, CMI kit rewards, hidden reward identity markers, extra-token item tools with shield presets, and staff migration tools for old manual trades. |
-| [DiscordChat](https://github.com/mrfdev/1MB-Plugins-Docs/blob/main/project-docs/docs/plugins/discordchat.md) | Player Fun | `/discordchat` DiscordSRV server-chat engagement tracker with quality-gated EXP, conversation clusters, first-Discord broadcasts, community pulse, recurring bonus windows, linked-account streaks, top lists, point rewards, safe item tools, dependency-aware reward checks, opt-out reminders, milestone celebration privacy, and staff smoke/community/economy/archive/award reports. |
-| [GameTypes](https://github.com/mrfdev/1MB-Plugins-Docs/blob/main/project-docs/docs/plugins/gametypes.md) | Player Fun | `/gametype` safe BentoBox menu adapter for OneBlock, SkyBlock, AcidIsland, CaveBlock, and SkyGrid, with world detection and config-driven addon buttons. |
-| [BirthdayLanterns](https://github.com/mrfdev/1MB-Plugins-Docs/blob/main/project-docs/docs/plugins/birthdaylanterns.md) | Player Fun | `/birthday` collectible birthday, player anniversary, and server milestone lantern rewards with PDC item identity, finite wish charges, strict birthday/guestbook input, GUI claims, presets, mail variants, and configurable CMI reward commands. |
-| [MobHat](https://github.com/mrfdev/1MB-Plugins-Docs/blob/main/project-docs/docs/plugins/mobhat.md) | Player Fun | Cosmetic whitelisted mob hats with optional `/hat mob` alias support, world safety, scale handling, and experimental offset positions. |
-| [PlayerTodo](https://github.com/mrfdev/1MB-Plugins-Docs/blob/main/project-docs/docs/plugins/todo.md) | Player Fun | Small per-player todo lists stored in shared playerdata so players do not have to mail notes to themselves. |
-| [Refer](https://github.com/mrfdev/1MB-Plugins-Docs/blob/main/project-docs/docs/plugins/refer.md) | Player Fun | Two-step player referral rewards with playtime checks and permission reward markers. |
-| [TPAuto](https://github.com/mrfdev/1MB-Plugins-Docs/blob/main/project-docs/docs/plugins/tpauto.md) | Player Fun | Trusted-player `/tpauto` toggle for auto-accepting incoming CMI `/tpa` and `/tpahere` requests. |
-| [Menu](https://github.com/mrfdev/1MB-Plugins-Docs/blob/main/project-docs/docs/plugins/menu.md) | Player Fun | Configurable `/menu` GUI for server discovery, travel, economy, progression, and CMI ctext info. |
+<table>
+  <thead>
+    <tr>
+      <th>Feature</th>
+      <th>Category</th>
+      <th>Summary</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><a href="https://github.com/mrfdev/1MB-Plugins-Docs/blob/main/project-docs/docs/plugins/afkshrine.md">AFKShrine</a></td>
+      <td>Player Fun</td>
+      <td>Visual AFK effects, persistent opt-outs, selectable particle presets, and reward/quest tracking.</td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/mrfdev/1MB-Plugins-Docs/blob/main/project-docs/docs/plugins/recordingmode.md">RecordingMode</a></td>
+      <td>Player Fun</td>
+      <td>Per-player recording quiet mode for personal messages, TPA requests, money requests, staff messages, tips, and optional live map hiding.</td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/mrfdev/1MB-Plugins-Docs/blob/main/project-docs/docs/plugins/sellstreaks.md">SellStreaks</a></td>
+      <td>Player Fun</td>
+      <td>CMI sell streaks, daily market goals, and varied-material rewards.</td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/mrfdev/1MB-Plugins-Docs/blob/main/project-docs/docs/plugins/scheduledtips.md">ScheduledTips</a></td>
+      <td>Player Fun</td>
+      <td>Clickable rotating tips with per-player dismiss and visibility controls.</td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/mrfdev/1MB-Plugins-Docs/blob/main/project-docs/docs/plugins/visit.md">Visit</a></td>
+      <td>Player Fun</td>
+      <td>Player-owned hidden CMI visit warps with safe arrival messages, titles, particles, and sounds.</td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/mrfdev/1MB-Plugins-Docs/blob/main/project-docs/docs/plugins/passportdiscovery.md">PassportDiscovery</a></td>
+      <td>Player Fun</td>
+      <td>Umbrella discovery passport for worlds, warps, visits, biomes, blocks, items, consumables, tools, weapons, armor, kills, mounts, and exploration.</td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/mrfdev/1MB-Plugins-Docs/blob/main/project-docs/docs/plugins/socialgatherings.md">SocialGatherings</a></td>
+      <td>Player Fun</td>
+      <td>Configurable social parties around CMI sit, portals, sleepovers, dinner tables, campfires, beaches, hats, music, elytra, balloons, cookouts, fishing, mining, farming, vehicles, archery, gardens, libraries, forges, and markets.</td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/mrfdev/1MB-Plugins-Docs/blob/main/project-docs/docs/plugins/journeymap.md">JourneyMap</a></td>
+      <td>Player Fun</td>
+      <td>Playtime eras, badges, milestones, and optional rewards powered by CMI/PlaceholderAPI playtime data.</td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/mrfdev/1MB-Plugins-Docs/blob/main/project-docs/docs/plugins/kitstreaks.md">KitStreaks</a></td>
+      <td>Player Fun</td>
+      <td>CMI kit claim streaks with configurable tracks, milestone calendars, and optional rewards.</td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/mrfdev/1MB-Plugins-Docs/blob/main/project-docs/docs/plugins/messagefont.md">MessageFont</a></td>
+      <td>Player Fun</td>
+      <td>Temporary CMI private-message font preferences with recipient plain-mode accessibility opt-out.</td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/mrfdev/1MB-Plugins-Docs/blob/main/project-docs/docs/plugins/nick.md">Nick</a></td>
+      <td>Player Fun</td>
+      <td>Safer `/nick` GUI and CMI nickname wrapper with curated colors, gradients, cooldowns, related-name checks, history, favorites, ratings, logs, and unlockable styles.</td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/mrfdev/1MB-Plugins-Docs/blob/main/project-docs/docs/plugins/emotemenu.md">Emotes</a></td>
+      <td>Player Fun</td>
+      <td>GUI browser, Paper dialog search, target picker, disabled-emote admin review, and CMI CustomAlias import for server emotes.</td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/mrfdev/1MB-Plugins-Docs/blob/main/project-docs/docs/plugins/pvptoggle.md">PvPToggle</a></td>
+      <td>Player Fun</td>
+      <td>Per-player `/pvp` state, CMI combat awareness, shared playerdata, particles, and migration compatibility for the old standalone plugin.</td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/mrfdev/1MB-Plugins-Docs/blob/main/project-docs/docs/plugins/boosters.md">Boosters</a></td>
+      <td>Player Fun</td>
+      <td>`/rate` booster status and admin control for mcMMO, Jobs, and PyroWelcomesPro Points detection, replacing the old standalone Boosters plugin.</td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/mrfdev/1MB-Plugins-Docs/blob/main/project-docs/docs/plugins/namemc.md">NameMC</a></td>
+      <td>Player Fun</td>
+      <td>`/namemc` NameMC like verification, one-time CMI/LuckPerms rewards, legacy permissions, and `%onembnamemc_*%` placeholders.</td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/mrfdev/1MB-Plugins-Docs/blob/main/project-docs/docs/plugins/trades.md">Trades</a></td>
+      <td>Player Fun</td>
+      <td>`/trade` GUI exchanges for item, money, and EXP hand-ins, migrated from the old standalone 1MBTrades plugin.</td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/mrfdev/1MB-Plugins-Docs/blob/main/project-docs/docs/plugins/votetokens.md">VoteTokens</a></td>
+      <td>Player Fun</td>
+      <td>`/votetokens` secure vote-token GUI trades with tier/layer progress, CMI kit rewards, hidden reward identity markers, extra-token item tools with shield presets, and staff migration tools for old manual trades.</td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/mrfdev/1MB-Plugins-Docs/blob/main/project-docs/docs/plugins/discordchat.md">DiscordChat</a></td>
+      <td>Player Fun</td>
+      <td>`/discordchat` DiscordSRV server-chat engagement tracker with quality-gated EXP, conversation clusters, first-Discord broadcasts, community pulse, recurring bonus windows, linked-account streaks, top lists, point rewards, safe item tools, dependency-aware reward checks, opt-out reminders, milestone celebration privacy, and staff smoke/community/economy/archive/award reports.</td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/mrfdev/1MB-Plugins-Docs/blob/main/project-docs/docs/plugins/gametypes.md">GameTypes</a></td>
+      <td>Player Fun</td>
+      <td>`/gametype` safe BentoBox menu adapter for OneBlock, SkyBlock, AcidIsland, CaveBlock, and SkyGrid, with world detection and config-driven addon buttons.</td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/mrfdev/1MB-Plugins-Docs/blob/main/project-docs/docs/plugins/birthdaylanterns.md">BirthdayLanterns</a></td>
+      <td>Player Fun</td>
+      <td>`/birthday` collectible birthday, player anniversary, and server milestone lantern rewards with PDC item identity, finite wish charges, strict birthday/guestbook input, GUI claims, presets, mail variants, and configurable CMI reward commands.</td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/mrfdev/1MB-Plugins-Docs/blob/main/project-docs/docs/plugins/mobhat.md">MobHat</a></td>
+      <td>Player Fun</td>
+      <td>Cosmetic whitelisted mob hats with optional `/hat mob` alias support, world safety, scale handling, and experimental offset positions.</td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/mrfdev/1MB-Plugins-Docs/blob/main/project-docs/docs/plugins/todo.md">PlayerTodo</a></td>
+      <td>Player Fun</td>
+      <td>Small per-player todo lists stored in shared playerdata so players do not have to mail notes to themselves.</td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/mrfdev/1MB-Plugins-Docs/blob/main/project-docs/docs/plugins/refer.md">Refer</a></td>
+      <td>Player Fun</td>
+      <td>Two-step player referral rewards with playtime checks and permission reward markers.</td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/mrfdev/1MB-Plugins-Docs/blob/main/project-docs/docs/plugins/tpauto.md">TPAuto</a></td>
+      <td>Player Fun</td>
+      <td>Trusted-player `/tpauto` toggle for auto-accepting incoming CMI `/tpa` and `/tpahere` requests.</td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/mrfdev/1MB-Plugins-Docs/blob/main/project-docs/docs/plugins/menu.md">Menu</a></td>
+      <td>Player Fun</td>
+      <td>Configurable `/menu` GUI for server discovery, travel, economy, progression, and CMI ctext info.</td>
+    </tr>
+  </tbody>
+</table>

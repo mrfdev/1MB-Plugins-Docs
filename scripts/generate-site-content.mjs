@@ -19,8 +19,13 @@ const PLAYER_COMMANDS = [
   ['/votetokens', 'Review vote-token reward trades and safe reward tools.'],
 ];
 
-function escapePipes(value) {
-  return value.replaceAll('|', '\\|').trim();
+function escapeHtml(value) {
+  return value
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;')
+    .replaceAll('"', '&quot;')
+    .trim();
 }
 
 function parsePlugins(markdown) {
@@ -44,13 +49,51 @@ function parsePlugins(markdown) {
     .filter(Boolean);
 }
 
-function tableRows(plugins) {
-  return plugins
+function commandTable(commands) {
+  const rows = commands
+    .map(([command, purpose]) => `    <tr>
+      <td><code>${escapeHtml(command)}</code></td>
+      <td>${escapeHtml(purpose)}</td>
+    </tr>`)
+    .join('\n');
+
+  return `<table>
+  <thead>
+    <tr>
+      <th>Command</th>
+      <th>What it is for</th>
+    </tr>
+  </thead>
+  <tbody>
+${rows}
+  </tbody>
+</table>`;
+}
+
+function pluginTable(plugins) {
+  const rows = plugins
     .map((plugin) => {
       const url = `${publicRepoBlob}/project-docs/docs/plugins/${plugin.file}`;
-      return `| [${escapePipes(plugin.name)}](${url}) | ${escapePipes(plugin.category)} | ${escapePipes(plugin.purpose)} |`;
+      return `    <tr>
+      <td><a href="${url}">${escapeHtml(plugin.name)}</a></td>
+      <td>${escapeHtml(plugin.category)}</td>
+      <td>${escapeHtml(plugin.purpose)}</td>
+    </tr>`;
     })
     .join('\n');
+
+  return `<table>
+  <thead>
+    <tr>
+      <th>Feature</th>
+      <th>Category</th>
+      <th>Summary</th>
+    </tr>
+  </thead>
+  <tbody>
+${rows}
+  </tbody>
+</table>`;
 }
 
 function groupedLists(plugins) {
@@ -129,9 +172,7 @@ description: Player-friendly command overview for public server docs.
 
 Commands can be permission-based. This list explains what common commands are meant to do when they are available to you.
 
-| Command | What it is for |
-| --- | --- |
-${PLAYER_COMMANDS.map(([command, purpose]) => `| \`${command}\` | ${purpose} |`).join('\n')}
+${commandTable(PLAYER_COMMANDS)}
 
 ## Good to know
 
@@ -147,9 +188,7 @@ description: Friendly summary of player-facing 1MoreBlock plugin features.
 
 These are the current player-facing feature docs copied from the private project documentation. Staff can open the raw reference links for exact config, permission, and debug details.
 
-| Feature | Category | Summary |
-| --- | --- | --- |
-${tableRows(playerPlugins)}
+${pluginTable(playerPlugins)}
 `);
 
 await writeFile(path.join(contentRoot, 'staff-reference', 'index.mdx'), `---
