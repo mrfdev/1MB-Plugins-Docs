@@ -2,8 +2,7 @@ import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
 
 export default defineConfig({
-  site: 'https://mrfdev.github.io',
-  base: '/1MB-Plugins-Docs',
+  site: 'https://docs.1moreblock.com',
   integrations: [
     starlight({
       title: '1MoreBlock Plugin Docs',
