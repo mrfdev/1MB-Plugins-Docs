@@ -1,0 +1,63 @@
+---
+title: GameTypes Commands
+description: Player-friendly command guide for GameTypes.
+---
+
+`/gametype` safe BentoBox menu adapter for OneBlock, SkyBlock, AcidIsland, CaveBlock, and SkyGrid, with world detection and config-driven addon buttons.
+
+## Commands
+
+<table>
+  <thead>
+    <tr>
+      <th>Command</th>
+      <th>What it does</th>
+      <th>Example</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>/gametype</code></td>
+      <td>Opens the detected game type menu for the player's current world. If no BentoBox game type is detected, it opens the GameTypes index. Console receives status output.</td>
+      <td><code>/gametype</code></td>
+    </tr>
+    <tr>
+      <td><code>/gametype menu</code></td>
+      <td>Opens the detected menu from the current world, or the GameTypes index from worlds such as wild, spawn, survival, or skylands.</td>
+      <td><code>/gametype menu</code></td>
+    </tr>
+    <tr>
+      <td><code>/gametype menu &lt;type&gt;</code></td>
+      <td>Opens a specific configured menu when world detection is not possible, such as from /wild.</td>
+      <td><code>/gametype menu oneblock</code></td>
+    </tr>
+    <tr>
+      <td><code>/gametype status</code></td>
+      <td>Shows loaded hooks, enabled game types, the current world, and detection state.</td>
+      <td><code>/gametype status</code></td>
+    </tr>
+    <tr>
+      <td><code>/gametype info</code></td>
+      <td>Shows the player-friendly intro, starter command, help command, and docs link.</td>
+      <td><code>/gametype info</code></td>
+    </tr>
+    <tr>
+      <td><code>/gametype help</code></td>
+      <td>Shows only commands available to the sender. Permission nodes are hidden from normal help.</td>
+      <td><code>/gametype help</code></td>
+    </tr>
+  </tbody>
+</table>
+
+## Examples
+
+- `/gametype`
+- `/gametype menu`
+- `/gametype menu oneblock`
+- `/gametype status`
+- `/gametype info`
+- `/gametype help`
+
+## Full Reference
+
+Staff and curious players can open the [full synced GameTypes reference](https://github.com/mrfdev/1MB-Plugins-Docs/blob/main/project-docs/docs/plugins/gametypes.md) for more technical detail.

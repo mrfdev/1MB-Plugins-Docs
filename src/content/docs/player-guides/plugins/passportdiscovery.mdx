@@ -1,0 +1,140 @@
+---
+title: PassportDiscovery Commands
+description: Player-friendly command guide for PassportDiscovery.
+---
+
+Umbrella discovery passport for worlds, warps, visits, biomes, blocks, items, consumables, tools, weapons, armor, kills, mounts, and exploration.
+
+## Player Flow
+
+`/passport info` explains the system in-game for regular players. It describes passports as a collection log, lists how each type earns stamps, points players at useful commands, and notes that rewards are not automatic yet. That gives us a clean place later to describe completion rewards such as title unlocks, cosmetic styles, event entries, or trade-in hooks.
+
+## Commands
+
+<table>
+  <thead>
+    <tr>
+      <th>Command</th>
+      <th>What it does</th>
+      <th>Example</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>/passport info</code></td>
+      <td>Shows a friendly explanation of what PassportDiscovery does.</td>
+      <td><code>/passport info</code></td>
+    </tr>
+    <tr>
+      <td><code>/passport status [type]</code></td>
+      <td>Shows your current PassportDiscovery status.</td>
+      <td><code>/passport status</code></td>
+    </tr>
+    <tr>
+      <td><code>/passport stats &lt;type&gt;</code></td>
+      <td>Runs the PassportDiscovery stats action.</td>
+      <td><code>/passport stats oneblock</code></td>
+    </tr>
+    <tr>
+      <td><code>/passport types</code></td>
+      <td>Runs the PassportDiscovery types action.</td>
+      <td><code>/passport types</code></td>
+    </tr>
+    <tr>
+      <td><code>/passport view &lt;world|warp|visit|biome|block|item|consume|tool|weapon|armor|kill|mount|explore&gt; [page]</code></td>
+      <td>Manages one of your PassportDiscovery entries.</td>
+      <td><code>/passport view warp</code></td>
+    </tr>
+    <tr>
+      <td><code>/passport missing &lt;world|warp|visit|biome|block|item|consume|tool|weapon|armor|kill|mount|explore|hand&gt; [page]</code></td>
+      <td>Runs the PassportDiscovery missing action.</td>
+      <td><code>/passport missing example</code></td>
+    </tr>
+    <tr>
+      <td><code>/passport known &lt;world|warp|visit|biome|block|item|consume|tool|weapon|armor|kill|mount|explore&gt; [page]</code></td>
+      <td>Runs the PassportDiscovery known action.</td>
+      <td><code>/passport known warp</code></td>
+    </tr>
+    <tr>
+      <td><code>/passport info &lt;world|warp|visit|biome|block|item|consume|tool|weapon|armor|kill|mount|explore&gt; &lt;entry&gt;</code></td>
+      <td>Shows a friendly explanation of what PassportDiscovery does.</td>
+      <td><code>/passport info warp spawn</code></td>
+    </tr>
+    <tr>
+      <td><code>/passport recent [page]</code></td>
+      <td>Runs the PassportDiscovery recent action.</td>
+      <td><code>/passport recent</code></td>
+    </tr>
+    <tr>
+      <td><code>/passport batch [fast|normal|slow|off|reset]</code></td>
+      <td>Runs the PassportDiscovery batch action.</td>
+      <td><code>/passport batch</code></td>
+    </tr>
+    <tr>
+      <td><code>/passport progress [status|on|off|toggle]</code></td>
+      <td>Runs the PassportDiscovery progress action.</td>
+      <td><code>/passport progress</code></td>
+    </tr>
+    <tr>
+      <td><code>/passport stamps</code></td>
+      <td>Runs the PassportDiscovery stamps action.</td>
+      <td><code>/passport stamps</code></td>
+    </tr>
+    <tr>
+      <td><code>/passport stamps trade &lt;box&gt;</code></td>
+      <td>Runs the PassportDiscovery stamps action.</td>
+      <td><code>/passport stamps trade basic</code></td>
+    </tr>
+    <tr>
+      <td><code>/passport scan</code></td>
+      <td>Runs the PassportDiscovery scan action.</td>
+      <td><code>/passport scan</code></td>
+    </tr>
+    <tr>
+      <td><code>/passport top [all|world|warp|visit|biome|block|item|consume|tool|weapon|armor|kill|mount|explore]</code></td>
+      <td>Shows the PassportDiscovery leaderboard or top list.</td>
+      <td><code>/passport top</code></td>
+    </tr>
+  </tbody>
+</table>
+
+## Examples
+
+- `/passport`
+- `/passport info`
+- `/passport status warp`
+- `/passport stats warp`
+- `/passport view warp`
+- `/passport known warp`
+- `/passport info warp tree`
+- `/passport missing visit`
+- `/passport missing hand`
+- `/passport status biome`
+- `/passport view item`
+- `/passport view consume`
+- `/passport missing consume`
+- `/passport top weapon`
+- `/passport missing armor`
+- `/passport view kill`
+- `/passport view mount`
+- `/passport view explore`
+- `/passport info explore swimming`
+- `/passport recent`
+- `/passport recent 2`
+- `/passport batch`
+- `/passport batch slow`
+- `/passport batch off`
+- `/passport batch reset`
+- `/passport progress`
+- `/passport progress off`
+- `/passport stamps`
+- `/passport stamps trade biome`
+- `/passport stamps trade consume`
+- `/passport stamps trade visit`
+- `/passport top all`
+- `/passport top block`
+- `/passport scan`
+
+## Full Reference
+
+Staff and curious players can open the [full synced PassportDiscovery reference](https://github.com/mrfdev/1MB-Plugins-Docs/blob/main/project-docs/docs/plugins/passportdiscovery.md) for more technical detail.

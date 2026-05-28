@@ -1,0 +1,135 @@
+---
+title: PlayerTodo Commands
+description: Player-friendly command guide for PlayerTodo.
+---
+
+Players can add quick notes while playing:
+
+## Commands
+
+<table>
+  <thead>
+    <tr>
+      <th>Command</th>
+      <th>What it does</th>
+      <th>Example</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>/todo</code></td>
+      <td>Opens or shows the main PlayerTodo player view.</td>
+      <td><code>/todo</code></td>
+    </tr>
+    <tr>
+      <td><code>/todo &lt;text&gt;</code></td>
+      <td>Uses PlayerTodo with the value you provide.</td>
+      <td><code>/todo Build a starter house</code></td>
+    </tr>
+    <tr>
+      <td><code>/todo add &lt;text&gt;</code></td>
+      <td>Runs the PlayerTodo add action.</td>
+      <td><code>/todo add Build a starter house</code></td>
+    </tr>
+    <tr>
+      <td><code>/todo list [open|all|completed] [page] [asc|desc]</code></td>
+      <td>Lists available PlayerTodo entries.</td>
+      <td><code>/todo list</code></td>
+    </tr>
+    <tr>
+      <td><code>/todo page &lt;page&gt; [asc|desc]</code></td>
+      <td>Runs the PlayerTodo page action.</td>
+      <td><code>/todo page 1</code></td>
+    </tr>
+    <tr>
+      <td><code>/todo view &lt;id&gt;</code></td>
+      <td>Manages one of your PlayerTodo entries.</td>
+      <td><code>/todo view 1</code></td>
+    </tr>
+    <tr>
+      <td><code>/todo edit &lt;id&gt; &lt;new text&gt;</code></td>
+      <td>Manages one of your PlayerTodo entries.</td>
+      <td><code>/todo edit 1 Build a starter house</code></td>
+    </tr>
+    <tr>
+      <td><code>/todo done &lt;id&gt;</code></td>
+      <td>Manages one of your PlayerTodo entries.</td>
+      <td><code>/todo done 1</code></td>
+    </tr>
+    <tr>
+      <td><code>/todo complete &lt;id&gt;</code></td>
+      <td>Manages one of your PlayerTodo entries.</td>
+      <td><code>/todo complete 1</code></td>
+    </tr>
+    <tr>
+      <td><code>/todo undo &lt;id&gt;</code></td>
+      <td>Manages one of your PlayerTodo entries.</td>
+      <td><code>/todo undo 1</code></td>
+    </tr>
+    <tr>
+      <td><code>/todo reopen &lt;id&gt;</code></td>
+      <td>Manages one of your PlayerTodo entries.</td>
+      <td><code>/todo reopen 1</code></td>
+    </tr>
+    <tr>
+      <td><code>/todo remove &lt;id&gt; [confirm]</code></td>
+      <td>Manages one of your PlayerTodo entries.</td>
+      <td><code>/todo remove 1</code></td>
+    </tr>
+    <tr>
+      <td><code>/todo clear completed</code></td>
+      <td>Changes or clears your PlayerTodo setting.</td>
+      <td><code>/todo clear completed</code></td>
+    </tr>
+    <tr>
+      <td><code>/todo search &lt;keyword&gt; [page]</code></td>
+      <td>Manages one of your PlayerTodo entries.</td>
+      <td><code>/todo search cheer</code></td>
+    </tr>
+    <tr>
+      <td><code>/todo share &lt;player&gt; &lt;id&gt;</code></td>
+      <td>Shares your current public design when sharing is enabled.</td>
+      <td><code>/todo share Steve 1</code></td>
+    </tr>
+    <tr>
+      <td><code>/todo status</code></td>
+      <td>Shows your current PlayerTodo status.</td>
+      <td><code>/todo status</code></td>
+    </tr>
+    <tr>
+      <td><code>/todo info</code></td>
+      <td>Shows a friendly explanation of what PlayerTodo does.</td>
+      <td><code>/todo info</code></td>
+    </tr>
+    <tr>
+      <td><code>/todo help</code></td>
+      <td>Shows the PlayerTodo commands available to you.</td>
+      <td><code>/todo help</code></td>
+    </tr>
+  </tbody>
+</table>
+
+## Examples
+
+- `/todo build a starter house near /warp town`
+- `/todo add test copper blocks in the roof`
+- `/todo list`
+- `/todo list 5`
+- `/todo list all 2`
+- `/todo list 2 asc`
+- `/todo list oldest`
+- `/todo list open 2 desc`
+- `/todo view 4`
+- `/todo edit 4 test copper blocks in the greenhouse roof`
+- `/todo search copper`
+- `/todo done 4`
+- `/todo undo 4`
+- `/todo remove 4`
+- `/todo remove 4 confirm`
+- `/todo clear completed`
+- `/todo share NikkiPixel 4`
+- `/todo status`
+
+## Full Reference
+
+Staff and curious players can open the [full synced PlayerTodo reference](https://github.com/mrfdev/1MB-Plugins-Docs/blob/main/project-docs/docs/plugins/todo.md) for more technical detail.
