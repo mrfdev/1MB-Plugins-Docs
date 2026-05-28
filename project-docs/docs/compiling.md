@@ -1,0 +1,71 @@
+# Compile Instructions
+
+The Gradle scaffold is present. The current baseline is:
+
+- Java 25+
+- Paper 26.1.2+
+- separate jars for every feature
+- a separate shared library jar
+
+Expected build command:
+
+```bash
+./gradlew clean refreshBuildDocs build
+```
+
+If a Gradle wrapper has not been generated yet, use the installed Gradle command:
+
+```bash
+gradle clean refreshBuildDocs build
+```
+
+`refreshBuildDocs` updates documented jar names and build metadata examples after `buildNumber` changes. `build` also runs `verifyBuildMetadata`, which fails if docs or generated debug metadata are stale.
+
+Expected jar naming:
+
+```text
+1MB-CMIAPI-LIB-v1.0.0-374-j25-26.1.2.jar
+1MB-CMIAPI-AFKShrine-v1.0.0-374-j25-26.1.2.jar
+1MB-CMIAPI-StaffCenter-v1.0.0-374-j25-26.1.2.jar
+1MB-CMIAPI-Profile-v1.0.0-374-j25-26.1.2.jar
+```
+
+After a successful feature or library build, copy the output jar into:
+
+```text
+servers/Paper-26.1.2/plugins/
+```
+
+The helper task and script handle the Paper test server sync:
+
+```bash
+gradle syncBuiltJarsToProjectServer
+scripts/copy-built-jars-to-local-server.sh
+```
+
+The Gradle task copies all built 1MB-CMIAPI jars to the Paper test server, removes stale active project jars from that folder, and verifies the remaining active project jars match the current build metadata. The shell script targets one server folder at a time. GameTypes/BentoBox deployment is handled separately from this repository-local sync flow.
+
+After the Paper test server has been used for live testing, stage exactly those tested jars for a manual live deployment:
+
+```bash
+gradle stageTestedJarsForLive
+```
+
+The staged jars are written to `build/tested-jars/live/`. No live server or RCON path is used.
+
+The centralized server tooling may still be used for temporary automated test instances.
+
+Optional compile-only plugin API jars should not live in the active local test
+server `plugins/` folder unless the test server intentionally needs to load
+them. For example, NotableMsg and 1MBStaffMsg compile against DiscordSRV's API
+from:
+
+```text
+servers/Paper-26.1.2/compile-support/DiscordSRV-1.30.5-SNAPSHOT-18f33ad.jar
+```
+
+Keep DiscordSRV disabled or absent from `servers/Paper-26.1.2/plugins/` during
+normal local CMI-API testing so server start/stop events do not post to live
+Discord channels.
+
+[Documentation index](README.md)

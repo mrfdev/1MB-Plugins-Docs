@@ -1,0 +1,17 @@
+{
+  "name": "1mb-plugins-docs",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "npm run docs:generate && astro build",
+    "preview": "astro preview",
+    "docs:sync": "node scripts/sync-private-docs.mjs && node scripts/generate-site-content.mjs",
+    "docs:generate": "node scripts/generate-site-content.mjs"
+  },
+  "dependencies": {
+    "@astrojs/starlight": "^0.39.2",
+    "astro": "^6.4.2"
+  }
+}

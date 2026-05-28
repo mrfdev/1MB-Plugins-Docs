@@ -1,0 +1,17 @@
+:root {
+  --sl-color-accent-low: #1c3140;
+  --sl-color-accent: #7cc7e8;
+  --sl-color-accent-high: #d9f0ff;
+  --sl-color-white: #f8fbff;
+  --sl-color-gray-1: #edf6fb;
+  --sl-color-gray-2: #c5d9e2;
+  --sl-color-gray-3: #8ba5b0;
+  --sl-color-gray-4: #58717c;
+  --sl-color-gray-5: #364d57;
+  --sl-color-gray-6: #223640;
+  --sl-color-black: #101b22;
+}
+
+.hero img {
+  filter: drop-shadow(0 18px 45px rgb(124 199 232 / 22%));
+}

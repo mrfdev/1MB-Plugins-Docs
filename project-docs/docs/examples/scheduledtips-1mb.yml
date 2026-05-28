@@ -1,0 +1,87 @@
+# Example ScheduledTips config based on the old CMI schedules.yml Announcer.
+# Copy the relevant sections into plugins/1MB-CMIAPI/ScheduledTips/config.yml.
+# CMI ctellraw hover/click tags have been converted to Adventure MiniMessage.
+
+enabled: true
+debug: false
+
+schedule:
+  initial-delay-seconds: 90
+  interval-seconds: 1500
+  min-players: 2
+  randomize: true
+
+dismiss:
+  after-seen-count: 12
+
+broadcast:
+  require-permission: true
+  show-dismiss-before-threshold: false
+  show-off-button: true
+
+list:
+  entries-per-page: 10
+
+disabled-tip-ids: []
+
+tips:
+  - "sit|<color:#007ba7>1MB Tip > </color><color:#a6d96a>You can <click:run_command:'/sit'><hover:show_text:'Click to /sit now'><color:#ffa500><bold>/sit</bold></color></hover></click> on stairs by right-clicking empty handed.</color>"
+  - "oneblock|<color:#007ba7>1MB Tip > </color><color:#a6d96a>Tired of regular survival? Try <click:run_command:'/oneblock'><hover:show_text:'Click to teleport to /oneblock'><color:#ffa500><bold>/oneblock</bold></color></hover></click>.</color>"
+  - "menu|<color:#007ba7>1MB Tip > </color><color:#a6d96a>Type <click:run_command:'/menu'><hover:show_text:'Click to open /menu'><color:#ffa500><bold>/menu</bold></color></hover></click> to find out what else is on our server.</color>"
+  - "forums|<color:#007ba7>1MB Tip > </color><color:#a6d96a>Learn more about our features on <click:run_command:'/forums'><hover:show_text:'Click to go to /forums'><color:#ffa500><bold>/forums</bold></color></hover></click>.</color>"
+  - "mcmmo|<color:#007ba7>1MB Tip > </color><color:#a6d96a>Level up for perks from <click:run_command:'/mcmmo'><hover:show_text:'Click to go to /mcMMO'><color:#ffa500><bold>/mcMMO</bold></color></hover></click>.</color>"
+  - "achievements|<color:#007ba7>1MB Tip > </color><color:#a6d96a>Level up for rewards from <click:run_command:'/achievements'><hover:show_text:'Click to go to /achievements'><color:#ffa500><bold>/achievements</bold></color></hover></click>.</color>"
+  - "mcmmo_commands|<color:#007ba7>1MB Tip > </color><color:#a6d96a>RPG mcMMO commands: <color:#ffa500><bold>/mcstats</bold></color>, <color:#ffa500><bold>/mcrank</bold></color>, <color:#ffa500><bold>/mctop</bold></color>.</color>"
+  - "pyro_features|<color:#007ba7>1MB Tip > </color><color:#a6d96a>Some features: <click:run_command:'/fish menu'><hover:show_text:'Pyro Fishing feature, click to learn more'><color:#ffa500><bold>/fish</bold></color></hover></click>, <click:run_command:'/mine menu'><hover:show_text:'Pyro Mining feature, click to learn more'><color:#ffa500><bold>/mine</bold></color></hover></click>, <click:run_command:'/farm menu'><hover:show_text:'Pyro Farming feature, click to learn more'><color:#ffa500><bold>/farm</bold></color></hover></click>.</color>"
+  - "rpg_features|<color:#007ba7>1MB Tip > </color><color:#a6d96a>RPG features: <click:run_command:'/jobs browse'><hover:show_text:'Jobs feature, click to learn more'><color:#ffa500><bold>/jobs</bold></color></hover></click>, <click:run_command:'/pvp'><hover:show_text:'Toggle PVP on or off, click to start'><color:#ffa500><bold>/pvp</bold></color></hover></click>, <click:run_command:'/party'><hover:show_text:'mcMMO party feature, click to start'><color:#ffa500><bold>/party</bold></color></hover></click>.</color>"
+  - "protection|<color:#007ba7>1MB Tip > </color><color:#a6d96a>Protection commands: <click:run_command:'/chests'><hover:show_text:'Learn more with /chests'><color:#ffa500><bold>/lock</bold></color>, <color:#ffa500><bold>/unlock</bold></color>, <color:#ffa500><bold>/cmodify</bold></color></hover></click>.</color>"
+  - "homes_player|<color:#007ba7>1MB Tip > </color><color:#a6d96a>Players in the group Player can have up to 3 <click:run_command:'/cmi homes'><hover:show_text:'Click to view your /homes'><color:#ffa500><bold>homes</bold></color></hover></click>.</color>"
+  - "homes_member|<color:#007ba7>1MB Tip > </color><color:#a6d96a>Players in the group Member can have up to 6 <click:run_command:'/cmi homes'><hover:show_text:'Click to view your /homes'><color:#ffa500><bold>homes</bold></color></hover></click>.</color>"
+  - "homes_boosted|<color:#007ba7>1MB Tip > </color><color:#a6d96a>Players in the group Boosted can have up to 8 <click:run_command:'/cmi homes'><hover:show_text:'Click to view your /homes'><color:#ffa500><bold>homes</bold></color></hover></click>.</color>"
+  - "homes_builder|<color:#007ba7>1MB Tip > </color><color:#a6d96a>Players in the group Builder can have up to 16 <click:run_command:'/cmi homes'><hover:show_text:'Click to view your /homes'><color:#ffa500><bold>homes</bold></color></hover></click>.</color>"
+  - "homes_rogue|<color:#007ba7>1MB Tip > </color><color:#a6d96a>Players in the group Rogue can have up to 18 <click:run_command:'/cmi homes'><hover:show_text:'Click to view your /homes'><color:#ffa500><bold>homes</bold></color></hover></click>.</color>"
+  - "homes_patron|<color:#007ba7>1MB Tip > </color><color:#a6d96a>Players in the group Patron can have up to 22 <click:run_command:'/cmi homes'><hover:show_text:'Click to view your /homes'><color:#ffa500><bold>homes</bold></color></hover></click>.</color>"
+  - "homes_mvp|<color:#007ba7>1MB Tip > </color><color:#a6d96a>Players in the group MVP can have up to 23 <click:run_command:'/cmi homes'><hover:show_text:'Click to view your /homes'><color:#ffa500><bold>homes</bold></color></hover></click>.</color>"
+  - "homes_epic|<color:#007ba7>1MB Tip > </color><color:#a6d96a>Players in the group Epic can have up to 28 <click:run_command:'/cmi homes'><hover:show_text:'Click to view your /homes'><color:#ffa500><bold>homes</bold></color></hover></click>.</color>"
+  - "oneblock_team|<color:#007ba7>1MB Tip > </color><color:#a6d96a>When both parties are in <color:#ffa500><bold>/oneblock</bold></color>, the island owner can type <click:run_command:'/oneblock team invite'><hover:show_text:'Click to invite your friend'><color:#ffa500><bold>/oneblock team invite</bold></color></hover></click>.</color>"
+  - "back|<color:#007ba7>1MB Tip > </color><color:#a6d96a>Players have access to <click:run_command:'/cmi back'><hover:show_text:'Click to teleport to your previous location'><color:#ffa500><bold>/back</bold></color></hover></click> to quickly teleport back.</color>"
+  - "dback|<color:#007ba7>1MB Tip > </color><color:#a6d96a>Players have access to <click:run_command:'/cmi dback'><hover:show_text:'Click to teleport to your death location'><color:#ffa500><bold>/dback</bold></color></hover></click> to quickly teleport back to their death location.</color>"
+  - "reply|<color:#007ba7>1MB Tip > </color><color:#a6d96a>Did someone just /msg you? Type <click:suggest_command:'/r '><hover:show_text:'Click to paste /r in chat'><color:#ffa500><bold>/r</bold></color></hover></click> to quickly reply to them.</color>"
+  - "portals|<color:#007ba7>1MB Tip > </color><color:#a6d96a>Players cannot create portals. Please use <color:#ffa500>/end</color> and <color:#ffa500>/nether</color>.</color>"
+  - "groups|<color:#007ba7>1MB Tip > </color><color:#a6d96a>Groups: We have quite a few! Check <click:run_command:'/groups'><hover:show_text:'Click to view /groups'><color:#ffa500><bold>/groups</bold></color></hover></click>.</color>"
+  - "ranks|<color:#007ba7>1MB Tip > </color><color:#a6d96a>Ranks: We have quite a few! Check <click:run_command:'/ranks'><hover:show_text:'Click to view /ranks'><color:#ffa500><bold>/ranks</bold></color></hover></click>.</color>"
+  - "community_2011|<color:#007ba7>1MB Community > </color><color:#ff66cc>We started the server 15+ years ago in 2011 WHOOOO!</color>"
+  - "celebration|<color:#007ba7>1MB Community > </color><color:#ff66cc>Type: <click:run_command:'/celebration'><hover:show_text:'Click to run /celebration'><color:#ffa500><bold>/celebration</bold></color></hover></click>.</color>"
+  - "discord_ticket|<color:#007ba7>1MB Tip > </color><color:#a6d96a>Found an issue, bug, or broken item? Report it as a ticket on <click:run_command:'/discord'><hover:show_text:'Click to get /discord link'><color:#ffa500><bold>/discord</bold></color></hover></click>. tnx</color>"
+  - "hop|<color:#007ba7>1MB Tip > </color><color:#a6d96a>Learn which mobs you can <click:run_command:'/hop info'><hover:show_text:'Click to learn more'><color:#ffa500><bold>/hop</bold></color></hover></click> on.</color>"
+  - "points_greet|<color:#007ba7>1MB Tip > </color><color:#a6d96a>When you greet someone by their name when they join, you earn <click:run_command:'/points'><hover:show_text:'Click to view /points'><color:#ffa500><bold>/points</bold></color></hover></click>.</color>"
+  - "mcmmo_grind|<color:#007ba7>1MB Tip > </color><color:#a6d96a>Grind mcMMO levels to unlock perks and level up your skill abilities.</color>"
+  - "pointy_fish|<color:#007ba7>1MB Tip > </color><color:#a6d96a>Eat special Pointy Fish to earn <click:run_command:'/points'><hover:show_text:'Click to view /points'><color:#ffa500><bold>/points</bold></color></hover></click>!</color>"
+  - "fish_shop|<color:#007ba7>1MB Tip > </color><color:#a6d96a>Sell all the types of fish on <click:run_command:'/fish shop'><hover:show_text:'Click to view /fish shop'><color:#ffa500><bold>/fish shop</bold></color></hover></click>.</color>"
+  - "server_version|<color:#007ba7>1MB Tip > </color><color:#a6d96a>Server: 1MB Third Era (%onemb_1mb_version%) for Minecraft %onemb_mc_version%</color>"
+  - "shops_first|<color:#007ba7>1MB Tip > </color><color:#a6d96a>Players in the group First can have up to 1 Chest <click:run_command:'/shops'><hover:show_text:'Click to view /shops'><color:#ffa500><bold>shops</bold></color></hover></click>.</color>"
+  - "shops_player|<color:#007ba7>1MB Tip > </color><color:#a6d96a>Players in the group Player can have up to 5 Chest <click:run_command:'/shops'><hover:show_text:'Click to view /shops'><color:#ffa500><bold>shops</bold></color></hover></click>.</color>"
+  - "shops_member|<color:#007ba7>1MB Tip > </color><color:#a6d96a>Players in the group Member can have up to 10 Chest <click:run_command:'/shops'><hover:show_text:'Click to view /shops'><color:#ffa500><bold>shops</bold></color></hover></click>.</color>"
+  - "shops_boosted|<color:#007ba7>1MB Tip > </color><color:#a6d96a>Players in the group Boosted can have up to 15 Chest <click:run_command:'/shops'><hover:show_text:'Click to view /shops'><color:#ffa500><bold>shops</bold></color></hover></click>.</color>"
+  - "shops_builder|<color:#007ba7>1MB Tip > </color><color:#a6d96a>Players in the group Builder can have up to 25 Chest <click:run_command:'/shops'><hover:show_text:'Click to view /shops'><color:#ffa500><bold>shops</bold></color></hover></click>.</color>"
+  - "shops_rogue|<color:#007ba7>1MB Tip > </color><color:#a6d96a>Players in the group Rogue can have up to 30 Chest <click:run_command:'/shops'><hover:show_text:'Click to view /shops'><color:#ffa500><bold>shops</bold></color></hover></click>.</color>"
+  - "shops_patron|<color:#007ba7>1MB Tip > </color><color:#a6d96a>Players in the group Patron can have up to 35 Chest <click:run_command:'/shops'><hover:show_text:'Click to view /shops'><color:#ffa500><bold>shops</bold></color></hover></click>.</color>"
+  - "shops_mvp|<color:#007ba7>1MB Tip > </color><color:#a6d96a>Players in the group MVP can have up to 40 Chest <click:run_command:'/shops'><hover:show_text:'Click to view /shops'><color:#ffa500><bold>shops</bold></color></hover></click>.</color>"
+  - "shops_epic|<color:#007ba7>1MB Tip > </color><color:#a6d96a>Players in the group Epic can have up to 50 Chest <click:run_command:'/shops'><hover:show_text:'Click to view /shops'><color:#ffa500><bold>shops</bold></color></hover></click>.</color>"
+  - "jump_perk|<color:#007ba7>1MB Tip > </color><color:#a6d96a><color:#ffa500><bold>/j</bold></color> is a little perk for the Green rank. It lets the player quickly teleport to where they point.</color>"
+  - "invite_friends|<color:#007ba7>1MB Tip > </color><color:#a6d96a>Help grow the server by asking your friends to join!</color>"
+  - "warp_signs|<color:#007ba7>1MB Tip > </color><color:#a6d96a>Learn about server signs at <click:run_command:'/cmi warp signs'><hover:show_text:'Click to check out /warp signs'><color:#ffa500><bold>/warp signs</bold></color></hover></click>.</color>"
+  - "here|<color:#007ba7>1MB Tip > </color><color:#a6d96a>Type <click:run_command:'/here'><hover:show_text:'Click to view /here'><color:#ffa500><bold>/here</bold></color></hover></click> for more information about where you are.</color>"
+  - "vote_tokens|<color:#007ba7>1MB Tip > </color><color:#a6d96a>Collect all the vote-tokens for unique OP stuff.</color>"
+  - "market|<color:#007ba7>1MB Tip > </color><color:#a6d96a>You can buy and sell items on <click:run_command:'/market'><hover:show_text:'Click to check out /market'><color:#ffa500><bold>/market</bold></color></hover></click>.</color>"
+  - "discord_announcement|<color:#007ba7>1MB Tip > </color><color:#a6d96a>Stay up to date! We have an Announcement channel on <click:run_command:'/discord'><hover:show_text:'Click to join discord.gg/floris'><color:#ffa500><bold>/discord</bold></color></hover></click>.</color>"
+  - "vote|<color:#007ba7>1MB Tip > </color><color:#a6d96a>You can <click:run_command:'/vote'><hover:show_text:'Click to check out /vote'><color:#ffa500><bold>/vote</bold></color></hover></click> daily for lots of rewards.</color>"
+  - "helpers|<color:#007ba7>1MB Tip > </color><color:#a6d96a>Instead of regular operators, we have community helpers. Ask away!</color>"
+  - "warp_shops|<color:#007ba7>1MB Tip > </color><color:#a6d96a>Player and Admin Shops: <click:run_command:'/warp shops'><hover:show_text:'Click to check out /warp shops'><color:#ffa500><bold>/warp shops</bold></color></hover></click>.</color>"
+  - "rules|<color:#007ba7>1MB Tip > </color><color:#a6d96a>You cannot take from chests or break things made by others unless a sign says so. Please read <click:run_command:'/rules'><hover:show_text:'Click to view /rules'><color:#ffa500><bold>/rules</bold></color></hover></click>, and play fair. Thank you!</color>"
+  - "jobs_browse|<color:#007ba7>1MB Tip > </color><color:#a6d96a>A great way to make money is with jobs. Players can join multiple. Type <click:run_command:'/jobs browse'><hover:show_text:'Click to view /jobs browse'><color:#ffa500><bold>/jobs browse</bold></color></hover></click> to get started.</color>"
+  - "fish_tournament|<color:#007ba7>1MB Tip > </color><color:#a6d96a>Four times in the month, there will be a fishing tournament for 30 minutes (<color:#ffa500>/fisht info</color>).</color>"
+  - "farm_tournament|<color:#007ba7>1MB Tip > </color><color:#a6d96a>Four times in the month, there will be a farming tournament for 30 minutes (<color:#ffa500>/farmt info</color>).</color>"
+  - "mcmmo_booster|<color:#007ba7>1MB Tip > </color><color:#a6d96a>Four times in the month, there will be an mcMMO booster for an hour (<color:#ffa500>/rate</color>).</color>"
+  - "jobs_booster|<color:#007ba7>1MB Tip > </color><color:#a6d96a>Four times in the month, there will be a Jobs booster for an hour.</color>"
+  - "utility_commands|<color:#007ba7>1MB Tip > </color><color:#a6d96a>Players can use <color:#ffa500>/craft</color>, <color:#ffa500>/ec</color>, <color:#ffa500>/anvil</color>, and a few more! Check <color:#ffa500>/warp signs</color>.</color>"
