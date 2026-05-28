@@ -1,9 +1,34 @@
 ---
-title: Visit Commands
-description: Player-friendly command guide for Visit.
+title: Visit Player Guide
+description: Learn what Visit does, how to use it, and which player commands are available.
 ---
 
-Visit adds player-owned visit locations using hidden CMI warps. It behaves like a lightweight player-warp feature without exposing the generated warps in normal `/warps` lists.
+This page introduces Visit from a player point of view. It focuses on what you can do in-game, how to get started, and which commands are useful when the feature is available to you.
+
+## What It Does
+
+Visit adds player-owned visit locations using hidden server warps. It behaves like a lightweight player-warp feature without exposing the generated warps in normal /warps lists.
+
+## How Players Use It
+
+Start in-game with /visit. The sections below explain what Visit is for, which commands players can try, and what to expect when your account has access.
+
+## Things You Can Do
+
+- Create one hidden server-backed visit warp per player.
+- Keep visit warps hidden by default so they do not clutter normal warp lists.
+- Allow an optional welcome message of up to 128 characters by default.
+- Let visit owners update just the visit message with /visit set msg &lt;short message&gt;.
+- Show a readable /visit set status list for Visit message, arrival, money, offline, cooldown, and perk state, with hover command hints and quick toggles that refresh the status view after changes.
+- Let perked visit owners set arrival titles, subtitles, particle presets, and sound presets.
+- Let visit owners turn their arrival feedback on/off with /visit set effects.
+- Use strict player-name validation for /visit &lt;player&gt; lookups.
+
+## Quick Start
+
+1. Start with `/visit` to open or view Visit.
+2. Use `/visit info` when you want the in-game help or a short explanation.
+3. Try `/visit set` when you are ready to use one of the feature actions.
 
 ## Commands
 
@@ -68,7 +93,7 @@ Visit adds player-owned visit locations using hidden CMI warps. It behaves like 
     </tr>
     <tr>
       <td><code>/visit cooldown [short|normal|long|off|status]</code></td>
-      <td>Runs the Visit cooldown action.</td>
+      <td>Changes or reviews your Visit cooldown setting.</td>
       <td><code>/visit cooldown</code></td>
     </tr>
     <tr>
@@ -83,7 +108,7 @@ Visit adds player-owned visit locations using hidden CMI warps. It behaves like 
     </tr>
     <tr>
       <td><code>/visit unset</code></td>
-      <td>Runs the Visit unset action.</td>
+      <td>Removes or turns off your Visit setup.</td>
       <td><code>/visit unset</code></td>
     </tr>
     <tr>
@@ -107,6 +132,14 @@ Visit adds player-owned visit locations using hidden CMI warps. It behaves like 
 
 - No separate examples are listed yet. Use the command examples above as a starting point.
 
+## Good To Know
+
+- Some commands may be hidden until your group, event progress, or unlocks allow them.
+- If a command opens a menu, follow the buttons in-game; the website is only the learning guide.
+- You may also see /pvisit as a shortcut.
+- Top lists and leaderboards are public-facing progress views when the feature enables them.
+- Settings commands only change your own player preferences unless the page says otherwise.
+
 ## Full Reference
 
-Staff and curious players can open the [full synced Visit reference](https://github.com/mrfdev/1MB-Plugins-Docs/blob/main/project-docs/docs/plugins/visit.md) for more technical detail.
+The [full synced Visit reference](https://github.com/mrfdev/1MB-Plugins-Docs/blob/main/project-docs/docs/plugins/visit.md) is available for exact technical details.

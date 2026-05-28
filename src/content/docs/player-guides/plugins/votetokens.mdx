@@ -1,13 +1,33 @@
 ---
-title: VoteTokens Commands
-description: Player-friendly command guide for VoteTokens.
+title: VoteTokens Player Guide
+description: Learn what VoteTokens does, how to use it, and which player commands are available.
 ---
 
-`/votetokens` secure vote-token GUI trades with tier/layer progress, CMI kit rewards, hidden reward identity markers, extra-token item tools with shield presets, and staff migration tools for old manual trades.
+This page introduces VoteTokens from a player point of view. It focuses on what you can do in-game, how to get started, and which commands are useful when the feature is available to you.
 
-## Player Flow
+## What It Does
+
+VoteTokens gives players a safer menu for vote-token rewards. Open the menu to review trades, check progress, and use token tools when your account has access.
+
+## How Players Use It
 
 Progress is completion-based, not one-time reward based. A player may trade the same unlocked item again later, but the first successful trade is what marks that item complete for unlocking the next layer.
+
+## Things You Can Do
+
+- /votetokens opens the Tokens Trade Index GUI.
+- The top book closes the VoteTokens GUI and runs /vote, so VotingPlugin can show its normal voting flow.
+- The bottom-left player head shows the player's current tier/layer progress and opens a read-only progress tree.
+- The progress tree uses dye colors: green complete, orange in progress, yellow unlocked, red locked, and gray disabled.
+- The book next to the player head sends the vote-item information link: https://omgboards.com/vote.
+- The tools button opens a single-input tools page for upgrading eligible vote reward items with extra vote tokens.
+- Locked trades explain what is missing; unlocked trades open a confirmation page.
+- Tier 1 has layer 1.
+
+## Quick Start
+
+1. Start with `/votetokens` to open or view VoteTokens.
+2. Try `/votetokens tools` when you are ready to use one of the feature actions.
 
 ## Commands
 
@@ -47,6 +67,11 @@ Progress is completion-based, not one-time reward based. A player may trade the 
 
 - No separate examples are listed yet. Use the command examples above as a starting point.
 
+## Good To Know
+
+- Some commands may be hidden until your group, event progress, or unlocks allow them.
+- If a command opens a menu, follow the buttons in-game; the website is only the learning guide.
+
 ## Full Reference
 
-Staff and curious players can open the [full synced VoteTokens reference](https://github.com/mrfdev/1MB-Plugins-Docs/blob/main/project-docs/docs/plugins/votetokens.md) for more technical detail.
+The [full synced VoteTokens reference](https://github.com/mrfdev/1MB-Plugins-Docs/blob/main/project-docs/docs/plugins/votetokens.md) is available for exact technical details.

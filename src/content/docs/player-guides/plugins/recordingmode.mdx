@@ -1,9 +1,33 @@
 ---
-title: RecordingMode Commands
-description: Player-friendly command guide for RecordingMode.
+title: RecordingMode Player Guide
+description: Learn what RecordingMode does, how to use it, and which player commands are available.
 ---
 
-RecordingMode gives players a clean `/recording` toggle for video recording, streaming, screenshots, or other moments where chat interruptions should be reduced.
+This page introduces RecordingMode from a player point of view. It focuses on what you can do in-game, how to get started, and which commands are useful when the feature is available to you.
+
+## What It Does
+
+Recording mode helps players stream or record without private messages, requests, tips, or map visibility getting in the way. Turn it on before going live, then turn it off when you are done.
+
+## How Players Use It
+
+Start in-game with /recording. The sections below explain what RecordingMode is for, which commands players can try, and what to expect when your account has access.
+
+## Things You Can Do
+
+- /recording toggles recording mode on or off.
+- Per-player preferences persist in shared playerdata.
+- /recording set &lt;channel&gt; &lt;on|off&gt; controls what stays enabled while recording.
+- Previous server PM/TPA/money option states are captured and restored when recording mode turns off.
+- /recording status shows the recording state across multiple colored lines. Preference entries have hover text explaining what on/off means, and players with onembcmi.recordingmode.set can click an entry to toggle it.
+- Successful /recording set changes refresh the status panel again after a short delay, so click-to-toggle users immediately see the new state and can toggle it back.
+
+## Quick Start
+
+1. Start with `/recording` to open or view RecordingMode.
+2. Use `/recording status` to check your current progress, settings, or state.
+3. Use `/recording help` when you want the in-game help or a short explanation.
+4. Try `/recording set msg on` when you are ready to use one of the feature actions.
 
 ## Commands
 
@@ -78,6 +102,12 @@ RecordingMode gives players a clean `/recording` toggle for video recording, str
 
 - No separate examples are listed yet. Use the command examples above as a starting point.
 
+## Good To Know
+
+- Some commands may be hidden until your group, event progress, or unlocks allow them.
+- If a command opens a menu, follow the buttons in-game; the website is only the learning guide.
+- Settings commands only change your own player preferences unless the page says otherwise.
+
 ## Full Reference
 
-Staff and curious players can open the [full synced RecordingMode reference](https://github.com/mrfdev/1MB-Plugins-Docs/blob/main/project-docs/docs/plugins/recordingmode.md) for more technical detail.
+The [full synced RecordingMode reference](https://github.com/mrfdev/1MB-Plugins-Docs/blob/main/project-docs/docs/plugins/recordingmode.md) is available for exact technical details.

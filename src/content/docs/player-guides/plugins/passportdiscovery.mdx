@@ -1,13 +1,32 @@
 ---
-title: PassportDiscovery Commands
-description: Player-friendly command guide for PassportDiscovery.
+title: PassportDiscovery Player Guide
+description: Learn what PassportDiscovery does, how to use it, and which player commands are available.
 ---
 
-Umbrella discovery passport for worlds, warps, visits, biomes, blocks, items, consumables, tools, weapons, armor, kills, mounts, and exploration.
+This page introduces PassportDiscovery from a player point of view. It focuses on what you can do in-game, how to get started, and which commands are useful when the feature is available to you.
 
-## Player Flow
+## What It Does
 
-`/passport info` explains the system in-game for regular players. It describes passports as a collection log, lists how each type earns stamps, points players at useful commands, and notes that rewards are not automatic yet. That gives us a clean place later to describe completion rewards such as title unlocks, cosmetic styles, event entries, or trade-in hooks.
+PassportDiscovery is the umbrella discovery-passport plugin for player-facing collection progress. It adds /passport and tracks stamps for worlds, warps, visits, biomes, blocks, items, consumables, tools, weapons, armor, kills, mounts, and sustained exploration in shared UUID playerdata.
+
+## How Players Use It
+
+Start in-game with /passport info. The sections below explain what PassportDiscovery is for, which commands players can try, and what to expect when your account has access.
+
+## Things You Can Do
+
+- Collection.gametypes is the allowlist. Gamemodes not listed do not collect stamps.
+- Collection.vanish: false means server vanished players do not collect stamps.
+- Collection.god: false means server god-mode players do not collect stamps.
+- Collection.fly: false means server /fly, temp fly, or survival allow-flight players do not collect stamps. Elytra gliding still counts as normal survival play.
+- Players can still view their passport while collection is paused.
+
+## Quick Start
+
+1. Start with `/passport info` to open or view PassportDiscovery.
+2. Use `/passport status` to check your current progress, settings, or state.
+3. Use `/passport info` when you want the in-game help or a short explanation.
+4. Try `/passport stats oneblock` when you are ready to use one of the feature actions.
 
 ## Commands
 
@@ -135,6 +154,13 @@ Umbrella discovery passport for worlds, warps, visits, biomes, blocks, items, co
 - `/passport top block`
 - `/passport scan`
 
+## Good To Know
+
+- Some commands may be hidden until your group, event progress, or unlocks allow them.
+- If a command opens a menu, follow the buttons in-game; the website is only the learning guide.
+- Top lists and leaderboards are public-facing progress views when the feature enables them.
+- Settings commands only change your own player preferences unless the page says otherwise.
+
 ## Full Reference
 
-Staff and curious players can open the [full synced PassportDiscovery reference](https://github.com/mrfdev/1MB-Plugins-Docs/blob/main/project-docs/docs/plugins/passportdiscovery.md) for more technical detail.
+The [full synced PassportDiscovery reference](https://github.com/mrfdev/1MB-Plugins-Docs/blob/main/project-docs/docs/plugins/passportdiscovery.md) is available for exact technical details.

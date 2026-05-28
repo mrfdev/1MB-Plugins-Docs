@@ -27,7 +27,7 @@ export default defineConfig({
             { slug: 'player-guides/commands' },
             { slug: 'player-guides/features' },
             {
-              label: 'Plugin Command Guides',
+              label: 'Plugin Player Guides',
               items: [{ autogenerate: { directory: 'player-guides/plugins' } }],
             },
           ],
