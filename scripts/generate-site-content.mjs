@@ -107,6 +107,11 @@ function escapeHtml(value) {
     .trim();
 }
 
+function formatCommand(value) {
+  return escapeHtml(value)
+    .replaceAll('|', '|<wbr />');
+}
+
 function uniqueValues(values) {
   const seen = new Set();
   const unique = [];
@@ -807,12 +812,12 @@ function extractCommandData(markdown) {
 function commandTable(commands) {
   const rows = commands
     .map(([command, purpose]) => `    <tr>
-      <td><code>${escapeHtml(command)}</code></td>
+      <td><code>${formatCommand(command)}</code></td>
       <td>${escapeHtml(purpose)}</td>
     </tr>`)
     .join('\n');
 
-  return `<table>
+  return `<table class="command-table">
   <thead>
     <tr>
       <th>Command</th>
@@ -829,13 +834,13 @@ function commandIndexTable(rows, guidePathPrefix = '../plugins/') {
   const htmlRows = rows
     .map((row) => `    <tr>
       <td><a href="${guidePathPrefix}${row.slug}/">${escapeHtml(row.plugin)}</a></td>
-      <td><code>${escapeHtml(row.command)}</code></td>
+      <td><code>${formatCommand(row.command)}</code></td>
       <td>${escapeHtml(friendlyText(row.description))}</td>
-      <td><code>${escapeHtml(row.example)}</code></td>
+      <td><code>${formatCommand(row.example)}</code></td>
     </tr>`)
     .join('\n');
 
-  return `<table>
+  return `<table class="command-table command-index-table">
   <thead>
     <tr>
       <th>Feature</th>
@@ -855,7 +860,7 @@ function commandPreview(details, guideHref) {
   if (!commands.length) {
     return 'No player commands listed yet.';
   }
-  const preview = commands.slice(0, 4).map((command) => `<code>${escapeHtml(command)}</code>`).join(', ');
+  const preview = commands.slice(0, 4).map((command) => `<code>${formatCommand(command)}</code>`).join(', ');
   const hidden = commands.length - 4;
   if (hidden <= 0) {
     return preview;
@@ -908,13 +913,13 @@ ${rows}
 function pluginCommandTable(plugin, commandData) {
   const rows = commandData.playerCommands
     .map((command) => `    <tr>
-      <td><code>${escapeHtml(command)}</code></td>
+      <td><code>${formatCommand(command)}</code></td>
       <td>${escapeHtml(friendlyText(commandData.descriptions.get(command) || commandDescription(command, plugin)))}</td>
-      <td><code>${escapeHtml(commandExample(command))}</code></td>
+      <td><code>${formatCommand(commandExample(command))}</code></td>
     </tr>`)
     .join('\n');
 
-  return `<table>
+  return `<table class="command-table plugin-command-table">
   <thead>
     <tr>
       <th>Command</th>
