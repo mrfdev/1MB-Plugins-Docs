@@ -1,0 +1,110 @@
+---
+title: NotableMsg Guide
+description: Learn what NotableMsg does, how to use it, and which public commands are available.
+---
+
+This page introduces NotableMsg from a public server-docs point of view. It focuses on what the feature does in-game, how to get started when you have access, and which commands are useful.
+
+## What It Does
+
+NotableMsg is a private helper chat channel for notable/community-assistant groups. It intentionally uses only /n so the server's existing /notable command space remains available for other workflows.
+
+## How Players Use It
+
+Start in-game with /n. The sections below explain what NotableMsg is for, which commands players can try, and what to expect when your account has access.
+
+## Things You Can Do
+
+- /n, /n toggle, /n on, and /n off control persistent notable chat for the sender.
+- When persistent notable chat is enabled, normal public chat from that player is cancelled and sent to notable chat.
+- The default format uses the same ⚜ style marker as server staffmsg, adds a visible [notable] channel label, and uses a softer pastel green/cyan palette.
+- The whole notable chat line has a hover tooltip showing Command: /n, sender name, world, and local server time.
+- Clicking a notable chat line suggests /n in the chat input for a quick reply.
+- Each row is compact, shows oldest-to-newest within the page so the latest visible message lands at the bottom, and puts world, coordinates, time, and recipient details in the sender hover tooltip.
+- Optional pass-through can forward selected /n &lt;subcommand&gt; entries to an existing command such as /notable.
+
+## Quick Start
+
+1. Start with `/n` to open or view NotableMsg.
+2. Use `/n status` to check your current progress, settings, or state.
+3. Use `/n help` when you want the in-game help or a short explanation.
+4. Try `/n Happy birthday!` when you are ready to use one of the feature actions.
+
+## Commands
+
+<table class="command-table plugin-command-table">
+  <thead>
+    <tr>
+      <th>Command</th>
+      <th>What it does</th>
+      <th>Example</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>/n &lt;message&gt;</code></td>
+      <td>Uses NotableMsg with the value you provide.</td>
+      <td><code>/n Happy birthday!</code></td>
+    </tr>
+    <tr>
+      <td><code>/n</code></td>
+      <td>Opens or shows the main NotableMsg player view.</td>
+      <td><code>/n</code></td>
+    </tr>
+    <tr>
+      <td><code>/n toggle</code></td>
+      <td>Changes or clears your NotableMsg setting.</td>
+      <td><code>/n toggle</code></td>
+    </tr>
+    <tr>
+      <td><code>/n on</code></td>
+      <td>Changes or clears your NotableMsg setting.</td>
+      <td><code>/n on</code></td>
+    </tr>
+    <tr>
+      <td><code>/n off</code></td>
+      <td>Changes or clears your NotableMsg setting.</td>
+      <td><code>/n off</code></td>
+    </tr>
+    <tr>
+      <td><code>/n status</code></td>
+      <td>Shows your current NotableMsg status.</td>
+      <td><code>/n status</code></td>
+    </tr>
+    <tr>
+      <td><code>/n recent [page]</code></td>
+      <td>Runs the NotableMsg recent action.</td>
+      <td><code>/n recent</code></td>
+    </tr>
+    <tr>
+      <td><code>/n help [page]</code></td>
+      <td>Shows the NotableMsg commands available to you.</td>
+      <td><code>/n help</code></td>
+    </tr>
+    <tr>
+      <td><code>/n info</code></td>
+      <td>Shows a friendly explanation of what NotableMsg does.</td>
+      <td><code>/n info</code></td>
+    </tr>
+  </tbody>
+</table>
+
+## Examples
+
+- `/n Could someone check the spawn queue?`
+- `/n on`
+- `/n off`
+- `/n status`
+- `/n recent`
+- `/n recent 2`
+- `/n help`
+- `/n help 2`
+
+## Good To Know
+
+- Some commands may be hidden until your group, event progress, or unlocks allow them.
+- If a command opens a menu, follow the buttons in-game; the website is only the learning guide.
+
+## Full Reference
+
+The [full synced NotableMsg reference](https://github.com/mrfdev/1MB-Plugins-Docs/blob/main/project-docs/docs/plugins/notablemsg.md) is available for exact technical details.

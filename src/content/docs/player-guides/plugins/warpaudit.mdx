@@ -1,0 +1,115 @@
+---
+title: WarpAudit Guide
+description: Learn what WarpAudit does, how to use it, and which public commands are available.
+---
+
+This page introduces WarpAudit from a public server-docs point of view. It focuses on what the feature does in-game, how to get started when you have access, and which commands are useful.
+
+## What It Does
+
+Read-only server warp and portal hygiene and safety audit.
+
+## How Players Use It
+
+Start in-game with /warpaudit status. The sections below explain what WarpAudit is for, which commands players can try, and what to expect when your account has access.
+
+## Things You Can Do
+
+- Read current server warps from server.getInstance().getWarpManager().getWarps().
+- Read current server portals from server.getInstance().getPortalManager().getPortals().
+- Show a compact status summary with last audit result and issue count.
+- Run a fresh on-demand audit scan.
+- Group warps by server warp group.
+- Detect missing or unloaded worlds.
+- Detect duplicate portal names and duplicate portal bounds.
+- Detect unloaded chunks without forcing chunk loads, so audits stay gentle on live servers.
+
+## Quick Start
+
+1. Start with `/warpaudit status` to open or view WarpAudit.
+2. Use `/warpaudit status` to check your current progress, settings, or state.
+3. Try `/warpaudit scan` when you are ready to use one of the feature actions.
+
+## Commands
+
+<table class="command-table plugin-command-table">
+  <thead>
+    <tr>
+      <th>Command</th>
+      <th>What it does</th>
+      <th>Example</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>/warpaudit status</code></td>
+      <td>Shows your current WarpAudit status.</td>
+      <td><code>/warpaudit status</code></td>
+    </tr>
+    <tr>
+      <td><code>/warpaudit scan</code></td>
+      <td>Runs the WarpAudit scan action.</td>
+      <td><code>/warpaudit scan</code></td>
+    </tr>
+    <tr>
+      <td><code>/warpaudit issues [page]</code></td>
+      <td>Runs the WarpAudit issues action.</td>
+      <td><code>/warpaudit issues</code></td>
+    </tr>
+    <tr>
+      <td><code>/warpaudit safety [page]</code></td>
+      <td>Runs the WarpAudit safety action.</td>
+      <td><code>/warpaudit safety</code></td>
+    </tr>
+    <tr>
+      <td><code>/warpaudit list [page]</code></td>
+      <td>Lists available WarpAudit entries.</td>
+      <td><code>/warpaudit list</code></td>
+    </tr>
+    <tr>
+      <td><code>/warpaudit portals [page]</code></td>
+      <td>Runs the WarpAudit portals action.</td>
+      <td><code>/warpaudit portals</code></td>
+    </tr>
+    <tr>
+      <td><code>/warpaudit portalissues [page]</code></td>
+      <td>Runs the WarpAudit portalissues action.</td>
+      <td><code>/warpaudit portalissues</code></td>
+    </tr>
+    <tr>
+      <td><code>/warpaudit groups</code></td>
+      <td>Runs the WarpAudit groups action.</td>
+      <td><code>/warpaudit groups</code></td>
+    </tr>
+    <tr>
+      <td><code>/warpaudit dump</code></td>
+      <td>Runs the WarpAudit dump action.</td>
+      <td><code>/warpaudit dump</code></td>
+    </tr>
+  </tbody>
+</table>
+
+## Aliases
+
+- `/waudit`
+
+## Examples
+
+- `/warpaudit scan`
+- `/warpaudit issues`
+- `/warpaudit safety`
+- `/warpaudit list 2`
+- `/warpaudit portals`
+- `/warpaudit portalissues`
+- `/warpaudit groups`
+- `/warpaudit dump`
+
+## Good To Know
+
+- Some commands may be hidden until your group, event progress, or unlocks allow them.
+- If a command opens a menu, follow the buttons in-game; the website is only the learning guide.
+- You may also see /waudit as a shortcut.
+
+## Full Reference
+
+The [full synced WarpAudit reference](https://github.com/mrfdev/1MB-Plugins-Docs/blob/main/project-docs/docs/plugins/warpaudit.md) is available for exact technical details.

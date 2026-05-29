@@ -1,0 +1,90 @@
+---
+title: WorthHelper Guide
+description: Learn what WorthHelper does, how to use it, and which public commands are available.
+---
+
+This page introduces WorthHelper from a public server-docs point of view. It focuses on what the feature does in-game, how to get started when you have access, and which commands are useful.
+
+## What It Does
+
+Read-only server Worth.yml and server recipe analyzer with review-first setworth suggestions.
+
+## How Players Use It
+
+Start in-game with /worthhelper. The sections below explain what WorthHelper is for, which commands players can try, and what to expect when your account has access.
+
+## Things You Can Do
+
+- Enumerate server item materials for the running server version.
+- Inspect shaped, shapeless, cooking, stonecutting, smithing, and transmute recipes where server exposes enough information.
+- Compare current server worth against ingredient cost divided by output count.
+- Use cheapest priced ingredient choices when a recipe accepts alternatives.
+- Skip variant server worth keys such as enchantment-specific entries for the base material scan.
+
+## Quick Start
+
+1. Start with `/worthhelper` to open or view WorthHelper.
+2. Use `/worthhelper status` to check your current progress, settings, or state.
+3. Try `/worthhelper scan` when you are ready to use one of the feature actions.
+
+## Commands
+
+<table class="command-table plugin-command-table">
+  <thead>
+    <tr>
+      <th>Command</th>
+      <th>What it does</th>
+      <th>Example</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>/worthhelper</code></td>
+      <td>Opens or shows the main WorthHelper player view.</td>
+      <td><code>/worthhelper</code></td>
+    </tr>
+    <tr>
+      <td><code>/worthhelper status</code></td>
+      <td>Shows your current WorthHelper status.</td>
+      <td><code>/worthhelper status</code></td>
+    </tr>
+    <tr>
+      <td><code>/worthhelper scan [page]</code></td>
+      <td>Runs the WorthHelper scan action.</td>
+      <td><code>/worthhelper scan</code></td>
+    </tr>
+    <tr>
+      <td><code>/worthhelper missing [page]</code></td>
+      <td>Runs the WorthHelper missing action.</td>
+      <td><code>/worthhelper missing</code></td>
+    </tr>
+    <tr>
+      <td><code>/worthhelper recipes &lt;material&gt; [page]</code></td>
+      <td>Runs the WorthHelper recipes action.</td>
+      <td><code>/worthhelper recipes DIAMOND</code></td>
+    </tr>
+  </tbody>
+</table>
+
+## Aliases
+
+- `/whelper`
+- `/worthhelp`
+
+## Examples
+
+- `/worthhelper status`
+- `/worthhelper scan`
+- `/worthhelper missing`
+- `/worthhelper recipes diamond_block`
+- `/worthhelper recipes minecraft:iron_ingot`
+
+## Good To Know
+
+- Some commands may be hidden until your group, event progress, or unlocks allow them.
+- If a command opens a menu, follow the buttons in-game; the website is only the learning guide.
+- You may also see /whelper or /worthhelp as a shortcut.
+
+## Full Reference
+
+The [full synced WorthHelper reference](https://github.com/mrfdev/1MB-Plugins-Docs/blob/main/project-docs/docs/plugins/worthhelper.md) is available for exact technical details.

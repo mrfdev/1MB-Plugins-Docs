@@ -1,0 +1,102 @@
+---
+title: StartupDoctor Guide
+description: Learn what StartupDoctor does, how to use it, and which public commands are available.
+---
+
+This page introduces StartupDoctor from a public server-docs point of view. It focuses on what the feature does in-game, how to get started when you have access, and which commands are useful.
+
+## What It Does
+
+Startup/runtime diagnostics plus read-only folder doctor suggestions and export reports.
+
+## How Players Use It
+
+Start in-game with /startupdoctor status. The sections below explain what StartupDoctor is for, which commands players can try, and what to expect when your account has access.
+
+## Things You Can Do
+
+- Capture a startup report shortly after the plugin stack finishes enabling.
+- Run on-demand diagnostics from command output.
+- Show a compact summary for support triage.
+- Verify server-API classes are visible to the feature jar.
+- List registered 1MB CMIAPI features, categories, versions, and enabled state.
+- Show suggested manual fixes for folder findings without deleting, moving, or editing files.
+- Write the latest diagnostics report or folder-doctor report to the StartupDoctor cache folder for support/debug use.
+
+## Quick Start
+
+1. Start with `/startupdoctor status` to open or view StartupDoctor.
+2. Use `/startupdoctor status` to check your current progress, settings, or state.
+3. Try `/startupdoctor summary` when you are ready to use one of the feature actions.
+
+## Commands
+
+<table class="command-table plugin-command-table">
+  <thead>
+    <tr>
+      <th>Command</th>
+      <th>What it does</th>
+      <th>Example</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>/startupdoctor status</code></td>
+      <td>Shows your current StartupDoctor status.</td>
+      <td><code>/startupdoctor status</code></td>
+    </tr>
+    <tr>
+      <td><code>/startupdoctor summary</code></td>
+      <td>Runs the StartupDoctor summary action.</td>
+      <td><code>/startupdoctor summary</code></td>
+    </tr>
+    <tr>
+      <td><code>/startupdoctor report</code></td>
+      <td>Runs the StartupDoctor report action.</td>
+      <td><code>/startupdoctor report</code></td>
+    </tr>
+    <tr>
+      <td><code>/startupdoctor warnings [page]</code></td>
+      <td>Runs the StartupDoctor warnings action.</td>
+      <td><code>/startupdoctor warnings</code></td>
+    </tr>
+    <tr>
+      <td><code>/startupdoctor features</code></td>
+      <td>Runs the StartupDoctor features action.</td>
+      <td><code>/startupdoctor features</code></td>
+    </tr>
+    <tr>
+      <td><code>/startupdoctor storage</code></td>
+      <td>Runs the StartupDoctor storage action.</td>
+      <td><code>/startupdoctor storage</code></td>
+    </tr>
+    <tr>
+      <td><code>/startupdoctor folders [page]</code></td>
+      <td>Runs the StartupDoctor folders action.</td>
+      <td><code>/startupdoctor folders</code></td>
+    </tr>
+    <tr>
+      <td><code>/startupdoctor dump</code></td>
+      <td>Runs the StartupDoctor dump action.</td>
+      <td><code>/startupdoctor dump</code></td>
+    </tr>
+  </tbody>
+</table>
+
+## Aliases
+
+- `/sdoctor`
+
+## Examples
+
+- No separate examples are listed yet. Use the command examples above as a starting point.
+
+## Good To Know
+
+- Some commands may be hidden until your group, event progress, or unlocks allow them.
+- If a command opens a menu, follow the buttons in-game; the website is only the learning guide.
+- You may also see /sdoctor as a shortcut.
+
+## Full Reference
+
+The [full synced StartupDoctor reference](https://github.com/mrfdev/1MB-Plugins-Docs/blob/main/project-docs/docs/plugins/startupdoctor.md) is available for exact technical details.

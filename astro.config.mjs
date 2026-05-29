@@ -29,7 +29,7 @@ export default defineConfig({
             { slug: 'player-guides/commands' },
             { slug: 'player-guides/features' },
             {
-              label: 'Plugin Player Guides',
+              label: 'Plugin Guides',
               items: [{ autogenerate: { directory: 'player-guides/plugins' } }],
             },
           ],

@@ -1,0 +1,106 @@
+---
+title: CMIDatabase Guide
+description: Learn what CMIDatabase does, how to use it, and which public commands are available.
+---
+
+This page introduces CMIDatabase from a public server-docs point of view. It focuses on what the feature does in-game, how to get started when you have access, and which commands are useful.
+
+## What It Does
+
+CMIDatabase is an internal key/value store for server custom aliases, event commands, interactive commands, quests, parkour, adventure logic, and other automation where server usermeta is not enough.
+
+## How Players Use It
+
+Start in-game with /cmidb status. The sections below explain what CMIDatabase is for, which commands players can try, and what to expect when your account has access.
+
+## Things You Can Do
+
+- Store global flags such as event state, quest state, or server automation switches.
+- Store player-scoped progress by player name without requiring the player to be online.
+- Expose values through the shared onembcmi server expansion.
+- Register a convenience onembcmidb server expansion for short server check syntax.
+- Keep keys strict and predictable: lowercase letters, numbers, dots, underscores, and dashes.
+
+## Quick Start
+
+1. Start with `/cmidb status` to open or view CMIDatabase.
+2. Use `/cmidb status` to check your current progress, settings, or state.
+3. Use `/cmidb help` when you want the in-game help or a short explanation.
+4. Try `/cmidb global get example` when you are ready to use one of the feature actions.
+
+## Commands
+
+<table class="command-table plugin-command-table">
+  <thead>
+    <tr>
+      <th>Command</th>
+      <th>What it does</th>
+      <th>Example</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>/cmidb status</code></td>
+      <td>Shows your current CMIDatabase status.</td>
+      <td><code>/cmidb status</code></td>
+    </tr>
+    <tr>
+      <td><code>/cmidb help</code></td>
+      <td>Shows the CMIDatabase commands available to you.</td>
+      <td><code>/cmidb help</code></td>
+    </tr>
+    <tr>
+      <td><code>/cmidb global get &lt;key&gt;</code></td>
+      <td>Runs the CMIDatabase global action.</td>
+      <td><code>/cmidb global get example</code></td>
+    </tr>
+    <tr>
+      <td><code>/cmidb global has &lt;key&gt;</code></td>
+      <td>Runs the CMIDatabase global action.</td>
+      <td><code>/cmidb global has example</code></td>
+    </tr>
+    <tr>
+      <td><code>/cmidb global delete &lt;key&gt;</code></td>
+      <td>Runs the CMIDatabase global action.</td>
+      <td><code>/cmidb global delete example</code></td>
+    </tr>
+    <tr>
+      <td><code>/cmidb &lt;playerName&gt; get &lt;key&gt;</code></td>
+      <td>Uses CMIDatabase with the value you provide.</td>
+      <td><code>/cmidb Steve get example</code></td>
+    </tr>
+    <tr>
+      <td><code>/cmidb &lt;playerName&gt; has &lt;key&gt;</code></td>
+      <td>Uses CMIDatabase with the value you provide.</td>
+      <td><code>/cmidb Steve has example</code></td>
+    </tr>
+    <tr>
+      <td><code>/cmidb &lt;playerName&gt; delete &lt;key&gt;</code></td>
+      <td>Uses CMIDatabase with the value you provide.</td>
+      <td><code>/cmidb Steve delete example</code></td>
+    </tr>
+    <tr>
+      <td><code>/cmidb list global [page]</code></td>
+      <td>Lists available CMIDatabase entries.</td>
+      <td><code>/cmidb list global</code></td>
+    </tr>
+    <tr>
+      <td><code>/cmidb list &lt;playerName&gt; [page]</code></td>
+      <td>Lists available CMIDatabase entries.</td>
+      <td><code>/cmidb list Steve</code></td>
+    </tr>
+  </tbody>
+</table>
+
+## Examples
+
+- No separate examples are listed yet. Use the command examples above as a starting point.
+
+## Good To Know
+
+- Some commands may be hidden until your group, event progress, or unlocks allow them.
+- If a command opens a menu, follow the buttons in-game; the website is only the learning guide.
+
+## Full Reference
+
+The [full synced CMIDatabase reference](https://github.com/mrfdev/1MB-Plugins-Docs/blob/main/project-docs/docs/plugins/cmidatabase.md) is available for exact technical details.

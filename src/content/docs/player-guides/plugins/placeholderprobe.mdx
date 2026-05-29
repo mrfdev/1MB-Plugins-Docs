@@ -1,0 +1,114 @@
+---
+title: PlaceholderProbe Guide
+description: Learn what PlaceholderProbe does, how to use it, and which public commands are available.
+---
+
+This page introduces PlaceholderProbe from a public server-docs point of view. It focuses on what the feature does in-game, how to get started when you have access, and which commands are useful.
+
+## What It Does
+
+Strict server probe for server and onembcmi placeholders.
+
+## How Players Use It
+
+Start in-game with /placeholderprobe status. The sections below explain what PlaceholderProbe is for, which commands players can try, and what to expect when your account has access.
+
+## Things You Can Do
+
+- Show server loaded state and registered expansion identifiers.
+- Search registered server expansion identifiers by safe text.
+- Keep a bounded recent in-memory history of probe inputs and outputs.
+- Classify recent output as changed, unchanged, unresolved, empty, or error.
+- Show recent stats including slow probes and average parse time.
+- Dump recent probe history to the shared cache folder.
+
+## Quick Start
+
+1. Start with `/placeholderprobe status` to open or view PlaceholderProbe.
+2. Use `/placeholderprobe status` to check your current progress, settings, or state.
+3. Try `/placeholderprobe parse example` when you are ready to use one of the feature actions.
+
+## Commands
+
+<table class="command-table plugin-command-table">
+  <thead>
+    <tr>
+      <th>Command</th>
+      <th>What it does</th>
+      <th>Example</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>/placeholderprobe status</code></td>
+      <td>Shows your current PlaceholderProbe status.</td>
+      <td><code>/placeholderprobe status</code></td>
+    </tr>
+    <tr>
+      <td><code>/placeholderprobe parse &lt;placeholder&gt; [online-player]</code></td>
+      <td>Runs the PlaceholderProbe parse action.</td>
+      <td><code>/placeholderprobe parse example</code></td>
+    </tr>
+    <tr>
+      <td><code>/placeholderprobe samples [page] [online-player]</code></td>
+      <td>Runs the PlaceholderProbe samples action.</td>
+      <td><code>/placeholderprobe samples</code></td>
+    </tr>
+    <tr>
+      <td><code>/placeholderprobe identifiers [page]</code></td>
+      <td>Runs the PlaceholderProbe identifiers action.</td>
+      <td><code>/placeholderprobe identifiers</code></td>
+    </tr>
+    <tr>
+      <td><code>/placeholderprobe search &lt;text&gt; [page]</code></td>
+      <td>Manages one of your PlaceholderProbe entries.</td>
+      <td><code>/placeholderprobe search Build a starter house</code></td>
+    </tr>
+    <tr>
+      <td><code>/placeholderprobe recent [page]</code></td>
+      <td>Runs the PlaceholderProbe recent action.</td>
+      <td><code>/placeholderprobe recent</code></td>
+    </tr>
+    <tr>
+      <td><code>/placeholderprobe stats</code></td>
+      <td>Runs the PlaceholderProbe stats action.</td>
+      <td><code>/placeholderprobe stats</code></td>
+    </tr>
+    <tr>
+      <td><code>/placeholderprobe clear</code></td>
+      <td>Changes or clears your PlaceholderProbe setting.</td>
+      <td><code>/placeholderprobe clear</code></td>
+    </tr>
+    <tr>
+      <td><code>/placeholderprobe dump</code></td>
+      <td>Runs the PlaceholderProbe dump action.</td>
+      <td><code>/placeholderprobe dump</code></td>
+    </tr>
+  </tbody>
+</table>
+
+## Aliases
+
+- `/pprobe`
+
+## Examples
+
+- `/placeholderprobe parse %onembcmi_global.status.loaded%`
+- `/placeholderprobe parse %onembcmi_startupdoctor.last.result%`
+- `/placeholderprobe parse %cmi_user_name% Steve`
+- `/placeholderprobe identifiers`
+- `/placeholderprobe search cmi`
+- `/placeholderprobe samples`
+- `/placeholderprobe recent`
+- `/placeholderprobe stats`
+- `/placeholderprobe dump`
+
+## Good To Know
+
+- Some commands may be hidden until your group, event progress, or unlocks allow them.
+- If a command opens a menu, follow the buttons in-game; the website is only the learning guide.
+- You may also see /pprobe as a shortcut.
+
+## Full Reference
+
+The [full synced PlaceholderProbe reference](https://github.com/mrfdev/1MB-Plugins-Docs/blob/main/project-docs/docs/plugins/placeholderprobe.md) is available for exact technical details.

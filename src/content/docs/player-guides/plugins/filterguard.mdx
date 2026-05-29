@@ -1,0 +1,85 @@
+---
+title: FilterGuard Guide
+description: Learn what FilterGuard does, how to use it, and which public commands are available.
+---
+
+This page introduces FilterGuard from a public server-docs point of view. It focuses on what the feature does in-game, how to get started when you have access, and which commands are useful.
+
+## What It Does
+
+FilterGuard extends server chat-filter style checks to other player-written text surfaces: signs, wall signs, hanging signs, wall hanging signs, books, anvils, item names, and server nicknames.
+
+## How Players Use It
+
+Start in-game with /filterguard. The sections below explain what FilterGuard is for, which commands players can try, and what to expect when your account has access.
+
+## Things You Can Do
+
+- Checks sign text, wall sign text, hanging sign text, wall hanging sign text, book edits, anvil rename text, item-name rename text, and server nickname changes.
+- Supports per-surface enabled toggles.
+- Supports per-surface actions: log, alert, cancel, and cancel-and-alert.
+- Keeps bounded recent detections for the current runtime.
+- Provides a safe /filterguard test &lt;surface&gt; &lt;text&gt; command before enabling cancellation.
+
+## Quick Start
+
+1. Start with `/filterguard` to open or view FilterGuard.
+2. Use `/filterguard status` to check your current progress, settings, or state.
+3. Try `/filterguard recent` when you are ready to use one of the feature actions.
+
+## Commands
+
+<table class="command-table plugin-command-table">
+  <thead>
+    <tr>
+      <th>Command</th>
+      <th>What it does</th>
+      <th>Example</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>/filterguard</code></td>
+      <td>Opens or shows the main FilterGuard player view.</td>
+      <td><code>/filterguard</code></td>
+    </tr>
+    <tr>
+      <td><code>/filterguard status</code></td>
+      <td>Shows your current FilterGuard status.</td>
+      <td><code>/filterguard status</code></td>
+    </tr>
+    <tr>
+      <td><code>/filterguard recent [page]</code></td>
+      <td>Runs the FilterGuard recent action.</td>
+      <td><code>/filterguard recent</code></td>
+    </tr>
+    <tr>
+      <td><code>/filterguard rules [page]</code></td>
+      <td>Runs the FilterGuard rules action.</td>
+      <td><code>/filterguard rules</code></td>
+    </tr>
+  </tbody>
+</table>
+
+## Aliases
+
+- `/chatfilterguard`
+- `/cfguard`
+
+## Examples
+
+- `/filterguard`
+- `/filterguard status`
+- `/filterguard recent`
+- `/filterguard recent 2`
+- `/filterguard rules`
+
+## Good To Know
+
+- Some commands may be hidden until your group, event progress, or unlocks allow them.
+- If a command opens a menu, follow the buttons in-game; the website is only the learning guide.
+- You may also see /chatfilterguard or /cfguard as a shortcut.
+
+## Full Reference
+
+The [full synced FilterGuard reference](https://github.com/mrfdev/1MB-Plugins-Docs/blob/main/project-docs/docs/plugins/filterguard.md) is available for exact technical details.

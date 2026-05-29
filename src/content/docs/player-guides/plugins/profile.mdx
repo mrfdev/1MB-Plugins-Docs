@@ -1,0 +1,116 @@
+---
+title: Profile Guide
+description: Learn what Profile does, how to use it, and which public commands are available.
+---
+
+This page introduces Profile from a public server-docs point of view. It focuses on what the feature does in-game, how to get started when you have access, and which commands are useful.
+
+## What It Does
+
+Staff-only Java/Bedrock identity profiler with cached server/log signals, Mojang account status, optional remote profile context, public ban-list review signals, manual notes, and Markdown exports.
+
+## How Players Use It
+
+Start in-game with /profile Steve. The sections below explain what Profile is for, which commands players can try, and what to expect when your account has access.
+
+## Things You Can Do
+
+- Check your own Profile progress or settings with /profile status.
+
+## Quick Start
+
+1. Start with `/profile Steve` to open or view Profile.
+2. Use `/profile status` to check your current progress, settings, or state.
+3. Try `/profile lookup Steve` when you are ready to use one of the feature actions.
+
+## Commands
+
+<table class="command-table plugin-command-table">
+  <thead>
+    <tr>
+      <th>Command</th>
+      <th>What it does</th>
+      <th>Example</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>/profile &lt;target&gt;</code></td>
+      <td>Opens the cached profile, then refreshes stale or incomplete remote data in the background.</td>
+      <td><code>/profile Steve</code></td>
+    </tr>
+    <tr>
+      <td><code>/profile lookup &lt;target&gt;</code></td>
+      <td>Explicit lookup alias for a Java name, Bedrock name, or UUID.</td>
+      <td><code>/profile lookup Steve</code></td>
+    </tr>
+    <tr>
+      <td><code>/profile refresh &lt;target&gt;</code></td>
+      <td>Forces a fresh local and remote review when cooldowns allow it.</td>
+      <td><code>/profile refresh Steve</code></td>
+    </tr>
+    <tr>
+      <td><code>/profile history &lt;target&gt; [page]</code></td>
+      <td>Shows known names collected from server, local/manual data, and supported remote review sources.</td>
+      <td><code>/profile history Steve</code></td>
+    </tr>
+    <tr>
+      <td><code>/profile bans &lt;target&gt; [page]</code></td>
+      <td>Shows public ban-list review signals when the sender has ban-review permission.</td>
+      <td><code>/profile bans Steve</code></td>
+    </tr>
+    <tr>
+      <td><code>/profile add name &lt;target&gt; &lt;name&gt; [source]</code></td>
+      <td>Adds a manually verified known-name entry without overwriting existing history.</td>
+      <td><code>/profile add name Steve YourName</code></td>
+    </tr>
+    <tr>
+      <td><code>/profile add ip &lt;target&gt; &lt;ip&gt; [source]</code></td>
+      <td>Adds a manually verified IP signal for senior staff review.</td>
+      <td><code>/profile add ip Steve example</code></td>
+    </tr>
+    <tr>
+      <td><code>/profile add note &lt;target&gt; &lt;text&gt;</code></td>
+      <td>Adds a free-form staff note to the profile.</td>
+      <td><code>/profile add note Steve Build a starter house</code></td>
+    </tr>
+    <tr>
+      <td><code>/profile add flag &lt;target&gt; &lt;text&gt;</code></td>
+      <td>Adds a moderation flag that should be reviewed before making decisions.</td>
+      <td><code>/profile add flag Steve Build a starter house</code></td>
+    </tr>
+    <tr>
+      <td><code>/profile add link &lt;target&gt; &lt;key&gt; &lt;url&gt;</code></td>
+      <td>Stores a safe reference link under an allowlisted key.</td>
+      <td><code>/profile add link Steve example example</code></td>
+    </tr>
+    <tr>
+      <td><code>/profile status</code></td>
+      <td>Shows runtime status, cache size, lookup counters, and provider state.</td>
+      <td><code>/profile status</code></td>
+    </tr>
+  </tbody>
+</table>
+
+## Examples
+
+- `/profile mrfloris`
+- `/profile lookup .RenonXenon`
+- `/profile refresh 00000000-0000-0000-0009-01f06566cd3b`
+- `/profile history mrfloris 2`
+- `/profile bans CrowdBound`
+- `/profile add name mrfloris mr_floris old-note`
+- `/profile add ip SomeName 203.0.113.12 firewall-note`
+- `/profile add note SomeName Reviewed appeal on Discord.`
+- `/profile add flag SomeName Review older name history before staff trust.`
+- `/profile add link SomeName namemc https://namemc.com/profile/example`
+- `/profile status`
+
+## Good To Know
+
+- Some commands may be hidden until your group, event progress, or unlocks allow them.
+- If a command opens a menu, follow the buttons in-game; the website is only the learning guide.
+
+## Full Reference
+
+The [full synced Profile reference](https://github.com/mrfdev/1MB-Plugins-Docs/blob/main/project-docs/docs/plugins/profile.md) is available for exact technical details.

@@ -1,0 +1,85 @@
+---
+title: EconomyGuardian Guide
+description: Learn what EconomyGuardian does, how to use it, and which public commands are available.
+---
+
+This page introduces EconomyGuardian from a public server-docs point of view. It focuses on what the feature does in-game, how to get started when you have access, and which commands are useful.
+
+## What It Does
+
+EconomyGuardian is a read-only server-management plugin that watches server economy balance changes and reports unusual money movement during the current runtime.
+
+## How Players Use It
+
+Start in-game with /economyguardian. The sections below explain what EconomyGuardian is for, which commands players can try, and what to expect when your account has access.
+
+## Things You Can Do
+
+- Listens to CMIUserBalanceChangeEvent at monitor priority.
+- Tracks total observed positive and negative balance movement.
+- Tracks per-player balance movement and anomaly counts.
+- Flags large positive spikes, large negative movement, sharp percent changes, and repeated high-value action/source paths.
+- Keeps bounded recent anomaly records.
+
+## Quick Start
+
+1. Start with `/economyguardian` to open or view EconomyGuardian.
+2. Use `/economyguardian status` to check your current progress, settings, or state.
+3. Try `/economyguardian player Steve` when you are ready to use one of the feature actions.
+
+## Commands
+
+<table class="command-table plugin-command-table">
+  <thead>
+    <tr>
+      <th>Command</th>
+      <th>What it does</th>
+      <th>Example</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>/economyguardian</code></td>
+      <td>Opens or shows the main EconomyGuardian player view.</td>
+      <td><code>/economyguardian</code></td>
+    </tr>
+    <tr>
+      <td><code>/economyguardian status</code></td>
+      <td>Shows your current EconomyGuardian status.</td>
+      <td><code>/economyguardian status</code></td>
+    </tr>
+    <tr>
+      <td><code>/economyguardian player &lt;player&gt;</code></td>
+      <td>Runs the EconomyGuardian player action.</td>
+      <td><code>/economyguardian player Steve</code></td>
+    </tr>
+    <tr>
+      <td><code>/economyguardian anomalies [page]</code></td>
+      <td>Runs the EconomyGuardian anomalies action.</td>
+      <td><code>/economyguardian anomalies</code></td>
+    </tr>
+  </tbody>
+</table>
+
+## Aliases
+
+- `/eg`
+- `/ecoguardian`
+
+## Examples
+
+- `/economyguardian`
+- `/economyguardian status`
+- `/economyguardian player mrfloris`
+- `/economyguardian anomalies`
+- `/economyguardian anomalies 2`
+
+## Good To Know
+
+- Some commands may be hidden until your group, event progress, or unlocks allow them.
+- If a command opens a menu, follow the buttons in-game; the website is only the learning guide.
+- You may also see /eg or /ecoguardian as a shortcut.
+
+## Full Reference
+
+The [full synced EconomyGuardian reference](https://github.com/mrfdev/1MB-Plugins-Docs/blob/main/project-docs/docs/plugins/economyguardian.md) is available for exact technical details.

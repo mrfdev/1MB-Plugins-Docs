@@ -1,0 +1,182 @@
+---
+title: EventRecorder Guide
+description: Learn what EventRecorder does, how to use it, and which public commands are available.
+---
+
+This page introduces EventRecorder from a public server-docs point of view. It focuses on what the feature does in-game, how to get started when you have access, and which commands are useful.
+
+## What It Does
+
+EventRecorder is a generic developer/testing plugin for learning server runtime behavior. It records selected server events with readable fields so future feature plugins can be designed from observed behavior instead of guesses.
+
+## How Players Use It
+
+Start in-game with /cmirecorder. The sections below explain what EventRecorder is for, which commands players can try, and what to expect when your account has access.
+
+## Things You Can Do
+
+- Open or view EventRecorder with /cmirecorder.
+- Check your own EventRecorder progress or settings with /cmirecorder status.
+
+## Quick Start
+
+1. Start with `/cmirecorder` to open or view EventRecorder.
+2. Use `/cmirecorder status` to check your current progress, settings, or state.
+3. Try `/cmirecorder events` when you are ready to use one of the feature actions.
+
+## Commands
+
+<table class="command-table plugin-command-table">
+  <thead>
+    <tr>
+      <th>Command</th>
+      <th>What it does</th>
+      <th>Example</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>/cmirecorder</code></td>
+      <td>Opens or shows the main EventRecorder player view.</td>
+      <td><code>/cmirecorder</code></td>
+    </tr>
+    <tr>
+      <td><code>/cmirecorder status</code></td>
+      <td>Shows your current EventRecorder status.</td>
+      <td><code>/cmirecorder status</code></td>
+    </tr>
+    <tr>
+      <td><code>/cmirecorder events [page]</code></td>
+      <td>Runs the EventRecorder events action.</td>
+      <td><code>/cmirecorder events</code></td>
+    </tr>
+    <tr>
+      <td><code>/cmirecorder on &lt;event&gt;</code></td>
+      <td>Changes or clears your EventRecorder setting.</td>
+      <td><code>/cmirecorder on example</code></td>
+    </tr>
+    <tr>
+      <td><code>/cmirecorder on all</code></td>
+      <td>Changes or clears your EventRecorder setting.</td>
+      <td><code>/cmirecorder on all</code></td>
+    </tr>
+    <tr>
+      <td><code>/cmirecorder off &lt;event&gt;</code></td>
+      <td>Changes or clears your EventRecorder setting.</td>
+      <td><code>/cmirecorder off example</code></td>
+    </tr>
+    <tr>
+      <td><code>/cmirecorder off all</code></td>
+      <td>Changes or clears your EventRecorder setting.</td>
+      <td><code>/cmirecorder off all</code></td>
+    </tr>
+    <tr>
+      <td><code>/cmirecorder recent [event|<wbr />all] [page]</code></td>
+      <td>Runs the EventRecorder recent action.</td>
+      <td><code>/cmirecorder recent</code></td>
+    </tr>
+    <tr>
+      <td><code>/cmirecorder stats [event|<wbr />all]</code></td>
+      <td>Runs the EventRecorder stats action.</td>
+      <td><code>/cmirecorder stats</code></td>
+    </tr>
+    <tr>
+      <td><code>/cmirecorder find &lt;text&gt; [page]</code></td>
+      <td>Runs the EventRecorder find action.</td>
+      <td><code>/cmirecorder find Build a starter house</code></td>
+    </tr>
+    <tr>
+      <td><code>/cmirecorder clear [event|<wbr />all]</code></td>
+      <td>Changes or clears your EventRecorder setting.</td>
+      <td><code>/cmirecorder clear</code></td>
+    </tr>
+    <tr>
+      <td><code>/cmirecorder dump [event|<wbr />all]</code></td>
+      <td>Runs the EventRecorder dump action.</td>
+      <td><code>/cmirecorder dump</code></td>
+    </tr>
+    <tr>
+      <td><code>/cmievents</code></td>
+      <td>Opens or shows the main EventRecorder player view.</td>
+      <td><code>/cmievents</code></td>
+    </tr>
+    <tr>
+      <td><code>/cmievents status</code></td>
+      <td>Shows your current EventRecorder status.</td>
+      <td><code>/cmievents status</code></td>
+    </tr>
+    <tr>
+      <td><code>/cmievents events [page]</code></td>
+      <td>Runs the EventRecorder events action.</td>
+      <td><code>/cmievents events</code></td>
+    </tr>
+    <tr>
+      <td><code>/cmievents on &lt;event&gt;</code></td>
+      <td>Changes or clears your EventRecorder setting.</td>
+      <td><code>/cmievents on example</code></td>
+    </tr>
+    <tr>
+      <td><code>/cmievents on all</code></td>
+      <td>Changes or clears your EventRecorder setting.</td>
+      <td><code>/cmievents on all</code></td>
+    </tr>
+    <tr>
+      <td><code>/cmievents off &lt;event&gt;</code></td>
+      <td>Changes or clears your EventRecorder setting.</td>
+      <td><code>/cmievents off example</code></td>
+    </tr>
+    <tr>
+      <td><code>/cmievents off all</code></td>
+      <td>Changes or clears your EventRecorder setting.</td>
+      <td><code>/cmievents off all</code></td>
+    </tr>
+    <tr>
+      <td><code>/cmievents recent [event|<wbr />all] [page]</code></td>
+      <td>Runs the EventRecorder recent action.</td>
+      <td><code>/cmievents recent</code></td>
+    </tr>
+    <tr>
+      <td><code>/cmievents stats [event|<wbr />all]</code></td>
+      <td>Runs the EventRecorder stats action.</td>
+      <td><code>/cmievents stats</code></td>
+    </tr>
+    <tr>
+      <td><code>/cmievents find &lt;text&gt; [page]</code></td>
+      <td>Runs the EventRecorder find action.</td>
+      <td><code>/cmievents find Build a starter house</code></td>
+    </tr>
+    <tr>
+      <td><code>/cmievents clear [event|<wbr />all]</code></td>
+      <td>Changes or clears your EventRecorder setting.</td>
+      <td><code>/cmievents clear</code></td>
+    </tr>
+    <tr>
+      <td><code>/cmievents dump [event|<wbr />all]</code></td>
+      <td>Runs the EventRecorder dump action.</td>
+      <td><code>/cmievents dump</code></td>
+    </tr>
+  </tbody>
+</table>
+
+## Examples
+
+- `/cmirecorder events`
+- `/cmirecorder recent all 2`
+- `/cmirecorder recent afk`
+- `/cmirecorder stats warp`
+- `/cmirecorder find warp`
+- `/cmirecorder on teleport`
+- `/cmirecorder on all-cmi`
+- `/cmirecorder on cmilib-log`
+- `/cmirecorder on paper-log`
+- `/cmirecorder off console`
+- `/cmirecorder dump all`
+
+## Good To Know
+
+- Some commands may be hidden until your group, event progress, or unlocks allow them.
+- If a command opens a menu, follow the buttons in-game; the website is only the learning guide.
+
+## Full Reference
+
+The [full synced EventRecorder reference](https://github.com/mrfdev/1MB-Plugins-Docs/blob/main/project-docs/docs/plugins/eventrecorder.md) is available for exact technical details.

@@ -1,0 +1,86 @@
+---
+title: CmdCostDashboard Guide
+description: Learn what CmdCostDashboard does, how to use it, and which public commands are available.
+---
+
+This page introduces CmdCostDashboard from a public server-docs point of view. It focuses on what the feature does in-game, how to get started when you have access, and which commands are useful.
+
+## What It Does
+
+CmdCostDashboard is a read-only server-management plugin for reviewing server command costs, observed command usage, and money removed by command fees.
+
+## How Players Use It
+
+Start in-game with /cmdcosts. The sections below explain what CmdCostDashboard is for, which commands players can try, and what to expect when your account has access.
+
+## Things You Can Do
+
+- Observe player command usage through server command preprocess events.
+- Correlate negative CMIUserBalanceChangeEvent deltas near recent player commands.
+- Track observed uses, correlated fee count, and money removed by command.
+- Flag low-cost/high-use commands as potentially too cheap.
+- Simulate server command cost usability for an online player without executing the command.
+- Write timestamped support reports to the shared cache folder.
+
+## Quick Start
+
+1. Start with `/cmdcosts` to open or view CmdCostDashboard.
+2. Use `/cmdcosts status` to check your current progress, settings, or state.
+3. Try `/cmdcosts top` when you are ready to use one of the feature actions.
+
+## Commands
+
+<table class="command-table plugin-command-table">
+  <thead>
+    <tr>
+      <th>Command</th>
+      <th>What it does</th>
+      <th>Example</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>/cmdcosts</code></td>
+      <td>Opens or shows the main CmdCostDashboard player view.</td>
+      <td><code>/cmdcosts</code></td>
+    </tr>
+    <tr>
+      <td><code>/cmdcosts status</code></td>
+      <td>Shows your current CmdCostDashboard status.</td>
+      <td><code>/cmdcosts status</code></td>
+    </tr>
+    <tr>
+      <td><code>/cmdcosts top [page]</code></td>
+      <td>Shows the CmdCostDashboard leaderboard or top list.</td>
+      <td><code>/cmdcosts top</code></td>
+    </tr>
+    <tr>
+      <td><code>/cmdcosts report</code></td>
+      <td>Runs the CmdCostDashboard report action.</td>
+      <td><code>/cmdcosts report</code></td>
+    </tr>
+  </tbody>
+</table>
+
+## Aliases
+
+- `/commandcosts`
+- `/ccosts`
+
+## Examples
+
+- `/cmdcosts status`
+- `/cmdcosts top`
+- `/cmdcosts simulate Steve cmi home`
+- `/cmdcosts report`
+
+## Good To Know
+
+- Some commands may be hidden until your group, event progress, or unlocks allow them.
+- If a command opens a menu, follow the buttons in-game; the website is only the learning guide.
+- You may also see /commandcosts or /ccosts as a shortcut.
+- Top lists and leaderboards are public-facing progress views when the feature enables them.
+
+## Full Reference
+
+The [full synced CmdCostDashboard reference](https://github.com/mrfdev/1MB-Plugins-Docs/blob/main/project-docs/docs/plugins/cmdcostdashboard.md) is available for exact technical details.

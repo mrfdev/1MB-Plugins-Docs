@@ -1,0 +1,150 @@
+---
+title: SparkReviewer Guide
+description: Learn what SparkReviewer does, how to use it, and which public commands are available.
+---
+
+This page introduces SparkReviewer from a public server-docs point of view. It focuses on what the feature does in-game, how to get started when you have access, and which commands are useful.
+
+## What It Does
+
+SparkReviewer is a server-management feature plugin for performance triage.
+
+## How Players Use It
+
+Start in-game with /sparkreviewer status. The sections below explain what SparkReviewer is for, which commands players can try, and what to expect when your account has access.
+
+## Things You Can Do
+
+- Captures live TPS, average MSPT when server exposes it, memory usage, player count, world count, and server library/Spark/MobFarmManager status.
+- Counts loaded entities per world, including living entities, monsters, animals, item drops, projectiles, vehicles, hopper minecarts, tile entities, and hopper blocks in scanned loaded chunks.
+- Lists chunk hotspots by entity/item/hopper/tile count.
+- Dispatches Spark health and profiler commands from a single command surface.
+- Writes named snapshots for before/after comparisons such as mfm-on versus mfm-off.
+- Writes support-friendly dumps to the shared cache folder.
+- Ships an offline Python companion script for copied server folders.
+
+## Quick Start
+
+1. Start with `/sparkreviewer status` to open or view SparkReviewer.
+2. Use `/sparkreviewer status` to check your current progress, settings, or state.
+3. Try `/sparkreviewer review` when you are ready to use one of the feature actions.
+
+## Commands
+
+<table class="command-table plugin-command-table">
+  <thead>
+    <tr>
+      <th>Command</th>
+      <th>What it does</th>
+      <th>Example</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>/sparkreviewer status</code></td>
+      <td>Shows your current SparkReviewer status.</td>
+      <td><code>/sparkreviewer status</code></td>
+    </tr>
+    <tr>
+      <td><code>/sparkreviewer review</code></td>
+      <td>Runs the SparkReviewer review action.</td>
+      <td><code>/sparkreviewer review</code></td>
+    </tr>
+    <tr>
+      <td><code>/sparkreviewer findings [page]</code></td>
+      <td>Runs the SparkReviewer findings action.</td>
+      <td><code>/sparkreviewer findings</code></td>
+    </tr>
+    <tr>
+      <td><code>/sparkreviewer entities [page]</code></td>
+      <td>Runs the SparkReviewer entities action.</td>
+      <td><code>/sparkreviewer entities</code></td>
+    </tr>
+    <tr>
+      <td><code>/sparkreviewer chunks [page]</code></td>
+      <td>Runs the SparkReviewer chunks action.</td>
+      <td><code>/sparkreviewer chunks</code></td>
+    </tr>
+    <tr>
+      <td><code>/sparkreviewer logs [page]</code></td>
+      <td>Runs the SparkReviewer logs action.</td>
+      <td><code>/sparkreviewer logs</code></td>
+    </tr>
+    <tr>
+      <td><code>/sparkreviewer mfm [page]</code></td>
+      <td>Runs the SparkReviewer mfm action.</td>
+      <td><code>/sparkreviewer mfm</code></td>
+    </tr>
+    <tr>
+      <td><code>/sparkreviewer compare &lt;before&gt; &lt;after&gt; [page]</code></td>
+      <td>Runs the SparkReviewer compare action.</td>
+      <td><code>/sparkreviewer compare example example</code></td>
+    </tr>
+    <tr>
+      <td><code>/sparkreviewer spark status</code></td>
+      <td>Runs the SparkReviewer spark action.</td>
+      <td><code>/sparkreviewer spark status</code></td>
+    </tr>
+    <tr>
+      <td><code>/sparkreviewer spark health</code></td>
+      <td>Runs the SparkReviewer spark action.</td>
+      <td><code>/sparkreviewer spark health</code></td>
+    </tr>
+    <tr>
+      <td><code>/sparkreviewer spark start [seconds] [label]</code></td>
+      <td>Runs the SparkReviewer spark action.</td>
+      <td><code>/sparkreviewer spark start</code></td>
+    </tr>
+    <tr>
+      <td><code>/sparkreviewer spark stop [label]</code></td>
+      <td>Runs the SparkReviewer spark action.</td>
+      <td><code>/sparkreviewer spark stop</code></td>
+    </tr>
+    <tr>
+      <td><code>/sparkreviewer spark cancel</code></td>
+      <td>Runs the SparkReviewer spark action.</td>
+      <td><code>/sparkreviewer spark cancel</code></td>
+    </tr>
+    <tr>
+      <td><code>/sparkreviewer stress &lt;label&gt; [seconds]</code></td>
+      <td>Runs the SparkReviewer stress action.</td>
+      <td><code>/sparkreviewer stress example</code></td>
+    </tr>
+    <tr>
+      <td><code>/sparkreviewer dump</code></td>
+      <td>Runs the SparkReviewer dump action.</td>
+      <td><code>/sparkreviewer dump</code></td>
+    </tr>
+  </tbody>
+</table>
+
+## Aliases
+
+- `/sreview`
+- `/spreview`
+
+## Examples
+
+- `/sparkreviewer review`
+- `/sparkreviewer findings`
+- `/sparkreviewer entities`
+- `/sparkreviewer chunks`
+- `/sparkreviewer logs`
+- `/sparkreviewer mfm`
+- `/sparkreviewer spark health`
+- `/sparkreviewer spark start 180 farm-test`
+- `/sparkreviewer stress mfm-on 180`
+- `/sparkreviewer stress mfm-off 180`
+- `/sparkreviewer compare mfm-on mfm-off`
+- `/sparkreviewer dump`
+
+## Good To Know
+
+- Some commands may be hidden until your group, event progress, or unlocks allow them.
+- If a command opens a menu, follow the buttons in-game; the website is only the learning guide.
+- You may also see /sreview or /spreview as a shortcut.
+- Top lists and leaderboards are public-facing progress views when the feature enables them.
+
+## Full Reference
+
+The [full synced SparkReviewer reference](https://github.com/mrfdev/1MB-Plugins-Docs/blob/main/project-docs/docs/plugins/sparkreviewer.md) is available for exact technical details.

@@ -1,0 +1,102 @@
+---
+title: WorthDrift Guide
+description: Learn what WorthDrift does, how to use it, and which public commands are available.
+---
+
+This page introduces WorthDrift from a public server-docs point of view. It focuses on what the feature does in-game, how to get started when you have access, and which commands are useful.
+
+## What It Does
+
+Server sell-event drift analyzer for worth values and economy-loop signals.
+
+## How Players Use It
+
+Start in-game with /worthdrift. The sections below explain what WorthDrift is for, which commands players can try, and what to expect when your account has access.
+
+## Things You Can Do
+
+- Read per-material sold amounts and payments from server's sell event.
+- Flag player concentration when one player accounts for a large share of a material's observed payment.
+- Ask server WorthItem whether an exploit recipe is known for a material.
+- Keep a bounded recent sample list for report context.
+- Write timestamped support reports to the shared cache folder.
+
+## Quick Start
+
+1. Start with `/worthdrift` to open or view WorthDrift.
+2. Use `/worthdrift status` to check your current progress, settings, or state.
+3. Try `/worthdrift top` when you are ready to use one of the feature actions.
+
+## Commands
+
+<table class="command-table plugin-command-table">
+  <thead>
+    <tr>
+      <th>Command</th>
+      <th>What it does</th>
+      <th>Example</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>/worthdrift</code></td>
+      <td>Opens or shows the main WorthDrift player view.</td>
+      <td><code>/worthdrift</code></td>
+    </tr>
+    <tr>
+      <td><code>/worthdrift status</code></td>
+      <td>Shows your current WorthDrift status.</td>
+      <td><code>/worthdrift status</code></td>
+    </tr>
+    <tr>
+      <td><code>/worthdrift top [page]</code></td>
+      <td>Shows the WorthDrift leaderboard or top list.</td>
+      <td><code>/worthdrift top</code></td>
+    </tr>
+    <tr>
+      <td><code>/worthdrift material &lt;material&gt;</code></td>
+      <td>Runs the WorthDrift material action.</td>
+      <td><code>/worthdrift material DIAMOND</code></td>
+    </tr>
+    <tr>
+      <td><code>/worthdrift report</code></td>
+      <td>Runs the WorthDrift report action.</td>
+      <td><code>/worthdrift report</code></td>
+    </tr>
+    <tr>
+      <td><code>/worthdrift ignored</code></td>
+      <td>Runs the WorthDrift ignored action.</td>
+      <td><code>/worthdrift ignored</code></td>
+    </tr>
+    <tr>
+      <td><code>/worthdrift ignore &lt;material&gt;</code></td>
+      <td>Runs the WorthDrift ignore action.</td>
+      <td><code>/worthdrift ignore DIAMOND</code></td>
+    </tr>
+  </tbody>
+</table>
+
+## Aliases
+
+- `/wdrift`
+
+## Examples
+
+- `/worthdrift status`
+- `/worthdrift top`
+- `/worthdrift material DIAMOND`
+- `/worthdrift material minecraft:diamond`
+- `/worthdrift report`
+- `/worthdrift ignore CACTUS`
+- `/worthdrift ignored`
+
+## Good To Know
+
+- Some commands may be hidden until your group, event progress, or unlocks allow them.
+- If a command opens a menu, follow the buttons in-game; the website is only the learning guide.
+- You may also see /wdrift as a shortcut.
+- Top lists and leaderboards are public-facing progress views when the feature enables them.
+
+## Full Reference
+
+The [full synced WorthDrift reference](https://github.com/mrfdev/1MB-Plugins-Docs/blob/main/project-docs/docs/plugins/worthdrift.md) is available for exact technical details.

@@ -48,7 +48,7 @@ Commands can be permission-based. This list explains what common commands are me
   </tbody>
 </table>
 
-For the fuller introduction to each feature, open the [plugin player guides](../plugins/). Those pages explain what each feature does before listing commands.
+For the fuller introduction to each feature, open the [plugin guides](../plugins/). Those pages explain what each feature does before listing commands.
 
 ## All Listed Player Commands
 
@@ -1551,6 +1551,1200 @@ This table is generated from the synced plugin documentation. It filters out obv
       <td><code>/menu help</code></td>
       <td>Shows the Menu commands available to you.</td>
       <td><code>/menu help</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/staffcenter/">StaffCenter</a></td>
+      <td><code>/staffcenter &lt;player&gt;</code></td>
+      <td>Uses StaffCenter with the value you provide.</td>
+      <td><code>/staffcenter Steve</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/staffcenter/">StaffCenter</a></td>
+      <td><code>/staffcenter &lt;player&gt; [summary|<wbr />moderation|<wbr />economy|<wbr />locations|<wbr />homes|<wbr />all]</code></td>
+      <td>Uses StaffCenter with the value you provide.</td>
+      <td><code>/staffcenter Steve</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/staffcenter/">StaffCenter</a></td>
+      <td><code>/staffcenter status</code></td>
+      <td>Shows your current StaffCenter status.</td>
+      <td><code>/staffcenter status</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/staffcenter/">StaffCenter</a></td>
+      <td><code>/staffcenter recent [section|<wbr />all] [page]</code></td>
+      <td>Runs the StaffCenter recent action.</td>
+      <td><code>/staffcenter recent</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/staffcenter/">StaffCenter</a></td>
+      <td><code>/staffcenter stats [section|<wbr />all]</code></td>
+      <td>Runs the StaffCenter stats action.</td>
+      <td><code>/staffcenter stats</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/staffcenter/">StaffCenter</a></td>
+      <td><code>/staffcenter find &lt;text&gt; [page]</code></td>
+      <td>Runs the StaffCenter find action.</td>
+      <td><code>/staffcenter find Build a starter house</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/staffcenter/">StaffCenter</a></td>
+      <td><code>/staffcenter dump [section|<wbr />all]</code></td>
+      <td>Runs the StaffCenter dump action.</td>
+      <td><code>/staffcenter dump</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/profile/">Profile</a></td>
+      <td><code>/profile &lt;target&gt;</code></td>
+      <td>Opens the cached profile, then refreshes stale or incomplete remote data in the background.</td>
+      <td><code>/profile Steve</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/profile/">Profile</a></td>
+      <td><code>/profile lookup &lt;target&gt;</code></td>
+      <td>Explicit lookup alias for a Java name, Bedrock name, or UUID.</td>
+      <td><code>/profile lookup Steve</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/profile/">Profile</a></td>
+      <td><code>/profile refresh &lt;target&gt;</code></td>
+      <td>Forces a fresh local and remote review when cooldowns allow it.</td>
+      <td><code>/profile refresh Steve</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/profile/">Profile</a></td>
+      <td><code>/profile history &lt;target&gt; [page]</code></td>
+      <td>Shows known names collected from server, local/manual data, and supported remote review sources.</td>
+      <td><code>/profile history Steve</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/profile/">Profile</a></td>
+      <td><code>/profile bans &lt;target&gt; [page]</code></td>
+      <td>Shows public ban-list review signals when the sender has ban-review permission.</td>
+      <td><code>/profile bans Steve</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/profile/">Profile</a></td>
+      <td><code>/profile add name &lt;target&gt; &lt;name&gt; [source]</code></td>
+      <td>Adds a manually verified known-name entry without overwriting existing history.</td>
+      <td><code>/profile add name Steve YourName</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/profile/">Profile</a></td>
+      <td><code>/profile add ip &lt;target&gt; &lt;ip&gt; [source]</code></td>
+      <td>Adds a manually verified IP signal for senior staff review.</td>
+      <td><code>/profile add ip Steve example</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/profile/">Profile</a></td>
+      <td><code>/profile add note &lt;target&gt; &lt;text&gt;</code></td>
+      <td>Adds a free-form staff note to the profile.</td>
+      <td><code>/profile add note Steve Build a starter house</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/profile/">Profile</a></td>
+      <td><code>/profile add flag &lt;target&gt; &lt;text&gt;</code></td>
+      <td>Adds a moderation flag that should be reviewed before making decisions.</td>
+      <td><code>/profile add flag Steve Build a starter house</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/profile/">Profile</a></td>
+      <td><code>/profile add link &lt;target&gt; &lt;key&gt; &lt;url&gt;</code></td>
+      <td>Stores a safe reference link under an allowlisted key.</td>
+      <td><code>/profile add link Steve example example</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/profile/">Profile</a></td>
+      <td><code>/profile status</code></td>
+      <td>Shows runtime status, cache size, lookup counters, and provider state.</td>
+      <td><code>/profile status</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/filterlab/">FilterLab</a></td>
+      <td><code>/filterlab</code></td>
+      <td>Opens or shows the main FilterLab player view.</td>
+      <td><code>/filterlab</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/filterlab/">FilterLab</a></td>
+      <td><code>/filterlab status</code></td>
+      <td>Shows your current FilterLab status.</td>
+      <td><code>/filterlab status</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/filterlab/">FilterLab</a></td>
+      <td><code>/filterlab rules [page]</code></td>
+      <td>Runs the FilterLab rules action.</td>
+      <td><code>/filterlab rules</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/filterlab/">FilterLab</a></td>
+      <td><code>/filterlab recent [page]</code></td>
+      <td>Runs the FilterLab recent action.</td>
+      <td><code>/filterlab recent</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/filterguard/">FilterGuard</a></td>
+      <td><code>/filterguard</code></td>
+      <td>Opens or shows the main FilterGuard player view.</td>
+      <td><code>/filterguard</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/filterguard/">FilterGuard</a></td>
+      <td><code>/filterguard status</code></td>
+      <td>Shows your current FilterGuard status.</td>
+      <td><code>/filterguard status</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/filterguard/">FilterGuard</a></td>
+      <td><code>/filterguard recent [page]</code></td>
+      <td>Runs the FilterGuard recent action.</td>
+      <td><code>/filterguard recent</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/filterguard/">FilterGuard</a></td>
+      <td><code>/filterguard rules [page]</code></td>
+      <td>Runs the FilterGuard rules action.</td>
+      <td><code>/filterguard rules</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/warninglens/">WarningLens</a></td>
+      <td><code>/warninglens status</code></td>
+      <td>Shows your current WarningLens status.</td>
+      <td><code>/warninglens status</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/warninglens/">WarningLens</a></td>
+      <td><code>/warninglens &lt;player&gt;</code></td>
+      <td>Uses WarningLens with the value you provide.</td>
+      <td><code>/warninglens Steve</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/warninglens/">WarningLens</a></td>
+      <td><code>/warninglens recent [type|<wbr />all] [page]</code></td>
+      <td>Runs the WarningLens recent action.</td>
+      <td><code>/warninglens recent</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/warninglens/">WarningLens</a></td>
+      <td><code>/warninglens stats [type|<wbr />all]</code></td>
+      <td>Runs the WarningLens stats action.</td>
+      <td><code>/warninglens stats</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/warninglens/">WarningLens</a></td>
+      <td><code>/warninglens find &lt;text&gt; [page]</code></td>
+      <td>Runs the WarningLens find action.</td>
+      <td><code>/warninglens find Build a starter house</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/warninglens/">WarningLens</a></td>
+      <td><code>/warninglens dump [type|<wbr />all]</code></td>
+      <td>Runs the WarningLens dump action.</td>
+      <td><code>/warninglens dump</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/notablemsg/">NotableMsg</a></td>
+      <td><code>/n &lt;message&gt;</code></td>
+      <td>Uses NotableMsg with the value you provide.</td>
+      <td><code>/n Happy birthday!</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/notablemsg/">NotableMsg</a></td>
+      <td><code>/n</code></td>
+      <td>Opens or shows the main NotableMsg player view.</td>
+      <td><code>/n</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/notablemsg/">NotableMsg</a></td>
+      <td><code>/n toggle</code></td>
+      <td>Changes or clears your NotableMsg setting.</td>
+      <td><code>/n toggle</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/notablemsg/">NotableMsg</a></td>
+      <td><code>/n on</code></td>
+      <td>Changes or clears your NotableMsg setting.</td>
+      <td><code>/n on</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/notablemsg/">NotableMsg</a></td>
+      <td><code>/n off</code></td>
+      <td>Changes or clears your NotableMsg setting.</td>
+      <td><code>/n off</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/notablemsg/">NotableMsg</a></td>
+      <td><code>/n status</code></td>
+      <td>Shows your current NotableMsg status.</td>
+      <td><code>/n status</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/notablemsg/">NotableMsg</a></td>
+      <td><code>/n recent [page]</code></td>
+      <td>Runs the NotableMsg recent action.</td>
+      <td><code>/n recent</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/notablemsg/">NotableMsg</a></td>
+      <td><code>/n help [page]</code></td>
+      <td>Shows the NotableMsg commands available to you.</td>
+      <td><code>/n help</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/notablemsg/">NotableMsg</a></td>
+      <td><code>/n info</code></td>
+      <td>Shows a friendly explanation of what NotableMsg does.</td>
+      <td><code>/n info</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/staffmsg/">1MBStaffMsg</a></td>
+      <td><code>/s recent [page]</code></td>
+      <td>Runs the 1MBStaffMsg recent action.</td>
+      <td><code>/s recent</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/staffmsg/">1MBStaffMsg</a></td>
+      <td><code>/staffmsg recent [page]</code></td>
+      <td>Runs the 1MBStaffMsg recent action.</td>
+      <td><code>/staffmsg recent</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/staffmsg/">1MBStaffMsg</a></td>
+      <td><code>/cmi staffmsg recent [page]</code></td>
+      <td>Runs the 1MBStaffMsg staffmsg action.</td>
+      <td><code>/cmi staffmsg recent</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/staffmsg/">1MBStaffMsg</a></td>
+      <td><code>/1mbstaffmsg recent [page]</code></td>
+      <td>Runs the 1MBStaffMsg recent action.</td>
+      <td><code>/1mbstaffmsg recent</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/staffmsg/">1MBStaffMsg</a></td>
+      <td><code>/1mbstaffmsg status</code></td>
+      <td>Shows your current 1MBStaffMsg status.</td>
+      <td><code>/1mbstaffmsg status</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/staffmsg/">1MBStaffMsg</a></td>
+      <td><code>/1mbstaffmsg info</code></td>
+      <td>Shows a friendly explanation of what 1MBStaffMsg does.</td>
+      <td><code>/1mbstaffmsg info</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/staffmsg/">1MBStaffMsg</a></td>
+      <td><code>/1mbstaffmsg help</code></td>
+      <td>Shows the 1MBStaffMsg commands available to you.</td>
+      <td><code>/1mbstaffmsg help</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/cmdcostdashboard/">CmdCostDashboard</a></td>
+      <td><code>/cmdcosts</code></td>
+      <td>Opens or shows the main CmdCostDashboard player view.</td>
+      <td><code>/cmdcosts</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/cmdcostdashboard/">CmdCostDashboard</a></td>
+      <td><code>/cmdcosts status</code></td>
+      <td>Shows your current CmdCostDashboard status.</td>
+      <td><code>/cmdcosts status</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/cmdcostdashboard/">CmdCostDashboard</a></td>
+      <td><code>/cmdcosts top [page]</code></td>
+      <td>Shows the CmdCostDashboard leaderboard or top list.</td>
+      <td><code>/cmdcosts top</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/cmdcostdashboard/">CmdCostDashboard</a></td>
+      <td><code>/cmdcosts report</code></td>
+      <td>Runs the CmdCostDashboard report action.</td>
+      <td><code>/cmdcosts report</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/cmiconfig/">CMIConfig</a></td>
+      <td><code>/cmiconfig</code></td>
+      <td>Opens or shows the main CMIConfig player view.</td>
+      <td><code>/cmiconfig</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/cmiconfig/">CMIConfig</a></td>
+      <td><code>/cmiconfig open</code></td>
+      <td>Opens a specific CMIConfig menu or entry.</td>
+      <td><code>/cmiconfig open</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/cmiconfig/">CMIConfig</a></td>
+      <td><code>/cmiconfig status</code></td>
+      <td>Shows your current CMIConfig status.</td>
+      <td><code>/cmiconfig status</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/cmiconfig/">CMIConfig</a></td>
+      <td><code>/cmiconfig scan</code></td>
+      <td>Runs the CMIConfig scan action.</td>
+      <td><code>/cmiconfig scan</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/consolenoiserouter/">ConsoleNoiseRouter</a></td>
+      <td><code>/consolenoise</code></td>
+      <td>Opens or shows the main ConsoleNoiseRouter player view.</td>
+      <td><code>/consolenoise</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/consolenoiserouter/">ConsoleNoiseRouter</a></td>
+      <td><code>/consolenoise status</code></td>
+      <td>Shows your current ConsoleNoiseRouter status.</td>
+      <td><code>/consolenoise status</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/consolenoiserouter/">ConsoleNoiseRouter</a></td>
+      <td><code>/consolenoise patterns</code></td>
+      <td>Runs the ConsoleNoiseRouter patterns action.</td>
+      <td><code>/consolenoise patterns</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/consolenoiserouter/">ConsoleNoiseRouter</a></td>
+      <td><code>/consolenoise recent [level|<wbr />all] [page]</code></td>
+      <td>Runs the ConsoleNoiseRouter recent action.</td>
+      <td><code>/consolenoise recent</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/consolenoiserouter/">ConsoleNoiseRouter</a></td>
+      <td><code>/consolenoise stats [level|<wbr />all]</code></td>
+      <td>Runs the ConsoleNoiseRouter stats action.</td>
+      <td><code>/consolenoise stats</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/consolenoiserouter/">ConsoleNoiseRouter</a></td>
+      <td><code>/consolenoise find &lt;text&gt; [page]</code></td>
+      <td>Runs the ConsoleNoiseRouter find action.</td>
+      <td><code>/consolenoise find Build a starter house</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/consolenoiserouter/">ConsoleNoiseRouter</a></td>
+      <td><code>/consolenoise clear [level|<wbr />all]</code></td>
+      <td>Changes or clears your ConsoleNoiseRouter setting.</td>
+      <td><code>/consolenoise clear</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/consolenoiserouter/">ConsoleNoiseRouter</a></td>
+      <td><code>/consolenoise dump [level|<wbr />all]</code></td>
+      <td>Runs the ConsoleNoiseRouter dump action.</td>
+      <td><code>/consolenoise dump</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/economyguardian/">EconomyGuardian</a></td>
+      <td><code>/economyguardian</code></td>
+      <td>Opens or shows the main EconomyGuardian player view.</td>
+      <td><code>/economyguardian</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/economyguardian/">EconomyGuardian</a></td>
+      <td><code>/economyguardian status</code></td>
+      <td>Shows your current EconomyGuardian status.</td>
+      <td><code>/economyguardian status</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/economyguardian/">EconomyGuardian</a></td>
+      <td><code>/economyguardian player &lt;player&gt;</code></td>
+      <td>Runs the EconomyGuardian player action.</td>
+      <td><code>/economyguardian player Steve</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/economyguardian/">EconomyGuardian</a></td>
+      <td><code>/economyguardian anomalies [page]</code></td>
+      <td>Runs the EconomyGuardian anomalies action.</td>
+      <td><code>/economyguardian anomalies</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/startupdoctor/">StartupDoctor</a></td>
+      <td><code>/startupdoctor status</code></td>
+      <td>Shows your current StartupDoctor status.</td>
+      <td><code>/startupdoctor status</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/startupdoctor/">StartupDoctor</a></td>
+      <td><code>/startupdoctor summary</code></td>
+      <td>Runs the StartupDoctor summary action.</td>
+      <td><code>/startupdoctor summary</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/startupdoctor/">StartupDoctor</a></td>
+      <td><code>/startupdoctor report</code></td>
+      <td>Runs the StartupDoctor report action.</td>
+      <td><code>/startupdoctor report</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/startupdoctor/">StartupDoctor</a></td>
+      <td><code>/startupdoctor warnings [page]</code></td>
+      <td>Runs the StartupDoctor warnings action.</td>
+      <td><code>/startupdoctor warnings</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/startupdoctor/">StartupDoctor</a></td>
+      <td><code>/startupdoctor features</code></td>
+      <td>Runs the StartupDoctor features action.</td>
+      <td><code>/startupdoctor features</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/startupdoctor/">StartupDoctor</a></td>
+      <td><code>/startupdoctor storage</code></td>
+      <td>Runs the StartupDoctor storage action.</td>
+      <td><code>/startupdoctor storage</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/startupdoctor/">StartupDoctor</a></td>
+      <td><code>/startupdoctor folders [page]</code></td>
+      <td>Runs the StartupDoctor folders action.</td>
+      <td><code>/startupdoctor folders</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/startupdoctor/">StartupDoctor</a></td>
+      <td><code>/startupdoctor dump</code></td>
+      <td>Runs the StartupDoctor dump action.</td>
+      <td><code>/startupdoctor dump</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/updatesmoke/">UpdateSmoke</a></td>
+      <td><code>/updatesmoke</code></td>
+      <td>Opens or shows the main UpdateSmoke player view.</td>
+      <td><code>/updatesmoke</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/updatesmoke/">UpdateSmoke</a></td>
+      <td><code>/updatesmoke help</code></td>
+      <td>Shows the UpdateSmoke commands available to you.</td>
+      <td><code>/updatesmoke help</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/updatesmoke/">UpdateSmoke</a></td>
+      <td><code>/updatesmoke status</code></td>
+      <td>Shows your current UpdateSmoke status.</td>
+      <td><code>/updatesmoke status</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/updatesmoke/">UpdateSmoke</a></td>
+      <td><code>/updatesmoke run [page]</code></td>
+      <td>Runs the UpdateSmoke run action.</td>
+      <td><code>/updatesmoke run</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/updatesmoke/">UpdateSmoke</a></td>
+      <td><code>/updatesmoke checks [page]</code></td>
+      <td>Runs the UpdateSmoke checks action.</td>
+      <td><code>/updatesmoke checks</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/updatesmoke/">UpdateSmoke</a></td>
+      <td><code>/updatesmoke report [page]</code></td>
+      <td>Runs the UpdateSmoke report action.</td>
+      <td><code>/updatesmoke report</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/updatesmoke/">UpdateSmoke</a></td>
+      <td><code>/usmoke status</code></td>
+      <td>Shows your current UpdateSmoke status.</td>
+      <td><code>/usmoke status</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/pluginversions/">PluginVersions</a></td>
+      <td><code>/pv</code></td>
+      <td>Opens or shows the main PluginVersions player view.</td>
+      <td><code>/pv</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/pluginversions/">PluginVersions</a></td>
+      <td><code>/pv info</code></td>
+      <td>Shows a friendly explanation of what PluginVersions does.</td>
+      <td><code>/pv info</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/pluginversions/">PluginVersions</a></td>
+      <td><code>/pv help [page|<wbr />topic]</code></td>
+      <td>Shows the PluginVersions commands available to you.</td>
+      <td><code>/pv help</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/pluginversions/">PluginVersions</a></td>
+      <td><code>/pv list [page]</code></td>
+      <td>Lists available PluginVersions entries.</td>
+      <td><code>/pv list</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/pluginversions/">PluginVersions</a></td>
+      <td><code>/pv gate [page]</code></td>
+      <td>Runs the PluginVersions gate action.</td>
+      <td><code>/pv gate</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/pluginversions/">PluginVersions</a></td>
+      <td><code>/pv help overview</code></td>
+      <td>Shows the PluginVersions commands available to you.</td>
+      <td><code>/pv help overview</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/pluginversions/">PluginVersions</a></td>
+      <td><code>/pv help commands</code></td>
+      <td>Shows the PluginVersions commands available to you.</td>
+      <td><code>/pv help commands</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/pluginversions/">PluginVersions</a></td>
+      <td><code>/pv help gate</code></td>
+      <td>Shows the PluginVersions commands available to you.</td>
+      <td><code>/pv help gate</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/pluginversions/">PluginVersions</a></td>
+      <td><code>/pv help set</code></td>
+      <td>Shows the PluginVersions commands available to you.</td>
+      <td><code>/pv help set</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/potions/">Potions</a></td>
+      <td><code>/potions</code></td>
+      <td>Opens or shows the main Potions player view.</td>
+      <td><code>/potions</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/potions/">Potions</a></td>
+      <td><code>/potions info</code></td>
+      <td>Shows a friendly explanation of what Potions does.</td>
+      <td><code>/potions info</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/potions/">Potions</a></td>
+      <td><code>/potions help</code></td>
+      <td>Shows the Potions commands available to you.</td>
+      <td><code>/potions help</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/worldsnapshot/">WorldSnapshot</a></td>
+      <td><code>/worldsnapshot</code></td>
+      <td>Opens or shows the main WorldSnapshot player view.</td>
+      <td><code>/worldsnapshot</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/worldsnapshot/">WorldSnapshot</a></td>
+      <td><code>/worldsnapshot help</code></td>
+      <td>Shows the WorldSnapshot commands available to you.</td>
+      <td><code>/worldsnapshot help</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/worldsnapshot/">WorldSnapshot</a></td>
+      <td><code>/worldsnapshot status</code></td>
+      <td>Shows your current WorldSnapshot status.</td>
+      <td><code>/worldsnapshot status</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/worldsnapshot/">WorldSnapshot</a></td>
+      <td><code>/worldsnapshot refresh</code></td>
+      <td>Runs the WorldSnapshot refresh action.</td>
+      <td><code>/worldsnapshot refresh</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/worldsnapshot/">WorldSnapshot</a></td>
+      <td><code>/worldsnapshot list [page]</code></td>
+      <td>Lists available WorldSnapshot entries.</td>
+      <td><code>/worldsnapshot list</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/worldsnapshot/">WorldSnapshot</a></td>
+      <td><code>/worldsnapshot world &lt;world&gt; [page]</code></td>
+      <td>Runs the WorldSnapshot world action.</td>
+      <td><code>/worldsnapshot world example</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/worldsnapshot/">WorldSnapshot</a></td>
+      <td><code>/worldsnapshot diff [world|<wbr />all] [page]</code></td>
+      <td>Runs the WorldSnapshot diff action.</td>
+      <td><code>/worldsnapshot diff</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/worldsnapshot/">WorldSnapshot</a></td>
+      <td><code>/worldsnapshot dump</code></td>
+      <td>Runs the WorldSnapshot dump action.</td>
+      <td><code>/worldsnapshot dump</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/sparkreviewer/">SparkReviewer</a></td>
+      <td><code>/sparkreviewer status</code></td>
+      <td>Shows your current SparkReviewer status.</td>
+      <td><code>/sparkreviewer status</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/sparkreviewer/">SparkReviewer</a></td>
+      <td><code>/sparkreviewer review</code></td>
+      <td>Runs the SparkReviewer review action.</td>
+      <td><code>/sparkreviewer review</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/sparkreviewer/">SparkReviewer</a></td>
+      <td><code>/sparkreviewer findings [page]</code></td>
+      <td>Runs the SparkReviewer findings action.</td>
+      <td><code>/sparkreviewer findings</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/sparkreviewer/">SparkReviewer</a></td>
+      <td><code>/sparkreviewer entities [page]</code></td>
+      <td>Runs the SparkReviewer entities action.</td>
+      <td><code>/sparkreviewer entities</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/sparkreviewer/">SparkReviewer</a></td>
+      <td><code>/sparkreviewer chunks [page]</code></td>
+      <td>Runs the SparkReviewer chunks action.</td>
+      <td><code>/sparkreviewer chunks</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/sparkreviewer/">SparkReviewer</a></td>
+      <td><code>/sparkreviewer logs [page]</code></td>
+      <td>Runs the SparkReviewer logs action.</td>
+      <td><code>/sparkreviewer logs</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/sparkreviewer/">SparkReviewer</a></td>
+      <td><code>/sparkreviewer mfm [page]</code></td>
+      <td>Runs the SparkReviewer mfm action.</td>
+      <td><code>/sparkreviewer mfm</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/sparkreviewer/">SparkReviewer</a></td>
+      <td><code>/sparkreviewer compare &lt;before&gt; &lt;after&gt; [page]</code></td>
+      <td>Runs the SparkReviewer compare action.</td>
+      <td><code>/sparkreviewer compare example example</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/sparkreviewer/">SparkReviewer</a></td>
+      <td><code>/sparkreviewer spark status</code></td>
+      <td>Runs the SparkReviewer spark action.</td>
+      <td><code>/sparkreviewer spark status</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/sparkreviewer/">SparkReviewer</a></td>
+      <td><code>/sparkreviewer spark health</code></td>
+      <td>Runs the SparkReviewer spark action.</td>
+      <td><code>/sparkreviewer spark health</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/sparkreviewer/">SparkReviewer</a></td>
+      <td><code>/sparkreviewer spark start [seconds] [label]</code></td>
+      <td>Runs the SparkReviewer spark action.</td>
+      <td><code>/sparkreviewer spark start</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/sparkreviewer/">SparkReviewer</a></td>
+      <td><code>/sparkreviewer spark stop [label]</code></td>
+      <td>Runs the SparkReviewer spark action.</td>
+      <td><code>/sparkreviewer spark stop</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/sparkreviewer/">SparkReviewer</a></td>
+      <td><code>/sparkreviewer spark cancel</code></td>
+      <td>Runs the SparkReviewer spark action.</td>
+      <td><code>/sparkreviewer spark cancel</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/sparkreviewer/">SparkReviewer</a></td>
+      <td><code>/sparkreviewer stress &lt;label&gt; [seconds]</code></td>
+      <td>Runs the SparkReviewer stress action.</td>
+      <td><code>/sparkreviewer stress example</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/sparkreviewer/">SparkReviewer</a></td>
+      <td><code>/sparkreviewer dump</code></td>
+      <td>Runs the SparkReviewer dump action.</td>
+      <td><code>/sparkreviewer dump</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/warpaudit/">WarpAudit</a></td>
+      <td><code>/warpaudit status</code></td>
+      <td>Shows your current WarpAudit status.</td>
+      <td><code>/warpaudit status</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/warpaudit/">WarpAudit</a></td>
+      <td><code>/warpaudit scan</code></td>
+      <td>Runs the WarpAudit scan action.</td>
+      <td><code>/warpaudit scan</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/warpaudit/">WarpAudit</a></td>
+      <td><code>/warpaudit issues [page]</code></td>
+      <td>Runs the WarpAudit issues action.</td>
+      <td><code>/warpaudit issues</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/warpaudit/">WarpAudit</a></td>
+      <td><code>/warpaudit safety [page]</code></td>
+      <td>Runs the WarpAudit safety action.</td>
+      <td><code>/warpaudit safety</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/warpaudit/">WarpAudit</a></td>
+      <td><code>/warpaudit list [page]</code></td>
+      <td>Lists available WarpAudit entries.</td>
+      <td><code>/warpaudit list</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/warpaudit/">WarpAudit</a></td>
+      <td><code>/warpaudit portals [page]</code></td>
+      <td>Runs the WarpAudit portals action.</td>
+      <td><code>/warpaudit portals</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/warpaudit/">WarpAudit</a></td>
+      <td><code>/warpaudit portalissues [page]</code></td>
+      <td>Runs the WarpAudit portalissues action.</td>
+      <td><code>/warpaudit portalissues</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/warpaudit/">WarpAudit</a></td>
+      <td><code>/warpaudit groups</code></td>
+      <td>Runs the WarpAudit groups action.</td>
+      <td><code>/warpaudit groups</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/warpaudit/">WarpAudit</a></td>
+      <td><code>/warpaudit dump</code></td>
+      <td>Runs the WarpAudit dump action.</td>
+      <td><code>/warpaudit dump</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/worthdrift/">WorthDrift</a></td>
+      <td><code>/worthdrift</code></td>
+      <td>Opens or shows the main WorthDrift player view.</td>
+      <td><code>/worthdrift</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/worthdrift/">WorthDrift</a></td>
+      <td><code>/worthdrift status</code></td>
+      <td>Shows your current WorthDrift status.</td>
+      <td><code>/worthdrift status</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/worthdrift/">WorthDrift</a></td>
+      <td><code>/worthdrift top [page]</code></td>
+      <td>Shows the WorthDrift leaderboard or top list.</td>
+      <td><code>/worthdrift top</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/worthdrift/">WorthDrift</a></td>
+      <td><code>/worthdrift material &lt;material&gt;</code></td>
+      <td>Runs the WorthDrift material action.</td>
+      <td><code>/worthdrift material DIAMOND</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/worthdrift/">WorthDrift</a></td>
+      <td><code>/worthdrift report</code></td>
+      <td>Runs the WorthDrift report action.</td>
+      <td><code>/worthdrift report</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/worthdrift/">WorthDrift</a></td>
+      <td><code>/worthdrift ignored</code></td>
+      <td>Runs the WorthDrift ignored action.</td>
+      <td><code>/worthdrift ignored</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/worthdrift/">WorthDrift</a></td>
+      <td><code>/worthdrift ignore &lt;material&gt;</code></td>
+      <td>Runs the WorthDrift ignore action.</td>
+      <td><code>/worthdrift ignore DIAMOND</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/worthhelper/">WorthHelper</a></td>
+      <td><code>/worthhelper</code></td>
+      <td>Opens or shows the main WorthHelper player view.</td>
+      <td><code>/worthhelper</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/worthhelper/">WorthHelper</a></td>
+      <td><code>/worthhelper status</code></td>
+      <td>Shows your current WorthHelper status.</td>
+      <td><code>/worthhelper status</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/worthhelper/">WorthHelper</a></td>
+      <td><code>/worthhelper scan [page]</code></td>
+      <td>Runs the WorthHelper scan action.</td>
+      <td><code>/worthhelper scan</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/worthhelper/">WorthHelper</a></td>
+      <td><code>/worthhelper missing [page]</code></td>
+      <td>Runs the WorthHelper missing action.</td>
+      <td><code>/worthhelper missing</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/worthhelper/">WorthHelper</a></td>
+      <td><code>/worthhelper recipes &lt;material&gt; [page]</code></td>
+      <td>Runs the WorthHelper recipes action.</td>
+      <td><code>/worthhelper recipes DIAMOND</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/eventrecorder/">EventRecorder</a></td>
+      <td><code>/cmirecorder</code></td>
+      <td>Opens or shows the main EventRecorder player view.</td>
+      <td><code>/cmirecorder</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/eventrecorder/">EventRecorder</a></td>
+      <td><code>/cmirecorder status</code></td>
+      <td>Shows your current EventRecorder status.</td>
+      <td><code>/cmirecorder status</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/eventrecorder/">EventRecorder</a></td>
+      <td><code>/cmirecorder events [page]</code></td>
+      <td>Runs the EventRecorder events action.</td>
+      <td><code>/cmirecorder events</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/eventrecorder/">EventRecorder</a></td>
+      <td><code>/cmirecorder on &lt;event&gt;</code></td>
+      <td>Changes or clears your EventRecorder setting.</td>
+      <td><code>/cmirecorder on example</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/eventrecorder/">EventRecorder</a></td>
+      <td><code>/cmirecorder on all</code></td>
+      <td>Changes or clears your EventRecorder setting.</td>
+      <td><code>/cmirecorder on all</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/eventrecorder/">EventRecorder</a></td>
+      <td><code>/cmirecorder off &lt;event&gt;</code></td>
+      <td>Changes or clears your EventRecorder setting.</td>
+      <td><code>/cmirecorder off example</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/eventrecorder/">EventRecorder</a></td>
+      <td><code>/cmirecorder off all</code></td>
+      <td>Changes or clears your EventRecorder setting.</td>
+      <td><code>/cmirecorder off all</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/eventrecorder/">EventRecorder</a></td>
+      <td><code>/cmirecorder recent [event|<wbr />all] [page]</code></td>
+      <td>Runs the EventRecorder recent action.</td>
+      <td><code>/cmirecorder recent</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/eventrecorder/">EventRecorder</a></td>
+      <td><code>/cmirecorder stats [event|<wbr />all]</code></td>
+      <td>Runs the EventRecorder stats action.</td>
+      <td><code>/cmirecorder stats</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/eventrecorder/">EventRecorder</a></td>
+      <td><code>/cmirecorder find &lt;text&gt; [page]</code></td>
+      <td>Runs the EventRecorder find action.</td>
+      <td><code>/cmirecorder find Build a starter house</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/eventrecorder/">EventRecorder</a></td>
+      <td><code>/cmirecorder clear [event|<wbr />all]</code></td>
+      <td>Changes or clears your EventRecorder setting.</td>
+      <td><code>/cmirecorder clear</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/eventrecorder/">EventRecorder</a></td>
+      <td><code>/cmirecorder dump [event|<wbr />all]</code></td>
+      <td>Runs the EventRecorder dump action.</td>
+      <td><code>/cmirecorder dump</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/eventrecorder/">EventRecorder</a></td>
+      <td><code>/cmievents</code></td>
+      <td>Opens or shows the main EventRecorder player view.</td>
+      <td><code>/cmievents</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/eventrecorder/">EventRecorder</a></td>
+      <td><code>/cmievents status</code></td>
+      <td>Shows your current EventRecorder status.</td>
+      <td><code>/cmievents status</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/eventrecorder/">EventRecorder</a></td>
+      <td><code>/cmievents events [page]</code></td>
+      <td>Runs the EventRecorder events action.</td>
+      <td><code>/cmievents events</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/eventrecorder/">EventRecorder</a></td>
+      <td><code>/cmievents on &lt;event&gt;</code></td>
+      <td>Changes or clears your EventRecorder setting.</td>
+      <td><code>/cmievents on example</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/eventrecorder/">EventRecorder</a></td>
+      <td><code>/cmievents on all</code></td>
+      <td>Changes or clears your EventRecorder setting.</td>
+      <td><code>/cmievents on all</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/eventrecorder/">EventRecorder</a></td>
+      <td><code>/cmievents off &lt;event&gt;</code></td>
+      <td>Changes or clears your EventRecorder setting.</td>
+      <td><code>/cmievents off example</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/eventrecorder/">EventRecorder</a></td>
+      <td><code>/cmievents off all</code></td>
+      <td>Changes or clears your EventRecorder setting.</td>
+      <td><code>/cmievents off all</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/eventrecorder/">EventRecorder</a></td>
+      <td><code>/cmievents recent [event|<wbr />all] [page]</code></td>
+      <td>Runs the EventRecorder recent action.</td>
+      <td><code>/cmievents recent</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/eventrecorder/">EventRecorder</a></td>
+      <td><code>/cmievents stats [event|<wbr />all]</code></td>
+      <td>Runs the EventRecorder stats action.</td>
+      <td><code>/cmievents stats</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/eventrecorder/">EventRecorder</a></td>
+      <td><code>/cmievents find &lt;text&gt; [page]</code></td>
+      <td>Runs the EventRecorder find action.</td>
+      <td><code>/cmievents find Build a starter house</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/eventrecorder/">EventRecorder</a></td>
+      <td><code>/cmievents clear [event|<wbr />all]</code></td>
+      <td>Changes or clears your EventRecorder setting.</td>
+      <td><code>/cmievents clear</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/eventrecorder/">EventRecorder</a></td>
+      <td><code>/cmievents dump [event|<wbr />all]</code></td>
+      <td>Runs the EventRecorder dump action.</td>
+      <td><code>/cmievents dump</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/cmiprobe/">CMIProbe</a></td>
+      <td><code>/cmiprobe</code></td>
+      <td>Opens or shows the main CMIProbe player view.</td>
+      <td><code>/cmiprobe</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/cmiprobe/">CMIProbe</a></td>
+      <td><code>/cmiprobe status</code></td>
+      <td>Shows your current CMIProbe status.</td>
+      <td><code>/cmiprobe status</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/cmiprobe/">CMIProbe</a></td>
+      <td><code>/cmiprobe managers [page]</code></td>
+      <td>Runs the CMIProbe managers action.</td>
+      <td><code>/cmiprobe managers</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/cmiprobe/">CMIProbe</a></td>
+      <td><code>/cmiprobe firecheck [page]</code></td>
+      <td>Runs the CMIProbe firecheck action.</td>
+      <td><code>/cmiprobe firecheck</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/cmiprobe/">CMIProbe</a></td>
+      <td><code>/cmiprobe report</code></td>
+      <td>Runs the CMIProbe report action.</td>
+      <td><code>/cmiprobe report</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/cmiprobe/">CMIProbe</a></td>
+      <td><code>/cmiprobe player &lt;player&gt; [page]</code></td>
+      <td>Runs the CMIProbe player action.</td>
+      <td><code>/cmiprobe player Steve</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/cmiprobe/">CMIProbe</a></td>
+      <td><code>/cmiprobe joinwatch status</code></td>
+      <td>Runs the CMIProbe joinwatch action.</td>
+      <td><code>/cmiprobe joinwatch status</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/cmiprobe/">CMIProbe</a></td>
+      <td><code>/cmiprobe joinwatch on [player|<wbr />all] [seconds]</code></td>
+      <td>Runs the CMIProbe joinwatch action.</td>
+      <td><code>/cmiprobe joinwatch on</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/cmiprobe/">CMIProbe</a></td>
+      <td><code>/cmiprobe joinwatch off</code></td>
+      <td>Runs the CMIProbe joinwatch action.</td>
+      <td><code>/cmiprobe joinwatch off</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/cmiprobe/">CMIProbe</a></td>
+      <td><code>/cmiprobe joinwatch clear</code></td>
+      <td>Runs the CMIProbe joinwatch action.</td>
+      <td><code>/cmiprobe joinwatch clear</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/cmidatabase/">CMIDatabase</a></td>
+      <td><code>/cmidb status</code></td>
+      <td>Shows your current CMIDatabase status.</td>
+      <td><code>/cmidb status</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/cmidatabase/">CMIDatabase</a></td>
+      <td><code>/cmidb help</code></td>
+      <td>Shows the CMIDatabase commands available to you.</td>
+      <td><code>/cmidb help</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/cmidatabase/">CMIDatabase</a></td>
+      <td><code>/cmidb global get &lt;key&gt;</code></td>
+      <td>Runs the CMIDatabase global action.</td>
+      <td><code>/cmidb global get example</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/cmidatabase/">CMIDatabase</a></td>
+      <td><code>/cmidb global has &lt;key&gt;</code></td>
+      <td>Runs the CMIDatabase global action.</td>
+      <td><code>/cmidb global has example</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/cmidatabase/">CMIDatabase</a></td>
+      <td><code>/cmidb global delete &lt;key&gt;</code></td>
+      <td>Runs the CMIDatabase global action.</td>
+      <td><code>/cmidb global delete example</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/cmidatabase/">CMIDatabase</a></td>
+      <td><code>/cmidb &lt;playerName&gt; get &lt;key&gt;</code></td>
+      <td>Uses CMIDatabase with the value you provide.</td>
+      <td><code>/cmidb Steve get example</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/cmidatabase/">CMIDatabase</a></td>
+      <td><code>/cmidb &lt;playerName&gt; has &lt;key&gt;</code></td>
+      <td>Uses CMIDatabase with the value you provide.</td>
+      <td><code>/cmidb Steve has example</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/cmidatabase/">CMIDatabase</a></td>
+      <td><code>/cmidb &lt;playerName&gt; delete &lt;key&gt;</code></td>
+      <td>Uses CMIDatabase with the value you provide.</td>
+      <td><code>/cmidb Steve delete example</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/cmidatabase/">CMIDatabase</a></td>
+      <td><code>/cmidb list global [page]</code></td>
+      <td>Lists available CMIDatabase entries.</td>
+      <td><code>/cmidb list global</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/cmidatabase/">CMIDatabase</a></td>
+      <td><code>/cmidb list &lt;playerName&gt; [page]</code></td>
+      <td>Lists available CMIDatabase entries.</td>
+      <td><code>/cmidb list Steve</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/placeholderprobe/">PlaceholderProbe</a></td>
+      <td><code>/placeholderprobe status</code></td>
+      <td>Shows your current PlaceholderProbe status.</td>
+      <td><code>/placeholderprobe status</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/placeholderprobe/">PlaceholderProbe</a></td>
+      <td><code>/placeholderprobe parse &lt;placeholder&gt; [online-player]</code></td>
+      <td>Runs the PlaceholderProbe parse action.</td>
+      <td><code>/placeholderprobe parse example</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/placeholderprobe/">PlaceholderProbe</a></td>
+      <td><code>/placeholderprobe samples [page] [online-player]</code></td>
+      <td>Runs the PlaceholderProbe samples action.</td>
+      <td><code>/placeholderprobe samples</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/placeholderprobe/">PlaceholderProbe</a></td>
+      <td><code>/placeholderprobe identifiers [page]</code></td>
+      <td>Runs the PlaceholderProbe identifiers action.</td>
+      <td><code>/placeholderprobe identifiers</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/placeholderprobe/">PlaceholderProbe</a></td>
+      <td><code>/placeholderprobe search &lt;text&gt; [page]</code></td>
+      <td>Manages one of your PlaceholderProbe entries.</td>
+      <td><code>/placeholderprobe search Build a starter house</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/placeholderprobe/">PlaceholderProbe</a></td>
+      <td><code>/placeholderprobe recent [page]</code></td>
+      <td>Runs the PlaceholderProbe recent action.</td>
+      <td><code>/placeholderprobe recent</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/placeholderprobe/">PlaceholderProbe</a></td>
+      <td><code>/placeholderprobe stats</code></td>
+      <td>Runs the PlaceholderProbe stats action.</td>
+      <td><code>/placeholderprobe stats</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/placeholderprobe/">PlaceholderProbe</a></td>
+      <td><code>/placeholderprobe clear</code></td>
+      <td>Changes or clears your PlaceholderProbe setting.</td>
+      <td><code>/placeholderprobe clear</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/placeholderprobe/">PlaceholderProbe</a></td>
+      <td><code>/placeholderprobe dump</code></td>
+      <td>Runs the PlaceholderProbe dump action.</td>
+      <td><code>/placeholderprobe dump</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/cmiplaceholders/">CMIPlaceholderCheck</a></td>
+      <td><code>/cmiplaceholders</code></td>
+      <td>Opens or shows the main CMIPlaceholderCheck player view.</td>
+      <td><code>/cmiplaceholders</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/cmiplaceholders/">CMIPlaceholderCheck</a></td>
+      <td><code>/cmiplaceholders help</code></td>
+      <td>Shows the CMIPlaceholderCheck commands available to you.</td>
+      <td><code>/cmiplaceholders help</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/cmiplaceholders/">CMIPlaceholderCheck</a></td>
+      <td><code>/cmiplaceholders status</code></td>
+      <td>Shows your current CMIPlaceholderCheck status.</td>
+      <td><code>/cmiplaceholders status</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/cmiplaceholders/">CMIPlaceholderCheck</a></td>
+      <td><code>/cmiplaceholders check &lt;keyword&gt; [page]</code></td>
+      <td>Runs the CMIPlaceholderCheck check action.</td>
+      <td><code>/cmiplaceholders check cheer</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/cmiplaceholders/">CMIPlaceholderCheck</a></td>
+      <td><code>/cmiplaceholders list [page]</code></td>
+      <td>Lists available CMIPlaceholderCheck entries.</td>
+      <td><code>/cmiplaceholders list</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/cmiplaceholders/">CMIPlaceholderCheck</a></td>
+      <td><code>/cmiplaceholders plugin &lt;plugin&gt; [page]</code></td>
+      <td>Runs the CMIPlaceholderCheck plugin action.</td>
+      <td><code>/cmiplaceholders plugin example</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/cmiplaceholders/">CMIPlaceholderCheck</a></td>
+      <td><code>/cmiplaceholders example &lt;placeholder&gt; [player]</code></td>
+      <td>Runs the CMIPlaceholderCheck example action.</td>
+      <td><code>/cmiplaceholders example example</code></td>
     </tr>
   </tbody>
 </table>

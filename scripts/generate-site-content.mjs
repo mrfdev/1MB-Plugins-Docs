@@ -958,6 +958,7 @@ function groupedLists(plugins) {
 const pluginMarkdown = await readFile(pluginReadme, 'utf8');
 const plugins = parsePlugins(pluginMarkdown);
 const playerPlugins = plugins.filter((plugin) => plugin.category === 'Player Fun');
+const guidePlugins = plugins.filter((plugin) => plugin.file !== 'hoppers-roadmap.md');
 const pluginDetails = new Map();
 const commandIndexRows = [];
 
@@ -967,7 +968,7 @@ await mkdir(path.join(contentRoot, 'staff-reference'), { recursive: true });
 await rm(pluginGuideRoot, { recursive: true, force: true });
 await mkdir(pluginGuideRoot, { recursive: true });
 
-for (const plugin of playerPlugins) {
+for (const plugin of guidePlugins) {
   const slug = slugFromFile(plugin.file);
   const override = PLAYER_GUIDE_OVERRIDES[slug] ?? {};
   const markdown = await readFile(path.join(docsRoot, 'plugins', plugin.file), 'utf8');
@@ -990,11 +991,11 @@ for (const plugin of playerPlugins) {
   }
 
   await writeFile(path.join(pluginGuideRoot, `${slug}.mdx`), `---
-title: ${plugin.name} Player Guide
-description: Learn what ${plugin.name} does, how to use it, and which player commands are available.
+title: ${plugin.name} Guide
+description: Learn what ${plugin.name} does, how to use it, and which public commands are available.
 ---
 
-This page introduces ${escapeHtml(plugin.name)} from a player point of view. It focuses on what you can do in-game, how to get started, and which commands are useful when the feature is available to you.
+This page introduces ${escapeHtml(plugin.name)} from a public server-docs point of view. It focuses on what the feature does in-game, how to get started when you have access, and which commands are useful.
 
 ## What It Does
 
@@ -1031,13 +1032,13 @@ The [full synced ${plugin.name} reference](${publicRepoBlob}/project-docs/docs/p
 }
 
 await writeFile(path.join(pluginGuideRoot, 'index.mdx'), `---
-title: Plugin Player Guides
-description: Friendly player guides for 1MoreBlock plugin features.
+title: Plugin Guides
+description: Friendly public guides for 1MoreBlock plugin features.
 ---
 
-Each page introduces a feature in normal player language, then shows useful commands and examples you can try when you have access.
+Each page introduces a feature in normal server language, then shows useful commands and examples you can try when you have access.
 
-${pluginTable(playerPlugins, pluginDetails, './')}
+${pluginTable(guidePlugins, pluginDetails, './')}
 `);
 
 await writeFile(path.join(contentRoot, 'index.mdx'), `---
@@ -1054,7 +1055,7 @@ This site explains the player-facing features, commands, and server systems that
 - [Getting started](./player-guides/getting-started/) gives players a friendly overview.
 - [Common player commands](./player-guides/commands/) lists useful commands and what they are for.
 - [Feature overview](./player-guides/features/) summarizes the player-facing plugin features.
-- [Plugin player guides](./player-guides/plugins/) explain each feature, how to use it, commands, and examples.
+- [Plugin guides](./player-guides/plugins/) explain each feature, how to use it, commands, and examples.
 - [Staff reference](./staff-reference/) links to the raw synced documentation for deeper staff review.
 
 ## Public URL
@@ -1099,7 +1100,7 @@ Commands can be permission-based. This list explains what common commands are me
 
 ${commandTable(PLAYER_COMMANDS)}
 
-For the fuller introduction to each feature, open the [plugin player guides](../plugins/). Those pages explain what each feature does before listing commands.
+For the fuller introduction to each feature, open the [plugin guides](../plugins/). Those pages explain what each feature does before listing commands.
 
 ## All Listed Player Commands
 
