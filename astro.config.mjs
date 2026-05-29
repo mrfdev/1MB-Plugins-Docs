@@ -1,5 +1,6 @@
 import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
+import starlightThemeFlexoki from 'starlight-theme-flexoki';
 
 export default defineConfig({
   site: 'https://docs.1moreblock.com',
@@ -17,6 +18,7 @@ export default defineConfig({
           href: 'https://github.com/mrfdev/1MB-Plugins-Docs',
         },
       ],
+      plugins: [starlightThemeFlexoki({ accentColor: 'green' })],
       customCss: ['./src/styles/custom.css'],
       sidebar: [
         { label: 'Home', link: '/' },
