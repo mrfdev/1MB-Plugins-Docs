@@ -32,13 +32,19 @@ PRIVATE_DOCS_SOURCE=/path/to/CMI-API npm run docs:sync
 
 GitHub Actions deploys the Starlight build on pushes to `main`.
 
-Default public URL:
+Public URL:
+
+```text
+https://docs.1moreblock.com/
+```
+
+GitHub Pages origin location:
 
 ```text
 https://mrfdev.github.io/1MB-Plugins-Docs/
 ```
 
-For a future custom domain such as `docs.1moreblock.com`, add `public/CNAME` and update `astro.config.mjs` according to the Astro GitHub Pages custom-domain instructions.
+The custom domain is configured through `public/CNAME` and `astro.config.mjs`.
 
 ## Sources
 

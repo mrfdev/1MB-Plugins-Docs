@@ -1060,11 +1060,13 @@ This site explains the player-facing features, commands, and server systems that
 
 ## Public URL
 
-The default GitHub Pages URL for this repo will be:
+The public player-facing docs URL is:
+
+https://docs.1moreblock.com/
+
+The GitHub Pages origin location is still available for deployment/reference:
 
 https://mrfdev.github.io/1MB-Plugins-Docs/
-
-Later, this can move to a custom domain such as \`docs.1moreblock.com\`.
 `);
 
 await writeFile(path.join(contentRoot, 'player-guides', 'getting-started.mdx'), `---
