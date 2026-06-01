@@ -685,43 +685,49 @@ This table is generated from the synced plugin documentation. It filters out obv
     <tr>
       <td><a href="../plugins/nick/">Nick</a></td>
       <td><code>/nick</code></td>
-      <td>Opens or shows the main Nick player view.</td>
+      <td>Opens the safe nickname picker.</td>
       <td><code>/nick</code></td>
     </tr>
     <tr>
       <td><a href="../plugins/nick/">Nick</a></td>
       <td><code>/nick &lt;name&gt;</code></td>
-      <td>Uses Nick with the value you provide.</td>
+      <td>Sets your plain nickname text when it passes the server rules.</td>
       <td><code>/nick YourName</code></td>
     </tr>
     <tr>
       <td><a href="../plugins/nick/">Nick</a></td>
       <td><code>/nick set &lt;name&gt;</code></td>
-      <td>Sets one of your Nick preferences.</td>
+      <td>Sets your plain nickname text when it passes the server rules.</td>
       <td><code>/nick set YourName</code></td>
     </tr>
     <tr>
       <td><a href="../plugins/nick/">Nick</a></td>
       <td><code>/nick style &lt;style-id&gt;</code></td>
-      <td>Runs the Nick style action.</td>
+      <td>Applies a trusted color, gradient, mood, group, or event style.</td>
       <td><code>/nick style soft_blue</code></td>
     </tr>
     <tr>
       <td><a href="../plugins/nick/">Nick</a></td>
       <td><code>/nick clear</code></td>
-      <td>Changes or clears your Nick setting.</td>
+      <td>Turns your current nickname off while keeping your Nick history and favorites.</td>
       <td><code>/nick clear</code></td>
     </tr>
     <tr>
       <td><a href="../plugins/nick/">Nick</a></td>
+      <td><code>/nick undo</code></td>
+      <td>Restores your previous Nick choice during the quick undo window.</td>
+      <td><code>/nick undo</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/nick/">Nick</a></td>
       <td><code>/nick status</code></td>
-      <td>Shows your current Nick status.</td>
+      <td>Shows your current nickname, cooldowns, legacy entry, and collection state.</td>
       <td><code>/nick status</code></td>
     </tr>
     <tr>
       <td><a href="../plugins/nick/">Nick</a></td>
       <td><code>/nick status &lt;player&gt;</code></td>
-      <td>Shows your current Nick status.</td>
+      <td>Shows public nickname status for another player when available.</td>
       <td><code>/nick status Steve</code></td>
     </tr>
     <tr>
@@ -739,62 +745,98 @@ This table is generated from the synced plugin documentation. It filters out obv
     <tr>
       <td><a href="../plugins/nick/">Nick</a></td>
       <td><code>/nick top</code></td>
-      <td>Shows the Nick leaderboard or top list.</td>
+      <td>Shows the public nickname leaderboard.</td>
       <td><code>/nick top</code></td>
     </tr>
     <tr>
       <td><a href="../plugins/nick/">Nick</a></td>
+      <td><code>/nick top claim</code></td>
+      <td>Claims a configured monthly top nickname reward when you qualify.</td>
+      <td><code>/nick top claim</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/nick/">Nick</a></td>
       <td><code>/nick share chat</code></td>
-      <td>Shares your current public design when sharing is enabled.</td>
+      <td>Shares your current public style in chat when sharing is enabled.</td>
       <td><code>/nick share chat</code></td>
     </tr>
     <tr>
       <td><a href="../plugins/nick/">Nick</a></td>
       <td><code>/nick share discord</code></td>
-      <td>Shares your current public design when sharing is enabled.</td>
+      <td>Shares your current public style to Discord when sharing is enabled.</td>
       <td><code>/nick share discord</code></td>
     </tr>
     <tr>
       <td><a href="../plugins/nick/">Nick</a></td>
       <td><code>/nick copycat &lt;player&gt;</code></td>
-      <td>Copies another player's public style when it is allowed.</td>
+      <td>Copies another player's public style when you can use it too.</td>
       <td><code>/nick copycat Steve</code></td>
     </tr>
     <tr>
       <td><a href="../plugins/nick/">Nick</a></td>
       <td><code>/nick favorite save &lt;slot&gt;</code></td>
-      <td>Saves or restores one of your favorite choices.</td>
+      <td>Saves your current nickname style into a favorite slot.</td>
       <td><code>/nick favorite save 1</code></td>
     </tr>
     <tr>
       <td><a href="../plugins/nick/">Nick</a></td>
       <td><code>/nick favorite use &lt;slot&gt;</code></td>
-      <td>Saves or restores one of your favorite choices.</td>
+      <td>Restores a saved favorite nickname style.</td>
       <td><code>/nick favorite use 1</code></td>
     </tr>
     <tr>
       <td><a href="../plugins/nick/">Nick</a></td>
       <td><code>/nick history</code></td>
-      <td>Shows recent choices you can restore.</td>
+      <td>Shows recent nickname choices you can restore.</td>
       <td><code>/nick history</code></td>
     </tr>
     <tr>
       <td><a href="../plugins/nick/">Nick</a></td>
       <td><code>/nick legacy status</code></td>
-      <td>Shows or restores your captured legacy nickname when available.</td>
+      <td>Shows your captured old nickname when one exists.</td>
       <td><code>/nick legacy status</code></td>
     </tr>
     <tr>
       <td><a href="../plugins/nick/">Nick</a></td>
       <td><code>/nick legacy restore</code></td>
-      <td>Shows or restores your captured legacy nickname when available.</td>
+      <td>Uses one remaining legacy restore to bring back the old nickname.</td>
       <td><code>/nick legacy restore</code></td>
     </tr>
     <tr>
       <td><a href="../plugins/nick/">Nick</a></td>
       <td><code>/nick tools</code></td>
-      <td>Opens helper tools for this feature.</td>
+      <td>Opens cleanup and randomizer tools for your nickname.</td>
       <td><code>/nick tools</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/nick/">Nick</a></td>
+      <td><code>/nick lab &lt;lighter|<wbr />darker|<wbr />warmer|<wbr />cooler|<wbr />redder|<wbr />greener|<wbr />bluer|<wbr />pastel|<wbr />softer|<wbr />bolder|<wbr />random&gt;</code></td>
+      <td>Tweaks your current style with a safe Style Lab action.</td>
+      <td><code>/nick lab pastel</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/nick/">Nick</a></td>
+      <td><code>/nick milestones</code></td>
+      <td>Shows configured milestone progress and unlock hints.</td>
+      <td><code>/nick milestones</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/nick/">Nick</a></td>
+      <td><code>/nick museum</code></td>
+      <td>Opens your collection of Nick styles you have used before.</td>
+      <td><code>/nick museum</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/nick/">Nick</a></td>
+      <td><code>/nick museum top</code></td>
+      <td>Shows the largest Nick style collections.</td>
+      <td><code>/nick museum top</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/nick/">Nick</a></td>
+      <td><code>/nick museum &lt;player&gt;</code></td>
+      <td>Shows another player's Nick collection when you have access.</td>
+      <td><code>/nick museum Steve</code></td>
     </tr>
     <tr>
       <td><a href="../plugins/nick/">Nick</a></td>

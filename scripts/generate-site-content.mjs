@@ -51,6 +51,64 @@ const PLAYER_GUIDE_OVERRIDES = {
       'Use /namemc status to check whether your like has been verified.',
     ],
   },
+  nick: {
+    summary: 'Pick readable nickname colors, gradients, tools, favorites, and unlockable styles from the safe nickname picker.',
+    intro: 'Nick is the safer /nick system on 1MoreBlock. It gives players a curated nickname picker with readable colors, gradients, cleanup tools, favorites, history, and unlockable styles without letting raw color codes or unsafe text into chat.',
+    guide: '`/nick` opens the nickname menu with a live preview. Depending on your permissions and unlocks, you can browse public colors, gradients, seasonal styles, group styles, economy unlocks, milestone styles, moods, tools, history, favorites, top nicknames, and bio settings.\n\nThe menu also includes Quick Undo, Style Lab, milestone progress, and Nick Museum when enabled. Style Lab lets you nudge a safe color lighter, darker, warmer, cooler, redder, greener, bluer, pastel, softer, bolder, or random without typing raw hex codes. Nick Museum tracks styles you have used as a personal collection, and Museum Top shows the largest collections for fun.',
+    bullets: [
+      'Open the nickname picker with /nick.',
+      'Check your current nickname, cooldowns, history, legacy entry, and collection with /nick status.',
+      'Pick a safe plain nickname with /nick set YourName.',
+      'Restore a recent choice with /nick undo or /nick history.',
+      'Save long-term favorites with /nick favorite save 1.',
+      'Try small color tweaks with /nick lab lighter, /nick lab pastel, or /nick lab random.',
+      'Check configured milestone progress with /nick milestones.',
+      'View your collected styles with /nick museum or /nick museum top.',
+      'View public nickname rankings with /nick top.',
+    ],
+    quickStart: [
+      'Start with `/nick` to open the nickname picker.',
+      'Use `/nick status` to check your current nickname, cooldowns, history, and collection.',
+      'Pick a style in the menu, or use `/nick set YourName` when you are ready to choose your plain nickname text.',
+    ],
+    examples: [
+      '/nick',
+      '/nick set YourName',
+      '/nick lab pastel',
+      '/nick milestones',
+      '/nick favorite save 1',
+      '/nick undo',
+    ],
+    commandDescriptions: {
+      '/nick': 'Opens the safe nickname picker.',
+      '/nick <name>': 'Sets your plain nickname text when it passes the server rules.',
+      '/nick set <name>': 'Sets your plain nickname text when it passes the server rules.',
+      '/nick style <style-id>': 'Applies a trusted color, gradient, mood, group, or event style.',
+      '/nick clear': 'Turns your current nickname off while keeping your Nick history and favorites.',
+      '/nick undo': 'Restores your previous Nick choice during the quick undo window.',
+      '/nick status': 'Shows your current nickname, cooldowns, legacy entry, and collection state.',
+      '/nick status <player>': 'Shows public nickname status for another player when available.',
+      '/nick bio <short bio>': 'Sets your short public nickname bio.',
+      '/nick rate <player> <1-5>': "Rates another player's nickname when rating is available.",
+      '/nick top': 'Shows the public nickname leaderboard.',
+      '/nick top claim': 'Claims a configured monthly top nickname reward when you qualify.',
+      '/nick share chat': 'Shares your current public style in chat when sharing is enabled.',
+      '/nick share discord': 'Shares your current public style to Discord when sharing is enabled.',
+      '/nick copycat <player>': "Copies another player's public style when you can use it too.",
+      '/nick favorite save <slot>': 'Saves your current nickname style into a favorite slot.',
+      '/nick favorite use <slot>': 'Restores a saved favorite nickname style.',
+      '/nick history': 'Shows recent nickname choices you can restore.',
+      '/nick legacy status': 'Shows your captured old nickname when one exists.',
+      '/nick legacy restore': 'Uses one remaining legacy restore to bring back the old nickname.',
+      '/nick tools': 'Opens cleanup and randomizer tools for your nickname.',
+      '/nick lab <lighter|darker|warmer|cooler|redder|greener|bluer|pastel|softer|bolder|random>': 'Tweaks your current style with a safe Style Lab action.',
+      '/nick milestones': 'Shows configured milestone progress and unlock hints.',
+      '/nick museum': 'Opens your collection of Nick styles you have used before.',
+      '/nick museum top': 'Shows the largest Nick style collections.',
+      '/nick museum <player>': "Shows another player's Nick collection when you have access.",
+      '/nick realname <player>': "Shows a player's real Minecraft name when the command is available.",
+    },
+  },
   pvptoggle: {
     summary: 'Turn your own PvP state on or off and check your current PvP protection state.',
     intro: 'PvPToggle gives players a clear /pvp switch. Use it to see whether PvP is enabled for you and to turn your own PvP state on or off when the server allows it.',
@@ -64,6 +122,64 @@ const PLAYER_GUIDE_OVERRIDES = {
   recordingmode: {
     summary: 'Quiet selected personal messages and requests while recording or streaming.',
     intro: 'Recording mode helps players stream or record without private messages, requests, tips, or map visibility getting in the way. Turn it on before going live, then turn it off when you are done.',
+  },
+  schedulercheck: {
+    summary: 'Owner-only CMI scheduler validator for YAML syntax, timing ranges, enabled toggles, and Markdown reports.',
+    intro: 'SchedulerCheck is a direct-console server-owner tool for checking CMI scheduler entries before a restart or after editing the scheduler file.',
+    guide: 'There is no player-side command for SchedulerCheck. Server owners use it from direct console to check CMI scheduler YAML, review enabled and disabled entries, export a report, or safely toggle one schedule entry on or off.',
+    pageIntro: 'This page documents SchedulerCheck as a public staff/reference guide. It has no player-facing command and intentionally rejects in-game use and RCON.',
+    audienceHeading: 'How Staff Use It',
+    bullets: [
+      'Run a YAML and value check before trusting a changed scheduler file.',
+      'Catch invalid time values such as Hour: 31 or Minute: Five.',
+      'List all, enabled, or disabled CMI scheduler entries.',
+      'Inspect one scheduler entry by id when you need the full details.',
+      'Export the latest check as Markdown for Discord or support review.',
+      'Toggle one entry with Enabled: true or Enabled: false without rewriting the whole CMI file.',
+    ],
+    quickStart: [
+      'Open direct server console, not RCON and not in-game chat.',
+      'Run `/_scheduler check` to scan the configured CMI scheduler file.',
+      'Use `/_scheduler list enabled` or `/_scheduler list id Announcer` to review specific entries.',
+      'Run `/_scheduler export` when you want a Markdown report to share with staff.',
+    ],
+    commands: [
+      '/_scheduler',
+      '/_scheduler info',
+      '/_scheduler help',
+      '/_scheduler check',
+      '/_scheduler scan',
+      '/_scheduler export',
+      '/_scheduler list [all|enabled|disabled]',
+      '/_scheduler list id <key>',
+      '/_scheduler set <key> <true|false>',
+      '/_scheduler reload',
+    ],
+    examples: [
+      '/_scheduler check',
+      '/_scheduler export',
+      '/_scheduler list enabled',
+      '/_scheduler list id Announcer',
+      '/_scheduler set Announcer false',
+    ],
+    commandDescriptions: {
+      '/_scheduler': 'Shows the SchedulerCheck intro from direct console.',
+      '/_scheduler info': 'Shows the SchedulerCheck intro and CMI scheduler documentation link.',
+      '/_scheduler help': 'Shows command examples.',
+      '/_scheduler check': 'Parses and validates the configured CMI scheduler file.',
+      '/_scheduler scan': 'Alias for the scheduler check action.',
+      '/_scheduler export': 'Writes the latest check as Markdown, running a fresh check first when needed.',
+      '/_scheduler list [all|enabled|disabled]': 'Lists scheduler entries by state.',
+      '/_scheduler list id <key>': 'Shows full details for one scheduler entry.',
+      '/_scheduler set <key> <true|false>': 'Sets one entry Enabled: true or false with a line-preserving edit.',
+      '/_scheduler reload': 'Reloads SchedulerCheck config and messages.',
+    },
+    notes: [
+      'A full /stop and server start is still the cleanest way to apply CMI scheduler file changes.',
+      'You can try /cmi reload or /cmi schedule <key> for CMI-side testing, but do not treat that as a full restart.',
+      'Exports may include scheduler command lines, so review reports before posting them publicly.',
+    ],
+    includeInCommandIndex: false,
   },
   socialgatherings: {
     summary: 'Join small social activities around campfires, dinners, fishing, farms, markets, and other town spots.',
@@ -726,6 +842,8 @@ function commandExample(command) {
     .replace(/<on\|off>/gi, 'on')
     .replace(/<true\|false>/gi, 'true')
     .replace(/<preset\|off\|status>/gi, 'normal')
+    .replace(/<lighter\|darker\|warmer\|cooler\|redder\|greener\|bluer\|pastel\|softer\|bolder\|random>/gi, 'pastel')
+    .replace(/<lighter\|darker\|warmer\|cooler>/gi, 'lighter')
     .replace(/<short\|normal\|long\|off\|status>/gi, 'normal')
     .replace(/<private\|public>/gi, 'public')
     .replace(/<on\|off\|send>/gi, 'on')
@@ -901,7 +1019,7 @@ function pluginTable(plugins, pluginDetails, guidePathPrefix = './plugins/') {
       <th>Feature</th>
       <th>Category</th>
       <th>Summary</th>
-      <th>Player commands</th>
+      <th>Commands</th>
     </tr>
   </thead>
   <tbody>
@@ -974,13 +1092,30 @@ for (const plugin of guidePlugins) {
   const markdown = await readFile(path.join(docsRoot, 'plugins', plugin.file), 'utf8');
   const purpose = override.intro ?? introParagraph(markdown, plugin);
   const commandData = extractCommandData(markdown);
-  const guideBody = guideParagraphs(markdown, plugin, commandData);
-  const quickStart = quickStartSteps(plugin, commandData);
+  if (override.commands) {
+    commandData.playerCommands = override.commands;
+  }
+  if (override.aliases) {
+    commandData.playerAliases = override.aliases;
+  }
+  if (override.commandExamples) {
+    commandData.playerExamples = override.commandExamples;
+  }
+  if (override.commandDescriptions) {
+    for (const [command, description] of Object.entries(override.commandDescriptions)) {
+      commandData.descriptions.set(command, description);
+    }
+  }
+  const guideBody = override.guide ? escapeHtml(override.guide).replaceAll('\n\n', '\n\n') : guideParagraphs(markdown, plugin, commandData);
+  const quickStart = override.quickStart ?? quickStartSteps(plugin, commandData);
   const playerBullets = override.bullets ?? playerBulletItems(plugin, markdown, commandData);
-  const notes = goodToKnow(plugin, commandData);
+  const notes = override.notes ?? goodToKnow(plugin, commandData);
+  const examples = override.examples ?? commandData.playerExamples;
+  const pageIntro = override.pageIntro ?? `This page introduces ${escapeHtml(plugin.name)} from a public server-docs point of view. It focuses on what the feature does in-game, how to get started when you have access, and which commands are useful.`;
+  const audienceHeading = override.audienceHeading ?? 'How Players Use It';
   pluginDetails.set(slug, commandData);
 
-  for (const command of commandData.playerCommands) {
+  for (const command of override.includeInCommandIndex === false ? [] : commandData.playerCommands) {
     commandIndexRows.push({
       slug,
       plugin: plugin.name,
@@ -995,13 +1130,13 @@ title: ${plugin.name} Guide
 description: Learn what ${plugin.name} does, how to use it, and which public commands are available.
 ---
 
-This page introduces ${escapeHtml(plugin.name)} from a public server-docs point of view. It focuses on what the feature does in-game, how to get started when you have access, and which commands are useful.
+${pageIntro}
 
 ## What It Does
 
 ${escapeHtml(purpose)}
 
-## How Players Use It
+## ${audienceHeading}
 
 ${guideBody}
 
@@ -1019,7 +1154,7 @@ ${commandData.playerCommands.length ? pluginCommandTable(plugin, commandData) : 
 
 ${commandData.playerAliases.length ? `## Aliases\n\n${commandData.playerAliases.map((alias) => `- \`${alias}\``).join('\n')}\n\n` : ''}## Examples
 
-${examplesList(commandData.playerExamples)}
+${examplesList(examples)}
 
 ## Good To Know
 

@@ -1,0 +1,112 @@
+---
+title: SchedulerCheck Guide
+description: Learn what SchedulerCheck does, how to use it, and which public commands are available.
+---
+
+This page documents SchedulerCheck as a public staff/reference guide. It has no player-facing command and intentionally rejects in-game use and RCON.
+
+## What It Does
+
+SchedulerCheck is a direct-console server-owner tool for checking CMI scheduler entries before a restart or after editing the scheduler file.
+
+## How Staff Use It
+
+There is no player-side command for SchedulerCheck. Server owners use it from direct console to check CMI scheduler YAML, review enabled and disabled entries, export a report, or safely toggle one schedule entry on or off.
+
+## Things You Can Do
+
+- Run a YAML and value check before trusting a changed scheduler file.
+- Catch invalid time values such as Hour: 31 or Minute: Five.
+- List all, enabled, or disabled server scheduler entries.
+- Inspect one scheduler entry by id when you need the full details.
+- Export the latest check as Markdown for Discord or support review.
+- Toggle one entry with Enabled: true or Enabled: false without rewriting the whole server file.
+
+## Quick Start
+
+1. Open direct server console, not RCON and not in-game chat.
+2. Run `/_scheduler check` to scan the configured CMI scheduler file.
+3. Use `/_scheduler list enabled` or `/_scheduler list id Announcer` to review specific entries.
+4. Run `/_scheduler export` when you want a Markdown report to share with staff.
+
+## Commands
+
+<table class="command-table plugin-command-table">
+  <thead>
+    <tr>
+      <th>Command</th>
+      <th>What it does</th>
+      <th>Example</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>/_scheduler</code></td>
+      <td>Shows the SchedulerCheck intro from direct console.</td>
+      <td><code>/_scheduler</code></td>
+    </tr>
+    <tr>
+      <td><code>/_scheduler info</code></td>
+      <td>Shows the SchedulerCheck intro and server scheduler documentation link.</td>
+      <td><code>/_scheduler info</code></td>
+    </tr>
+    <tr>
+      <td><code>/_scheduler help</code></td>
+      <td>Shows command examples.</td>
+      <td><code>/_scheduler help</code></td>
+    </tr>
+    <tr>
+      <td><code>/_scheduler check</code></td>
+      <td>Parses and validates the configured server scheduler file.</td>
+      <td><code>/_scheduler check</code></td>
+    </tr>
+    <tr>
+      <td><code>/_scheduler scan</code></td>
+      <td>Alias for the scheduler check action.</td>
+      <td><code>/_scheduler scan</code></td>
+    </tr>
+    <tr>
+      <td><code>/_scheduler export</code></td>
+      <td>Writes the latest check as Markdown, running a fresh check first when needed.</td>
+      <td><code>/_scheduler export</code></td>
+    </tr>
+    <tr>
+      <td><code>/_scheduler list [all|<wbr />enabled|<wbr />disabled]</code></td>
+      <td>Lists scheduler entries by state.</td>
+      <td><code>/_scheduler list</code></td>
+    </tr>
+    <tr>
+      <td><code>/_scheduler list id &lt;key&gt;</code></td>
+      <td>Shows full details for one scheduler entry.</td>
+      <td><code>/_scheduler list id example</code></td>
+    </tr>
+    <tr>
+      <td><code>/_scheduler set &lt;key&gt; &lt;true|<wbr />false&gt;</code></td>
+      <td>Sets one entry Enabled: true or false with a line-preserving edit.</td>
+      <td><code>/_scheduler set example true</code></td>
+    </tr>
+    <tr>
+      <td><code>/_scheduler reload</code></td>
+      <td>Reloads SchedulerCheck config and messages.</td>
+      <td><code>/_scheduler reload</code></td>
+    </tr>
+  </tbody>
+</table>
+
+## Examples
+
+- `/_scheduler check`
+- `/_scheduler export`
+- `/_scheduler list enabled`
+- `/_scheduler list id Announcer`
+- `/_scheduler set Announcer false`
+
+## Good To Know
+
+- A full /stop and server start is still the cleanest way to apply server scheduler file changes.
+- You can try /cmi reload or /cmi schedule &lt;key&gt; for server-side testing, but do not treat that as a full restart.
+- Exports may include scheduler command lines, so review reports before posting them publicly.
+
+## Full Reference
+
+The [full synced SchedulerCheck reference](https://github.com/mrfdev/1MB-Plugins-Docs/blob/main/project-docs/docs/plugins/schedulercheck.md) is available for exact technical details.

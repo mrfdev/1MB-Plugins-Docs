@@ -147,6 +147,7 @@ Feature `/help` pages are intentionally player-facing: they list commands availa
 /1mbcmi debug plugin startupdoctor all
 /1mbcmi debug plugin updatesmoke all
 /1mbcmi debug plugin pluginversions all
+/_scheduler debug all
 /1mbcmi debug plugin upgrade all
 /1mbcmi debug plugin worldsnapshot all
 /1mbcmi debug plugin sparkreviewer all
@@ -237,7 +238,7 @@ Upgrade:
 
 ## Feature Command Examples
 
-Every feature command supports a plain `info` subcommand that gives a player-friendly introduction, a logical starter command, a help command, and the matching docs link. Technical metadata such as category, build context, and full debug commands belongs on the feature debug page.
+Every feature command supports a plain `info` subcommand that gives a player-friendly introduction, a logical starter command, a help command, and the matching public docs link. Technical metadata such as category, build context, private technical docs, and full debug commands belongs on the feature debug page.
 
 Examples:
 
@@ -470,12 +471,15 @@ Nick:
 /nick set MyName
 /nick style aurora
 /nick clear
+/nick undo
 /nick status
 /nick status mrfloris
 /nick bio Cozy builder <3
 /nick rate mrfloris 5
 /nick top
+/nick top claim
 /nick share chat
+/nick share discord
 /nick copycat mrfloris
 /nick favorite save 1
 /nick favorite use 1
@@ -483,14 +487,33 @@ Nick:
 /nick legacy status
 /nick legacy restore
 /nick tools
+/nick lab lighter
+/nick lab darker
+/nick lab pastel
+/nick lab redder
+/nick lab random
+/nick lab warmer
+/nick lab cooler
+/nick milestones
+/nick museum
+/nick museum top
 /nick realname mrfloris
 /nick debug
 /nick debug all
 /nick debug presets
+/nick debug presets validate
 /nick admin inspect mrfloris
-/nick admin reset mrfloris
+/nick admin review
+/nick admin review logs
+/nick admin review resolve <entry-id> checked
+/nick admin review dismiss <entry-id> duplicate report
+/nick admin validate
+/nick admin similar mrfloris
+/nick admin reset mrfloris Policy cleanup
+/nick admin reset mrfloris --lock 1440 Policy cleanup
+/nick admin lock mrfloris 1440 Admin review
+/nick admin unlock mrfloris
 /nick admin reload
-/nick debug presets
 /nick debug permissions
 ```
 
@@ -1102,6 +1125,28 @@ Potions:
 `/potions` is player-safe and permissionless. It shows the id, state, form, effect, duration, drink cost, and collection details for a Potions event item held in either hand. The clickable Potions prefix runs `/potions`, not the admin-only `/_potions` command.
 
 In game, the bare `/_potions` GUI includes a Collection Bundles path for creating one item per enabled potion in a configured collection, plus a Configure Potions path for editing common `potions.yml` fields such as level, duration, money cost, EXP level cost, particle preset, and enabled state before creating fresh items.
+
+SchedulerCheck:
+
+```text
+/_scheduler
+/_scheduler info
+/_scheduler help
+/_scheduler check
+/_scheduler scan
+/_scheduler export
+/_scheduler list
+/_scheduler list all
+/_scheduler list enabled
+/_scheduler list disabled
+/_scheduler list id Announcer
+/_scheduler set Announcer false
+/_scheduler set Announcer true
+/_scheduler reload
+/_scheduler debug all
+```
+
+`/_scheduler` is direct-console only and has no aliases. It reads CMI `Settings/Schedules.yml` or `Scheduler.yml`, validates YAML syntax, type/range values such as `Hour: 0-23`, command list shape, and schedule trigger logic, then exports Markdown reports for Discord/support review. `/_scheduler set <key> true|false` only changes one `Enabled:` line and reminds the owner that a full `/stop` and start is the cleanest way to apply CMI scheduler changes.
 
 EndCrystals:
 

@@ -192,6 +192,12 @@ placeholders.legacy-onembboosters-expansion
 
 `/rate stop jobs` dispatches the configured Jobs reset command, defaulting to `jobs boost all reset`, and clears tracked state.
 
+Explicit admin stop commands use stored tracked state rather than passive display state, so staff can still reset a stale booster if its tracked end time has already passed.
+
+`/rate`, `/rate status`, debug state output, and PlaceholderAPI lookups are passive status reads. If they notice expired tracked state, they show the booster as inactive while the internal expiry timer/watchdog finalizes the normal end flow. They do not run stop broadcasts, stop hooks, or reset commands.
+
+An internal once-per-second expiry watchdog also checks tracked mcMMO and Jobs state. This keeps automatic end broadcasts and reset commands reliable even if a single scheduled expiry task becomes stale or the server tick timing drifts.
+
 External `/xprate` and `/jobs boost` commands are monitored so admin actions outside `/rate` can still update the status display and placeholders.
 
 Points reads PyroWelcomesPro `config.yml` and compares current values with configured base values. If either value is above base, Points shows as active and exposes an inferred multiplier. It is read-only by default because automatic writes and reloads should only happen once the target plugin is verified to reload those values safely.
@@ -211,6 +217,7 @@ Boosters uses Paper/Bukkit command, plugin, scheduler, YAML, and event APIs. It 
 ## Security Notes
 
 - Player-facing `/rate` status is read-only.
+- Status, debug, and placeholder reads never trigger booster stop broadcasts or stop command hooks.
 - Start, stop, reload, debug, and config edits require admin/debug permissions.
 - `/rate debug set config` only accepts known scalar config paths from this plugin's defaults.
 - List config values are not editable through the in-game set command.

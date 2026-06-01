@@ -13,12 +13,13 @@ id: afkshrine
 name: AFKShrine
 category: player-fun
 version: 1.0.0
-build: 374
+build: 381
 java-target: 25
 paper-target: 26.1.2
 jar-prefix: 1MB-CMIAPI
-jar-name: 1MB-CMIAPI-AFKShrine-v1.0.0-374-j25-26.1.2.jar
+jar-name: 1MB-CMIAPI-AFKShrine-v1.0.0-381-j25-26.1.2.jar
 repo: https://github.com/mrfdev/1MB-CMIAPI
+public-docs: https://docs.1moreblock.com
 dependencies: CMI, CMILib, 1MB-CMIAPI-LIB
 optional-hooks: PlaceholderAPI, LuckPerms, Vault
 data-path: plugins/1MB-CMIAPI/AFKShrine/
@@ -46,6 +47,8 @@ generic
 - command count
 - permission count
 - placeholder count
+- public docs URL for player-friendly `/info` pages
+- private technical docs URL for debug/support pages
 - config path
 - data path
 - cache path and cache size

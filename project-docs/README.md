@@ -81,61 +81,62 @@ Paper loads normal plugin jars from the top-level server `/plugins/` directory. 
 
 - `plugins/CMI-<version>.jar`
 - `plugins/CMILib<version>.jar`
-- `plugins/1MB-CMIAPI-LIB-v1.0.0-374-j25-26.1.2.jar`
-- `plugins/1MB-CMIAPI-AFKShrine-v1.0.0-374-j25-26.1.2.jar` provides CMI AFK shrine effects, player-selectable particle presets, AFKShrine points, claim/trade rewards, milestones, quests, and leaderboards
-- `plugins/1MB-CMIAPI-RecordingMode-v1.0.0-374-j25-26.1.2.jar`
-- `plugins/1MB-CMIAPI-SellStreaks-v1.0.0-374-j25-26.1.2.jar`
-- `plugins/1MB-CMIAPI-ScheduledTips-v1.0.0-374-j25-26.1.2.jar`
-- `plugins/1MB-CMIAPI-Visit-v1.0.0-374-j25-26.1.2.jar` provides player-owned hidden CMI visit warps with safe welcome messages, arrival titles, particles, sounds, and top-visit perk unlocks
-- `plugins/1MB-CMIAPI-PassportDiscovery-v1.0.0-374-j25-26.1.2.jar` includes `/passport warp`, replacing legacy WarpPassport for new installs
-- `plugins/1MB-CMIAPI-SocialGatherings-v1.0.0-374-j25-26.1.2.jar`
-- `plugins/1MB-CMIAPI-JourneyMap-v1.0.0-374-j25-26.1.2.jar`
-- `plugins/1MB-CMIAPI-KitStreaks-v1.0.0-374-j25-26.1.2.jar`
-- `plugins/1MB-CMIAPI-MessageFont-v1.0.0-374-j25-26.1.2.jar`
-- `plugins/1MB-CMIAPI-Nick-v1.0.0-374-j25-26.1.2.jar` provides safer `/nick` presets, GUI previews, cooldowns, related-name checks, history, favorites, ratings, and CMI nickname delegation
-- `plugins/1MB-CMIAPI-EmoteMenu-v1.0.0-374-j25-26.1.2.jar` provides `/emotes` with a hardened light-blue GUI, Paper dialog search, target picking, and CMI CustomAlias-backed emote review
-- `plugins/1MB-CMIAPI-PvPToggle-v1.0.0-374-j25-26.1.2.jar`
-- `plugins/1MB-CMIAPI-Boosters-v1.0.0-374-j25-26.1.2.jar`
-- `plugins/1MB-CMIAPI-NameMC-v1.0.0-374-j25-26.1.2.jar`
-- `plugins/1MB-CMIAPI-Trades-v1.0.0-374-j25-26.1.2.jar` provides `/trade`, migrated from the old standalone 1MBTrades plugin
-- `plugins/1MB-CMIAPI-VoteTokens-v1.0.0-374-j25-26.1.2.jar` provides `/votetokens` secure vote-token GUI trades, CMI kit rewards, hidden reward identity markers, reward setup item creation, extra-token item tools with shield presets, and staff migration tools for old manual trades
-- `plugins/1MB-CMIAPI-DiscordChat-v1.0.0-374-j25-26.1.2.jar` provides `/discordchat` DiscordSRV server-chat engagement tracking, quality-gated EXP, conversation clusters, first-Discord broadcasts, community pulse, recurring bonus windows, linked-account streaks, point rewards, safe item tools, dependency-aware reward checks, opt-out reminders, milestone celebration privacy, and staff smoke/community/economy/archive/award reports
-- `plugins/1MB-CMIAPI-GameTypes-v1.0.0-374-j25-26.1.2.jar` provides `/gametype` safe BentoBox game type menus for OneBlock, SkyBlock, AcidIsland, CaveBlock, and SkyGrid
-- `plugins/1MB-CMIAPI-BirthdayLanterns-v1.0.0-374-j25-26.1.2.jar` provides `/birthday` collectible birthday, player anniversary, and server milestone lantern rewards with GUI claims, PDC item identity, finite wish charges, guestbook notes, presets, mail variants, and configurable CMI reward commands
-- `plugins/1MB-CMIAPI-MobHat-v1.0.0-374-j25-26.1.2.jar`
-- `plugins/1MB-CMIAPI-PlayerTodo-v1.0.0-374-j25-26.1.2.jar`
-- `plugins/1MB-CMIAPI-Refer-v1.0.0-374-j25-26.1.2.jar`
-- `plugins/1MB-CMIAPI-TPAuto-v1.0.0-374-j25-26.1.2.jar`
-- `plugins/1MB-CMIAPI-Menu-v1.0.0-374-j25-26.1.2.jar`
-- `plugins/1MB-CMIAPI-StaffCenter-v1.0.0-374-j25-26.1.2.jar`
-- `plugins/1MB-CMIAPI-Profile-v1.0.0-374-j25-26.1.2.jar` provides `/profile` for staff-only Java/Bedrock identity review, cached CMI/log signals, Mojang account status, remote profile context, public ban-list review signals, manual notes, and Markdown exports
-- `plugins/1MB-CMIAPI-FilterLab-v1.0.0-374-j25-26.1.2.jar`
-- `plugins/1MB-CMIAPI-FilterGuard-v1.0.0-374-j25-26.1.2.jar`
-- `plugins/1MB-CMIAPI-WarningLens-v1.0.0-374-j25-26.1.2.jar`
-- `plugins/1MB-CMIAPI-NotableMsg-v1.0.0-374-j25-26.1.2.jar`
-- `plugins/1MB-CMIAPI-1MBStaffMsg-v1.0.0-374-j25-26.1.2.jar`
-- `plugins/1MB-CMIAPI-CmdCostDashboard-v1.0.0-374-j25-26.1.2.jar`
-- `plugins/1MB-CMIAPI-CMIConfig-v1.0.0-374-j25-26.1.2.jar`
-- `plugins/1MB-CMIAPI-ConsoleNoiseRouter-v1.0.0-374-j25-26.1.2.jar`
-- `plugins/1MB-CMIAPI-EconomyGuardian-v1.0.0-374-j25-26.1.2.jar`
-- `plugins/1MB-CMIAPI-StartupDoctor-v1.0.0-374-j25-26.1.2.jar`
-- `plugins/1MB-CMIAPI-UpdateSmoke-v1.0.0-374-j25-26.1.2.jar`
-- `plugins/1MB-CMIAPI-PluginVersions-v1.0.0-374-j25-26.1.2.jar` provides plugin inventory, tested Java/Paper/dependency gate checks, URL curation, and Markdown/Discord exports
-- `plugins/1MB-CMIAPI-Potions-v1.0.0-374-j25-26.1.2.jar` provides `/_potions` for locked admin custom event potion forging plus player-safe `/potions` held-item inspection, split config/potions/particles files, PDC identity, GUI definition editing, collection bundle generation, 14-style generation, snapshotted item costs, particle/collection metadata, and runtime disable controls
-- `plugins/1MB-CMIAPI-Upgrade-v1.0.0-374-j25-26.1.2.jar` provides `/_upgrade` admin-only LuckPerms group upgrade suggestions and read-only rankup simulation from join date and playtime signals, with a review queue GUI, clickable inspect/apply actions, guarded re-checks, side-group preservation, optional cosmetic permission rewards, promotion feedback effects, Discord link reminders, and split `config.yml`/`groups.yml`
-- `plugins/1MB-CMIAPI-EndCrystals-v1.0.0-374-j25-26.1.2.jar` provides `/_endcrystals`, migrated from the old standalone 1MB-EndCrystals plugin
-- `plugins/1MB-CMIAPI-WorldSnapshot-v1.0.0-374-j25-26.1.2.jar`
-- `plugins/1MB-CMIAPI-SparkReviewer-v1.0.0-374-j25-26.1.2.jar`
-- `plugins/1MB-CMIAPI-Hoppers-v1.0.0-374-j25-26.1.2.jar` provides `/_hoppers` for read-only hopper clog, watch/trigger/baseline, report comparison, storage-chain/container/material/redstone/ticket deep dives, world/chunk/player, region, Spark, notes, drift, history, and recommendation triage
-- `plugins/1MB-CMIAPI-EventRecorder-v1.0.0-374-j25-26.1.2.jar`
-- `plugins/1MB-CMIAPI-CMIProbe-v1.0.0-374-j25-26.1.2.jar`
-- `plugins/1MB-CMIAPI-CMIDatabase-v1.0.0-374-j25-26.1.2.jar`
-- `plugins/1MB-CMIAPI-PlaceholderProbe-v1.0.0-374-j25-26.1.2.jar`
-- `plugins/1MB-CMIAPI-CMIPlaceholderCheck-v1.0.0-374-j25-26.1.2.jar`
-- `plugins/1MB-CMIAPI-1MBPlaceholders-v1.0.0-374-j25-26.1.2.jar` provides the migrated `%onemb_<key>%` PlaceholderAPI expansion and keeps `/_placeholders`
-- `plugins/1MB-CMIAPI-WarpAudit-v1.0.0-374-j25-26.1.2.jar` provides read-only CMI warp and portal hygiene checks
-- `plugins/1MB-CMIAPI-WorthDrift-v1.0.0-374-j25-26.1.2.jar`
-- `plugins/1MB-CMIAPI-WorthHelper-v1.0.0-374-j25-26.1.2.jar` provides `/worthhelper` for read-only CMI Worth.yml and Paper recipe review exports
+- `plugins/1MB-CMIAPI-LIB-v1.0.0-381-j25-26.1.2.jar`
+- `plugins/1MB-CMIAPI-AFKShrine-v1.0.0-381-j25-26.1.2.jar` provides CMI AFK shrine effects, player-selectable particle presets, AFKShrine points, claim/trade rewards, milestones, quests, and leaderboards
+- `plugins/1MB-CMIAPI-RecordingMode-v1.0.0-381-j25-26.1.2.jar`
+- `plugins/1MB-CMIAPI-SellStreaks-v1.0.0-381-j25-26.1.2.jar`
+- `plugins/1MB-CMIAPI-ScheduledTips-v1.0.0-381-j25-26.1.2.jar`
+- `plugins/1MB-CMIAPI-Visit-v1.0.0-381-j25-26.1.2.jar` provides player-owned hidden CMI visit warps with safe welcome messages, arrival titles, particles, sounds, and top-visit perk unlocks
+- `plugins/1MB-CMIAPI-PassportDiscovery-v1.0.0-381-j25-26.1.2.jar` includes `/passport warp`, replacing legacy WarpPassport for new installs
+- `plugins/1MB-CMIAPI-SocialGatherings-v1.0.0-381-j25-26.1.2.jar`
+- `plugins/1MB-CMIAPI-JourneyMap-v1.0.0-381-j25-26.1.2.jar`
+- `plugins/1MB-CMIAPI-KitStreaks-v1.0.0-381-j25-26.1.2.jar`
+- `plugins/1MB-CMIAPI-MessageFont-v1.0.0-381-j25-26.1.2.jar`
+- `plugins/1MB-CMIAPI-Nick-v1.0.0-381-j25-26.1.2.jar` provides safer `/nick` presets, GUI previews, cooldowns, related-name checks, history, favorites, ratings, and CMI nickname delegation
+- `plugins/1MB-CMIAPI-EmoteMenu-v1.0.0-381-j25-26.1.2.jar` provides `/emotes` with a hardened light-blue GUI, Paper dialog search, target picking, and CMI CustomAlias-backed emote review
+- `plugins/1MB-CMIAPI-PvPToggle-v1.0.0-381-j25-26.1.2.jar`
+- `plugins/1MB-CMIAPI-Boosters-v1.0.0-381-j25-26.1.2.jar`
+- `plugins/1MB-CMIAPI-NameMC-v1.0.0-381-j25-26.1.2.jar`
+- `plugins/1MB-CMIAPI-Trades-v1.0.0-381-j25-26.1.2.jar` provides `/trade`, migrated from the old standalone 1MBTrades plugin
+- `plugins/1MB-CMIAPI-VoteTokens-v1.0.0-381-j25-26.1.2.jar` provides `/votetokens` secure vote-token GUI trades, CMI kit rewards, hidden reward identity markers, reward setup item creation, extra-token item tools with shield presets, and staff migration tools for old manual trades
+- `plugins/1MB-CMIAPI-DiscordChat-v1.0.0-381-j25-26.1.2.jar` provides `/discordchat` DiscordSRV server-chat engagement tracking, quality-gated EXP, conversation clusters, first-Discord broadcasts, community pulse, recurring bonus windows, linked-account streaks, point rewards, safe item tools, dependency-aware reward checks, opt-out reminders, milestone celebration privacy, and staff smoke/community/economy/archive/award reports
+- `plugins/1MB-CMIAPI-GameTypes-v1.0.0-381-j25-26.1.2.jar` provides `/gametype` safe BentoBox game type menus for OneBlock, SkyBlock, AcidIsland, CaveBlock, and SkyGrid
+- `plugins/1MB-CMIAPI-BirthdayLanterns-v1.0.0-381-j25-26.1.2.jar` provides `/birthday` collectible birthday, player anniversary, and server milestone lantern rewards with GUI claims, PDC item identity, finite wish charges, guestbook notes, presets, mail variants, and configurable CMI reward commands
+- `plugins/1MB-CMIAPI-MobHat-v1.0.0-381-j25-26.1.2.jar`
+- `plugins/1MB-CMIAPI-PlayerTodo-v1.0.0-381-j25-26.1.2.jar`
+- `plugins/1MB-CMIAPI-Refer-v1.0.0-381-j25-26.1.2.jar`
+- `plugins/1MB-CMIAPI-TPAuto-v1.0.0-381-j25-26.1.2.jar`
+- `plugins/1MB-CMIAPI-Menu-v1.0.0-381-j25-26.1.2.jar`
+- `plugins/1MB-CMIAPI-StaffCenter-v1.0.0-381-j25-26.1.2.jar`
+- `plugins/1MB-CMIAPI-Profile-v1.0.0-381-j25-26.1.2.jar` provides `/profile` for staff-only Java/Bedrock identity review, cached CMI/log signals, Mojang account status, remote profile context, public ban-list review signals, manual notes, and Markdown exports
+- `plugins/1MB-CMIAPI-FilterLab-v1.0.0-381-j25-26.1.2.jar`
+- `plugins/1MB-CMIAPI-FilterGuard-v1.0.0-381-j25-26.1.2.jar`
+- `plugins/1MB-CMIAPI-WarningLens-v1.0.0-381-j25-26.1.2.jar`
+- `plugins/1MB-CMIAPI-NotableMsg-v1.0.0-381-j25-26.1.2.jar`
+- `plugins/1MB-CMIAPI-1MBStaffMsg-v1.0.0-381-j25-26.1.2.jar`
+- `plugins/1MB-CMIAPI-CmdCostDashboard-v1.0.0-381-j25-26.1.2.jar`
+- `plugins/1MB-CMIAPI-CMIConfig-v1.0.0-381-j25-26.1.2.jar`
+- `plugins/1MB-CMIAPI-ConsoleNoiseRouter-v1.0.0-381-j25-26.1.2.jar`
+- `plugins/1MB-CMIAPI-EconomyGuardian-v1.0.0-381-j25-26.1.2.jar`
+- `plugins/1MB-CMIAPI-StartupDoctor-v1.0.0-381-j25-26.1.2.jar`
+- `plugins/1MB-CMIAPI-UpdateSmoke-v1.0.0-381-j25-26.1.2.jar`
+- `plugins/1MB-CMIAPI-PluginVersions-v1.0.0-381-j25-26.1.2.jar` provides plugin inventory, tested Java/Paper/dependency gate checks, URL curation, and Markdown/Discord exports
+- `plugins/1MB-CMIAPI-Potions-v1.0.0-381-j25-26.1.2.jar` provides `/_potions` for locked admin custom event potion forging plus player-safe `/potions` held-item inspection, split config/potions/particles files, PDC identity, GUI definition editing, collection bundle generation, 14-style generation, snapshotted item costs, particle/collection metadata, and runtime disable controls
+- `plugins/1MB-CMIAPI-SchedulerCheck-v1.0.0-381-j25-26.1.2.jar` provides direct-console `/_scheduler` checks for CMI scheduler YAML syntax, timing values, command lists, enabled toggles, and Markdown exports
+- `plugins/1MB-CMIAPI-Upgrade-v1.0.0-381-j25-26.1.2.jar` provides `/_upgrade` admin-only LuckPerms group upgrade suggestions and read-only rankup simulation from join date and playtime signals, with a review queue GUI, clickable inspect/apply actions, guarded re-checks, side-group preservation, optional cosmetic permission rewards, promotion feedback effects, Discord link reminders, and split `config.yml`/`groups.yml`
+- `plugins/1MB-CMIAPI-EndCrystals-v1.0.0-381-j25-26.1.2.jar` provides `/_endcrystals`, migrated from the old standalone 1MB-EndCrystals plugin
+- `plugins/1MB-CMIAPI-WorldSnapshot-v1.0.0-381-j25-26.1.2.jar`
+- `plugins/1MB-CMIAPI-SparkReviewer-v1.0.0-381-j25-26.1.2.jar`
+- `plugins/1MB-CMIAPI-Hoppers-v1.0.0-381-j25-26.1.2.jar` provides `/_hoppers` for read-only hopper clog, watch/trigger/baseline, report comparison, storage-chain/container/material/redstone/ticket deep dives, world/chunk/player, region, Spark, notes, drift, history, and recommendation triage
+- `plugins/1MB-CMIAPI-EventRecorder-v1.0.0-381-j25-26.1.2.jar`
+- `plugins/1MB-CMIAPI-CMIProbe-v1.0.0-381-j25-26.1.2.jar`
+- `plugins/1MB-CMIAPI-CMIDatabase-v1.0.0-381-j25-26.1.2.jar`
+- `plugins/1MB-CMIAPI-PlaceholderProbe-v1.0.0-381-j25-26.1.2.jar`
+- `plugins/1MB-CMIAPI-CMIPlaceholderCheck-v1.0.0-381-j25-26.1.2.jar`
+- `plugins/1MB-CMIAPI-1MBPlaceholders-v1.0.0-381-j25-26.1.2.jar` provides the migrated `%onemb_<key>%` PlaceholderAPI expansion and keeps `/_placeholders`
+- `plugins/1MB-CMIAPI-WarpAudit-v1.0.0-381-j25-26.1.2.jar` provides read-only CMI warp and portal hygiene checks
+- `plugins/1MB-CMIAPI-WorthDrift-v1.0.0-381-j25-26.1.2.jar`
+- `plugins/1MB-CMIAPI-WorthHelper-v1.0.0-381-j25-26.1.2.jar` provides `/worthhelper` for read-only CMI Worth.yml and Paper recipe review exports
 
 The common `1MB-CMIAPI-` prefix keeps the jars grouped together when sorted by name. Repository folders and build output may be organized by category, but installed runtime jars should stay in `/plugins/` for normal Paper loading and feature isolation.
 
@@ -199,7 +200,7 @@ The shared library should own the global command surface:
 
 Feature plugins should expose their own concise commands and also register with the library so `/1mbcmi features` and `/1mbcmi debug plugins` stay accurate.
 
-The shared library also owns central chat-prefix symbols through `plugins/1MB-CMIAPI/CMIAPILIB/config.yml` under `locale.prefix-unicodes.*`. This lets feature messages use consistent visible prefixes such as `[✎ PassportDiscovery]`, `[ⓘ ScheduledTips]`, `[⚔ PvP]`, `[⚗ Potions]`, `[⇧ Upgrade]`, and `[✦ Vote]` without hard-coding symbols into every feature translation file.
+The shared library also owns central chat-prefix symbols through `plugins/1MB-CMIAPI/CMIAPILIB/config.yml` under `locale.prefix-unicodes.*`. This lets feature messages use consistent visible prefixes such as `[✎ PassportDiscovery]`, `[ⓘ ScheduledTips]`, `[⚔ PvP]`, `[⚗ Potions]`, `[◷ SchedulerCheck]`, `[⇧ Upgrade]`, and `[✦ Vote]` without hard-coding symbols into every feature translation file.
 
 The shared library also owns the global GUI pane theme through `gui.filler-material` and `gui.border-material`. GUI feature plugins use `LIGHT_BLUE_STAINED_GLASS_PANE` by default so filled or blocked slots stay visible across resource packs, while still allowing a per-plugin override when a future menu needs a custom look.
 

@@ -2,7 +2,7 @@
 
 Each feature plugin gets its own page here.
 
-Every feature jar exposes `/<plugin-command> info` with a player-friendly introduction, a logical starter command, a help command, and a documentation link. Technical metadata such as category, build details, private repository URLs, and full debug/support strings belongs on `/<plugin-command> debug`.
+Every feature jar exposes `/<plugin-command> info` with a player-friendly introduction, a logical starter command, a help command, and a public docs link under `https://docs.1moreblock.com/player-guides/plugins/<slug>/`. Technical metadata such as category, build details, private repository URLs, and full debug/support strings belongs on `/<plugin-command> debug`.
 
 Every feature jar that does not implement a local debug command inherits `/<plugin-command> debug` from the shared library. The fallback is permission locked to `onembcmi.<plugin>.admin` and includes overview, health, hooks, commands, permissions, placeholders, config, and all pages with pagination in game. Console senders receive full shared paginated lists in one command.
 
@@ -51,6 +51,7 @@ Every feature jar that does not implement a local debug command inherits `/<plug
 | Server Management | [UpdateSmoke](updatesmoke.md) | Post-update smoke checks for hooks, commands, placeholders, feature metadata, and key CMI/CMILib APIs. |
 | Server Management | [PluginVersions](pluginversions.md) | Plugin version inventory, tested Java/Paper/dependency gate, URL curation, and Markdown/Discord export reports migrated from the standalone PluginVersions project. |
 | Server Management | [Potions](potions.md) | Locked `/_potions` admin forge plus player-safe `/potions` held-item inspection for PDC-marked custom event potions with split config files, GUI definition editing, collection bundle generation, 14 style choices, snapshotted costs, particle presets, collections, and runtime disable controls. |
+| Server Management | [SchedulerCheck](schedulercheck.md) | Direct-console CMI scheduler YAML validator for syntax, timing ranges, command lists, enabled toggles, and Markdown exports. |
 | Server Management | [Upgrade](upgrade.md) | Admin-only `/_upgrade` helper that simulates, suggests, and applies guarded LuckPerms group upgrades from join-date and playtime signals, with a review queue GUI, optional cosmetic rewards, promotion effects, and Discord link reminders. |
 | Server Management | [EndCrystals](endcrystals.md) | End crystal block, entity, and player-break protection migrated from the standalone EndCrystals project. |
 | Server Management | [WorldSnapshot](worldsnapshot.md) | Read-only world settings, gamerules, and CMI world-toggle snapshots. |
@@ -100,61 +101,62 @@ Runtime jars use this shape:
 Examples:
 
 ```text
-1MB-CMIAPI-LIB-v1.0.0-374-j25-26.1.2.jar
-1MB-CMIAPI-AFKShrine-v1.0.0-374-j25-26.1.2.jar
-1MB-CMIAPI-RecordingMode-v1.0.0-374-j25-26.1.2.jar
-1MB-CMIAPI-SellStreaks-v1.0.0-374-j25-26.1.2.jar
-1MB-CMIAPI-ScheduledTips-v1.0.0-374-j25-26.1.2.jar
-1MB-CMIAPI-Visit-v1.0.0-374-j25-26.1.2.jar
-1MB-CMIAPI-PassportDiscovery-v1.0.0-374-j25-26.1.2.jar
-1MB-CMIAPI-SocialGatherings-v1.0.0-374-j25-26.1.2.jar
-1MB-CMIAPI-JourneyMap-v1.0.0-374-j25-26.1.2.jar
-1MB-CMIAPI-KitStreaks-v1.0.0-374-j25-26.1.2.jar
-1MB-CMIAPI-MessageFont-v1.0.0-374-j25-26.1.2.jar
-1MB-CMIAPI-Nick-v1.0.0-374-j25-26.1.2.jar
-1MB-CMIAPI-EmoteMenu-v1.0.0-374-j25-26.1.2.jar
-1MB-CMIAPI-PvPToggle-v1.0.0-374-j25-26.1.2.jar
-1MB-CMIAPI-Boosters-v1.0.0-374-j25-26.1.2.jar
-1MB-CMIAPI-NameMC-v1.0.0-374-j25-26.1.2.jar
-1MB-CMIAPI-Trades-v1.0.0-374-j25-26.1.2.jar
-1MB-CMIAPI-VoteTokens-v1.0.0-374-j25-26.1.2.jar
-1MB-CMIAPI-DiscordChat-v1.0.0-374-j25-26.1.2.jar
-1MB-CMIAPI-GameTypes-v1.0.0-374-j25-26.1.2.jar
-1MB-CMIAPI-BirthdayLanterns-v1.0.0-374-j25-26.1.2.jar
-1MB-CMIAPI-MobHat-v1.0.0-374-j25-26.1.2.jar
-1MB-CMIAPI-PlayerTodo-v1.0.0-374-j25-26.1.2.jar
-1MB-CMIAPI-Refer-v1.0.0-374-j25-26.1.2.jar
-1MB-CMIAPI-TPAuto-v1.0.0-374-j25-26.1.2.jar
-1MB-CMIAPI-Menu-v1.0.0-374-j25-26.1.2.jar
-1MB-CMIAPI-StaffCenter-v1.0.0-374-j25-26.1.2.jar
-1MB-CMIAPI-Profile-v1.0.0-374-j25-26.1.2.jar
-1MB-CMIAPI-FilterLab-v1.0.0-374-j25-26.1.2.jar
-1MB-CMIAPI-FilterGuard-v1.0.0-374-j25-26.1.2.jar
-1MB-CMIAPI-WarningLens-v1.0.0-374-j25-26.1.2.jar
-1MB-CMIAPI-NotableMsg-v1.0.0-374-j25-26.1.2.jar
-1MB-CMIAPI-1MBStaffMsg-v1.0.0-374-j25-26.1.2.jar
-1MB-CMIAPI-CmdCostDashboard-v1.0.0-374-j25-26.1.2.jar
-1MB-CMIAPI-CMIConfig-v1.0.0-374-j25-26.1.2.jar
-1MB-CMIAPI-ConsoleNoiseRouter-v1.0.0-374-j25-26.1.2.jar
-1MB-CMIAPI-EconomyGuardian-v1.0.0-374-j25-26.1.2.jar
-1MB-CMIAPI-StartupDoctor-v1.0.0-374-j25-26.1.2.jar
-1MB-CMIAPI-UpdateSmoke-v1.0.0-374-j25-26.1.2.jar
-1MB-CMIAPI-PluginVersions-v1.0.0-374-j25-26.1.2.jar
-1MB-CMIAPI-Potions-v1.0.0-374-j25-26.1.2.jar
-1MB-CMIAPI-Upgrade-v1.0.0-374-j25-26.1.2.jar
-1MB-CMIAPI-EndCrystals-v1.0.0-374-j25-26.1.2.jar
-1MB-CMIAPI-WorldSnapshot-v1.0.0-374-j25-26.1.2.jar
-1MB-CMIAPI-SparkReviewer-v1.0.0-374-j25-26.1.2.jar
-1MB-CMIAPI-Hoppers-v1.0.0-374-j25-26.1.2.jar
-1MB-CMIAPI-EventRecorder-v1.0.0-374-j25-26.1.2.jar
-1MB-CMIAPI-PlaceholderProbe-v1.0.0-374-j25-26.1.2.jar
-1MB-CMIAPI-CMIPlaceholderCheck-v1.0.0-374-j25-26.1.2.jar
-1MB-CMIAPI-1MBPlaceholders-v1.0.0-374-j25-26.1.2.jar
-1MB-CMIAPI-WarpAudit-v1.0.0-374-j25-26.1.2.jar
-1MB-CMIAPI-WorthDrift-v1.0.0-374-j25-26.1.2.jar
-1MB-CMIAPI-WorthHelper-v1.0.0-374-j25-26.1.2.jar
-1MB-CMIAPI-CMIProbe-v1.0.0-374-j25-26.1.2.jar
-1MB-CMIAPI-CMIDatabase-v1.0.0-374-j25-26.1.2.jar
+1MB-CMIAPI-LIB-v1.0.0-381-j25-26.1.2.jar
+1MB-CMIAPI-AFKShrine-v1.0.0-381-j25-26.1.2.jar
+1MB-CMIAPI-RecordingMode-v1.0.0-381-j25-26.1.2.jar
+1MB-CMIAPI-SellStreaks-v1.0.0-381-j25-26.1.2.jar
+1MB-CMIAPI-ScheduledTips-v1.0.0-381-j25-26.1.2.jar
+1MB-CMIAPI-Visit-v1.0.0-381-j25-26.1.2.jar
+1MB-CMIAPI-PassportDiscovery-v1.0.0-381-j25-26.1.2.jar
+1MB-CMIAPI-SocialGatherings-v1.0.0-381-j25-26.1.2.jar
+1MB-CMIAPI-JourneyMap-v1.0.0-381-j25-26.1.2.jar
+1MB-CMIAPI-KitStreaks-v1.0.0-381-j25-26.1.2.jar
+1MB-CMIAPI-MessageFont-v1.0.0-381-j25-26.1.2.jar
+1MB-CMIAPI-Nick-v1.0.0-381-j25-26.1.2.jar
+1MB-CMIAPI-EmoteMenu-v1.0.0-381-j25-26.1.2.jar
+1MB-CMIAPI-PvPToggle-v1.0.0-381-j25-26.1.2.jar
+1MB-CMIAPI-Boosters-v1.0.0-381-j25-26.1.2.jar
+1MB-CMIAPI-NameMC-v1.0.0-381-j25-26.1.2.jar
+1MB-CMIAPI-Trades-v1.0.0-381-j25-26.1.2.jar
+1MB-CMIAPI-VoteTokens-v1.0.0-381-j25-26.1.2.jar
+1MB-CMIAPI-DiscordChat-v1.0.0-381-j25-26.1.2.jar
+1MB-CMIAPI-GameTypes-v1.0.0-381-j25-26.1.2.jar
+1MB-CMIAPI-BirthdayLanterns-v1.0.0-381-j25-26.1.2.jar
+1MB-CMIAPI-MobHat-v1.0.0-381-j25-26.1.2.jar
+1MB-CMIAPI-PlayerTodo-v1.0.0-381-j25-26.1.2.jar
+1MB-CMIAPI-Refer-v1.0.0-381-j25-26.1.2.jar
+1MB-CMIAPI-TPAuto-v1.0.0-381-j25-26.1.2.jar
+1MB-CMIAPI-Menu-v1.0.0-381-j25-26.1.2.jar
+1MB-CMIAPI-StaffCenter-v1.0.0-381-j25-26.1.2.jar
+1MB-CMIAPI-Profile-v1.0.0-381-j25-26.1.2.jar
+1MB-CMIAPI-FilterLab-v1.0.0-381-j25-26.1.2.jar
+1MB-CMIAPI-FilterGuard-v1.0.0-381-j25-26.1.2.jar
+1MB-CMIAPI-WarningLens-v1.0.0-381-j25-26.1.2.jar
+1MB-CMIAPI-NotableMsg-v1.0.0-381-j25-26.1.2.jar
+1MB-CMIAPI-1MBStaffMsg-v1.0.0-381-j25-26.1.2.jar
+1MB-CMIAPI-CmdCostDashboard-v1.0.0-381-j25-26.1.2.jar
+1MB-CMIAPI-CMIConfig-v1.0.0-381-j25-26.1.2.jar
+1MB-CMIAPI-ConsoleNoiseRouter-v1.0.0-381-j25-26.1.2.jar
+1MB-CMIAPI-EconomyGuardian-v1.0.0-381-j25-26.1.2.jar
+1MB-CMIAPI-StartupDoctor-v1.0.0-381-j25-26.1.2.jar
+1MB-CMIAPI-UpdateSmoke-v1.0.0-381-j25-26.1.2.jar
+1MB-CMIAPI-PluginVersions-v1.0.0-381-j25-26.1.2.jar
+1MB-CMIAPI-Potions-v1.0.0-381-j25-26.1.2.jar
+1MB-CMIAPI-SchedulerCheck-v1.0.0-381-j25-26.1.2.jar
+1MB-CMIAPI-Upgrade-v1.0.0-381-j25-26.1.2.jar
+1MB-CMIAPI-EndCrystals-v1.0.0-381-j25-26.1.2.jar
+1MB-CMIAPI-WorldSnapshot-v1.0.0-381-j25-26.1.2.jar
+1MB-CMIAPI-SparkReviewer-v1.0.0-381-j25-26.1.2.jar
+1MB-CMIAPI-Hoppers-v1.0.0-381-j25-26.1.2.jar
+1MB-CMIAPI-EventRecorder-v1.0.0-381-j25-26.1.2.jar
+1MB-CMIAPI-PlaceholderProbe-v1.0.0-381-j25-26.1.2.jar
+1MB-CMIAPI-CMIPlaceholderCheck-v1.0.0-381-j25-26.1.2.jar
+1MB-CMIAPI-1MBPlaceholders-v1.0.0-381-j25-26.1.2.jar
+1MB-CMIAPI-WarpAudit-v1.0.0-381-j25-26.1.2.jar
+1MB-CMIAPI-WorthDrift-v1.0.0-381-j25-26.1.2.jar
+1MB-CMIAPI-WorthHelper-v1.0.0-381-j25-26.1.2.jar
+1MB-CMIAPI-CMIProbe-v1.0.0-381-j25-26.1.2.jar
+1MB-CMIAPI-CMIDatabase-v1.0.0-381-j25-26.1.2.jar
 ```
 
 [Documentation index](../README.md)
