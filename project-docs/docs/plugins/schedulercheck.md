@@ -20,7 +20,7 @@ The plugin is intentionally not a player tool and does not support RCON. It is f
   - `Day`: `1` to `31` or weekday names such as `Monday`
   - `FirstMonthDay` and `LastMonthDay`: weekday names
 - Warn when enabled entries have no clear trigger.
-- Warn when entries combine interval `Delay` and fixed-time `PerformOn`.
+- Optionally warn when entries combine interval `Delay` and fixed-time `PerformOn`. This warning is off by default because CMI's own sample entry can combine both for demonstration.
 - Warn when command lists are missing, empty, or contain non-text entries.
 - Detect impossible player-count ranges such as `MaxPlayers` below `MinPlayers`.
 - List all, enabled, or disabled scheduler entries.
