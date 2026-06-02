@@ -124,9 +124,9 @@ const PLAYER_GUIDE_OVERRIDES = {
     intro: 'Recording mode helps players stream or record without private messages, requests, tips, or map visibility getting in the way. Turn it on before going live, then turn it off when you are done.',
   },
   schedulercheck: {
-    summary: 'Owner-only CMI scheduler validator for YAML syntax, timing ranges, enabled toggles, and Markdown reports.',
-    intro: 'SchedulerCheck is a direct-console server-owner tool for checking CMI scheduler entries before a restart or after editing the scheduler file.',
-    guide: 'There is no player-side command for SchedulerCheck. Server owners use it from direct console to check CMI scheduler YAML, review enabled and disabled entries, export a report, or safely toggle one schedule entry on or off.',
+    summary: 'Owner-only CMI scheduler validator for YAML syntax, timing ranges, command risks, upcoming runs, safe toggles, created tasks, and Markdown reports.',
+    intro: 'SchedulerCheck is a direct-console server-owner tool for checking CMI scheduler entries before a restart, after editing the scheduler file, or before adding a simple new scheduled task.',
+    guide: 'There is no player-side command for SchedulerCheck. Server owners use it from direct console to check CMI scheduler YAML, review enabled and disabled entries, explain one entry, estimate upcoming fixed-time runs, export reports, safely toggle one schedule entry, or create a basic delay/daily schedule without opening the file system.',
     pageIntro: 'This page documents SchedulerCheck as a public staff/reference guide. It has no player-facing command and intentionally rejects in-game use and RCON.',
     audienceHeading: 'How Staff Use It',
     bullets: [
@@ -134,14 +134,18 @@ const PLAYER_GUIDE_OVERRIDES = {
       'Catch invalid time values such as Hour: 31 or Minute: Five.',
       'List all, enabled, or disabled CMI scheduler entries.',
       'Inspect one scheduler entry by id when you need the full details.',
-      'Export the latest check as Markdown for Discord or support review.',
-      'Toggle one entry with Enabled: true or Enabled: false without rewriting the whole CMI file.',
+      'Explain one entry in plain language, including trigger details and command count.',
+      'Estimate fixed-time PerformOn runs for the next 24 hours or 7 days.',
+      'Export the latest check as full Markdown or compact Discord Markdown.',
+      'Toggle one entry with Enabled: true or Enabled: false while logging the reason.',
+      'Create a simple disabled delay or daily task from direct console.',
     ],
     quickStart: [
       'Open direct server console, not RCON and not in-game chat.',
       'Run `/_scheduler check` to scan the configured CMI scheduler file.',
       'Use `/_scheduler list enabled` or `/_scheduler list id Announcer` to review specific entries.',
-      'Run `/_scheduler export` when you want a Markdown report to share with staff.',
+      'Use `/_scheduler explain Announcer` when you want a plain-language summary.',
+      'Run `/_scheduler export discord` when you want a compact Markdown report to share with staff.',
     ],
     commands: [
       '/_scheduler',
@@ -149,34 +153,56 @@ const PLAYER_GUIDE_OVERRIDES = {
       '/_scheduler help',
       '/_scheduler check',
       '/_scheduler scan',
+      '/_scheduler explain <key>',
+      '/_scheduler upcoming 24h|7d',
       '/_scheduler export',
+      '/_scheduler export discord',
       '/_scheduler list [all|enabled|disabled]',
       '/_scheduler list id <key>',
-      '/_scheduler set <key> <true|false>',
+      '/_scheduler set <key> [enabled] <true|false> [--reason <text>]',
+      '/_scheduler create <key> delay <seconds> <true|false> --command <command> [--reason <text>]',
+      '/_scheduler create <key> daily <hour> <minute> <true|false> --command <command> [--reason <text>]',
       '/_scheduler reload',
     ],
     examples: [
       '/_scheduler check',
-      '/_scheduler export',
+      '/_scheduler export discord',
+      '/_scheduler explain Announcer',
+      '/_scheduler upcoming 24h',
       '/_scheduler list enabled',
       '/_scheduler list id Announcer',
-      '/_scheduler set Announcer false',
+      '/_scheduler set Announcer enabled false --reason noisy during maintenance',
+      '/_scheduler create morningAnnouncer daily 6 0 false --command broadcast! Good morning from 1MoreBlock --reason draft test',
+      '/_scheduler create pinataClear delay 600 false --command asFakeOp! pinata killall',
     ],
+    commandTableExamples: {
+      '/_scheduler explain <key>': '/_scheduler explain Announcer',
+      '/_scheduler upcoming 24h|7d': '/_scheduler upcoming 24h',
+      '/_scheduler set <key> [enabled] <true|false> [--reason <text>]': '/_scheduler set Announcer enabled false --reason noisy during maintenance',
+      '/_scheduler create <key> delay <seconds> <true|false> --command <command> [--reason <text>]': '/_scheduler create pinataClear delay 600 false --command asFakeOp! pinata killall',
+      '/_scheduler create <key> daily <hour> <minute> <true|false> --command <command> [--reason <text>]': '/_scheduler create morningAnnouncer daily 6 0 false --command broadcast! Good morning from 1MoreBlock --reason draft test',
+    },
     commandDescriptions: {
       '/_scheduler': 'Shows the SchedulerCheck intro from direct console.',
       '/_scheduler info': 'Shows the SchedulerCheck intro and CMI scheduler documentation link.',
       '/_scheduler help': 'Shows command examples.',
       '/_scheduler check': 'Parses and validates the configured CMI scheduler file.',
       '/_scheduler scan': 'Alias for the scheduler check action.',
+      '/_scheduler explain <key>': 'Shows a plain-language summary for one scheduler entry.',
+      '/_scheduler upcoming 24h|7d': 'Estimates upcoming fixed-time PerformOn runs over the next day or week.',
       '/_scheduler export': 'Writes the latest check as Markdown, running a fresh check first when needed.',
+      '/_scheduler export discord': 'Writes a compact Discord-friendly Markdown report.',
       '/_scheduler list [all|enabled|disabled]': 'Lists scheduler entries by state.',
       '/_scheduler list id <key>': 'Shows full details for one scheduler entry.',
-      '/_scheduler set <key> <true|false>': 'Sets one entry Enabled: true or false with a line-preserving edit.',
+      '/_scheduler set <key> [enabled] <true|false> [--reason <text>]': 'Sets one entry Enabled: true or false with a line-preserving edit and audit log entry.',
+      '/_scheduler create <key> delay <seconds> <true|false> --command <command> [--reason <text>]': 'Appends a simple delay-based schedule entry, then reloads the YAML to verify it.',
+      '/_scheduler create <key> daily <hour> <minute> <true|false> --command <command> [--reason <text>]': 'Appends a simple daily PerformOn schedule entry, then reloads the YAML to verify it.',
       '/_scheduler reload': 'Reloads SchedulerCheck config and messages.',
     },
     notes: [
       'A full /stop and server start is still the cleanest way to apply CMI scheduler file changes.',
       'You can try /cmi reload or /cmi schedule <key> for CMI-side testing, but do not treat that as a full restart.',
+      'The scan warns about invalid booleans, invalid numbers, missing Commands on enabled schedules, risky command roots, unknown CMI specialized command prefixes, duplicate enabled schedules, common schedule-id typos, and enabled draft/test-style ids.',
       'Exports may include scheduler command lines, so review reports before posting them publicly.',
     ],
     includeInCommandIndex: false,
@@ -225,6 +251,7 @@ function escapeHtml(value) {
 
 function formatCommand(value) {
   return escapeHtml(value)
+    .replaceAll('--', '<span>-</span><span>-</span>')
     .replaceAll('|', '|<wbr />');
 }
 
@@ -1033,7 +1060,7 @@ function pluginCommandTable(plugin, commandData) {
     .map((command) => `    <tr>
       <td><code>${formatCommand(command)}</code></td>
       <td>${escapeHtml(friendlyText(commandData.descriptions.get(command) || commandDescription(command, plugin)))}</td>
-      <td><code>${formatCommand(commandExample(command))}</code></td>
+      <td><code>${formatCommand(commandData.tableExamples?.get(command) || commandExample(command))}</code></td>
     </tr>`)
     .join('\n');
 
@@ -1100,6 +1127,9 @@ for (const plugin of guidePlugins) {
   }
   if (override.commandExamples) {
     commandData.playerExamples = override.commandExamples;
+  }
+  if (override.commandTableExamples) {
+    commandData.tableExamples = new Map(Object.entries(override.commandTableExamples));
   }
   if (override.commandDescriptions) {
     for (const [command, description] of Object.entries(override.commandDescriptions)) {

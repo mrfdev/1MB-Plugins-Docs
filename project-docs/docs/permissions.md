@@ -454,9 +454,11 @@ onembcmi.hoppers.admin
 onembcmi.hoppers.admin.reload
 onembcmi.schedulercheck.admin
 onembcmi.schedulercheck.check
+onembcmi.schedulercheck.explain
 onembcmi.schedulercheck.export
 onembcmi.schedulercheck.list
 onembcmi.schedulercheck.set
+onembcmi.schedulercheck.create
 onembcmi.schedulercheck.debug
 onembcmi.eventrecorder.use
 onembcmi.eventrecorder.view
@@ -513,7 +515,7 @@ Potions is locked by default. Grant `onembcmi.potions.admin` explicitly in LuckP
 
 Upgrade is locked by default. Grant `onembcmi.upgrade.notify` to admins who should see join-time upgrade suggestions, `onembcmi.upgrade.gui` to admins who should open the pending review queue GUI, `onembcmi.upgrade.inspect` to admins who may review player eligibility, `onembcmi.upgrade.simulate` to admins who may use read-only group path and rankup simulation tools, and `onembcmi.upgrade.apply` only to admins trusted to run LuckPerms group changes. `onembcmi.upgrade.admin` includes all Upgrade permissions, but operator status alone does not receive it from plugin.yml defaults. Direct console can run the non-GUI management commands. Upgrade re-checks LuckPerms state before applying and preserves non-managed side groups such as donor, tester, developer, streamer, or notable parents.
 
-SchedulerCheck is direct-console only and explicitly rejects RCON and in-game command senders. All declared permissions default to false for metadata/debug consistency. `onembcmi.schedulercheck.check`, `export`, and `list` are read/report actions. `onembcmi.schedulercheck.set` can line-edit one CMI scheduler entry's `Enabled: true|false`, so keep it owner-only even though the runtime command is direct-console only.
+SchedulerCheck is direct-console only and explicitly rejects RCON and in-game command senders. All declared permissions default to false for metadata/debug consistency. Direct server console can run the owner commands and see the complete help list. `onembcmi.schedulercheck.check`, `explain`, `export`, and `list` are read/report actions. `onembcmi.schedulercheck.set` can line-edit one CMI scheduler entry's `Enabled: true|false`, and `onembcmi.schedulercheck.create` can append simple new CMI scheduler entries, so keep both owner-only even though the runtime command is direct-console only.
 
 Profile is staff-only and can show sensitive operational context. Grant `onembcmi.profile.lookup`, `onembcmi.profile.export`, and `onembcmi.profile.add` only to trusted moderation staff. Grant `onembcmi.profile.view.ip` separately because it reveals stored IP signals from CMI, joins, manual notes, and logs. Grant `onembcmi.profile.bans` separately for senior staff who may review public ban-list signals.
 

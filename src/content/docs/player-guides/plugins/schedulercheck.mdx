@@ -7,11 +7,11 @@ This page documents SchedulerCheck as a public staff/reference guide. It has no 
 
 ## What It Does
 
-SchedulerCheck is a direct-console server-owner tool for checking CMI scheduler entries before a restart or after editing the scheduler file.
+SchedulerCheck is a direct-console server-owner tool for checking CMI scheduler entries before a restart, after editing the scheduler file, or before adding a simple new scheduled task.
 
 ## How Staff Use It
 
-There is no player-side command for SchedulerCheck. Server owners use it from direct console to check CMI scheduler YAML, review enabled and disabled entries, export a report, or safely toggle one schedule entry on or off.
+There is no player-side command for SchedulerCheck. Server owners use it from direct console to check CMI scheduler YAML, review enabled and disabled entries, explain one entry, estimate upcoming fixed-time runs, export reports, safely toggle one schedule entry, or create a basic delay/daily schedule without opening the file system.
 
 ## Things You Can Do
 
@@ -19,15 +19,19 @@ There is no player-side command for SchedulerCheck. Server owners use it from di
 - Catch invalid time values such as Hour: 31 or Minute: Five.
 - List all, enabled, or disabled server scheduler entries.
 - Inspect one scheduler entry by id when you need the full details.
-- Export the latest check as Markdown for Discord or support review.
-- Toggle one entry with Enabled: true or Enabled: false without rewriting the whole server file.
+- Explain one entry in plain language, including trigger details and command count.
+- Estimate fixed-time PerformOn runs for the next 24 hours or 7 days.
+- Export the latest check as full Markdown or compact Discord Markdown.
+- Toggle one entry with Enabled: true or Enabled: false while logging the reason.
+- Create a simple disabled delay or daily task from direct console.
 
 ## Quick Start
 
 1. Open direct server console, not RCON and not in-game chat.
 2. Run `/_scheduler check` to scan the configured CMI scheduler file.
 3. Use `/_scheduler list enabled` or `/_scheduler list id Announcer` to review specific entries.
-4. Run `/_scheduler export` when you want a Markdown report to share with staff.
+4. Use `/_scheduler explain Announcer` when you want a plain-language summary.
+5. Run `/_scheduler export discord` when you want a compact Markdown report to share with staff.
 
 ## Commands
 
@@ -66,9 +70,24 @@ There is no player-side command for SchedulerCheck. Server owners use it from di
       <td><code>/_scheduler scan</code></td>
     </tr>
     <tr>
+      <td><code>/_scheduler explain &lt;key&gt;</code></td>
+      <td>Shows a plain-language summary for one scheduler entry.</td>
+      <td><code>/_scheduler explain Announcer</code></td>
+    </tr>
+    <tr>
+      <td><code>/_scheduler upcoming 24h|<wbr />7d</code></td>
+      <td>Estimates upcoming fixed-time PerformOn runs over the next day or week.</td>
+      <td><code>/_scheduler upcoming 24h</code></td>
+    </tr>
+    <tr>
       <td><code>/_scheduler export</code></td>
       <td>Writes the latest check as Markdown, running a fresh check first when needed.</td>
       <td><code>/_scheduler export</code></td>
+    </tr>
+    <tr>
+      <td><code>/_scheduler export discord</code></td>
+      <td>Writes a compact Discord-friendly Markdown report.</td>
+      <td><code>/_scheduler export discord</code></td>
     </tr>
     <tr>
       <td><code>/_scheduler list [all|<wbr />enabled|<wbr />disabled]</code></td>
@@ -81,9 +100,19 @@ There is no player-side command for SchedulerCheck. Server owners use it from di
       <td><code>/_scheduler list id example</code></td>
     </tr>
     <tr>
-      <td><code>/_scheduler set &lt;key&gt; &lt;true|<wbr />false&gt;</code></td>
-      <td>Sets one entry Enabled: true or false with a line-preserving edit.</td>
-      <td><code>/_scheduler set example true</code></td>
+      <td><code>/_scheduler set &lt;key&gt; [enabled] &lt;true|<wbr />false&gt; [<span>-</span><span>-</span>reason &lt;text&gt;]</code></td>
+      <td>Sets one entry Enabled: true or false with a line-preserving edit and audit log entry.</td>
+      <td><code>/_scheduler set Announcer enabled false <span>-</span><span>-</span>reason noisy during maintenance</code></td>
+    </tr>
+    <tr>
+      <td><code>/_scheduler create &lt;key&gt; delay &lt;seconds&gt; &lt;true|<wbr />false&gt; <span>-</span><span>-</span>command &lt;command&gt; [<span>-</span><span>-</span>reason &lt;text&gt;]</code></td>
+      <td>Appends a simple delay-based schedule entry, then reloads the YAML to verify it.</td>
+      <td><code>/_scheduler create pinataClear delay 600 false <span>-</span><span>-</span>command asFakeOp! pinata killall</code></td>
+    </tr>
+    <tr>
+      <td><code>/_scheduler create &lt;key&gt; daily &lt;hour&gt; &lt;minute&gt; &lt;true|<wbr />false&gt; <span>-</span><span>-</span>command &lt;command&gt; [<span>-</span><span>-</span>reason &lt;text&gt;]</code></td>
+      <td>Appends a simple daily PerformOn schedule entry, then reloads the YAML to verify it.</td>
+      <td><code>/_scheduler create morningAnnouncer daily 6 0 false <span>-</span><span>-</span>command broadcast! Good morning from 1MoreBlock <span>-</span><span>-</span>reason draft test</code></td>
     </tr>
     <tr>
       <td><code>/_scheduler reload</code></td>
@@ -96,15 +125,20 @@ There is no player-side command for SchedulerCheck. Server owners use it from di
 ## Examples
 
 - `/_scheduler check`
-- `/_scheduler export`
+- `/_scheduler export discord`
+- `/_scheduler explain Announcer`
+- `/_scheduler upcoming 24h`
 - `/_scheduler list enabled`
 - `/_scheduler list id Announcer`
-- `/_scheduler set Announcer false`
+- `/_scheduler set Announcer enabled false --reason noisy during maintenance`
+- `/_scheduler create morningAnnouncer daily 6 0 false --command broadcast! Good morning from 1MoreBlock --reason draft test`
+- `/_scheduler create pinataClear delay 600 false --command asFakeOp! pinata killall`
 
 ## Good To Know
 
 - A full /stop and server start is still the cleanest way to apply server scheduler file changes.
 - You can try /cmi reload or /cmi schedule &lt;key&gt; for server-side testing, but do not treat that as a full restart.
+- The scan warns about invalid booleans, invalid numbers, missing Commands on enabled schedules, risky command roots, unknown server specialized command prefixes, duplicate enabled schedules, common schedule-id typos,...
 - Exports may include scheduler command lines, so review reports before posting them publicly.
 
 ## Full Reference
