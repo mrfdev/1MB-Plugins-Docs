@@ -56,11 +56,14 @@ The plugin is intentionally not a player tool and does not support RCON. It is f
 /_scheduler list all
 /_scheduler list enabled
 /_scheduler list disabled
+/_scheduler list error
 /_scheduler list id <key>
 /_scheduler set <key> true
 /_scheduler set <key> false
 /_scheduler set <key> true --reason <text>
 /_scheduler set <key> enabled false --reason <text>
+/_scheduler fix <key> <path> <value>
+/_scheduler fix <key> <path> <value> --apply --reason <text>
 /_scheduler create <key> delay <seconds> <true|false> --command <command> [--command <command>] [--reason <text>]
 /_scheduler create <key> daily <hour> <minute> <true|false> --command <command> [--command <command>] [--reason <text>]
 /_scheduler reload
@@ -77,15 +80,32 @@ There are no aliases.
 /_scheduler export discord
 /_scheduler explain Announcer
 /_scheduler upcoming 24h
+/_scheduler list error
 /_scheduler list enabled
 /_scheduler list id Announcer
 /_scheduler set Announcer false --reason quiet during maintenance
+/_scheduler fix resetWeatherTime PerformOn.2.Hour 23
+/_scheduler fix resetWeatherTime PerformOn.2.Hour 23 --apply --reason invalid hour hotfix
+/_scheduler fix Announcer Feedback false --apply --reason strict boolean cleanup
 /_scheduler create morningAnnouncer daily 6 0 false --command broadcast! Good morning from 1MoreBlock --reason draft test
 /_scheduler create pinataClear delay 600 false --command asFakeOp! pinata killall --command actionbar! &ePinatas cleared
 /_scheduler debug all
 ```
 
 `/_scheduler set <key> true|false` edits the CMI scheduler file only. A full `/stop` and server start is recommended before trusting scheduler runtime behavior. You can try `/cmi reload` or `/cmi schedule <key>` for CMI-side testing, but a restart is the cleanest way to apply scheduler-file changes.
+
+`/_scheduler fix <key> <path> <value>` is a dry-run by default. It validates the requested value, finds the exact YAML line that would be edited, and prints the current value plus the command to apply it. Add `--apply` only after reviewing the dry-run. Applied fixes create a timestamped backup first, reload the YAML to confirm the edit is syntactically valid, and write an audit log entry. If the post-edit YAML reload fails, SchedulerCheck restores the backup.
+
+Safe hotfix paths are deliberately limited to scalar fields:
+
+```text
+Enabled, Repeat, Feedback, Randomize, DuplicateRandomize, SingleLinear, DontTranslatePlaceholders
+Delay, MinPlayers, MaxPlayers
+PerformOn.<frame>.Hour, PerformOn.<frame>.Minute, PerformOn.<frame>.Second
+PerformOn.<frame>.Month, PerformOn.<frame>.Day, PerformOn.<frame>.FirstMonthDay, PerformOn.<frame>.LastMonthDay
+```
+
+The hotfix command does not edit `Commands:` lists or rewrite whole schedule blocks. Use file review for those changes.
 
 `/_scheduler create` appends a new simple schedule entry to the CMI scheduler file, then reloads the YAML to make sure the edit is syntactically valid. Created entries can be interval-based with `delay <seconds>` or fixed-time daily entries with `daily <hour> <minute>`. Each `--command` chunk becomes one `Commands:` list item.
 
@@ -100,6 +120,7 @@ onembcmi.schedulercheck.explain
 onembcmi.schedulercheck.export
 onembcmi.schedulercheck.list
 onembcmi.schedulercheck.set
+onembcmi.schedulercheck.fix
 onembcmi.schedulercheck.create
 onembcmi.schedulercheck.debug
 ```
@@ -146,6 +167,8 @@ plugins/1MB-CMIAPI/CMIAPILIB/cache/plugins/schedulercheck/logs/schedulercheck-au
 It does not write playerdata.
 
 `/_scheduler set` can edit the CMI scheduler file by changing or inserting one `Enabled:` line under the requested schedule key. The edit is deliberately line-based so CMI comments and surrounding formatting survive.
+
+`/_scheduler fix` can dry-run and apply narrow scalar hotfixes for fields that SchedulerCheck can validate safely. It keeps the edit line-based, creates a backup before writing, and refuses unsupported broad edits.
 
 `/_scheduler create` can append a new simple schedule entry. It writes one small SchedulerCheck comment above the created entry, quotes command lines safely, and validates the resulting YAML before reporting success.
 

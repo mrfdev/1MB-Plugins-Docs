@@ -24,10 +24,10 @@ gradle clean refreshBuildDocs build
 Expected jar naming:
 
 ```text
-1MB-CMIAPI-LIB-v1.0.0-385-j25-26.1.2.jar
-1MB-CMIAPI-AFKShrine-v1.0.0-385-j25-26.1.2.jar
-1MB-CMIAPI-StaffCenter-v1.0.0-385-j25-26.1.2.jar
-1MB-CMIAPI-Profile-v1.0.0-385-j25-26.1.2.jar
+1MB-CMIAPI-LIB-v1.0.0-389-j25-26.1.2.jar
+1MB-CMIAPI-AFKShrine-v1.0.0-389-j25-26.1.2.jar
+1MB-CMIAPI-StaffCenter-v1.0.0-389-j25-26.1.2.jar
+1MB-CMIAPI-Profile-v1.0.0-389-j25-26.1.2.jar
 ```
 
 After a successful feature or library build, copy the output jar into:

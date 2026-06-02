@@ -1143,18 +1143,22 @@ SchedulerCheck:
 /_scheduler list all
 /_scheduler list enabled
 /_scheduler list disabled
+/_scheduler list error
 /_scheduler list id Announcer
 /_scheduler set Announcer false
 /_scheduler set Announcer true
 /_scheduler set Announcer false --reason quiet during maintenance
 /_scheduler set Announcer enabled true --reason tested from console
+/_scheduler fix resetWeatherTime PerformOn.2.Hour 23
+/_scheduler fix resetWeatherTime PerformOn.2.Hour 23 --apply --reason invalid hour hotfix
+/_scheduler fix Announcer Feedback false --apply --reason strict boolean cleanup
 /_scheduler create morningAnnouncer daily 6 0 false --command broadcast! Good morning from 1MoreBlock --reason draft test
 /_scheduler create pinataClear delay 600 false --command asFakeOp! pinata killall --command actionbar! &ePinatas cleared
 /_scheduler reload
 /_scheduler debug all
 ```
 
-`/_scheduler` is direct-console only and has no aliases. It reads CMI `Settings/Schedules.yml` or `Scheduler.yml`, validates YAML syntax, type/range values such as `Hour: 0-23`, strict booleans, command list shape, specialized CMI command prefixes, risky command roots, duplicate enabled schedules, typo-prone ids, and schedule trigger logic. `/_scheduler export` writes a full Markdown report, while `/_scheduler export discord` writes a shorter findings summary. `/_scheduler set <key> true|false [--reason <text>]` only changes one `Enabled:` line and reminds the owner that a full `/stop` and start is the cleanest way to apply CMI scheduler changes. `/_scheduler create` can append simple interval or daily schedule entries from console.
+`/_scheduler` is direct-console only and has no aliases. It reads CMI `Settings/Schedules.yml` or `Scheduler.yml`, validates YAML syntax, type/range values such as `Hour: 0-23`, strict booleans, command list shape, specialized CMI command prefixes, risky command roots, duplicate enabled schedules, typo-prone ids, and schedule trigger logic. `/_scheduler export` writes a full Markdown report, while `/_scheduler export discord` writes a shorter findings summary. `/_scheduler set <key> true|false [--reason <text>]` only changes one `Enabled:` line and reminds the owner that a full `/stop` and start is the cleanest way to apply CMI scheduler changes. `/_scheduler fix <key> <path> <value>` is a dry-run-first scalar hotfix for validated fields such as `Feedback`, `Delay`, and `PerformOn.1.Hour`; add `--apply` to back up the file and write the line-preserving change. `/_scheduler create` can append simple interval or daily schedule entries from console.
 
 EndCrystals:
 
