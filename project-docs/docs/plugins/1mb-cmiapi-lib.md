@@ -174,6 +174,7 @@ locale:
     scheduledtips: "ⓘ"
     pvptoggle: "⚔"
     nick: "✎"
+    lavaboots: "♨"
     potions: "⚗"
     upgrade: "⇧"
     tpauto: "⇥"
@@ -188,6 +189,7 @@ When enabled, `{prefix}` output is composed from the shared config instead of re
 [ⓘ ScheduledTips] Scheduled tips are now hidden for you.
 [⚔ PvP] PvP is now enabled.
 [✎ Nick] Saved your nickname as MyName with style Aurora.
+[♨ LavaBoots] LavaBoots activated. Sneak to brake, sprint for a short burst.
 [⚗ Potions] Created 1 Potion for mrfloris.
 [⇧ Upgrade] DrPeanut11 might be eligible for Player from New.
 [✦ Birthday] You have 2 lantern rewards ready.

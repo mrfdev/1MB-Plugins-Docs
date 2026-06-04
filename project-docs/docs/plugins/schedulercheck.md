@@ -57,6 +57,7 @@ The plugin is intentionally not a player tool and does not support RCON. It is f
 /_scheduler list enabled
 /_scheduler list disabled
 /_scheduler list error
+/_scheduler list warning
 /_scheduler list id <key>
 /_scheduler set <key> true
 /_scheduler set <key> false
@@ -81,6 +82,7 @@ There are no aliases.
 /_scheduler explain Announcer
 /_scheduler upcoming 24h
 /_scheduler list error
+/_scheduler list warning
 /_scheduler list enabled
 /_scheduler list id Announcer
 /_scheduler set Announcer false --reason quiet during maintenance

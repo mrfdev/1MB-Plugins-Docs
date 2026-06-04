@@ -809,6 +809,32 @@ BirthdayLanterns:
 
 `/birthday` opens the player GUI for birthday, player-anniversary, and server milestone lanterns. Normal players can claim eligible rewards, set their birthday with a strict one-correction default, choose particles/sounds, and add sanitized guestbook notes. Admin commands inspect saved state, create marked lantern items for online players, reset scoped playerdata, and reload `config.yml`, `celebrations.yml`, and translations.
 
+LavaBoots:
+
+```text
+/lavaboots
+/lavaboots status
+/lavaboots info
+/lavaboots help
+/lavaboots admin give mrfloris 1 blacksmith steady 1
+/lavaboots admin give mrfloris 3 summer_crystal steady 1
+/lavaboots admin give mrfloris 5 ancient_forge sparked 1
+/lavaboots admin gui
+/lavaboots admin gui mrfloris
+/lavaboots admin list levels
+/lavaboots admin list themes
+/lavaboots admin list profiles
+/lavaboots admin inspect mrfloris
+/lavaboots admin disableitem summer_crystal_3_ab12cd34
+/lavaboots admin enableitem summer_crystal_3_ab12cd34
+/lavaboots admin reload
+/lavaboots admin debug item mrfloris
+/lavaboots debug item
+/lavaboots debug all
+```
+
+`/lavaboots` is player-safe and inspects a LavaBoots item the player is wearing, holding, or carrying. Admin give commands work from direct console and in game, create dyed leather boots with PDC identity, and do not create crafting recipes. Levels I-III are normal event levels; IV and V are rare event tiers with lava vision while active. The boots spend stored charge seconds, can absorb magma cream or fire charges from the offhand, drain real leather durability while used in lava, and are blocked from anvil, enchanting, grindstone, smithing, mcMMO repair block, and repair-style player commands.
+
 MobHat:
 
 ```text
@@ -1144,6 +1170,7 @@ SchedulerCheck:
 /_scheduler list enabled
 /_scheduler list disabled
 /_scheduler list error
+/_scheduler list warning
 /_scheduler list id Announcer
 /_scheduler set Announcer false
 /_scheduler set Announcer true
