@@ -14,8 +14,9 @@ Players run:
 
 The main GUI shows:
 
-- a friendly spawner category for farm and companion mobs
+- a friendly spawner category selector for farm and companion mob tiers
 - an angry spawner category that is browsable but disabled by default
+- a restricted spawner category that only appears for staff with the configured restricted permission
 - an event spawner category for Valentines, Summer, Halloween, and Christmas selections
 - an event progress page showing which yearly event spawners the player has bought and which stock remains
 - a sell-to-server section, disabled by default
@@ -25,6 +26,10 @@ The main GUI shows:
 - a bottom-right button that returns to `/menu`
 
 Subpages use the same light-blue glass border and return to the previous Spawners page instead of immediately opening `/menu`.
+
+Friendly spawners are split by configured tier. The default pages are Global, Member, Builder, and Rogue, and any future configured tier such as Patron gets its own paginated page automatically. The GUI title includes the tier name and page number so players can tell where they are.
+
+Shop entries use matching spawn egg icons when Paper exposes a spawn egg material for that entity type. Entries that are currently buyable for the player receive a hidden-enchant glint; locked, disabled, sold-out, or yearly-limit-reached entries stay visible without the glint.
 
 ## Commands
 
@@ -68,6 +73,7 @@ Default pricing follows the requested progression:
 | Builder friendly tier | 44% higher |
 | Rogue friendly tier | 73% higher |
 | Angry spawners | $750,000 |
+| Restricted spawners | $1,000,000 |
 | Event spawners | $750,000 |
 | Sell-to-server buyback | $150,000 |
 
@@ -82,9 +88,15 @@ The default config starts with common friendly mobs and gradually unlocks rarer 
 | Global | `default`, `1mb_player` | chicken, cow, pig, sheep |
 | Member | `1mb_member`, `1mb_boosted` | rabbit, bee, turtle, cat, wolf, fox, horse, llama |
 | Builder | `1mb_builder` | goat, frog, axolotl, camel, donkey, mule, ocelot, parrot, panda, mooshroom |
-| Rogue | `1mb_rogue` | sniffer, armadillo, allay, villager, wandering trader, iron golem, snow golem, polar bear |
+| Rogue | `1mb_rogue` | sniffer, armadillo, allay, villager, wandering trader, snow golem |
 
 The GUI still checks the actual permission on the player. If a group inherits lower-tier permissions through LuckPerms, the shop naturally follows that inheritance. The exported setup commands are cumulative so a test server can be configured even if inheritance is not already present.
+
+The tier selector is driven by `spawners.friendly.tier-order`. Adding another tier in config makes it appear as a separate friendly page without needing code changes.
+
+Paper exposes some unusual spawnable entity ids that should not become player shop stock. Spawners hard-filters configured `spawners.blocked-entity-ids` everywhere, including player pages, event pages, and admin give tab suggestions. The default blocklist includes utility/projectile/display entities such as armor stands, mannequins, lightning-like or non-mob entries, minecarts, item frames, display entities, fireballs, arrows, and end crystals.
+
+Hostile or risky mobs can be listed under the angry category, which is browsable but disabled by default. Boss or extreme-risk ids such as wither, ender dragon, warden, and giant live in `spawners.restricted.entities` instead. Restricted spawners only appear in game for senders with `onembcmi.spawners.restricted` or the configured restricted permission, and buying remains controlled separately by `spawners.restricted.enabled`.
 
 ## CMI Spawner Permissions
 
@@ -179,6 +191,8 @@ gui:
   filler-material: GLOBAL
   info-ctext-command: cmi ctext spawners {player}
   back-command: menu
+  use-spawn-egg-icons: true
+  available-spawners-glint: true
 shop:
   require-use-permission: true
   require-buy-permission: true
@@ -195,11 +209,31 @@ economy:
   base-friendly-price: 350000.0
   tier-price-increase: 0.2
   angry-price: 750000.0
+  restricted-price: 1000000.0
   event-price: 750000.0
 spawners:
+  blocked-entity-ids:
+  - armor_stand
+  - mannequin
+  auto-discovery:
+    include-uncategorized-friendly: true
+    auto-tier-id: rogue
+    exclude-from-friendly:
+    - zombie
+    - wither
+    - ender_dragon
+    - warden
   angry:
     enabled: false
     browsable: true
+  restricted:
+    enabled: false
+    browsable: true
+    permission: onembcmi.spawners.restricted
+    entities:
+    - wither
+    - ender_dragon
+    - warden
 events:
   enabled: true
   purchase-limit-per-year: 1
@@ -229,9 +263,12 @@ onembcmi.spawners.give
 onembcmi.spawners.gui
 onembcmi.spawners.setup
 onembcmi.spawners.debug
+onembcmi.spawners.restricted
 ```
 
 `onembcmi.spawners.use`, `onembcmi.spawners.progress`, `onembcmi.spawners.buy`, `onembcmi.spawners.pickaxe`, and `onembcmi.spawners.sell` default to true. Admin permissions default to false, including the admin parent, so staff access should be granted explicitly through LuckPerms.
+
+`onembcmi.spawners.restricted` also defaults to false and is intentionally separate from the admin parent. Grant it only to owner-level staff who should browse or admin-give restricted boss/extreme-risk spawner types.
 
 The actual spawner unlocks are not `onembcmi` permissions. They are CMI permissions:
 
@@ -243,6 +280,8 @@ cmi.dropspawner.rabbit
 ## Safety Notes
 
 Spawners uses the shared hardened GUI service: custom holders, cancelled unsafe clicks/drags, delayed close actions, and same-slot click debouncing. Purchases also have their own short action lock, check inventory space before taking money, refund on inventory failure, and never trust client-side item movement inside the GUI.
+
+Spawn egg icons and the hidden-enchant glint are visual shop indicators only. Purchased items are still generated as real Paper spawner items with PDC identity and a stored spawned entity type.
 
 Command dispatch is limited to fixed configured commands with only the online Paper player name inserted. Command strings containing semicolons, pipes, angle brackets, or newlines are rejected.
 
