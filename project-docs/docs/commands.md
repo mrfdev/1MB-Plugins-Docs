@@ -133,6 +133,7 @@ Feature `/help` pages are intentionally player-facing: they list commands availa
 /1mbcmi debug plugin namemc all
 /1mbcmi debug plugin trades all
 /1mbcmi debug plugin votetokens all
+/1mbcmi debug plugin spawners all
 /1mbcmi debug plugin mobhat all
 /1mbcmi debug plugin todo all
 /1mbcmi debug plugin staffcenter all
@@ -834,6 +835,23 @@ LavaBoots:
 ```
 
 `/lavaboots` is player-safe and inspects a LavaBoots item the player is wearing, holding, or carrying. Admin give commands work from direct console and in game, create dyed leather boots with PDC identity, and do not create crafting recipes. Levels I-III are normal event levels; IV and V are rare event tiers with lava vision while active. The boots spend stored charge seconds, can absorb magma cream or fire charges from the offhand, drain real leather durability while used in lava, and are blocked from anvil, enchanting, grindstone, smithing, mcMMO repair block, and repair-style player commands.
+
+Spawners:
+
+```text
+/spawners
+/spawners info
+/spawners help
+/spawners reload
+/spawners admin give mrfloris rabbit 1
+/spawners admin give mrfloris cow 4
+/spawners admin setupcommands
+/spawners debug item
+/spawners debug discovered
+/spawners debug all
+```
+
+`/spawners` opens the hardened shop GUI. Purchases require the relevant CMI `cmi.placespawner.<type>` permission, available balance through the CMI-backed Vault economy provider, and safe inventory space. `/spawners admin setupcommands` exports LuckPerms commands for the configured CMI place/drop spawner permissions.
 
 MobHat:
 

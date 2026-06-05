@@ -170,6 +170,15 @@ onembcmi.lavaboots.inspect
 onembcmi.lavaboots.toggle
 onembcmi.lavaboots.reload
 onembcmi.lavaboots.debug
+onembcmi.spawners.use
+onembcmi.spawners.buy
+onembcmi.spawners.pickaxe
+onembcmi.spawners.sell
+onembcmi.spawners.admin
+onembcmi.spawners.reload
+onembcmi.spawners.give
+onembcmi.spawners.setup
+onembcmi.spawners.debug
 onembcmi.emotemenu.use
 onembcmi.emotemenu.search
 onembcmi.emotemenu.run
@@ -523,6 +532,8 @@ WorthHelper is staff-only and report-first. Grant `onembcmi.worthhelper.scan`, `
 Potions is locked by default. Grant `onembcmi.potions.admin` explicitly in LuckPerms to owner-level staff who may create and tune event potions; operator status alone does not receive the permission from plugin.yml defaults. Direct console can run the non-GUI management commands. `onembcmi.potions.bundle` covers full collection bundle generation from configured collection metadata. Players do not need a permission for `/potions`, which only shows safe held-item details for a Potions event item. Generated items carry PDC identity and snapshotted drink costs, and disabled ids are blocked by the plugin while it is installed.
 
 LavaBoots grants `onembcmi.lavaboots.use` to players by default so they can inspect boots they are wearing, holding, or carrying with `/lavaboots`. Admin creation and item retirement are locked by default: grant `onembcmi.lavaboots.give` for event item creation, `onembcmi.lavaboots.gui` for the in-game builder, `onembcmi.lavaboots.toggle` for disabling or re-enabling generated item ids, and `onembcmi.lavaboots.debug` for PDC inspection. `onembcmi.lavaboots.admin` includes all LavaBoots admin nodes, but defaults to false so operator status alone does not receive it from plugin.yml defaults. Direct console can run the admin non-GUI commands.
+
+Spawners grants `onembcmi.spawners.use` and `onembcmi.spawners.buy` to players by default so `/spawners` can open the shop and buy only the CMI spawner types their group already unlocks. The actual spawner gates are CMI permissions such as `cmi.placespawner.rabbit` and `cmi.dropspawner.rabbit`. `onembcmi.spawners.sell` and `onembcmi.spawners.pickaxe` default to true but their sections are disabled by config until the server owner enables them. Admin give, setup export, reload, and debug permissions default to false.
 
 Upgrade is locked by default. Grant `onembcmi.upgrade.notify` to admins who should see join-time upgrade suggestions, `onembcmi.upgrade.gui` to admins who should open the pending review queue GUI, `onembcmi.upgrade.inspect` to admins who may review player eligibility, `onembcmi.upgrade.simulate` to admins who may use read-only group path and rankup simulation tools, and `onembcmi.upgrade.apply` only to admins trusted to run LuckPerms group changes. `onembcmi.upgrade.admin` includes all Upgrade permissions, but operator status alone does not receive it from plugin.yml defaults. Direct console can run the non-GUI management commands. Upgrade re-checks LuckPerms state before applying and preserves non-managed side groups such as donor, tester, developer, streamer, or notable parents.
 

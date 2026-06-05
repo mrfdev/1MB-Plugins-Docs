@@ -62,6 +62,8 @@ For support/debugging:
 - [DiscordChat](plugins/discordchat.md)
 - [GameTypes](plugins/gametypes.md)
 - [BirthdayLanterns](plugins/birthdaylanterns.md)
+- [LavaBoots](plugins/lavaboots.md)
+- [Spawners](plugins/spawners.md)
 - [MobHat](plugins/mobhat.md)
 - [PlayerTodo](plugins/todo.md)
 - [Refer](plugins/refer.md)
