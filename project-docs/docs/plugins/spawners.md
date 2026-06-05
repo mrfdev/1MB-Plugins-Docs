@@ -17,6 +17,7 @@ The main GUI shows:
 - a friendly spawner category for farm and companion mobs
 - an angry spawner category that is browsable but disabled by default
 - an event spawner category for Valentines, Summer, Halloween, and Christmas selections
+- an event progress page showing which yearly event spawners the player has bought and which stock remains
 - a sell-to-server section, disabled by default
 - a special Silk Touch V pickaxe button, disabled until the exact item details are finalized
 - a book that runs the configured CMI ctext guide command
@@ -31,8 +32,10 @@ Subpages use the same light-blue glass border and return to the previous Spawner
 /spawners
 /spawners info
 /spawners help
+/spawners progress
 /spawners reload
 /spawners admin give <player> <type> [amount]
+/spawners admin gui
 /spawners admin setupcommands
 /spawners debug item
 /spawners debug discovered
@@ -43,6 +46,8 @@ Examples:
 
 ```text
 /spawners
+/spawners progress
+/spawners admin gui
 /spawners admin setupcommands
 /spawners admin give mrfloris rabbit 1
 /spawners admin give mrfloris cow 4
@@ -50,7 +55,7 @@ Examples:
 /spawners debug discovered
 ```
 
-Console can use non-GUI admin commands. Players use `/spawners` in game to open the shop.
+Console can use non-GUI admin commands. Players use `/spawners` in game to open the shop, and `/spawners progress` to view yearly event collection progress.
 
 ## Pricing
 
@@ -123,9 +128,40 @@ Data is stored under:
 
 ```text
 plugins/1MB-CMIAPI/Spawners/players/<uuid>.yml
+plugins/1MB-CMIAPI/Spawners/stock.yml
 ```
 
-If the plugin is uninstalled, already-created spawner items remain normal Paper spawner items with their stored creature type. Annual purchase limits and shop disable switches require the plugin to be installed.
+`stock.yml` tracks per-year event totals and per-spawner totals when stock caps are enabled. Use `events.<event>.global-stock-per-year` for a whole seasonal pool and `events.<event>.per-spawner-stock-per-year` for each spawner type in that event. Set either value to `-1` for unlimited stock.
+
+If the plugin is uninstalled, already-created spawner items remain normal Paper spawner items with their stored creature type. Annual purchase limits, stock caps, Discord logs, and shop disable switches require the plugin to be installed.
+
+## Admin GUI
+
+Admins with `onembcmi.spawners.gui` can run:
+
+```text
+/spawners admin gui
+```
+
+The admin GUI can toggle angry buying, event buying, stock tracking, sell section, pickaxe section, purchase confirmations, friendly tier enabled states, and seasonal event enabled states. Stock usage is reviewable in the GUI; stock caps are scalar config values and can be changed with shared debug config commands.
+
+## Confirmations And Logs
+
+Spawner and pickaxe purchases open a confirmation screen before money is withdrawn. The final purchase handler re-checks permissions, stock, balance, and inventory space after the confirmation click, so stale GUI clicks cannot bypass the current config state.
+
+When enabled, DiscordSRV logs are sent through the configured console command:
+
+```yaml
+discord-log:
+  enabled: true
+  command: discordsrv broadcast
+  channel-id: '#1393795584217059370'
+  log-buys: true
+  log-sells: true
+  log-admin-give: true
+```
+
+The Discord log message is sanitized before dispatch and supports `{action}`, `{actor}`, `{player}`, `{type}`, `{type_id}`, `{amount}`, `{price}`, `{category}`, and `{tier}`.
 
 ## Config
 
@@ -149,6 +185,10 @@ shop:
   require-cmi-place-permission: true
   cmi-place-permission-format: cmi.placespawner.{type}
   cmi-drop-permission-format: cmi.dropspawner.{type}
+  confirmation:
+    enabled: true
+    spawners: true
+    pickaxe: true
 economy:
   enabled: true
   provider: Vault
@@ -160,6 +200,12 @@ spawners:
   angry:
     enabled: false
     browsable: true
+events:
+  enabled: true
+  purchase-limit-per-year: 1
+  stock:
+    enabled: true
+    show-in-lore: true
 sell:
   enabled: false
   price: 150000.0
@@ -173,17 +219,19 @@ All defaults are commented when written. Existing values are preserved on reload
 
 ```text
 onembcmi.spawners.use
+onembcmi.spawners.progress
 onembcmi.spawners.buy
 onembcmi.spawners.pickaxe
 onembcmi.spawners.sell
 onembcmi.spawners.admin
 onembcmi.spawners.reload
 onembcmi.spawners.give
+onembcmi.spawners.gui
 onembcmi.spawners.setup
 onembcmi.spawners.debug
 ```
 
-`onembcmi.spawners.use`, `onembcmi.spawners.buy`, `onembcmi.spawners.pickaxe`, and `onembcmi.spawners.sell` default to true. Admin permissions default to false, including the admin parent, so staff access should be granted explicitly through LuckPerms.
+`onembcmi.spawners.use`, `onembcmi.spawners.progress`, `onembcmi.spawners.buy`, `onembcmi.spawners.pickaxe`, and `onembcmi.spawners.sell` default to true. Admin permissions default to false, including the admin parent, so staff access should be granted explicitly through LuckPerms.
 
 The actual spawner unlocks are not `onembcmi` permissions. They are CMI permissions:
 
@@ -204,11 +252,13 @@ The plugin does not use RCON. It writes an audit log for buy, sell, admin-give, 
 plugins/1MB-CMIAPI/Spawners/logs/spawners.log
 ```
 
+DiscordSRV staff logging is optional and command-based. It only dispatches when DiscordSRV is loaded and the configured command root exists.
+
 ## CMI, CMILib, LuckPerms, Vault, And Paper API
 
 CMI and CMILib are required because this project loads through the shared 1MB-CMIAPI library environment. CMI remains responsible for spawner place/drop permissions and is expected to be the economy manager behind Vault.
 
-LuckPerms is optional at runtime but used for the player-head primary group display when available. Vault is used for balance checks, withdrawals, and deposits so CMI's economy provider can remain the money backend.
+LuckPerms is optional at runtime but used for the player-head primary group display when available. Vault is used for balance checks, withdrawals, and deposits so CMI's economy provider can remain the money backend. DiscordSRV is optional and only used for staff-channel buy/sell/admin-give logs.
 
 Paper APIs used include runtime `EntityType` discovery, `Material.SPAWNER`, `BlockStateMeta`, `CreatureSpawner#setSpawnedType`, Adventure item names/lore, PDC item metadata, and inventory GUI handling through the shared library.
 

@@ -842,16 +842,18 @@ Spawners:
 /spawners
 /spawners info
 /spawners help
+/spawners progress
 /spawners reload
 /spawners admin give mrfloris rabbit 1
 /spawners admin give mrfloris cow 4
+/spawners admin gui
 /spawners admin setupcommands
 /spawners debug item
 /spawners debug discovered
 /spawners debug all
 ```
 
-`/spawners` opens the hardened shop GUI. Purchases require the relevant CMI `cmi.placespawner.<type>` permission, available balance through the CMI-backed Vault economy provider, and safe inventory space. `/spawners admin setupcommands` exports LuckPerms commands for the configured CMI place/drop spawner permissions.
+`/spawners` opens the hardened shop GUI. Purchases require the relevant CMI `cmi.placespawner.<type>` permission, available balance through the CMI-backed Vault economy provider, safe inventory space, and a confirmation click. `/spawners progress` shows annual event spawner collection progress and stock state. `/spawners admin gui` toggles friendly tiers, seasonal events, stock tracking, purchase confirmations, sell, and pickaxe sections. `/spawners admin setupcommands` exports LuckPerms commands for the configured CMI place/drop spawner permissions.
 
 MobHat:
 
