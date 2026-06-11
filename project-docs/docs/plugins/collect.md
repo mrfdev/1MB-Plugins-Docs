@@ -1,0 +1,327 @@
+# Collect
+
+Collect adds a seasonal `/collect` event GUI where players submit normal gameplay items, build event score, climb daily and weekly leaderboards, build event streaks, and claim earned keepsake rewards. The first configured event is `summer_2026`, but the same plugin can also host Valentines, Halloween, and Christmas events by changing `events.yml`.
+
+The submission flow is intentionally safe: players do not drag items into the GUI. Instead, the Submit button scans their normal inventory storage for the current week's configured materials, removes only untouched vanilla item stacks, and adds the amount to their event totals. Armor slots and offhand are not touched. Renamed, lored, damaged, enchanted, custom-model, PDC, or otherwise modified items are ignored and stay in the player's inventory.
+
+## Player Flow
+
+Players run:
+
+```text
+/collect
+```
+
+The GUI uses the shared light-blue glass border and includes:
+
+- an index page with event state, current week, stats, leaderboards, and reward access
+- a collect items page with this week's visible item list and a safe submit button
+- a personal stats page with today, week, month, all-event, and streak totals
+- personal best highlights and visible event-score totals
+- global leaderboards for daily, weekly, monthly, and all-event standings
+- a reward claim page for participation, streak, personal milestones, daily top 10, weekly top 10, monthly top 10, and all-event top 10 rewards
+- a community goal tile when enabled, showing server-wide score progress and the configured point booster
+- the player head in the bottom-left with personal event totals
+- an event guide book next to the player head, opening the configured CMI `collectevent` ctext page for that player
+- a bottom-right close button and a nearby `/menu` return button
+
+Future weeks stay hidden by default and show as mystery content until their week starts.
+
+## Commands
+
+```text
+/collect
+/collect info
+/collect help
+/collect items
+/collect submit
+/collect stats
+/collect leaderboard [daily|weekly|monthly|event]
+/collect rewards
+/collect admin reload
+/collect admin debug <true|false>
+/collect admin week <1|2|3|4|off>
+/collect admin day <1-28|off>
+/collect admin date <yyyy-mm-dd|off>
+/collect admin event <event-id>
+/collect admin inspect <player>
+/collect admin reset <player> <event-id>
+/collect admin report <event-id>
+/collect debug setday <1-28|off>
+/collect debug all
+```
+
+Examples:
+
+```text
+/collect
+/collect items
+/collect submit
+/collect leaderboard daily
+/collect rewards
+/collect admin debug true
+/collect admin week 2
+/collect admin day 14
+/collect admin date 2026-07-14
+/collect admin event summer_2026
+/collect admin inspect mrfloris
+/collect admin report summer_2026
+```
+
+Console can use the non-GUI admin commands. Players use `/collect` in game.
+
+## Default Summer Event
+
+The default Summer event runs:
+
+```text
+2026-07-01 through 2026-07-28
+```
+
+Reward claiming stays open until:
+
+```text
+2026-08-04
+```
+
+Default weeks:
+
+| Week | Theme | Items |
+| --- | --- | --- |
+| 1 | Stone Hunt | cobblestone, stone, deepslate variants, andesite, diorite, granite, tuff, calcite, blackstone, basalt, stone bricks |
+| 2 | Chainmail Relics | chainmail helmet, chestplate, leggings, boots |
+| 3 | Summer Flora | common flowers, tall flowers, and meadow-style plants |
+| 4 | Picnic Pantry | wheat, crops, melon, pumpkin, apples, bread, cookies, berries |
+
+These are all configurable in `events.yml`.
+
+## Rewards
+
+Rewards are configured in `rewards.yml` and are intentionally not too overpowered by default. The plugin creates PDC-marked keepsake items and can also run narrow, configured console reward commands such as CMI money, CMI exp, CMI kits, CMI mail, `give`, or LuckPerms commands.
+
+Default claim groups:
+
+- participation reward after submitting at least one configured item
+- streak reward after the configured streak target
+- personal milestone rewards at configurable event-score thresholds
+- daily top 10 rewards for completed days
+- weekly top 10 rewards for completed weeks
+- monthly top 10 rewards after the event month is complete
+- all-event top 10 rewards after the 28-day event ends
+
+Weekly top rewards use a series option by default. Repeat winners receive the next piece in a chainmail relic set, so one player can gradually complete the series instead of receiving the same item every time.
+
+## Config Files
+
+Main config:
+
+```text
+plugins/1MB-CMIAPI/Collect/config.yml
+```
+
+Event definitions:
+
+```text
+plugins/1MB-CMIAPI/Collect/events.yml
+```
+
+Reward definitions:
+
+```text
+plugins/1MB-CMIAPI/Collect/rewards.yml
+```
+
+Generated event reports:
+
+```text
+plugins/1MB-CMIAPI/Collect/reports/
+```
+
+Player data is stored in shared playerdata under the `collect` section:
+
+```text
+plugins/1MB-CMIAPI/CMIAPILIB/playerdata/<uuid>.yml
+```
+
+Important config paths:
+
+```yaml
+active-event: summer_2026
+gui:
+  info-command: cmi ctext collectevent {player}
+submission:
+  require-event-open: true
+  commands:
+    enabled: false
+    allowed-prefixes:
+      - cmi money give
+      - cmi exp give
+      - cmi mail send
+worlds:
+  allowed:
+    - general
+    - wild
+    - nether
+    - end
+    - oneblock
+    - cave
+    - skyblock
+    - acid
+    - skygrid
+  debug-extra-allowed:
+    - spawn
+scoring:
+  catch-up:
+    enabled: true
+    min-missed-days: 2
+    multiplier: 1.25
+    max-items-per-submit: 1000
+  streak-multiplier:
+    enabled: true
+    required-days: 7
+    multiplier: 1.2
+  rest-bonus:
+    enabled: true
+    required-hours: 24
+    multiplier: 2.0
+    max-items-per-submit: 500
+community:
+  enabled: true
+  target-score: 100000
+  point-booster: 1.1
+  display-on-index: true
+rewards:
+  participation-minimum: 1
+  streak-days: 3
+  commands:
+    enabled: true
+    allowed-prefixes:
+      - cmi money give
+      - cmi exp give
+      - cmi kit
+      - cmi mail send
+      - give
+      - lp user
+debug:
+  force-open: false
+  week-override: 0
+  day-override: 0
+  date-override: ''
+  reveal-future-weeks: false
+  allow-current-period-claims: false
+```
+
+Submitted stacks are stored as raw material totals, but leaderboards use event score. Event score can equal the item count, or it can be higher when configured catch-up, rest, streak, or community multipliers are active. Submission command hooks can use `{score}`, `{items}`, and `{bonus}` placeholders.
+
+The footer guide book closes the GUI and dispatches `gui.info-command` from direct server console. It is locked to the `cmi ctext` command prefix, so the default expects a CMI ctext page such as `collectevent` that can explain the current event to the player.
+
+## Hologram Placeholders
+
+Collect registers PlaceholderAPI values through the shared `onembcmi` expansion. These are intended for CMI holograms, ajLeaderboards, NPC displays, and `/summer` event signs.
+
+Event state:
+
+```text
+%onembcmi_collect.event.name%
+%onembcmi_collect.event.theme%
+%onembcmi_collect.event.open%
+%onembcmi_collect.current.day_display%
+%onembcmi_collect.current.week_name%
+%onembcmi_collect.current.week_items%
+%onembcmi_collect.current.week_item.1%
+```
+
+Personal player progress:
+
+```text
+%onembcmi_collect.player.score.daily%
+%onembcmi_collect.player.score.weekly%
+%onembcmi_collect.player.score.monthly%
+%onembcmi_collect.player.score.alltime%
+%onembcmi_collect.player.rank.daily.display%
+%onembcmi_collect.player.rank.weekly.display%
+%onembcmi_collect.player.rank.monthly.display%
+%onembcmi_collect.player.rank.alltime.display%
+%onembcmi_collect.player.streak.current%
+```
+
+Community and top-10 lines:
+
+```text
+%onembcmi_collect.community.score_formatted%
+%onembcmi_collect.community.percent%
+%onembcmi_collect.participants.daily%
+%onembcmi_collect.top.daily.1.line%
+%onembcmi_collect.top.weekly.1.line%
+%onembcmi_collect.top.monthly.1.line%
+%onembcmi_collect.top.alltime.1.line%
+```
+
+Top placeholders support ranks `1` through `10` and fields `line`, `rank`, `name`, `score`, and `score_formatted`, for example `%onembcmi_collect.top.daily.3.name%` and `%onembcmi_collect.top.alltime.5.score_formatted%`. Board names accept `daily`, `weekly`, `monthly`, and `alltime` (`event` and `overall` are also accepted aliases).
+
+## Debug Testing
+
+For test server work:
+
+```text
+/collect admin debug true
+/collect admin week 1
+/collect admin day 1
+/collect admin date 2026-07-01
+```
+
+`debug.force-open` lets admins test submissions outside the real event dates. `debug.week-override` forces the visible week. `debug.day-override` is set by `/collect admin day` or `/collect debug setday` and writes the matching `debug.date-override` value automatically. `debug.date-override` is useful for testing daily and weekly leaderboard periods. `debug.allow-current-period-claims` can be enabled in config when reward claims need to be tested before a real day or week has ended.
+
+## Permissions
+
+```text
+onembcmi.collect.use
+onembcmi.collect.submit
+onembcmi.collect.stats
+onembcmi.collect.leaderboard
+onembcmi.collect.rewards
+onembcmi.collect.admin
+onembcmi.collect.reload
+onembcmi.collect.debug
+onembcmi.collect.inspect
+onembcmi.collect.reset
+onembcmi.collect.test
+onembcmi.collect.report
+```
+
+Player-facing permissions default to true. Admin permissions default to false, including the parent `onembcmi.collect.admin`, so owner-level staff should be granted access explicitly through LuckPerms.
+
+## Event Reports
+
+After an event, staff can export a Discord-friendly markdown report:
+
+```text
+/collect admin report summer_2026
+```
+
+The report is generated from saved Collect playerdata and can be regenerated weeks later. It includes:
+
+- event dates, participants, total event score, raw vanilla items submitted, active collection days, claimed rewards, best streak, busiest score day, and most collected item
+- top collected materials
+- all-event top 10
+- monthly top 10
+- weekly top 10 for every configured week
+- daily top 10 for every event day
+
+The file is written to `plugins/1MB-CMIAPI/Collect/reports/` as a `.md` file so it can be edited or pasted into Discord/community announcements.
+
+## Safety Notes
+
+Collect does not use RCON and does not accept raw player input for commands. Reward and submission commands are console-dispatched only after placeholder replacement and a strict allowed-prefix check. Commands containing newlines, semicolons, pipes, or chained operators are blocked.
+
+The GUI is managed by the shared hardened GUI service, which cancels unsafe clicks and drags, uses safe holders, and debounces repeated actions. Submissions remove matching untouched vanilla materials directly from normal inventory storage after the click, so players cannot duplicate items by placing them into a custom inventory. Custom or modified items are never removed or counted.
+
+Submissions count only in configured worlds. By default this is `general`, `wild`, `nether`, `end`, `oneblock`, `cave`, `skyblock`, `acid`, and `skygrid`; `spawn` is accepted only while debug force-open is active.
+
+## CMI, CMILib, And Paper API
+
+CMI and CMILib are required because the feature runs inside the shared 1MB-CMIAPI plugin environment and uses shared docs/debug/config handling. Configured reward commands can use CMI money, CMI EXP, CMI mail, and CMI kits.
+
+Paper/Bukkit APIs used include safe inventory reads/removal, Adventure item names/lore, PDC reward item identity, particles, sounds, titles, and the shared GUI holder/click protections.
+
+[Documentation index](../README.md)

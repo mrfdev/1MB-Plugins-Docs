@@ -56,6 +56,7 @@ The default button list includes:
 /jobs
 /trade
 /votetokens
+/spawners
 /warp shops
 /buy
 /sell
@@ -65,6 +66,8 @@ The default button list includes:
 /farm menu
 /mine menu
 ```
+
+Existing configs that were created before Spawners existed can auto-append the Spawners button when `buttons.spawners.enabled` and `buttons.spawners.auto-append-to-order` are true. Set either value to false if `/spawners` should stay out of `/menu`.
 
 The compass button tries `/home home`, then `/home bed`, and finally `/homes`. The preferred home names and fallback command are configurable.
 

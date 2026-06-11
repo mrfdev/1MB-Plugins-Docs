@@ -847,13 +847,50 @@ Spawners:
 /spawners admin give mrfloris rabbit 1
 /spawners admin give mrfloris cow 4
 /spawners admin gui
+/spawners admin disable cow
+/spawners admin enable cow
+/spawners admin setprice rabbit 400000
+/spawners admin resetprice rabbit
+/spawners admin price angry 750000
+/spawners admin move frog friendly builder
+/spawners admin move bee event summer
+/spawners admin tier create veteran 1mb_veteran Veteran 1.95
 /spawners admin setupcommands
 /spawners debug item
 /spawners debug discovered
 /spawners debug all
 ```
 
-`/spawners` opens the hardened shop GUI. Purchases require the relevant CMI `cmi.placespawner.<type>` permission, available balance through the CMI-backed Vault economy provider, safe inventory space, and a confirmation click. `/spawners progress` shows annual event spawner collection progress and stock state. `/spawners admin gui` toggles friendly tiers, seasonal events, stock tracking, purchase confirmations, sell, and pickaxe sections. `/spawners admin setupcommands` exports LuckPerms commands for the configured CMI place/drop spawner permissions.
+`/spawners` opens the hardened shop GUI. Purchases require the relevant CMI `cmi.placespawner.<type>` permission, available balance through the CMI-backed Vault economy provider, safe inventory space, and a confirmation click. `/spawners progress` shows annual event spawner collection progress and stock state. `/spawners admin gui` toggles shop sections and opens the per-spawner editor; admins can also shift-click a shop spawner entry to edit it. Admin edit commands can disable one id, set or reset a per-spawner price override, change category prices, move a spawner between friendly/angry/restricted/event categories, and create future LuckPerms friendly tiers. `/spawners admin setupcommands` exports LuckPerms commands for the configured CMI place/drop spawner permissions.
+
+Collect:
+
+```text
+/collect
+/collect info
+/collect help
+/collect items
+/collect submit
+/collect stats
+/collect leaderboard daily
+/collect leaderboard weekly
+/collect leaderboard monthly
+/collect leaderboard event
+/collect rewards
+/collect admin reload
+/collect admin debug true
+/collect admin week 2
+/collect admin day 14
+/collect admin date 2026-07-14
+/collect admin event summer_2026
+/collect admin inspect mrfloris
+/collect admin reset mrfloris summer_2026
+/collect admin report summer_2026
+/collect debug setday 14
+/collect debug all
+```
+
+`/collect` opens the seasonal event GUI. Players submit configured weekly items through a safe inventory scan rather than by dragging items into a GUI. Only untouched vanilla item stacks count; renamed, lored, damaged, enchanted, custom-model, PDC, or otherwise modified items are ignored. Players can review personal stats, personal bests, community goal progress, leaderboards, streaks, and claim participation/milestone/top-10 rewards. Admin debug commands can force the event open, test a week, test an event day, test a date, switch the active event, inspect player data, reset one player's event state, and export a Discord-friendly markdown report for an event. Leaderboards use event score, which can include configured catch-up, rest, streak, and community bonuses, while reports also keep raw vanilla item totals. Reward and submission command hooks are console-dispatched only after strict allowed-prefix checks.
 
 MobHat:
 

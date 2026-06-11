@@ -23,6 +23,7 @@ The main GUI shows:
 - a special Silk Touch V pickaxe button, disabled until the exact item details are finalized
 - a book that runs the configured CMI ctext guide command
 - the player head in the bottom-left with LuckPerms group, CMI/Vault balance, and unlocked friendly count
+- an admin-only index button for staff with `onembcmi.spawners.gui`
 - a bottom-right button that returns to `/menu`
 
 Subpages use the same light-blue glass border and return to the previous Spawners page instead of immediately opening `/menu`.
@@ -41,6 +42,18 @@ Shop entries use matching spawn egg icons when Paper exposes a spawn egg materia
 /spawners reload
 /spawners admin give <player> <type> [amount]
 /spawners admin gui
+/spawners admin disable <type>
+/spawners admin enable <type>
+/spawners admin setprice <type> <amount>
+/spawners admin resetprice <type>
+/spawners admin price <base-friendly|angry|restricted|event|sell|pickaxe> <amount>
+/spawners admin move <type> <friendly|angry|restricted|event> [tier/event]
+/spawners admin tier list
+/spawners admin tier create <id> <group> [name] [multiplier]
+/spawners admin tier addgroup <tier> <group>
+/spawners admin tier removegroup <tier> <group>
+/spawners admin tier setmultiplier <tier> <multiplier>
+/spawners admin tier setname <tier> <display_name>
 /spawners admin setupcommands
 /spawners debug item
 /spawners debug discovered
@@ -56,11 +69,21 @@ Examples:
 /spawners admin setupcommands
 /spawners admin give mrfloris rabbit 1
 /spawners admin give mrfloris cow 4
+/spawners admin disable cow
+/spawners admin enable cow
+/spawners admin setprice rabbit 400000
+/spawners admin resetprice rabbit
+/spawners admin price angry 750000
+/spawners admin move frog friendly builder
+/spawners admin move blaze angry
+/spawners admin move bee event summer
+/spawners admin tier create veteran 1mb_veteran Veteran 1.95
+/spawners admin tier addgroup veteran 1mb_ancient
 /spawners debug item
 /spawners debug discovered
 ```
 
-Console can use non-GUI admin commands. Players use `/spawners` in game to open the shop, and `/spawners progress` to view yearly event collection progress.
+Console can use non-GUI admin commands. Players use `/spawners` in game to open the shop, and `/spawners progress` to view yearly event collection progress. Admins with `onembcmi.spawners.gui` can also shift-click a spawner inside the shop GUI to open that spawner's editor instead of buying it.
 
 ## Pricing
 
@@ -79,6 +102,8 @@ Default pricing follows the requested progression:
 
 The sell section is built but disabled by default. When enabled, it sells one spawner from the player's main hand at a time.
 
+Admins can set one-off prices with `/spawners admin setprice <type> <amount>` or from the spawner editor GUI. These overrides are written under `spawners.price-overrides.<type>` and apply wherever that spawner appears. `/spawners admin resetprice <type>` removes the override and returns the spawner to its category or tier price.
+
 ## Default Friendly Tiers
 
 The default config starts with common friendly mobs and gradually unlocks rarer or more decorative mobs:
@@ -92,7 +117,7 @@ The default config starts with common friendly mobs and gradually unlocks rarer 
 
 The GUI still checks the actual permission on the player. If a group inherits lower-tier permissions through LuckPerms, the shop naturally follows that inheritance. The exported setup commands are cumulative so a test server can be configured even if inheritance is not already present.
 
-The tier selector is driven by `spawners.friendly.tier-order`. Adding another tier in config makes it appear as a separate friendly page without needing code changes.
+The tier selector is driven by `spawners.friendly.tier-order`. Adding another tier in config or with `/spawners admin tier create <id> <group> [name] [multiplier]` makes it appear as a separate friendly page without needing code changes. This is meant for future LuckPerms groups such as `1mb_veteran`, `1mb_epic`, or `1mb_ancient`; move spawner ids into the new tier with the admin editor or `/spawners admin move <type> friendly <tier>`.
 
 Paper exposes some unusual spawnable entity ids that should not become player shop stock. Spawners hard-filters configured `spawners.blocked-entity-ids` everywhere, including player pages, event pages, and admin give tab suggestions. The default blocklist includes utility/projectile/display entities such as armor stands, mannequins, lightning-like or non-mob entries, minecarts, item frames, display entities, fireballs, arrows, and end crystals.
 
@@ -155,7 +180,18 @@ Admins with `onembcmi.spawners.gui` can run:
 /spawners admin gui
 ```
 
-The admin GUI can toggle angry buying, event buying, stock tracking, sell section, pickaxe section, purchase confirmations, friendly tier enabled states, and seasonal event enabled states. Stock usage is reviewable in the GUI; stock caps are scalar config values and can be changed with shared debug config commands.
+They also see an admin-only **Admin Index** button on the normal `/spawners` main GUI, so they can start from the same page players use.
+
+The admin GUI can toggle angry buying, restricted buying, event buying, stock tracking, sell section, pickaxe section, purchase confirmations, friendly tier enabled states, and seasonal event enabled states. It also includes:
+
+- a per-spawner editor for disabling or enabling an id without removing it from a category
+- move buttons for friendly tiers, angry spawners, restricted spawners, and seasonal event groups
+- per-spawner price override controls with small and shift-click steps
+- category price controls for friendly base, angry, restricted, event, buyback, and pickaxe prices
+- paginated tier management that scales when future LuckPerms groups are added
+- stock review for the current event year
+
+Normal player clicks still buy or confirm purchases. Admin shift-clicks on shop entries open the same per-spawner editor.
 
 ## Confirmations And Logs
 
@@ -212,6 +248,9 @@ economy:
   restricted-price: 1000000.0
   event-price: 750000.0
 spawners:
+  disabled-ids: []
+  price-overrides:
+    rabbit: 400000.0
   blocked-entity-ids:
   - armor_stand
   - mannequin
