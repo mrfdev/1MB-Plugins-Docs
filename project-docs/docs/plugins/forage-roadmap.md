@@ -49,7 +49,7 @@ V1 should not include mini-bosses, custom trees, auctions, pet magic, or broad t
 
 Add the home-base loop and early identity:
 
-- player Forage Camps with logs, campfire, crafting table, barrel, composter, bed/tent blocks, lanterns, and a tree requirement
+- player Forage Camps with logs, campfire, crafting table, barrel, composter, bed/tent blocks, optional lanterns, and a tree-grove requirement, partially implemented in v1 camp validation
 - sneak-right-click camp composter opens Forage GUI or a camp page while normal right-click keeps vanilla composting behavior
 - camp composter turn-ins for approved vanilla natural scraps
 - camp ready notifications, implemented in v1 as throttled ready feedback when a player validates a complete camp

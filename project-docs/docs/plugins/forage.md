@@ -25,6 +25,7 @@ The GUI uses the shared hardened GUI service with safe holders, cancelled clicks
 - camp-only Repair & Merge for worn Forage tools
 - camp composter turn-ins for plain vanilla forage items
 - Forage Dust crafting and small bounded growth pulses
+- tree-grove camp validation with optional lantern requirements
 - tips
 - camp check with checklist, unlocks, and throttled ready feedback
 - CMI ctext guide button through the configured `gui.info-command`
@@ -109,7 +110,9 @@ By default, Forage Dust:
 
 `/forage camp` and sneak-right-clicking the configured camp anchor now give a clearer camp status. The camp GUI separates the checklist, unlocks, composter action, tool upgrades, and Repair & Merge action so players can understand what the camp is for and what is still missing.
 
-When a player validates a complete camp, Forage can show a short ready message and play the configured camp sound/particle effect. This is throttled by player and camp chunk through `camp.ready-feedback.cooldown-seconds`, so repeated sneak-clicks do not spam chat. Ready camps unlock camp-only tool upgrades, Repair & Merge, camp composter turn-ins, and Forage Dust.
+Camp validation can require the configured composter anchor, a campfire, barrel, crafting table, logs, leaves or canopy blocks, wool for a tent/bedroll feel, and a nearby tree-grove shape. The tree-grove check is still cheap: it looks for a trunk-like block with leaves, Nether wart canopy, warped wart canopy, or mushroom cap blocks nearby. `camp.require-lantern` is available for stricter camps, but defaults off so existing test camps do not all need a lantern immediately.
+
+When a player validates a complete camp, Forage can show a short ready message and play the configured camp sound/particle effect. This is throttled by player and camp chunk through `camp.ready-feedback.cooldown-seconds`, so repeated sneak-clicks do not spam chat. Ready camps unlock camp-only tool upgrades, Repair & Merge, camp composter turn-ins, Forage Dust, and tree-grove validation.
 
 ## Commands
 
@@ -186,6 +189,8 @@ Important sections:
 - `chunk-exhaustion.*`: v1 anti-grind cooldowns by chunk and source family
 - `protection.worldguard.*`: conservative global-only region check when WorldGuard is installed
 - `camp.*`: composter camp anchor, wool tent/bedroll count, nearby block requirements, and ready feedback
+- `camp.require-tree`: requires a trunk/canopy tree-grove shape near the camp
+- `camp.require-lantern` and `camp.required-lantern-count`: optional camp ambience requirement
 - `camp.turnins.*`: complete-camp requirement, accepted source families, item cap, reward scaling, cooldown, and daily-cap behavior
 - `growth.*`: bounded Forage Dust growth pulses, cooldown, radius, max blocks, and allowed target materials
 - `growth.dust.*`: dust item material/name/glint, batch amount, complete-camp requirement, money cost, point cost, and bonemeal cost
@@ -250,6 +255,7 @@ These are enough for a first hologram or scoreboard pass while richer skill tree
 - Camp composter turn-ins do not open an escrow inventory. They scan plain vanilla inventory stacks, confirm the plan, revalidate each slot, and only then consume items.
 - Forage Dust does not open an escrow inventory. It checks camp state, money, Forage Points, plain vanilla bonemeal, and inventory space at confirmation time before creating PDC-marked dust.
 - Forage Dust growth pulses are bounded by configured allowed materials, radius, max block count, cooldown, allowed worlds, and WorldGuard checks. Dust does not award Forage XP or points.
+- Camp tree-grove validation only scans the existing small camp radius and does not edit blocks or track persistence.
 - WorldGuard is optional and checked by reflection so the jar can load without a compile-time WorldGuard dependency.
 - Chunk exhaustion is intentionally conservative and cheap: it tracks chunk, source family, action count, and cooldown.
 - Player-placed block provenance tracking is not part of v1 and remains a live-readiness discussion item.
@@ -259,6 +265,7 @@ These are enough for a first hologram or scoreboard pass while richer skill tree
 Forage is expected to grow gradually after test feedback:
 
 - richer Forage Camps
+- stricter or themed camp validation profiles
 - richer composter recipes and camp progression
 - skill trees
 - higher-tier tool upgrades and unlock variants
