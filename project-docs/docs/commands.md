@@ -876,7 +876,9 @@ Collect:
 /collect leaderboard weekly
 /collect leaderboard monthly
 /collect leaderboard event
+/collect hall summer_2026
 /collect rewards
+/collect exchange
 /collect admin reload
 /collect admin debug true
 /collect admin week 2
@@ -886,11 +888,44 @@ Collect:
 /collect admin inspect mrfloris
 /collect admin reset mrfloris summer_2026
 /collect admin report summer_2026
+/collect admin feed
+/collect admin scavenger start
 /collect debug setday 14
 /collect debug all
 ```
 
-`/collect` opens the seasonal event GUI. Players submit configured weekly items through a safe inventory scan rather than by dragging items into a GUI. Only untouched vanilla item stacks count; renamed, lored, damaged, enchanted, custom-model, PDC, or otherwise modified items are ignored. Players can review personal stats, personal bests, community goal progress, leaderboards, streaks, and claim participation/milestone/top-10 rewards. Admin debug commands can force the event open, test a week, test an event day, test a date, switch the active event, inspect player data, reset one player's event state, and export a Discord-friendly markdown report for an event. Leaderboards use event score, which can include configured catch-up, rest, streak, and community bonuses, while reports also keep raw vanilla item totals. Reward and submission command hooks are console-dispatched only after strict allowed-prefix checks.
+`/collect` opens the seasonal event GUI. Players submit configured weekly items through a safe inventory scan rather than by dragging items into a GUI. Only untouched vanilla item stacks count; renamed, lored, damaged, enchanted, custom-model, PDC, or otherwise modified items are ignored. Players can review personal stats, personal bests, community goal progress, scavenger hunt state, top-3 highlighted leaderboard heads, Hall of Fame archives, streaks, claim participation/milestone/top-10 rewards, occasionally discover capped virtual Lucky Finds during valid submissions, and use `/collect exchange` to trade duplicate Collect reward items for configured event score. Admin debug commands can force the event open, test a week, test an event day, test a date, switch the active event, inspect player data, reset one player's event state, force/clear a daily scavenger hunt, run passive feed checks, and export a Discord-friendly markdown report for an event. Leaderboards use event score, which can include configured catch-up, rest, streak, lucky-find, scavenger, community, and duplicate reward exchange bonuses, while reports also keep raw vanilla item totals. Reward, submission, scavenger, and Discord feed command hooks are console-dispatched only after strict allowed-prefix checks.
+
+Forage:
+
+```text
+/forage
+/forage info
+/forage help
+/forage shop
+/forage stats
+/forage quests
+/forage top
+/forage top points
+/forage top daily
+/forage recent
+/forage tips
+/forage tools
+/forage camp
+/forage compost
+/forage dust
+/forage admin give mrfloris sickle 1
+/forage admin give mrfloris axe 2
+/forage admin inspect mrfloris
+/forage admin chunks
+/forage admin reload
+/forage admin save
+/forage debug tool
+/forage debug tool mrfloris
+/forage debug all
+```
+
+`/forage` opens the v1 Forage hub GUI. Players can buy curated PDC-marked tools from the CMI-backed Vault shop, view their level/XP/points, complete daily and weekly `/forage quests`, read tips, inspect supported source families, view `/forage top` leaderboards, compost plain vanilla forage items near a complete camp, make PDC-marked Forage Dust for bounded growth pulses, repair and merge matching tools near a complete camp, and check whether a nearby camp build is ready. Forage progress only counts when a configured natural block is broken with a matching Forage tool in an allowed world. Frequent progress, compost, growth, quest, treasure, level, and chunk exhaustion messages are batched into a clickable summary, and `/forage recent` shows the latest details. Daily caps and chunk/source-family exhaustion keep v1 from becoming a farm exploit while the system is tuned. Forage Dust does not award Forage XP or points. When WorldGuard is installed, the default conservative check only counts actions in locations without a specific protected region. Admin commands can give tools, inspect player profiles and held tool PDC, view chunk exhaustion counts, reload config/data, and use the shared debug pages.
 
 MobHat:
 

@@ -7,7 +7,7 @@ This page introduces Collect from a public server-docs point of view. It focuses
 
 ## What It Does
 
-/collect seasonal event GUI for safe inventory-scanned item submissions, event-score bonuses, community progress, personal milestones, hidden future weeks, daily/weekly/monthly/all-event leaderboards, streaks, server item data keepsake rewards, reward command hooks, and admin debug week/day/date...
+Collect adds a seasonal /collect event GUI where players submit normal gameplay items, build event score, occasionally discover virtual lucky finds, climb daily and weekly leaderboards, build event streaks, claim earned keepsake rewards, and trade duplicate reward keepsakes back into event...
 
 ## How Players Use It
 
@@ -21,10 +21,10 @@ Future weeks stay hidden by default and show as mystery content until their week
 - A collect items page with this week's visible item list and a safe submit button
 - A personal stats page with today, week, month, all-event, and streak totals
 - Personal best highlights and visible event-score totals
+- Virtual Lucky Find totals from rare capped bonus rolls during valid submissions
 - Global leaderboards for daily, weekly, monthly, and all-event standings
+- Highlighted top 3 player heads on leaderboard pages, with richer score, streak, participation, and top-item lore
 - A reward claim page for participation, streak, personal milestones, daily top 10, weekly top 10, monthly top 10, and all-event top 10 rewards
-- The player head in the bottom-left with personal event totals
-- A bottom-right close button and a nearby /menu return button
 
 ## Quick Start
 
@@ -79,9 +79,19 @@ Future weeks stay hidden by default and show as mystery content until their week
       <td><code>/collect leaderboard</code></td>
     </tr>
     <tr>
+      <td><code>/collect hall [event-id]</code></td>
+      <td>Runs the Collect hall action.</td>
+      <td><code>/collect hall</code></td>
+    </tr>
+    <tr>
       <td><code>/collect rewards</code></td>
       <td>Shows your Collect rewards view.</td>
       <td><code>/collect rewards</code></td>
+    </tr>
+    <tr>
+      <td><code>/collect exchange</code></td>
+      <td>Runs the Collect exchange action.</td>
+      <td><code>/collect exchange</code></td>
     </tr>
   </tbody>
 </table>
@@ -92,7 +102,9 @@ Future weeks stay hidden by default and show as mystery content until their week
 - `/collect items`
 - `/collect submit`
 - `/collect leaderboard daily`
+- `/collect hall summer_2026`
 - `/collect rewards`
+- `/collect exchange`
 
 ## Good To Know
 
