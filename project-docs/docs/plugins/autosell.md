@@ -70,7 +70,7 @@ This plugin should not be used as a hopper, farm, or AFK seller. It is meant for
 | `/autosell recent` | player | Shows recent batched sale results. |
 | `/autosell quests` | player | Shows active daily, weekly, and monthly AutoSell quest progress in chat. |
 | `/autosell quests gui` | player | Opens the AutoSell quest GUI. |
-| `/autosell caps` | player | Opens permanent daily cap unlocks purchased with broker points. |
+| `/autosell caps` | player | Opens weekly and lifetime daily cap unlocks purchased with broker points. |
 | `/autosell toggle` | player | Turns AutoSell on or off for the player. |
 | `/autosell trigger <always\|full>` | player | Chooses whether AutoSell runs normally after pickup/break batches or only when inventory storage slots are nearly full. |
 | `/autosell categories` | player | Opens the category toggle GUI. |
@@ -155,28 +155,52 @@ AutoSell has several progress systems that can appear together in the GUI, chat 
 | Word | What it means | Resets? | Reward type |
 | --- | --- | --- | --- |
 | Broker level | Long-term AutoSell experience from legitimate sold item volume. | No, permanent. | Unlock-style progress, broker points, and small configured bonus. |
-| Broker points | Spendable points earned from broker levels, quests, and milestones. | No, unless spent on cap unlocks. | Used in `/autosell caps` for permanent daily-cap unlocks. |
+| Broker points | Spendable points earned from broker levels, quests, and milestones. | No, unless spent on cap unlocks. | Used in `/autosell caps` for weekly or lifetime daily-cap unlocks. |
 | Quests | Repeatable goals such as daily, weekly, or monthly AutoSell tasks. | Yes, by quest period. | Usually broker points, money, and a small daily bonus. |
 | Milestones | One-time achievements such as total sold items, broker level, streak days, or sell chains. | No, one-time per player. | Usually broker points, money, EXP, mail, or a small bonus. |
 | Streaks | Activity over consecutive qualifying days or enough qualifying days in a week. | Daily/weekly tracking changes over time. | Small temporary bonus for steady activity. |
 | Sell chains | Short active-session progress from selling in repeated batches without waiting too long. | Yes, expires after the chain window. | Small temporary batch bonus and chain-based goals. |
 | Daily bonus | A temporary payout bonus earned from broker progress, quests, milestones, streaks, or chains. | Yes, it is daily/temporary by design. | Higher AutoSell payout while the bonus is active. |
 | Boosters | Server-wide Happy Hour boosts started by staff and shown in `/rate`. | Yes, temporary. | Multiplies AutoSell payouts while active. |
-| Cap unlocks | Permanent account upgrades bought with broker points. | No, permanent once purchased. | Higher AutoSell daily money cap. |
+| Cap unlocks | Weekly or lifetime account upgrades bought with broker points. | Weekly unlocks expire; lifetime unlocks do not. | Higher AutoSell daily money cap. |
 
 Quick examples:
 
 - Instant: a verified AutoSell batch sells items and pays money right away.
 - Progressive: broker level, quests, streaks, and milestones move forward over time.
 - Temporary: sell-chain bonuses, daily bonuses, streak bonuses, and staff Happy Hour boosts eventually expire or reset.
-- Permanent: broker level history, unspent broker points, milestone claims, stats, and purchased cap unlocks stay with the account.
+- Permanent: broker level history, unspent broker points, milestone claims, stats, and lifetime cap unlocks stay with the account.
 - Daily/weekly/monthly: quest and streak windows use server time, so progress can reset when the period changes.
 
 If the GUI says `Broker level: 0` but `Broker points: 2`, that is valid. It usually means the player earned broker points from quests or milestones before selling enough total AutoSell items to reach broker level 1.
 
 Broker progress counts legitimate AutoSell item volume. Players increase broker level by keeping AutoSell enabled and selling eligible pure vanilla items from normal inventory storage slots. By default, every 10,000 sold items adds one broker level, grants broker points, and can add a small temporary daily bonus capped by `broker.max-multiplier-bonus`. Broker points can also come from quests and milestones, so a player can have broker points while still being broker level 0.
 
-Players can spend broker points in `/autosell caps` to permanently unlock higher daily AutoSell caps for their account. The default unlocks are a $250,000 cap for 30 broker points, a $500,000 cap for 80 broker points, and a $1,000,000 cap for 160 broker points. These unlocks are stored in AutoSell player data and keep working even if the player's group changes. The old automatic broker-point cap behavior is available only when `caps.legacy-automatic-point-unlocks` is enabled.
+Players can spend broker points in `/autosell caps` to unlock higher daily AutoSell caps for their account. The active cap is the highest value from the player's permission/group cap, an active weekly unlock, and any lifetime unlock. Weekly unlocks last 7 days by default and are cheaper for players who only need a temporary market push. Lifetime unlocks cost more, stay in AutoSell player data, and keep working even if the player's group changes. The old automatic broker-point cap behavior is available only when `caps.legacy-automatic-point-unlocks` is enabled.
+
+Default weekly cap unlocks are:
+
+| Unlock | Duration | Broker points |
+| --- | ---: | ---: |
+| $100,000 cap | 7 days | 6 |
+| $250,000 cap | 7 days | 15 |
+| $500,000 cap | 7 days | 30 |
+| $750,000 cap | 7 days | 45 |
+| $1,000,000 cap | 7 days | 60 |
+| unlimited cap | 7 days | 100 |
+
+Default lifetime cap unlocks are:
+
+| Unlock | Duration | Broker points |
+| --- | ---: | ---: |
+| $100,000 cap | lifetime | 20 |
+| $250,000 cap | lifetime | 60 |
+| $500,000 cap | lifetime | 120 |
+| $750,000 cap | lifetime | 180 |
+| $1,000,000 cap | lifetime | 240 |
+| unlimited cap | lifetime | 500 |
+
+Staff can configure the unlocks under `caps.unlock-gui.options.*`. Normal cap unlocks use numeric `cap` values, while the unlimited unlock can use the readable value `cap: unlimited`. Use `type: weekly` with `duration-days` for temporary unlocks, or `type: lifetime` for permanent account unlocks.
 
 Milestone rewards are configured under `milestones.definitions.*`. They are one-time per player and can watch totals such as `total-items`, `total-earned`, `broker-level`, `streak-days`, and `chain-sales`. When a player reaches a milestone, AutoSell can grant broker points, add a small capped daily bonus, play a celebration, write a recent-history entry, and run strictly allowlisted direct-console commands such as CMI money, EXP, mail, message, toast, sound, or title commands.
 
