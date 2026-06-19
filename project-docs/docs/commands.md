@@ -996,6 +996,10 @@ AutoSell:
 /autosell admin warnings
 /autosell admin warnings blacklist 1
 /autosell admin export
+/autosell admin boost status
+/autosell admin boost start all 20m 1.10
+/autosell admin boost start mining 30m 1.25
+/autosell admin boost stop
 /autosell admin blacklist list
 /autosell admin blacklist add diamond_block
 /autosell admin blacklist remove diamond_block
@@ -1004,7 +1008,7 @@ AutoSell:
 /autosell debug all
 ```
 
-`/autosell` opens an opt-in inventory cleanup GUI. Players can turn AutoSell on or off, choose categories, browse per-category material pages, toggle individual materials, set value filters, choose a notification style, opt into allowed worlds, preview what would sell, and review recent batched results. AutoSell reads CMI `Worth.yml`, pays through the CMI-backed Vault economy provider, and only scans normal inventory storage slots after a short delayed batch. It never sells hotbar, offhand, armor, open-container, custom-name, lore, enchant, damaged, PDC, custom-model, shulker, bundle, or other modified/storage items by default. The final sale rechecks exact stack identity before removing items and refunds removed stacks if the economy payment fails. Admin commands can reload config/data/worth, run colored readiness checks, manage a hard material blacklist, blacklist materials directly from numbered material warnings, move materials between categories, inspect player profiles, review suspicious volume warnings, and export Markdown reports.
+`/autosell` opens an opt-in inventory cleanup GUI. Players can turn AutoSell on or off, choose categories, browse per-category material pages, toggle individual materials, set value filters, choose a notification style, opt into allowed worlds, preview what would sell, and review recent batched results. AutoSell reads CMI `Worth.yml`, pays through the CMI-backed Vault economy provider, and only scans normal inventory storage slots after a short delayed batch. It never sells hotbar, offhand, armor, open-container, custom-name, lore, enchant, damaged, PDC, custom-model, shulker, bundle, or other modified/storage items by default. The final sale rechecks exact stack identity before removing items and refunds removed stacks if the economy payment fails. Broker progress grows from legitimate sold item volume, sell chains reward active batches within a short window, daily/weekly streaks reward repeated qualifying use, and staff can start temporary AutoSell boosts that appear in `/rate`. Admin commands can reload config/data/worth, run colored readiness checks, manage a hard material blacklist, blacklist materials directly from numbered material warnings, move materials between categories, inspect player profiles, review suspicious volume warnings, start/stop AutoSell boosts, and export Markdown reports.
 
 MobHat:
 

@@ -21,11 +21,11 @@ The GUI uses the shared hardened GUI service with safe holders, cancelled clicks
 - optional world toggles
 - a preview button that explains what would sell right now
 - a recent-results button for batched sale history
-- the player head with today's AutoSell total, cap, and broker level
+- the player head with today's AutoSell total, cap, broker level, sell chain, streak, and active boost
 
 AutoSell only runs after a short delayed batch, usually after a pickup or chunk move. The final sale runs on the main thread, snapshots exact stacks, rechecks that the inventory still matches, removes the items, pays the player, and refunds removed stacks if the economy payment fails.
 
-When chat notifications are selected, the batched sale message is hoverable and clickable. Hover shows the batch total, trigger, top sold materials, daily cap progress, and broker status. Click opens `/autosell recent` for the detailed sale history. Actionbar, title, and bossbar notification modes remain visual-only because Minecraft clients do not support hover/click actions there.
+When chat notifications are selected, the batched sale message is hoverable and clickable. Hover shows the batch total, trigger, top sold materials, daily cap progress, broker status, sell-chain status, streak status, and any active AutoSell boost. Click opens `/autosell recent` for the detailed sale history. Actionbar, title, and bossbar notification modes remain visual-only because Minecraft clients do not support hover/click actions there.
 
 ## Safety Model
 
@@ -45,6 +45,8 @@ AutoSell is built around anti-dupe and anti-farm guards:
 - chunk-change guard requires movement between successful sale cycles
 - overheat guard warns and pauses repeated sales from the same small area
 - daily money caps are permission-based and can be increased by broker progress
+- sell chains and streaks reward active moving gameplay, not static hopper/AFK selling
+- temporary AutoSell boosts can appear in `/rate` while active
 - suspicious volume warnings are stored and can be exported
 
 This plugin should not be used as a hopper, farm, or AFK seller. It is meant for players who move around and manually mine, dig, chop, or gather while keeping their inventory tidy.
@@ -72,6 +74,9 @@ This plugin should not be used as a hopper, farm, or AFK seller. It is meant for
 | `/autosell admin warnings` | admin/console | Shows recent suspicious sale warnings. |
 | `/autosell admin warnings blacklist <number>` | admin/console | Adds the material from a numbered material warning to the hard blacklist. |
 | `/autosell admin export` | admin/console | Writes a Discord-friendly Markdown report. |
+| `/autosell admin boost status` | admin/console | Shows the active AutoSell happy-hour boost, if any. |
+| `/autosell admin boost start <all\|category> <time> <multiplier>` | admin/console | Starts a temporary AutoSell boost that appears in `/rate`. |
+| `/autosell admin boost stop` | admin/console | Stops the active AutoSell boost. |
 | `/autosell admin blacklist list` | admin/console | Lists hard-blocked materials. |
 | `/autosell admin blacklist add <material>` | admin/console | Adds a material to the hard blacklist. |
 | `/autosell admin blacklist remove <material>` | admin/console | Removes a material from the hard blacklist. |
@@ -96,6 +101,9 @@ Examples:
 /autosell admin check
 /autosell admin warnings
 /autosell admin warnings blacklist 1
+/autosell admin boost status
+/autosell admin boost start mining 20m 1.25
+/autosell admin boost stop
 /autosell admin blacklist add diamond_block
 /autosell admin category move raw_iron mining
 /autosell admin inspect mrfloris
@@ -117,7 +125,26 @@ Daily caps are permission-aware:
 | `onembcmi.autosell.cap.500000` | $500,000/day |
 | `onembcmi.autosell.cap.unlimited` | unlimited |
 
-Broker progress counts legitimate sold item volume. By default, every 10,000 sold items can add broker points and a small temporary daily bonus, capped by `broker.max-multiplier-bonus`. Broker points can also unlock higher daily caps through config.
+Broker progress counts legitimate AutoSell item volume. Players increase broker level by keeping AutoSell enabled and selling eligible pure vanilla items from normal inventory storage slots. By default, every 10,000 sold items adds broker progress, grants broker points, and can add a small temporary daily bonus capped by `broker.max-multiplier-bonus`. Broker points can also unlock higher daily caps through config.
+
+The status output and player-head GUI lore show:
+
+- current broker level and broker points
+- how many more sold items are needed for the next broker level
+- today's broker bonus
+- current sell chain and streak state
+
+Sell chains are short active-session bonuses. A player has to keep producing legitimate AutoSell batches within the configured chain window. If they stop selling for too long, the chain expires and the next batch starts a new chain.
+
+Daily streaks are longer progression. A day qualifies when the player reaches the configured item or money threshold for that day. Consecutive qualifying days increase the streak and can add a small configured streak bonus. Weekly streak progress can unlock an additional weekly bonus after enough qualifying days in the same server week.
+
+Staff can run temporary AutoSell happy-hour boosts. These multiply AutoSell payouts for all categories or one configured category and are exposed to `/rate` while active:
+
+```text
+/autosell admin boost start all 20m 1.10
+/autosell admin boost start mining 30m 1.25
+/autosell admin boost stop
+```
 
 ## Worlds
 
