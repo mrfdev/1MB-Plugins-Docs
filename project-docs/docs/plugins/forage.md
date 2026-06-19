@@ -210,6 +210,7 @@ When a player validates a complete camp, Forage can show a short ready message a
 | `/forage admin resetcap <player>` | admin/console | Clears today's daily XP/action cap progress for testing. |
 | `/forage admin balance` | admin/console | Shows the active balance preset, multipliers, caps, source-family caps, tool price range, sample upgrade/improvement costs, repair sample cost, and quest reward ranges. |
 | `/forage admin livecheck` | admin/console | Shows the owner checklist for moving Forage from testing to live balance, including active preset, safety switches, caps, repair costs, and upgrade costs. |
+| `/forage admin check` | admin/console | Runs a colored config sanity report for `config.yml` and `quests.yml`, including YAML type drift, invalid materials/entities, source/tool/branch references, quest roll ranges, reward command prefixes, economy hook state, and live-readiness warnings. |
 | `/forage admin camps list [page]` | admin/console | Lists claimed Forage camp anchors. |
 | `/forage admin camps near` | admin | Inspects the nearest configured camp anchor from the admin's location. |
 | `/forage admin camps inspect <player\|key>` | admin/console | Shows camp claims by owner name/UUID or exact camp key. |
@@ -318,7 +319,13 @@ balance:
   preset: live
 ```
 
-Then run `/forage admin reload`, `/forage admin livecheck`, and `/forage admin balance`. The live checklist is read-only and still works while the global `enabled` switch is false, so the owner can review live readiness during an emergency toggle or before reopening the feature.
+Then run `/forage admin reload`, `/forage admin check`, `/forage admin livecheck`, and `/forage admin balance`. The config sanity check and live checklist are read-only and still work while the global `enabled` switch is false, so the owner can review YAML types, config references, live readiness, and balance tuning during an emergency toggle or before reopening the feature.
+
+### Config sanity check
+
+`/forage admin check` is the owner-facing preflight report for Forage config files. It checks managed default type drift, known Paper material names, entity type names, active balance preset values, enabled source family definitions, tool-to-family references, branch-to-family references, quest target/reward ranges, quest reward command safety prefixes, economy hook state, growth dust values, camp anchor material, low-durability protection, external repair command guards, and WorldGuard launch settings.
+
+The report uses soft green `ok:`, gold `warn:`, and pastel red `error:` labels. Errors mean a setting can break or silently change behavior, such as an invalid material or a tool pointing at a disabled source family. Warnings mean the setting is valid but should be reviewed before live, such as running on a testing preset or using broad command prefixes. Each finding includes what was wrong, what was expected, and a suggested fix.
 
 ## Placeholders
 
