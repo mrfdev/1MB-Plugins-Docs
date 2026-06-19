@@ -187,6 +187,7 @@ Default weekly cap unlocks are:
 
 | Unlock | Duration | Broker points |
 | --- | ---: | ---: |
+| $75,000 cap | 7 days | 4 |
 | $100,000 cap | 7 days | 6 |
 | $250,000 cap | 7 days | 15 |
 | $500,000 cap | 7 days | 30 |
@@ -198,6 +199,7 @@ Default lifetime cap unlocks are:
 
 | Unlock | Duration | Broker points |
 | --- | ---: | ---: |
+| $75,000 cap | lifetime | 15 |
 | $100,000 cap | lifetime | 20 |
 | $250,000 cap | lifetime | 60 |
 | $500,000 cap | lifetime | 120 |
