@@ -334,6 +334,7 @@ Boosters placeholders:
 %onembcmi_boosters.points.timeleft%
 %onembcmi_boosters.points.dependency%
 %onembcmi_boosters.runtime.recent_actions%
+%onembcmi_boosters.runtime.reminder_players%
 ```
 
 Legacy Boosters compatibility placeholders:

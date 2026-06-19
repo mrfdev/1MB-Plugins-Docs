@@ -610,6 +610,9 @@ Boosters:
 ```text
 /rate
 /rate status
+/rate reminders
+/rate reminders off
+/rate reminders on
 /rate info
 /rate help
 /rate start mcmmo 1h 2

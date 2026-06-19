@@ -9,6 +9,7 @@ The first merged version keeps parity with the old project where practical:
 - Detects PyroWelcomesPro Points multipliers from its config file.
 - Detects an active DiscordChat event multiplier from `plugins/1MB-CMIAPI/DiscordChat/config.yml` and shows it in `/rate` only while the event is active.
 - Keeps Points read-only/manual by default until live reload behavior is proven safe.
+- Sends subtle per-player active-booster reminders after join, with `/rate reminders` opt-out enabled by default.
 - Registers legacy `%onembboosters_*%` placeholders when PlaceholderAPI is installed.
 - Accepts legacy permissions `onemb.boosters.rate`, `onemb.boosters.admin`, and `onemb.boosters.debug` for migration.
 
@@ -18,6 +19,7 @@ The first merged version keeps parity with the old project where practical:
 - The new command is still `/rate`.
 - The new config lives at `plugins/1MB-CMIAPI/Boosters/config.yml`.
 - Runtime state lives at `plugins/1MB-CMIAPI/Boosters/booster-state.yml`.
+- Per-player reminder preferences live at `plugins/1MB-CMIAPI/Boosters/player-reminders.yml`.
 - The plugin does not import old state files automatically. Start with a clean state or start/stop boosters once through `/rate`.
 
 ## Commands
@@ -25,6 +27,7 @@ The first merged version keeps parity with the old project where practical:
 ```text
 /rate
 /rate status
+/rate reminders [on|off|status]
 /rate info
 /rate help
 /rate start <mcmmo|jobs|all> <time> <rate>
@@ -53,6 +56,9 @@ The first merged version keeps parity with the old project where practical:
 
 ```text
 /rate
+/rate reminders
+/rate reminders off
+/rate reminders on
 /rate info
 /rate start mcmmo 1h 2
 /rate start jobs 30m 2.5
@@ -76,6 +82,8 @@ onembcmi.boosters.use
 onembcmi.boosters.admin
 onembcmi.boosters.debug
 ```
+
+`onembcmi.boosters.use` also covers toggling your own `/rate reminders` preference.
 
 Legacy compatibility permissions:
 
@@ -107,6 +115,7 @@ Primary 1MB-CMIAPI placeholders:
 %onembcmi_boosters.points.timeleft%
 %onembcmi_boosters.points.dependency%
 %onembcmi_boosters.runtime.recent_actions%
+%onembcmi_boosters.runtime.reminder_players%
 ```
 
 Legacy PlaceholderAPI compatibility placeholders:
@@ -153,6 +162,10 @@ display.labels.mcmmo
 display.labels.jobs
 display.labels.points
 display.labels.discordchat
+reminders.enabled
+reminders.default-on
+reminders.first-delay-seconds
+reminders.second-delay-seconds
 tab-completion.common-durations
 tab-completion.common-rates
 logging.audit-to-console
@@ -204,6 +217,10 @@ Points reads PyroWelcomesPro `config.yml` and compares current values with confi
 
 DiscordChat reads the DiscordChat feature config and shows a DiscordChat row only when `event-multiplier.enabled` is true, the multiplier is above `1.0`, and the configured end time has not passed. Inactive DiscordChat multipliers stay hidden from `/rate` by default.
 
+Player reminders are passive. When enabled globally and enabled for the player, Boosters schedules two join reminders: one after `reminders.first-delay-seconds` and one `reminders.second-delay-seconds` later. Each scheduled reminder re-checks permissions, the player's opt-out, and current active booster state before sending anything. If no booster is active by then, nothing is sent.
+
+`/rate reminders` toggles a player's reminder preference. `/rate reminders on`, `/rate reminders off`, and `/rate reminders status` are also accepted. Reminder chat uses a clickable `[Boosters]` prefix and clickable message body that runs `/rate`; the hover text lists the active booster details and mentions `/rate reminders`.
+
 ## CMI / CMILib / CMI-API Usage
 
 Boosters is a normal 1MB-CMIAPI feature jar. It depends on CMI, CMILib, and `1MB-CMIAPI-Lib`, uses the shared feature registry, shared MiniMessage output, shared config comments, shared docs/debug shape, and shared PlaceholderAPI registration path.
@@ -217,6 +234,7 @@ Boosters uses Paper/Bukkit command, plugin, scheduler, YAML, and event APIs. It 
 ## Security Notes
 
 - Player-facing `/rate` status is read-only.
+- Player-facing `/rate reminders` only writes that sender's own boolean preference.
 - Status, debug, and placeholder reads never trigger booster stop broadcasts or stop command hooks.
 - Start, stop, reload, debug, and config edits require admin/debug permissions.
 - `/rate debug set config` only accepts known scalar config paths from this plugin's defaults.
@@ -229,6 +247,8 @@ Boosters uses Paper/Bukkit command, plugin, scheduler, YAML, and event APIs. It 
 ```text
 /rate
 /rate start mcmmo 5m 2
+/rate reminders off
+/rate reminders on
 /rate debug state
 /rate stop mcmmo
 /rate start jobs 5m 2
