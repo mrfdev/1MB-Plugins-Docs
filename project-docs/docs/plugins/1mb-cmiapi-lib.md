@@ -224,6 +224,8 @@ When `use-global-filler-material` is `true`, the feature ignores its local fille
 
 Current GUI features using the shared theme include VoteTokens, GameTypes, and Trades.
 
+Shared GUI buttons also normalize display names and lore for item tooltips. `GuiButton.item(...)` and `GuiButton.playerHead(...)` render names and lore without Minecraft's default italic styling, strip legacy color codes, and apply soft tooltip colors for readable `key: value` lines, clickable call-to-action lines, and `ok`/`missing` style status values. Feature plugins should use these shared helpers for ordinary GUI buttons so menus keep a consistent readable tooltip style.
+
 ## Placeholders
 
 ```text
