@@ -219,6 +219,24 @@ PluginVersions:
 /pv export discord
 ```
 
+PlaceholderHealth:
+
+```text
+/placeholderhealth
+/placeholderhealth info
+/placeholderhealth help
+/placeholderhealth check
+/placeholderhealth check mrfloris
+/placeholderhealth list
+/placeholderhealth export
+/placeholderhealth export mrfloris
+/placeholderhealth reload
+/placeholderhealth debug placeholders
+/placeholderhealth debug all
+```
+
+`/placeholderhealth` is a read-only server-owner monitor for configured PlaceholderAPI samples. It parses each configured CMI or `onembcmi` placeholder, flags unresolved, empty, slow, or erroring output, and can export the last or freshly-run check as a Discord-friendly Markdown report. Unlike `/placeholderprobe`, it is not for ad hoc one-off placeholder input; it is for the known sample set you want to keep healthy.
+
 Upgrade:
 
 ```text
@@ -902,9 +920,14 @@ Forage:
 /forage
 /forage info
 /forage help
+/forage guide
+/forage status
+/forage limits
 /forage shop
 /forage stats
 /forage quests
+/forage branches
+/forage branch herbalist
 /forage top
 /forage top points
 /forage top daily
@@ -916,7 +939,23 @@ Forage:
 /forage dust
 /forage admin give mrfloris sickle 1
 /forage admin give mrfloris axe 2
+/forage admin give mrfloris sword 1
+/forage admin give mrfloris mace 1
 /forage admin inspect mrfloris
+/forage admin inspectitem mrfloris main
+/forage admin inspectitem mrfloris offhand
+/forage admin xp mrfloris 500
+/forage admin level mrfloris 25
+/forage admin points mrfloris 1000
+/forage admin toollevel mrfloris 12
+/forage admin resetcap mrfloris
+/forage admin balance
+/forage admin livecheck
+/forage admin camps list
+/forage admin camps near
+/forage admin camps inspect mrfloris
+/forage admin camps release near
+/forage admin camps reassign near mrfloris
 /forage admin chunks
 /forage admin reload
 /forage admin save
@@ -925,7 +964,7 @@ Forage:
 /forage debug all
 ```
 
-`/forage` opens the v1 Forage hub GUI. Players can buy curated PDC-marked tools from the CMI-backed Vault shop, view their level/XP/points, complete daily and weekly `/forage quests`, read tips, inspect supported source families, view `/forage top` leaderboards, compost plain vanilla forage items near a complete camp, make PDC-marked Forage Dust for bounded growth pulses, repair and merge matching tools near a complete camp, and check whether a nearby camp build is ready. Forage progress only counts when a configured natural block is broken with a matching Forage tool in an allowed world. Frequent progress, compost, growth, quest, treasure, level, and chunk exhaustion messages are batched into a clickable summary, and `/forage recent` shows the latest details. Daily caps and chunk/source-family exhaustion keep v1 from becoming a farm exploit while the system is tuned. Forage Dust does not award Forage XP or points. When WorldGuard is installed, the default conservative check only counts actions in locations without a specific protected region. Admin commands can give tools, inspect player profiles and held tool PDC, view chunk exhaustion counts, reload config/data, and use the shared debug pages.
+`/forage` opens the v1 Forage hub GUI. Players can use `/forage guide` for the first-run camp/tool/limits path, buy curated PDC-marked tools from the CMI-backed Vault camp shop, unlock Tier 2 pickaxe, brush, sword, and mace tools after growing any Forage tool to the configured level, view their level/XP/points, use `/forage status` for a compact progress and next-step summary, use `/forage limits` for daily caps, family caps, economy costs, and quest reward ranges, choose a small focused skill branch with `/forage branches`, complete daily, weekly, and monthly `/forage quests` from `quests.yml` for point, XP, and money rewards, read tips, inspect supported source families, view `/forage top` leaderboards, compost plain vanilla forage items near a complete camp, make PDC-marked Forage Dust for bounded growth pulses, upgrade held tools from the camp page, refine supported tools to diamond, add controlled Unbreaking/Efficiency upgrades, repair and merge matching tools near a complete camp, and check whether a nearby camp build is ready. Guide, stats, status, limits, and camp setup stay available away from camp, but the shop and broader activity pages expect a complete nearby camp. Forage progress only counts when a configured natural block is broken or a configured entity is killed with the matching Forage tool in an allowed world. The default tool ownership is intentionally non-overlapping: axe owns logs/fruits, shears own leaves, trowel owns moss, pickaxe owns cave/stone, brush owns sands/relics, sword owns gentle creature sources, and mace owns danger sources. Matching branch actions can grant small configured XP, point, and treasure chance bonuses. Frequent progress, branch, compost, growth, quest, treasure, level, and chunk exhaustion messages are batched into a clickable summary, `/forage recent` shows the latest details, and chunk exhaustion now also gives an immediate short warning so players can move on faster. Global daily caps slow total progress, while per-source-family daily caps let players switch tools and continue with another route when one family is capped. Forage Dust does not award Forage XP or points. When WorldGuard is installed, the default conservative check only counts actions in locations without a specific protected region. Camp anchors are UUID-owned on first real use. Admin commands can give tools, inspect player profiles, inspect held/offhand/armor item PDC and repair-guard state, add or remove profile XP and points, set profile or held-tool levels for testing, reset today's global and per-family daily cap progress, view the active balance preset/cost/cap report, run the read-only `/forage admin livecheck` readiness checklist for the suggested live preset, manage camp claims, view chunk exhaustion counts, reload config/data, and use the shared debug pages.
 
 MobHat:
 

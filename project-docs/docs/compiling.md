@@ -21,13 +21,21 @@ gradle clean refreshBuildDocs build
 
 `refreshBuildDocs` updates documented jar names and build metadata examples after `buildNumber` changes. `build` also runs `verifyBuildMetadata`, which fails if docs or generated debug metadata are stale.
 
+To check whether the public Starlight docs mirror is current, run:
+
+```bash
+gradle checkPublicDocsSync
+```
+
+This is a read-only drift check against the public `1MB-Plugins-Docs` checkout. Use `PUBLIC_DOCS_REPO=/path/to/1MB-Plugins-Docs` when the public docs repo is not in the default sibling folder.
+
 Expected jar naming:
 
 ```text
-1MB-CMIAPI-LIB-v1.0.0-434-j25-26.1.2.jar
-1MB-CMIAPI-AFKShrine-v1.0.0-434-j25-26.1.2.jar
-1MB-CMIAPI-StaffCenter-v1.0.0-434-j25-26.1.2.jar
-1MB-CMIAPI-Profile-v1.0.0-434-j25-26.1.2.jar
+1MB-CMIAPI-LIB-v1.0.0-466-j25-26.1.2.jar
+1MB-CMIAPI-AFKShrine-v1.0.0-466-j25-26.1.2.jar
+1MB-CMIAPI-StaffCenter-v1.0.0-466-j25-26.1.2.jar
+1MB-CMIAPI-Profile-v1.0.0-466-j25-26.1.2.jar
 ```
 
 After a successful feature or library build, copy the output jar into:

@@ -13,65 +13,66 @@ All jars should follow this shape:
 Examples:
 
 ```text
-1MB-CMIAPI-LIB-v1.0.0-434-j25-26.1.2.jar
-1MB-CMIAPI-AFKShrine-v1.0.0-434-j25-26.1.2.jar
-1MB-CMIAPI-RecordingMode-v1.0.0-434-j25-26.1.2.jar
-1MB-CMIAPI-SellStreaks-v1.0.0-434-j25-26.1.2.jar
-1MB-CMIAPI-ScheduledTips-v1.0.0-434-j25-26.1.2.jar
-1MB-CMIAPI-Visit-v1.0.0-434-j25-26.1.2.jar
-1MB-CMIAPI-PassportDiscovery-v1.0.0-434-j25-26.1.2.jar
-1MB-CMIAPI-SocialGatherings-v1.0.0-434-j25-26.1.2.jar
-1MB-CMIAPI-JourneyMap-v1.0.0-434-j25-26.1.2.jar
-1MB-CMIAPI-KitStreaks-v1.0.0-434-j25-26.1.2.jar
-1MB-CMIAPI-MessageFont-v1.0.0-434-j25-26.1.2.jar
-1MB-CMIAPI-Nick-v1.0.0-434-j25-26.1.2.jar
-1MB-CMIAPI-EmoteMenu-v1.0.0-434-j25-26.1.2.jar
-1MB-CMIAPI-PvPToggle-v1.0.0-434-j25-26.1.2.jar
-1MB-CMIAPI-Boosters-v1.0.0-434-j25-26.1.2.jar
-1MB-CMIAPI-NameMC-v1.0.0-434-j25-26.1.2.jar
-1MB-CMIAPI-Trades-v1.0.0-434-j25-26.1.2.jar
-1MB-CMIAPI-VoteTokens-v1.0.0-434-j25-26.1.2.jar
-1MB-CMIAPI-DiscordChat-v1.0.0-434-j25-26.1.2.jar
-1MB-CMIAPI-GameTypes-v1.0.0-434-j25-26.1.2.jar
-1MB-CMIAPI-BirthdayLanterns-v1.0.0-434-j25-26.1.2.jar
-1MB-CMIAPI-LavaBoots-v1.0.0-434-j25-26.1.2.jar
-1MB-CMIAPI-Spawners-v1.0.0-434-j25-26.1.2.jar
-1MB-CMIAPI-Collect-v1.0.0-434-j25-26.1.2.jar
-1MB-CMIAPI-Forage-v1.0.0-434-j25-26.1.2.jar
-1MB-CMIAPI-MobHat-v1.0.0-434-j25-26.1.2.jar
-1MB-CMIAPI-PlayerTodo-v1.0.0-434-j25-26.1.2.jar
-1MB-CMIAPI-Refer-v1.0.0-434-j25-26.1.2.jar
-1MB-CMIAPI-TPAuto-v1.0.0-434-j25-26.1.2.jar
-1MB-CMIAPI-Menu-v1.0.0-434-j25-26.1.2.jar
-1MB-CMIAPI-StaffCenter-v1.0.0-434-j25-26.1.2.jar
-1MB-CMIAPI-Profile-v1.0.0-434-j25-26.1.2.jar
-1MB-CMIAPI-FilterLab-v1.0.0-434-j25-26.1.2.jar
-1MB-CMIAPI-FilterGuard-v1.0.0-434-j25-26.1.2.jar
-1MB-CMIAPI-WarningLens-v1.0.0-434-j25-26.1.2.jar
-1MB-CMIAPI-NotableMsg-v1.0.0-434-j25-26.1.2.jar
-1MB-CMIAPI-1MBStaffMsg-v1.0.0-434-j25-26.1.2.jar
-1MB-CMIAPI-CmdCostDashboard-v1.0.0-434-j25-26.1.2.jar
-1MB-CMIAPI-CMIConfig-v1.0.0-434-j25-26.1.2.jar
-1MB-CMIAPI-ConsoleNoiseRouter-v1.0.0-434-j25-26.1.2.jar
-1MB-CMIAPI-EconomyGuardian-v1.0.0-434-j25-26.1.2.jar
-1MB-CMIAPI-StartupDoctor-v1.0.0-434-j25-26.1.2.jar
-1MB-CMIAPI-UpdateSmoke-v1.0.0-434-j25-26.1.2.jar
-1MB-CMIAPI-PluginVersions-v1.0.0-434-j25-26.1.2.jar
-1MB-CMIAPI-Potions-v1.0.0-434-j25-26.1.2.jar
-1MB-CMIAPI-Upgrade-v1.0.0-434-j25-26.1.2.jar
-1MB-CMIAPI-EndCrystals-v1.0.0-434-j25-26.1.2.jar
-1MB-CMIAPI-WorldSnapshot-v1.0.0-434-j25-26.1.2.jar
-1MB-CMIAPI-SparkReviewer-v1.0.0-434-j25-26.1.2.jar
-1MB-CMIAPI-Hoppers-v1.0.0-434-j25-26.1.2.jar
-1MB-CMIAPI-EventRecorder-v1.0.0-434-j25-26.1.2.jar
-1MB-CMIAPI-CMIProbe-v1.0.0-434-j25-26.1.2.jar
-1MB-CMIAPI-CMIDatabase-v1.0.0-434-j25-26.1.2.jar
-1MB-CMIAPI-PlaceholderProbe-v1.0.0-434-j25-26.1.2.jar
-1MB-CMIAPI-CMIPlaceholderCheck-v1.0.0-434-j25-26.1.2.jar
-1MB-CMIAPI-1MBPlaceholders-v1.0.0-434-j25-26.1.2.jar
-1MB-CMIAPI-WarpAudit-v1.0.0-434-j25-26.1.2.jar
-1MB-CMIAPI-WorthDrift-v1.0.0-434-j25-26.1.2.jar
-1MB-CMIAPI-WorthHelper-v1.0.0-434-j25-26.1.2.jar
+1MB-CMIAPI-LIB-v1.0.0-466-j25-26.1.2.jar
+1MB-CMIAPI-AFKShrine-v1.0.0-466-j25-26.1.2.jar
+1MB-CMIAPI-RecordingMode-v1.0.0-466-j25-26.1.2.jar
+1MB-CMIAPI-SellStreaks-v1.0.0-466-j25-26.1.2.jar
+1MB-CMIAPI-ScheduledTips-v1.0.0-466-j25-26.1.2.jar
+1MB-CMIAPI-Visit-v1.0.0-466-j25-26.1.2.jar
+1MB-CMIAPI-PassportDiscovery-v1.0.0-466-j25-26.1.2.jar
+1MB-CMIAPI-SocialGatherings-v1.0.0-466-j25-26.1.2.jar
+1MB-CMIAPI-JourneyMap-v1.0.0-466-j25-26.1.2.jar
+1MB-CMIAPI-KitStreaks-v1.0.0-466-j25-26.1.2.jar
+1MB-CMIAPI-MessageFont-v1.0.0-466-j25-26.1.2.jar
+1MB-CMIAPI-Nick-v1.0.0-466-j25-26.1.2.jar
+1MB-CMIAPI-EmoteMenu-v1.0.0-466-j25-26.1.2.jar
+1MB-CMIAPI-PvPToggle-v1.0.0-466-j25-26.1.2.jar
+1MB-CMIAPI-Boosters-v1.0.0-466-j25-26.1.2.jar
+1MB-CMIAPI-NameMC-v1.0.0-466-j25-26.1.2.jar
+1MB-CMIAPI-Trades-v1.0.0-466-j25-26.1.2.jar
+1MB-CMIAPI-VoteTokens-v1.0.0-466-j25-26.1.2.jar
+1MB-CMIAPI-DiscordChat-v1.0.0-466-j25-26.1.2.jar
+1MB-CMIAPI-GameTypes-v1.0.0-466-j25-26.1.2.jar
+1MB-CMIAPI-BirthdayLanterns-v1.0.0-466-j25-26.1.2.jar
+1MB-CMIAPI-LavaBoots-v1.0.0-466-j25-26.1.2.jar
+1MB-CMIAPI-Spawners-v1.0.0-466-j25-26.1.2.jar
+1MB-CMIAPI-Collect-v1.0.0-466-j25-26.1.2.jar
+1MB-CMIAPI-Forage-v1.0.0-466-j25-26.1.2.jar
+1MB-CMIAPI-MobHat-v1.0.0-466-j25-26.1.2.jar
+1MB-CMIAPI-PlayerTodo-v1.0.0-466-j25-26.1.2.jar
+1MB-CMIAPI-Refer-v1.0.0-466-j25-26.1.2.jar
+1MB-CMIAPI-TPAuto-v1.0.0-466-j25-26.1.2.jar
+1MB-CMIAPI-Menu-v1.0.0-466-j25-26.1.2.jar
+1MB-CMIAPI-StaffCenter-v1.0.0-466-j25-26.1.2.jar
+1MB-CMIAPI-Profile-v1.0.0-466-j25-26.1.2.jar
+1MB-CMIAPI-FilterLab-v1.0.0-466-j25-26.1.2.jar
+1MB-CMIAPI-FilterGuard-v1.0.0-466-j25-26.1.2.jar
+1MB-CMIAPI-WarningLens-v1.0.0-466-j25-26.1.2.jar
+1MB-CMIAPI-NotableMsg-v1.0.0-466-j25-26.1.2.jar
+1MB-CMIAPI-1MBStaffMsg-v1.0.0-466-j25-26.1.2.jar
+1MB-CMIAPI-CmdCostDashboard-v1.0.0-466-j25-26.1.2.jar
+1MB-CMIAPI-CMIConfig-v1.0.0-466-j25-26.1.2.jar
+1MB-CMIAPI-ConsoleNoiseRouter-v1.0.0-466-j25-26.1.2.jar
+1MB-CMIAPI-EconomyGuardian-v1.0.0-466-j25-26.1.2.jar
+1MB-CMIAPI-StartupDoctor-v1.0.0-466-j25-26.1.2.jar
+1MB-CMIAPI-UpdateSmoke-v1.0.0-466-j25-26.1.2.jar
+1MB-CMIAPI-PluginVersions-v1.0.0-466-j25-26.1.2.jar
+1MB-CMIAPI-PlaceholderHealth-v1.0.0-466-j25-26.1.2.jar
+1MB-CMIAPI-Potions-v1.0.0-466-j25-26.1.2.jar
+1MB-CMIAPI-Upgrade-v1.0.0-466-j25-26.1.2.jar
+1MB-CMIAPI-EndCrystals-v1.0.0-466-j25-26.1.2.jar
+1MB-CMIAPI-WorldSnapshot-v1.0.0-466-j25-26.1.2.jar
+1MB-CMIAPI-SparkReviewer-v1.0.0-466-j25-26.1.2.jar
+1MB-CMIAPI-Hoppers-v1.0.0-466-j25-26.1.2.jar
+1MB-CMIAPI-EventRecorder-v1.0.0-466-j25-26.1.2.jar
+1MB-CMIAPI-CMIProbe-v1.0.0-466-j25-26.1.2.jar
+1MB-CMIAPI-CMIDatabase-v1.0.0-466-j25-26.1.2.jar
+1MB-CMIAPI-PlaceholderProbe-v1.0.0-466-j25-26.1.2.jar
+1MB-CMIAPI-CMIPlaceholderCheck-v1.0.0-466-j25-26.1.2.jar
+1MB-CMIAPI-1MBPlaceholders-v1.0.0-466-j25-26.1.2.jar
+1MB-CMIAPI-WarpAudit-v1.0.0-466-j25-26.1.2.jar
+1MB-CMIAPI-WorthDrift-v1.0.0-466-j25-26.1.2.jar
+1MB-CMIAPI-WorthHelper-v1.0.0-466-j25-26.1.2.jar
 ```
 
 ## Local Build
@@ -87,6 +88,25 @@ When a Gradle wrapper exists:
 ```
 
 `BuildConstants.java` is generated by Gradle from `gradle.properties`, so `/1mbcmi debug`, feature debug output, plugin.yml versions, jar filenames, and docs all use the same version/build source. `gradle build` runs `verifyBuildMetadata` and fails when documented jar examples or generated constants are stale. After changing `buildNumber`, run `gradle refreshBuildDocs` before the build.
+
+## Public Docs Sync Check
+
+Before release handoff or public-docs updates, run:
+
+```bash
+gradle checkPublicDocsSync
+```
+
+This read-only check compares this private repo's `README.md` and `docs/` against the public `1MB-Plugins-Docs/project-docs/` mirror, regenerates Starlight content in a temporary copy, compares it with the committed public site content, and verifies the GitHub Pages domain metadata for `https://docs.1moreblock.com`.
+
+If it reports drift, refresh the public docs repo from that repo:
+
+```bash
+PRIVATE_DOCS_SOURCE=/Users/floris/Projects/Codex/CMI-API npm run docs:sync
+npm run build
+```
+
+Then review, commit, and push the public docs repository separately.
 
 ## Copy To Project Test Server
 

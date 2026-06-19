@@ -34,7 +34,7 @@ Every feature jar that does not implement a local debug command inherits `/<plug
 | Player Fun | [LavaBoots](lavaboots.md) | `/lavaboots` finite PDC-marked lava-assist boots with dyed leather themes, charge, durability drain, offhand fuel, movement assist, short fire-resistance windows, lava vision event tiers, and repair/anvil/enchant guards. |
 | Player Fun | [Spawners](spawners.md) | `/spawners` CMI spawner shop GUI with Paper entity discovery, spawn egg shop icons, tier-split friendly pages, glint availability markers, blocked utility-entity filters, restricted admin-only spawner browsing, CMI placespawner permission checks, confirmation purchases, CMI-backed Vault economy payments, annual event limits, stock caps, event progress, admin toggles, shift-click spawner editing, per-id disables, price overrides, category moves, future tier/group tools, DiscordSRV staff logs, setup command exports, and safe sell-section scaffolding. |
 | Player Fun | [Collect](collect.md) | `/collect` seasonal event GUI for safe inventory-scanned item submissions, event-score bonuses, capped virtual Lucky Finds, community progress, personal milestones, hidden future weeks, top-3 highlighted leaderboards, streaks, PDC keepsake rewards, duplicate reward exchange, reward command hooks, and admin debug week/day/date controls. |
-| Player Fun | [Forage](forage.md) | `/forage` v1 tool-gated nature progression with curated PDC tools, CMI-backed Vault tool shop, XP/points, daily and weekly quests, read-only top boards, camp-ready feedback, camp-only tool upgrades, camp composter turn-ins, Forage Dust growth pulses, tool soul lore, daily caps, chunk exhaustion, WorldGuard global-only checks, camp validation, camp-only Repair & Merge, tips, placeholders, and safe GUI handling. |
+| Player Fun | [Forage](forage.md) | `/forage` v1 tool-gated nature progression with curated PDC tools, CMI-backed Vault camp shop, Tier 2 pickaxe/brush/sword/mace unlocks, block and entity source families with non-overlapping default tool ownership, player XP/tool XP balance presets, global and per-family daily caps, XP/points, daily, weekly, and monthly quests, read-only top boards, camp-ready feedback, camp-only tier upgrades, diamond refinement, controlled Unbreaking/Efficiency improvements, camp-anchor turn-ins, multi-tier Forage Dust growth pulses with rare legendary treasure dust, tool soul lore, chunk exhaustion, WorldGuard global-only checks, camp validation, camp-only Repair & Merge, tips, placeholders, and safe GUI handling. |
 | Player Fun | [Forage Roadmap](forage-roadmap.md) | Planning notes for long-term `/forage` expansion with camps, skill trees, seasonal profiles, magic growth systems, derbies, storage-hardening discussion, and staged v2/v3 rollout ideas. |
 | Player Fun | [MobHat](mobhat.md) | Cosmetic whitelisted mob hats with optional `/hat mob` alias support, world safety, scale handling, and experimental offset positions. |
 | Player Fun | [PlayerTodo](todo.md) | Small per-player todo lists stored in shared playerdata so players do not have to mail notes to themselves. |
@@ -55,6 +55,7 @@ Every feature jar that does not implement a local debug command inherits `/<plug
 | Server Management | [StartupDoctor](startupdoctor.md) | Startup/runtime diagnostics plus read-only folder doctor suggestions and export reports. |
 | Server Management | [UpdateSmoke](updatesmoke.md) | Post-update smoke checks for hooks, commands, placeholders, feature metadata, and key CMI/CMILib APIs. |
 | Server Management | [PluginVersions](pluginversions.md) | Plugin version inventory, tested Java/Paper/dependency gate, URL curation, and Markdown/Discord export reports migrated from the standalone PluginVersions project. |
+| Server Management | [PlaceholderHealth](placeholderhealth.md) | Read-only PlaceholderAPI health monitor for configured CMI and 1MB placeholders with ok/warn/error checks and Markdown exports. |
 | Server Management | [Potions](potions.md) | Locked `/_potions` admin forge plus player-safe `/potions` held-item inspection for PDC-marked custom event potions with split config files, GUI definition editing, collection bundle generation, 14 style choices, snapshotted costs, particle presets, collections, and runtime disable controls. |
 | Server Management | [SchedulerCheck](schedulercheck.md) | Direct-console CMI scheduler YAML validator for syntax, timing ranges, command lists, enabled toggles, and Markdown exports. |
 | Server Management | [Upgrade](upgrade.md) | Admin-only `/_upgrade` helper that simulates, suggests, and applies guarded LuckPerms group upgrades from join-date and playtime signals, with a review queue GUI, optional cosmetic rewards, promotion effects, and Discord link reminders. |
@@ -106,66 +107,67 @@ Runtime jars use this shape:
 Examples:
 
 ```text
-1MB-CMIAPI-LIB-v1.0.0-434-j25-26.1.2.jar
-1MB-CMIAPI-AFKShrine-v1.0.0-434-j25-26.1.2.jar
-1MB-CMIAPI-RecordingMode-v1.0.0-434-j25-26.1.2.jar
-1MB-CMIAPI-SellStreaks-v1.0.0-434-j25-26.1.2.jar
-1MB-CMIAPI-ScheduledTips-v1.0.0-434-j25-26.1.2.jar
-1MB-CMIAPI-Visit-v1.0.0-434-j25-26.1.2.jar
-1MB-CMIAPI-PassportDiscovery-v1.0.0-434-j25-26.1.2.jar
-1MB-CMIAPI-SocialGatherings-v1.0.0-434-j25-26.1.2.jar
-1MB-CMIAPI-JourneyMap-v1.0.0-434-j25-26.1.2.jar
-1MB-CMIAPI-KitStreaks-v1.0.0-434-j25-26.1.2.jar
-1MB-CMIAPI-MessageFont-v1.0.0-434-j25-26.1.2.jar
-1MB-CMIAPI-Nick-v1.0.0-434-j25-26.1.2.jar
-1MB-CMIAPI-EmoteMenu-v1.0.0-434-j25-26.1.2.jar
-1MB-CMIAPI-PvPToggle-v1.0.0-434-j25-26.1.2.jar
-1MB-CMIAPI-Boosters-v1.0.0-434-j25-26.1.2.jar
-1MB-CMIAPI-NameMC-v1.0.0-434-j25-26.1.2.jar
-1MB-CMIAPI-Trades-v1.0.0-434-j25-26.1.2.jar
-1MB-CMIAPI-VoteTokens-v1.0.0-434-j25-26.1.2.jar
-1MB-CMIAPI-DiscordChat-v1.0.0-434-j25-26.1.2.jar
-1MB-CMIAPI-GameTypes-v1.0.0-434-j25-26.1.2.jar
-1MB-CMIAPI-BirthdayLanterns-v1.0.0-434-j25-26.1.2.jar
-1MB-CMIAPI-LavaBoots-v1.0.0-434-j25-26.1.2.jar
-1MB-CMIAPI-Spawners-v1.0.0-434-j25-26.1.2.jar
-1MB-CMIAPI-Collect-v1.0.0-434-j25-26.1.2.jar
-1MB-CMIAPI-Forage-v1.0.0-434-j25-26.1.2.jar
-1MB-CMIAPI-MobHat-v1.0.0-434-j25-26.1.2.jar
-1MB-CMIAPI-PlayerTodo-v1.0.0-434-j25-26.1.2.jar
-1MB-CMIAPI-Refer-v1.0.0-434-j25-26.1.2.jar
-1MB-CMIAPI-TPAuto-v1.0.0-434-j25-26.1.2.jar
-1MB-CMIAPI-Menu-v1.0.0-434-j25-26.1.2.jar
-1MB-CMIAPI-StaffCenter-v1.0.0-434-j25-26.1.2.jar
-1MB-CMIAPI-Profile-v1.0.0-434-j25-26.1.2.jar
-1MB-CMIAPI-FilterLab-v1.0.0-434-j25-26.1.2.jar
-1MB-CMIAPI-FilterGuard-v1.0.0-434-j25-26.1.2.jar
-1MB-CMIAPI-WarningLens-v1.0.0-434-j25-26.1.2.jar
-1MB-CMIAPI-NotableMsg-v1.0.0-434-j25-26.1.2.jar
-1MB-CMIAPI-1MBStaffMsg-v1.0.0-434-j25-26.1.2.jar
-1MB-CMIAPI-CmdCostDashboard-v1.0.0-434-j25-26.1.2.jar
-1MB-CMIAPI-CMIConfig-v1.0.0-434-j25-26.1.2.jar
-1MB-CMIAPI-ConsoleNoiseRouter-v1.0.0-434-j25-26.1.2.jar
-1MB-CMIAPI-EconomyGuardian-v1.0.0-434-j25-26.1.2.jar
-1MB-CMIAPI-StartupDoctor-v1.0.0-434-j25-26.1.2.jar
-1MB-CMIAPI-UpdateSmoke-v1.0.0-434-j25-26.1.2.jar
-1MB-CMIAPI-PluginVersions-v1.0.0-434-j25-26.1.2.jar
-1MB-CMIAPI-Potions-v1.0.0-434-j25-26.1.2.jar
-1MB-CMIAPI-SchedulerCheck-v1.0.0-434-j25-26.1.2.jar
-1MB-CMIAPI-Upgrade-v1.0.0-434-j25-26.1.2.jar
-1MB-CMIAPI-EndCrystals-v1.0.0-434-j25-26.1.2.jar
-1MB-CMIAPI-WorldSnapshot-v1.0.0-434-j25-26.1.2.jar
-1MB-CMIAPI-SparkReviewer-v1.0.0-434-j25-26.1.2.jar
-1MB-CMIAPI-Hoppers-v1.0.0-434-j25-26.1.2.jar
-1MB-CMIAPI-EventRecorder-v1.0.0-434-j25-26.1.2.jar
-1MB-CMIAPI-PlaceholderProbe-v1.0.0-434-j25-26.1.2.jar
-1MB-CMIAPI-CMIPlaceholderCheck-v1.0.0-434-j25-26.1.2.jar
-1MB-CMIAPI-1MBPlaceholders-v1.0.0-434-j25-26.1.2.jar
-1MB-CMIAPI-WarpAudit-v1.0.0-434-j25-26.1.2.jar
-1MB-CMIAPI-WorthDrift-v1.0.0-434-j25-26.1.2.jar
-1MB-CMIAPI-WorthHelper-v1.0.0-434-j25-26.1.2.jar
-1MB-CMIAPI-CMIProbe-v1.0.0-434-j25-26.1.2.jar
-1MB-CMIAPI-CMIDatabase-v1.0.0-434-j25-26.1.2.jar
+1MB-CMIAPI-LIB-v1.0.0-466-j25-26.1.2.jar
+1MB-CMIAPI-AFKShrine-v1.0.0-466-j25-26.1.2.jar
+1MB-CMIAPI-RecordingMode-v1.0.0-466-j25-26.1.2.jar
+1MB-CMIAPI-SellStreaks-v1.0.0-466-j25-26.1.2.jar
+1MB-CMIAPI-ScheduledTips-v1.0.0-466-j25-26.1.2.jar
+1MB-CMIAPI-Visit-v1.0.0-466-j25-26.1.2.jar
+1MB-CMIAPI-PassportDiscovery-v1.0.0-466-j25-26.1.2.jar
+1MB-CMIAPI-SocialGatherings-v1.0.0-466-j25-26.1.2.jar
+1MB-CMIAPI-JourneyMap-v1.0.0-466-j25-26.1.2.jar
+1MB-CMIAPI-KitStreaks-v1.0.0-466-j25-26.1.2.jar
+1MB-CMIAPI-MessageFont-v1.0.0-466-j25-26.1.2.jar
+1MB-CMIAPI-Nick-v1.0.0-466-j25-26.1.2.jar
+1MB-CMIAPI-EmoteMenu-v1.0.0-466-j25-26.1.2.jar
+1MB-CMIAPI-PvPToggle-v1.0.0-466-j25-26.1.2.jar
+1MB-CMIAPI-Boosters-v1.0.0-466-j25-26.1.2.jar
+1MB-CMIAPI-NameMC-v1.0.0-466-j25-26.1.2.jar
+1MB-CMIAPI-Trades-v1.0.0-466-j25-26.1.2.jar
+1MB-CMIAPI-VoteTokens-v1.0.0-466-j25-26.1.2.jar
+1MB-CMIAPI-DiscordChat-v1.0.0-466-j25-26.1.2.jar
+1MB-CMIAPI-GameTypes-v1.0.0-466-j25-26.1.2.jar
+1MB-CMIAPI-BirthdayLanterns-v1.0.0-466-j25-26.1.2.jar
+1MB-CMIAPI-LavaBoots-v1.0.0-466-j25-26.1.2.jar
+1MB-CMIAPI-Spawners-v1.0.0-466-j25-26.1.2.jar
+1MB-CMIAPI-Collect-v1.0.0-466-j25-26.1.2.jar
+1MB-CMIAPI-Forage-v1.0.0-466-j25-26.1.2.jar
+1MB-CMIAPI-MobHat-v1.0.0-466-j25-26.1.2.jar
+1MB-CMIAPI-PlayerTodo-v1.0.0-466-j25-26.1.2.jar
+1MB-CMIAPI-Refer-v1.0.0-466-j25-26.1.2.jar
+1MB-CMIAPI-TPAuto-v1.0.0-466-j25-26.1.2.jar
+1MB-CMIAPI-Menu-v1.0.0-466-j25-26.1.2.jar
+1MB-CMIAPI-StaffCenter-v1.0.0-466-j25-26.1.2.jar
+1MB-CMIAPI-Profile-v1.0.0-466-j25-26.1.2.jar
+1MB-CMIAPI-FilterLab-v1.0.0-466-j25-26.1.2.jar
+1MB-CMIAPI-FilterGuard-v1.0.0-466-j25-26.1.2.jar
+1MB-CMIAPI-WarningLens-v1.0.0-466-j25-26.1.2.jar
+1MB-CMIAPI-NotableMsg-v1.0.0-466-j25-26.1.2.jar
+1MB-CMIAPI-1MBStaffMsg-v1.0.0-466-j25-26.1.2.jar
+1MB-CMIAPI-CmdCostDashboard-v1.0.0-466-j25-26.1.2.jar
+1MB-CMIAPI-CMIConfig-v1.0.0-466-j25-26.1.2.jar
+1MB-CMIAPI-ConsoleNoiseRouter-v1.0.0-466-j25-26.1.2.jar
+1MB-CMIAPI-EconomyGuardian-v1.0.0-466-j25-26.1.2.jar
+1MB-CMIAPI-StartupDoctor-v1.0.0-466-j25-26.1.2.jar
+1MB-CMIAPI-UpdateSmoke-v1.0.0-466-j25-26.1.2.jar
+1MB-CMIAPI-PluginVersions-v1.0.0-466-j25-26.1.2.jar
+1MB-CMIAPI-PlaceholderHealth-v1.0.0-466-j25-26.1.2.jar
+1MB-CMIAPI-Potions-v1.0.0-466-j25-26.1.2.jar
+1MB-CMIAPI-SchedulerCheck-v1.0.0-466-j25-26.1.2.jar
+1MB-CMIAPI-Upgrade-v1.0.0-466-j25-26.1.2.jar
+1MB-CMIAPI-EndCrystals-v1.0.0-466-j25-26.1.2.jar
+1MB-CMIAPI-WorldSnapshot-v1.0.0-466-j25-26.1.2.jar
+1MB-CMIAPI-SparkReviewer-v1.0.0-466-j25-26.1.2.jar
+1MB-CMIAPI-Hoppers-v1.0.0-466-j25-26.1.2.jar
+1MB-CMIAPI-EventRecorder-v1.0.0-466-j25-26.1.2.jar
+1MB-CMIAPI-PlaceholderProbe-v1.0.0-466-j25-26.1.2.jar
+1MB-CMIAPI-CMIPlaceholderCheck-v1.0.0-466-j25-26.1.2.jar
+1MB-CMIAPI-1MBPlaceholders-v1.0.0-466-j25-26.1.2.jar
+1MB-CMIAPI-WarpAudit-v1.0.0-466-j25-26.1.2.jar
+1MB-CMIAPI-WorthDrift-v1.0.0-466-j25-26.1.2.jar
+1MB-CMIAPI-WorthHelper-v1.0.0-466-j25-26.1.2.jar
+1MB-CMIAPI-CMIProbe-v1.0.0-466-j25-26.1.2.jar
+1MB-CMIAPI-CMIDatabase-v1.0.0-466-j25-26.1.2.jar
 ```
 
 [Documentation index](../README.md)

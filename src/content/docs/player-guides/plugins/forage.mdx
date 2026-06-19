@@ -13,24 +13,25 @@ Forage is a player-facing nature progression plugin for /forage. It is built for
 
 The GUI uses the shared hardened GUI service with safe holders, cancelled clicks and drags, duplicate click protection, delayed close actions, and the global light-blue filler material. The v1 hub includes:
 
-Forage only awards progress when:
+Forage now separates player progression XP from tool soul XP. Player XP and Forage Points are tuned for account progression, while tool XP is tuned for tool upgrades and soul growth.
 
 ## Things You Can Do
 
-- Daily and weekly quests
+- Quest index with ready-to-claim, daily, weekly, and monthly pages
+- Skill branch picker
 - Read-only top boards for level, XP, points, actions, treasures, daily XP, and weekly XP
 - Tool/family explanation
-- Camp-only tier upgrades for held Forage tools
+- Camp-only tool upgrades for held Forage tools, including tiers, supported diamond refinement, and controlled vanilla enchants
 - Camp-only Repair &amp; Merge for worn Forage tools
-- Camp composter turn-ins for plain vanilla forage items
-- Forage Dust crafting and small bounded growth pulses
-- Tree-grove camp validation with optional lantern requirements
+- Camp turn-ins for plain vanilla forage items
+- Multi-tier Forage Dust crafting and bounded growth pulses
 
 ## Quick Start
 
 1. Start with `/forage` to open or view Forage.
-2. Use `/forage info` when you want the in-game help or a short explanation.
-3. Try `/forage help` when you are ready to use one of the feature actions.
+2. Use `/forage status` to check your current progress, settings, or state.
+3. Use `/forage info` when you want the in-game help or a short explanation.
+4. Try `/forage help` when you are ready to use one of the feature actions.
 
 ## Commands
 
@@ -59,6 +60,21 @@ Forage only awards progress when:
       <td><code>/forage help</code></td>
     </tr>
     <tr>
+      <td><code>/forage guide</code></td>
+      <td>Player/console</td>
+      <td><code>/forage guide</code></td>
+    </tr>
+    <tr>
+      <td><code>/forage status</code></td>
+      <td>Player</td>
+      <td><code>/forage status</code></td>
+    </tr>
+    <tr>
+      <td><code>/forage limits</code></td>
+      <td>Player/console</td>
+      <td><code>/forage limits</code></td>
+    </tr>
+    <tr>
       <td><code>/forage shop</code></td>
       <td>Player</td>
       <td><code>/forage shop</code></td>
@@ -72,6 +88,11 @@ Forage only awards progress when:
       <td><code>/forage quests</code></td>
       <td>Player</td>
       <td><code>/forage quests</code></td>
+    </tr>
+    <tr>
+      <td><code>/forage branches [branch]</code></td>
+      <td>Player</td>
+      <td><code>/forage branches</code></td>
     </tr>
     <tr>
       <td><code>/forage top [level|<wbr />xp|<wbr />points|<wbr />actions|<wbr />treasures|<wbr />daily|<wbr />weekly]</code></td>
