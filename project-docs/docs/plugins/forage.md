@@ -211,6 +211,7 @@ When a player validates a complete camp, Forage can show a short ready message a
 | `/forage admin balance` | admin/console | Shows the active balance preset, multipliers, caps, source-family caps, tool price range, sample upgrade/improvement costs, repair sample cost, and quest reward ranges. |
 | `/forage admin livecheck` | admin/console | Shows the owner checklist for moving Forage from testing to live balance, including active preset, safety switches, caps, repair costs, and upgrade costs. |
 | `/forage admin check` | admin/console | Runs a colored config sanity report for `config.yml` and `quests.yml`, including YAML type drift, invalid materials/entities, source/tool/branch references, quest roll ranges, reward command prefixes, economy hook state, and live-readiness warnings. |
+| `/forage admin export [backup]` | admin/console | Saves current Forage data and writes a Discord-friendly Markdown export with profiles, caps, camps, chunk exhaustion, quest summaries, runtime counters, and top boards. Add `backup` to also copy raw Forage YAML files. |
 | `/forage admin camps list [page]` | admin/console | Lists claimed Forage camp anchors. |
 | `/forage admin camps near` | admin | Inspects the nearest configured camp anchor from the admin's location. |
 | `/forage admin camps inspect <player\|key>` | admin/console | Shows camp claims by owner name/UUID or exact camp key. |
@@ -262,6 +263,8 @@ plugins/1MB-CMIAPI/Forage/quests.yml
 ```
 
 `profiles.yml` stores player level, XP, points, actions, treasure count, purchases, current branch id, branch change time, per-branch XP/actions/treasures, global daily caps, per-source-family daily caps, quest progress, quest claim state, and last action. `/forage top` reads this saved profile data in memory; it does not write separate leaderboard snapshots. `chunks.yml` stores active chunk exhaustion cooldowns. Runtime turn-in and dust/growth counters are exposed for debug/placeholders, but individual turn-ins and dust uses are not stored as permanent history in v1. This keeps v1 self-contained while the roadmap keeps SQLite as a later storage-hardening discussion item if the feature grows large enough to need it.
+
+`/forage admin export` saves current memory state and writes a timestamped Markdown report under `plugins/1MB-CMIAPI/Forage/data/exports/`. The report summarizes profile totals, top boards, camps, chunk exhaustion, quest definition and claim counts, active balance/cap settings, and live runtime counters such as tool purchases, compost turn-ins, dust crafts, and growth pulses. `/forage admin export backup` also copies the raw `profiles.yml`, `chunks.yml`, `camps.yml`, `config.yml`, and `quests.yml` files into a timestamped backup folder. The export command stays available while the global Forage switch is disabled so the owner can snapshot data before emergency config edits.
 
 Camp ownership is stored separately in:
 
