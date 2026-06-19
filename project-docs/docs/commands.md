@@ -969,6 +969,40 @@ Forage:
 
 `/forage` opens the v1 Forage hub GUI. Players can use `/forage guide` for the first-run camp/tool/limits path, buy curated PDC-marked tools from the CMI-backed Vault camp shop, unlock Tier 2 pickaxe, brush, sword, and mace tools after growing any Forage tool to the configured level, view their level/XP/points, use `/forage status` for a compact progress and next-step summary, use `/forage limits` for daily caps, family caps, economy costs, and quest reward ranges, choose a small focused skill branch with `/forage branches`, complete daily, weekly, and monthly `/forage quests` from `quests.yml` for point, XP, and money rewards, read tips, inspect supported source families, view `/forage top` leaderboards, compost plain vanilla forage items near a complete camp, make PDC-marked Forage Dust for bounded growth pulses, upgrade held tools from the camp page, refine supported tools to diamond, add controlled Unbreaking/Efficiency upgrades, repair and merge matching tools near a complete camp, and check whether a nearby camp build is ready. Guide, stats, status, limits, and camp setup stay available away from camp, but the shop and broader activity pages expect a complete nearby camp. Forage progress only counts when a configured natural block is broken or a configured entity is killed with the matching Forage tool in an allowed world. The default tool ownership is intentionally non-overlapping: axe owns logs/fruits, shears own leaves, trowel owns moss, pickaxe owns cave/stone, brush owns sands/relics, sword owns gentle creature sources, and mace owns danger sources. Matching branch actions can grant small configured XP, point, and treasure chance bonuses. Frequent progress, branch, compost, growth, quest, treasure, level, and chunk exhaustion messages are batched into a clickable summary, `/forage recent` shows the latest details, and chunk exhaustion now also gives an immediate short warning so players can move on faster. Global daily caps slow total progress, while per-source-family daily caps let players switch tools and continue with another route when one family is capped. Forage Dust does not award Forage XP or points. When WorldGuard is installed, the default conservative check only counts actions in locations without a specific protected region. Camp anchors are UUID-owned on first real use. Admin commands can give tools, inspect player profiles, inspect held/offhand/armor item PDC and repair-guard state, add or remove profile XP and points, set profile or held-tool levels for testing, reset today's global and per-family daily cap progress, view the active balance preset/cost/cap report, run the colored `/forage admin check` config sanity report for config/quest ranges and references, run the read-only `/forage admin livecheck` readiness checklist for the suggested live preset, export a Markdown data summary with `/forage admin export [backup]`, manage camp claims, view chunk exhaustion counts, reload config/data, and use the shared debug pages.
 
+AutoSell:
+
+```text
+/autosell
+/autosell info
+/autosell help
+/autosell status
+/autosell preview
+/autosell recent
+/autosell toggle
+/autosell categories
+/autosell items mining
+/autosell filters
+/autosell worlds
+/autosell category mining on
+/autosell category fancy off
+/autosell item cobblestone on
+/autosell item diamond_block off
+/autosell debug item
+/autosell admin reload
+/autosell admin check
+/autosell admin warnings
+/autosell admin warnings blacklist 1
+/autosell admin export
+/autosell admin blacklist list
+/autosell admin blacklist add diamond_block
+/autosell admin blacklist remove diamond_block
+/autosell admin category move raw_iron mining
+/autosell admin inspect mrfloris
+/autosell debug all
+```
+
+`/autosell` opens an opt-in inventory cleanup GUI. Players can turn AutoSell on or off, choose categories, browse per-category material pages, toggle individual materials, set value filters, choose a notification style, opt into allowed worlds, preview what would sell, and review recent batched results. AutoSell reads CMI `Worth.yml`, pays through the CMI-backed Vault economy provider, and only scans normal inventory storage slots after a short delayed batch. It never sells hotbar, offhand, armor, open-container, custom-name, lore, enchant, damaged, PDC, custom-model, shulker, bundle, or other modified/storage items by default. The final sale rechecks exact stack identity before removing items and refunds removed stacks if the economy payment fails. Admin commands can reload config/data/worth, run colored readiness checks, manage a hard material blacklist, blacklist materials directly from numbered material warnings, move materials between categories, inspect player profiles, review suspicious volume warnings, and export Markdown reports.
+
 MobHat:
 
 ```text

@@ -1,0 +1,133 @@
+---
+title: AutoSell Guide
+description: Learn what AutoSell does, how to use it, and which public commands are available.
+---
+
+This page introduces AutoSell from a public server-docs point of view. It focuses on what the feature does in-game, how to get started when you have access, and which commands are useful.
+
+## What It Does
+
+/autosell opt-in server Worth.yml inventory cleanup with hardened GUI category/material/filter/world toggles, per-category material pages, pure-vanilla item checks, hotbar/offhand/armor protection, exact-stack sell verification, Vault/server payments, daily caps, broker progress, chunk-change...
+
+## How Players Use It
+
+The GUI uses the shared hardened GUI service with safe holders, cancelled clicks and drags, duplicate click protection, delayed close handling, and the global light-blue filler material. The main page includes:
+
+AutoSell only runs after a short delayed batch, usually after a pickup or chunk move. The final sale runs on the main thread, snapshots exact stacks, rechecks that the inventory still matches, removes the items, pays the player, and refunds removed stacks if the economy payment fails.
+
+## Things You Can Do
+
+- A global on/off toggle
+- Category toggles for server worth items
+- Per-category material pages where players can toggle individual items
+- Value filters and notification settings
+- Optional world toggles
+- A preview button that explains what would sell right now
+- A recent-results button for batched sale history
+- The player head with today's AutoSell total, cap, and broker level
+
+## Quick Start
+
+1. Start with `/autosell` to open or view AutoSell.
+2. Use `/autosell status` to check your current progress, settings, or state.
+3. Use `/autosell info` when you want the in-game help or a short explanation.
+4. Try `/autosell help` when you are ready to use one of the feature actions.
+
+## Commands
+
+<table class="command-table plugin-command-table">
+  <thead>
+    <tr>
+      <th>Command</th>
+      <th>What it does</th>
+      <th>Example</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>/autosell</code></td>
+      <td>Player</td>
+      <td><code>/autosell</code></td>
+    </tr>
+    <tr>
+      <td><code>/autosell info</code></td>
+      <td>Anyone</td>
+      <td><code>/autosell info</code></td>
+    </tr>
+    <tr>
+      <td><code>/autosell help</code></td>
+      <td>Anyone</td>
+      <td><code>/autosell help</code></td>
+    </tr>
+    <tr>
+      <td><code>/autosell status</code></td>
+      <td>Player/console</td>
+      <td><code>/autosell status</code></td>
+    </tr>
+    <tr>
+      <td><code>/autosell preview</code></td>
+      <td>Player</td>
+      <td><code>/autosell preview</code></td>
+    </tr>
+    <tr>
+      <td><code>/autosell recent</code></td>
+      <td>Player</td>
+      <td><code>/autosell recent</code></td>
+    </tr>
+    <tr>
+      <td><code>/autosell toggle</code></td>
+      <td>Player</td>
+      <td><code>/autosell toggle</code></td>
+    </tr>
+    <tr>
+      <td><code>/autosell categories</code></td>
+      <td>Player</td>
+      <td><code>/autosell categories</code></td>
+    </tr>
+    <tr>
+      <td><code>/autosell items &lt;category&gt;</code></td>
+      <td>Player</td>
+      <td><code>/autosell items vote</code></td>
+    </tr>
+    <tr>
+      <td><code>/autosell filters</code></td>
+      <td>Player</td>
+      <td><code>/autosell filters</code></td>
+    </tr>
+    <tr>
+      <td><code>/autosell worlds</code></td>
+      <td>Player</td>
+      <td><code>/autosell worlds</code></td>
+    </tr>
+    <tr>
+      <td><code>/autosell category &lt;id&gt; on|<wbr />off</code></td>
+      <td>Player</td>
+      <td><code>/autosell category 1 on|<wbr />off</code></td>
+    </tr>
+    <tr>
+      <td><code>/autosell item &lt;material&gt; on|<wbr />off</code></td>
+      <td>Player</td>
+      <td><code>/autosell item DIAMOND on|<wbr />off</code></td>
+    </tr>
+  </tbody>
+</table>
+
+## Examples
+
+- `/autosell`
+- `/autosell toggle`
+- `/autosell preview`
+- `/autosell items mining`
+- `/autosell category mining on`
+- `/autosell category fancy off`
+- `/autosell item cobblestone on`
+- `/autosell item diamond_block off`
+
+## Good To Know
+
+- Some commands may be hidden until your group, event progress, or unlocks allow them.
+- If a command opens a menu, follow the buttons in-game; the website is only the learning guide.
+
+## Full Reference
+
+The [full synced AutoSell reference](https://github.com/mrfdev/1MB-Plugins-Docs/blob/main/project-docs/docs/plugins/autosell.md) is available for exact technical details.
