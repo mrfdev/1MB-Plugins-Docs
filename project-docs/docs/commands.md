@@ -979,9 +979,15 @@ AutoSell:
 /autosell info
 /autosell help
 /autosell status
+/autosell stats
 /autosell preview
 /autosell recent
+/autosell quests
+/autosell quests gui
+/autosell caps
 /autosell toggle
+/autosell trigger full
+/autosell trigger always
 /autosell categories
 /autosell items mining
 /autosell filters
@@ -995,8 +1001,11 @@ AutoSell:
 /autosell admin check
 /autosell admin warnings
 /autosell admin warnings blacklist 1
+/autosell admin report
 /autosell admin export
 /autosell admin boost status
+/autosell admin boost list
+/autosell admin boost start preset royal_blacksmith
 /autosell admin boost start all 20m 1.10
 /autosell admin boost start mining 30m 1.25
 /autosell admin boost stop
@@ -1008,7 +1017,7 @@ AutoSell:
 /autosell debug all
 ```
 
-`/autosell` opens an opt-in inventory cleanup GUI. Players can turn AutoSell on or off, choose categories, browse per-category material pages, toggle individual materials, set value filters, choose a notification style, opt into allowed worlds, preview what would sell, and review recent batched results. AutoSell reads CMI `Worth.yml`, pays through the CMI-backed Vault economy provider, and only scans normal inventory storage slots after a short delayed batch. It never sells hotbar, offhand, armor, open-container, custom-name, lore, enchant, damaged, PDC, custom-model, shulker, bundle, or other modified/storage items by default. The final sale rechecks exact stack identity before removing items and refunds removed stacks if the economy payment fails. Broker progress grows from legitimate sold item volume, sell chains reward active batches within a short window, daily/weekly streaks reward repeated qualifying use, and staff can start temporary AutoSell boosts that appear in `/rate`. Admin commands can reload config/data/worth, run colored readiness checks, manage a hard material blacklist, blacklist materials directly from numbered material warnings, move materials between categories, inspect player profiles, review suspicious volume warnings, start/stop AutoSell boosts, and export Markdown reports.
+`/autosell` opens an opt-in inventory cleanup GUI. Players can turn AutoSell on or off, choose categories, browse per-category material pages, toggle individual materials, set value filters, choose a notification style, opt into allowed worlds, choose whether AutoSell runs after pickup/break batches or only when inventory storage slots are nearly full, preview what would sell, review recent batched results, inspect their own top sold categories/materials with `/autosell stats`, track repeatable daily, weekly, and monthly AutoSell quests, and spend broker points on permanent daily cap unlocks. AutoSell reads CMI `Worth.yml`, pays through the CMI-backed Vault economy provider, and only scans normal inventory storage slots after a short delayed batch. It never sells hotbar, offhand, armor, open-container, custom-name, lore, enchant, damaged, PDC, custom-model, shulker, bundle, or other modified/storage items by default. The final sale rechecks exact stack identity before removing items and refunds removed stacks if the economy payment fails. Broker progress grows from legitimate sold item volume, configurable milestone and quest rewards can grant broker points, small daily bonuses, and safe allowlisted CMI command rewards, sell chains reward active batches within a short window, daily/weekly streaks reward repeated qualifying use, and staff can start preset or manual temporary AutoSell Happy Hour boosts that appear in `/rate` while AutoSell is enabled. Admin commands can reload config/data/worth, run colored readiness checks, print richer economy reports, manage a hard material blacklist, blacklist materials directly from numbered material warnings, move materials between categories, inspect player profiles, review suspicious volume warnings, list/start/stop AutoSell boosts, and export Markdown reports with server/player totals, top earners, top categories, top materials, category/material leaders, cap usage, broker growth, quest progress, and warning summaries.
 
 MobHat:
 

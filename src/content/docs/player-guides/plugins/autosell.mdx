@@ -21,10 +21,10 @@ AutoSell only runs after a short delayed batch, usually after a pickup or chunk 
 - Category toggles for server worth items
 - Per-category material pages where players can toggle individual items
 - Value filters and notification settings
+- An inventory-full trigger for players who only want AutoSell to run when storage slots are nearly full
 - Optional world toggles
 - A preview button that explains what would sell right now
 - A recent-results button for batched sale history
-- The player head with today's AutoSell total, cap, broker level, sell chain, streak, and active boost
 
 ## Quick Start
 
@@ -65,6 +65,11 @@ AutoSell only runs after a short delayed batch, usually after a pickup or chunk 
       <td><code>/autosell status</code></td>
     </tr>
     <tr>
+      <td><code>/autosell stats</code></td>
+      <td>Player/console</td>
+      <td><code>/autosell stats</code></td>
+    </tr>
+    <tr>
       <td><code>/autosell preview</code></td>
       <td>Player</td>
       <td><code>/autosell preview</code></td>
@@ -75,9 +80,29 @@ AutoSell only runs after a short delayed batch, usually after a pickup or chunk 
       <td><code>/autosell recent</code></td>
     </tr>
     <tr>
+      <td><code>/autosell quests</code></td>
+      <td>Player</td>
+      <td><code>/autosell quests</code></td>
+    </tr>
+    <tr>
+      <td><code>/autosell quests gui</code></td>
+      <td>Player</td>
+      <td><code>/autosell quests gui</code></td>
+    </tr>
+    <tr>
+      <td><code>/autosell caps</code></td>
+      <td>Player</td>
+      <td><code>/autosell caps</code></td>
+    </tr>
+    <tr>
       <td><code>/autosell toggle</code></td>
       <td>Player</td>
       <td><code>/autosell toggle</code></td>
+    </tr>
+    <tr>
+      <td><code>/autosell trigger &lt;always|<wbr />full&gt;</code></td>
+      <td>Player</td>
+      <td><code>/autosell trigger example</code></td>
     </tr>
     <tr>
       <td><code>/autosell categories</code></td>
@@ -116,7 +141,13 @@ AutoSell only runs after a short delayed batch, usually after a pickup or chunk 
 
 - `/autosell`
 - `/autosell toggle`
+- `/autosell stats`
 - `/autosell preview`
+- `/autosell quests`
+- `/autosell quests gui`
+- `/autosell caps`
+- `/autosell trigger full`
+- `/autosell trigger always`
 - `/autosell items mining`
 - `/autosell category mining on`
 - `/autosell category fancy off`

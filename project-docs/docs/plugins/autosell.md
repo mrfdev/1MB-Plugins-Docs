@@ -18,14 +18,16 @@ The GUI uses the shared hardened GUI service with safe holders, cancelled clicks
 - category toggles for CMI worth items
 - per-category material pages where players can toggle individual items
 - value filters and notification settings
+- an inventory-full trigger for players who only want AutoSell to run when storage slots are nearly full
 - optional world toggles
 - a preview button that explains what would sell right now
 - a recent-results button for batched sale history
-- the player head with today's AutoSell total, cap, broker level, sell chain, streak, and active boost
+- a quests button for daily, weekly, and monthly AutoSell goals
+- the player head with today's AutoSell total, cap, broker level, top category, top item, milestone progress, quest progress, sell chain, streak, trigger mode, and active boost
 
 AutoSell only runs after a short delayed batch, usually after a pickup or chunk move. The final sale runs on the main thread, snapshots exact stacks, rechecks that the inventory still matches, removes the items, pays the player, and refunds removed stacks if the economy payment fails.
 
-When chat notifications are selected, the batched sale message is hoverable and clickable. Hover shows the batch total, trigger, top sold materials, daily cap progress, broker status, sell-chain status, streak status, and any active AutoSell boost. Click opens `/autosell recent` for the detailed sale history. Actionbar, title, and bossbar notification modes remain visual-only because Minecraft clients do not support hover/click actions there.
+When chat notifications are selected, the batched sale message is hoverable and clickable. Hover shows the batch total, trigger, top sold materials, daily cap progress, broker status, milestone progress, quest progress, sell-chain status, streak status, and any active AutoSell boost. Click opens `/autosell recent` for the detailed sale history. Actionbar, title, and bossbar notification modes remain visual-only because Minecraft clients do not support hover/click actions there.
 
 ## Safety Model
 
@@ -45,7 +47,10 @@ AutoSell is built around anti-dupe and anti-farm guards:
 - chunk-change guard requires movement between successful sale cycles
 - overheat guard warns and pauses repeated sales from the same small area
 - daily money caps are permission-based and can be increased by broker progress
+- optional inventory-full mode can wait until normal inventory storage slots are nearly full
 - sell chains and streaks reward active moving gameplay, not static hopper/AFK selling
+- one-time milestone rewards are claimed automatically when configured targets are reached
+- repeatable quest rewards only progress after a verified sale batch and use the same safe command allowlist model
 - temporary AutoSell boosts can appear in `/rate` while active
 - suspicious volume warnings are stored and can be exported
 
@@ -59,9 +64,14 @@ This plugin should not be used as a hopper, farm, or AFK seller. It is meant for
 | `/autosell info` | anyone | Shows a player-friendly intro and public docs link. |
 | `/autosell help` | anyone | Shows commands available to the sender. |
 | `/autosell status` | player/console | Shows player status or console plugin status. |
+| `/autosell stats` | player/console | Shows player top categories/materials, rank, server share, or the console economy report. |
 | `/autosell preview` | player | Shows what would sell from the player's normal inventory right now. |
 | `/autosell recent` | player | Shows recent batched sale results. |
+| `/autosell quests` | player | Shows active daily, weekly, and monthly AutoSell quest progress in chat. |
+| `/autosell quests gui` | player | Opens the AutoSell quest GUI. |
+| `/autosell caps` | player | Opens permanent daily cap unlocks purchased with broker points. |
 | `/autosell toggle` | player | Turns AutoSell on or off for the player. |
+| `/autosell trigger <always\|full>` | player | Chooses whether AutoSell runs normally after pickup/break batches or only when inventory storage slots are nearly full. |
 | `/autosell categories` | player | Opens the category toggle GUI. |
 | `/autosell items <category>` | player | Opens per-material toggles for one category. |
 | `/autosell filters` | player | Opens filter and notification settings. |
@@ -73,9 +83,12 @@ This plugin should not be used as a hopper, farm, or AFK seller. It is meant for
 | `/autosell admin check` | admin/console | Prints colored readiness checks for economy, worth, worlds, caps, and hardening. |
 | `/autosell admin warnings` | admin/console | Shows recent suspicious sale warnings. |
 | `/autosell admin warnings blacklist <number>` | admin/console | Adds the material from a numbered material warning to the hard blacklist. |
+| `/autosell admin report` | admin/console | Prints a compact economy report with top earners, categories, materials, cap usage, and export hint. |
 | `/autosell admin export` | admin/console | Writes a Discord-friendly Markdown report. |
 | `/autosell admin boost status` | admin/console | Shows the active AutoSell happy-hour boost, if any. |
-| `/autosell admin boost start <all\|category> <time> <multiplier>` | admin/console | Starts a temporary AutoSell boost that appears in `/rate`. |
+| `/autosell admin boost list` | admin/console | Lists configured Happy Hour boost presets. |
+| `/autosell admin boost start preset <id>` | admin/console | Starts a configured Happy Hour preset that appears in `/rate`. |
+| `/autosell admin boost start <all\|category> <time> <multiplier>` | admin/console | Starts a manual temporary AutoSell boost that appears in `/rate`. |
 | `/autosell admin boost stop` | admin/console | Stops the active AutoSell boost. |
 | `/autosell admin blacklist list` | admin/console | Lists hard-blocked materials. |
 | `/autosell admin blacklist add <material>` | admin/console | Adds a material to the hard blacklist. |
@@ -91,7 +104,13 @@ Examples:
 ```text
 /autosell
 /autosell toggle
+/autosell stats
 /autosell preview
+/autosell quests
+/autosell quests gui
+/autosell caps
+/autosell trigger full
+/autosell trigger always
 /autosell items mining
 /autosell category mining on
 /autosell category fancy off
@@ -101,7 +120,10 @@ Examples:
 /autosell admin check
 /autosell admin warnings
 /autosell admin warnings blacklist 1
+/autosell admin report
 /autosell admin boost status
+/autosell admin boost list
+/autosell admin boost start preset royal_blacksmith
 /autosell admin boost start mining 20m 1.25
 /autosell admin boost stop
 /autosell admin blacklist add diamond_block
@@ -125,12 +147,60 @@ Daily caps are permission-aware:
 | `onembcmi.autosell.cap.500000` | $500,000/day |
 | `onembcmi.autosell.cap.unlimited` | unlimited |
 
-Broker progress counts legitimate AutoSell item volume. Players increase broker level by keeping AutoSell enabled and selling eligible pure vanilla items from normal inventory storage slots. By default, every 10,000 sold items adds broker progress, grants broker points, and can add a small temporary daily bonus capped by `broker.max-multiplier-bonus`. Broker points can also unlock higher daily caps through config.
+Broker progress counts legitimate AutoSell item volume. Players increase broker level by keeping AutoSell enabled and selling eligible pure vanilla items from normal inventory storage slots. By default, every 10,000 sold items adds broker progress, grants broker points, and can add a small temporary daily bonus capped by `broker.max-multiplier-bonus`.
+
+Players can spend broker points in `/autosell caps` to permanently unlock higher daily AutoSell caps for their account. The default unlocks are a $250,000 cap for 30 broker points and a $500,000 cap for 80 broker points. These unlocks are stored in AutoSell player data and keep working even if the player's group changes. The old automatic broker-point cap behavior is available only when `caps.legacy-automatic-point-unlocks` is enabled.
+
+Milestone rewards are configured under `milestones.definitions.*`. They are one-time per player and can watch totals such as `total-items`, `total-earned`, `broker-level`, `streak-days`, and `chain-sales`. When a player reaches a milestone, AutoSell can grant broker points, add a small capped daily bonus, play a celebration, write a recent-history entry, and run strictly allowlisted direct-console commands such as CMI money, EXP, mail, message, toast, sound, or title commands.
+
+Default milestone examples include:
+
+| Milestone | Default target | Reward style |
+| --- | ---: | --- |
+| First Cleanup | 1,000 sold items | broker point, tiny daily bonus, small money reward |
+| Inventory Keeper | 10,000 sold items | broker points, daily bonus, money/mail reward |
+| Market Regular | $25,000 AutoSell earnings | broker points and money reward |
+| Chain Runner | 10 active sell-chain batches | broker point and small bonus |
+| Streak Keeper | 7-day AutoSell streak | broker points, daily bonus, money/mail reward |
+| Broker Apprentice | broker level 3 | broker points and EXP reward |
+
+Repeatable AutoSell quests are configured under `quests.definitions.*`. They reset by period and can be daily, weekly, or monthly. Quest progress only moves after a successful verified AutoSell batch, so it uses the same inventory safety, item purity, cap, and anti-farm checks as normal selling. Quests can reward broker points, a small daily bonus capped by `quests.max-daily-bonus-percent`, and direct-console commands from `quests.commands.allowed-prefixes`.
+
+Supported quest types:
+
+| Type | Counts |
+| --- | --- |
+| `items` | all eligible items sold |
+| `earned` | money earned from verified AutoSell batches |
+| `category-items` | items sold from one AutoSell category such as `digging` or `mining` |
+| `category-earned` | money earned from one AutoSell category |
+| `material-items` | items sold for one exact material |
+| `material-earned` | money earned from one exact material |
+| `chain-sales` | active sell-chain batch count |
+
+Default quest examples include:
+
+| Quest | Period | Default target | Reward style |
+| --- | --- | ---: | --- |
+| Daily Cleanup | daily | 500 items | broker point, tiny daily bonus, money reward |
+| Daily Digger | daily | 750 digging items | broker point, tiny daily bonus, money reward |
+| Daily Miner | daily | 450 mining items | broker point, tiny daily bonus, money reward |
+| Daily Value Run | daily | $1,500 earned | broker point, tiny daily bonus, money reward |
+| Weekly Bulk Seller | weekly | 5,000 items | broker points, daily bonus, money/mail reward |
+| Weekly Market Run | weekly | $20,000 earned | broker points, daily bonus, money reward |
+| Weekly Sell Chain | weekly | 8 chain batches | broker points, daily bonus, EXP reward |
+| Monthly Hauler | monthly | 25,000 items | broker points, daily bonus, money/mail reward |
+| Monthly Market Maker | monthly | $100,000 earned | broker points, daily bonus, money reward |
 
 The status output and player-head GUI lore show:
 
 - current broker level and broker points
 - how many more sold items are needed for the next broker level
+- top AutoSell category and top sold material for that player
+- player rank by AutoSell money and by item volume
+- the player's share of all AutoSell money recorded on the server
+- claimed milestone count and the next configured milestone
+- active quest progress and claimed quest count
 - today's broker bonus
 - current sell chain and streak state
 
@@ -138,13 +208,27 @@ Sell chains are short active-session bonuses. A player has to keep producing leg
 
 Daily streaks are longer progression. A day qualifies when the player reaches the configured item or money threshold for that day. Consecutive qualifying days increase the streak and can add a small configured streak bonus. Weekly streak progress can unlock an additional weekly bonus after enough qualifying days in the same server week.
 
-Staff can run temporary AutoSell happy-hour boosts. These multiply AutoSell payouts for all categories or one configured category and are exposed to `/rate` while active:
+Staff can run temporary AutoSell happy-hour boosts. These multiply AutoSell payouts for all categories or one configured category and are exposed to `/rate` while AutoSell is installed, enabled, rate integration is enabled, and the boost is active.
+
+Presets live under `happy-hour.presets` in `config.yml`, so staff can start a themed boost without remembering the exact category, duration, and multiplier:
+
+```text
+/autosell admin boost list
+/autosell admin boost start preset royal_blacksmith
+/autosell admin boost start preset dig_site
+```
+
+Manual boosts still work for one-off testing or special events:
 
 ```text
 /autosell admin boost start all 20m 1.10
 /autosell admin boost start mining 30m 1.25
 /autosell admin boost stop
 ```
+
+When enabled in config, Happy Hour starts and natural ends are announced to online players with a hoverable/clickable chat line that opens `/rate`. The active boost is also saved in AutoSell data, so reloads keep the correct `/rate` status and expired boosts are cleaned up on startup/reload.
+
+Admin report/export views include server totals, today's totals, top earners, top categories, top materials, the leading player for each top category/material, cap usage, broker growth, quest progress, warning summaries, and recent suspicious sale warnings. Use `/autosell admin report` for the compact console view and `/autosell admin export` for a Discord-friendly Markdown file.
 
 ## Worlds
 
@@ -172,6 +256,8 @@ plugins/1MB-CMIAPI/AutoSell/data.yml
 plugins/1MB-CMIAPI/AutoSell/exports/
 ```
 
+The data file stores player preferences, totals, recent sale messages, broker/streak/milestone state, category/material totals, cap snapshots, and current quest progress. Players can inspect their own category/material breakdown with `/autosell stats`, while staff can inspect one profile with `/autosell admin inspect <player>` or review the full economy picture with `/autosell admin report` and `/autosell admin export`. If AutoSell is disabled or removed, player inventories are not changed; the plugin simply stops scanning and selling.
+
 AutoSell reads CMI worth values from:
 
 ```text
@@ -179,6 +265,42 @@ plugins/CMI/Saves/Worth.yml
 ```
 
 The Worth cache is refreshed automatically on a short interval and can be forced with `/autosell admin reload`.
+
+Inventory-full mode is controlled by:
+
+```yaml
+selling:
+  default-only-when-nearly-full: false
+  nearly-full-empty-slots: 3
+```
+
+Players can toggle their own mode with `/autosell trigger full` or `/autosell trigger always`. In full mode, AutoSell waits until the player's main inventory storage slots have the configured number of empty slots or fewer. Hotbar, offhand, and armor are still ignored.
+
+Quest defaults are controlled by:
+
+```yaml
+quests:
+  enabled: true
+  max-daily-bonus-percent: 0.03
+  commands:
+    enabled: true
+    allowed-prefixes:
+    - cmi money give
+    - cmi exp give
+    - cmi mail send
+  definitions:
+    daily_cleanup:
+      enabled: true
+      period: daily
+      type: items
+      target: 500
+      title: Daily Cleanup
+      description: AutoSell 500 eligible inventory items today.
+      broker-points: 1
+      daily-bonus-percent: 0.0025
+      commands:
+      - cmi money give {player} 250
+```
 
 Plain vanilla items can still carry harmless Paper metadata internally. AutoSell does not reject those empty/default item components, but it still blocks named, lored, enchanted, damaged, PDC-marked, storage, and custom-model items.
 
