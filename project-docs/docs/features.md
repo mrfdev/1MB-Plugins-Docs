@@ -17,7 +17,7 @@ These are the first feature candidates now using the shared library scaffold:
 | Player Fun | AFKShrine | Visual AFK effects, persistent opt-outs, and selectable styles | [AFKShrine](plugins/afkshrine.md) |
 | Player Fun | RecordingMode | Per-player recording quiet mode | [RecordingMode](plugins/recordingmode.md) |
 | Player Fun | SellStreaks | CMI sell streaks and daily market goals | [SellStreaks](plugins/sellstreaks.md) |
-| Player Fun | ScheduledTips | Clickable rotating tips with per-player dismiss and visibility controls | [ScheduledTips](plugins/scheduledtips.md) |
+| Player Fun | ScheduledTips | Clickable rotating tips with per-player dismiss, visibility controls, and live booster reminders | [ScheduledTips](plugins/scheduledtips.md) |
 | Player Fun | Visit | Player-owned hidden CMI visit warps with safe arrival messages, titles, particles, and sounds | [Visit](plugins/visit.md) |
 | Player Fun | PassportDiscovery | Umbrella discovery passport for worlds, warps, visits, biomes, blocks, items, consumables, tools, weapons, armor, kills, mounts, and exploration | [PassportDiscovery](plugins/passportdiscovery.md) |
 | Player Fun | SocialGatherings | Configurable town party system around CMI sit, portals, beds, food, chat, hats, jukeboxes, elytra, fishing, mining, farming, vehicles, archery, libraries, markets, and cookouts | [SocialGatherings](plugins/socialgatherings.md) |

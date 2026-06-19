@@ -22,6 +22,54 @@ broadcast:
 list:
   entries-per-page: 10
 
+booster-reminders:
+  enabled: true
+  generic-keywords:
+    - booster
+    - boosters
+    - /rate
+  tip-id-matchers:
+    mcmmo:
+      - mcmmo
+      - mcmmo_*
+      - mcstats
+      - mcrank
+      - mctop
+      - xprate
+    jobs:
+      - jobs
+      - jobs_*
+      - jobs_browse
+    points:
+      - points
+      - points_*
+      - pointy_*
+    discordchat:
+      - discordchat
+      - discordchat_*
+      - discord_*
+  text-keywords:
+    mcmmo:
+      - mcmmo
+      - /mcstats
+      - /mcrank
+      - /mctop
+      - /party
+      - xprate
+    jobs:
+      - /jobs
+      - jobs booster
+      - jobs browse
+    points:
+      - /points
+      - points
+      - pointy fish
+      - welcome points
+    discordchat:
+      - discordchat
+      - server-chat
+      - "#server-chat"
+
 disabled-tip-ids: []
 
 tips:

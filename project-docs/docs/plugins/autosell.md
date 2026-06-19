@@ -25,6 +25,8 @@ The GUI uses the shared hardened GUI service with safe holders, cancelled clicks
 
 AutoSell only runs after a short delayed batch, usually after a pickup or chunk move. The final sale runs on the main thread, snapshots exact stacks, rechecks that the inventory still matches, removes the items, pays the player, and refunds removed stacks if the economy payment fails.
 
+When chat notifications are selected, the batched sale message is hoverable and clickable. Hover shows the batch total, trigger, top sold materials, daily cap progress, and broker status. Click opens `/autosell recent` for the detailed sale history. Actionbar, title, and bossbar notification modes remain visual-only because Minecraft clients do not support hover/click actions there.
+
 ## Safety Model
 
 AutoSell is built around anti-dupe and anti-farm guards:
@@ -76,6 +78,8 @@ This plugin should not be used as a hopper, farm, or AFK seller. It is meant for
 | `/autosell admin category move <material> <category>` | admin/console | Moves a material into another AutoSell category. |
 | `/autosell admin inspect <player>` | admin/console | Shows one player's AutoSell profile and cap state. |
 | `/autosell admin stats <player>` | admin/console | Alias for player profile totals. |
+
+Direct console is treated as trusted for AutoSell status, debug, report, reload, and admin maintenance commands. Commands that need a player inventory or GUI still require an in-game player.
 
 Examples:
 

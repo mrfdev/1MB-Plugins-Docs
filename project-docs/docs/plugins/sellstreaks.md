@@ -36,12 +36,7 @@ Version 1 uses command output instead of a CMILib inventory GUI. The core sell-e
 /sellstreak admin reload
 ```
 
-Aliases:
-
-```text
-/sellstreaks
-/marketgoals
-```
+SellStreaks intentionally registers no aliases. Use `/sellstreak`.
 
 Useful examples:
 

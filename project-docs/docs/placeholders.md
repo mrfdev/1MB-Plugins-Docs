@@ -115,6 +115,7 @@ ScheduledTips placeholders:
 %onembcmi_scheduledtips.last_tip%
 %onembcmi_scheduledtips.runtime.sent%
 %onembcmi_scheduledtips.runtime.dismissed%
+%onembcmi_scheduledtips.runtime.booster_reminders%
 %onembcmi_scheduledtips.cache.size%
 ```
 

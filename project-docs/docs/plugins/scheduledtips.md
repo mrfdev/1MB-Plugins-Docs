@@ -4,10 +4,11 @@
 
 ScheduledTips replaces simple CMI `scheduler.yml` tip broadcasts with a dedicated 1MB CMI-API feature plugin. It rotates through configured tips, sends them as clickable Adventure messages, and gives players control over what they keep seeing.
 
-The first version is meant to cover the current CMI scheduled-tip workflow while adding two player-friendly controls:
+It covers the current CMI scheduled-tip workflow while adding player-friendly controls and optional dynamic awareness of live `/rate` boosters:
 
 - players can hide all scheduled tips with `/tips off`, useful while recording videos
 - players can click a red `[x]` before a repeated tip after they have seen it enough times
+- if Boosters is installed and a tip about mcMMO, Jobs, `/points`, or DiscordChat would display while that booster is live, the tip is replaced by a clickable `/rate` reminder
 
 ## Features
 
@@ -16,6 +17,7 @@ The first version is meant to cover the current CMI scheduled-tip workflow while
 - Add a red `[x]` click action before a tip after a player has seen it enough times.
 - Add a `[tips off]` click action so players can globally hide scheduled tips.
 - Make `/tips on` and `/tips off` confirmation messages clickable so players can quickly switch back.
+- Replace matching mcMMO, Jobs, `/points`, and DiscordChat tips with a live booster reminder when the matching `/rate` booster is active.
 - Expose a small library service so RecordingMode can hide ScheduledTips during recording mode when both jars are installed.
 - Track per-player seen counts, dismissed tips, and global visibility in shared playerdata.
 - Let players view status, list tips, inspect seen counts, dismiss tips, and reset their own data.
@@ -88,6 +90,7 @@ onembcmi.scheduledtips.admin.reload
 %onembcmi_scheduledtips.last_tip%
 %onembcmi_scheduledtips.runtime.sent%
 %onembcmi_scheduledtips.runtime.dismissed%
+%onembcmi_scheduledtips.runtime.booster_reminders%
 %onembcmi_scheduledtips.cache.size%
 ```
 
@@ -98,6 +101,7 @@ CMI:
 - CMI remains a runtime dependency in the project stack.
 - ScheduledTips is intended to replace CMI scheduler.yml tip broadcasts when you want per-player dismiss/toggle behavior.
 - Player-facing ScheduledTips chat uses the shared feature-prefix system with visible prefix name `Tips`, so scheduled tip broadcasts and `/tips` responses do not use the generic `1MB CMI-API` library prefix. The symbol comes from `plugins/1MB-CMIAPI/CMIAPILIB/config.yml` under `locale.prefix-unicodes.scheduledtips`.
+- When the Boosters feature is installed, ScheduledTips can ask the shared Boosters service for live `/rate` booster state and replace matching booster tips with a clickable reminder.
 - Future versions can inspect or import existing CMI scheduler-style tip command text if we decide that is useful.
 
 CMILib:
@@ -125,6 +129,16 @@ broadcast.require-permission
 broadcast.show-dismiss-before-threshold
 broadcast.show-off-button
 list.entries-per-page
+booster-reminders.enabled
+booster-reminders.generic-keywords
+booster-reminders.tip-id-matchers.mcmmo
+booster-reminders.tip-id-matchers.jobs
+booster-reminders.tip-id-matchers.points
+booster-reminders.tip-id-matchers.discordchat
+booster-reminders.text-keywords.mcmmo
+booster-reminders.text-keywords.jobs
+booster-reminders.text-keywords.points
+booster-reminders.text-keywords.discordchat
 tips
 disabled-tip-ids
 ```
@@ -146,7 +160,42 @@ tips:
   - "profile|Use <color:#bde0fe>/tips off</color> if you need a clean chat while recording."
 disabled-tip-ids:
   - "profile"
+booster-reminders:
+  enabled: true
+  generic-keywords:
+    - "booster"
+    - "boosters"
+    - "/rate"
+  tip-id-matchers:
+    mcmmo:
+      - "mcmmo"
+      - "mcmmo_*"
+    jobs:
+      - "jobs"
+      - "jobs_*"
+    points:
+      - "points"
+      - "points_*"
+      - "pointy_*"
+    discordchat:
+      - "discordchat"
+      - "discord_*"
+  text-keywords:
+    mcmmo:
+      - "mcmmo"
+      - "/mcstats"
+    jobs:
+      - "/jobs"
+      - "jobs booster"
+    points:
+      - "/points"
+      - "pointy fish"
+    discordchat:
+      - "discordchat"
+      - "server-chat"
 ```
+
+Specific matchers win first. For example, a tip id `mcmmo_booster` only turns into a reminder when the mcMMO booster is live. A generic booster tip with no specific match can turn into a reminder for any currently active booster.
 
 A larger converted 1MB example based on the previous CMI `schedules.yml` announcer lives at [scheduledtips-1mb.yml](../examples/scheduledtips-1mb.yml).
 
@@ -173,11 +222,12 @@ scheduledtips:
 - `/tips admin set` is limited to known scalar config paths registered by this feature.
 - Player commands never run arbitrary configured commands.
 - Click actions only call this plugin's own `/tips dismiss <id>`, `/tips off`, and `/tips on` commands.
+- Dynamic booster reminder click actions only run `/rate`.
 - Player-specific data is stored under the shared playerdata namespace `scheduledtips`.
 - Configured tip text is treated as trusted admin-authored MiniMessage content.
 
 ## Shared Library Usage
 
-ScheduledTips uses `1MB-CMIAPI-LIB` for feature registration, strict permission checks, config defaults, translation defaults, PlaceholderAPI routing, tab filtering, paginated list output, shared `PlayerDataStore` UUID load/save, plugin-scoped playerdata cleanup, and debug metadata.
+ScheduledTips uses `1MB-CMIAPI-LIB` for feature registration, strict permission checks, config defaults, translation defaults, PlaceholderAPI routing, tab filtering, paginated list output, shared `PlayerDataStore` UUID load/save, plugin-scoped playerdata cleanup, debug metadata, and optional service discovery for Boosters live-state reminders.
 
 [Plugin index](README.md)
