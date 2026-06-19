@@ -32,10 +32,10 @@ This is a read-only drift check against the public `1MB-Plugins-Docs` checkout. 
 Expected jar naming:
 
 ```text
-1MB-CMIAPI-LIB-v1.0.0-496-j25-26.1.2.jar
-1MB-CMIAPI-AFKShrine-v1.0.0-496-j25-26.1.2.jar
-1MB-CMIAPI-StaffCenter-v1.0.0-496-j25-26.1.2.jar
-1MB-CMIAPI-Profile-v1.0.0-496-j25-26.1.2.jar
+1MB-CMIAPI-LIB-v1.0.0-501-j25-26.1.2.jar
+1MB-CMIAPI-AFKShrine-v1.0.0-501-j25-26.1.2.jar
+1MB-CMIAPI-StaffCenter-v1.0.0-501-j25-26.1.2.jar
+1MB-CMIAPI-Profile-v1.0.0-501-j25-26.1.2.jar
 ```
 
 After a successful feature or library build, copy the output jar into:

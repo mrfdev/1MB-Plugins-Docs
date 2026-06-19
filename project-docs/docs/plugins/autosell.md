@@ -22,9 +22,10 @@ The GUI uses the shared hardened GUI service with safe holders, cancelled clicks
 - optional world toggles
 - a preview button that explains what would sell right now
 - a recent-results button for batched sale history
-- a quests button for daily, weekly, and monthly AutoSell goals
+- a quests button with claimable rewards, daily, weekly, monthly, and all-quest pages
+- a milestones button for the visible one-time milestone tree
 - a stats button for personal category/material totals, ranks, and server share
-- the player head with today's AutoSell total, cap, broker level, broker points, next broker-level progress, top category, top item, milestone progress, quest progress, sell chain, streak, trigger mode, and active boost
+- the player head with today's AutoSell total, cap, broker level, broker points, next broker-level progress, top category, top item, best single batch, milestone progress, quest progress, sell chain, streak, trigger mode, and active boost
 
 AutoSell only runs after a short delayed batch, usually after a pickup or chunk move. The final sale runs on the main thread, snapshots exact stacks, rechecks that the inventory still matches, removes the items, pays the player, and refunds removed stacks if the economy payment fails.
 
@@ -69,7 +70,9 @@ This plugin should not be used as a hopper, farm, or AFK seller. It is meant for
 | `/autosell preview` | player | Shows what would sell from the player's normal inventory right now. |
 | `/autosell recent` | player | Shows recent batched sale results. |
 | `/autosell quests` | player | Shows active daily, weekly, and monthly AutoSell quest progress in chat. |
-| `/autosell quests gui` | player | Opens the AutoSell quest GUI. |
+| `/autosell quests gui` | player | Opens the AutoSell quest hub with claimable rewards and period pages. |
+| `/autosell quests claim [all\|id]` | player | Claims ready AutoSell quest rewards when manual claiming is enabled. |
+| `/autosell milestones` | player | Opens the visible one-time milestone tree, including bulk-cleanup milestones. |
 | `/autosell caps` | player | Opens weekly and lifetime daily cap unlocks purchased with broker points. |
 | `/autosell toggle` | player | Turns AutoSell on or off for the player. |
 | `/autosell trigger <always\|full>` | player | Chooses whether AutoSell runs normally after pickup/break batches or only when inventory storage slots are nearly full. |
@@ -109,6 +112,8 @@ Examples:
 /autosell preview
 /autosell quests
 /autosell quests gui
+/autosell quests claim
+/autosell quests claim all
 /autosell caps
 /autosell trigger full
 /autosell trigger always
@@ -156,8 +161,8 @@ AutoSell has several progress systems that can appear together in the GUI, chat 
 | --- | --- | --- | --- |
 | Broker level | Long-term AutoSell experience from legitimate sold item volume. | No, permanent. | Unlock-style progress, broker points, and small configured bonus. |
 | Broker points | Spendable points earned from broker levels, quests, and milestones. | No, unless spent on cap unlocks. | Used in `/autosell caps` for weekly or lifetime daily-cap unlocks. |
-| Quests | Repeatable goals such as daily, weekly, or monthly AutoSell tasks. | Yes, by quest period. | Usually broker points, money, and a small daily bonus. |
-| Milestones | One-time achievements such as total sold items, broker level, streak days, or sell chains. | No, one-time per player. | Usually broker points, money, EXP, mail, or a small bonus. |
+| Quests | Repeatable goals such as daily, weekly, or monthly AutoSell tasks. | Yes, by quest period. | Usually broker points, money, and a small daily bonus. Rewards can pay automatically or wait in the quest menu. |
+| Milestones | One-time achievements such as total sold items, bulk cleanup batches, broker level, streak days, or sell chains. | No, one-time per player. | Usually broker points, money, EXP, mail, or a small bonus. |
 | Streaks | Activity over consecutive qualifying days or enough qualifying days in a week. | Daily/weekly tracking changes over time. | Small temporary bonus for steady activity. |
 | Sell chains | Short active-session progress from selling in repeated batches without waiting too long. | Yes, expires after the chain window. | Small temporary batch bonus and chain-based goals. |
 | Daily bonus | A temporary payout bonus earned from broker progress, quests, milestones, streaks, or chains. | Yes, it is daily/temporary by design. | Higher AutoSell payout while the bonus is active. |
@@ -202,7 +207,7 @@ Default lifetime cap unlocks are:
 
 Staff can configure the unlocks under `caps.unlock-gui.options.*`. Normal cap unlocks use numeric `cap` values, while the unlimited unlock can use the readable value `cap: unlimited`. Use `type: weekly` with `duration-days` for temporary unlocks, or `type: lifetime` for permanent account unlocks.
 
-Milestone rewards are configured under `milestones.definitions.*`. They are one-time per player and can watch totals such as `total-items`, `total-earned`, `broker-level`, `streak-days`, and `chain-sales`. When a player reaches a milestone, AutoSell can grant broker points, add a small capped daily bonus, play a celebration, write a recent-history entry, and run strictly allowlisted direct-console commands such as CMI money, EXP, mail, message, toast, sound, or title commands.
+Milestone rewards are configured under `milestones.definitions.*`. They are one-time per player and can watch totals such as `total-items`, `total-earned`, `broker-level`, `streak-days`, `chain-sales`, `bulk-items`, and `bulk-earned`. The `/autosell milestones` GUI shows the visible milestone tree with claimed, ready, and in-progress states so players can see what they are working toward. Bulk milestones are separate from the lifetime ladder: they count the player's best single verified AutoSell batch by item amount or money earned. When a player reaches a milestone, AutoSell can grant broker points, add a small capped daily bonus, play a celebration, write a recent-history entry, and run strictly allowlisted direct-console commands such as CMI money, EXP, mail, message, toast, sound, or title commands.
 
 Default milestone examples include:
 
@@ -211,11 +216,36 @@ Default milestone examples include:
 | First Cleanup | 1,000 sold items | broker point, tiny daily bonus, small money reward |
 | Inventory Keeper | 10,000 sold items | broker points, daily bonus, money/mail reward |
 | Market Regular | $25,000 AutoSell earnings | broker points and money reward |
+| Bulk Stack | 256 items in one batch | broker point, tiny daily bonus, small money reward |
+| Crate Clearout | 1,024 items in one batch | broker points, daily bonus, money reward |
+| Market Sweep | $5,000 in one batch | broker points, daily bonus, money reward |
 | Chain Runner | 10 active sell-chain batches | broker point and small bonus |
 | Streak Keeper | 7-day AutoSell streak | broker points, daily bonus, money/mail reward |
 | Broker Apprentice | broker level 3 | broker points and EXP reward |
 
+Supported milestone types:
+
+| Type | Counts |
+| --- | --- |
+| `total-items` | lifetime eligible items sold |
+| `total-earned` | lifetime money earned through AutoSell |
+| `bulk-items` | the largest single verified AutoSell batch by item count |
+| `bulk-earned` | the largest single verified AutoSell batch by money earned |
+| `chain-sales` | best active sell-chain batch count |
+| `streak-days` | best qualifying daily streak |
+| `broker-level` | current broker level |
+
 Repeatable AutoSell quests are configured under `quests.definitions.*`. They reset by period and can be daily, weekly, or monthly. Quest progress only moves after a successful verified AutoSell batch, so it uses the same inventory safety, item purity, cap, and anti-farm checks as normal selling. Quests can reward broker points, a small daily bonus capped by `quests.max-daily-bonus-percent`, and direct-console commands from `quests.commands.allowed-prefixes`.
+
+The `/autosell quests gui` page is a quest hub:
+
+- **Claim Rewards** shows completed quest rewards waiting to be claimed.
+- **Daily Quests** shows active daily quests that are not already claimed for the current day.
+- **Weekly Quests** shows active weekly quests that are not already claimed for the current server week.
+- **Monthly Quests** shows active monthly quests that are not already claimed for the current server month.
+- **All Quests** shows the full configured quest board, including completed/claimed quests, so players can learn what exists.
+
+By default, quest rewards use manual claiming. Completing a quest stores a pending reward, sends a small ready message, and lets the player claim it from the quest hub or with `/autosell quests claim <id>`. Staff can set `quests.rewards.claim-mode: auto` to restore automatic payout on completion. `quests.rewards.claim-all-enabled` controls whether the claimable rewards page and `/autosell quests claim all` can claim every ready reward at once.
 
 Supported quest types:
 
