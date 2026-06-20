@@ -4,6 +4,8 @@ DiscordChat is a player-fun feature plugin for turning the DiscordSRV `#server-c
 
 The plugin is report-first and reward-safe: it only records DiscordSRV events, stores local player progress, and runs configured reward commands after a player confirms a point trade in game. It does not post to Discord, moderate Discord, or change DiscordSRV configuration.
 
+When Menu is installed and enabled, `/menu` includes a DiscordChat button and the DiscordChat GUI pages show a Main Menu shortcut beside their close controls.
+
 ## Commands
 
 | Command | Explanation | Example |

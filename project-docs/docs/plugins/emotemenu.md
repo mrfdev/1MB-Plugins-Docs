@@ -17,6 +17,7 @@ The goal is discoverability. Players can still learn and type the real commands 
 - Includes a bottom-left search button that opens a Paper text-input dialog, with a safe chat prompt fallback.
 - Includes bottom-middle pagination controls.
 - Includes a bottom-right barrier close button.
+- Includes a Main Menu shortcut beside the close button when Menu is installed and enabled; `/menu` also gets an Emotes button.
 - Uses the shared light-blue GUI filler/border material so blocked slots stay visible across resource packs.
 - Optional-target emotes open an online-player picker with a clear "no username" option.
 - Required-target emotes open an online-player picker without the no-username option.

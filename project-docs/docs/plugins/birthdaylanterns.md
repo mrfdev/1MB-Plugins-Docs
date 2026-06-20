@@ -8,6 +8,8 @@ The server start date defaults to `2011-03-07`. A player who joined before a ser
 
 Players use `/birthday` to open the GUI. From there they can review claimable lanterns, set their birthday, toggle visibility/effects/greetings, choose particle and sound presets, send their personalized celebration mail, and read guestbook notes.
 
+When Menu is installed and enabled, `/menu` includes a Birthday Lanterns button and the BirthdayLanterns GUI shows a Main Menu shortcut beside the close button.
+
 Lantern items are marked with Paper PersistentDataContainer data. A normal right-click opens the BirthdayLanterns GUI. Sneak-right-click activates the lantern:
 
 - Collectible lanterns only glow and open the collection flow by default, so they are safe to keep forever.

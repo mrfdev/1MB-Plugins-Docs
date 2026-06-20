@@ -56,6 +56,10 @@ The default button list includes:
 /jobs
 /trade
 /votetokens
+/birthday
+/discordchat
+/emotes
+/nick
 /spawners
 /forage
 /warp shops
@@ -70,6 +74,8 @@ The default button list includes:
 ```
 
 Existing configs that were created before Spawners existed can auto-append the Spawners button when `buttons.spawners.enabled` and `buttons.spawners.auto-append-to-order` are true. Set either value to false if `/spawners` should stay out of `/menu`.
+
+Existing configs that were created before BirthdayLanterns, DiscordChat, EmoteMenu, or Nick were added to the menu can auto-append their buttons when the matching `buttons.<id>.enabled` and `buttons.<id>.auto-append-to-order` settings are true. Menu checks that the matching feature plugin is installed, plugin-enabled, and that the feature `config.yml` still has `enabled: true`, so disabled feature GUIs do not show as dead buttons.
 
 Existing configs that were created before Forage existed can auto-append the Forage button when `buttons.forage.enabled` and `buttons.forage.auto-append-to-order` are true. Menu also checks that `1MB-CMIAPI-Forage` is installed, plugin-enabled, and that the Forage `config.yml` still has `enabled: true`, so the button disappears automatically during an emergency Forage shutdown.
 

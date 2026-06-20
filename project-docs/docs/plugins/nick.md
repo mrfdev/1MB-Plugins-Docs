@@ -8,6 +8,8 @@ Before enabling this jar, remove or disable CMI's own `/nick` alias/command regi
 
 `/nick` opens a hardened GUI with a live preview. The player can browse public colors, gradients, seasonal styles, group styles, economy unlocks, milestone styles, moods, tools, history, favorites, top nicknames, and bio settings.
 
+When Menu is installed and enabled, `/menu` includes a Nick button and Nick GUI pages show a Main Menu shortcut beside their close controls.
+
 The main GUI includes a "Turn Off Nickname" button next to the current preview. It uses the same safe clear path as `/nick clear`, dispatching the configured CMI command `cmi nick off {player} -s` while keeping Nick history and favorites intact.
 
 The main GUI also links to Style Lab and Nick Museum when enabled. Style Lab can make the current color lighter, darker, warmer, cooler, redder, greener, bluer, pastel, softer, bolder, or safely random without allowing players to type raw hex codes. Nick Museum tracks styles a player has used as a personal collection; it does not make styles exclusive, so other players can still use the same public presets. `/nick museum top` shows the largest public collections as a fun leaderboard.
