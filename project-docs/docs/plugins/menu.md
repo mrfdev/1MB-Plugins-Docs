@@ -61,6 +61,7 @@ The default button list includes:
 /warp shops
 /buy
 /sell
+/autosell
 /market
 /points (runs /welcomes shop by default)
 /fish menu
@@ -71,6 +72,8 @@ The default button list includes:
 Existing configs that were created before Spawners existed can auto-append the Spawners button when `buttons.spawners.enabled` and `buttons.spawners.auto-append-to-order` are true. Set either value to false if `/spawners` should stay out of `/menu`.
 
 Existing configs that were created before Forage existed can auto-append the Forage button when `buttons.forage.enabled` and `buttons.forage.auto-append-to-order` are true. Menu also checks that `1MB-CMIAPI-Forage` is installed, plugin-enabled, and that the Forage `config.yml` still has `enabled: true`, so the button disappears automatically during an emergency Forage shutdown.
+
+Existing configs that were created before AutoSell existed in the menu can auto-append the AutoSell button when `buttons.autosell.enabled` and `buttons.autosell.auto-append-to-order` are true. Menu also checks that `1MB-CMIAPI-AutoSell` is installed, plugin-enabled, and that the AutoSell `config.yml` still has `enabled: true`, so the button disappears automatically during an emergency AutoSell shutdown.
 
 The compass button tries `/home home`, then `/home bed`, and finally `/homes`. The preferred home names and fallback command are configurable.
 
@@ -198,6 +201,7 @@ Optional hooks:
 - PlaceholderAPI: used for stat-head placeholders such as `{papi:%mcmmo_power_level%}`.
 - Vault: fallback economy provider if CMI balance formatting is unavailable.
 - mcMMO and Jobs: shown through PlaceholderAPI when those expansions are installed. Menu also falls back to mcMMO's own power-level API if the mcMMO PlaceholderAPI value is blank.
+- AutoSell: optional runtime check for showing the `/autosell` button only while the AutoSell plugin is installed and enabled.
 
 ## CMI / CMILib / Paper Usage
 

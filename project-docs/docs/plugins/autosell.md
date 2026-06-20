@@ -25,6 +25,7 @@ The GUI uses the shared hardened GUI service with safe holders, cancelled clicks
 - a quests button with claimable rewards, daily, weekly, monthly, and all-quest pages
 - a milestones button for the visible one-time milestone tree
 - a stats button for personal category/material totals, ranks, and server share
+- a Main Menu button beside the close button when `/menu` is installed and enabled
 - the player head with today's AutoSell total, cap, broker level, broker points, next broker-level progress, top category, top item, best single batch, milestone progress, quest progress, sell chain, streak, trigger mode, and active boost
 
 AutoSell only runs after a short delayed batch, usually after a pickup or chunk move. The final sale runs on the main thread, snapshots exact stacks, rechecks that the inventory still matches, removes the items, pays the player, and refunds removed stacks if the economy payment fails.
@@ -55,6 +56,8 @@ AutoSell is built around anti-dupe and anti-farm guards:
 - repeatable quest rewards only progress after a verified sale batch and use the same safe command allowlist model
 - temporary AutoSell boosts can appear in `/rate` while active
 - suspicious volume warnings are stored and can be exported
+- verified sale revenue is tracked by chunk for passive staff heatmap review
+- passive tuning sessions collect observations and suggestions only; they never edit config values automatically
 
 This plugin should not be used as a hopper, farm, or AFK seller. It is meant for players who move around and manually mine, dig, chop, or gather while keeping their inventory tidy.
 
@@ -89,8 +92,17 @@ This plugin should not be used as a hopper, farm, or AFK seller. It is meant for
 | `/autosell admin warnings blacklist <number>` | admin/console | Adds the material from a numbered material warning to the hard blacklist. |
 | `/autosell admin report` | admin/console | Prints a compact economy report with top earners, categories, materials, cap usage, and export hint. |
 | `/autosell admin export` | admin/console | Writes a Discord-friendly Markdown report. |
+| `/autosell admin heatmap [page]` | admin/console | Shows chunk revenue hotspots from verified AutoSell batches. |
+| `/autosell admin heatmap export` | admin/console | Writes a Markdown chunk revenue heatmap. |
+| `/autosell admin tuning start` | admin/console | Starts passive observation for broker/cap/worth review. |
+| `/autosell admin tuning status` | admin/console | Shows the current passive observation sample. |
+| `/autosell admin tuning report` | admin/console | Shows suggestions based on observed sales, caps, warnings, materials, and chunks. |
+| `/autosell admin tuning stop` | admin/console | Stops passive observation while keeping the collected report. |
+| `/autosell admin tuning reset confirm` | admin/console | Clears passive observation data. |
+| `/autosell admin tuning export` | admin/console | Writes a Markdown passive tuning report. |
 | `/autosell admin boost status` | admin/console | Shows the active AutoSell happy-hour boost, if any. |
 | `/autosell admin boost list` | admin/console | Lists configured Happy Hour boost presets. |
+| `/autosell admin boost schedule` | admin/console | Shows disabled-by-default scheduled Happy Hour entries. |
 | `/autosell admin boost start preset <id>` | admin/console | Starts a configured Happy Hour preset that appears in `/rate`. |
 | `/autosell admin boost start <all\|category> <time> <multiplier>` | admin/console | Starts a manual temporary AutoSell boost that appears in `/rate`. |
 | `/autosell admin boost stop` | admin/console | Stops the active AutoSell boost. |
@@ -127,8 +139,14 @@ Examples:
 /autosell admin warnings
 /autosell admin warnings blacklist 1
 /autosell admin report
+/autosell admin heatmap
+/autosell admin heatmap export
+/autosell admin tuning start
+/autosell admin tuning report
+/autosell admin tuning export
 /autosell admin boost status
 /autosell admin boost list
+/autosell admin boost schedule
 /autosell admin boost start preset royal_blacksmith
 /autosell admin boost start mining 20m 1.25
 /autosell admin boost stop
@@ -313,7 +331,36 @@ Manual boosts still work for one-off testing or special events:
 
 When enabled in config, Happy Hour starts and natural ends are announced to online players with a hoverable/clickable chat line that opens `/rate`. The active boost is also saved in AutoSell data, so reloads keep the correct `/rate` status and expired boosts are cleaned up on startup/reload.
 
-Admin report/export views include server totals, today's totals, top earners, top categories, top materials, the leading player for each top category/material, cap usage, broker growth, quest progress, warning summaries, and recent suspicious sale warnings. Use `/autosell admin report` for the compact console view and `/autosell admin export` for a Discord-friendly Markdown file.
+Scheduled Happy Hour entries live under `happy-hour.schedule`, but schedule automation is disabled by default. Staff can review configured entries with:
+
+```text
+/autosell admin boost schedule
+```
+
+To enable automation, set `happy-hour.schedule.enabled: true` and enable one or more entries under `happy-hour.schedule.entries.*`. Each entry points at a configured preset, has a server-time `HH:mm` time in the Europe/Amsterdam server zone, and a day list such as `SATURDAY` and `SUNDAY`. By default, scheduled entries skip if another AutoSell boost is already active.
+
+Admin report/export views include server totals, today's totals, top earners, top categories, top materials, the leading player for each top category/material, cap usage, broker growth, quest progress, warning summaries, chunk revenue heatmaps, passive tuning suggestions, and recent suspicious sale warnings. Use `/autosell admin report` for the compact console view and `/autosell admin export` for a Discord-friendly Markdown file.
+
+## Heatmap And Passive Tuning
+
+AutoSell records verified sale revenue by chunk when `heatmap.enabled` is true. The heatmap is read-only staff context for finding unusual economy hotspots:
+
+```text
+/autosell admin heatmap
+/autosell admin heatmap export
+```
+
+Passive tuning sessions are started manually when staff want to watch live behavior for a while:
+
+```text
+/autosell admin tuning start
+/autosell admin tuning status
+/autosell admin tuning report
+/autosell admin tuning export
+/autosell admin tuning stop
+```
+
+While a session is running, AutoSell records verified sale totals, observed players, material/category/chunk shares, cap usage, and warnings. Reports can suggest things to review, such as one material dominating observed money, one chunk producing most revenue, players nearing caps, or cap unlocks seeing little use. The tuning commands do not edit `config.yml`, `Worth.yml`, broker costs, cap values, blacklist entries, or player data beyond their own observation counters. Staff still decide and apply any real changes separately after reviewing the evidence.
 
 ## Worlds
 
@@ -343,6 +390,8 @@ plugins/1MB-CMIAPI/AutoSell/exports/
 
 The data file stores player preferences, totals, recent sale messages, broker/streak/milestone state, category/material totals, cap snapshots, and current quest progress. Players can inspect their own category/material breakdown with `/autosell stats`, while staff can inspect one profile with `/autosell admin inspect <player>` or review the full economy picture with `/autosell admin report` and `/autosell admin export`. If AutoSell is disabled or removed, player inventories are not changed; the plugin simply stops scanning and selling.
 
+The same data file also stores heatmap rows, passive tuning observation counters, and the last run keys for scheduled Happy Hour entries. These are staff review artifacts, not player inventory data.
+
 AutoSell reads CMI worth values from:
 
 ```text
@@ -360,6 +409,33 @@ selling:
 ```
 
 Players can toggle their own mode with `/autosell trigger full` or `/autosell trigger always`. In full mode, AutoSell waits until the player's main inventory storage slots have the configured number of empty slots or fewer. Hotbar, offhand, and armor are still ignored.
+
+Heatmap, passive tuning, and scheduled Happy Hour defaults are controlled by:
+
+```yaml
+heatmap:
+  enabled: true
+  max-chunks: 250
+  report-limit: 10
+tuning:
+  enabled: true
+  min-observation-hours: 24
+happy-hour:
+  schedule:
+    enabled: false
+    check-interval-seconds: 60
+    skip-while-boost-active: true
+    entries:
+      weekend_cleanup:
+        enabled: false
+        preset: server_cleanup
+        days:
+        - SATURDAY
+        - SUNDAY
+        time: "18:00"
+```
+
+The schedule is intentionally off by default, and the example entry is disabled too. Passive tuning is available by default because it only collects observations after an admin starts a session.
 
 Quest defaults are controlled by:
 
@@ -428,6 +504,7 @@ onembcmi.autosell.cap.unlimited
 - Vault is required at runtime for economy payments; on 1MoreBlock this is backed by CMI money.
 - LuckPerms can grant cap and admin permissions.
 - PlaceholderAPI is optional for future expansion.
+- `1MB-CMIAPI-Menu` is optional; when present and enabled, AutoSell GUIs show a Main Menu shortcut beside the close button.
 
 ## Notes
 
