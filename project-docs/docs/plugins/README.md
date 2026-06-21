@@ -54,7 +54,7 @@ Every feature jar that does not implement a local debug command inherits `/<plug
 | Server Management | [ConsoleNoiseRouter](consolenoiserouter.md) | CMI console message classification, redaction, and support dumps. |
 | Server Management | [EconomyGuardian](economyguardian.md) | Read-only CMI economy balance anomaly watcher. |
 | Server Management | [StartupDoctor](startupdoctor.md) | Startup/runtime diagnostics plus read-only folder doctor suggestions and export reports. |
-| Server Management | [UpdateSmoke](updatesmoke.md) | Post-update smoke checks for hooks, commands, placeholders, feature metadata, and key CMI/CMILib APIs. |
+| Server Management | [UpdateSmoke](updatesmoke.md) | Post-update smoke checks for runtime compatibility, hooks, command registration and dispatch, placeholders, feature metadata, and key CMI/CMILib APIs. |
 | Server Management | [PluginVersions](pluginversions.md) | Plugin version inventory, tested Java/Paper/dependency gate, URL curation, and Markdown/Discord export reports migrated from the standalone PluginVersions project. |
 | Server Management | [PlaceholderHealth](placeholderhealth.md) | Read-only PlaceholderAPI health monitor for configured CMI and 1MB placeholders with ok/warn/error checks and Markdown exports. |
 | Server Management | [Potions](potions.md) | Locked `/_potions` admin forge plus player-safe `/potions` held-item inspection for PDC-marked custom event potions with split config files, GUI definition editing, collection bundle generation, 14 style choices, snapshotted costs, particle presets, collections, and runtime disable controls. |
@@ -66,12 +66,13 @@ Every feature jar that does not implement a local debug command inherits `/<plug
 | Server Management | [Hoppers](hoppers.md) | Read-only hopper clog, watch/trigger/baseline tools, report comparison, storage-chain/container/material/redstone/ticket deep dives, world/chunk/player scopes, Spark helpers, notes, config drift, hotspot history, and MobFarmManager triage for TPS drops. |
 | Server Management | [Hoppers Roadmap](hoppers-roadmap.md) | Accepted, implemented, rejected, and pending Hoppers analyzer ideas. |
 | Server Management | [WarpAudit](warpaudit.md) | Read-only CMI warp and portal hygiene and safety audit. |
-| Server Management | [WorthDrift](worthdrift.md) | CMI sell-event drift analyzer for worth values and economy-loop signals. |
+| Server Management | [WorthDrift](worthdrift.md) | CMI sell-event drift analyzer plus ShopGUI+ `buyPrice` vs CMI `Worth.yml` Markdown reports for missing, drifting, duplicate, not-in-worth, illegal-item, and exception-filtered review. |
 | Server Management | [WorthHelper](worthhelper.md) | Read-only CMI Worth.yml and Paper recipe analyzer with review-first setworth suggestions. |
 | Generic / Dev | [EventRecorder](eventrecorder.md) | CMI event recorder for development and test sessions. |
 | Generic / Dev | [CMIProbe](cmiprobe.md) | CMI, CMILib, event, and command smoke probe for test templates. |
 | Generic / Dev | [CMIDatabase](cmidatabase.md) | Internal key/value database for CMI aliases, event commands, and placeholders. |
 | Generic / Dev | [PlaceholderProbe](placeholderprobe.md) | Strict PlaceholderAPI probe for CMI and `onembcmi` placeholders. |
+| Generic / Dev | [PermissionProbe](permissionprobe.md) | Owner-only read-only permission diagnosis, passive denial recording, command checks, plugin checks, LuckPerms cached state, and Bukkit metadata. |
 | Generic / Dev | [CMIPlaceholderCheck](cmiplaceholders.md) | CMI-style placeholder lookup catalog with live example parsing. |
 | Generic / Dev | [1MBPlaceholders](onembplaceholders.md) | Migrated `%onemb_<key>%` PlaceholderAPI expansion with legacy `/_placeholders` management commands. |
 
@@ -163,6 +164,7 @@ Examples:
 1MB-CMIAPI-Hoppers-v1.0.0-505-j25-26.1.2.jar
 1MB-CMIAPI-EventRecorder-v1.0.0-505-j25-26.1.2.jar
 1MB-CMIAPI-PlaceholderProbe-v1.0.0-505-j25-26.1.2.jar
+1MB-CMIAPI-PermissionProbe-v1.0.0-505-j25-26.1.2.jar
 1MB-CMIAPI-CMIPlaceholderCheck-v1.0.0-505-j25-26.1.2.jar
 1MB-CMIAPI-1MBPlaceholders-v1.0.0-505-j25-26.1.2.jar
 1MB-CMIAPI-WarpAudit-v1.0.0-505-j25-26.1.2.jar

@@ -56,7 +56,7 @@ These are the first feature candidates now using the shared library scaffold:
 | Server Management | ConsoleNoiseRouter | CMI console message classifier and cache dump helper | [ConsoleNoiseRouter](plugins/consolenoiserouter.md) |
 | Server Management | EconomyGuardian | Read-only CMI economy balance anomaly watcher | [EconomyGuardian](plugins/economyguardian.md) |
 | Server Management | StartupDoctor | Startup/runtime diagnostics | [StartupDoctor](plugins/startupdoctor.md) |
-| Server Management | UpdateSmoke | Post-update smoke checks for hooks, commands, placeholders, feature metadata, and key CMI/CMILib APIs | [UpdateSmoke](plugins/updatesmoke.md) |
+| Server Management | UpdateSmoke | Post-update smoke checks for runtime compatibility, hooks, command registration and dispatch, placeholders, feature metadata, and key CMI/CMILib APIs | [UpdateSmoke](plugins/updatesmoke.md) |
 | Server Management | PluginVersions | Plugin version inventory, tested Java/Paper/dependency gate, URL curation, and Markdown/Discord export reports migrated from the standalone PluginVersions project | [PluginVersions](plugins/pluginversions.md) |
 | Server Management | PlaceholderHealth | Read-only PlaceholderAPI health monitor for configured CMI and 1MB placeholders with ok/warn/error checks and Markdown exports | [PlaceholderHealth](plugins/placeholderhealth.md) |
 | Server Management | Potions | Locked admin forge plus player-safe `/potions` held-item inspection for PDC-marked custom event potions with split config files, GUI definition editing, collection bundle generation, 14 style choices, snapshotted costs, particle presets, collections, and runtime disable controls | [Potions](plugins/potions.md) |
@@ -66,12 +66,13 @@ These are the first feature candidates now using the shared library scaffold:
 | Server Management | SparkReviewer | Spark workflow, latest.log, config, MFM, entity, hopper, and stress-test reviewer for TPS drops | [SparkReviewer](plugins/sparkreviewer.md) |
 | Server Management | Hoppers | Read-only hopper clog, world/chunk/player scopes, Spark helpers, notes, config drift, hotspot history, Markdown export, and MobFarmManager triage for TPS drops | [Hoppers](plugins/hoppers.md) |
 | Server Management | WarpAudit | Read-only CMI warp and portal audit | [WarpAudit](plugins/warpaudit.md) |
-| Server Management | WorthDrift | CMI sell-event drift analyzer | [WorthDrift](plugins/worthdrift.md) |
+| Server Management | WorthDrift | CMI sell-event drift analyzer plus ShopGUI+ `buyPrice` vs `Worth.yml` Markdown reports | [WorthDrift](plugins/worthdrift.md) |
 | Server Management | WorthHelper | Read-only CMI Worth.yml and Paper recipe analyzer | [WorthHelper](plugins/worthhelper.md) |
 | Generic / Dev | EventRecorder | CMI event recorder for development and testing | [EventRecorder](plugins/eventrecorder.md) |
 | Generic / Dev | CMIProbe | CMI, CMILib, event, and command smoke probe | [CMIProbe](plugins/cmiprobe.md) |
 | Generic / Dev | CMIDatabase | Internal key/value database for CMI automation and placeholders | [CMIDatabase](plugins/cmidatabase.md) |
 | Generic / Dev | PlaceholderProbe | Safe PlaceholderAPI probe | [PlaceholderProbe](plugins/placeholderprobe.md) |
+| Generic / Dev | PermissionProbe | Owner-only read-only permission diagnosis, passive denial recording, command checks, plugin checks, LuckPerms cached state, and Bukkit metadata | [PermissionProbe](plugins/permissionprobe.md) |
 | Generic / Dev | CMIPlaceholderCheck | CMI-style placeholder lookup catalog and live examples | [CMIPlaceholderCheck](plugins/cmiplaceholders.md) |
 | Generic / Dev | 1MBPlaceholders | Migrated `%onemb_<key>%` PlaceholderAPI expansion with legacy `/_placeholders` management commands | [1MBPlaceholders](plugins/onembplaceholders.md) |
 

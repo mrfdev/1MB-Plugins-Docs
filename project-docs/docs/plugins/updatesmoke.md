@@ -4,7 +4,7 @@
 
 UpdateSmoke is a post-update smoke tester for the CMI and 1MB CMI-API stack. It is meant to be run after updating Paper, CMI, CMILib, PlaceholderAPI, or any 1MB feature jar.
 
-It does not reload plugins, change configs, dispatch commands, or repair anything automatically. It gives staff a compact checklist result so update testing starts with the obvious compatibility signals: hooks, versions, registered features, command registration, placeholder parsing, and selected CMI/CMILib API access.
+It does not reload plugins, change configs, mutate player data, or repair anything automatically. It gives staff a compact checklist result so update testing starts with the obvious compatibility signals: accepted Paper/Java matrix, hooks, versions, registered features, command registration, read-only command dispatch paths, placeholder parsing, and selected CMI/CMILib API access.
 
 ## Commands
 
@@ -34,7 +34,7 @@ Examples:
 
 `/updatesmoke status` shows the latest run result, counts, and cache size.
 
-`/updatesmoke run [page]` runs a fresh checklist and prints a paginated view of the check rows.
+`/updatesmoke run [page]` runs a fresh checklist and prints a paginated view of the check rows. When command smoke is enabled it dispatches configured read-only root/help/info/debug command paths and records any thrown exceptions as failures.
 
 `/updatesmoke checks [page]` lists the most recent check rows without creating a new report file.
 
@@ -64,6 +64,8 @@ onembcmi.updatesmoke.admin.reload
 %onembcmi_updatesmoke.last.failures%
 %onembcmi_updatesmoke.commands.ok%
 %onembcmi_updatesmoke.commands.total%
+%onembcmi_updatesmoke.command_smoke.ok%
+%onembcmi_updatesmoke.command_smoke.total%
 %onembcmi_updatesmoke.placeholders.ok%
 %onembcmi_updatesmoke.placeholders.total%
 %onembcmi_updatesmoke.features.count%
@@ -86,6 +88,10 @@ debug: false
 output.page-size: 10
 checks.expected-java: "25"
 checks.expected-paper: "26.1.2"
+checks.compatibility-matrix:
+  - "26.1.2@25"
+  - "26.1.2@26"
+  - "26.2@26"
 checks.require-placeholderapi: true
 checks.require-current-build: true
 checks.min-feature-count: 1
@@ -101,6 +107,18 @@ commands.required:
   - visit
   - tips
   - n
+commands.smoke.enabled: true
+commands.smoke.discover-1mb-commands: true
+commands.smoke.include-required: false
+commands.smoke.include-feature-debug: true
+commands.smoke.arguments:
+  - ""
+  - help
+  - info
+  - debug all
+commands.smoke.excluded-roots: []
+commands.smoke.max-dispatches: 400
+commands.smoke.return-false-is-warning: false
 placeholders.required:
   - "%onembcmi_global.status.loaded%"
   - "%onembcmi_global.cmi.version%"
@@ -119,13 +137,17 @@ report.write-file: true
 report.file-prefix: updatesmoke-report
 ```
 
+Server owners can add future Mojang/Paper targets to `checks.compatibility-matrix` in `paper@java` form, for example `26.3@26`. The legacy `checks.expected-paper` and `checks.expected-java` values are only used when the matrix is empty.
+
 Server owners can add or remove command and placeholder samples to match the exact installed feature jars. If a feature is temporarily not installed, remove its command from `commands.required` before treating a failed smoke run as a real update blocker.
+
+The command smoke layer discovers loaded `1MB-CMIAPI-*` command roots from Bukkit's command map, then dispatches each root with the configured read-only argument shapes. By default it also runs `/1mbcmi debug plugin <feature> all` for every registered feature. Dispatches are considered passing when they complete without throwing; Bukkit returning `false` can optionally be treated as a warning with `commands.smoke.return-false-is-warning`.
 
 ## Checks
 
 UpdateSmoke currently checks:
 
-- Paper API version prefix and Java runtime against config.
+- Paper API version prefix and Java runtime against the configured compatibility matrix.
 - CMI, CMILib, PlaceholderAPI, and `1MB-CMIAPI-Lib` plugin state.
 - CMI-API and CMILib class availability through the shared diagnostics helper.
 - `CMI.getInstance()` and configured CMI manager methods by reflection.
@@ -133,6 +155,7 @@ UpdateSmoke currently checks:
 - 1MB feature registry count and each registered feature plugin's enabled state.
 - Current 1MB feature build numbers when `checks.require-current-build` is true.
 - Configured command registration through Paper/Bukkit command metadata.
+- Read-only command smoke dispatches for discovered 1MB roots and per-feature debug dumps.
 - Configured PlaceholderAPI samples, including unresolved placeholder detection.
 
 ## Data
@@ -171,10 +194,11 @@ Paper:
 ## Safety
 
 - Read-only checks only.
-- No commands are dispatched.
+- Only configured read-only command smoke paths are dispatched.
 - No plugin reloads are attempted.
 - No player data is changed.
 - Command names are validated before lookup.
+- Command smoke argument shapes are validated before dispatch.
 - Placeholder samples come from config and are parsed only when PlaceholderAPI is enabled.
 
 [Plugin index](README.md)

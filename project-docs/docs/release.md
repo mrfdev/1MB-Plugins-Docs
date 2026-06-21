@@ -68,6 +68,7 @@ Examples:
 1MB-CMIAPI-CMIProbe-v1.0.0-505-j25-26.1.2.jar
 1MB-CMIAPI-CMIDatabase-v1.0.0-505-j25-26.1.2.jar
 1MB-CMIAPI-PlaceholderProbe-v1.0.0-505-j25-26.1.2.jar
+1MB-CMIAPI-PermissionProbe-v1.0.0-505-j25-26.1.2.jar
 1MB-CMIAPI-CMIPlaceholderCheck-v1.0.0-505-j25-26.1.2.jar
 1MB-CMIAPI-1MBPlaceholders-v1.0.0-505-j25-26.1.2.jar
 1MB-CMIAPI-WarpAudit-v1.0.0-505-j25-26.1.2.jar

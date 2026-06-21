@@ -11,9 +11,6 @@ This page documents the global command shape. Individual plugins have their own 
 /1mbcmi doctor
 /1mbcmi features
 /1mbcmi storage
-/1mbcmi permissions <player> [plugin|all] [page]
-/1mbcmi permissions node <player> <permission>
-/1mbcmi permissions plugin <plugin> <player> [page]
 /1mbcmi help
 /1mbcmi debug plugins
 /1mbcmi debug plugins <category>
@@ -51,9 +48,6 @@ This page documents the global command shape. Individual plugins have their own 
 | `/1mbcmi doctor` | Runs support checks for hooks, feature registration, config validation, and storage paths. |
 | `/1mbcmi features [category]` | Lists registered 1MB CMI-API features with active/config/dependency/validation health, optionally filtered by category. |
 | `/1mbcmi storage` | Shows shared data, cache, translation, debug, and playerdata storage sizes. |
-| `/1mbcmi permissions <player> [plugin\|all] [page]` | Read-only permission probe for registered 1MB CMI-API permission nodes. |
-| `/1mbcmi permissions node <player> <permission>` | Read-only effective-state probe for one exact permission node. |
-| `/1mbcmi permissions plugin <plugin> <player> [page]` | Plugin-first form for checking one feature's registered permission nodes. |
 | `/1mbcmi debug plugins [category]` | Lists registered features and health states in a compact debug-friendly view. |
 | `/1mbcmi debug cmi` | Prints CMI, CMILib, CMI-API, server, and plugin metadata for support. |
 | `/1mbcmi debug plugin <plugin>` | Shows a summary for one registered feature. |
@@ -83,6 +77,26 @@ Command output is rendered with Paper's Adventure MiniMessage support. The share
 
 Dynamic values such as player input, config values, event details, and log snippets are escaped before rendering so they cannot inject MiniMessage formatting.
 
+## Owner Permission Probe
+
+The richer owner-only permission diagnosis surface lives in the `PermissionProbe` feature plugin:
+
+```text
+/_permissions status
+/_permissions denials [page]
+/_permissions <player> [page]
+/_permissions all <player> [page]
+/_permissions check <player> <permission>
+/_permissions plugin <plugin|feature> <player> [page]
+/_permissions command <player> <command>
+/_permissions groups <player>
+/_permissions reload
+```
+
+`/_permissions` is locked behind `onembcmi.permissionprobe.use` before help, status, debug, or tab completion exposes probe data. It is read-only: it checks Bukkit effective state, registered permission metadata, command metadata, recent denied 1MB feature permission checks, and LuckPerms cached results without granting or removing nodes.
+
+The old `/1mbcmi permissions ...` command is no longer listed as a working analyzer. If typed manually, it prints a compatibility note pointing admins to `/_permissions`.
+
 ## Feature Debug Fallback
 
 Feature plugins that do not implement their own local debug command inherit a shared fallback from `1MB-CMIAPI-Lib`. The fallback is locked to that feature's admin permission, usually `onembcmi.<plugin>.admin`, and exposes:
@@ -111,9 +125,12 @@ Feature `/help` pages are intentionally player-facing: they list commands availa
 /1mbcmi doctor
 /1mbcmi features
 /1mbcmi storage
-/1mbcmi permissions mrfloris visit
-/1mbcmi permissions node mrfloris onembcmi.visit.use
-/1mbcmi permissions plugin startupdoctor mrfloris
+/_permissions mrfloris
+/_permissions denials
+/_permissions check mrfloris onembcmi.autosell.use
+/_permissions plugin autosell mrfloris
+/_permissions command mrfloris autosell
+/_permissions groups mrfloris
 /1mbcmi debug plugins player-fun
 /1mbcmi debug cmi
 /1mbcmi debug plugin afkshrine

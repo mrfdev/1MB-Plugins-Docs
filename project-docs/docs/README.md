@@ -97,6 +97,7 @@ For support/debugging:
 - [CMIProbe](plugins/cmiprobe.md)
 - [CMIDatabase](plugins/cmidatabase.md)
 - [PlaceholderProbe](plugins/placeholderprobe.md)
+- [PermissionProbe](plugins/permissionprobe.md)
 - [CMIPlaceholderCheck](plugins/cmiplaceholders.md)
 - [1MBPlaceholders](plugins/onembplaceholders.md)
 

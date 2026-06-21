@@ -7,7 +7,7 @@ This page introduces WorthDrift from a public server-docs point of view. It focu
 
 ## What It Does
 
-Server sell-event drift analyzer for worth values and economy-loop signals.
+Server sell-event drift analyzer plus ShopGUI+ buyPrice vs server Worth.yml Markdown reports for missing, drifting, duplicate, not-in-worth, illegal-item, and exception-filtered review.
 
 ## How Players Use It
 
@@ -19,6 +19,8 @@ Start in-game with /worthdrift. The sections below explain what WorthDrift is fo
 - Flag player concentration when one player accounts for a large share of a material's observed payment.
 - Ask server WorthItem whether an exploit recipe is known for a material.
 - Keep a bounded recent sample list for report context.
+- Report per-row ShopGUI+ drift with material, worth value, current shop value, expected shop value, difference, percent drift, file, shop id, entry id, slot, and page.
+- Support Markdown exports for GitHub tables or Discord-friendly bullet lists.
 - Write timestamped support reports to the shared cache folder.
 
 ## Quick Start
@@ -64,6 +66,26 @@ Start in-game with /worthdrift. The sections below explain what WorthDrift is fo
       <td><code>/worthdrift report</code></td>
     </tr>
     <tr>
+      <td><code>/worthdrift shopgui [-all|<wbr />-missing|<wbr />-drifting|<wbr />-illegal-items|<wbr />-not-in-worth|<wbr />-duplicates] [-valid-only] [-github|<wbr />-discord] [-limit &lt;rows&gt;]</code></td>
+      <td>Runs the WorthDrift shopgui action.</td>
+      <td><code>/worthdrift shopgui</code></td>
+    </tr>
+    <tr>
+      <td><code>/worthdrift missing generate:&lt;file.yml&gt;</code></td>
+      <td>Runs the WorthDrift missing action.</td>
+      <td><code>/worthdrift missing generate:example</code></td>
+    </tr>
+    <tr>
+      <td><code>/worthdrift fix &lt;material&gt;</code></td>
+      <td>Runs the WorthDrift fix action.</td>
+      <td><code>/worthdrift fix DIAMOND</code></td>
+    </tr>
+    <tr>
+      <td><code>/worthdrift skip &lt;file:file.yml|<wbr />item:material&gt;</code></td>
+      <td>Runs the WorthDrift skip action.</td>
+      <td><code>/worthdrift skip example</code></td>
+    </tr>
+    <tr>
       <td><code>/worthdrift ignored</code></td>
       <td>Runs the WorthDrift ignored action.</td>
       <td><code>/worthdrift ignored</code></td>
@@ -87,6 +109,17 @@ Start in-game with /worthdrift. The sections below explain what WorthDrift is fo
 - `/worthdrift material DIAMOND`
 - `/worthdrift material minecraft:diamond`
 - `/worthdrift report`
+- `/worthdrift shopgui`
+- `/worthdrift shopgui -drifting`
+- `/worthdrift shopgui -missing`
+- `/worthdrift shopgui -missing -discord -valid-only -limit 0`
+- `/worthdrift shopgui -all -github -limit 0`
+- `/worthdrift shopgui -illegal-items -discord`
+- `/worthdrift shopgui -duplicates`
+- `/worthdrift missing generate:survival_misc.yml`
+- `/worthdrift fix OAK_LOG`
+- `/worthdrift skip file:armor.yml`
+- `/worthdrift skip item:SPAWNER`
 - `/worthdrift ignore CACTUS`
 - `/worthdrift ignored`
 

@@ -2,7 +2,7 @@
 
 ## Purpose
 
-`1MB-CMIAPI-Lib` is the shared runtime library for the 1MB CMI-API feature jars. It owns common diagnostics, feature registration, config visibility, translation health, shared GUI examples, safe action rules, read-only permission probes, cache cleanup, debug bundles, and PlaceholderAPI routing for global and feature placeholders.
+`1MB-CMIAPI-Lib` is the shared runtime library for the 1MB CMI-API feature jars. It owns common diagnostics, feature registration, config visibility, translation health, shared GUI examples, safe action rules, cache cleanup, debug bundles, and PlaceholderAPI routing for global and feature placeholders.
 
 It must be installed in `/plugins/` next to CMI, CMILib, and any 1MB CMI-API feature jars.
 
@@ -22,9 +22,6 @@ Feature configs are validated and repaired through the shared `FeatureSettings` 
 /1mbcmi doctor
 /1mbcmi features [category]
 /1mbcmi storage
-/1mbcmi permissions <player> [id|all] [page]
-/1mbcmi permissions node <player> <permission>
-/1mbcmi permissions plugin <id> <player> [page]
 /1mbcmi debug plugins [category]
 /1mbcmi debug cmi
 /1mbcmi debug plugin <id>
@@ -58,9 +55,6 @@ Useful examples:
 /1mbcmi doctor
 /1mbcmi features player-fun
 /1mbcmi storage
-/1mbcmi permissions mrfloris visit
-/1mbcmi permissions node mrfloris onembcmi.visit.use
-/1mbcmi permissions plugin startupdoctor mrfloris
 /1mbcmi debug plugins staff
 /1mbcmi debug cmi
 /1mbcmi debug plugin socialgatherings all
@@ -88,7 +82,6 @@ onembcmi.global.status
 onembcmi.global.doctor
 onembcmi.global.features
 onembcmi.global.storage
-onembcmi.global.permissions
 onembcmi.global.debug
 onembcmi.global.debug.bundle
 onembcmi.global.clean.cache
@@ -100,13 +93,9 @@ onembcmi.global.rules
 onembcmi.global.translations
 ```
 
-## Permission Probe
+## Permission Diagnosis
 
-`/1mbcmi permissions` is a read-only helper for checking known 1MB CMIAPI permission nodes against a cached or online player. It does not grant, revoke, create, or delete permissions.
-
-Use `/1mbcmi permissions <player> [id|all] [page]` to list the registered permission nodes for one feature plugin or all known 1MB features. Use `/1mbcmi permissions node <player> <permission>` for one exact node, including nodes that are not registered in feature metadata. Use `/1mbcmi permissions plugin <id> <player> [page]` when you prefer the plugin id first.
-
-For online players, the probe reports the Bukkit effective result from `Player#hasPermission(...)` and a LuckPerms cached result when LuckPerms is loaded and the user is available. For offline players, Bukkit state is limited to declared permission defaults and operator state; LuckPerms state is only available when LuckPerms already has the user cached. If a player is unknown to the server cache, have them join once or inspect them directly in LuckPerms.
+The dedicated [PermissionProbe](permissionprobe.md) feature plugin owns permission diagnosis through `/_permissions`. The old `/1mbcmi permissions ...` command is kept only as a compatibility redirect and tells admins to use `/_permissions`.
 
 ## Shared Action Rules
 

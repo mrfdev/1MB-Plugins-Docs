@@ -14,7 +14,6 @@ onembcmi.global.status
 onembcmi.global.doctor
 onembcmi.global.features
 onembcmi.global.storage
-onembcmi.global.permissions
 onembcmi.global.debug
 onembcmi.global.debug.bundle
 onembcmi.global.config
@@ -502,6 +501,9 @@ onembcmi.cmiprobe.firecheck
 onembcmi.cmiprobe.command
 onembcmi.cmiprobe.report
 onembcmi.cmiprobe.admin.reload
+onembcmi.permissionprobe.use
+onembcmi.permissionprobe.admin
+onembcmi.permissionprobe.admin.reload
 onembcmi.cmidb.manage
 onembcmi.cmidb.view
 onembcmi.cmidb.admin

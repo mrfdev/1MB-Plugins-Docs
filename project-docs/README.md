@@ -140,10 +140,11 @@ Paper loads normal plugin jars from the top-level server `/plugins/` directory. 
 - `plugins/1MB-CMIAPI-CMIProbe-v1.0.0-505-j25-26.1.2.jar`
 - `plugins/1MB-CMIAPI-CMIDatabase-v1.0.0-505-j25-26.1.2.jar`
 - `plugins/1MB-CMIAPI-PlaceholderProbe-v1.0.0-505-j25-26.1.2.jar`
+- `plugins/1MB-CMIAPI-PermissionProbe-v1.0.0-505-j25-26.1.2.jar` provides owner-only `/_permissions` diagnosis for players, commands, plugins, passive denied-check recording, LuckPerms, and Bukkit permission metadata
 - `plugins/1MB-CMIAPI-CMIPlaceholderCheck-v1.0.0-505-j25-26.1.2.jar`
 - `plugins/1MB-CMIAPI-1MBPlaceholders-v1.0.0-505-j25-26.1.2.jar` provides the migrated `%onemb_<key>%` PlaceholderAPI expansion and keeps `/_placeholders`
 - `plugins/1MB-CMIAPI-WarpAudit-v1.0.0-505-j25-26.1.2.jar` provides read-only CMI warp and portal hygiene checks
-- `plugins/1MB-CMIAPI-WorthDrift-v1.0.0-505-j25-26.1.2.jar`
+- `plugins/1MB-CMIAPI-WorthDrift-v1.0.0-505-j25-26.1.2.jar` provides read-only CMI sell-event drift tracking plus ShopGUI+ `buyPrice` vs CMI `Worth.yml` Markdown reports with missing, drifting, duplicate, not-in-worth, illegal-item, GitHub-table, Discord-bullet, and exception-filtered modes
 - `plugins/1MB-CMIAPI-WorthHelper-v1.0.0-505-j25-26.1.2.jar` provides `/worthhelper` for read-only CMI Worth.yml and Paper recipe review exports
 
 The common `1MB-CMIAPI-` prefix keeps the jars grouped together when sorted by name. Repository folders and build output may be organized by category, but installed runtime jars should stay in `/plugins/` for normal Paper loading and feature isolation.
@@ -188,9 +189,6 @@ The shared library should own the global command surface:
 - `/1mbcmi doctor`
 - `/1mbcmi features`
 - `/1mbcmi storage`
-- `/1mbcmi permissions <player> [plugin|all] [page]`
-- `/1mbcmi permissions node <player> <permission>`
-- `/1mbcmi permissions plugin <plugin> <player> [page]`
 - `/1mbcmi debug plugins`
 - `/1mbcmi debug plugins <category>`
 - `/1mbcmi debug cmi`
@@ -207,6 +205,8 @@ The shared library should own the global command surface:
 - `/1mbcmi help`
 
 Feature plugins should expose their own concise commands and also register with the library so `/1mbcmi features` and `/1mbcmi debug plugins` stay accurate.
+
+Permission diagnosis lives in the PermissionProbe feature plugin as `/_permissions ...`. The old `/1mbcmi permissions ...` command remains only as a compatibility redirect.
 
 The shared library also owns central chat-prefix symbols through `plugins/1MB-CMIAPI/CMIAPILIB/config.yml` under `locale.prefix-unicodes.*`. This lets feature messages use consistent visible prefixes such as `[✎ PassportDiscovery]`, `[ⓘ ScheduledTips]`, `[¤ AutoSell]`, `[¤ SellStreaks]`, `[⚔ PvP]`, `[♨ LavaBoots]`, `[▣ Spawners]`, `[✹ Collect]`, `[☘ Forage]`, `[⚗ Potions]`, `[◷ SchedulerCheck]`, `[⇧ Upgrade]`, and `[✦ Vote]` without hard-coding symbols into every feature translation file.
 
@@ -355,6 +355,7 @@ PlaceholderAPI placeholders should follow this shape:
 - `%onembcmi_updatesmoke.last.result%`
 - `%onembcmi_updatesmoke.last.failures%`
 - `%onembcmi_updatesmoke.commands.ok%`
+- `%onembcmi_updatesmoke.command_smoke.ok%`
 - `%onembcmi_updatesmoke.placeholders.ok%`
 - `%onembcmi_worldsnapshot.worlds.count%`
 - `%onembcmi_worldsnapshot.gamerules.count%`

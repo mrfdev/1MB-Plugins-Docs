@@ -1099,6 +1099,8 @@ UpdateSmoke placeholders:
 %onembcmi_updatesmoke.last.failures%
 %onembcmi_updatesmoke.commands.ok%
 %onembcmi_updatesmoke.commands.total%
+%onembcmi_updatesmoke.command_smoke.ok%
+%onembcmi_updatesmoke.command_smoke.total%
 %onembcmi_updatesmoke.placeholders.ok%
 %onembcmi_updatesmoke.placeholders.total%
 %onembcmi_updatesmoke.features.count%
@@ -1213,6 +1215,23 @@ PlaceholderProbe placeholders:
 %onembcmi_placeholderprobe.recent.empty.count%
 %onembcmi_placeholderprobe.recent.error.count%
 %onembcmi_placeholderprobe.cache.size%
+```
+
+PermissionProbe placeholders:
+
+```text
+%onembcmi_permissionprobe.enabled%
+%onembcmi_permissionprobe.last.player%
+%onembcmi_permissionprobe.last.subject%
+%onembcmi_permissionprobe.last.result%
+%onembcmi_permissionprobe.permissions.count%
+%onembcmi_permissionprobe.denials.distinct%
+%onembcmi_permissionprobe.denials.total%
+%onembcmi_permissionprobe.denials.last.sender%
+%onembcmi_permissionprobe.denials.last.feature%
+%onembcmi_permissionprobe.denials.last.permission%
+%onembcmi_permissionprobe.denials.last.command%
+%onembcmi_permissionprobe.cache.size%
 ```
 
 PlaceholderHealth placeholders:
@@ -1414,6 +1433,11 @@ WorthDrift placeholders:
 %onembcmi_worthdrift.last.drift.count%
 %onembcmi_worthdrift.last.high_value.count%
 %onembcmi_worthdrift.last.concentration.count%
+%onembcmi_worthdrift.shopgui.last.result%
+%onembcmi_worthdrift.shopgui.last.drift.count%
+%onembcmi_worthdrift.shopgui.last.missing.count%
+%onembcmi_worthdrift.shopgui.last.not_in_worth.count%
+%onembcmi_worthdrift.shopgui.last.illegal.count%
 %onembcmi_worthdrift.cache.size%
 ```
 
