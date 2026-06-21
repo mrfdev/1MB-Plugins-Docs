@@ -72,7 +72,7 @@ Every feature jar that does not implement a local debug command inherits `/<plug
 | Generic / Dev | [CMIProbe](cmiprobe.md) | CMI, CMILib, event, and command smoke probe for test templates. |
 | Generic / Dev | [CMIDatabase](cmidatabase.md) | Internal key/value database for CMI aliases, event commands, and placeholders. |
 | Generic / Dev | [PlaceholderProbe](placeholderprobe.md) | Strict PlaceholderAPI probe for CMI and `onembcmi` placeholders. |
-| Generic / Dev | [PermissionProbe](permissionprobe.md) | Owner-only read-only permission diagnosis, passive denial recording, scoped reports, Markdown exports, command explainers, feature access summaries, LuckPerms source traces, and Bukkit metadata. |
+| Generic / Dev | [PermissionProbe](permissionprobe.md) | Owner-only read-only permission diagnosis, passive denial recording, scoped reports, Markdown exports, command explainers, feature/player access summaries, player comparisons, LuckPerms source traces, wildcard/orphan scans, and Bukkit metadata. |
 | Generic / Dev | [CMIPlaceholderCheck](cmiplaceholders.md) | CMI-style placeholder lookup catalog with live example parsing. |
 | Generic / Dev | [1MBPlaceholders](onembplaceholders.md) | Migrated `%onemb_<key>%` PlaceholderAPI expansion with legacy `/_placeholders` management commands. |
 

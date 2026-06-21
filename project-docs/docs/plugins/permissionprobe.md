@@ -14,9 +14,13 @@ PermissionProbe replaces the older `/1mbcmi permissions ...` analyzer. The libra
 /_permissions status
 /_permissions denials [page]
 /_permissions report [all|player <player>|feature <feature>|node <permission>|command <command>] [page]
-/_permissions export <report|denials|feature|trace> ... [-github|-discord] [-limit <n|all>]
+/_permissions export <report|denials|feature|trace|player|compare|wildcards|orphans> ... [-github|-discord] [-limit <n|all>]
 /_permissions trace <player> <permission>
 /_permissions feature <feature> <player> [page]
+/_permissions player <player> [page]
+/_permissions compare <playerA> <playerB> [feature] [page]
+/_permissions scan wildcards <player> [page]
+/_permissions scan orphans [page]
 /_permissions <player> [page]
 /_permissions all <player> [page]
 /_permissions check <player> <permission>
@@ -40,6 +44,14 @@ Useful examples:
 /_permissions export trace mrfloris onembcmi.autosell.use -discord
 /_permissions feature autosell mrfloris
 /_permissions export feature autosell mrfloris -github
+/_permissions player mrfloris
+/_permissions export player mrfloris -discord
+/_permissions compare mrfloris helperName autosell
+/_permissions export compare mrfloris helperName -github -limit all
+/_permissions scan wildcards mrfloris
+/_permissions export wildcards mrfloris -discord
+/_permissions scan orphans
+/_permissions export orphans -github -limit all
 /_permissions check mrfloris onembcmi.autosell.use
 /_permissions plugin autosell mrfloris
 /_permissions plugin 1MB-CMIAPI-AutoSell mrfloris
@@ -66,11 +78,19 @@ The trace view is meant for fast owner/staff diagnosis during live testing. It r
 
 The `feature` probe summarizes a player against one registered 1MB feature. It starts with common access surfaces such as `use`, `gui`, `debug`, `admin`, `reload`, and `admin.reload`, then adds permissions from the feature runtime command help, plugin.yml, and registered Bukkit permissions. Each row includes the effective state and, when enabled, a compact LuckPerms source hint.
 
+The `player` probe summarizes one cached player across every loaded 1MB feature. It highlights whether normal use or GUI access appears available, whether any admin-style node is available, and how many feature nodes are available, denied, or default/unknown. Use it before live tests to quickly spot a player who can reach more or less than expected.
+
+The `compare` probe compares two cached players across all loaded 1MB features, or one specific feature when provided. It prints only rows where their observed permission state differs, so staff can quickly explain why one account can open or use something another cannot.
+
 The `command` probe explains the command owner, aliases, known Bukkit labels, usage, command metadata permission, matching 1MB runtime command-help entries, likely internal feature permission checks, effective state, and compact LuckPerms source hints. If Bukkit command metadata does not declare a permission, PermissionProbe still tries to infer likely checks from the owning 1MB feature runtime and plugin permission metadata.
+
+The `scan wildcards` probe reviews cached direct and inherited LuckPerms source nodes for one player and flags broad grants or denies such as `*`, `onembcmi.*`, and `onembcmi.<feature>.*`. This is useful when access appears to come from a wildcard instead of an exact permission.
+
+The `scan orphans` probe reviews cached LuckPerms users and groups for `onembcmi.` nodes that are not declared by currently loaded 1MB feature metadata. It is a migration and cleanup aid only; it does not remove anything.
 
 The `report` probe summarizes passive denied-check records. Reports can be scoped to all records, one player, one feature, one permission node, or one command root. Rows are grouped by feature, permission, command, and world, then sorted by count and recency so the most repeated live-test problems rise to the top.
 
-The `export` command writes Markdown files to the PermissionProbe cache. `-github` creates table-based Markdown for GitHub issues, PRs, and docs. `-discord` creates no-table bullet Markdown that is easier to paste into Discord. `-limit <n>` caps row count, and `-limit all` writes every matching row.
+The `export` command writes Markdown files to the PermissionProbe cache for reports, denials, feature access, traces, player overviews, player comparisons, wildcard scans, and orphan scans. `-github` creates table-based Markdown for GitHub issues, PRs, and docs. `-discord` creates no-table bullet Markdown that is easier to paste into Discord. `-limit <n>` caps row count, and `-limit all` writes every matching row.
 
 The `groups` probe reports LuckPerms primary group and direct cached parent group nodes. For authoritative raw LuckPerms details, still use LuckPerms directly with `/lp user <player> info` or `/lp user <player> permission info <node>`.
 
@@ -180,7 +200,7 @@ LuckPerms
 Vault
 ```
 
-LuckPerms is optional so the command can still show Bukkit command and permission metadata on a test server without LuckPerms. When LuckPerms is loaded, PermissionProbe uses cached user data through the public API by reflection so the plugin can remain compile-light.
+LuckPerms is optional so the command can still show Bukkit command and permission metadata on a test server without LuckPerms. When LuckPerms is loaded, PermissionProbe uses cached user, loaded-user, and loaded-group data through the public API by reflection so the plugin can remain compile-light.
 
 ## Security Notes
 
