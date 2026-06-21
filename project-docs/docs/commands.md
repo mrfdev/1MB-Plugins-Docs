@@ -84,18 +84,20 @@ The richer owner-only permission diagnosis surface lives in the `PermissionProbe
 ```text
 /_permissions status
 /_permissions denials [page]
+/_permissions report [all|player <player>|feature <feature>|node <permission>|command <command>] [page]
+/_permissions export <report|denials|feature|trace> ... [-github|-discord] [-limit <n|all>]
 /_permissions trace <player> <permission>
 /_permissions feature <feature> <player> [page]
 /_permissions <player> [page]
 /_permissions all <player> [page]
 /_permissions check <player> <permission>
 /_permissions plugin <plugin|feature> <player> [page]
-/_permissions command <player> <command>
+/_permissions command <player> <command...>
 /_permissions groups <player>
 /_permissions reload
 ```
 
-`/_permissions` is locked behind `onembcmi.permissionprobe.use` before help, status, debug, or tab completion exposes probe data. It is read-only: it checks Bukkit effective state, registered permission metadata, command metadata, recent denied 1MB feature permission checks, LuckPerms cached results, cached LuckPerms source traces, and feature access summaries without granting or removing nodes.
+`/_permissions` is locked behind `onembcmi.permissionprobe.use` before help, status, debug, or tab completion exposes probe data. It is read-only: it checks Bukkit effective state, registered permission metadata, command metadata, recent denied 1MB feature permission checks, scoped denial reports, Markdown exports, LuckPerms cached results, cached LuckPerms source traces, and feature access summaries without granting or removing nodes.
 
 The old `/1mbcmi permissions ...` command is no longer listed as a working analyzer. If typed manually, it prints a compatibility note pointing admins to `/_permissions`.
 
@@ -129,11 +131,13 @@ Feature `/help` pages are intentionally player-facing: they list commands availa
 /1mbcmi storage
 /_permissions mrfloris
 /_permissions denials
+/_permissions report feature autosell
+/_permissions export report feature autosell -discord -limit 25
 /_permissions trace mrfloris onembcmi.autosell.use
 /_permissions feature autosell mrfloris
 /_permissions check mrfloris onembcmi.autosell.use
 /_permissions plugin autosell mrfloris
-/_permissions command mrfloris autosell
+/_permissions command mrfloris autosell gui
 /_permissions groups mrfloris
 /1mbcmi debug plugins player-fun
 /1mbcmi debug cmi

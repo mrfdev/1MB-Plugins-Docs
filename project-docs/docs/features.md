@@ -72,7 +72,7 @@ These are the first feature candidates now using the shared library scaffold:
 | Generic / Dev | CMIProbe | CMI, CMILib, event, and command smoke probe | [CMIProbe](plugins/cmiprobe.md) |
 | Generic / Dev | CMIDatabase | Internal key/value database for CMI automation and placeholders | [CMIDatabase](plugins/cmidatabase.md) |
 | Generic / Dev | PlaceholderProbe | Safe PlaceholderAPI probe | [PlaceholderProbe](plugins/placeholderprobe.md) |
-| Generic / Dev | PermissionProbe | Owner-only read-only permission diagnosis, passive denial recording, command checks, feature access summaries, LuckPerms source traces, and Bukkit metadata | [PermissionProbe](plugins/permissionprobe.md) |
+| Generic / Dev | PermissionProbe | Owner-only read-only permission diagnosis, passive denial recording, scoped reports, Markdown exports, command explainers, feature access summaries, LuckPerms source traces, and Bukkit metadata | [PermissionProbe](plugins/permissionprobe.md) |
 | Generic / Dev | CMIPlaceholderCheck | CMI-style placeholder lookup catalog and live examples | [CMIPlaceholderCheck](plugins/cmiplaceholders.md) |
 | Generic / Dev | 1MBPlaceholders | Migrated `%onemb_<key>%` PlaceholderAPI expansion with legacy `/_placeholders` management commands | [1MBPlaceholders](plugins/onembplaceholders.md) |
 

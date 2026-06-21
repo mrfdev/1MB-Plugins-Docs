@@ -13,13 +13,15 @@ PermissionProbe replaces the older `/1mbcmi permissions ...` analyzer. The libra
 ```text
 /_permissions status
 /_permissions denials [page]
+/_permissions report [all|player <player>|feature <feature>|node <permission>|command <command>] [page]
+/_permissions export <report|denials|feature|trace> ... [-github|-discord] [-limit <n|all>]
 /_permissions trace <player> <permission>
 /_permissions feature <feature> <player> [page]
 /_permissions <player> [page]
 /_permissions all <player> [page]
 /_permissions check <player> <permission>
 /_permissions plugin <plugin|feature> <player> [page]
-/_permissions command <player> <command>
+/_permissions command <player> <command...>
 /_permissions groups <player>
 /_permissions reload
 /_permissions debug [overview|health|hooks|commands|permissions|placeholders|config|all] [page]
@@ -30,12 +32,18 @@ Useful examples:
 ```text
 /_permissions mrfloris
 /_permissions denials
+/_permissions report
+/_permissions report feature autosell
+/_permissions export report feature autosell -discord -limit 25
+/_permissions export denials -github -limit all
 /_permissions trace mrfloris onembcmi.autosell.use
+/_permissions export trace mrfloris onembcmi.autosell.use -discord
 /_permissions feature autosell mrfloris
+/_permissions export feature autosell mrfloris -github
 /_permissions check mrfloris onembcmi.autosell.use
 /_permissions plugin autosell mrfloris
 /_permissions plugin 1MB-CMIAPI-AutoSell mrfloris
-/_permissions command mrfloris autosell
+/_permissions command mrfloris autosell gui
 /_permissions command mrfloris shopguiplus:shopgui
 /_permissions groups mrfloris
 /_permissions debug all
@@ -58,7 +66,11 @@ The trace view is meant for fast owner/staff diagnosis during live testing. It r
 
 The `feature` probe summarizes a player against one registered 1MB feature. It starts with common access surfaces such as `use`, `gui`, `debug`, `admin`, `reload`, and `admin.reload`, then adds permissions from the feature runtime command help, plugin.yml, and registered Bukkit permissions. Each row includes the effective state and, when enabled, a compact LuckPerms source hint.
 
-The `command` probe reports the command owner, aliases, usage, and command metadata permission. If a command does not declare a permission in Bukkit metadata, the plugin notes that the command may still check permissions internally after it starts running.
+The `command` probe explains the command owner, aliases, known Bukkit labels, usage, command metadata permission, matching 1MB runtime command-help entries, likely internal feature permission checks, effective state, and compact LuckPerms source hints. If Bukkit command metadata does not declare a permission, PermissionProbe still tries to infer likely checks from the owning 1MB feature runtime and plugin permission metadata.
+
+The `report` probe summarizes passive denied-check records. Reports can be scoped to all records, one player, one feature, one permission node, or one command root. Rows are grouped by feature, permission, command, and world, then sorted by count and recency so the most repeated live-test problems rise to the top.
+
+The `export` command writes Markdown files to the PermissionProbe cache. `-github` creates table-based Markdown for GitHub issues, PRs, and docs. `-discord` creates no-table bullet Markdown that is easier to paste into Discord. `-limit <n>` caps row count, and `-limit all` writes every matching row.
 
 The `groups` probe reports LuckPerms primary group and direct cached parent group nodes. For authoritative raw LuckPerms details, still use LuckPerms directly with `/lp user <player> info` or `/lp user <player> permission info <node>`.
 
@@ -109,6 +121,12 @@ luckperms:
   show-source-trace-in-feature-rows: true
   trace-group-depth: 5
   trace-max-matches: 12
+report:
+  default-limit: 10
+export:
+  default-format: github
+  default-limit: 25
+  file-prefix: permissionprobe
 denials:
   max-records: 200
   record-players: true
@@ -123,18 +141,23 @@ denials:
 
 `luckperms.trace-group-depth` controls how far inherited parent groups are walked for `/_permissions trace`. `luckperms.trace-max-matches` limits how many matching source nodes are printed in one trace.
 
-`denials.max-records` controls how many distinct denial aggregates are retained in memory. The denial recorder is intentionally in-memory for now; export/report files are part of the accepted roadmap but not feature 1.
+`report.default-limit` controls how many grouped rows each in-game/console report page shows.
+
+`export.default-format`, `export.default-limit`, and `export.file-prefix` control Markdown file defaults. Export commands can override format and limit per run.
+
+`denials.max-records` controls how many distinct denial aggregates are retained in memory. The denial recorder is intentionally in-memory; Markdown files are written only when an admin runs `/_permissions export ...`.
 
 ## Data And Cache
 
-PermissionProbe writes only its shared config and translation files:
+PermissionProbe writes its shared config, translation file, and admin-triggered Markdown exports:
 
 ```text
 plugins/1MB-CMIAPI/PermissionProbe/config.yml
 plugins/1MB-CMIAPI/CMIAPILIB/translations/permissionprobe.yml
+plugins/1MB-CMIAPI/CMIAPILIB/cache/plugins/permissionprobe/*.md
 ```
 
-The command keeps the last probe summary and recent denial aggregates in memory for placeholders and `/_permissions denials`. It does not write permission reports to disk, mutate playerdata, or dispatch LuckPerms commands.
+The command keeps the last probe summary and recent denial aggregates in memory for placeholders, `/_permissions denials`, and `/_permissions report`. Markdown exports are written only when an admin runs `/_permissions export ...`. PermissionProbe does not mutate playerdata, dispatch LuckPerms commands, or reload permission data.
 
 ## CMI-API Usage
 
