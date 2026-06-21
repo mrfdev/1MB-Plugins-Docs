@@ -14,11 +14,17 @@ PermissionProbe replaces the older `/1mbcmi permissions ...` analyzer. The libra
 /_permissions status
 /_permissions denials [page]
 /_permissions report [all|player <player>|feature <feature>|node <permission>|command <command>] [page]
-/_permissions export <report|denials|feature|trace|player|compare|wildcards|orphans> ... [-github|-discord] [-limit <n|all>]
+/_permissions export <report|denials|feature|trace|player|compare|comparegroups|context|watch|wildcards|orphans|expected> ... [-github|-discord] [-limit <n|all>]
+/_permissions watch <all|player <player>|feature <feature>> [minutes]
+/_permissions watch list
+/_permissions watch stop <id|all>
 /_permissions trace <player> <permission>
 /_permissions feature <feature> <player> [page]
 /_permissions player <player> [page]
 /_permissions compare <playerA> <playerB> [feature] [page]
+/_permissions comparegroups <groupA> <groupB> [feature] [page]
+/_permissions context <player> <permission> [world:<world>] [server:<server>] [context:<key=value>] [page]
+/_permissions expected <profile> <player|group:<group>> [feature] [page]
 /_permissions scan wildcards <player> [page]
 /_permissions scan orphans [page]
 /_permissions <player> [page]
@@ -48,6 +54,15 @@ Useful examples:
 /_permissions export player mrfloris -discord
 /_permissions compare mrfloris helperName autosell
 /_permissions export compare mrfloris helperName -github -limit all
+/_permissions comparegroups helper trusted autosell
+/_permissions export comparegroups helper trusted -discord
+/_permissions context mrfloris onembcmi.autosell.use world:world
+/_permissions export context mrfloris onembcmi.autosell.use world:world -github
+/_permissions expected helper group:helper autosell
+/_permissions export expected helper group:helper -discord -limit all
+/_permissions watch feature autosell 15
+/_permissions watch list
+/_permissions export watch 1 -discord
 /_permissions scan wildcards mrfloris
 /_permissions export wildcards mrfloris -discord
 /_permissions scan orphans
@@ -82,7 +97,15 @@ The `player` probe summarizes one cached player across every loaded 1MB feature.
 
 The `compare` probe compares two cached players across all loaded 1MB features, or one specific feature when provided. It prints only rows where their observed permission state differs, so staff can quickly explain why one account can open or use something another cannot.
 
+The `comparegroups` probe compares two cached LuckPerms groups across loaded 1MB feature access nodes, or one feature when provided. It uses direct and inherited cached group nodes, then lists only state differences so rank gaps are easier to review before live testing.
+
+The `context` probe explains one player's cached source nodes for a permission with optional `world:`, `server:`, or `context:key=value` filters. It shows Bukkit and LuckPerms cached state, then lists global or context-tagged source matches. This is a read-only context inspection and should be paired with LuckPerms' own verbose/check tools for authoritative precedence.
+
 The `command` probe explains the command owner, aliases, known Bukkit labels, usage, command metadata permission, matching 1MB runtime command-help entries, likely internal feature permission checks, effective state, and compact LuckPerms source hints. If Bukkit command metadata does not declare a permission, PermissionProbe still tries to infer likely checks from the owning 1MB feature runtime and plugin permission metadata.
+
+The `expected` probe compares a configured expected profile against one cached player or `group:<group>`. Expected profiles live in config under `expected.profiles.<name>.nodes`, so admins can define the server's intended role policy without the plugin guessing. The command reports present and missing expected nodes and never grants them.
+
+The `watch` probe starts an in-memory live-test window for all denied checks, one player, or one feature. Matching denied 1MB feature permission checks are highlighted to the watcher, summarized when the watch is stopped or expires, and optionally auto-exported to Markdown.
 
 The `scan wildcards` probe reviews cached direct and inherited LuckPerms source nodes for one player and flags broad grants or denies such as `*`, `onembcmi.*`, and `onembcmi.<feature>.*`. This is useful when access appears to come from a wildcard instead of an exact permission.
 
@@ -90,7 +113,7 @@ The `scan orphans` probe reviews cached LuckPerms users and groups for `onembcmi
 
 The `report` probe summarizes passive denied-check records. Reports can be scoped to all records, one player, one feature, one permission node, or one command root. Rows are grouped by feature, permission, command, and world, then sorted by count and recency so the most repeated live-test problems rise to the top.
 
-The `export` command writes Markdown files to the PermissionProbe cache for reports, denials, feature access, traces, player overviews, player comparisons, wildcard scans, and orphan scans. `-github` creates table-based Markdown for GitHub issues, PRs, and docs. `-discord` creates no-table bullet Markdown that is easier to paste into Discord. `-limit <n>` caps row count, and `-limit all` writes every matching row.
+The `export` command writes Markdown files to the PermissionProbe cache for reports, denials, feature access, traces, player overviews, player comparisons, group comparisons, context checks, expected-node checks, watch summaries, wildcard scans, and orphan scans. `-github` creates table-based Markdown for GitHub issues, PRs, and docs. `-discord` creates no-table bullet Markdown that is easier to paste into Discord. `-limit <n>` caps row count, and `-limit all` writes every matching row.
 
 The `groups` probe reports LuckPerms primary group and direct cached parent group nodes. For authoritative raw LuckPerms details, still use LuckPerms directly with `/lp user <player> info` or `/lp user <player> permission info <node>`.
 
@@ -147,6 +170,18 @@ export:
   default-format: github
   default-limit: 25
   file-prefix: permissionprobe
+watch:
+  default-minutes: 10
+  max-minutes: 120
+  auto-export-on-finish: true
+expected:
+  profiles:
+    owner:
+      nodes: []
+    admin:
+      nodes: []
+    helper:
+      nodes: []
 denials:
   max-records: 200
   record-players: true
@@ -164,6 +199,10 @@ denials:
 `report.default-limit` controls how many grouped rows each in-game/console report page shows.
 
 `export.default-format`, `export.default-limit`, and `export.file-prefix` control Markdown file defaults. Export commands can override format and limit per run.
+
+`watch.default-minutes`, `watch.max-minutes`, and `watch.auto-export-on-finish` control in-memory watch sessions. Active and recently completed watch summaries reset on restart.
+
+`expected.profiles.<name>.nodes` defines read-only expected permission profiles for `/_permissions expected`. Leave profiles empty until staff decide which exact nodes or wildcard nodes represent the intended role policy.
 
 `denials.max-records` controls how many distinct denial aggregates are retained in memory. The denial recorder is intentionally in-memory; Markdown files are written only when an admin runs `/_permissions export ...`.
 

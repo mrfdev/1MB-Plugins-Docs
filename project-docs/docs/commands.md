@@ -85,11 +85,15 @@ The richer owner-only permission diagnosis surface lives in the `PermissionProbe
 /_permissions status
 /_permissions denials [page]
 /_permissions report [all|player <player>|feature <feature>|node <permission>|command <command>] [page]
-/_permissions export <report|denials|feature|trace|player|compare|wildcards|orphans> ... [-github|-discord] [-limit <n|all>]
+/_permissions export <report|denials|feature|trace|player|compare|comparegroups|context|watch|wildcards|orphans|expected> ... [-github|-discord] [-limit <n|all>]
+/_permissions watch <all|player <player>|feature <feature>> [minutes]
 /_permissions trace <player> <permission>
 /_permissions feature <feature> <player> [page]
 /_permissions player <player> [page]
 /_permissions compare <playerA> <playerB> [feature] [page]
+/_permissions comparegroups <groupA> <groupB> [feature] [page]
+/_permissions context <player> <permission> [world:<world>] [server:<server>] [context:<key=value>] [page]
+/_permissions expected <profile> <player|group:<group>> [feature] [page]
 /_permissions scan wildcards <player> [page]
 /_permissions scan orphans [page]
 /_permissions <player> [page]
@@ -101,7 +105,7 @@ The richer owner-only permission diagnosis surface lives in the `PermissionProbe
 /_permissions reload
 ```
 
-`/_permissions` is locked behind `onembcmi.permissionprobe.use` before help, status, debug, or tab completion exposes probe data. It is read-only: it checks Bukkit effective state, registered permission metadata, command metadata, recent denied 1MB feature permission checks, scoped denial reports, Markdown exports, LuckPerms cached results, cached LuckPerms source traces, player access overviews, player comparisons, wildcard scans, orphan-node scans, and feature access summaries without granting or removing nodes.
+`/_permissions` is locked behind `onembcmi.permissionprobe.use` before help, status, debug, or tab completion exposes probe data. It is read-only: it checks Bukkit effective state, registered permission metadata, command metadata, recent denied 1MB feature permission checks, live watch summaries, scoped denial reports, Markdown exports, LuckPerms cached results, cached LuckPerms source traces, player access overviews, player/group comparisons, context-tagged source nodes, expected-profile gaps, wildcard scans, orphan-node scans, and feature access summaries without granting or removing nodes.
 
 The old `/1mbcmi permissions ...` command is no longer listed as a working analyzer. If typed manually, it prints a compatibility note pointing admins to `/_permissions`.
 
@@ -141,6 +145,10 @@ Feature `/help` pages are intentionally player-facing: they list commands availa
 /_permissions feature autosell mrfloris
 /_permissions player mrfloris
 /_permissions compare mrfloris helperName autosell
+/_permissions comparegroups helper trusted autosell
+/_permissions context mrfloris onembcmi.autosell.use world:world
+/_permissions expected helper group:helper autosell
+/_permissions watch feature autosell 15
 /_permissions scan wildcards mrfloris
 /_permissions scan orphans
 /_permissions check mrfloris onembcmi.autosell.use

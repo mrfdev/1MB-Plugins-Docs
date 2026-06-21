@@ -140,7 +140,7 @@ Paper loads normal plugin jars from the top-level server `/plugins/` directory. 
 - `plugins/1MB-CMIAPI-CMIProbe-v1.0.0-505-j25-26.1.2.jar`
 - `plugins/1MB-CMIAPI-CMIDatabase-v1.0.0-505-j25-26.1.2.jar`
 - `plugins/1MB-CMIAPI-PlaceholderProbe-v1.0.0-505-j25-26.1.2.jar`
-- `plugins/1MB-CMIAPI-PermissionProbe-v1.0.0-505-j25-26.1.2.jar` provides owner-only `/_permissions` diagnosis for players, commands, plugins, feature access summaries, player access overviews, player comparisons, passive denied-check recording, scoped reports, Markdown exports, LuckPerms source traces, wildcard/orphan scans, and Bukkit permission metadata
+- `plugins/1MB-CMIAPI-PermissionProbe-v1.0.0-505-j25-26.1.2.jar` provides owner-only `/_permissions` diagnosis for players, commands, plugins, feature access summaries, player access overviews, player/group comparisons, passive denied-check recording, live watch summaries, scoped reports, Markdown exports, context-aware LuckPerms source traces, expected-profile gap checks, wildcard/orphan scans, and Bukkit permission metadata
 - `plugins/1MB-CMIAPI-CMIPlaceholderCheck-v1.0.0-505-j25-26.1.2.jar`
 - `plugins/1MB-CMIAPI-1MBPlaceholders-v1.0.0-505-j25-26.1.2.jar` provides the migrated `%onemb_<key>%` PlaceholderAPI expansion and keeps `/_placeholders`
 - `plugins/1MB-CMIAPI-WarpAudit-v1.0.0-505-j25-26.1.2.jar` provides read-only CMI warp and portal hygiene checks
