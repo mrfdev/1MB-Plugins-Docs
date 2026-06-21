@@ -84,6 +84,8 @@ The richer owner-only permission diagnosis surface lives in the `PermissionProbe
 ```text
 /_permissions status
 /_permissions denials [page]
+/_permissions trace <player> <permission>
+/_permissions feature <feature> <player> [page]
 /_permissions <player> [page]
 /_permissions all <player> [page]
 /_permissions check <player> <permission>
@@ -93,7 +95,7 @@ The richer owner-only permission diagnosis surface lives in the `PermissionProbe
 /_permissions reload
 ```
 
-`/_permissions` is locked behind `onembcmi.permissionprobe.use` before help, status, debug, or tab completion exposes probe data. It is read-only: it checks Bukkit effective state, registered permission metadata, command metadata, recent denied 1MB feature permission checks, and LuckPerms cached results without granting or removing nodes.
+`/_permissions` is locked behind `onembcmi.permissionprobe.use` before help, status, debug, or tab completion exposes probe data. It is read-only: it checks Bukkit effective state, registered permission metadata, command metadata, recent denied 1MB feature permission checks, LuckPerms cached results, cached LuckPerms source traces, and feature access summaries without granting or removing nodes.
 
 The old `/1mbcmi permissions ...` command is no longer listed as a working analyzer. If typed manually, it prints a compatibility note pointing admins to `/_permissions`.
 
@@ -127,6 +129,8 @@ Feature `/help` pages are intentionally player-facing: they list commands availa
 /1mbcmi storage
 /_permissions mrfloris
 /_permissions denials
+/_permissions trace mrfloris onembcmi.autosell.use
+/_permissions feature autosell mrfloris
 /_permissions check mrfloris onembcmi.autosell.use
 /_permissions plugin autosell mrfloris
 /_permissions command mrfloris autosell
