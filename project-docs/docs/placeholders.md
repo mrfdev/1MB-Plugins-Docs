@@ -556,41 +556,41 @@ papi parse mrfloris %onembnamemc_reward_claimed_at%
 papi parse mrfloris %onembcmi_namemc.total_rewarded%
 ```
 
-Trades placeholders:
+Exchange placeholders:
 
 ```text
-%onembcmi_trades.enabled%
-%onembcmi_trades.trades_loaded%
-%onembcmi_trades.enabled_trades%
-%onembcmi_trades.tracked_players%
-%onembcmi_trades.visible_trades%
-%onembcmi_trades.ready_trades%
-%onembcmi_trades.completed_trades%
+%onembcmi_exchange.enabled%
+%onembcmi_exchange.exchanges_loaded%
+%onembcmi_exchange.enabled_exchanges%
+%onembcmi_exchange.tracked_players%
+%onembcmi_exchange.visible_exchanges%
+%onembcmi_exchange.ready_exchanges%
+%onembcmi_exchange.completed_exchanges%
 ```
 
-Legacy Trades compatibility placeholders:
+Exchange-specific placeholders:
 
 ```text
-%onembtrades_version%
-%onembtrades_build%
-%onembtrades_trades_loaded%
-%onembtrades_enabled_trades%
-%onembtrades_tracked_players%
-%onembtrades_visible_trades%
-%onembtrades_ready_trades%
-%onembtrades_completed_trades%
-%onembtrades_trade.<tradeId>%
-%onembtrades_trade.<tradeId>.status%
-%onembtrades_trade.<tradeId>.missing_summary%
-%onembtrades_trade.<tradeId>.can_trade%
+%onembexchange_version%
+%onembexchange_build%
+%onembexchange_exchanges_loaded%
+%onembexchange_enabled_exchanges%
+%onembexchange_tracked_players%
+%onembexchange_visible_exchanges%
+%onembexchange_ready_exchanges%
+%onembexchange_completed_exchanges%
+%onembexchange_exchange.<tradeId>%
+%onembexchange_exchange.<tradeId>.status%
+%onembexchange_exchange.<tradeId>.missing_summary%
+%onembexchange_exchange.<tradeId>.can_exchange%
 ```
 
 Example checks:
 
 ```text
-papi parse mrfloris %onembcmi_trades.ready_trades%
-papi parse mrfloris %onembtrades_trade.summer_event.status%
-papi parse mrfloris %onembtrades_trade.summer_event.missing_summary%
+papi parse mrfloris %onembcmi_exchange.ready_exchanges%
+papi parse mrfloris %onembexchange_exchange.summer_event.status%
+papi parse mrfloris %onembexchange_exchange.summer_event.missing_summary%
 ```
 
 VoteTokens placeholders:

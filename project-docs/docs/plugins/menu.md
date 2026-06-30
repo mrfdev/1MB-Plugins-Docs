@@ -54,7 +54,7 @@ The default button list includes:
 /kits
 /mcmmo menu
 /jobs
-/trade
+/exchange
 /votetokens
 /birthday
 /discordchat

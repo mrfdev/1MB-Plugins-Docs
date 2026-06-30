@@ -57,7 +57,7 @@ For support/debugging:
 - [PvPToggle](plugins/pvptoggle.md)
 - [Boosters](plugins/boosters.md)
 - [NameMC](plugins/namemc.md)
-- [Trades](plugins/trades.md)
+- [Exchange](plugins/exchange.md)
 - [VoteTokens](plugins/votetokens.md)
 - [DiscordChat](plugins/discordchat.md)
 - [GameTypes](plugins/gametypes.md)

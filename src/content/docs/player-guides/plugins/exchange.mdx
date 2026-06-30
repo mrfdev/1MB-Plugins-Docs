@@ -1,0 +1,132 @@
+---
+title: Exchange Guide
+description: Learn what Exchange does, how to use it, and which public commands are available.
+---
+
+This page introduces Exchange from a public server-docs point of view. It focuses on what the feature does in-game, how to get started when you have access, and which commands are useful.
+
+## What It Does
+
+/exchange GUI exchanges for item, money, and EXP hand-ins, migrated from the old standalone 1MBTrades plugin.
+
+## How Players Use It
+
+Start in-game with /exchange. The sections below explain what Exchange is for, which commands players can try, and what to expect when your account has access.
+
+## Things You Can Do
+
+- Open or view Exchange with /exchange.
+- Update your own Exchange settings with commands such as /exchange set hide example true.
+
+## Quick Start
+
+1. Start with `/exchange` to open or view Exchange.
+2. Use `/exchange info` when you want the in-game help or a short explanation.
+3. Try `/exchange help` when you are ready to use one of the feature actions.
+
+## Commands
+
+<table class="command-table plugin-command-table">
+  <thead>
+    <tr>
+      <th>Command</th>
+      <th>What it does</th>
+      <th>Example</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>/exchange</code></td>
+      <td>Opens or shows the main Exchange player view.</td>
+      <td><code>/exchange</code></td>
+    </tr>
+    <tr>
+      <td><code>/exchange info</code></td>
+      <td>Shows a friendly explanation of what Exchange does.</td>
+      <td><code>/exchange info</code></td>
+    </tr>
+    <tr>
+      <td><code>/exchange help</code></td>
+      <td>Shows the Exchange commands available to you.</td>
+      <td><code>/exchange help</code></td>
+    </tr>
+    <tr>
+      <td><code>/exchange open [trade] [player]</code></td>
+      <td>Opens a specific Exchange menu or entry.</td>
+      <td><code>/exchange open</code></td>
+    </tr>
+    <tr>
+      <td><code>/exchange open category &lt;category&gt; [player]</code></td>
+      <td>Opens a specific Exchange menu or entry.</td>
+      <td><code>/exchange open category vote</code></td>
+    </tr>
+    <tr>
+      <td><code>/exchange set hide &lt;trade&gt; &lt;true|<wbr />false&gt;</code></td>
+      <td>Sets one of your Exchange preferences.</td>
+      <td><code>/exchange set hide example true</code></td>
+    </tr>
+    <tr>
+      <td><code>/exchange set worlds &lt;trade&gt; &lt;global|<wbr />world1,world2&gt;</code></td>
+      <td>Sets one of your Exchange preferences.</td>
+      <td><code>/exchange set worlds example example</code></td>
+    </tr>
+    <tr>
+      <td><code>/exchange set money &lt;trade&gt; &lt;amount&gt;</code></td>
+      <td>Sets one of your Exchange preferences.</td>
+      <td><code>/exchange set money example 10</code></td>
+    </tr>
+    <tr>
+      <td><code>/exchange set exp &lt;trade&gt; &lt;levels&gt;</code></td>
+      <td>Sets one of your Exchange preferences.</td>
+      <td><code>/exchange set exp example example</code></td>
+    </tr>
+    <tr>
+      <td><code>/exchange set start &lt;trade&gt; &lt;MM-DD-YYYY|<wbr />none&gt;</code></td>
+      <td>Sets one of your Exchange preferences.</td>
+      <td><code>/exchange set start example example</code></td>
+    </tr>
+    <tr>
+      <td><code>/exchange set end &lt;trade&gt; &lt;MM-DD-YYYY|<wbr />none&gt;</code></td>
+      <td>Sets one of your Exchange preferences.</td>
+      <td><code>/exchange set end example example</code></td>
+    </tr>
+    <tr>
+      <td><code>/exchange set category &lt;trade&gt; &lt;category&gt;</code></td>
+      <td>Sets one of your Exchange preferences.</td>
+      <td><code>/exchange set category example vote</code></td>
+    </tr>
+    <tr>
+      <td><code>/exchange toggle &lt;trade&gt; &lt;true|<wbr />false&gt;</code></td>
+      <td>Changes or clears your Exchange setting.</td>
+      <td><code>/exchange toggle example true</code></td>
+    </tr>
+  </tbody>
+</table>
+
+## Examples
+
+- `/exchange`
+- `/exchange info`
+- `/exchange open summer_event`
+- `/exchange open category vote`
+- `/exchange set display summer_event <#F6D365><bold>Summer Event Trade</bold></#F6D365>`
+- `/exchange set description summer_event Bring your event tokens here.`
+- `/exchange set permission summer_event onembcmi.exchange.summer_event`
+- `/exchange set completion summer_event onembcmi.exchange.completed.summer_event`
+- `/exchange set max summer_event 1`
+- `/exchange set worlds summer_event survival,oneblock`
+- `/exchange set money summer_event 2500`
+- `/exchange set exp summer_event 5`
+- `/exchange set start summer_event 06-01-2026`
+- `/exchange set end summer_event 08-31-2026`
+- `/exchange toggle summer_event false`
+
+## Good To Know
+
+- Some commands may be hidden until your group, event progress, or unlocks allow them.
+- If a command opens a menu, follow the buttons in-game; the website is only the learning guide.
+- Settings commands only change your own player preferences unless the page says otherwise.
+
+## Full Reference
+
+The [full synced Exchange reference](https://github.com/mrfdev/1MB-Plugins-Docs/blob/main/project-docs/docs/plugins/exchange.md) is available for exact technical details.

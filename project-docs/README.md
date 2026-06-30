@@ -84,7 +84,7 @@ Paper loads normal plugin jars from the top-level server `/plugins/` directory. 
 - `plugins/CMI-<version>.jar`
 - `plugins/CMILib<version>.jar`
 - `plugins/1MB-CMIAPI-LIB-v1.0.0-505-j25-26.1.2.jar`
-- `plugins/1MB-CMIAPI-AFKShrine-v1.0.0-505-j25-26.1.2.jar` provides CMI AFK shrine effects, player-selectable particle presets, AFKShrine points, claim/trade rewards, milestones, quests, and leaderboards
+- `plugins/1MB-CMIAPI-AFKShrine-v1.0.0-505-j25-26.1.2.jar` provides CMI AFK shrine effects, player-selectable particle presets, AFKShrine points, claim/exchange rewards, milestones, quests, and leaderboards
 - `plugins/1MB-CMIAPI-RecordingMode-v1.0.0-505-j25-26.1.2.jar`
 - `plugins/1MB-CMIAPI-SellStreaks-v1.0.0-505-j25-26.1.2.jar`
 - `plugins/1MB-CMIAPI-ScheduledTips-v1.0.0-505-j25-26.1.2.jar`
@@ -99,8 +99,8 @@ Paper loads normal plugin jars from the top-level server `/plugins/` directory. 
 - `plugins/1MB-CMIAPI-PvPToggle-v1.0.0-505-j25-26.1.2.jar`
 - `plugins/1MB-CMIAPI-Boosters-v1.0.0-505-j25-26.1.2.jar`
 - `plugins/1MB-CMIAPI-NameMC-v1.0.0-505-j25-26.1.2.jar`
-- `plugins/1MB-CMIAPI-Trades-v1.0.0-505-j25-26.1.2.jar` provides `/trade`, migrated from the old standalone 1MBTrades plugin
-- `plugins/1MB-CMIAPI-VoteTokens-v1.0.0-505-j25-26.1.2.jar` provides `/votetokens` secure vote-token GUI trades, CMI kit rewards, hidden reward identity markers, reward setup item creation, extra-token item tools with shield presets, and staff migration tools for old manual trades
+- `plugins/1MB-CMIAPI-Exchange-v1.0.0-505-j25-26.1.2.jar` provides `/exchange`, migrated from the old standalone 1MBTrades plugin
+- `plugins/1MB-CMIAPI-VoteTokens-v1.0.0-505-j25-26.1.2.jar` provides `/votetokens` secure vote-token GUI exchanges, CMI kit rewards, hidden reward identity markers, reward setup item creation, extra-token item tools with shield presets, and staff migration tools for old manual exchanges
 - `plugins/1MB-CMIAPI-DiscordChat-v1.0.0-505-j25-26.1.2.jar` provides `/discordchat` DiscordSRV server-chat engagement tracking, quality-gated EXP, conversation clusters, first-Discord broadcasts, community pulse, recurring bonus windows, linked-account streaks, point rewards, safe item tools, dependency-aware reward checks, opt-out reminders, milestone celebration privacy, and staff smoke/community/economy/archive/award reports
 - `plugins/1MB-CMIAPI-GameTypes-v1.0.0-505-j25-26.1.2.jar` provides `/gametype` safe BentoBox game type menus for OneBlock, SkyBlock, AcidIsland, CaveBlock, and SkyGrid
 - `plugins/1MB-CMIAPI-BirthdayLanterns-v1.0.0-505-j25-26.1.2.jar` provides `/birthday` collectible birthday, player anniversary, and server milestone lantern rewards with GUI claims, PDC item identity, finite wish charges, guestbook notes, presets, mail variants, and configurable CMI reward commands
@@ -195,6 +195,9 @@ The shared library should own the global command surface:
 - `/1mbcmi debug bundle`
 - `/1mbcmi debug clean cache [global|all|plugin <plugin>] [--dry-run]`
 - `/1mbcmi debug clean playerdata plugin <plugin> [--dry-run|--confirm]`
+- `/1mbcmi docs commands [all|plugin] [discord|github]`
+- `/1mbcmi docs permissions [all|plugin] [discord|github]`
+- `/1mbcmi docs all [all|plugin] [discord|github]`
 - `/1mbcmi config <plugin>`
 - `/1mbcmi config set <plugin> <path> <value>`
 - `/1mbcmi gui test`
@@ -207,6 +210,8 @@ The shared library should own the global command surface:
 Feature plugins should expose their own concise commands and also register with the library so `/1mbcmi features` and `/1mbcmi debug plugins` stay accurate.
 
 Permission diagnosis lives in the PermissionProbe feature plugin as `/_permissions ...`. The old `/1mbcmi permissions ...` command remains only as a compatibility redirect.
+
+Command and permission documentation snapshots can be generated with `/1mbcmi docs ...`. These are read-only Markdown exports for review and do not edit the private or public docs automatically. Support bundles and generated docs pass through the shared audit redactor before they are written to disk.
 
 The shared library also owns central chat-prefix symbols through `plugins/1MB-CMIAPI/CMIAPILIB/config.yml` under `locale.prefix-unicodes.*`. This lets feature messages use consistent visible prefixes such as `[✎ PassportDiscovery]`, `[ⓘ ScheduledTips]`, `[¤ AutoSell]`, `[¤ SellStreaks]`, `[⚔ PvP]`, `[♨ LavaBoots]`, `[▣ Spawners]`, `[✹ Collect]`, `[☘ Forage]`, `[⚗ Potions]`, `[◷ SchedulerCheck]`, `[⇧ Upgrade]`, and `[✦ Vote]` without hard-coding symbols into every feature translation file.
 
@@ -301,8 +306,8 @@ PlaceholderAPI placeholders should follow this shape:
 - `%onembcmi_emotemenu.aliases.enabled.count%`
 - `%onembcmi_emotemenu.last.emote%`
 - `%onembcmi_emotemenu.actions.count%`
-- `%onembcmi_trades.ready_trades%`
-- `%onembtrades_trade.summer_event.status%`
+- `%onembcmi_exchange.ready_exchanges%`
+- `%onembexchange_exchange.summer_event.status%`
 - `%onembcmi_votetokens.current_tier%`
 - `%onembcmi_votetokens.token.diamond.count%`
 - `%onembcmi_votetokens.extra_token.lapis.count%`

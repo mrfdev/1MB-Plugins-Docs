@@ -34,6 +34,9 @@ Feature configs are validated and repaired through the shared `FeatureSettings` 
 /1mbcmi debug bundle
 /1mbcmi debug clean cache [global|all|plugin <id>] [--dry-run]
 /1mbcmi debug clean playerdata plugin <id> [--dry-run|--confirm]
+/1mbcmi docs commands [all|id] [discord|github]
+/1mbcmi docs permissions [all|id] [discord|github]
+/1mbcmi docs all [all|id] [discord|github]
 /1mbcmi config <id>
 /1mbcmi config set <id> <path> <value>
 /1mbcmi gui test
@@ -62,6 +65,9 @@ Useful examples:
 /1mbcmi debug clean cache plugin socialgatherings --dry-run
 /1mbcmi debug clean playerdata plugin afkshrine --dry-run
 /1mbcmi debug bundle
+/1mbcmi docs all all github
+/1mbcmi docs commands autosell discord
+/1mbcmi docs permissions permissionprobe github
 /1mbcmi config socialgatherings
 /1mbcmi config set socialgatherings feedback.default-cooldown-seconds 30
 /1mbcmi gui test
@@ -88,10 +94,49 @@ onembcmi.global.clean.cache
 onembcmi.global.clean.playerdata
 onembcmi.global.config
 onembcmi.global.config.set
+onembcmi.global.docs
 onembcmi.global.gui
 onembcmi.global.rules
 onembcmi.global.translations
 ```
+
+## Generated Command And Permission Docs
+
+The library can write review snapshots from loaded runtime metadata:
+
+```text
+/1mbcmi docs commands [all|id] [discord|github]
+/1mbcmi docs permissions [all|id] [discord|github]
+/1mbcmi docs all [all|id] [discord|github]
+```
+
+The output is Markdown written under:
+
+```text
+plugins/1MB-CMIAPI/CMIAPILIB/cache/global/docs/
+```
+
+`discord` output uses compact bullets for staff discussion. `github` output uses tables for docs review. The generator compares runtime command help and plugin.yml command metadata against plugin.yml permission declarations, then adds review notes when command metadata references undeclared permission nodes.
+
+The command is read-only. It does not edit private docs or the public GitHub Pages checkout automatically.
+
+## Shared Audit Redactor
+
+Generated support artifacts use the shared audit redactor before writing to disk. `/1mbcmi debug bundle` now redacts common secrets, Discord webhook URLs, bearer tokens, JDBC connection strings, IP addresses, email-looking strings, and private-message-like fields by default. Money-like fields are configurable but off by default because economy reports often need those values.
+
+Default config paths:
+
+```yaml
+audit-redactor:
+  enabled: true
+  redact-ips: true
+  redact-emails: true
+  redact-private-message-fields: true
+  redact-money-fields: false
+  custom-patterns: []
+```
+
+Feature plugins can reuse the shared redactor through the library for future exports and debug files. Generated files should still be reviewed before public sharing.
 
 ## Permission Diagnosis
 
@@ -211,7 +256,7 @@ gui:
 
 When `use-global-filler-material` is `true`, the feature ignores its local filler material and uses the shared library value. When it is `false`, the feature uses its own configured filler material. Invalid materials, non-item materials, or non-pane materials fall back safely to `LIGHT_BLUE_STAINED_GLASS_PANE`.
 
-Current GUI features using the shared theme include VoteTokens, GameTypes, and Trades.
+Current GUI features using the shared theme include VoteTokens, GameTypes, and Exchange.
 
 Shared GUI buttons also normalize display names and lore for item tooltips. `GuiButton.item(...)` and `GuiButton.playerHead(...)` render names and lore without Minecraft's default italic styling, strip legacy color codes, and apply soft tooltip colors for readable `key: value` lines, clickable call-to-action lines, and `ok`/`missing` style status values. Feature plugins should use these shared helpers for ordinary GUI buttons so menus keep a consistent readable tooltip style.
 

@@ -26,8 +26,8 @@ Every feature jar that does not implement a local debug command inherits `/<plug
 | Player Fun | [PvPToggle](pvptoggle.md) | Per-player `/pvp` state, CMI combat awareness, shared playerdata, particles, and migration compatibility for the old standalone plugin. |
 | Player Fun | [Boosters](boosters.md) | `/rate` booster status and admin control for mcMMO, Jobs, and PyroWelcomesPro Points detection, replacing the old standalone Boosters plugin. |
 | Player Fun | [NameMC](namemc.md) | `/namemc` NameMC like verification, one-time CMI/LuckPerms rewards, legacy permissions, and `%onembnamemc_*%` placeholders. |
-| Player Fun | [Trades](trades.md) | `/trade` GUI exchanges for item, money, and EXP hand-ins, migrated from the old standalone 1MBTrades plugin. |
-| Player Fun | [VoteTokens](votetokens.md) | `/votetokens` secure vote-token GUI trades with tier/layer progress, CMI kit rewards, hidden reward identity markers, extra-token item tools with shield presets, and staff migration tools for old manual trades. |
+| Player Fun | [Exchange](exchange.md) | `/exchange` GUI exchanges for item, money, and EXP hand-ins, migrated from the old standalone 1MBTrades plugin. |
+| Player Fun | [VoteTokens](votetokens.md) | `/votetokens` secure vote-token GUI exchanges with tier/layer progress, CMI kit rewards, hidden reward identity markers, extra-token item tools with shield presets, and staff migration tools for old manual exchanges. |
 | Player Fun | [DiscordChat](discordchat.md) | `/discordchat` DiscordSRV server-chat engagement tracker with quality-gated EXP, conversation clusters, first-Discord broadcasts, community pulse, recurring bonus windows, linked-account streaks, top lists, point rewards, safe item tools, dependency-aware reward checks, opt-out reminders, milestone celebration privacy, and staff smoke/community/economy/archive/award reports. |
 | Player Fun | [GameTypes](gametypes.md) | `/gametype` safe BentoBox menu adapter for OneBlock, SkyBlock, AcidIsland, CaveBlock, and SkyGrid, with world detection and config-driven addon buttons. |
 | Player Fun | [BirthdayLanterns](birthdaylanterns.md) | `/birthday` collectible birthday, player anniversary, and server milestone lantern rewards with PDC item identity, finite wish charges, strict birthday/guestbook input, GUI claims, presets, mail variants, and configurable CMI reward commands. |
@@ -125,7 +125,7 @@ Examples:
 1MB-CMIAPI-PvPToggle-v1.0.0-505-j25-26.1.2.jar
 1MB-CMIAPI-Boosters-v1.0.0-505-j25-26.1.2.jar
 1MB-CMIAPI-NameMC-v1.0.0-505-j25-26.1.2.jar
-1MB-CMIAPI-Trades-v1.0.0-505-j25-26.1.2.jar
+1MB-CMIAPI-Exchange-v1.0.0-505-j25-26.1.2.jar
 1MB-CMIAPI-VoteTokens-v1.0.0-505-j25-26.1.2.jar
 1MB-CMIAPI-DiscordChat-v1.0.0-505-j25-26.1.2.jar
 1MB-CMIAPI-GameTypes-v1.0.0-505-j25-26.1.2.jar

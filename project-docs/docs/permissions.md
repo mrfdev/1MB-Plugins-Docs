@@ -18,6 +18,7 @@ onembcmi.global.debug
 onembcmi.global.debug.bundle
 onembcmi.global.config
 onembcmi.global.config.set
+onembcmi.global.docs
 onembcmi.global.gui
 onembcmi.global.rules
 onembcmi.global.translations
@@ -241,10 +242,9 @@ pluginversions.url.*
 pluginversions.url.list
 pluginversions.url.add
 pluginversions.url.del
-onembcmi.trades.admin
-onembtrade.admin
-onembtrade.<tradeId>
-onembtrade.completed.<tradeId>
+onembcmi.exchange.admin
+onembcmi.exchange.<tradeId>
+onembcmi.exchange.completed.<tradeId>
 onembcmi.votetokens.use
 onembcmi.votetokens.trade
 onembcmi.votetokens.progress

@@ -26,7 +26,7 @@ plugins/
   1MB-CMIAPI-PvPToggle-v1.0.0-505-j25-26.1.2.jar
   1MB-CMIAPI-Boosters-v1.0.0-505-j25-26.1.2.jar
   1MB-CMIAPI-NameMC-v1.0.0-505-j25-26.1.2.jar
-  1MB-CMIAPI-Trades-v1.0.0-505-j25-26.1.2.jar
+  1MB-CMIAPI-Exchange-v1.0.0-505-j25-26.1.2.jar
   1MB-CMIAPI-VoteTokens-v1.0.0-505-j25-26.1.2.jar
   1MB-CMIAPI-DiscordChat-v1.0.0-505-j25-26.1.2.jar
   1MB-CMIAPI-GameTypes-v1.0.0-505-j25-26.1.2.jar
@@ -147,10 +147,10 @@ plugins/
     NameMC/
       config.yml
       playerdata/
-    Trades/
+    Exchange/
       config.yml
       Translations/
-      Trades/
+      Exchanges/
       playerData/
       logs/
     MobHat/

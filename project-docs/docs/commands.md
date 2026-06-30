@@ -25,6 +25,9 @@ This page documents the global command shape. Individual plugins have their own 
 /1mbcmi debug bundle
 /1mbcmi debug clean cache [global|all|plugin <plugin>] [--dry-run]
 /1mbcmi debug clean playerdata plugin <plugin> [--dry-run|--confirm]
+/1mbcmi docs commands [all|plugin] [discord|github]
+/1mbcmi docs permissions [all|plugin] [discord|github]
+/1mbcmi docs all [all|plugin] [discord|github]
 /1mbcmi config <plugin>
 /1mbcmi config set <plugin> <path> <value>
 /1mbcmi gui test
@@ -60,6 +63,9 @@ This page documents the global command shape. Individual plugins have their own 
 | `/1mbcmi debug bundle` | Writes a sanitized support bundle folder with environment, feature, config, translation, and recent cache-log summaries. |
 | `/1mbcmi debug clean cache [global|all|plugin <plugin>] [--dry-run]` | Clears selected cache data without touching playerdata. |
 | `/1mbcmi debug clean playerdata plugin <plugin> [--dry-run\|--confirm]` | Removes only that plugin's section from shared playerdata files. |
+| `/1mbcmi docs commands [all|plugin] [discord|github]` | Writes generated command Markdown from runtime command help and plugin.yml command roots. |
+| `/1mbcmi docs permissions [all|plugin] [discord|github]` | Writes generated permission Markdown from plugin.yml metadata and command-help references. |
+| `/1mbcmi docs all [all|plugin] [discord|github]` | Writes one generated command and permission Markdown snapshot for admin review. |
 | `/1mbcmi config <plugin>` | Shows the config file and top-level config keys for a feature. |
 | `/1mbcmi config set <plugin> <path> <value>` | Updates a supported config value and reloads that feature. |
 | `/1mbcmi gui test` | Opens a shared GUI framework smoke-test page. |
@@ -172,7 +178,7 @@ Feature `/help` pages are intentionally player-facing: they list commands availa
 /1mbcmi debug plugin pvptoggle all
 /1mbcmi debug plugin boosters all
 /1mbcmi debug plugin namemc all
-/1mbcmi debug plugin trades all
+/1mbcmi debug plugin exchange all
 /1mbcmi debug plugin votetokens all
 /1mbcmi debug plugin spawners all
 /1mbcmi debug plugin mobhat all
@@ -215,6 +221,9 @@ Feature `/help` pages are intentionally player-facing: they list commands availa
 /1mbcmi debug clean playerdata plugin afkshrine --dry-run
 /1mbcmi debug clean playerdata plugin afkshrine --confirm
 /1mbcmi debug bundle
+/1mbcmi docs all all github
+/1mbcmi docs commands autosell discord
+/1mbcmi docs permissions permissionprobe github
 /1mbcmi config afkshrine
 /1mbcmi config set afkshrine messages.enter.enabled false
 /1mbcmi gui test
@@ -328,7 +337,7 @@ AFKShrine:
 /afkshrine preview aurora
 /afkshrine admin audit mrfloris
 /afkshrine admin recent sessions
-/afkshrine admin recent trades
+/afkshrine admin recent exchanges
 ```
 
 RecordingMode:
@@ -705,49 +714,49 @@ NameMC:
 /namemc debug all
 ```
 
-Trades:
+Exchange:
 
 ```text
-/trade
-/trade info
-/trade help
-/trade open summer_event
-/trade open category vote
-/trade reload
-/trade debug
-/trade debug status
-/trade debug commands
-/trade debug permissions
-/trade debug placeholders
-/trade debug config
-/trade debug set config settings.trade-click-cooldown-ms 1000
-/trade debug all
-/trade debug index
-/trade debug player mrfloris
-/trade debug summer_event
-/trade debug summer_event reset mrfloris
-/trade create winter_event
-/trade clone summer_event autumn_event
-/trade delete winter_event
-/trade delete confirm winter_event
-/trade capture requirements summer_event
-/trade capture icon summer_event
-/trade capture reward summer_event
-/trade set display summer_event <#F6D365><bold>Summer Event Trade</bold></#F6D365>
-/trade set description summer_event Bring event tokens here.
-/trade set permission summer_event onembtrade.summer_event
-/trade set completion summer_event onembtrade.completed.summer_event
-/trade set max summer_event 1
-/trade set worlds summer_event survival,oneblock
-/trade set money summer_event 2500
-/trade set exp summer_event 5
-/trade set start summer_event 06-01-2026
-/trade set end summer_event 08-31-2026
-/trade set category summer_event summer
-/trade toggle summer_event true
-/trade command add summer_event success console:cmi kit summer %player%
-/trade command clear summer_event fail
-/trade test summer_event mrfloris
+/exchange
+/exchange info
+/exchange help
+/exchange open summer_event
+/exchange open category vote
+/exchange reload
+/exchange debug
+/exchange debug status
+/exchange debug commands
+/exchange debug permissions
+/exchange debug placeholders
+/exchange debug config
+/exchange debug set config settings.trade-click-cooldown-ms 1000
+/exchange debug all
+/exchange debug index
+/exchange debug player mrfloris
+/exchange debug summer_event
+/exchange debug summer_event reset mrfloris
+/exchange create winter_event
+/exchange clone summer_event autumn_event
+/exchange delete winter_event
+/exchange delete confirm winter_event
+/exchange capture requirements summer_event
+/exchange capture icon summer_event
+/exchange capture reward summer_event
+/exchange set display summer_event <#F6D365><bold>Summer Event Trade</bold></#F6D365>
+/exchange set description summer_event Bring event tokens here.
+/exchange set permission summer_event onembcmi.exchange.summer_event
+/exchange set completion summer_event onembcmi.exchange.completed.summer_event
+/exchange set max summer_event 1
+/exchange set worlds summer_event survival,oneblock
+/exchange set money summer_event 2500
+/exchange set exp summer_event 5
+/exchange set start summer_event 06-01-2026
+/exchange set end summer_event 08-31-2026
+/exchange set category summer_event summer
+/exchange toggle summer_event true
+/exchange command add summer_event success console:cmi kit summer %player%
+/exchange command clear summer_event fail
+/exchange test summer_event mrfloris
 ```
 
 VoteTokens:
