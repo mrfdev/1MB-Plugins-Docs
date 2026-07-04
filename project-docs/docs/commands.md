@@ -329,6 +329,7 @@ AFKShrine:
 /afkshrine trade afkshrine_starter
 /afkshrine trade afkshrine_starter confirm
 /afkshrine quests
+/afkshrine album seasonal
 /afkshrine community
 /afkshrine top daily
 /afkshrine top weekly

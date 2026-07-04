@@ -35,6 +35,7 @@ The reward side is intentionally claim/trade based. AFK sessions can create pend
 - Let players trade claimed AFKShrine points for configured command rewards.
 - Show reward preview output that explains readiness, missing points, one-time claim state, disabled reward rows, and configured command count before a trade is confirmed.
 - Track time milestones, biome milestones, safety milestones, risk milestones, and AFK adventure achievements.
+- Show a player-facing AFK Shrine collection album with collected/open entries, repeat limits, reset windows, and total repeat counts.
 - Track configurable seasonal AFK quest sets such as ocean week, Nether week, winter shrine, and rainy week.
 - Track server-wide claimed AFKShrine point totals and unlock temporary community shrine celebrations at configured milestones.
 - Track repeatability rules and award counts so milestones can be once-only, limited per reset window, or unlimited.
@@ -85,7 +86,6 @@ Additional ideas to consider next:
 - Staff-defined protected shrine areas where safe-space milestones are easier, and wild areas where risk milestones are worth more.
 - Return ceremony presets that play a small local particle/sound sequence when a player claims a bigger pending bundle.
 - Linked PassportDiscovery goals where AFK in newly discovered biomes can count toward both systems later.
-- AFK Shrine collection album showing limited/repeatable milestone counts like `3/10` or `unlimited`.
 - Configurable cooldown categories, so time milestones, biome milestones, and risk milestones can each have different anti-repeat behavior.
 - Monthly staff report of most-earned and least-earned AFK milestones for balancing.
 
@@ -101,6 +101,7 @@ Additional ideas to consider next:
 /afkshrine rewards [page]
 /afkshrine trade <reward> [confirm]
 /afkshrine quests
+/afkshrine album [all|time|biomes|safety|risk|events|quests|seasonal|streaks] [page]
 /afkshrine community
 /afkshrine top [daily|weekly|monthly|lifetime]
 /afkshrine styles
@@ -125,7 +126,7 @@ Additional ideas to consider next:
 
 `/afkshrine trade <reward>` is a read-only preview unless `confirm` is provided. The preview explains whether the reward has configured commands, whether it is a one-time trade already claimed, whether the player is missing points, and what command to run to complete the trade. `/afkshrine trade <reward> confirm` is the only step that spends points and dispatches the configured reward commands.
 
-`/afkshrine quests` includes completed seasonal quest counts and currently active seasonal sets. `/afkshrine community` shows the server-wide claimed-point total, completed community milestones, the next threshold, and the active temporary celebration if one is running.
+`/afkshrine quests` includes completed seasonal quest counts and currently active seasonal sets. `/afkshrine album` is the richer collection view: it shows configured and saved-history milestone entries as `done` or `open`, with counts such as `1/1 once`, `0/1 weekly (3 total)`, `3/10 weekly (14 total)`, or `12 total, unlimited`. Category filters are `time`, `biomes`, `safety`, `risk`, `events`, `quests`, `seasonal`, and `streaks`. `/afkshrine community` shows the server-wide claimed-point total, completed community milestones, the next threshold, and the active temporary celebration if one is running.
 
 Global library examples:
 
@@ -385,6 +386,7 @@ hooks.progress.specific
 leaderboards.enabled
 leaderboards.limit
 rewards.per-page
+album.per-page
 rewards.trades
 audit.session-log.enabled
 audit.trade-log.enabled
