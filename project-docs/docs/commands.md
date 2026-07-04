@@ -333,11 +333,13 @@ AFKShrine:
 /afkshrine top monthly
 /afkshrine top lifetime
 /afkshrine presets
-/afkshrine preset aurora
-/afkshrine preview aurora
+/afkshrine preset mint
+/afkshrine preview mint
+/afkshrine admin check
+/afkshrine admin report
 /afkshrine admin audit mrfloris
 /afkshrine admin recent sessions
-/afkshrine admin recent exchanges
+/afkshrine admin recent trades
 ```
 
 RecordingMode:

@@ -11,7 +11,7 @@ Every feature jar that does not implement a local debug command inherits `/<plug
 | Category | Plugin | Purpose |
 | --- | --- | --- |
 | Shared Library | [1MB-CMIAPI-Lib](1mb-cmiapi-lib.md) | Shared diagnostics, feature registry, config/debug helpers, translations, GUI examples, safe action rules, and global placeholders. |
-| Player Fun | [AFKShrine](afkshrine.md) | Visual AFK effects, persistent opt-outs, selectable particle presets, and reward/quest tracking. |
+| Player Fun | [AFKShrine](afkshrine.md) | Visual AFK effects, persistent opt-outs, permission-gated particle presets, welcome-back summaries, reward/quest tracking, readiness checks, and staff reports. |
 | Player Fun | [RecordingMode](recordingmode.md) | Per-player recording quiet mode for personal messages, TPA requests, money requests, staff messages, tips, and optional live map hiding. |
 | Player Fun | [SellStreaks](sellstreaks.md) | CMI sell streaks, daily market goals, and varied-material rewards. |
 | Player Fun | [ScheduledTips](scheduledtips.md) | Clickable rotating tips with per-player dismiss, visibility controls, and live booster reminders. |

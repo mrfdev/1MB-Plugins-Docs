@@ -20,10 +20,14 @@ The reward side is intentionally claim/trade based. AFK sessions can create pend
 - Let staff dump current runtime state into cache for debugging.
 - Let players choose from persistent, permission-gated shrine styles.
 - Let players use `/afkshrine preset <preset>` as the friendly player-facing command for their particle preset.
-- Let players preview a selected style for a short controlled duration or stop their preview.
+- Let permissioned staff/testers preview a selected style for a short controlled duration or stop their preview.
+- Hide preview commands, tab suggestions, and preset preview links from players without `onembcmi.afkshrine.preview`.
+- Show friendly preset tiers and locked hints without exposing permission nodes to normal players.
 - Log preset selections and actual active/preview starts so staff can review which particle combinations are popular over long periods.
-- Show a welcome-back message with time spent AFK.
+- Show a welcome-back summary with AFK time, pending points earned, cap progress, new milestones/quests, and no-point reasons.
 - Let staff inspect a player's current AFK shrine state.
+- Let staff run `/afkshrine admin check` for a read-only live-readiness review before rollout.
+- Let staff export `/afkshrine admin report` Markdown snapshots for passive review after testing or live windows.
 - Support cache cleanup for temporary effect state.
 - Track pending AFKShrine points for qualifying AFK sessions.
 - Require players to claim pending points before spending them.
@@ -61,12 +65,11 @@ These ideas were accepted for the longer AFKShrine direction and should be imple
 
 Additional ideas to consider next:
 
-- AFK postcards: a small return summary showing where the player survived AFK and what counted.
 - Rested bonus: a short active-play bonus after claiming AFK points, so players come back and play.
 - Seasonal AFK quest sets, such as ocean week, Nether week, rainy week, or winter shrine.
 - Community milestones where the whole server unlocks a temporary celebration after enough AFK claims.
 - No-repeat zones that can be configured more strictly for known AFK farms.
-- AFK Shrine journal export for staff review when balancing points and quests.
+- Deeper AFK Shrine journal exports for monthly balancing beyond the current passive staff report.
 - Danger score multipliers from light level, weather, open sky, water, world, and damage taken.
 - Grace recovery for server restarts/timeouts so pending AFK progress is preserved but never duplicated.
 - Reward preview output that explains why a player is or is not eligible for a trade.
@@ -102,6 +105,8 @@ Additional ideas to consider next:
 /afkshrine preview [style] [seconds]
 /afkshrine preview stop
 /afkshrine admin
+/afkshrine admin check
+/afkshrine admin report
 /afkshrine admin audit <player>
 /afkshrine admin recent [sessions|trades] [page]
 /afkshrine admin inspect <player>
@@ -141,8 +146,11 @@ onembcmi.afkshrine.style.honey
 onembcmi.afkshrine.style.void
 onembcmi.afkshrine.style.prism
 onembcmi.afkshrine.style.meadow
+onembcmi.afkshrine.style.*
 onembcmi.afkshrine.preview
 onembcmi.afkshrine.admin
+onembcmi.afkshrine.admin.check
+onembcmi.afkshrine.admin.report
 onembcmi.afkshrine.admin.audit
 onembcmi.afkshrine.admin.recent
 onembcmi.afkshrine.admin.inspect
@@ -151,6 +159,10 @@ onembcmi.afkshrine.admin.stop
 onembcmi.afkshrine.admin.dump
 onembcmi.afkshrine.admin.reload
 ```
+
+`onembcmi.afkshrine.preview` defaults to false. Players without it do not see preview in help, first-level tab completion, preview argument tab completion, or `/afkshrine presets` preview links.
+
+Only the default preset is open without an extra style permission. Non-default preset nodes such as `onembcmi.afkshrine.style.mint`, `onembcmi.afkshrine.style.aurora`, and `onembcmi.afkshrine.style.prism` default to false, so staff can use them as rank, milestone, seasonal, or manual unlocks. Grant `onembcmi.afkshrine.style.*` only when a player or group should access every configured preset.
 
 ## Placeholders
 
@@ -248,6 +260,8 @@ styles.<style>.particle-color
 styles.<style>.bossbar-color
 styles.<style>.bossbar-title
 styles.<style>.preview-title
+styles.<style>.tier
+styles.<style>.unlock-label
 styles.<style>.radius-centimeters
 styles.<style>.points
 styles.<style>.dust-size-percent
@@ -392,10 +406,18 @@ plugins/1MB-CMIAPI/AFKShrine/logs/trades.log
 Staff can review them in-game with:
 
 ```text
+/afkshrine admin check
+/afkshrine admin report
 /afkshrine admin audit <player>
 /afkshrine admin recent sessions
 /afkshrine admin recent trades
 ```
+
+`/afkshrine admin check` is read-only and console-safe. It reports dependency state, debug mode, point caps, minimum session time, allowed/disabled/event world overlap, default preset access, non-default preset permissions, invalid preset colors, reward row shape, configured console command counts, and whether session/trade audit logs are enabled.
+
+`/afkshrine admin report` writes a Markdown report into the AFKShrine cache folder. The report includes runtime counters, point/economy counters, active/preview/disabled counts, the current config summary, readiness findings, and recent session/trade audit rows. It is meant for passive staff review after a live test window.
+
+Reward trades and optional hooks are still owner-configured console commands. The readiness check/report call this out for manual review, but they do not block or rewrite commands.
 
 ## Data
 
@@ -455,7 +477,7 @@ Players can list and select their AFKShrine particle preset with:
 /afkshrine preview <preset>
 ```
 
-The older `/afkshrine styles` and `/afkshrine style <style>` forms still work, but `preset` is the friendlier wording for players.
+The older `/afkshrine styles` and `/afkshrine style <style>` forms still work, but `preset` is the friendlier wording for players. Preview requires `onembcmi.afkshrine.preview`, which defaults to false.
 
 Built-in presets are:
 
@@ -464,6 +486,15 @@ default, mint, twilight, ember, aurora, ocean, amethyst, blossom, frost, honey, 
 ```
 
 Older configs that already have `styles.available` can still receive newly shipped built-in presets when `styles.auto-add-default-presets` is true. Staff can lock or unlock any preset by changing `styles.<preset>.permission` and the matching LuckPerms node.
+
+Each preset has friendly display metadata:
+
+```text
+styles.<preset>.tier
+styles.<preset>.unlock-label
+```
+
+`/afkshrine presets` shows the tier for every preset and, when locked, shows the unlock label instead of permission nodes. This keeps the player output useful while leaving node details in `/afkshrine debug permissions` and `/1mbcmi debug plugin afkshrine permissions`.
 
 Long-term preset usage is appended to:
 

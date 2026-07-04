@@ -84,7 +84,7 @@ Paper loads normal plugin jars from the top-level server `/plugins/` directory. 
 - `plugins/CMI-<version>.jar`
 - `plugins/CMILib<version>.jar`
 - `plugins/1MB-CMIAPI-LIB-v1.0.0-505-j25-26.1.2.jar`
-- `plugins/1MB-CMIAPI-AFKShrine-v1.0.0-505-j25-26.1.2.jar` provides CMI AFK shrine effects, player-selectable particle presets, AFKShrine points, claim/exchange rewards, milestones, quests, and leaderboards
+- `plugins/1MB-CMIAPI-AFKShrine-v1.0.0-505-j25-26.1.2.jar` provides CMI AFK shrine effects, player-selectable permission-gated particle presets, welcome-back summaries, AFKShrine points, claim/exchange rewards, milestones, quests, leaderboards, readiness checks, and passive staff Markdown reports
 - `plugins/1MB-CMIAPI-RecordingMode-v1.0.0-505-j25-26.1.2.jar`
 - `plugins/1MB-CMIAPI-SellStreaks-v1.0.0-505-j25-26.1.2.jar`
 - `plugins/1MB-CMIAPI-ScheduledTips-v1.0.0-505-j25-26.1.2.jar`
