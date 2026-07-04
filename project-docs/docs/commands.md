@@ -1082,6 +1082,8 @@ AutoSell:
 
 MobHat:
 
+`/mobhat preview <type>` requires `onembcmi.mobhat.preview`, which defaults to false.
+
 ```text
 /mobhat
 /mobhat info
@@ -1089,16 +1091,16 @@ MobHat:
 /mobhat status
 /mobhat list
 /mobhat preview frog
-/mobhat preview parrot
-/mobhat mob goat
-/mobhat position
-/mobhat position back
-/mobhat position shoulder-left
-/mobhat position reset
+/mobhat preview turtle
+/mobhat mob rabbit
+/mobhat mob armadillo
+/mobhat mob frog
 /mobhat mob turtle
+/mobhat position
+/mobhat position reset
 /mobhat target
 /mobhat remove
-/hat mob goat
+/hat mob rabbit
 /hat mob
 /mobhat reload
 /mobhat admin inspect mrfloris

@@ -8,7 +8,7 @@ That keeps CMI's `/hat` behavior intact while still allowing a friendly shortcut
 
 - Spawns a safe cosmetic copy of a whitelisted mob.
 - Mounts the stable `head` cosmetic mob on the player with Paper/Bukkit passengers.
-- Adds an experimental offset-position test bed for `back`, `shoulder-left`, and `shoulder-right`.
+- Includes an experimental offset-position test bed for `back`, `shoulder-left`, and `shoulder-right`, disabled by default for the limited live test.
 - Keeps the real targeted mob in place when using `/mobhat target`.
 - Supports baby mobs for `Ageable` entities.
 - Supports modern entity scale through the `SCALE` attribute where available.
@@ -62,20 +62,20 @@ When `alias.hat-mob.no-type-uses-target` is true, `/hat mob` with no type behave
 /mobhat info
 /mobhat help
 /mobhat list
-/mobhat preview frog
-/mobhat preview parrot
-/mobhat mob goat
-/mobhat mob chicken
+/mobhat mob rabbit
+/mobhat mob armadillo
+/mobhat mob frog
+/mobhat mob turtle
 /mobhat position
-/mobhat position back
-/mobhat position shoulder-left
 /mobhat position reset
 /mobhat target
 /mobhat remove
-/hat mob goat
+/hat mob rabbit
 /hat mob
 /mobhat debug config
 /mobhat debug set config mobs.baby-mobs-only false
+/mobhat preview frog
+/mobhat preview turtle
 /mobhat admin inspect mrfloris
 /mobhat admin remove mrfloris
 /mobhat reload
@@ -85,6 +85,7 @@ When `alias.hat-mob.no-type-uses-target` is true, `/hat mob` with no type behave
 
 ```text
 onembcmi.mobhat.use
+onembcmi.mobhat.preview
 onembcmi.mobhat.wear
 onembcmi.mobhat.target
 onembcmi.mobhat.remove
@@ -101,12 +102,24 @@ onembcmi.mobhat.admin
 Examples:
 
 ```text
-onembcmi.mobhat.mob.goat
-onembcmi.mobhat.mob.chicken
 onembcmi.mobhat.mob.rabbit
+onembcmi.mobhat.mob.armadillo
+onembcmi.mobhat.mob.frog
+onembcmi.mobhat.mob.turtle
 ```
 
-`mobs.require-per-mob-permission` defaults to true, so players need either the exact mob permission or `onembcmi.mobhat.mob.*` before they can wear a whitelisted mob.
+For the first limited live test, grant only the exact mob nodes you want a tester to use:
+
+```text
+onembcmi.mobhat.mob.rabbit
+onembcmi.mobhat.mob.armadillo
+onembcmi.mobhat.mob.frog
+onembcmi.mobhat.mob.turtle
+```
+
+`mobs.require-per-mob-permission` defaults to true, so players need `onembcmi.mobhat.wear` plus either the exact mob permission or `onembcmi.mobhat.mob.*` before they can wear a whitelisted mob. `onembcmi.mobhat.target`, `onembcmi.mobhat.remove`, `onembcmi.mobhat.position`, and `onembcmi.mobhat.alias.hatmob` also default to false for explicit live-test grants.
+
+`onembcmi.mobhat.preview` defaults to false. Grant it only to staff or testers who should inspect MobHat safety, position, and scale details before public rollout.
 
 ## Placeholders
 
@@ -162,52 +175,18 @@ inventory:
   require-empty-slot-before-equip: true
 position:
   default: head
-  allow-player-preference: true
+  allow-player-preference: false
   allowed:
   - head
-  - back
-  - shoulder-left
-  - shoulder-right
-  experimental-offset-enabled: true
+  experimental-offset-enabled: false
   allowed-mobs:
     head:
-    - CHICKEN
-    - PIG
-    - COW
-    - SHEEP
-    - GOAT
     - RABBIT
-    - CAT
-    - WOLF
-    - FOX
-    - FROG
     - ARMADILLO
+    - FROG
     - TURTLE
-    - NAUTILUS
-    - PARROT
-    - BEE
-    back:
-    - PARROT
-    - BEE
-    - RABBIT
-    - CAT
-    - FOX
-    - WOLF
-    - CHICKEN
-    - ARMADILLO
-    - TURTLE
-    - FROG
-    - NAUTILUS
-    shoulder:
-    - PARROT
-    - BEE
-    - RABBIT
-    - ARMADILLO
-    - NAUTILUS
-    - CAT
-    - FOX
-    - WOLF
-    - FROG
+    back: []
+    shoulder: []
   offset:
     update-ticks: 2
     scale-multiplier: '0.65'
@@ -225,47 +204,26 @@ position:
       - TURTLE=90.0
       - FROG=25.0
       mobs:
-      - FOX=sleeping
-      - CAT=lying
-      - WOLF=sitting
       - ARMADILLO=rolled
       - TURTLE=swimming
       - RABBIT=sitting
-      - PARROT=sitting
-      - BEE=rolling
       - FROG=croaking
     shoulder:
       yaw-offset: '0.0'
       pitch: '0.0'
       pitch-per-mob: []
       mobs:
-      - FOX=sitting
-      - CAT=sitting
-      - WOLF=sitting
       - ARMADILLO=rolled
       - RABBIT=sitting
-      - PARROT=sitting
-      - BEE=rolling
       - FROG=croaking
 mobs:
   baby-mobs-only: true
   require-per-mob-permission: true
   allowed:
-  - CHICKEN
-  - PIG
-  - COW
-  - SHEEP
-  - GOAT
   - RABBIT
-  - CAT
-  - WOLF
-  - FOX
-  - FROG
   - ARMADILLO
+  - FROG
   - TURTLE
-  - NAUTILUS
-  - PARROT
-  - BEE
   remove-existing-before-equip: true
   target-max-distance: '8.0'
 cosmetic:
@@ -282,21 +240,10 @@ scaling:
   enabled: true
   default: '0.70'
   per-mob:
-  - CHICKEN=0.85
   - RABBIT=0.95
-  - BEE=0.80
-  - PARROT=0.90
-  - CAT=0.85
-  - FOX=0.85
-  - WOLF=0.75
-  - GOAT=0.55
-  - COW=0.50
-  - SHEEP=0.55
-  - PIG=0.55
+  - ARMADILLO=0.75
   - FROG=0.80
   - TURTLE=0.65
-  - ARMADILLO=0.75
-  - NAUTILUS=0.70
 worlds:
   allowed: []
   blocked: []
@@ -319,7 +266,7 @@ All config comments are written by the shared config helper and re-applied on re
 
 `mobs.allowed` is the global safety whitelist. It controls `/mobhat list`, tab suggestions, and whether `/mobhat mob <type>` can equip. The per-position lists under `position.allowed-mobs.*` only decide which already-globally-allowed mobs may be used on `head`, `back`, or `shoulder`; they do not allow a mob by themselves.
 
-If `/mobhat preview nautilus` says `global allowed: no`, add `NAUTILUS` to `mobs.allowed` as well as the position list you want, then run `/mobhat reload`.
+If `/mobhat preview rabbit` says `global allowed: no`, add `RABBIT` to `mobs.allowed` as well as the position list you want, then run `/mobhat reload`. Preview requires `onembcmi.mobhat.preview`.
 
 `scaling.default` and `scaling.per-mob` control visual size. `1.0` is normal mob scale before baby/adult state. Because `mobs.baby-mobs-only` defaults to true, many animals are already baby-sized and then scaled again, so values around `0.70` to `0.95` are usually more readable than very small values.
 
@@ -334,7 +281,7 @@ position:
 
 `head` uses Paper/Bukkit passengers. The experimental positions use a marked, no-AI cosmetic mob that follows a relative offset around the player. This avoids deprecated shoulder APIs and old armor stand/slime tricks.
 
-Players can set a preference when `position.allow-player-preference` is true:
+The limited live-test default keeps `position.allow-player-preference: false`, `position.experimental-offset-enabled: false`, and only allows `head`. Players can set a preference only when `position.allow-player-preference` is true:
 
 ```text
 /mobhat position
@@ -345,14 +292,14 @@ Players can set a preference when `position.allow-player-preference` is true:
 /mobhat position reset
 ```
 
-Players and admins can preview a mob before wearing it:
+Permissioned staff and testers can preview a mob before wearing it:
 
 ```text
-/mobhat preview parrot
+/mobhat preview turtle
 /mobhat preview frog
 ```
 
-The preview shows whether the mob is globally allowed, which position lists allow it, the permission node, scale, baby handling, and offset safety settings.
+The preview shows whether the mob is globally allowed, which position lists allow it, scale, baby handling, and offset safety settings. Permission nodes stay in `/mobhat debug permissions` and `/1mbcmi debug plugin mobhat permissions`.
 
 `back`, `shoulder-left`, and `shoulder-right` also require:
 
@@ -366,14 +313,15 @@ Offset values are `right,y,forward` relative to the player. Negative forward mea
 position:
   allowed-mobs:
     head:
-    - PARROT
+    - RABBIT
+    - ARMADILLO
     - FROG
+    - TURTLE
     back:
-    - PARROT
-    - CAT
+    - TURTLE
     shoulder:
-    - PARROT
-    - BEE
+    - RABBIT
+    - FROG
   offset:
     scale-multiplier: '0.65'
     back: 0.0,1.45,-0.85
@@ -381,7 +329,7 @@ position:
     shoulder-right: 0.65,1.75,0.05
 ```
 
-The position allow-lists are intentionally separate. `head` is the stable passenger mode and can allow larger mobs. `back` and `shoulder` use real living entities following a cosmetic offset, so wide/tall mobs can still cause player nudging if their hitbox overlaps the player. Keep those lists smaller and use `/mobhat preview <mob>` before adding a mob to a public group.
+The position allow-lists are intentionally separate. `head` is the stable passenger mode and can allow larger mobs. `back` and `shoulder` use real living entities following a cosmetic offset, so wide/tall mobs can still cause player nudging if their hitbox overlaps the player. Keep those lists smaller and have a staff member with `onembcmi.mobhat.preview` run `/mobhat preview <mob>` before adding a mob to a public group.
 
 ### Style Test Bed
 
@@ -398,15 +346,13 @@ position:
       pitch-per-mob:
       - TURTLE=90.0
       mobs:
-      - FOX=sleeping
-      - CAT=lying
-      - WOLF=sitting
       - ARMADILLO=rolled
       - TURTLE=swimming
     shoulder:
       mobs:
-      - PARROT=sitting
-      - BEE=rolling
+      - ARMADILLO=rolled
+      - RABBIT=sitting
+      - FROG=croaking
 ```
 
 Supported style keywords are:
@@ -426,9 +372,9 @@ interested
 none
 ```
 
-Some styles are mob-specific. For example, `sleeping` is useful for foxes, `lying` is useful for cats, `rolled` is useful for armadillos, and `rolling` is useful for bees. Generic poses such as `swimming`, `croaking`, or `fall-flying` are best treated as visual experiments. Minecraft may ignore pitch or render only part of the pose on some living mob models.
+Some styles are mob-specific. For example, `rolled` is useful for armadillos, `sitting` is useful for rabbits, and `swimming` can make turtle backpack tests read more like a shell. Generic poses such as `croaking` or `fall-flying` are best treated as visual experiments. Minecraft may ignore pitch or render only part of the pose on some living mob models.
 
-Yaw and pitch are read while the cosmetic follows the player, so those changes can show quickly. Style changes such as `FOX=sleeping` or `TURTLE=swimming` are applied when the mob is equipped, so remove and re-equip the MobHat after changing style mappings.
+Yaw and pitch are read while the cosmetic follows the player, so those changes can show quickly. Style changes such as `ARMADILLO=rolled` or `TURTLE=swimming` are applied when the mob is equipped, so remove and re-equip the MobHat after changing style mappings.
 
 For turtle backpack testing, the default test-bed tries:
 
@@ -561,18 +507,21 @@ Normal CMI `/hat` usage is left alone.
 
 ## Testing
 
+Grant `onembcmi.mobhat.preview` before testing `/mobhat preview`.
+
 ```text
 /mobhat info
 /mobhat help
 /mobhat list
-/mobhat preview frog
-/mobhat mob goat
-/mobhat position back
-/mobhat mob parrot
+/mobhat mob rabbit
+/mobhat mob armadillo
+/mobhat mob frog
+/mobhat mob turtle
 /mobhat status
 /mobhat remove
-/hat mob chicken
+/hat mob rabbit
 /mobhat target
+/mobhat preview frog
 /mobhat debug all
 papi parse mrfloris %onembcmi_mobhat.active%
 ```
