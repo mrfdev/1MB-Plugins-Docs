@@ -35,6 +35,8 @@ The reward side is intentionally claim/trade based. AFK sessions can create pend
 - Let players trade claimed AFKShrine points for configured command rewards.
 - Show reward preview output that explains readiness, missing points, one-time claim state, disabled reward rows, and configured command count before a trade is confirmed.
 - Track time milestones, biome milestones, safety milestones, risk milestones, and AFK adventure achievements.
+- Track configurable seasonal AFK quest sets such as ocean week, Nether week, winter shrine, and rainy week.
+- Track server-wide claimed AFKShrine point totals and unlock temporary community shrine celebrations at configured milestones.
 - Track repeatability rules and award counts so milestones can be once-only, limited per reset window, or unlimited.
 - Track AFK day streaks with milestone points.
 - Enforce anti-grind controls: minimum session length, counted-session cooldown, same-location cooldown, and daily point cap.
@@ -42,6 +44,8 @@ The reward side is intentionally claim/trade based. AFK sessions can create pend
 - Show daily, weekly, monthly, and lifetime AFKShrine leaderboards.
 - Count normal AFKShrine progress only in configured allowed worlds, while keeping spawn/creative/legacy worlds blocked by default.
 - Support seasonal event worlds that only grant explicit `event:<id>` milestones during configured months.
+- Support seasonal quest windows by month, ISO week, date range, or always-on rules.
+- Let community milestones temporarily override active shrine visuals with a configured preset without granting that preset permanently.
 - Keep reward commands config-driven, with default CMI kit naming such as `afkshrine_milestone_time_30`.
 
 ## Accepted Roadmap
@@ -64,12 +68,12 @@ These ideas were accepted for the longer AFKShrine direction and should be imple
 - AFK streaks and streak milestones.
 - Debug/admin review of recent point reasons and leaderboard data.
 - AFK adventure achievements such as open sky, underground, underwater, high altitude, Nether, and End.
+- Seasonal AFK quest sets for themed live windows.
+- Community milestones based on claimed server-wide AFKShrine points.
 
 Additional ideas to consider next:
 
 - Rested bonus: a short active-play bonus after claiming AFK points, so players come back and play.
-- Seasonal AFK quest sets, such as ocean week, Nether week, rainy week, or winter shrine.
-- Community milestones where the whole server unlocks a temporary celebration after enough AFK claims.
 - No-repeat zones that can be configured more strictly for known AFK farms.
 - Deeper AFK Shrine journal exports for monthly balancing beyond the current passive staff report.
 - Danger score multipliers from light level, weather, open sky, water, world, and damage taken.
@@ -97,6 +101,7 @@ Additional ideas to consider next:
 /afkshrine rewards [page]
 /afkshrine trade <reward> [confirm]
 /afkshrine quests
+/afkshrine community
 /afkshrine top [daily|weekly|monthly|lifetime]
 /afkshrine styles
 /afkshrine style [style]
@@ -119,6 +124,8 @@ Additional ideas to consider next:
 `/afkshrine rewards [page]` shows each configured trade with the current state for the player running it: ready, blocked, already claimed, disabled, or preview-only from console. It also shows the reason, command count, balance, missing points, and the trade command to review.
 
 `/afkshrine trade <reward>` is a read-only preview unless `confirm` is provided. The preview explains whether the reward has configured commands, whether it is a one-time trade already claimed, whether the player is missing points, and what command to run to complete the trade. `/afkshrine trade <reward> confirm` is the only step that spends points and dispatches the configured reward commands.
+
+`/afkshrine quests` includes completed seasonal quest counts and currently active seasonal sets. `/afkshrine community` shows the server-wide claimed-point total, completed community milestones, the next threshold, and the active temporary celebration if one is running.
 
 Global library examples:
 
@@ -199,6 +206,12 @@ Only the default preset is open without an extra style permission. Non-default p
 %onembcmi_afkshrine.biomes.count%
 %onembcmi_afkshrine.events.count%
 %onembcmi_afkshrine.progress.awards.count%
+%onembcmi_afkshrine.seasonal.active.count%
+%onembcmi_afkshrine.community.claimed_total%
+%onembcmi_afkshrine.community.completed.count%
+%onembcmi_afkshrine.community.celebration.active%
+%onembcmi_afkshrine.community.celebration.id%
+%onembcmi_afkshrine.community.celebration.seconds_left%
 %onembcmi_afkshrine.last.session.seconds%
 %onembcmi_afkshrine.last.session.points%
 %onembcmi_afkshrine.is_afk%
@@ -214,6 +227,8 @@ Only the default preset is open without an extra style permission. Non-default p
 %onembcmi_afkshrine.runtime.claimed_points%
 %onembcmi_afkshrine.runtime.traded_points%
 %onembcmi_afkshrine.runtime.quest_completions%
+%onembcmi_afkshrine.runtime.seasonal_quest_completions%
+%onembcmi_afkshrine.runtime.community_milestones%
 %onembcmi_afkshrine.cache.size%
 ```
 
@@ -345,6 +360,15 @@ quests.adventure-achievements.ids
 quests.repeat.mode
 quests.repeat.max-count
 quests.repeat.reset
+seasonal-quests.enabled
+seasonal-quests.sets
+seasonal-quests.repeat.mode
+seasonal-quests.repeat.max-count
+seasonal-quests.repeat.reset
+community.enabled
+community.celebration.enabled
+community.celebration.override-active-style
+community.milestones
 streaks.enabled
 streaks.milestones-days
 streaks.milestone-points
@@ -387,6 +411,22 @@ Grace recovery is enabled by default. While CMI says a player is AFK, AFKShrine 
 
 Event worlds are not normal AFK farming worlds. `events.worlds` rows use `world|months|progress-id|points`, for example `santa|12|event:santa|25`. A player AFKing in `santa` during December can earn the configured `event:santa` milestone once by default, but outside December the world does not count. The default event rows are `santa`, `halloween`, `thanksgiving`, `valentine`, and `summer`; staff can change months, points, or repeat rules as events change.
 
+Seasonal quest sets are normal-world AFK quests gated by a configurable active window and location/weather requirements. `seasonal-quests.sets` rows use:
+
+```text
+id|Display Name|window|points|min-session-seconds|requirements
+```
+
+Default rows include `ocean_week`, `nether_week`, `winter_shrine`, and `rainy_week`. Windows support `*`, `months:6,7,8`, `weeks:27,28`, and `dates:2026-12-20..2026-12-27`; multiple window tokens can be separated with semicolons. Requirements are semicolon-separated and all must pass. Supported tokens include `world:general`, `environment:NETHER`, `biome:minecraft:warm_ocean`, `biome-contains:ocean`, `weather:rain`, `weather:thunder`, `open-sky`, `underwater`, `solid-ground`, `y-min:60`, and `y-max:80`. Seasonal quests are stored as `seasonal:<id>` quest progress and use `seasonal-quests.repeat.*`, which defaults to once per week while active.
+
+Community milestones are server-wide claimed-point thresholds. They count points only when players run `/afkshrine claim`, not when points are merely pending. `community.milestones` rows use:
+
+```text
+id|claimed-total-threshold|Display Name|duration-minutes|style|optional console command;;second command
+```
+
+When a threshold is crossed, AFKShrine records it in `community.yml`, starts a temporary celebration window, notifies online players with `onembcmi.afkshrine.use`, optionally runs configured milestone commands while `hooks.enabled` is true, and can override active shrine visuals with the configured preset while the celebration lasts. The visual override does not grant the preset permanently and does not affect `/afkshrine preview`.
+
 Optional hooks are disabled by being empty, even though `hooks.enabled` defaults to true. They are meant for feedback such as sounds, titles, toasts, fireworks, and public milestone messages. Keep real rewards in `/afkshrine claim` and `/afkshrine trade` unless staff intentionally chooses otherwise.
 
 Hook command placeholders:
@@ -405,6 +445,12 @@ Hook command placeholders:
 {progress}
 {progress_type}
 {reason}
+{milestone}
+{display}
+{threshold}
+{total}
+{duration}
+{style}
 {id}
 {reward}
 {cost}
@@ -435,9 +481,11 @@ Staff can review them in-game with:
 /afkshrine admin recent trades
 ```
 
-`/afkshrine admin check` is read-only and console-safe. It reports dependency state, debug mode, point caps, minimum session time, grace recovery settings, allowed/disabled/event world overlap, default preset access, non-default preset permissions, invalid preset colors, reward row shape, configured console command counts, and whether session/trade audit logs are enabled.
+Community claim audit rows are included in `/afkshrine admin report` from `logs/community.log`.
 
-`/afkshrine admin report` writes a Markdown report into the AFKShrine cache folder. The report includes runtime counters, point/economy counters, active/preview/disabled counts, the current config summary, readiness findings, and recent session/trade audit rows. It is meant for passive staff review after a live test window.
+`/afkshrine admin check` is read-only and console-safe. It reports dependency state, debug mode, point caps, minimum session time, grace recovery settings, allowed/disabled/event world overlap, seasonal quest set counts, community milestone configuration, default preset access, non-default preset permissions, invalid preset colors, reward row shape, configured console command counts, and whether session/trade audit logs are enabled.
+
+`/afkshrine admin report` writes a Markdown report into the AFKShrine cache folder. The report includes runtime counters, point/economy counters, active/preview/disabled counts, seasonal/community state, the current config summary, readiness findings, and recent session/trade/community audit rows. It is meant for passive staff review after a live test window.
 
 Reward trades and optional hooks are still owner-configured console commands. The readiness check/report call this out for manual review, but they do not block or rewrite commands.
 
@@ -480,6 +528,8 @@ afkshrine:
       open-sky: false
       underwater: false
       solid-ground: true
+      raining: false
+      thundering: false
   sessions:
     total: 0
     afk-seconds: 0
@@ -499,6 +549,19 @@ afkshrine:
 ```
 
 Player opt-out, selected style, pending points, claimed balance, trade claims, milestones, quests, biomes, repeat award counts, streaks, recovery settlement ids, and leaderboard period totals are persistent. `active-session` is temporary recovery state for a currently active AFK session; it is cleared after normal AFK leave, clean shutdown settlement, or successful join recovery. Temporary visual state should live in cache and be safe to clean.
+
+Community milestone state is stored in the AFKShrine feature data folder:
+
+```yaml
+claimed-total: 0
+completed-milestones: []
+celebration:
+  id: ""
+  display-name: ""
+  style: ""
+  started-at-millis: 0
+  until-millis: 0
+```
 
 Runtime dump files are written to the AFKShrine cache folder and include active, preview, disabled, and runtime counter state only. They are meant for debugging and support, not permanent player history.
 

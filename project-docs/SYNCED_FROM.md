@@ -3,7 +3,7 @@
 This folder is a public documentation-only copy of selected files from the private `mrfdev/1MB-CMIAPI` repository.
 
 - Source path: `/Users/floris/Projects/Codex/CMI-API`
-- Source commit: `d929f2cd`
+- Source commit: `2dc362b7`
 - Source state: `clean`
 - Copied files: `README.md` and `docs/`
 - Excluded on purpose: source code, jars, servers, databases, task logs, and internal checklists
