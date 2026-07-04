@@ -326,6 +326,7 @@ AFKShrine:
 /afkshrine balance
 /afkshrine claim
 /afkshrine rewards
+/afkshrine trade afkshrine_starter
 /afkshrine trade afkshrine_starter confirm
 /afkshrine quests
 /afkshrine top daily

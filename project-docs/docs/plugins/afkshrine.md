@@ -25,6 +25,7 @@ The reward side is intentionally claim/trade based. AFK sessions can create pend
 - Show friendly preset tiers and locked hints without exposing permission nodes to normal players.
 - Log preset selections and actual active/preview starts so staff can review which particle combinations are popular over long periods.
 - Show a welcome-back summary with AFK time, pending points earned, cap progress, new milestones/quests, and no-point reasons.
+- Preserve active AFK progress across clean restarts and odd disconnect windows with a one-shot recovery marker.
 - Let staff inspect a player's current AFK shrine state.
 - Let staff run `/afkshrine admin check` for a read-only live-readiness review before rollout.
 - Let staff export `/afkshrine admin report` Markdown snapshots for passive review after testing or live windows.
@@ -32,6 +33,7 @@ The reward side is intentionally claim/trade based. AFK sessions can create pend
 - Track pending AFKShrine points for qualifying AFK sessions.
 - Require players to claim pending points before spending them.
 - Let players trade claimed AFKShrine points for configured command rewards.
+- Show reward preview output that explains readiness, missing points, one-time claim state, disabled reward rows, and configured command count before a trade is confirmed.
 - Track time milestones, biome milestones, safety milestones, risk milestones, and AFK adventure achievements.
 - Track repeatability rules and award counts so milestones can be once-only, limited per reset window, or unlimited.
 - Track AFK day streaks with milestone points.
@@ -71,8 +73,6 @@ Additional ideas to consider next:
 - No-repeat zones that can be configured more strictly for known AFK farms.
 - Deeper AFK Shrine journal exports for monthly balancing beyond the current passive staff report.
 - Danger score multipliers from light level, weather, open sky, water, world, and damage taken.
-- Grace recovery for server restarts/timeouts so pending AFK progress is preserved but never duplicated.
-- Reward preview output that explains why a player is or is not eligible for a trade.
 - Staff-only audit command for suspicious repeated AFK sessions without using same-IP checks.
 - Repeatable themed collection milestones, such as flowers or shrine tokens, where each configured progress id can be earned `N` times or once per reset period.
 - Milestone reset summaries that tell a player which repeatable goals refreshed today, this week, or this month.
@@ -115,6 +115,10 @@ Additional ideas to consider next:
 /afkshrine admin dump
 /afkshrine admin reload
 ```
+
+`/afkshrine rewards [page]` shows each configured trade with the current state for the player running it: ready, blocked, already claimed, disabled, or preview-only from console. It also shows the reason, command count, balance, missing points, and the trade command to review.
+
+`/afkshrine trade <reward>` is a read-only preview unless `confirm` is provided. The preview explains whether the reward has configured commands, whether it is a one-time trade already claimed, whether the player is missing points, and what command to run to complete the trade. `/afkshrine trade <reward> confirm` is the only step that spends points and dispatches the configured reward commands.
 
 Global library examples:
 
@@ -291,6 +295,9 @@ tracking.same-location-radius-blocks
 tracking.same-location-cooldown-minutes
 tracking.allowed-worlds
 tracking.disabled-worlds
+recovery.enabled
+recovery.persist-interval-seconds
+recovery.max-offline-seconds
 events.enabled
 events.worlds
 events.repeat.mode
@@ -376,6 +383,8 @@ Default configured styles include 26 presets: `default`, `mint`, `twilight`, `em
 
 World tracking is default-deny. Normal AFKShrine points only count in `tracking.allowed-worlds`, which defaults to `general`, `wild`, `nether`, `end`, `oneblock`, `skyblock`, `skygrid`, `acid`, and `cave`. `tracking.disabled-worlds` is a hard block and defaults to `spawn`, `builders`, and `legacy`.
 
+Grace recovery is enabled by default. While CMI says a player is AFK, AFKShrine writes a small `afkshrine.active-session` marker to playerdata with a session id, start time, last touch time, starting location snapshot, and damage taken. Clean shutdowns settle active sessions before the plugin disables. If the server or connection ends weirdly, the next join can settle that marker once, using `recovery.max-offline-seconds` as the maximum extra time counted after the last touch. Settled recovery ids are kept in `afkshrine.recovery.settled-session-ids` to prevent duplicate payouts if stale data reappears.
+
 Event worlds are not normal AFK farming worlds. `events.worlds` rows use `world|months|progress-id|points`, for example `santa|12|event:santa|25`. A player AFKing in `santa` during December can earn the configured `event:santa` milestone once by default, but outside December the world does not count. The default event rows are `santa`, `halloween`, `thanksgiving`, `valentine`, and `summer`; staff can change months, points, or repeat rules as events change.
 
 Optional hooks are disabled by being empty, even though `hooks.enabled` defaults to true. They are meant for feedback such as sounds, titles, toasts, fireworks, and public milestone messages. Keep real rewards in `/afkshrine claim` and `/afkshrine trade` unless staff intentionally chooses otherwise.
@@ -426,7 +435,7 @@ Staff can review them in-game with:
 /afkshrine admin recent trades
 ```
 
-`/afkshrine admin check` is read-only and console-safe. It reports dependency state, debug mode, point caps, minimum session time, allowed/disabled/event world overlap, default preset access, non-default preset permissions, invalid preset colors, reward row shape, configured console command counts, and whether session/trade audit logs are enabled.
+`/afkshrine admin check` is read-only and console-safe. It reports dependency state, debug mode, point caps, minimum session time, grace recovery settings, allowed/disabled/event world overlap, default preset access, non-default preset permissions, invalid preset colors, reward row shape, configured console command counts, and whether session/trade audit logs are enabled.
 
 `/afkshrine admin report` writes a Markdown report into the AFKShrine cache folder. The report includes runtime counters, point/economy counters, active/preview/disabled counts, the current config summary, readiness findings, and recent session/trade audit rows. It is meant for passive staff review after a live test window.
 
@@ -454,6 +463,23 @@ afkshrine:
         "2026-W21": 0
       monthly:
         "2026-05": 0
+  recovery:
+    settled-session-ids: []
+  active-session:
+    id: "recovery-session-uuid"
+    started-at-millis: 0
+    last-seen-at-millis: 0
+    damage: 0.0
+    snapshot:
+      world: "general"
+      environment: "NORMAL"
+      biome: "minecraft:plains"
+      x: 0
+      y: 64
+      z: 0
+      open-sky: false
+      underwater: false
+      solid-ground: true
   sessions:
     total: 0
     afk-seconds: 0
@@ -472,7 +498,7 @@ afkshrine:
       - "time:30|1|lifetime|1|2026-05-19T12:00:00Z"
 ```
 
-Player opt-out, selected style, pending points, claimed balance, trade claims, milestones, quests, biomes, repeat award counts, streaks, and leaderboard period totals are persistent. Temporary visual state should live in cache and be safe to clean.
+Player opt-out, selected style, pending points, claimed balance, trade claims, milestones, quests, biomes, repeat award counts, streaks, recovery settlement ids, and leaderboard period totals are persistent. `active-session` is temporary recovery state for a currently active AFK session; it is cleared after normal AFK leave, clean shutdown settlement, or successful join recovery. Temporary visual state should live in cache and be safe to clean.
 
 Runtime dump files are written to the AFKShrine cache folder and include active, preview, disabled, and runtime counter state only. They are meant for debugging and support, not permanent player history.
 
