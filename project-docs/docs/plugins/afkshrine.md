@@ -146,6 +146,19 @@ onembcmi.afkshrine.style.honey
 onembcmi.afkshrine.style.void
 onembcmi.afkshrine.style.prism
 onembcmi.afkshrine.style.meadow
+onembcmi.afkshrine.style.sunrise
+onembcmi.afkshrine.style.coral
+onembcmi.afkshrine.style.lagoon
+onembcmi.afkshrine.style.lavender
+onembcmi.afkshrine.style.copper
+onembcmi.afkshrine.style.emerald
+onembcmi.afkshrine.style.sapphire
+onembcmi.afkshrine.style.pearl
+onembcmi.afkshrine.style.dusk
+onembcmi.afkshrine.style.lantern
+onembcmi.afkshrine.style.cherry
+onembcmi.afkshrine.style.storm
+onembcmi.afkshrine.style.echo
 onembcmi.afkshrine.style.*
 onembcmi.afkshrine.preview
 onembcmi.afkshrine.admin
@@ -162,7 +175,7 @@ onembcmi.afkshrine.admin.reload
 
 `onembcmi.afkshrine.preview` defaults to false. Players without it do not see preview in help, first-level tab completion, preview argument tab completion, or `/afkshrine presets` preview links.
 
-Only the default preset is open without an extra style permission. Non-default preset nodes such as `onembcmi.afkshrine.style.mint`, `onembcmi.afkshrine.style.aurora`, and `onembcmi.afkshrine.style.prism` default to false, so staff can use them as rank, milestone, seasonal, or manual unlocks. Grant `onembcmi.afkshrine.style.*` only when a player or group should access every configured preset.
+Only the default preset is open without an extra style permission. Non-default preset nodes such as `onembcmi.afkshrine.style.mint`, `onembcmi.afkshrine.style.aurora`, `onembcmi.afkshrine.style.prism`, `onembcmi.afkshrine.style.sunrise`, and `onembcmi.afkshrine.style.storm` default to false, so staff can use them as rank, milestone, seasonal, or manual unlocks. Grant `onembcmi.afkshrine.style.*` only when a player or group should access every configured preset.
 
 ## Placeholders
 
@@ -359,7 +372,7 @@ risk:open-sky|limited|3|weekly
 biome:minecraft:plains|unlimited|0|daily
 ```
 
-Default configured styles include `default`, `mint`, `twilight`, `ember`, `aurora`, `ocean`, `amethyst`, `blossom`, `frost`, `honey`, `void`, `prism`, and `meadow`. The default style is usable by everyone; the other starter styles are permission-gated so they can be staff-only, donor-only, rank-based, or unlocked later through another system.
+Default configured styles include 26 presets: `default`, `mint`, `twilight`, `ember`, `aurora`, `ocean`, `amethyst`, `blossom`, `frost`, `honey`, `void`, `prism`, `meadow`, `sunrise`, `coral`, `lagoon`, `lavender`, `copper`, `emerald`, `sapphire`, `pearl`, `dusk`, `lantern`, `cherry`, `storm`, and `echo`. The default style is usable by everyone; the other starter/rank/seasonal/rare styles are permission-gated so they can be staff-only, donor-only, rank-based, or unlocked later through another system.
 
 World tracking is default-deny. Normal AFKShrine points only count in `tracking.allowed-worlds`, which defaults to `general`, `wild`, `nether`, `end`, `oneblock`, `skyblock`, `skygrid`, `acid`, and `cave`. `tracking.disabled-worlds` is a hard block and defaults to `spawn`, `builders`, and `legacy`.
 
@@ -482,7 +495,7 @@ The older `/afkshrine styles` and `/afkshrine style <style>` forms still work, b
 Built-in presets are:
 
 ```text
-default, mint, twilight, ember, aurora, ocean, amethyst, blossom, frost, honey, void, prism, meadow
+default, mint, twilight, ember, aurora, ocean, amethyst, blossom, frost, honey, void, prism, meadow, sunrise, coral, lagoon, lavender, copper, emerald, sapphire, pearl, dusk, lantern, cherry, storm, echo
 ```
 
 Older configs that already have `styles.available` can still receive newly shipped built-in presets when `styles.auto-add-default-presets` is true. Staff can lock or unlock any preset by changing `styles.<preset>.permission` and the matching LuckPerms node.

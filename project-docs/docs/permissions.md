@@ -55,6 +55,19 @@ onembcmi.afkshrine.style.honey
 onembcmi.afkshrine.style.void
 onembcmi.afkshrine.style.prism
 onembcmi.afkshrine.style.meadow
+onembcmi.afkshrine.style.sunrise
+onembcmi.afkshrine.style.coral
+onembcmi.afkshrine.style.lagoon
+onembcmi.afkshrine.style.lavender
+onembcmi.afkshrine.style.copper
+onembcmi.afkshrine.style.emerald
+onembcmi.afkshrine.style.sapphire
+onembcmi.afkshrine.style.pearl
+onembcmi.afkshrine.style.dusk
+onembcmi.afkshrine.style.lantern
+onembcmi.afkshrine.style.cherry
+onembcmi.afkshrine.style.storm
+onembcmi.afkshrine.style.echo
 onembcmi.afkshrine.style.*
 onembcmi.afkshrine.preview
 onembcmi.afkshrine.admin.check
@@ -565,7 +578,7 @@ Spawners grants `onembcmi.spawners.use`, `onembcmi.spawners.progress`, and `onem
 
 Collect grants `onembcmi.collect.use`, `onembcmi.collect.submit`, `onembcmi.collect.stats`, `onembcmi.collect.leaderboard`, and `onembcmi.collect.rewards` to players by default so `/collect` can open the event GUI, submit configured weekly untouched vanilla items, trigger capped virtual Lucky Find rolls from valid submissions, view standings/personal bests/community progress/Hall of Fame archives, claim earned participation, milestone, and top-10 rewards, and trade duplicate Collect reward keepsakes through `/collect exchange`. Modified stacks with names, lore, damage, enchantments, custom model data, PDC, or other item meta are ignored. Duplicate reward exchange only accepts PDC-marked Collect rewards from the active event and preserves one copy of each claim id. Admin permissions default to false. Grant `onembcmi.collect.test` for debug event/week/day/date controls and forced scavenger testing, `onembcmi.collect.feed` for manually running passive Discord feed/scavenger checks, `onembcmi.collect.inspect` for reviewing stored player event data, `onembcmi.collect.reset` for clearing one player's event data, `onembcmi.collect.reload` for reloading `config.yml`, `events.yml`, and `rewards.yml`, and `onembcmi.collect.report` for exporting Discord-friendly markdown event reports after an event. Reward/submission/scavenger/Discord feed command hooks are controlled by config allowed-prefix lists and are dispatched from direct server console only, never RCON.
 
-AFKShrine grants `onembcmi.afkshrine.use`, `onembcmi.afkshrine.claim`, `onembcmi.afkshrine.rewards`, `onembcmi.afkshrine.trade`, `onembcmi.afkshrine.top`, and `onembcmi.afkshrine.style` to players by default so the public feature can show status, claim pending points, view/trade configured rewards, use leaderboards, and select only unlocked presets. `onembcmi.afkshrine.preview` defaults to false and gates `/afkshrine preview`, preview tab completion, preview help entries, and preview links in `/afkshrine presets`. Non-default preset nodes such as `onembcmi.afkshrine.style.mint`, `.aurora`, and `.prism` also default to false; grant exact style nodes or `onembcmi.afkshrine.style.*` when staff intentionally unlocks visual tiers. Staff live-readiness and passive exports use `onembcmi.afkshrine.admin.check` and `onembcmi.afkshrine.admin.report`.
+AFKShrine grants `onembcmi.afkshrine.use`, `onembcmi.afkshrine.claim`, `onembcmi.afkshrine.rewards`, `onembcmi.afkshrine.trade`, `onembcmi.afkshrine.top`, and `onembcmi.afkshrine.style` to players by default so the public feature can show status, claim pending points, view/trade configured rewards, use leaderboards, and select only unlocked presets. `onembcmi.afkshrine.preview` defaults to false and gates `/afkshrine preview`, preview tab completion, preview help entries, and preview links in `/afkshrine presets`. Non-default preset nodes such as `onembcmi.afkshrine.style.mint`, `.aurora`, `.prism`, `.sunrise`, and `.storm` also default to false; grant exact style nodes or `onembcmi.afkshrine.style.*` when staff intentionally unlocks visual tiers. Staff live-readiness and passive exports use `onembcmi.afkshrine.admin.check` and `onembcmi.afkshrine.admin.report`.
 
 MobHat grants `onembcmi.mobhat.use` by default for status, help, info, and list output. `onembcmi.mobhat.preview` defaults to false and gates `/mobhat preview <type>`, preview tab completion, preview help entries, and preview links in `/mobhat list`; grant it only to staff or testers who should inspect mob safety details. The limited rollout config only allows head-position rabbit, armadillo, frog, and turtle. Wearing and removing mobs are separate through `onembcmi.mobhat.wear` and `onembcmi.mobhat.remove`, which default to false, plus exact per-mob nodes such as `onembcmi.mobhat.mob.rabbit`, `onembcmi.mobhat.mob.armadillo`, `onembcmi.mobhat.mob.frog`, and `onembcmi.mobhat.mob.turtle` when per-mob permissions are enabled. `onembcmi.mobhat.target`, `onembcmi.mobhat.position`, and `onembcmi.mobhat.alias.hatmob` also default to false for explicit rollout control.
 
