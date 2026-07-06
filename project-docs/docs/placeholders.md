@@ -52,6 +52,20 @@ AFKShrine placeholders:
 %onembcmi_afkshrine.biomes.count%
 %onembcmi_afkshrine.events.count%
 %onembcmi_afkshrine.progress.awards.count%
+%onembcmi_afkshrine.rested.active%
+%onembcmi_afkshrine.rested.seconds_left%
+%onembcmi_afkshrine.rested.total_granted%
+%onembcmi_afkshrine.repeat_zones.count%
+%onembcmi_afkshrine.last.repeat_zone.count%
+%onembcmi_afkshrine.last.danger.multiplier_percent%
+%onembcmi_afkshrine.last.danger.candidate_points%
+%onembcmi_afkshrine.last.danger.applied_points%
+%onembcmi_afkshrine.seasonal.active.count%
+%onembcmi_afkshrine.community.claimed_total%
+%onembcmi_afkshrine.community.completed.count%
+%onembcmi_afkshrine.community.celebration.active%
+%onembcmi_afkshrine.community.celebration.id%
+%onembcmi_afkshrine.community.celebration.seconds_left%
 %onembcmi_afkshrine.last.session.seconds%
 %onembcmi_afkshrine.last.session.points%
 %onembcmi_afkshrine.is_afk%
@@ -67,6 +81,13 @@ AFKShrine placeholders:
 %onembcmi_afkshrine.runtime.claimed_points%
 %onembcmi_afkshrine.runtime.traded_points%
 %onembcmi_afkshrine.runtime.quest_completions%
+%onembcmi_afkshrine.runtime.seasonal_quest_completions%
+%onembcmi_afkshrine.runtime.community_milestones%
+%onembcmi_afkshrine.runtime.rested_bonuses%
+%onembcmi_afkshrine.runtime.repeat_zone_warnings%
+%onembcmi_afkshrine.runtime.repeat_zone_hard_warnings%
+%onembcmi_afkshrine.runtime.danger_bonus_candidates%
+%onembcmi_afkshrine.runtime.danger_bonus_applied%
 %onembcmi_afkshrine.cache.size%
 ```
 

@@ -340,6 +340,7 @@ AFKShrine:
 /afkshrine preview mint
 /afkshrine admin check
 /afkshrine admin report
+/afkshrine admin suspicious
 /afkshrine admin audit mrfloris
 /afkshrine admin recent sessions
 /afkshrine admin recent trades
