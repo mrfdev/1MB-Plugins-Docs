@@ -6,7 +6,22 @@ AFKShrine is a player-fun plugin that turns CMI AFK state into a small visible e
 
 The goal is cosmetic and social, not economy-heavy. It should be safe to test because it listens to AFK state and displays effects rather than moving items, money, or teleports.
 
-The reward side is intentionally claim/trade based. AFK sessions can create pending AFKShrine points, milestones, quest completions, and leaderboard progress, but the plugin does not automatically pay kits, money, or commands just because someone went AFK. Players must return and use `/afkshrine claim` or `/afkshrine trade`.
+The reward side is intentionally claim/trade based. AFK sessions can create pending AFKShrine tokens, milestones, quest completions, and leaderboard progress, but the plugin does not automatically pay kits, money, or commands just because someone went AFK. Players must return and use `/afkshrine claim` or `/afkshrine trade`. Bed sleeping can also create a tiny AFKShrine-adjacent pending-token reward, but it uses a separate low-cap path with a same-area cooldown and does not run normal AFK milestone rewards.
+
+## Player-Facing Feature Guide
+
+These are the AFKShrine features players should be able to learn about from the public docs:
+
+- AFK shrine visuals: when CMI marks a player as AFK, AFKShrine can show a subtle personal shrine with soft particles, optional sparkles, and a private bossbar.
+- AFK postcards: when the player returns, AFKShrine can show a private return postcard with AFK time, approximate place, biome, weather or scene, damage taken, why the visit counted or did not count, newly completed milestones or quests, daily cap room, and clickable next actions such as `/afkshrine claim`.
+- Dynamic bossbar progress: while the player is AFK, the bossbar can rotate through session duration, minimum-session progress, estimated session cap, pending tokens, daily cap, streak, seasonal quest progress, and community milestone progress.
+- Tokens, claim, and rewards: qualifying AFK sessions create pending AFKShrine tokens. Players use `/afkshrine claim` to move pending tokens into their spendable balance, then `/afkshrine rewards` and `/afkshrine trade` to review and claim configured rewards.
+- Milestones and quests: players can discover time, biome, safety, risk, adventure, weather, seasonal, dimension, collection, and streak goals through `/afkshrine milestones`, `/afkshrine quests`, `/afkshrine album`, and `/afkshrine resets`.
+- Presets and personalization: players can list and choose unlocked particle presets with `/afkshrine presets` and `/afkshrine preset`, with hover details explaining each preset without exposing permission nodes.
+- Bed rest: sleeping in a bed can optionally count as a tiny AFKShrine-adjacent activity with low pending-token rewards and same-area cooldown protection.
+- Community milestones: server-wide claimed-token totals can unlock temporary celebration windows or visual shrine themes when configured.
+- Tools and upgrades: when enabled, `/afkshrine tools` can let players spend captured AFKShrine special items, such as tokens or notes, on staff-configured upgrades or lore/story rewards.
+- AFKShrine GUI: `/afkshrine gui` and `/afkshrine menu` open a player hub for stats, claiming, rewards, tools, milestones, albums, presets, leaderboards, bed rest, and help.
 
 ## Feature Ideas
 
@@ -24,18 +39,25 @@ The reward side is intentionally claim/trade based. AFK sessions can create pend
 - Hide preview commands, tab suggestions, and preset preview links from players without `onembcmi.afkshrine.preview`.
 - Show friendly preset tiers and locked hints without exposing permission nodes to normal players.
 - Log preset selections and actual active/preview starts so staff can review which particle combinations are popular over long periods.
-- Show a welcome-back summary with AFK time, pending points earned, cap progress, new milestones/quests, and no-point reasons.
+- Show a postcard-style welcome-back summary with AFK time, approximate place, biome, scene, damage taken, pending points earned, cap progress, new milestones/quests, and friendly no-point reasons.
+- Count qualifying time spent sleeping in a bed as a tiny AFKShrine-adjacent activity, with low pending-token rewards and same-area cooldown protection.
+- Cycle the active AFK bossbar through low-frequency progress views such as session time, minimum reward eligibility, session cap progress, pending tokens, daily cap, streak, seasonal quests, and community milestones.
 - Preserve active AFK progress across clean restarts and odd disconnect windows with a one-shot recovery marker.
 - Let staff inspect a player's current AFK shrine state.
 - Let staff run `/afkshrine admin check` for a read-only live-readiness review before rollout.
 - Let staff export `/afkshrine admin report` Markdown snapshots for passive review after testing or live windows.
+- Let staff export monthly `/afkshrine admin journal` files for deeper balancing and support review.
 - Support cache cleanup for temporary effect state.
 - Track pending AFKShrine points for qualifying AFK sessions.
 - Require players to claim pending points before spending them.
 - Let players trade claimed AFKShrine points for configured command rewards.
 - Show reward preview output that explains readiness, missing points, one-time claim state, disabled reward rows, and configured command count before a trade is confirmed.
+- Let staff capture exact AFKShrine special items such as the AFK Shrine Token, then use those captured templates as safe tool/action currency.
+- Provide `/afkshrine gui`, `/afkshrine menu`, and `/afkshrine tools` as the first AFKShrine menu surfaces, with the tools GUI previewing actions before players spend captured items.
 - Track time milestones, biome milestones, safety milestones, risk milestones, and AFK adventure achievements.
+- Track weather/time AFK quests for rain, thunder, night, and clear-sky sessions with stable-world and stable-location guards.
 - Show a player-facing AFK Shrine collection album with collected/open entries, repeat limits, reset windows, and total repeat counts.
+- Show a player-facing reset summary that explains which repeatable milestones are ready now, already used this daily/weekly/monthly window, inactive, or one-time complete.
 - Track configurable seasonal AFK quest sets such as ocean week, Nether week, winter shrine, and rainy week.
 - Track server-wide claimed AFKShrine point totals and unlock temporary community shrine celebrations at configured milestones.
 - Track repeatability rules and award counts so milestones can be once-only, limited per reset window, or unlimited.
@@ -74,24 +96,28 @@ These ideas were accepted for the longer AFKShrine direction and should be imple
 - Debug/admin review of recent point reasons and leaderboard data.
 - AFK adventure achievements such as open sky, underground, underwater, high altitude, Nether, and End.
 - Seasonal AFK quest sets for themed live windows.
+- Weather-specific AFK quests for rain, thunder, night, and clear-sky sessions.
 - Community milestones based on claimed server-wide AFKShrine points.
 - Rested state after claiming enough pending points from a qualifying AFK session.
 - Report-only no-repeat zone history, with an optional active dampening mode for later tuning.
 - Danger-score multiplier candidates, with report-only defaults and active mode available when staff wants to pay extra for varied/riskier locations.
 - Staff suspicious repeated-zone audit output.
+- Passive bed-rest token checks with conservative defaults, same-area cooldown history, and staff audit rows.
+- Dynamic active bossbar progress views that rotate on a configurable schedule without recalculating every particle tick.
+- AFK postcards / richer return summaries that explain where the player was AFK, what the shrine observed, and why the visit did or did not create tokens.
+- Monthly AFKShrine journal exports for staff balancing and support review from passive audit logs.
+- Milestone reset summaries for daily, weekly, and monthly repeatable goals.
 
 Additional ideas to consider next:
 
-- Deeper AFK Shrine journal exports for monthly balancing beyond the current passive staff report.
 - Repeatable themed collection milestones, such as flowers or shrine tokens, where each configured progress id can be earned `N` times or once per reset period.
-- Milestone reset summaries that tell a player which repeatable goals refreshed today, this week, or this month.
 - Per-world shrine themes where a risk or safety milestone can use different display text and reward rows by world.
-- Shrine weather quests for rain, thunder, clear sky, and night sessions.
 - Staff-defined protected shrine areas where safe-space milestones are easier, and wild areas where risk milestones are worth more.
 - Return ceremony presets that play a small local particle/sound sequence when a player claims a bigger pending bundle.
 - Linked PassportDiscovery goals where AFK in newly discovered biomes can count toward both systems later.
 - Configurable cooldown categories, so time milestones, biome milestones, and risk milestones can each have different anti-repeat behavior.
 - Monthly staff report of most-earned and least-earned AFK milestones for balancing.
+- Captured spear/shield identity checks before upgrade commands run, if staff wants upgrades to require both the token cost and the original shrine item.
 
 ## Commands
 
@@ -99,13 +125,23 @@ Additional ideas to consider next:
 /afkshrine
 /afkshrine toggle
 /afkshrine status
-/afkshrine stats
+/afkshrine stats [personal|server]
+/afkshrine stats 1
+/afkshrine stats 2
 /afkshrine balance
 /afkshrine claim
 /afkshrine rewards [page]
+/afkshrine trade
 /afkshrine trade <reward> [confirm]
+/afkshrine gui
+/afkshrine menu
+/afkshrine tools
+/afkshrine tools list
+/afkshrine tools claim <action> [confirm]
+/afkshrine milestones [all|time|biomes|safety|risk|quests|weather|seasonal|dimensions|collections|streaks|claim-streak] [page]
 /afkshrine quests
-/afkshrine album [all|time|biomes|safety|risk|events|quests|seasonal|streaks] [page]
+/afkshrine resets [category|daily|weekly|monthly|ready|used|complete|inactive] [page]
+/afkshrine album [all|time|biomes|safety|risk|events|quests|weather|seasonal|streaks|collections] [page]
 /afkshrine community
 /afkshrine top [daily|weekly|monthly|lifetime]
 /afkshrine styles
@@ -117,9 +153,11 @@ Additional ideas to consider next:
 /afkshrine admin
 /afkshrine admin check
 /afkshrine admin report
+/afkshrine admin journal [latest|YYYY-MM] [markdown|discord]
+/afkshrine admin capture <item>
 /afkshrine admin suspicious [page]
 /afkshrine admin audit <player>
-/afkshrine admin recent [sessions|trades] [page]
+/afkshrine admin recent [sessions|sleep|trades|tools] [page]
 /afkshrine admin inspect <player>
 /afkshrine admin list [active|preview|disabled|all] [page]
 /afkshrine admin stop <player>
@@ -127,9 +165,21 @@ Additional ideas to consider next:
 /afkshrine admin reload
 ```
 
-`/afkshrine rewards [page]` shows each configured trade with the current state for the player running it: ready, blocked, already claimed, disabled, or preview-only from console. It also shows the reason, command count, balance, missing points, and the trade command to review.
+The `[AFKShrine]` chat prefix is clickable and runs `/afkshrine menu`, giving players a quick way back to the AFKShrine GUI from feature messages. The AFK-enter message highlights `active` in green. Return summaries are AFK postcards by default: a private player-facing summary of away time, approximate location, biome, weather/scene, damage taken, why the visit counted or did not create tokens, new milestone/quest discoveries, daily cap room, and useful next actions. When the player has claimable AFKShrine tokens, the postcard keeps the clickable pending-token claim prompt; the hover text explains that clicking runs `/afkshrine claim`.
 
-`/afkshrine trade <reward>` is a read-only preview unless `confirm` is provided. The preview explains whether the reward has configured commands, whether it is a one-time trade already claimed, whether the player is missing points, and what command to run to complete the trade. `/afkshrine trade <reward> confirm` is the only step that spends points and dispatches the configured reward commands.
+While a player is actively AFK, the bossbar can rotate through progress views instead of showing one static title. The default dynamic cycle refreshes each player's bossbar snapshot every 30 seconds and changes view every 120 seconds. Supported views are session duration, minimum-session eligibility, estimated session cap progress, pending tokens, daily cap usage, streak progress, active seasonal quest progress, and community milestone or celebration progress. Preview bossbars stay static so staff can quickly inspect particle styles without mixing in live progress text.
+
+`/afkshrine gui` and `/afkshrine menu` open the player-facing AFKShrine hub. It uses the shared 1MB light-blue frame style, a player head in the bottom-left stats slot, pagination in the middle of the bottom row, a `Back to /menu` button beside the close button, and a barrier close button in the bottom-right. The first page is an index with deeper pages for player stats, claiming pending tokens, reward trades, tools and upgrades, spear upgrades, shield upgrades, lore-book exchanges, milestone/album progress, streaks, seasonal quests, community milestones, presets with GUI preview cooldown, leaderboards, bed rest info, and chat command help. GUI lore uses the same soft pastel tooltip style as other 1MB menus, with readable `key: value` lines and highlighted click actions. Captured item template previews are staff-only and require `onembcmi.afkshrine.admin` or `onembcmi.afkshrine.admin.capture`.
+
+`/afkshrine rewards [page]` shows a player-first trade overview. At the top it separates `Claimed tokens available to trade with` from `Pending tokens earned`, then each configured reward is marked `AVAILABLE`, `NEED <amount>`, `CLAIMED`, `DISABLED`, or `PREVIEW` from console. Each entry shows cost, one-time or repeatable claim type, already-claimed state when relevant, configured command count, missing tokens, and a safe clickable `/afkshrine trade <reward>` preview command when the player can afford it.
+
+`/afkshrine stats` is player-first. For players it opens personal page 1, showing `Pending tokens earned`, `Claimed tokens available to trade with`, lifetime tokens, current/last AFK session, daily cap left, streaks, milestones, quests, preset, and rested state. `/afkshrine stats personal` and `/afkshrine stats 1` show the same personal page. `/afkshrine stats server`, `/afkshrine stats global`, and `/afkshrine stats 2` show page 2 with server-wide runtime counters such as AFK enters/leaves/kicks, total observed AFK time, server pending/claimed/traded token totals, quest totals, and cache size. Console defaults to the server page.
+
+Bed rest rewards are passive. When `sleep.enabled` is true, a player who stays in bed for at least `sleep.min-session-seconds` can earn the tiny `sleep.points-per-session` pending-token reward, capped by `sleep.max-points-per-day` and the normal AFKShrine daily cap. The default is intentionally low: 1 pending token per qualifying bed rest, at most 2 per day. Reusing the same coarse bed area before `sleep.same-zone-cooldown-minutes` expires is recorded but does not award tokens. If CMI marks the player AFK while they are sleeping, AFKShrine skips the normal full AFK reward path so bed rest cannot double-dip into regular AFK milestones.
+
+`/afkshrine trade` without a reward id opens the same rewards overview so players can pick from valid rewards instead of guessing ids. `/afkshrine trade <reward>` is a read-only preview unless `confirm` is provided. The preview explains whether the reward has configured commands, whether it is a one-time trade already claimed, whether the player is missing claimed tokens, how many pending tokens are waiting to be claimed, and what command to run to complete the trade. When the trade is ready, the visible confirm command is clickable in chat and still remains typeable as a normal command. `/afkshrine trade <reward> confirm` is the only step that spends claimed tokens and dispatches the configured reward commands.
+
+`/afkshrine admin capture token` stores the exact item in the staff member's main hand as `token` in `plugins/1MB-CMIAPI/AFKShrine/tools.yml`. Matching uses Bukkit item similarity with stack amount ignored, so custom names, lore, custom model data, and other item metadata are preserved. `/afkshrine tools` opens the tools GUI when enabled, or `/afkshrine tools list` prints the same action state in chat. The GUI has deeper category pages for all tools, spear upgrades, shield upgrades, and lore/story exchanges. `/afkshrine tools claim <action>` previews the cost and blockers; `confirm` is required before captured items are consumed and configured commands run. Ready tool previews also make the visible confirm command clickable. GUI clicks only preview the confirm command. Normal players see generic token status; exact captured item templates and setup hints are only visible to staff with `onembcmi.afkshrine.admin` or `onembcmi.afkshrine.admin.capture`.
 
 `/afkshrine quests` includes completed seasonal quest counts and currently active seasonal sets. `/afkshrine album` is the richer collection view: it shows configured and saved-history milestone entries as `done` or `open`, with counts such as `1/1 once`, `0/1 weekly (3 total)`, `3/10 weekly (14 total)`, or `12 total, unlimited`. Category filters are `time`, `biomes`, `safety`, `risk`, `events`, `quests`, `seasonal`, and `streaks`. `/afkshrine community` shows the server-wide claimed-point total, completed community milestones, the next threshold, and the active temporary celebration if one is running.
 
@@ -151,6 +201,7 @@ onembcmi.afkshrine.use
 onembcmi.afkshrine.claim
 onembcmi.afkshrine.rewards
 onembcmi.afkshrine.trade
+onembcmi.afkshrine.tools
 onembcmi.afkshrine.top
 onembcmi.afkshrine.style
 onembcmi.afkshrine.style.mint
@@ -183,6 +234,8 @@ onembcmi.afkshrine.preview
 onembcmi.afkshrine.admin
 onembcmi.afkshrine.admin.check
 onembcmi.afkshrine.admin.report
+onembcmi.afkshrine.admin.journal
+onembcmi.afkshrine.admin.capture
 onembcmi.afkshrine.admin.suspicious
 onembcmi.afkshrine.admin.audit
 onembcmi.afkshrine.admin.recent
@@ -218,6 +271,13 @@ Only the default preset is open without an extra style permission. Non-default p
 %onembcmi_afkshrine.rested.active%
 %onembcmi_afkshrine.rested.seconds_left%
 %onembcmi_afkshrine.rested.total_granted%
+%onembcmi_afkshrine.sleep.active%
+%onembcmi_afkshrine.sleep.last.seconds%
+%onembcmi_afkshrine.sleep.last.points%
+%onembcmi_afkshrine.sleep.last.reason%
+%onembcmi_afkshrine.sleep.daily_left%
+%onembcmi_afkshrine.sleep.total_sessions%
+%onembcmi_afkshrine.sleep.total_seconds%
 %onembcmi_afkshrine.repeat_zones.count%
 %onembcmi_afkshrine.last.repeat_zone.count%
 %onembcmi_afkshrine.last.danger.multiplier_percent%
@@ -251,6 +311,13 @@ Only the default preset is open without an extra style permission. Non-default p
 %onembcmi_afkshrine.runtime.repeat_zone_hard_warnings%
 %onembcmi_afkshrine.runtime.danger_bonus_candidates%
 %onembcmi_afkshrine.runtime.danger_bonus_applied%
+%onembcmi_afkshrine.runtime.tool_actions%
+%onembcmi_afkshrine.runtime.sleep_sessions%
+%onembcmi_afkshrine.runtime.sleep_seconds%
+%onembcmi_afkshrine.runtime.sleep_points%
+%onembcmi_afkshrine.tools.captured_items%
+%onembcmi_afkshrine.tools.actions%
+%onembcmi_afkshrine.tools.enabled_actions%
 %onembcmi_afkshrine.cache.size%
 ```
 
@@ -287,6 +354,13 @@ Important config paths:
 enabled
 messages.enter.enabled
 messages.leave.enabled
+postcards.enabled
+postcards.show-when-no-points
+postcards.location-mode
+postcards.round-to-blocks
+postcards.max-progress-entries
+postcards.show-damage
+postcards.action-links
 preview.enabled
 preview.duration-seconds
 effects.interval-ticks
@@ -301,6 +375,17 @@ bossbar.title
 bossbar.preview-title
 bossbar.color
 bossbar.progress-percent
+bossbar.dynamic.enabled
+bossbar.dynamic.update-interval-seconds
+bossbar.dynamic.rotation-seconds
+bossbar.dynamic.title-format
+bossbar.dynamic.modes
+bossbar.dynamic.session-target-minutes
+bossbar.dynamic.pending-target-tokens
+bossbar.dynamic.streak-target-days
+preview.gui-cooldown-seconds
+gui.filler-material
+gui.menu-command
 styles.default-style
 styles.auto-add-default-presets
 styles.available
@@ -332,6 +417,14 @@ tracking.same-location-radius-blocks
 tracking.same-location-cooldown-minutes
 tracking.allowed-worlds
 tracking.disabled-worlds
+sleep.enabled
+sleep.min-session-seconds
+sleep.points-per-session
+sleep.max-points-per-day
+sleep.same-zone-size-blocks
+sleep.same-zone-cooldown-minutes
+sleep.zone-history-limit
+sleep.message-no-points
 recovery.enabled
 recovery.persist-interval-seconds
 recovery.max-offline-seconds
@@ -416,6 +509,15 @@ quests.adventure-achievements.ids
 quests.repeat.mode
 quests.repeat.max-count
 quests.repeat.reset
+weather-quests.enabled
+weather-quests.observe-interval-seconds
+weather-quests.required-sample-percent
+weather-quests.require-stable-world
+weather-quests.max-move-blocks
+weather-quests.sets
+weather-quests.repeat.mode
+weather-quests.repeat.max-count
+weather-quests.repeat.reset
 seasonal-quests.enabled
 seasonal-quests.sets
 seasonal-quests.repeat.mode
@@ -431,6 +533,9 @@ streaks.milestone-points
 streaks.repeat.mode
 streaks.repeat.max-count
 streaks.repeat.reset
+tools.enabled
+tools.gui.enabled
+tools.actions
 progress.overrides
 hooks.enabled
 hooks.session-earned.commands
@@ -444,13 +549,39 @@ rewards.per-page
 album.per-page
 rewards.trades
 audit.session-log.enabled
+audit.sleep-log.enabled
 audit.trade-log.enabled
+audit.tools-log.enabled
 audit.recent-per-page
+journal.default-format
+journal.max-rows-per-section
+journal.sample-rows
 admin.list-per-page
 dump.max-records
 ```
 
 Particle colors expect hex colors such as `#cdb4db`. Bossbar colors use Bukkit bossbar color names such as `PINK`, `BLUE`, `PURPLE`, `WHITE`, `GREEN`, `YELLOW`, or `RED`.
+
+Dynamic bossbar mode ids support friendly aliases, but the canonical ids are:
+
+```text
+session-duration
+minimum-session
+session-cap
+pending-tokens
+daily-cap
+streak
+seasonal
+community
+```
+
+`bossbar.dynamic.update-interval-seconds` controls how often each active AFK player's bossbar title/progress is recalculated. `bossbar.dynamic.rotation-seconds` controls how long one mode remains selected before the next configured mode is shown. Keep the update interval moderate on live servers; the defaults are designed to be visible without constantly touching player state.
+
+`postcards.enabled` replaces the old terse welcome-back lines with a richer private return postcard. `postcards.location-mode` supports `rounded`, `exact`, and `hidden`; the default `rounded` uses `postcards.round-to-blocks` so players see where the AFK visit happened without turning the summary into a raw debug dump. `postcards.show-when-no-points` keeps no-token visits understandable instead of silently feeling broken, and `postcards.action-links` controls the clickable follow-up links for claim, album, rewards, and stats.
+
+`gui.filler-material` controls the AFKShrine inventory frame and defaults to `LIGHT_BLUE_STAINED_GLASS_PANE` to match the other 1MB menus. `gui.menu-command` controls the bottom-row `Back to /menu` button and defaults to `menu`. `preview.gui-cooldown-seconds` controls only GUI preset preview clicks; typed `/afkshrine preview` still uses the normal preview permission and duration checks.
+
+`tools.gui.enabled` controls the `/afkshrine tools` entry point only. When it is false, `/afkshrine tools` falls back to chat/list output, while the broader `/afkshrine gui` and `/afkshrine menu` hub remains available.
 
 Repeat modes support `once`, `limited`, and `unlimited`. Reset windows support `never`, `daily`, `weekly`, and `monthly`. Exact progress ids can be overridden with `progress.overrides` rows in this format:
 
@@ -459,6 +590,10 @@ progress-id|mode|max-count|reset
 risk:open-sky|limited|3|weekly
 biome:minecraft:plains|unlimited|0|daily
 ```
+
+Players can learn the configured progression families with `/afkshrine milestones [family]` or the `Milestone Guide` button in `/afkshrine gui` or `/afkshrine menu`. The guide explains time, biome, safety, risk, adventure, weather, seasonal, dimension pilgrim, collection, normal streak, and Rested Return streak goals, including whether each family is enabled, how it is earned, the reward source, the player's collected count when run in-game, and the current repeat rule. Useful detail commands include `/afkshrine milestones time`, `/afkshrine milestones biomes`, `/afkshrine milestones safety`, `/afkshrine milestones risk`, `/afkshrine milestones quests`, `/afkshrine milestones weather`, `/afkshrine milestones seasonal`, `/afkshrine milestones dimensions`, `/afkshrine milestones collections`, `/afkshrine milestones streaks`, and `/afkshrine milestones claim-streak`.
+
+Players can inspect repeatable goals with `/afkshrine resets [category|daily|weekly|monthly|ready|used|complete|inactive] [page]` or the `Reset Summary` button in `/afkshrine gui` or `/afkshrine menu`. The summary uses the same rules as the award code and labels each entry as ready now, used this window, inactive right now, repeatable, or one-time complete. Daily, weekly, and monthly reset dates are shown in server time. Milestone and quest rewards are not claimed one-by-one; when a player completes a qualifying AFK session, the reward is added as pending AFKShrine tokens, and `/afkshrine claim` moves those pending tokens into the spendable trade balance.
 
 Default configured styles include 26 presets: `default`, `mint`, `twilight`, `ember`, `aurora`, `ocean`, `amethyst`, `blossom`, `frost`, `honey`, `void`, `prism`, `meadow`, `sunrise`, `coral`, `lagoon`, `lavender`, `copper`, `emerald`, `sapphire`, `pearl`, `dusk`, `lantern`, `cherry`, `storm`, and `echo`. The default style is usable by everyone; the other starter/rank/seasonal/rare styles are permission-gated so they can be staff-only, donor-only, rank-based, or unlocked later through another system.
 
@@ -474,6 +609,16 @@ Danger score is also `report-only` by default. It calculates a capped candidate 
 
 Event worlds are not normal AFK farming worlds. `events.worlds` rows use `world|months|progress-id|points`, for example `santa|12|event:santa|25`. A player AFKing in `santa` during December can earn the configured `event:santa` milestone once by default, but outside December the world does not count. The default event rows are `santa`, `halloween`, `thanksgiving`, `valentine`, and `summer`; staff can change months, points, or repeat rules as events change.
 
+Weather quests are normal AFK quest bonuses for sessions that spend enough time under a matching sky/time condition. `weather-quests.sets` rows use:
+
+```text
+id|Display Name|points|min-session-seconds|requirements
+```
+
+Default rows are `rain`, `thunder`, `night`, and `clear_sky`. Requirements are semicolon-separated and all must pass. Supported tokens include `weather:rain`, `weather:thunder`, `weather:clear`, `time:night`, `time:day`, `open-sky`, `underwater`, `solid-ground`, `stable-world`, `stable-location`, `world:general`, `environment:NORMAL`, `biome:minecraft:plains`, `biome-contains:ocean`, `y-min:60`, and `y-max:80`. Weather quests are stored as `weather:<id>` quest progress, show in `/afkshrine quests`, `/afkshrine album weather`, and the AFKShrine GUI weather page, and use `weather-quests.repeat.*`, which defaults to once per week.
+
+Weather and time can differ per world, so AFKShrine samples active AFK sessions on `weather-quests.observe-interval-seconds` instead of checking every tick. `weather-quests.required-sample-percent` controls how many sampled observations must match weather/time/sky requirements; the default `50` means a rain quest needs rain during at least half of the sampled session, not just one lucky moment. By default `weather-quests.require-stable-world: true` requires the player to finish in the same world where the AFK session started, and `weather-quests.max-move-blocks` requires the player to stay near the starting area. This keeps a player from beginning a rain quest in one world, changing worlds, and finishing against another world's weather/time state. Set the move limit to `0` only if staff intentionally wants weather quest progress to ignore same-world movement distance.
+
 Seasonal quest sets are normal-world AFK quests gated by a configurable active window and location/weather requirements. `seasonal-quests.sets` rows use:
 
 ```text
@@ -481,6 +626,35 @@ id|Display Name|window|points|min-session-seconds|requirements
 ```
 
 Default rows include `ocean_week`, `nether_week`, `winter_shrine`, and `rainy_week`. Windows support `*`, `months:6,7,8`, `weeks:27,28`, and `dates:2026-12-20..2026-12-27`; multiple window tokens can be separated with semicolons. Requirements are semicolon-separated and all must pass. Supported tokens include `world:general`, `environment:NETHER`, `biome:minecraft:warm_ocean`, `biome-contains:ocean`, `weather:rain`, `weather:thunder`, `open-sky`, `underwater`, `solid-ground`, `y-min:60`, and `y-max:80`. Seasonal quests are stored as `seasonal:<id>` quest progress and use `seasonal-quests.repeat.*`, which defaults to once per week while active.
+
+Always-available shrine quests live in `shrine-quests.sets` and use:
+
+```text
+id|Display Name|points|min-session-seconds|reset|requirements
+```
+
+Default rows include `safe_harbor_daily`, `wild_rest_weekly`, weekly dimension pilgrim goals, and monthly dimension pilgrim goals. They are stored as `shrine:<id>` quest progress, show in `/afkshrine quests`, `/afkshrine album quests`, `/afkshrine resets quests`, and the Milestone Guide. `reset` can be `daily`, `weekly`, `monthly`, or `never`. Requirements support `open-sky`, `underwater`, `solid-ground`, `no-damage`, `damage-taken`, `not-exempt-world`, `world:<world>`, `environment:<env>`, `biome:<id>`, `biome-contains:<text>`, `weather:<type>`, `y-min:<n>`, and `y-max:<n>`.
+
+Biome set goals are passive and reset-aware. `biome-goals.weekly-circuit` records unique biomes in the current week and awards `circuit:weekly-biomes` after the configured target, default 3 biomes. `biome-goals.monthly-wanderer` records unique biomes in the current month and awards `wanderer:monthly-biomes` after the configured target, default 10 biomes. Both goals only update at AFK session settlement, store small per-player sets in playerdata, and show progress in `/afkshrine quests`.
+
+Collection album rewards are one-time set-completion bonuses stored as `collection:<id>` milestones. Defaults award small AFKShrine token bonuses for completing all weather watcher quests, completing the dimension pilgrim set, recording 10 biomes, reaching a 14-day Loyal Keeper streak, and reaching a 28-day Quiet Month streak. They show in `/afkshrine album collections` and `/afkshrine resets collections`.
+
+Rested Return streaks are claim-based rather than AFK-toggle based. `claim-streak.min-claimed-points` controls how many pending tokens must be claimed for a day to count, default 30. Consecutive qualifying claim days award `claim-streak:<days>` milestones at the configured day counts, default 3, 7, 14, and 28, with a small claimed-token bonus. This is shown in `/afkshrine balance`, `/afkshrine quests`, `/afkshrine milestones claim-streak`, and the stats GUI.
+
+Suggested optional CMI kits for staff-created rewards:
+
+- `afkshrine_weather_watcher` for completing all weather watcher quests.
+- `afkshrine_weekly_circuit` for Weekly Shrine Circuit.
+- `afkshrine_monthly_wanderer` for Monthly Wanderer.
+- `afkshrine_safe_harbor` for a gentle daily safe-session reward.
+- `afkshrine_wild_rest` for Wild Rest Weekly.
+- `afkshrine_dimension_pilgrim` for completing dimension pilgrim goals.
+- `afkshrine_rested_return` for Rested Return streak milestones.
+- `afkshrine_loyal_keeper` for 14-day streak-style rewards.
+- `afkshrine_quiet_month` for 28-day streak-style rewards.
+- `afkshrine_preset_unlock` for rare preset unlock ceremonies.
+
+Keep the default AFKShrine token rewards active first, then optionally add CMI kit, money, XP, or LuckPerms preset-unlock commands through `hooks.progress.specific`. For example, a rare preset unlock can grant `onembcmi.afkshrine.style.lantern`, `onembcmi.afkshrine.style.aurora`, `onembcmi.afkshrine.style.prism`, or `onembcmi.afkshrine.style.echo` from exact progress ids such as `collection:weather-watcher`, `collection:dimension-pilgrim`, `collection:loyal-keeper-14`, or `collection:quiet-month-28`.
 
 Community milestones are server-wide claimed-point thresholds. They count points only when players run `/afkshrine claim`, not when points are merely pending. `community.milestones` rows use:
 
@@ -491,6 +665,29 @@ id|claimed-total-threshold|Display Name|duration-minutes|style|optional console 
 When a threshold is crossed, AFKShrine records it in `community.yml`, starts a temporary celebration window, notifies online players with `onembcmi.afkshrine.use`, optionally runs configured milestone commands while `hooks.enabled` is true, and can override active shrine visuals with the configured preset while the celebration lasts. The visual override does not grant the preset permanently and does not affect `/afkshrine preview`.
 
 Optional hooks are disabled by being empty, even though `hooks.enabled` defaults to true. They are meant for feedback such as sounds, titles, toasts, fireworks, and public milestone messages. Keep real rewards in `/afkshrine claim` and `/afkshrine trade` unless staff intentionally chooses otherwise.
+
+AFKShrine tools are a separate captured-item layer. Staff captures exact special items with:
+
+```text
+/afkshrine admin capture token
+```
+
+Captured templates are stored in:
+
+```text
+plugins/1MB-CMIAPI/AFKShrine/tools.yml
+```
+
+Tool action rows live in `tools.actions` and use:
+
+```text
+id|Display Name|icon material|enabled|captured-item costs|console command;;second command
+netherite_spear|Netherite Shrine Spear|NETHERITE_SWORD|false|token:6|cmi kit afkshrine_spear_netherite {player} -s
+story_books|AFK Shrine Story Books|WRITTEN_BOOK|false|token:2|cmi kit afkshrine_story_books {player} -s
+shield_upgrade|AFK Shrine Shield Upgrade|SHIELD|false|token:4|cmi kit afkshrine_shield_upgrade {player} -s
+```
+
+The default rows are disabled. Staff should capture the real token, create/review the target kits, flip one row to `true`, reload AFKShrine, and use `/afkshrine tools claim <id>` before trying `confirm`. If a command fails after captured items are consumed, AFKShrine refunds the captured item cost and logs the failure for review.
 
 Hook command placeholders:
 
@@ -518,6 +715,8 @@ Hook command placeholders:
 {reward}
 {cost}
 {balance}
+{cost_item}
+{cost_amount}
 ```
 
 Specific progress hooks use this row format:
@@ -531,7 +730,10 @@ Session and trade audit rows are appended to:
 
 ```text
 plugins/1MB-CMIAPI/AFKShrine/logs/sessions.log
+plugins/1MB-CMIAPI/AFKShrine/logs/sleep.log
 plugins/1MB-CMIAPI/AFKShrine/logs/trades.log
+plugins/1MB-CMIAPI/AFKShrine/logs/tools.log
+plugins/1MB-CMIAPI/AFKShrine/logs/community.log
 ```
 
 Staff can review them in-game with:
@@ -539,17 +741,23 @@ Staff can review them in-game with:
 ```text
 /afkshrine admin check
 /afkshrine admin report
+/afkshrine admin journal latest markdown
+/afkshrine admin journal 2026-07 discord
 /afkshrine admin suspicious
 /afkshrine admin audit <player>
 /afkshrine admin recent sessions
+/afkshrine admin recent sleep
 /afkshrine admin recent trades
+/afkshrine admin recent tools
 ```
 
-Community claim audit rows are included in `/afkshrine admin report` from `logs/community.log`. Session rows also include repeat-zone and danger-score columns so staff can review candidate changes before switching either system to active mode.
+Community claim audit rows are included in staff exports from `logs/community.log`. Session rows also include repeat-zone and danger-score columns so staff can review candidate changes before switching either system to active mode. Sleep rows include bed-rest seconds, awarded tokens, blocker reason, bed location, and coarse cooldown zone.
 
-`/afkshrine admin check` is read-only and console-safe. It reports dependency state, debug mode, point caps, minimum session time, grace recovery settings, rested/no-repeat/danger-score modes, allowed/disabled/event world overlap, seasonal quest set counts, community milestone configuration, default preset access, non-default preset permissions, invalid preset colors, reward row shape, configured console command counts, and whether session/trade audit logs are enabled.
+`/afkshrine admin check` is read-only and console-safe. It reports dependency state, debug mode, point caps, minimum session time, bed-rest reward caps/cooldown, dynamic bossbar mode/update settings, grace recovery settings, rested/no-repeat/danger-score modes, allowed/disabled/event world overlap, seasonal quest set counts, community milestone configuration, default preset access, non-default preset permissions, invalid preset colors, reward row shape, captured tool/action readiness, configured console command counts, and whether session/sleep/trade/tools audit logs are enabled.
 
-`/afkshrine admin report` writes a Markdown report into the AFKShrine cache folder. The report includes runtime counters, point/economy counters, active/preview/disabled counts, rested/no-repeat/danger runtime counters, seasonal/community state, the current config summary, readiness findings, repeated-zone audit rows, and recent session/trade/community audit rows. It is meant for passive staff review after a live test window.
+`/afkshrine admin report` writes a Markdown report into the AFKShrine cache folder. The report includes runtime counters, point/economy counters, active/preview/disabled counts, rested/no-repeat/danger/tool/sleep runtime counters, dynamic bossbar settings, seasonal/community state, the current config summary, readiness findings, repeated-zone audit rows, and recent session/sleep/trade/tools/community audit rows. It is meant for passive staff review after a live test window.
+
+`/afkshrine admin journal [latest|YYYY-MM] [markdown|discord]` writes monthly balancing/support journals into `plugins/1MB-CMIAPI/CMIAPILIB/cache/plugins/afkshrine/journals/`. The exporter reads existing audit logs on demand and does not change player balances, rewards, or config. `markdown` creates table-heavy GitHub-friendly review notes; `discord` creates a no-table bullet version for staff channels. Both formats include unique player counts, AFK and bed-rest token totals, no-token reasons, top token earners, AFK time leaders, worlds, biomes, repeat-zone states, danger-score factors, milestone/quest hits, reward trade usage, tool-action usage, recent support samples, and generated balancing notes. Each run writes a timestamped file plus a `*-latest.md` copy for the same period and format.
 
 Reward trades and optional hooks are still owner-configured console commands. The readiness check/report call this out for manual review, but they do not block or rewrite commands.
 
@@ -584,6 +792,21 @@ afkshrine:
     period-key: ""
     period-uses: 0
     total-granted: 0
+  sleep:
+    total-sessions: 0
+    total-seconds: 0
+    period-key: "2026-07-06"
+    period-points: 0
+    last:
+      seconds: 0
+      points: 0
+      at: ""
+      no-point-reason: ""
+      zone-key: ""
+      awarded-at-millis: 0
+    zones:
+      history:
+        - "general:12:-4|sleep|1|1|1783296000000|2026-07-06T12:00:00Z"
   active-session:
     id: "recovery-session-uuid"
     started-at-millis: 0
@@ -638,7 +861,7 @@ afkshrine:
       - "time:30|1|lifetime|1|2026-05-19T12:00:00Z"
 ```
 
-Player opt-out, selected style, pending points, claimed balance, trade claims, milestones, quests, biomes, repeat award counts, streaks, rested state, bounded no-repeat zone history, recovery settlement ids, and leaderboard period totals are persistent. `zones.history` is capped by `no-repeat-zones.history-limit` so it cannot grow forever. `active-session` is temporary recovery state for a currently active AFK session; it is cleared after normal AFK leave, clean shutdown settlement, or successful join recovery. Temporary visual state should live in cache and be safe to clean.
+Player opt-out, selected style, pending points, claimed balance, trade claims, milestones, quests, biomes, repeat award counts, streaks, rested state, bounded no-repeat zone history, bed-rest history, recovery settlement ids, and leaderboard period totals are persistent. `zones.history` is capped by `no-repeat-zones.history-limit` and `sleep.zones.history` is capped by `sleep.zone-history-limit` so they cannot grow forever. `active-session` is temporary recovery state for a currently active AFK session; it is cleared after normal AFK leave, clean shutdown settlement, or successful join recovery. Active bed sessions are runtime-only and settle on bed leave, quit, or clean plugin shutdown. Temporary visual state should live in cache and be safe to clean.
 
 Community milestone state is stored in the AFKShrine feature data folder:
 
@@ -686,7 +909,7 @@ styles.<preset>.tier
 styles.<preset>.unlock-label
 ```
 
-`/afkshrine presets` shows the tier for every preset and, when locked, shows the unlock label instead of permission nodes. This keeps the player output useful while leaving node details in `/afkshrine debug permissions` and `/1mbcmi debug plugin afkshrine permissions`.
+`/afkshrine presets` lists every preset as a hoverable row. `/afkshrine preset` shows the player's current preset first, then the same hoverable rows. The tooltip explains the tier, unlock hint, dust-ring particle color, radius, dust size, sparkle behavior, and bossbar color without exposing permission nodes. Rows the player can use are clickable and run `/afkshrine preset <preset>` to change their persistent preference; locked rows explain the unlock hint but do not run a command. This keeps the player output useful while leaving node details in `/afkshrine debug permissions` and `/1mbcmi debug plugin afkshrine permissions`.
 
 Long-term preset usage is appended to:
 

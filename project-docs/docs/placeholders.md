@@ -55,6 +55,13 @@ AFKShrine placeholders:
 %onembcmi_afkshrine.rested.active%
 %onembcmi_afkshrine.rested.seconds_left%
 %onembcmi_afkshrine.rested.total_granted%
+%onembcmi_afkshrine.sleep.active%
+%onembcmi_afkshrine.sleep.last.seconds%
+%onembcmi_afkshrine.sleep.last.points%
+%onembcmi_afkshrine.sleep.last.reason%
+%onembcmi_afkshrine.sleep.daily_left%
+%onembcmi_afkshrine.sleep.total_sessions%
+%onembcmi_afkshrine.sleep.total_seconds%
 %onembcmi_afkshrine.repeat_zones.count%
 %onembcmi_afkshrine.last.repeat_zone.count%
 %onembcmi_afkshrine.last.danger.multiplier_percent%
@@ -88,6 +95,13 @@ AFKShrine placeholders:
 %onembcmi_afkshrine.runtime.repeat_zone_hard_warnings%
 %onembcmi_afkshrine.runtime.danger_bonus_candidates%
 %onembcmi_afkshrine.runtime.danger_bonus_applied%
+%onembcmi_afkshrine.runtime.tool_actions%
+%onembcmi_afkshrine.runtime.sleep_sessions%
+%onembcmi_afkshrine.runtime.sleep_seconds%
+%onembcmi_afkshrine.runtime.sleep_points%
+%onembcmi_afkshrine.tools.captured_items%
+%onembcmi_afkshrine.tools.actions%
+%onembcmi_afkshrine.tools.enabled_actions%
 %onembcmi_afkshrine.cache.size%
 ```
 

@@ -7,23 +7,40 @@ This page introduces AFKShrine from a public server-docs point of view. It focus
 
 ## What It Does
 
-AFKShrine is a player-fun plugin that turns server AFK state into a small visible experience. When a player becomes AFK, the plugin can show a subtle shrine effect around them with soft dust particles, optional sparkles, a private boss bar, and optional text that explains they are away.
+AFKShrine turns server AFK time into a small personal shrine experience. When you become AFK, the feature can show soft particles, a private bossbar, and progress views. When you return, AFKShrine can show a private postcard summary and let you claim pending tokens, review rewards, check milestones, and personalize your shrine preset.
 
 ## How Players Use It
 
-Start in-game with /afkshrine. The sections below explain what AFKShrine is for, which commands players can try, and what to expect when your account has access.
+AFKShrine is meant to make being away feel clearer and a little more fun, without automatically dumping rewards into your inventory. Your AFK sessions can create pending AFKShrine tokens, milestone progress, quest progress, and collection album entries. You return, review what happened, then claim or trade rewards when you are ready.
+
+Player-facing AFKShrine features include:
+
+- AFK shrine visuals: soft particles, optional sparkles, and a private bossbar while you are AFK.
+- AFK postcards: a welcome-back summary showing AFK time, approximate location, biome, weather or scene, damage taken, why the visit counted or did not count, new milestone or quest progress, daily cap room, and clickable next actions.
+- Dynamic bossbar progress: the bossbar can rotate through session duration, minimum-session progress, pending tokens, daily cap, streaks, seasonal progress, and community progress.
+- Tokens and rewards: AFK sessions create pending tokens; /afkshrine claim moves them into your spendable balance, and /afkshrine rewards or /afkshrine trade shows what you can use them for.
+- Milestones and quests: time, biome, safety, risk, adventure, weather, seasonal, dimension, collection, and streak goals can be reviewed through the commands and GUI.
+- Presets: /afkshrine presets and /afkshrine preset let you view and choose unlocked particle styles.
+- Collection album and resets: /afkshrine album and /afkshrine resets explain what you have completed, what refreshes, and what can still be earned.
+- Bed rest: when enabled, sleeping in a bed can count as a tiny AFKShrine-adjacent activity with strict low rewards and cooldown protection.
+- Community milestones: server-wide claimed-token totals can unlock temporary celebration windows when configured.
+- Tools and upgrades: when enabled, /afkshrine tools can let you use captured AFKShrine special items for staff-configured upgrades, lore books, or other rewards.
 
 ## Things You Can Do
 
-- Open or view AFKShrine with /afkshrine.
-- Check your own AFKShrine progress or settings with /afkshrine status.
-- View public AFKShrine rankings with /afkshrine top.
+- Open /afkshrine menu or /afkshrine gui to browse the AFKShrine hub.
+- Read your AFK postcard when you return to see what counted, what changed, and what to do next.
+- Use /afkshrine claim to move pending AFKShrine tokens into your spendable balance.
+- Use /afkshrine rewards or /afkshrine trade to review reward trades before confirming anything.
+- Use /afkshrine milestones, /afkshrine quests, /afkshrine album, and /afkshrine resets to learn your long-term goals.
+- Use /afkshrine presets or /afkshrine preset to inspect and choose unlocked shrine particle presets.
 
 ## Quick Start
 
-1. Start with `/afkshrine` to open or view AFKShrine.
-2. Use `/afkshrine status` to check your current progress, settings, or state.
-3. Try `/afkshrine toggle` when you are ready to use one of the feature actions.
+1. Start with `/afkshrine menu` or `/afkshrine gui` to open the AFKShrine hub.
+2. After an AFK session, read the AFK postcard summary and use `/afkshrine claim` if you have pending tokens.
+3. Use `/afkshrine rewards` before trading so you can see costs, one-time rewards, repeatable rewards, and what you can afford.
+4. Use `/afkshrine milestones` and `/afkshrine album` when you want to explore longer-term goals.
 
 ## Commands
 
@@ -38,92 +55,142 @@ Start in-game with /afkshrine. The sections below explain what AFKShrine is for,
   <tbody>
     <tr>
       <td><code>/afkshrine</code></td>
-      <td>Opens or shows the main AFKShrine player view.</td>
+      <td>Opens the AFKShrine entry point or shows basic AFKShrine information.</td>
       <td><code>/afkshrine</code></td>
     </tr>
     <tr>
       <td><code>/afkshrine toggle</code></td>
-      <td>Changes or clears your AFKShrine setting.</td>
+      <td>Turns your personal AFKShrine participation on or off when the feature allows it.</td>
       <td><code>/afkshrine toggle</code></td>
     </tr>
     <tr>
       <td><code>/afkshrine status</code></td>
-      <td>Shows your current AFKShrine status.</td>
+      <td>Shows your current AFKShrine state and basic settings.</td>
       <td><code>/afkshrine status</code></td>
     </tr>
     <tr>
-      <td><code>/afkshrine stats</code></td>
-      <td>Runs the AFKShrine stats action.</td>
+      <td><code>/afkshrine stats [personal|<wbr />server]</code></td>
+      <td>Shows personal AFKShrine stats or server-wide AFKShrine stats.</td>
       <td><code>/afkshrine stats</code></td>
     </tr>
     <tr>
+      <td><code>/afkshrine stats 1</code></td>
+      <td>Shows the personal AFKShrine stats page.</td>
+      <td><code>/afkshrine stats 1</code></td>
+    </tr>
+    <tr>
+      <td><code>/afkshrine stats 2</code></td>
+      <td>Shows the global/server AFKShrine stats page.</td>
+      <td><code>/afkshrine stats 2</code></td>
+    </tr>
+    <tr>
       <td><code>/afkshrine balance</code></td>
-      <td>Runs the AFKShrine balance action.</td>
+      <td>Shows pending tokens, claimed spendable tokens, streaks, and related progress.</td>
       <td><code>/afkshrine balance</code></td>
     </tr>
     <tr>
       <td><code>/afkshrine claim</code></td>
-      <td>Claims an available AFKShrine reward.</td>
+      <td>Moves pending AFKShrine tokens into your claimed spendable balance.</td>
       <td><code>/afkshrine claim</code></td>
     </tr>
     <tr>
       <td><code>/afkshrine rewards [page]</code></td>
-      <td>Shows your AFKShrine rewards view.</td>
+      <td>Lists configured reward trades, costs, availability, one-time state, and whether you can afford them.</td>
       <td><code>/afkshrine rewards</code></td>
     </tr>
     <tr>
+      <td><code>/afkshrine trade</code></td>
+      <td>Opens the reward overview so you can choose a trade instead of guessing an id.</td>
+      <td><code>/afkshrine trade</code></td>
+    </tr>
+    <tr>
       <td><code>/afkshrine trade &lt;reward&gt; [confirm]</code></td>
-      <td>Runs the AFKShrine trade action.</td>
+      <td>Previews a reward trade, or confirms it when you include confirm.</td>
       <td><code>/afkshrine trade daily</code></td>
     </tr>
     <tr>
+      <td><code>/afkshrine gui</code></td>
+      <td>Opens the AFKShrine GUI hub.</td>
+      <td><code>/afkshrine gui</code></td>
+    </tr>
+    <tr>
+      <td><code>/afkshrine menu</code></td>
+      <td>Opens the AFKShrine GUI hub.</td>
+      <td><code>/afkshrine menu</code></td>
+    </tr>
+    <tr>
+      <td><code>/afkshrine tools</code></td>
+      <td>Opens or lists AFKShrine tools and upgrades when enabled for players.</td>
+      <td><code>/afkshrine tools</code></td>
+    </tr>
+    <tr>
+      <td><code>/afkshrine tools list</code></td>
+      <td>Lists available AFKShrine tool actions in chat.</td>
+      <td><code>/afkshrine tools list</code></td>
+    </tr>
+    <tr>
+      <td><code>/afkshrine tools claim &lt;action&gt; [confirm]</code></td>
+      <td>Previews or confirms a tool action that spends captured AFKShrine special items.</td>
+      <td><code>/afkshrine tools claim example</code></td>
+    </tr>
+    <tr>
+      <td><code>/afkshrine milestones [all|<wbr />time|<wbr />biomes|<wbr />safety|<wbr />risk|<wbr />quests|<wbr />weather|<wbr />seasonal|<wbr />dimensions|<wbr />collections|<wbr />streaks|<wbr />claim-streak] [page]</code></td>
+      <td>Explains AFKShrine milestone families and how they repeat or unlock.</td>
+      <td><code>/afkshrine milestones</code></td>
+    </tr>
+    <tr>
       <td><code>/afkshrine quests</code></td>
-      <td>Runs the AFKShrine quests action.</td>
+      <td>Shows AFKShrine quest progress such as weather, seasonal, adventure, and dimension goals.</td>
       <td><code>/afkshrine quests</code></td>
     </tr>
     <tr>
-      <td><code>/afkshrine album [all|<wbr />time|<wbr />biomes|<wbr />safety|<wbr />risk|<wbr />events|<wbr />quests|<wbr />seasonal|<wbr />streaks] [page]</code></td>
-      <td>Runs the AFKShrine album action.</td>
+      <td><code>/afkshrine resets [category|<wbr />daily|<wbr />weekly|<wbr />monthly|<wbr />ready|<wbr />used|<wbr />complete|<wbr />inactive] [page]</code></td>
+      <td>Shows which repeatable milestones refreshed, are ready, were used, or are complete.</td>
+      <td><code>/afkshrine resets</code></td>
+    </tr>
+    <tr>
+      <td><code>/afkshrine album [all|<wbr />time|<wbr />biomes|<wbr />safety|<wbr />risk|<wbr />events|<wbr />quests|<wbr />weather|<wbr />seasonal|<wbr />streaks|<wbr />collections] [page]</code></td>
+      <td>Shows your AFKShrine collection album and completion counts.</td>
       <td><code>/afkshrine album</code></td>
     </tr>
     <tr>
       <td><code>/afkshrine community</code></td>
-      <td>Runs the AFKShrine community action.</td>
+      <td>Shows server-wide AFKShrine community milestone progress.</td>
       <td><code>/afkshrine community</code></td>
     </tr>
     <tr>
       <td><code>/afkshrine top [daily|<wbr />weekly|<wbr />monthly|<wbr />lifetime]</code></td>
-      <td>Shows the AFKShrine leaderboard or top list.</td>
+      <td>Shows AFKShrine leaderboards.</td>
       <td><code>/afkshrine top</code></td>
     </tr>
     <tr>
       <td><code>/afkshrine styles</code></td>
-      <td>Runs the AFKShrine styles action.</td>
+      <td>Older alias for listing shrine styles.</td>
       <td><code>/afkshrine styles</code></td>
     </tr>
     <tr>
       <td><code>/afkshrine style [style]</code></td>
-      <td>Runs the AFKShrine style action.</td>
+      <td>Older alias for showing or setting your shrine preset.</td>
       <td><code>/afkshrine style</code></td>
     </tr>
     <tr>
       <td><code>/afkshrine presets</code></td>
-      <td>Changes your particle or sound preset.</td>
+      <td>Lists shrine particle presets with availability and hover details.</td>
       <td><code>/afkshrine presets</code></td>
     </tr>
     <tr>
       <td><code>/afkshrine preset [preset]</code></td>
-      <td>Runs the AFKShrine preset action.</td>
+      <td>Shows your current preset, lists presets, or sets your chosen preset.</td>
       <td><code>/afkshrine preset</code></td>
     </tr>
     <tr>
       <td><code>/afkshrine preview [style] [seconds]</code></td>
-      <td>Previews a AFKShrine choice before applying it.</td>
+      <td>Previews a shrine preset when preview access is enabled.</td>
       <td><code>/afkshrine preview</code></td>
     </tr>
     <tr>
       <td><code>/afkshrine preview stop</code></td>
-      <td>Previews a AFKShrine choice before applying it.</td>
+      <td>Stops your active shrine preset preview.</td>
       <td><code>/afkshrine preview stop</code></td>
     </tr>
   </tbody>
@@ -131,14 +198,23 @@ Start in-game with /afkshrine. The sections below explain what AFKShrine is for,
 
 ## Examples
 
-- No separate examples are listed yet. Use the command examples above as a starting point.
+- `/afkshrine menu`
+- `/afkshrine claim`
+- `/afkshrine rewards`
+- `/afkshrine trade`
+- `/afkshrine milestones weather`
+- `/afkshrine album`
+- `/afkshrine resets ready`
+- `/afkshrine presets`
+- `/afkshrine preset mint`
 
 ## Good To Know
 
-- Some commands may be hidden until your group, event progress, or unlocks allow them.
-- If a command opens a menu, follow the buttons in-game; the website is only the learning guide.
-- Top lists and leaderboards are public-facing progress views when the feature enables them.
-- Settings commands only change your own player preferences unless the page says otherwise.
+- AFK postcards are private welcome-back summaries, not public broadcasts.
+- Pending tokens are not spendable until you claim them with /afkshrine claim.
+- Reward trades preview first; commands that spend tokens or items require confirmation.
+- Some presets, tools, upgrades, and previews may be locked by rank, event progress, beta access, or server configuration.
+- Bed rest and same-location checks are intentionally conservative so AFKShrine stays a fun passive feature instead of a farm.
 
 ## Full Reference
 

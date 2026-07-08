@@ -14,7 +14,7 @@ These are the first feature candidates now using the shared library scaffold:
 | Category | Plugin | Status | Docs |
 | --- | --- | --- | --- |
 | Shared Library | 1MB-CMIAPI-Lib | Shared diagnostics, feature registry, config/debug helpers, translations, GUI examples, safe action rules, and global placeholders | [1MB-CMIAPI-Lib](plugins/1mb-cmiapi-lib.md) |
-| Player Fun | AFKShrine | Visual AFK effects, persistent opt-outs, permission-gated presets, welcome-back summaries, points, readiness checks, and staff reports | [AFKShrine](plugins/afkshrine.md) |
+| Player Fun | AFKShrine | Visual AFK effects, permission-gated presets, postcards, points, weather/seasonal quests, readiness checks, and staff reports | [AFKShrine](plugins/afkshrine.md) |
 | Player Fun | RecordingMode | Per-player recording quiet mode | [RecordingMode](plugins/recordingmode.md) |
 | Player Fun | SellStreaks | CMI sell streaks and daily market goals | [SellStreaks](plugins/sellstreaks.md) |
 | Player Fun | ScheduledTips | Clickable rotating tips with per-player dismiss, visibility controls, and live booster reminders | [ScheduledTips](plugins/scheduledtips.md) |

@@ -323,13 +323,38 @@ AFKShrine:
 
 ```text
 /afkshrine status
+/afkshrine stats
+/afkshrine stats personal
+/afkshrine stats server
 /afkshrine balance
 /afkshrine claim
 /afkshrine rewards
+/afkshrine trade
 /afkshrine trade afkshrine_starter
 /afkshrine trade afkshrine_starter confirm
+/afkshrine gui
+/afkshrine menu
+/afkshrine tools
+/afkshrine tools list
+/afkshrine tools claim netherite_spear
+/afkshrine tools claim netherite_spear confirm
+/afkshrine milestones
+/afkshrine milestones time
+/afkshrine milestones quests
+/afkshrine milestones weather
+/afkshrine milestones seasonal
+/afkshrine milestones dimensions
+/afkshrine milestones collections
+/afkshrine milestones streaks
+/afkshrine milestones claim-streak
 /afkshrine quests
+/afkshrine resets
+/afkshrine resets weekly
+/afkshrine resets seasonal
+/afkshrine album weather
 /afkshrine album seasonal
+/afkshrine album quests
+/afkshrine album collections
 /afkshrine community
 /afkshrine top daily
 /afkshrine top weekly
@@ -340,10 +365,15 @@ AFKShrine:
 /afkshrine preview mint
 /afkshrine admin check
 /afkshrine admin report
+/afkshrine admin journal latest markdown
+/afkshrine admin journal 2026-07 discord
+/afkshrine admin capture token
 /afkshrine admin suspicious
 /afkshrine admin audit mrfloris
 /afkshrine admin recent sessions
+/afkshrine admin recent sleep
 /afkshrine admin recent trades
+/afkshrine admin recent tools
 ```
 
 RecordingMode:

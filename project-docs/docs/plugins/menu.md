@@ -62,6 +62,7 @@ The default button list includes:
 /nick
 /spawners
 /forage
+/afkshrine gui
 /warp shops
 /buy
 /sell
@@ -78,6 +79,8 @@ Existing configs that were created before Spawners existed can auto-append the S
 Existing configs that were created before BirthdayLanterns, DiscordChat, EmoteMenu, or Nick were added to the menu can auto-append their buttons when the matching `buttons.<id>.enabled` and `buttons.<id>.auto-append-to-order` settings are true. Menu checks that the matching feature plugin is installed, plugin-enabled, and that the feature `config.yml` still has `enabled: true`, so disabled feature GUIs do not show as dead buttons.
 
 Existing configs that were created before Forage existed can auto-append the Forage button when `buttons.forage.enabled` and `buttons.forage.auto-append-to-order` are true. Menu also checks that `1MB-CMIAPI-Forage` is installed, plugin-enabled, and that the Forage `config.yml` still has `enabled: true`, so the button disappears automatically during an emergency Forage shutdown.
+
+Existing configs that were created before AFKShrine existed in the menu can auto-append the AFKShrine button when `buttons.afkshrine.enabled` and `buttons.afkshrine.auto-append-to-order` are true. Menu also checks that `1MB-CMIAPI-AFKShrine` is installed, plugin-enabled, and that the AFKShrine `config.yml` still has `enabled: true`, so the button disappears automatically during an emergency AFKShrine shutdown.
 
 Existing configs that were created before AutoSell existed in the menu can auto-append the AutoSell button when `buttons.autosell.enabled` and `buttons.autosell.auto-append-to-order` are true. Menu also checks that `1MB-CMIAPI-AutoSell` is installed, plugin-enabled, and that the AutoSell `config.yml` still has `enabled: true`, so the button disappears automatically during an emergency AutoSell shutdown.
 
