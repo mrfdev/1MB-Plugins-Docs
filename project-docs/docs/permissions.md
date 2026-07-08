@@ -503,6 +503,11 @@ onembcmi.hoppers.notes
 onembcmi.hoppers.dump
 onembcmi.hoppers.admin
 onembcmi.hoppers.admin.reload
+onembcmi.diagnostics.use
+onembcmi.diagnostics.view
+onembcmi.diagnostics.dump
+onembcmi.diagnostics.admin
+onembcmi.diagnostics.admin.reload
 onembcmi.schedulercheck.admin
 onembcmi.schedulercheck.check
 onembcmi.schedulercheck.explain
@@ -569,6 +574,8 @@ onembcmi.placeholderhealth.debug
 ```
 
 Hoppers is staff-only. Normal players receive no default access to `/_hoppers`; grant `onembcmi.hoppers.admin` for full owner/admin use, or grant `onembcmi.hoppers.scan`, `onembcmi.hoppers.track`, `onembcmi.hoppers.watch`, `onembcmi.hoppers.trigger`, and `onembcmi.hoppers.baseline` to designated TPS-drop reviewers. `onembcmi.hoppers.scan` covers passive report pages such as risk, regions, world/chunk/player scopes, storage-chain probes, container saturation, material histograms, hopper minecarts, redstone context, chunk tickets, report comparison, MFM presets, dependency health, config drift, hotspot history, emergency guidance, and safe checklists. `onembcmi.hoppers.watch`, `onembcmi.hoppers.trigger`, and `onembcmi.hoppers.baseline` remain read-only. `onembcmi.hoppers.spark` dispatches Spark profiler commands, so grant it only to trusted admins. `onembcmi.hoppers.notes` writes report notes and Spark URL attachments into cache.
+
+Diagnostics is owner-only removable debug tooling. Grant `onembcmi.diagnostics.use` for `/_diagnostics status`, `onembcmi.diagnostics.view` for `/_diagnostics recent` and `/_diagnostics files`, and `onembcmi.diagnostics.dump` to write point-in-time support snapshots. `onembcmi.diagnostics.admin` unlocks shared debug pages, and `onembcmi.diagnostics.admin.reload` reloads the probe config. Normal players should not receive any Diagnostics nodes. All Diagnostics permission defaults are `false`, so operator status alone does not unlock the in-game command. Console can run `_diagnostics` without a permission lock.
 
 WorthHelper is staff-only and report-first. Grant `onembcmi.worthhelper.scan`, `onembcmi.worthhelper.view`, and `onembcmi.worthhelper.export` only to trusted economy reviewers; `onembcmi.worthhelper.admin` covers shared debug/config access. The plugin does not apply CMI worth changes.
 

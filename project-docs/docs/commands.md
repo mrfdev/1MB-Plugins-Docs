@@ -200,6 +200,7 @@ Feature `/help` pages are intentionally player-facing: they list commands availa
 /1mbcmi debug plugin worldsnapshot all
 /1mbcmi debug plugin sparkreviewer all
 /1mbcmi debug plugin hoppers all
+/1mbcmi debug plugin diagnostics all
 /1mbcmi debug plugin placeholderprobe all
 /1mbcmi debug plugin cmiplaceholders all
 /1mbcmi debug plugin onembplaceholders all
@@ -286,6 +287,20 @@ PlaceholderHealth:
 ```
 
 `/placeholderhealth` is a read-only server-owner monitor for configured PlaceholderAPI samples. It parses each configured CMI or `onembcmi` placeholder, flags unresolved, empty, slow, or erroring output, and can export the last or freshly-run check as a Discord-friendly Markdown report. Unlike `/placeholderprobe`, it is not for ad hoc one-off placeholder input; it is for the known sample set you want to keep healthy.
+
+Diagnostics:
+
+```text
+/_diagnostics status
+/_diagnostics recent
+/_diagnostics files
+/_diagnostics dump
+/_diagnostics dump mrfloris
+/_diagnostics reload
+/_diagnostics debug all
+```
+
+`/_diagnostics` is removable owner tooling for short-lived live investigations. It has no command aliases, console can run `_diagnostics` without a permission lock, and in-game players must have explicit Diagnostics permissions because operator status alone does not grant the nodes. Its first probe, `debug-disconnected`, records joins, Bukkit kick events, CMI kick events, CMI AFK enter/leave/kick events, quit records, player state, AFK state, packet-adjacent ViaVersion/Geyser/Floodgate context when available, compact item metadata summaries for serialization suspects, nearby entity counts, sampled permissions, sampled plugin versions, memory/TPS/MSPT details when available, and recent server-log context. It writes timestamped logs under `plugins/1MB-CMIAPI/Diagnostics/`, plus `disconnected-latest.log` for the newest run.
 
 Upgrade:
 

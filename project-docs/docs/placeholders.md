@@ -1433,6 +1433,17 @@ Hoppers placeholders:
 %onembcmi_hoppers.cache.size%
 ```
 
+Diagnostics placeholders:
+
+```text
+%onembcmi_diagnostics.enabled%
+%onembcmi_diagnostics.debug_disconnected.enabled%
+%onembcmi_diagnostics.disconnects.recent.count%
+%onembcmi_diagnostics.disconnects.last.player%
+%onembcmi_diagnostics.disconnects.last.reason%
+%onembcmi_diagnostics.log.file%
+```
+
 WarpAudit placeholders:
 
 ```text

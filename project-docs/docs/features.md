@@ -65,6 +65,7 @@ These are the first feature candidates now using the shared library scaffold:
 | Server Management | WorldSnapshot | Read-only world settings, gamerules, and CMI world-toggle snapshots | [WorldSnapshot](plugins/worldsnapshot.md) |
 | Server Management | SparkReviewer | Spark workflow, latest.log, config, MFM, entity, hopper, and stress-test reviewer for TPS drops | [SparkReviewer](plugins/sparkreviewer.md) |
 | Server Management | Hoppers | Read-only hopper clog, world/chunk/player scopes, Spark helpers, notes, config drift, hotspot history, Markdown export, and MobFarmManager triage for TPS drops | [Hoppers](plugins/hoppers.md) |
+| Server Management | Diagnostics | Removable owner diagnostics for disconnects, AFK context, player state, packet/protocol bridge clues, compact item metadata clues, plugin versions, and support-ready timestamped logs | [Diagnostics](plugins/diagnostics.md) |
 | Server Management | WarpAudit | Read-only CMI warp and portal audit | [WarpAudit](plugins/warpaudit.md) |
 | Server Management | WorthDrift | CMI sell-event drift analyzer plus ShopGUI+ `buyPrice` vs `Worth.yml` Markdown reports | [WorthDrift](plugins/worthdrift.md) |
 | Server Management | WorthHelper | Read-only CMI Worth.yml and Paper recipe analyzer | [WorthHelper](plugins/worthhelper.md) |

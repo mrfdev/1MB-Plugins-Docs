@@ -1,0 +1,907 @@
+AFKShrine Book & Quill Copy Source
+==================================
+
+Use these as player-facing written books for AFKShrine lore trades on 1MoreBlock.com.
+
+Suggested kits:
+
+- afkshrine_books_starter
+  - The First Shrine
+  - Notes From The Quiet Place
+
+- afkshrine_books_weather
+  - Rainwatch Journal
+  - Under The Idle Stars
+
+- afkshrine_books_travel
+  - The Biome Traveler's Pause
+  - Wild Rest Field Notes
+
+- afkshrine_books_keeper
+  - The Keeper Who Waited
+  - Safe Harbor Logbook
+
+- afkshrine_books_collectors
+  - The Token Ledger
+  - Postcards From Away
+
+Copy notes:
+
+- Each "Page" below is meant to be one Book & Quill page.
+- Every book stays under 20 pages.
+- The kit name is not part of the book text unless you want it to be.
+- Suggested author: AFKShrine
+
+
+Book 1: The First Shrine
+Kit: afkshrine_books_starter
+Pages: 8 of 20
+
+Page 1
+Nobody remembers who
+went AFK first.
+
+Some say it was a
+builder with soup on
+the stove.
+
+Page 2
+They stood near a hill
+on 1MoreBlock, pickaxe
+in hand, staring at a
+half-finished path.
+
+Then life called.
+
+Page 3
+The sun moved.
+The grass waved.
+The sheep judged the
+path very quietly.
+
+Still, the player did
+not move.
+
+Page 4
+When they returned,
+tiny lights circled
+their boots.
+
+Not loud.
+Not flashy.
+Just enough to say:
+welcome back.
+
+Page 5
+They checked their
+pockets.
+
+No diamonds had
+appeared.
+No magic sword.
+
+Only a small feeling
+that time had noticed.
+
+Page 6
+So they claimed their
+tokens, stretched their
+hands, and fixed one
+crooked stair.
+
+That was enough.
+
+Page 7
+By evening, others had
+seen the glow.
+
+"I was only getting
+tea," someone said.
+
+"The shrine waited,"
+said another.
+
+Page 8
+That is how the first
+AFK Shrine began.
+
+Not as a reward for
+leaving,
+but as a soft hello
+when you return.
+
+
+Book 2: Notes From The Quiet Place
+Kit: afkshrine_books_starter
+Pages: 8 of 20
+
+Page 1
+Entry 1:
+
+I found a quiet place
+behind my wheat field.
+
+I only meant to stand
+there for a minute.
+
+Page 2
+Entry 2:
+
+The kettle whistled.
+The cat complained.
+My inventory stayed
+full of cobblestone.
+
+This feels familiar.
+
+Page 3
+Entry 3:
+
+When I came back, the
+shrine knew the biome.
+
+It knew the weather.
+It knew I had taken
+no damage.
+
+Page 4
+Entry 4:
+
+I like that it does
+not scold me.
+
+It just says:
+you were away,
+and here is what
+happened.
+
+Page 5
+Entry 5:
+
+I claimed my pending
+tokens and went back
+to work.
+
+The farm still needed
+water.
+The chickens still had
+opinions.
+
+Page 6
+Entry 6:
+
+Today I tried a new
+spot near the river.
+
+The shrine seemed
+pleased, or maybe that
+was just the breeze.
+
+Page 7
+Entry 7:
+
+If you find this note,
+do not worry about
+standing still.
+
+Sometimes survival
+needs a snack break.
+
+Page 8
+Entry 8:
+
+Return when you can.
+Claim what waited.
+Then place one more
+block.
+
+That is how homes are
+made.
+
+
+Book 3: The Keeper Who Waited
+Kit: afkshrine_books_keeper
+Pages: 9 of 20
+
+Page 1
+There is a keeper in
+the quiet corners of
+1MoreBlock.
+
+No one has seen them.
+Everyone has returned
+to their work.
+
+Page 2
+The keeper does not
+carry a sword.
+
+They carry a lantern,
+a notebook, and a
+very patient smile.
+
+Page 3
+When a player goes AFK,
+the keeper sits nearby.
+
+They count clouds.
+They count steps not
+taken.
+They count the seconds
+kindly.
+
+Page 4
+If rain falls, the
+keeper writes:
+
+"Rainy watch.
+Boots wet.
+Player safe."
+
+Page 5
+If night comes, the
+keeper writes:
+
+"Stars bright.
+No panic.
+Probably making
+sandwich."
+
+Page 6
+If the player returns,
+the keeper closes the
+book.
+
+The shrine lights up.
+The bossbar hums.
+The world continues.
+
+Page 7
+The keeper never asks
+why you left.
+
+Doorbell?
+Dinner?
+Homework?
+Real life?
+
+All valid.
+
+Page 8
+They only ask what you
+will do next.
+
+Claim your tokens?
+Check a milestone?
+Try a new preset?
+Finish the roof?
+
+Page 9
+The keeper waited.
+
+Now you are back.
+
+Go make the server a
+little more yours.
+
+
+Book 4: Rainwatch Journal
+Kit: afkshrine_books_weather
+Pages: 8 of 20
+
+Page 1
+Rainwatch Journal
+
+Found beside a spruce
+tree after a long
+storm on 1MB.
+
+The pages smell a bit
+like wet wool.
+
+Page 2
+It started raining
+right after I went AFK.
+
+I had gone to close a
+window.
+
+Minecraft also closed
+the sky for me.
+
+Page 3
+When I came back, the
+shrine had noticed the
+rain.
+
+It felt like the world
+had kept a little
+weather diary.
+
+Page 4
+Thunder rolled once.
+
+My dog barked in real
+life.
+My wolf in-game sat
+perfectly still.
+
+Good wolf.
+
+Page 5
+The return postcard
+said where I had been,
+what I had seen, and
+why it counted.
+
+For a chat message, it
+felt oddly cozy.
+
+Page 6
+I claimed my tokens,
+then checked the mud
+near the farm.
+
+Somehow rain makes
+even unfinished builds
+look planned.
+
+Page 7
+If you go AFK in rain,
+listen when you return.
+
+The drops may be gone,
+but the shrine remembers
+the storm.
+
+Page 8
+Note to self:
+
+Build a covered bench
+near the wheat field.
+
+AFK breaks deserve
+good seating.
+
+
+Book 5: Under The Idle Stars
+Kit: afkshrine_books_weather
+Pages: 8 of 20
+
+Page 1
+At night, the server
+gets quieter.
+
+Not silent.
+Never silent.
+
+Just soft enough to
+hear your own plans.
+
+Page 2
+I went AFK on a roof
+while looking at the
+stars.
+
+I meant to be gone for
+one minute.
+
+Classic mistake.
+
+Page 3
+When I came back, the
+moon had moved.
+
+The shrine was active.
+The bossbar had changed.
+
+My roof was still
+missing a corner.
+
+Page 4
+The postcard said I
+was under open sky.
+
+It also said I took no
+damage.
+
+That is rare roof
+behavior, honestly.
+
+Page 5
+I claimed my tokens,
+checked my streak, and
+placed the missing
+corner block.
+
+Progress is progress.
+
+Page 6
+Some players chase
+dragons.
+Some sort chests.
+Some return from AFK
+and remember why they
+were on a roof.
+
+All are heroes.
+
+Page 7
+If you read this under
+the stars, take a
+moment.
+
+Look around.
+Find one thing to
+finish when you return.
+
+Page 8
+The night is not empty.
+
+It is full of builds
+waiting, farms growing,
+and tiny shrine lights
+saying:
+
+welcome back.
+
+
+Book 6: The Biome Traveler's Pause
+Kit: afkshrine_books_travel
+Pages: 9 of 20
+
+Page 1
+I packed bread,
+torches, and one boat.
+
+Then I forgot the boat
+at home.
+
+So began my biome
+adventure.
+
+Page 2
+Forest first.
+
+I went AFK beside an
+oak tree because real
+life asked where I put
+the laundry.
+
+The tree knew nothing.
+
+Page 3
+Desert next.
+
+I paused near a cactus,
+which felt brave until
+I remembered cacti are
+not furniture.
+
+Do not lean.
+
+Page 4
+Ocean after that.
+
+The shrine liked the
+view.
+I liked that I was not
+underwater.
+
+The boat was still at
+home.
+
+Page 5
+In each place, the
+return postcard told a
+small story.
+
+Biome.
+Weather.
+Why it counted.
+What was new.
+
+Page 6
+That made me want to
+try another place.
+
+Not because I had to.
+Because the world is
+large, and my map was
+too empty.
+
+Page 7
+The album remembered
+where I had been.
+
+It felt less like a
+checklist and more like
+a travel journal with
+better spelling.
+
+Page 8
+If you always AFK in
+one room, that is cozy.
+
+But once in a while,
+take your break where
+the view is different.
+
+Page 9
+Then return.
+Claim your tokens.
+Mark the biome.
+
+And maybe, finally,
+remember the boat.
+
+
+Book 7: Safe Harbor Logbook
+Kit: afkshrine_books_keeper
+Pages: 8 of 20
+
+Page 1
+Safe Harbor Logbook
+
+For players who build
+AFK corners with doors,
+lamps, snacks, and
+too many signs.
+
+Page 2
+Rule 1:
+
+Solid ground is good.
+
+The floor should not
+be lava, cactus, or
+one suspicious trapdoor.
+
+Page 3
+Rule 2:
+
+A roof is optional,
+but confidence is not.
+
+If phantoms can see
+you, perhaps add a
+ceiling.
+
+Page 4
+Rule 3:
+
+Leave a chair.
+
+You cannot sit in it
+while AFK, but your
+character deserves the
+thought.
+
+Page 5
+When you return, read
+the postcard first.
+
+It may say you were
+safe, dry, undamaged,
+and wonderfully boring.
+
+This is a compliment.
+
+Page 6
+Claim your tokens.
+Check your rewards.
+Then fix one small
+thing in the room.
+
+A lantern.
+A flowerpot.
+A better sign.
+
+Page 7
+Safe places are not
+lazy places.
+
+They are little harbors
+between adventures.
+
+Even heroes need to
+answer the door.
+
+Page 8
+If you found this book
+in a kit, your harbor
+is official now.
+
+Please keep it cozy.
+Please label the
+storage.
+
+
+Book 8: Wild Rest Field Notes
+Kit: afkshrine_books_travel
+Pages: 9 of 20
+
+Page 1
+Wild Rest Field Notes
+
+Written by someone who
+went AFK outside and
+lived to explain why
+that was risky.
+
+Page 2
+The first rule of wild
+rest is simple:
+
+Look around before you
+leave.
+
+Then look around again.
+
+Page 3
+I once went AFK in a
+flower field.
+
+Peaceful.
+Pretty.
+Full of bees.
+
+No issue, but it felt
+like a meeting.
+
+Page 4
+Another time, I paused
+near a cave mouth.
+
+The postcard later
+mentioned open sky and
+danger.
+
+It was polite about it.
+
+Page 5
+The shrine does not
+tell you to be reckless.
+
+It notices the story
+your location tells.
+
+That is different.
+
+Page 6
+If you return to find
+no tokens, read why.
+
+Maybe the session was
+too short.
+Maybe the place was
+too familiar.
+
+Try again later.
+
+Page 7
+If you return to find
+progress, nice.
+
+Claim it.
+Smile at the postcard.
+Do not brag to the
+zombie nearby.
+
+Page 8
+Wild places make good
+memories.
+
+Bring blocks.
+Bring food.
+Bring common sense.
+
+And maybe a friend.
+
+Page 9
+The best AFK spot is
+not always the safest.
+
+But the best return is
+the one where you know
+what happened.
+
+
+Book 9: The Token Ledger
+Kit: afkshrine_books_collectors
+Pages: 8 of 20
+
+Page 1
+The Token Ledger
+
+Property of nobody,
+because everyone kept
+borrowing it.
+
+Please return after
+counting shiny things.
+
+Page 2
+Entry:
+
+One AFK Shrine Token
+found after a very
+important sandwich
+break.
+
+Value: sentimental.
+
+Page 3
+Entry:
+
+Two tokens traded for
+something mysterious.
+
+The player said,
+"Worth it,"
+then ran to their base.
+
+Page 4
+Entry:
+
+Three notes, one token,
+and a name tag were
+seen together.
+
+This probably means an
+upgrade is coming.
+
+Page 5
+Reminder:
+
+Pending tokens are not
+the same as claimed
+tokens.
+
+Claim first.
+Spend later.
+Panic never.
+
+Page 6
+The ledger does not
+judge how long you
+were gone.
+
+It only records what
+the shrine allowed and
+what you chose to do.
+
+Page 7
+Good trades feel like
+tiny stories.
+
+A spear improved.
+A shield remembered.
+A book opened.
+A note spent.
+
+Page 8
+Final entry:
+
+The richest player is
+not the one with the
+most tokens.
+
+It is the one who came
+back and used them.
+
+
+Book 10: Postcards From Away
+Kit: afkshrine_books_collectors
+Pages: 10 of 20
+
+Page 1
+Postcard 1:
+
+I went AFK beside my
+starter house.
+
+When I came back, the
+roof was still ugly.
+
+Honest shrine.
+
+Page 2
+Postcard 2:
+
+Away in a plains biome.
+Weather clear.
+No damage taken.
+
+Returned with one snack
+and better plans.
+
+Page 3
+Postcard 3:
+
+AFK near the mine.
+
+The shrine noticed the
+stone, the dark, and my
+poor torch placement.
+
+Fair.
+
+Page 4
+Postcard 4:
+
+Rainy session.
+Boots wet.
+Inventory full.
+
+Came back and claimed
+tokens before sorting
+chests.
+
+Growth.
+
+Page 5
+Postcard 5:
+
+Under open sky at night.
+Stars above.
+Bed too far away.
+
+Returned before the
+phantoms filed a report.
+
+Page 6
+Postcard 6:
+
+Safe harbor room.
+Lantern on.
+Door shut.
+
+The shrine called it
+peaceful.
+I call it good design.
+
+Page 7
+Postcard 7:
+
+New biome discovered.
+New album line filled.
+New reason to wander.
+
+Also found pumpkins.
+Excellent trip.
+
+Page 8
+Postcard 8:
+
+No tokens this time.
+Session too short.
+
+The shrine was gentle.
+I had only gone to
+grab water.
+
+Fair enough.
+
+Page 9
+Postcard 9:
+
+Returned to a milestone.
+
+Claimed it.
+Read rewards.
+Changed preset.
+
+Then immediately forgot
+what I was building.
+
+Page 10
+Postcard 10:
+
+If this feels like your
+adventure, maybe it is.
+
+Go AFK when real life
+calls.
+Come back when you can.
+1MB will still be here.
