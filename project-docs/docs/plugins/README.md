@@ -83,6 +83,8 @@ Every plugin page should cover purpose, feature behavior, commands, example comm
 
 The page should be written for future server staff, not only developers. It should explain what the plugin is for, how it behaves in game, how to test it, how to operate it safely, and what a staff member should expect to see in chat, console, PlaceholderAPI, `/1mbcmi debug plugin <id> all`, and the plugin's own help/status pages.
 
+Every real plugin's generated public guide should include an `Available features include:` bullet list inside its `How Players Use It`, `How Staff Use It`, `How Testers Use It`, or `How The Server Uses It` section. Keep the list focused on capabilities that are available now. Roadmap pages describe possible future work and must not be presented as current feature guides.
+
 Keep docs and runtime metadata together. If a plugin change adds, removes, renames, or changes behavior for a command, permission, placeholder, config path, hook, data path, jar name, version, or build number, update the plugin page and any affected global docs in the same change.
 
 Build-number docs should be refreshed with `gradle refreshBuildDocs`; `gradle build` runs `verifyBuildMetadata` and fails when generated build constants or documented jar examples drift from `gradle.properties`.

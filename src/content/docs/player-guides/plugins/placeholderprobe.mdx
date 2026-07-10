@@ -1,22 +1,24 @@
 ---
 title: PlaceholderProbe Guide
-description: Learn what PlaceholderProbe does, how to use it, and which public commands are available.
+description: Learn what PlaceholderProbe checks, how testers use it, and which public test commands are available.
 ---
 
-This page introduces PlaceholderProbe from a public server-docs point of view. It focuses on what the feature does in-game, how to get started when you have access, and which commands are useful.
+This page introduces PlaceholderProbe as a public testing guide. It focuses on what the tool checks, how testers get started, and which commands are useful on an authorized test server.
 
 ## What It Does
 
 Strict server probe for server and onembcmi placeholders.
 
-## How Players Use It
+## How Testers Use It
 
-Start in-game with /placeholderprobe status. The sections below explain what PlaceholderProbe is for, which commands players can try, and what to expect when your account has access.
+Start with /placeholderprobe status. The sections below explain what PlaceholderProbe checks, which commands authorized testers can use, and what its output means.
 
-## Things You Can Do
+Available features include:
 
-- Show server loaded state and registered expansion identifiers.
-- Search registered server expansion identifiers by safe text.
+- Show PlaceholderAPI loaded state and registered expansion identifiers.
+- Search registered PlaceholderAPI expansion identifiers by safe text.
+- Parse one allowed placeholder for console, the sender, or a named online player.
+- Run a configured sample set for quick CMI and onembcmi checks.
 - Keep a bounded recent in-memory history of probe inputs and outputs.
 - Classify recent output as changed, unchanged, unresolved, empty, or error.
 - Show recent stats including slow probes and average parse time.
@@ -105,9 +107,8 @@ Start in-game with /placeholderprobe status. The sections below explain what Pla
 
 ## Good To Know
 
-- Some commands may be hidden until your group, event progress, or unlocks allow them.
-- If a command opens a menu, follow the buttons in-game; the website is only the learning guide.
-- You may also see /pprobe as a shortcut.
+- This is a permission-gated testing or development tool, not a normal player feature.
+- Use it only on an authorized server and review the full reference before running diagnostics or exports.
 
 ## Full Reference
 

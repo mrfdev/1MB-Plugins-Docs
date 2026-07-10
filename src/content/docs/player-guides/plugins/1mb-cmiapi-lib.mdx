@@ -1,39 +1,45 @@
 ---
 title: 1MB-CMIAPI-Lib Guide
-description: Learn what 1MB-CMIAPI-Lib does, how to use it, and which public commands are available.
+description: Learn which shared services 1MB-CMIAPI-Lib provides to the 1MoreBlock feature plugins.
 ---
 
-This page introduces 1MB-CMIAPI-Lib from a public server-docs point of view. It focuses on what the feature does in-game, how to get started when you have access, and which commands are useful.
+This page introduces 1MB-CMIAPI-Lib as the shared runtime behind the 1MoreBlock feature plugins. It focuses on common services and the staff-facing tools that support those features.
 
 ## What It Does
 
 Shared diagnostics, feature registry, config/debug helpers, translations, GUI examples, safe action rules, and global placeholders.
 
-## How Players Use It
+## How The Server Uses It
 
-Use this page as a friendly guide to 1MB-CMIAPI-Lib. It explains what the feature is for, what players can try in-game, and which commands are available when your account has access.
+Use this page as a public reference for the common services 1MB-CMIAPI-Lib provides to the feature plugins.
 
-## Things You Can Do
+Available features include:
 
-- More player-facing details will be added here as the feature guide grows.
+- A shared registry for feature names, categories, commands, permissions, placeholders, config paths, and support metadata.
+- Common configuration, translations, MiniMessage output, pagination, and clickable help components.
+- Shared UUID playerdata storage, cache ownership, and plugin-scoped cleanup tools.
+- Hardened GUI holders, click protection, consistent navigation, and the global GUI theme.
+- Shared permission checks, action rules, denial recording, and permission diagnosis helpers.
+- Audit redaction, report helpers, placeholder registration, and reusable runtime counters.
+- The /1mbcmi feature, debug, config, translation, and cleanup command surfaces used by staff.
 
 ## Quick Start
 
-1. Open the feature from the server menu when it is available.
-2. Check the feature page again later as more player-facing details are added.
+1. Review the available shared services above to understand what the feature plugins receive from the library.
+2. Open the full reference before using shared staff, config, data, or cleanup tooling.
 
 ## Commands
 
-No player-facing commands are listed for this plugin yet.
+No public shared-library commands are listed yet.
 
 ## Examples
 
-- No separate examples are listed yet. Use the command examples above as a starting point.
+- Open the full reference below for exact permission-gated commands and examples.
 
 ## Good To Know
 
-- Some commands may be hidden until your group, event progress, or unlocks allow them.
-- If a command opens a menu, follow the buttons in-game; the website is only the learning guide.
+- This is shared server infrastructure, not a normal player-facing feature.
+- Feature plugins depend on these services, so staff should review the full reference before changing shared config or data.
 
 ## Full Reference
 

@@ -1,25 +1,28 @@
 ---
 title: WorthHelper Guide
-description: Learn what WorthHelper does, how to use it, and which public commands are available.
+description: Learn what WorthHelper does, how staff use it, and which public staff commands are available.
 ---
 
-This page introduces WorthHelper from a public server-docs point of view. It focuses on what the feature does in-game, how to get started when you have access, and which commands are useful.
+This page introduces WorthHelper as a public staff guide. It focuses on what the tool does, how authorized staff get started, and which commands are useful.
 
 ## What It Does
 
 Read-only server Worth.yml and server recipe analyzer with review-first setworth suggestions.
 
-## How Players Use It
+## How Staff Use It
 
-Start in-game with /worthhelper. The sections below explain what WorthHelper is for, which commands players can try, and what to expect when your account has access.
+Start with /worthhelper. The sections below explain what WorthHelper is for, which commands authorized staff can use, and what its output means.
 
-## Things You Can Do
+Available features include:
 
-- Enumerate server item materials for the running server version.
-- Inspect shaped, shapeless, cooking, stonecutting, smithing, and transmute recipes where server exposes enough information.
-- Compare current server worth against ingredient cost divided by output count.
+- Read direct item worth values from plugins/CMI/Saves/Worth.yml.
+- Enumerate Paper item materials for the running server version.
+- Inspect shaped, shapeless, cooking, stonecutting, smithing, and transmute recipes where Paper exposes enough information.
+- Compare current CMI worth against ingredient cost divided by output count.
 - Use cheapest priced ingredient choices when a recipe accepts alternatives.
-- Skip variant server worth keys such as enchantment-specific entries for the base material scan.
+- Skip variant CMI worth keys such as enchantment-specific entries for the base material scan.
+- Flag missing direct worth values outside the configured review blacklist.
+- Mark potions, tipped arrows, ominous bottles, creative/test blocks, spawn eggs, spawners, trial spawners, and vaults as manual-review surfaces.
 
 ## Quick Start
 
@@ -81,9 +84,8 @@ Start in-game with /worthhelper. The sections below explain what WorthHelper is 
 
 ## Good To Know
 
-- Some commands may be hidden until your group, event progress, or unlocks allow them.
-- If a command opens a menu, follow the buttons in-game; the website is only the learning guide.
-- You may also see /whelper or /worthhelp as a shortcut.
+- This is a permission-gated staff or server-management feature, not a normal player feature.
+- Review the full reference before changing settings or using any command that can write data.
 
 ## Full Reference
 

@@ -1,6 +1,6 @@
 ---
 title: SchedulerCheck Guide
-description: Learn what SchedulerCheck does, how to use it, and which public commands are available.
+description: Learn what SchedulerCheck does, how staff use it, and which public staff commands are available.
 ---
 
 This page documents SchedulerCheck as a public staff/reference guide. It has no player-facing command and intentionally rejects in-game use and RCON.
@@ -13,11 +13,11 @@ SchedulerCheck is a direct-console server-owner tool for checking CMI scheduler 
 
 There is no player-side command for SchedulerCheck. Server owners use it from direct console to check CMI scheduler YAML, review enabled and disabled entries, explain one entry, estimate upcoming fixed-time runs, export reports, safely toggle one schedule entry, or create a basic delay/daily schedule without opening the file system.
 
-## Things You Can Do
+Available features include:
 
 - Run a YAML and value check before trusting a changed scheduler file.
 - Catch invalid time values such as Hour: 31 or Minute: Five.
-- List all, enabled, or disabled server scheduler entries.
+- List all, enabled, or disabled CMI scheduler entries.
 - Inspect one scheduler entry by id when you need the full details.
 - Explain one entry in plain language, including trigger details and command count.
 - Estimate fixed-time PerformOn runs for the next 24 hours or 7 days.

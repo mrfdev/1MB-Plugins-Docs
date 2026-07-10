@@ -1,25 +1,26 @@
 ---
 title: EconomyGuardian Guide
-description: Learn what EconomyGuardian does, how to use it, and which public commands are available.
+description: Learn what EconomyGuardian does, how staff use it, and which public staff commands are available.
 ---
 
-This page introduces EconomyGuardian from a public server-docs point of view. It focuses on what the feature does in-game, how to get started when you have access, and which commands are useful.
+This page introduces EconomyGuardian as a public staff guide. It focuses on what the tool does, how authorized staff get started, and which commands are useful.
 
 ## What It Does
 
 EconomyGuardian is a read-only server-management plugin that watches server economy balance changes and reports unusual money movement during the current runtime.
 
-## How Players Use It
+## How Staff Use It
 
-Start in-game with /economyguardian. The sections below explain what EconomyGuardian is for, which commands players can try, and what to expect when your account has access.
+Start with /economyguardian. The sections below explain what EconomyGuardian is for, which commands authorized staff can use, and what its output means.
 
-## Things You Can Do
+Available features include:
 
 - Listens to CMIUserBalanceChangeEvent at monitor priority.
 - Tracks total observed positive and negative balance movement.
 - Tracks per-player balance movement and anomaly counts.
 - Flags large positive spikes, large negative movement, sharp percent changes, and repeated high-value action/source paths.
 - Keeps bounded recent anomaly records.
+- Shows Vault loaded state for support context.
 
 ## Quick Start
 
@@ -76,9 +77,8 @@ Start in-game with /economyguardian. The sections below explain what EconomyGuar
 
 ## Good To Know
 
-- Some commands may be hidden until your group, event progress, or unlocks allow them.
-- If a command opens a menu, follow the buttons in-game; the website is only the learning guide.
-- You may also see /eg or /ecoguardian as a shortcut.
+- This is a permission-gated staff or server-management feature, not a normal player feature.
+- Review the full reference before changing settings or using any command that can write data.
 
 ## Full Reference
 

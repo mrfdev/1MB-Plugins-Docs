@@ -15,16 +15,16 @@ The GUI uses the shared hardened GUI service with safe holders, cancelled clicks
 
 AutoSell only runs after a short delayed batch, usually after a pickup or chunk move. The final sale runs on the main thread, snapshots exact stacks, rechecks that the inventory still matches, removes the items, pays the player, and refunds removed stacks if the economy payment fails.
 
-## Things You Can Do
+Available features include:
 
-- A global on/off toggle
-- Category toggles for server worth items
-- Per-category material pages where players can toggle individual items
-- Value filters and notification settings
-- An inventory-full trigger for players who only want AutoSell to run when storage slots are nearly full
-- Optional world toggles
-- A preview button that explains what would sell right now
-- A recent-results button for batched sale history
+- An opt-in AutoSell toggle with GUI controls for categories, individual materials, value filters, worlds, and notifications.
+- Pure-vanilla item checks that protect the hotbar, offhand, armor, named items, custom items, and blocked materials.
+- Delayed batch selling with a preview, exact-stack recheck, server economy payment, and item refund if payment fails.
+- Daily sell caps, inventory-full triggering, recent sale results, and quick blacklist actions from warnings.
+- Broker levels, milestones, sell chains, streak bonuses, and personal category and material statistics.
+- Daily and weekly quests with visible progress and claimable rewards.
+- AutoSell happy-hour boosts that can also appear in /rate.
+- Chunk-change and overheat safeguards that reduce repetitive automated farming.
 
 ## Quick Start
 

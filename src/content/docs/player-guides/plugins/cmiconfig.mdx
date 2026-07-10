@@ -1,24 +1,28 @@
 ---
 title: CMIConfig Guide
-description: Learn what CMIConfig does, how to use it, and which public commands are available.
+description: Learn what CMIConfig does, how staff use it, and which public staff commands are available.
 ---
 
-This page introduces CMIConfig from a public server-docs point of view. It focuses on what the feature does in-game, how to get started when you have access, and which commands are useful.
+This page introduces CMIConfig as a public staff guide. It focuses on what the tool does, how authorized staff get started, and which commands are useful.
 
 ## What It Does
 
 Owner GUI for selected server library config toggles with backups and reload prompts.
 
-## How Players Use It
+## How Staff Use It
 
-Start in-game with /cmiconfig. The sections below explain what CMIConfig is for, which commands players can try, and what to expect when your account has access.
+Start with /cmiconfig. The sections below explain what CMIConfig is for, which commands authorized staff can use, and what its output means.
 
-## Things You Can Do
+Available features include:
 
+- /cmiconfig opens an index GUI for CMI and CMILib config surfaces.
+- First page links to CMI config.yml, CMI modules.yml, selected CMI Settings/*.yml files, and CMILib config.yml when present.
 - Per-file pages show discovered boolean toggles with on/off dye indicators.
 - Click a toggle to open a confirmation screen.
+- Confirm only, or confirm and run the configured reload command such as cmi reload.
 - Creates a timestamped backup next to the edited YAML file before writing.
-- Uses a targeted line edit so server's comments and most formatting are preserved.
+- Uses a targeted line edit so CMI's comments and most formatting are preserved.
+- Marks modules.yml as restart-recommended because many module changes may not fully apply with /cmi reload, even though the GUI can still offer confirm-and-reload.
 
 ## Quick Start
 
@@ -66,8 +70,8 @@ Start in-game with /cmiconfig. The sections below explain what CMIConfig is for,
 
 ## Good To Know
 
-- Some commands may be hidden until your group, event progress, or unlocks allow them.
-- If a command opens a menu, follow the buttons in-game; the website is only the learning guide.
+- This is a permission-gated staff or server-management feature, not a normal player feature.
+- Review the full reference before changing settings or using any command that can write data.
 
 ## Full Reference
 

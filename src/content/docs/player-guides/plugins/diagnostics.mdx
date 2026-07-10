@@ -1,42 +1,46 @@
 ---
 title: Diagnostics Guide
-description: Learn what Diagnostics does, how to use it, and which public commands are available.
+description: Learn what Diagnostics does, how staff use it, and which public staff commands are available.
 ---
 
-This page introduces Diagnostics from a public server-docs point of view. It focuses on what the feature does in-game, how to get started when you have access, and which commands are useful.
+This page introduces Diagnostics as a public staff guide. It focuses on what the tool does, how authorized staff get started, and which commands are useful.
 
 ## What It Does
 
 Diagnostics is removable owner tooling for live server investigations.
 
-## How Players Use It
+## How Staff Use It
 
-Use this page as a friendly guide to Diagnostics. It explains what the feature is for, what players can try in-game, and which commands are available when your account has access.
+Use this page as a public staff guide to Diagnostics. It explains what the tool does and how authorized staff use it.
 
-## Things You Can Do
+Available features include:
 
-- Records player joins, quits, Bukkit kick events, server kick events, server AFK enter/leave/kick events, and enough context to tell whether a disconnect had a kick event or was just a generic quit.
+- Records player joins, quits, Bukkit kick events, CMI kick events, CMI AFK enter/leave/kick events, and enough context to tell whether a disconnect had a kick event or was just a generic quit.
 - Tracks per-player recent command context, block movement, interactions, open inventory title, teleports, world changes, damage, AFK state, and join duration.
-- Snapshots player state at quit: world, location, ping, address redacted by default, game mode, health, food, flight flags, sleep state, open inventory, server AFK state, and tracked AFK state.
-- Adds packet-adjacent context when available: client brand, locale, client view distance, server protocol version, ViaVersion player/server protocol data, Floodgate Bedrock player data, Geyser connection data, and...
+- Snapshots player state at quit: world, location, ping, address redacted by default, game mode, health, food, flight flags, sleep state, open inventory, CMI AFK state, and tracked AFK state.
+- Adds packet-adjacent context when available: client brand, locale, client view distance, Paper protocol version, ViaVersion player/server protocol data, Floodgate Bedrock player data, Geyser connection data, and relevant bridge/plugin versions.
+- Adds a compact inventory packet summary for serialization suspects: held item, offhand, armor, selected slot, non-empty slot count, metadata-heavy slot count, and a capped list of items with display names, lore, enchantments, custom model data, PDC keys, or non-basic meta.
+- Snapshots nearby entity counts, sampled permission nodes, sampled plugin versions, online count, memory, Java, Paper/Bukkit version, TPS, and MSPT when the server exposes them.
+- Keeps a small in-memory server-log ring buffer. Disconnect records include recent log lines before the quit and append a short after-context a few seconds later.
+- Writes timestamped log files directly under plugins/1MB-CMIAPI/Diagnostics/, plus disconnected-latest.log for the newest run.
 
 ## Quick Start
 
-1. Open the feature from the server menu when it is available.
-2. Check the feature page again later as more player-facing details are added.
+1. Review the available staff features above and confirm the tool is appropriate for the current task.
+2. Open the full reference for exact commands, permissions, configuration, and safety notes.
 
 ## Commands
 
-No player-facing commands are listed for this plugin yet.
+No public staff commands are listed for this plugin yet.
 
 ## Examples
 
-- No separate examples are listed yet. Use the command examples above as a starting point.
+- Open the full reference below for exact permission-gated commands and examples.
 
 ## Good To Know
 
-- Some commands may be hidden until your group, event progress, or unlocks allow them.
-- If a command opens a menu, follow the buttons in-game; the website is only the learning guide.
+- This is a permission-gated staff or server-management feature, not a normal player feature.
+- Review the full reference before changing settings or using any command that can write data.
 
 ## Full Reference
 

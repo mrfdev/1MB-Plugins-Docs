@@ -13,14 +13,18 @@ const PLAYER_GUIDE_OVERRIDES = {
   afkshrine: {
     summary: 'Turn AFK time into shrine visuals, return postcards, tokens, milestones, quests, presets, and community progress.',
     intro: 'AFKShrine turns server AFK time into a small personal shrine experience. When you become AFK, the feature can show soft particles, a private bossbar, and progress views. When you return, AFKShrine can show a private postcard summary and let you claim pending tokens, review rewards, check milestones, and personalize your shrine preset.',
-    guide: 'AFKShrine is meant to make being away feel clearer and a little more fun, without automatically dumping rewards into your inventory. Your AFK sessions can create pending AFKShrine tokens, milestone progress, quest progress, and collection album entries. You return, review what happened, then claim or trade rewards when you are ready.\n\nPlayer-facing AFKShrine features include:\n\n- AFK shrine visuals: soft particles, optional sparkles, and a private bossbar while you are AFK.\n- AFK postcards: a welcome-back summary showing AFK time, approximate location, biome, weather or scene, damage taken, why the visit counted or did not count, new milestone or quest progress, daily cap room, and clickable next actions.\n- Dynamic bossbar progress: the bossbar can rotate through session duration, minimum-session progress, pending tokens, daily cap, streaks, seasonal progress, and community progress.\n- Tokens and rewards: AFK sessions create pending tokens; /afkshrine claim moves them into your spendable balance, and /afkshrine rewards or /afkshrine trade shows what you can use them for.\n- Milestones and quests: time, biome, safety, risk, adventure, weather, seasonal, dimension, collection, and streak goals can be reviewed through the commands and GUI.\n- Presets: /afkshrine presets and /afkshrine preset let you view and choose unlocked particle styles.\n- Collection album and resets: /afkshrine album and /afkshrine resets explain what you have completed, what refreshes, and what can still be earned.\n- Bed rest: when enabled, sleeping in a bed can count as a tiny AFKShrine-adjacent activity with strict low rewards and cooldown protection.\n- Community milestones: server-wide claimed-token totals can unlock temporary celebration windows when configured.\n- Tools and upgrades: when enabled, /afkshrine tools can let you use captured AFKShrine special items for staff-configured upgrades, lore books, or other rewards.',
-    bullets: [
-      'Open /afkshrine menu or /afkshrine gui to browse the AFKShrine hub.',
-      'Read your AFK postcard when you return to see what counted, what changed, and what to do next.',
-      'Use /afkshrine claim to move pending AFKShrine tokens into your spendable balance.',
-      'Use /afkshrine rewards or /afkshrine trade to review reward trades before confirming anything.',
-      'Use /afkshrine milestones, /afkshrine quests, /afkshrine album, and /afkshrine resets to learn your long-term goals.',
-      'Use /afkshrine presets or /afkshrine preset to inspect and choose unlocked shrine particle presets.',
+    guide: 'AFKShrine is meant to make being away feel clearer and a little more fun, without automatically dumping rewards into your inventory. Your AFK sessions can create pending AFKShrine tokens, milestone progress, quest progress, and collection album entries. You return, review what happened, then claim or trade rewards when you are ready.',
+    features: [
+      'AFK shrine visuals with soft particles, optional sparkles, and a private bossbar while you are AFK.',
+      'Private welcome-back postcards with AFK time, approximate location, biome, weather or scene, damage taken, progress, cap room, and next actions.',
+      'Dynamic bossbar views for session time, reward eligibility, pending tokens, daily caps, streaks, seasonal progress, and community progress.',
+      'Pending-token claiming and preview-first reward trades through /afkshrine claim, /afkshrine rewards, and /afkshrine trade.',
+      'Time, biome, safety, risk, adventure, weather, seasonal, dimension, collection, and streak milestones and quests.',
+      'Permission-gated particle presets that players can inspect and select.',
+      'A collection album and reset summary showing completed, repeatable, refreshed, and still-available goals.',
+      'Optional low-reward bed-rest activity with cooldown protection.',
+      'Server-wide community milestones with temporary celebration windows.',
+      'Optional captured-item tools and upgrades configured by staff.',
     ],
     quickStart: [
       'Start with `/afkshrine menu` or `/afkshrine gui` to open the AFKShrine hub.',
@@ -80,10 +84,11 @@ const PLAYER_GUIDE_OVERRIDES = {
   boosters: {
     summary: 'Check which server-wide boosters are active for skills, jobs, points, and special events.',
     intro: 'Boosters lets players check the current server booster status from one simple place. Use it when you want to know whether skill, job, points, or event multipliers are active before you start grinding.',
-    bullets: [
-      'Open /rate to see which boosters are currently active.',
-      'Check /rate status for a quick text summary.',
-      'Use /rate info or /rate help when you want a short explanation in-game.',
+    features: [
+      'A single /rate overview for active mcMMO, Jobs, Points, and DiscordChat event multipliers.',
+      'Current booster rates, remaining time, and integration state in chat.',
+      'Subtle join reminders when a booster is active.',
+      'A personal reminder preference that players can turn on or off.',
     ],
   },
   gametypes: {
@@ -97,11 +102,11 @@ const PLAYER_GUIDE_OVERRIDES = {
   messagefont: {
     summary: 'Choose temporary private-message font styles, with a plain-mode option for readability.',
     intro: 'MessageFont lets players choose a temporary style for private messages. It is meant as a cosmetic chat perk while still giving recipients a plain-mode option when they prefer easier-to-read messages.',
-    bullets: [
-      'Use /msgfont to open the font menu.',
-      'Use /msgfont list to browse available font styles.',
-      'Use /msgfont set when you want to pick a style directly.',
-      'Use /msgfont plain when you want incoming styled private messages to stay readable.',
+    features: [
+      'A menu and paginated list for browsing available private-message font styles.',
+      'Temporary personal font selection without raw formatting codes.',
+      'Direct style selection for players who already know the style they want.',
+      'A recipient-side plain mode that keeps incoming private messages easy to read.',
     ],
   },
   journeymap: {
@@ -111,18 +116,18 @@ const PLAYER_GUIDE_OVERRIDES = {
   namemc: {
     summary: 'Like the server on NameMC, verify it in-game, and receive the configured one-time reward.',
     intro: 'NameMC lets players support the server on NameMC and verify that support in-game. Open the NameMC page, click the heart, then return to the server and run the verify command when you are ready.',
-    bullets: [
-      'Open /namemc to get the server NameMC page.',
-      'Click the heart on NameMC while logged into the right Minecraft account.',
-      'Run /namemc verify after liking the server.',
-      'Use /namemc status to check whether your like has been verified.',
+    features: [
+      'A direct link from /namemc to the 1MoreBlock NameMC page.',
+      'In-game verification of a NameMC server like for the matching Minecraft account.',
+      'A configured one-time reward after successful verification.',
+      'Persistent status showing whether the account has already verified its like.',
     ],
   },
   nick: {
     summary: 'Pick readable nickname colors, gradients, tools, favorites, and unlockable styles from the safe nickname picker.',
     intro: 'Nick is the safer /nick system on 1MoreBlock. It gives players a curated nickname picker with readable colors, gradients, cleanup tools, favorites, history, and unlockable styles without letting raw color codes or unsafe text into chat.',
     guide: '`/nick` opens the nickname menu with a live preview. Depending on your permissions and unlocks, you can browse public colors, gradients, seasonal styles, group styles, economy unlocks, milestone styles, moods, tools, history, favorites, top nicknames, and bio settings.\n\nThe menu also includes Quick Undo, Style Lab, milestone progress, and Nick Museum when enabled. Style Lab lets you nudge a safe color lighter, darker, warmer, cooler, redder, greener, bluer, pastel, softer, bolder, or random without typing raw hex codes. Nick Museum tracks styles you have used as a personal collection, and Museum Top shows the largest collections for fun.',
-    bullets: [
+    features: [
       'Open the nickname picker with /nick.',
       'Check your current nickname, cooldowns, history, legacy entry, and collection with /nick status.',
       'Pick a safe plain nickname with /nick set YourName.',
@@ -179,11 +184,11 @@ const PLAYER_GUIDE_OVERRIDES = {
   pvptoggle: {
     summary: 'Turn your own PvP state on or off and check your current PvP protection state.',
     intro: 'PvPToggle gives players a clear /pvp switch. Use it to see whether PvP is enabled for you and to turn your own PvP state on or off when the server allows it.',
-    bullets: [
-      'Run /pvp to see or change your current PvP state.',
-      'Use /pvp status when you only want to check your current setting.',
-      'Use /pvp on or /pvp off when you want a direct choice.',
-      'Use /pvp help if you are unsure which PvP commands are available to you.',
+    features: [
+      'A personal PvP on/off switch when the current world and server rules allow it.',
+      'A clear status view for the current PvP setting and protection state.',
+      'Direct /pvp on, /pvp off, and /pvp toggle choices.',
+      'Configurable feedback and visual effects when the state changes.',
     ],
   },
   recordingmode: {
@@ -196,7 +201,7 @@ const PLAYER_GUIDE_OVERRIDES = {
     guide: 'There is no player-side command for SchedulerCheck. Server owners use it from direct console to check CMI scheduler YAML, review enabled and disabled entries, explain one entry, estimate upcoming fixed-time runs, export reports, safely toggle one schedule entry, or create a basic delay/daily schedule without opening the file system.',
     pageIntro: 'This page documents SchedulerCheck as a public staff/reference guide. It has no player-facing command and intentionally rejects in-game use and RCON.',
     audienceHeading: 'How Staff Use It',
-    bullets: [
+    features: [
       'Run a YAML and value check before trusting a changed scheduler file.',
       'Catch invalid time values such as Hour: 31 or Minute: Five.',
       'List all, enabled, or disabled CMI scheduler entries.',
@@ -277,11 +282,11 @@ const PLAYER_GUIDE_OVERRIDES = {
   socialgatherings: {
     summary: 'Join small social activities around campfires, dinners, fishing, farms, markets, and other town spots.',
     intro: 'SocialGatherings rewards players for meeting up and doing small themed activities together. Some gatherings may happen around town builds such as campfires, dinner tables, beaches, markets, farms, or fishing spots.',
-    bullets: [
-      'Use /gathering to see the main gathering information.',
-      'Use /gathering types to browse gathering themes when they are enabled.',
-      'Use /gathering nearby to see whether your current location matches an active gathering area.',
-      'Use /gathering toggle if you want to opt in or out of gathering participation.',
+    features: [
+      'Small themed group activities around campfires, dinners, fishing spots, farms, markets, beaches, and town builds.',
+      'A gathering-type browser showing the social activities that are currently enabled.',
+      'Nearby-area detection that explains whether the current location can host a gathering.',
+      'Personal opt-in and opt-out controls for gathering participation.',
     ],
   },
   tpauto: {
@@ -292,6 +297,317 @@ const PLAYER_GUIDE_OVERRIDES = {
     summary: 'Trade vote tokens through safe menus, track tiers, and use eligible vote reward tools.',
     intro: 'VoteTokens gives players a safer menu for vote-token rewards. Open the menu to review trades, check progress, and use token tools when your account has access.',
   },
+};
+
+const FEATURE_BULLET_OVERRIDES = {
+  '1mb-cmiapi-lib': [
+    'A shared registry for feature names, categories, commands, permissions, placeholders, config paths, and support metadata.',
+    'Common configuration, translations, MiniMessage output, pagination, and clickable help components.',
+    'Shared UUID playerdata storage, cache ownership, and plugin-scoped cleanup tools.',
+    'Hardened GUI holders, click protection, consistent navigation, and the global GUI theme.',
+    'Shared permission checks, action rules, denial recording, and permission diagnosis helpers.',
+    'Audit redaction, report helpers, placeholder registration, and reusable runtime counters.',
+    'The /1mbcmi feature, debug, config, translation, and cleanup command surfaces used by staff.',
+  ],
+  autosell: [
+    'An opt-in AutoSell toggle with GUI controls for categories, individual materials, value filters, worlds, and notifications.',
+    'Pure-vanilla item checks that protect the hotbar, offhand, armor, named items, custom items, and blocked materials.',
+    'Delayed batch selling with a preview, exact-stack recheck, server economy payment, and item refund if payment fails.',
+    'Daily sell caps, inventory-full triggering, recent sale results, and quick blacklist actions from warnings.',
+    'Broker levels, milestones, sell chains, streak bonuses, and personal category and material statistics.',
+    'Daily and weekly quests with visible progress and claimable rewards.',
+    'AutoSell happy-hour boosts that can also appear in /rate.',
+    'Chunk-change and overheat safeguards that reduce repetitive automated farming.',
+  ],
+  birthdaylanterns: [
+    'Collectible lantern keepsakes for birthdays, player anniversaries, and 1MoreBlock server milestones.',
+    'A /birthday GUI for claimable lanterns, status, presets, greetings, guestbook entries, and mail.',
+    'Strict birthday setup with visibility controls and configurable celebration effects.',
+    'Particle and sound presets for personal birthday celebrations.',
+    'Finite wish charges on marked lantern items, with clear remaining-use details.',
+    'Personalized celebration mail and guestbook messages with input limits and safety checks.',
+    'Server-marked item identity, claim history, and optional configured reward commands.',
+  ],
+  collect: [
+    'A seasonal event GUI with current-week items, safe inventory-scanned submissions, event status, and reward access.',
+    'Personal daily, weekly, monthly, all-event, streak, and best-score progress.',
+    'Capped Lucky Finds that can add rare virtual bonus progress during valid submissions.',
+    'Community progress and personal milestone goals.',
+    'Daily, weekly, monthly, and all-event leaderboards with highlighted top-three players.',
+    'Hidden future weeks so upcoming event content stays a surprise.',
+    'Server-marked keepsake rewards and a duplicate reward exchange.',
+    'Claim pages for participation, streak, milestone, and leaderboard rewards.',
+  ],
+  discordchat: [
+    'DiscordChat EXP for meaningful linked-account activity in the DiscordSRV server-chat bridge.',
+    'Daily participation streaks and milestones that convert stored EXP into spendable points.',
+    'A GUI with personal status, tracked activity, community pulse, milestones, history, and public top lists.',
+    'Preview-first point reward trades and safe point-funded item tools.',
+    'Temporary community XP bonus windows that can also appear in /rate.',
+    'Unlockable chat prefix and suffix presets.',
+    'Personal controls for Discord reminders and public milestone celebrations.',
+    'Linked-account guidance, first-Discord participation feedback, and privacy-aware progress tracking.',
+  ],
+  emotemenu: [
+    'A searchable /emotes GUI for the server emote commands already available to the player.',
+    'Clickable emote entries with plain descriptions and the exact command shape.',
+    'Paginated chat lists for players who prefer commands over a GUI.',
+    'Online-player pickers for emotes with optional or required targets.',
+    'Safe handling for emotes that need non-player arguments.',
+    'A Main Menu shortcut when the Menu plugin is installed and enabled.',
+  ],
+  exchange: [
+    'A menu of configured exchanges for seasonal events, vote-token hand-ins, kit unlocks, and resource turn-ins.',
+    'Trades that can require exact items, money, EXP levels, or a combination of requirements.',
+    'Command-based rewards that run only after the exchange requirements pass.',
+    'One-time, repeatable, and limited-use exchanges with per-player usage tracking.',
+    'Category pages, date windows, world restrictions, and permission-gated entries when configured.',
+    'Optional hiding of completed exchanges so the normal menu stays focused on usable trades.',
+  ],
+  forage: [
+    'Curated Forage tools with tool soul XP, tiers, durability, and family-specific gathering actions.',
+    'Player XP, Forage Points, levels, skill branches, milestones, and read-only top boards.',
+    'Daily, weekly, and monthly quests with ready-to-claim reward views.',
+    'Camp-only tool upgrades, diamond refinement, controlled enchants, and Repair & Merge.',
+    'Camp turn-ins for eligible plain vanilla forage items.',
+    'Multi-tier Forage Dust crafting with bounded growth pulses and rare treasure outcomes.',
+    'Chunk exhaustion, daily caps, source-family rules, and other anti-farm protections.',
+    'Camp-ready feedback, tool explanations, personal stats, tips, and progress placeholders.',
+  ],
+  gametypes: [
+    'One menu system for OneBlock, SkyBlock, AcidIsland, CaveBlock, and SkyGrid.',
+    'Automatic current-world detection with a game-type index when no island world is detected.',
+    'Core island actions for travel, creation, teams, information, help, top lists, kits, and daily shops.',
+    'Addon buttons for warps, challenges, levels, biomes, generators, borders, and other installed BentoBox features.',
+    'Per-game-type button visibility based on installed and enabled BentoBox addons.',
+    'A confirmation screen for destructive island reset actions when reset is enabled.',
+    'Back-to-index navigation for switching between configured game types.',
+  ],
+  journeymap: [
+    'Playtime eras and badges that show where a player is in the long-term server journey.',
+    'A milestone list with earned goals, the next target, and remaining playtime.',
+    'Optional one-time rewards for completed milestones.',
+    'Manual claiming or automatic reward delivery, depending on server configuration.',
+    'Personal status, milestone, reward, claim, and refresh commands.',
+    'Persistent maximum playtime and milestone history in shared playerdata.',
+  ],
+  kitstreaks: [
+    'Per-kit claim streaks for configured daily, starter, event, or other tracked kits.',
+    'Milestone calendars with common 7, 14, 21, 28, and 365 day goals.',
+    'Clear streak health states such as safe today, due today, grace, or missed.',
+    'Claim history, current and longest streaks, and next-milestone progress.',
+    'Optional milestone rewards with claim-based or automatic delivery.',
+    'A whitelist for tracked kits so unrelated reward kits do not affect streaks.',
+    'Player status, milestone, reward, and refresh views.',
+  ],
+  lavaboots: [
+    'Finite server-marked boots that provide short lava movement assistance and fire-resistance windows.',
+    'Five configured levels, including rare event tiers with lava vision.',
+    'Stored charge that drains only while the boots are actively helping in lava.',
+    'Offhand magma cream or fire charges as optional fuel while in lava.',
+    'Real leather-boot durability loss alongside the separate charge supply.',
+    'Dyed themes and profile information visible through /lavaboots.',
+    'Repair, anvil, enchant, smithing, grindstone, and common repair-command guards that keep the item finite.',
+  ],
+  menu: [
+    'A main /menu GUI for discovering worlds, travel, homes, kits, economy, progression, events, and server information.',
+    'Feature buttons with a title, short description, direct command, and click hint.',
+    'Automatic staggered layout and pagination when more buttons are enabled.',
+    'Live player stats, server information, smart-home navigation, and a consistent close button.',
+    'Automatic visibility checks so disabled or missing feature plugins do not leave dead buttons.',
+    'Back-button support that lets other server GUIs return players to the main menu safely.',
+  ],
+  mobhat: [
+    'Cosmetic hats made from a safe whitelist of supported mob appearances.',
+    'Direct selection, target-based selection, and optional /hat mob alias support.',
+    'Baby variants and modern entity scale handling where the mob supports them.',
+    'World restrictions and optional empty-inventory-slot requirements.',
+    'Experimental shoulder and back offsets for controlled testing when enabled.',
+    'Automatic cleanup on quit, death, world change, dismount, plugin disable, or stale state.',
+  ],
+  passportdiscovery: [
+    'One discovery passport for worlds, warps, visits, biomes, blocks, items, consumables, tools, weapons, armor, kills, mounts, and exploration.',
+    'Automatic stamps from normal gameplay events with each discovery type independently configurable.',
+    'Status, known, missing, recent, detailed entry, and per-type statistics views.',
+    'Personal collection pacing controls and progress-message preferences.',
+    'Public top lists for overall progress or one discovery type.',
+    'One-time completion rewards plus generic stamp credits for continued completed-passport activity.',
+    'Stamp-credit trades for configured reward boxes.',
+    'Shared UUID playerdata so long-lived discovery progress survives restarts.',
+  ],
+  recordingmode: [
+    'A personal recording mode that temporarily quiets selected private messages, requests, tips, and visibility surfaces.',
+    'Per-channel settings so players can decide what remains enabled while recording or streaming.',
+    'Automatic capture and restoration of the previous server message and request settings.',
+    'Persistent personal preferences in shared playerdata.',
+    'A clickable status panel showing the current recording state and each channel preference.',
+    'Simple on, off, toggle, status, and per-channel commands.',
+  ],
+  refer: [
+    'A two-step referral request and confirmation flow between two players.',
+    'Playtime eligibility checks for both the referrer and the referred player.',
+    'Duplicate-claim protection and expiring pending requests.',
+    'Separate configured rewards or permission markers for each participant.',
+    'Status, accept, deny, and cancel controls for an active referral request.',
+  ],
+  scheduledtips: [
+    'Clickable scheduled tips with compact, readable formatting.',
+    'Per-player seen counts and dismissal controls for tips that are no longer useful.',
+    'A global personal /tips on or /tips off preference.',
+    'Quick click actions for dismissing one tip or hiding scheduled tips entirely.',
+    'Live booster substitutions for matching mcMMO, Jobs, Points, and DiscordChat tips.',
+    'Persistent visibility and dismissal preferences in shared playerdata.',
+  ],
+  sellstreaks: [
+    'Daily tracking for sell events, item totals, payments, unique materials, and material variety.',
+    'Variety reward thresholds that encourage selling more than one repeated material.',
+    'Daily market goals for specific materials with visible completion progress.',
+    'Automatic daily resets and persistent lifetime progress.',
+    'A configurable daily reward cap and one-item spam protection.',
+    'Personal status, current goals, next reward threshold, and public top lists.',
+  ],
+  spawners: [
+    'A tiered CMI spawner shop GUI with friendly, hostile, event, and companion-oriented categories.',
+    'Paper entity discovery, spawn-egg icons, availability glints, and blocked utility-entity filtering.',
+    'Price, balance, permission, event-window, personal-limit, and stock checks before purchase.',
+    'A confirmation screen before money is withdrawn and a spawner is granted.',
+    'Annual event purchase limits with personal event progress and remaining stock.',
+    'Per-spawner disables, price overrides, category moves, and future group/tier presentation.',
+    'A restricted administrative browser for entries hidden from normal players.',
+    'Safe scaffolding for a future sell-to-server section, disabled by default.',
+  ],
+  todo: [
+    'A private per-player list for building tasks, shopping notes, repayment reminders, and other short ideas.',
+    'Add, list, page, view, edit, search, complete, reopen, and remove actions.',
+    'Separate open and completed views with newest-first or oldest-first sorting.',
+    'Confirmation before deleting one entry and a separate clear-completed action.',
+    'Sharing one selected todo entry with another player.',
+    'Configurable open-item limits with permission-based larger limits.',
+    'Persistent lifetime completion counts for milestones and placeholders.',
+  ],
+  tpauto: [
+    'A personal toggle for automatically accepting incoming CMI /tpa and /tpahere requests.',
+    'Trusted-role access so the feature can be limited to hosts, streamers, staff, or build teams.',
+    'Separate on, off, toggle, reset, and status controls.',
+    'Optional notifications for the requester and target after an automatic acceptance.',
+    'CMI remains responsible for request validity, cooldowns, warmups, safety checks, and the teleport itself.',
+  ],
+  visit: [
+    'One hidden personal visit warp that other players can use through /visit <player>.',
+    'A public visit browser with owner messages and strict player-name lookup.',
+    'Personal controls for visit visibility, offline visits, cooldowns, and optional money settings.',
+    'Perked arrival titles, subtitles, particles, and sounds.',
+    'A readable settings status page with clickable quick toggles.',
+    'Persistent visit statistics and public top lists.',
+    'Safe server-warp integration that keeps visit destinations out of normal warp lists.',
+  ],
+  votetokens: [
+    'A vote-token trade index with safe menus and confirmation before a trade.',
+    'Tier and layer progression that unlocks later trades after first-time completions.',
+    'A read-only progress tree with clear complete, in-progress, unlocked, locked, and disabled states.',
+    'Direct access to /vote and the server vote-item information page.',
+    'Locked-trade explanations showing exactly what is still missing.',
+    'Extra-token tools for upgrading eligible vote reward items.',
+    'Server-marked reward identity so only eligible vote items can use the tools.',
+    'Personal progress, completed trade history, and available reward views.',
+  ],
+  cmiprobe: [
+    'Read-only checks for CMI, CMILib, selected managers, and expected plugin dependencies.',
+    'Discovery of selected CMI custom event classes and registered listeners.',
+    'Command registration checks for required server and feature commands.',
+    'Online-player state snapshots for invulnerability, flight, health, AFK, and related support clues.',
+    'A temporary join-state watcher for delayed state changes caused by another plugin.',
+    'Compact status and report output for centralized or local test templates.',
+  ],
+  consolenoiserouter: [
+    'Classification of CMI console messages into ignored noise, information, debug, warnings, errors, alerts, and unknown entries.',
+    'Strict configured patterns with sanitized recent-message storage.',
+    'Per-level recent and lifetime counters.',
+    'Paginated recent views with level filters, sequence inspection, and safe text search.',
+    'Dry-run classification testing for a sample message.',
+    'Bounded support dumps without changing gameplay or console behavior.',
+  ],
+  endcrystals: [
+    'Protection for blocks against destructive end crystal explosion edits and drops.',
+    'Protection for configured decorative entities, display entities, dropped items, boats, and minecarts near crystal explosions.',
+    'Optional prevention of direct player and player-projectile crystal breaking.',
+    'A separate End-world setting that can preserve normal dragon-fight crystal behavior.',
+    'Explicit break-bypass permission and live staff toggles for the protection layers.',
+    'Runtime counters and status views for protected explosions and break attempts.',
+  ],
+  eventrecorder: [
+    'Opt-in recording for selected CMI custom event groups on test servers.',
+    'Optional discovery recording for every available CMI event class.',
+    'Explicitly enabled CMILib and Paper logger-line recording.',
+    'A bounded recent event buffer with event filters, pagination, search, and sequence inspection.',
+    'Per-event recent and total counters with cancellation, async, player, and safe field context.',
+    'Sanitized debug-file dumps and cache cleanup for test-session evidence.',
+  ],
+  permissionprobe: [
+    'Read-only effective permission checks for online and cached offline players.',
+    'LuckPerms source traces for exact, wildcard, user, group, inherited, temporary, and context-tagged nodes.',
+    'Feature, player, group, command, and context access summaries.',
+    'Player-to-player and group-to-group permission comparisons.',
+    'Expected-profile checks plus broad wildcard and orphan-node scans.',
+    'Passive denied-check recording and temporary live watch windows.',
+    'GitHub-table and Discord-friendly Markdown exports for each diagnostic view.',
+    'Strict owner-only access without changing permissions or player data.',
+  ],
+  pluginversions: [
+    'A searchable inventory of loaded plugins, versions, enabled state, and curated project links.',
+    'A tested Java, Paper, CMI, CMILib, and dependency compatibility gate.',
+    'Plugin and server summaries for post-update support checks.',
+    'A persistent plugin inventory database with optional refresh behavior.',
+    'Manual source, download, documentation, and support URL curation.',
+    'URL audits that highlight missing or malformed project links.',
+    'Full Markdown and compact Discord-friendly export reports.',
+  ],
+  potions: [
+    'A locked staff forge for normal, splash, and lingering custom event potions.',
+    'Configured potion effects, levels, durations, money or EXP costs, success messages, and sounds.',
+    'Fourteen themed title and lore variants plus reusable particle presets.',
+    'Collection bundles for event sets and museum-style collecting.',
+    'Server-marked item identity with snapshotted effects and drink costs.',
+    'Runtime enable and disable controls that can block already-created marked potions by id.',
+    'A player-safe /potions inspection command for the marked item held in either hand.',
+    'GUI and command editing for safe potion-definition fields without rewriting existing items.',
+  ],
+  profile: [
+    'A staff-only Java, Bedrock, Floodgate, name, UUID, and account-status profile view.',
+    'Cached CMI, server-log, shared-playerdata, Geyser, and Floodgate identity signals.',
+    'Optional remote profile context with cooldowns, timeouts, and stale-cache refresh.',
+    'Permission-separated IP and public ban-list review signals.',
+    'Known-name history plus manually verified names, notes, flags, IP signals, and reference links.',
+    'Markdown exports for careful staff review and Discord sharing.',
+    'Context-only output with no automatic punishment decisions.',
+  ],
+  staffcenter: [
+    'A read-only player dashboard with summary, moderation, economy, location, home, or combined sections.',
+    'Online state, UUID, names, AFK, vanish, jail, mute, balance, warnings, playtime, and rank context where available.',
+    'Permission-separated access to sensitive moderation, economy, location, and home details.',
+    'Recent lookup history with section filters, search, and per-section counters.',
+    'Support dumps for reviewed lookup records.',
+    'CMI, CMILib, PlaceholderAPI, LuckPerms, and Vault hook status.',
+    'Console-friendly text output without punishment actions.',
+  ],
+  updatesmoke: [
+    'A post-update compatibility checklist for Paper, Java, CMI, CMILib, PlaceholderAPI, and the 1MB feature jars.',
+    'Accepted Paper and Java matrix validation plus loaded version and dependency checks.',
+    'Required command registration and read-only command dispatch smoke checks.',
+    'Required placeholder parsing and unresolved-placeholder detection.',
+    'Selected CMI and CMILib API reachability checks.',
+    'Registered feature metadata and current build checks.',
+    'Paginated results, placeholders, and timestamped support reports without repairs or data mutation.',
+  ],
+  upgrade: [
+    'Join-time suggestions when a player appears eligible for the next configured LuckPerms group.',
+    'Read-only inspect, simulate, path, and explanation tools that reuse the real transition rules.',
+    'An online-player review queue GUI with fresh eligibility checks.',
+    'Explicit confirmation and a second safety check immediately before applying an upgrade.',
+    'A configurable managed-group ladder with disabled future transitions until staff enables them.',
+    'Optional cosmetic rewards, promotion effects, mail, and Discord-link reminders.',
+    'Audited, permission-separated notification, review, simulation, and apply access.',
+  ],
 };
 
 const PLAYER_COMMANDS = [
@@ -401,6 +717,13 @@ function markdownList(items) {
   return items.map((item) => `- ${escapeHtml(clampText(friendlyText(item)))}`).join('\n');
 }
 
+function featureList(items) {
+  if (!items.length) {
+    return '- No currently available features are documented yet.';
+  }
+  return items.map((item) => `- ${escapeHtml(clampText(item, 360))}`).join('\n');
+}
+
 function numberedList(items) {
   return items.map((item, index) => `${index + 1}. ${item}`).join('\n');
 }
@@ -428,6 +751,47 @@ function parsePlugins(markdown) {
 
 function slugFromFile(file) {
   return path.basename(file, '.md').toLowerCase();
+}
+
+function audienceInfo(plugin) {
+  if (plugin.category === 'Player Fun') {
+    return {
+      heading: 'How Players Use It',
+      description: `Learn what ${plugin.name} does, how to use it, and which public commands are available.`,
+      pageIntro: `This page introduces ${plugin.name} from a public server-docs point of view. It focuses on what the feature does in-game, how to get started when you have access, and which commands are useful.`,
+      fallbackWithCommand: `The sections below explain what ${plugin.name} is for, which commands players can try, and what to expect when your account has access.`,
+      fallbackWithoutCommand: `Use this page as a friendly guide to ${plugin.name}. It explains what the feature is for and what players can try in-game when their account has access.`,
+      noCommands: 'No player-facing commands are listed for this plugin yet.',
+    };
+  }
+  if (plugin.category === 'Generic / Dev') {
+    return {
+      heading: 'How Testers Use It',
+      description: `Learn what ${plugin.name} checks, how testers use it, and which public test commands are available.`,
+      pageIntro: `This page introduces ${plugin.name} as a public testing guide. It focuses on what the tool checks, how testers get started, and which commands are useful on an authorized test server.`,
+      fallbackWithCommand: `The sections below explain what ${plugin.name} checks, which commands authorized testers can use, and what its output means.`,
+      fallbackWithoutCommand: `Use this page as a public testing guide to ${plugin.name}. It explains what the tool checks and how it supports development or compatibility testing.`,
+      noCommands: 'No public tester commands are listed for this plugin yet.',
+    };
+  }
+  if (plugin.category === 'Shared Library') {
+    return {
+      heading: 'How The Server Uses It',
+      description: `Learn which shared services ${plugin.name} provides to the 1MoreBlock feature plugins.`,
+      pageIntro: `This page introduces ${plugin.name} as the shared runtime behind the 1MoreBlock feature plugins. It focuses on common services and the staff-facing tools that support those features.`,
+      fallbackWithCommand: `The sections below explain which services ${plugin.name} provides and which shared staff commands are available.`,
+      fallbackWithoutCommand: `Use this page as a public reference for the common services ${plugin.name} provides to the feature plugins.`,
+      noCommands: 'No public shared-library commands are listed yet.',
+    };
+  }
+  return {
+    heading: 'How Staff Use It',
+    description: `Learn what ${plugin.name} does, how staff use it, and which public staff commands are available.`,
+    pageIntro: `This page introduces ${plugin.name} as a public staff guide. It focuses on what the tool does, how authorized staff get started, and which commands are useful.`,
+    fallbackWithCommand: `The sections below explain what ${plugin.name} is for, which commands authorized staff can use, and what its output means.`,
+    fallbackWithoutCommand: `Use this page as a public staff guide to ${plugin.name}. It explains what the tool does and how authorized staff use it.`,
+    noCommands: 'No public staff commands are listed for this plugin yet.',
+  };
 }
 
 function normalizeHeading(value) {
@@ -585,11 +949,12 @@ function guideParagraphs(markdown, plugin, commandData) {
   if (selected.length) {
     return selected.map((paragraph) => escapeHtml(paragraph)).join('\n\n');
   }
+  const audience = audienceInfo(plugin);
   const root = commandData.playerCommands.find((command) => commandParts(command).length === 1) ?? commandData.playerCommands[0];
   if (root) {
-    return escapeHtml(`Start in-game with ${commandExample(root)}. The sections below explain what ${plugin.name} is for, which commands players can try, and what to expect when your account has access.`);
+    return escapeHtml(`Start with ${commandExample(root)}. ${audience.fallbackWithCommand}`);
   }
-  return escapeHtml(`Use this page as a friendly guide to ${plugin.name}. It explains what the feature is for, what players can try in-game, and which commands are available when your account has access.`);
+  return escapeHtml(audience.fallbackWithoutCommand);
 }
 
 function fallbackPlayerBullets(plugin, commandData) {
@@ -608,7 +973,29 @@ function fallbackPlayerBullets(plugin, commandData) {
   ].filter(Boolean));
 }
 
-function playerBulletItems(plugin, markdown, commandData) {
+function publicFeatureText(value, plugin) {
+  if (plugin.category === 'Player Fun') {
+    return friendlyText(value);
+  }
+  return sentenceCase(cleanMarkdownCell(value)
+    .replace(/^[-*]\s+/, '')
+    .replace(/^\d+\.\s+/, '')
+    .replace(/\s+/g, ' ')
+    .trim());
+}
+
+function isPublicFeatureText(value, plugin) {
+  if (plugin.category === 'Player Fun') {
+    return isPlayerFacingText(value);
+  }
+  const lower = value.toLowerCase();
+  return value.length >= 16
+    && value.length <= 420
+    && !lower.includes('register command, permission, placeholder')
+    && !lower.includes('1mb-cmiapi-lib');
+}
+
+function featureBulletItems(plugin, markdown, commandData) {
   const sectionNames = [
     'Player Experience',
     'Player Flow',
@@ -627,8 +1014,8 @@ function playerBulletItems(plugin, markdown, commandData) {
     .map((name) => extractSection(markdown, [name]))
     .filter(Boolean)
     .flatMap(extractListItems)
-    .map(friendlyText)
-    .filter(isPlayerFacingText);
+    .map((item) => publicFeatureText(item, plugin))
+    .filter((item) => isPublicFeatureText(item, plugin));
   if (items.length >= 3) {
     return uniqueValues(items).slice(0, 8);
   }
@@ -638,6 +1025,24 @@ function playerBulletItems(plugin, markdown, commandData) {
 function quickStartSteps(plugin, commandData) {
   const commands = commandData.playerCommands;
   if (!commands.length) {
+    if (plugin.category === 'Shared Library') {
+      return [
+        'Review the available shared services above to understand what the feature plugins receive from the library.',
+        'Open the full reference before using shared staff, config, data, or cleanup tooling.',
+      ];
+    }
+    if (plugin.category === 'Generic / Dev') {
+      return [
+        'Review the available checks above and confirm the tool belongs on the authorized test server.',
+        'Open the full reference for exact tester commands, permissions, output, and safety notes.',
+      ];
+    }
+    if (plugin.category !== 'Player Fun') {
+      return [
+        'Review the available staff features above and confirm the tool is appropriate for the current task.',
+        'Open the full reference for exact commands, permissions, configuration, and safety notes.',
+      ];
+    }
     return [
       `Open the feature from the server menu when it is available.`,
       `Check the feature page again later as more player-facing details are added.`,
@@ -656,6 +1061,24 @@ function quickStartSteps(plugin, commandData) {
 }
 
 function goodToKnow(plugin, commandData) {
+  if (plugin.category === 'Shared Library') {
+    return [
+      'This is shared server infrastructure, not a normal player-facing feature.',
+      'Feature plugins depend on these services, so staff should review the full reference before changing shared config or data.',
+    ];
+  }
+  if (plugin.category === 'Generic / Dev') {
+    return [
+      'This is a permission-gated testing or development tool, not a normal player feature.',
+      'Use it only on an authorized server and review the full reference before running diagnostics or exports.',
+    ];
+  }
+  if (plugin.category !== 'Player Fun') {
+    return [
+      'This is a permission-gated staff or server-management feature, not a normal player feature.',
+      'Review the full reference before changing settings or using any command that can write data.',
+    ];
+  }
   const notes = [
     'Some commands may be hidden until your group, event progress, or unlocks allow them.',
     'If a command opens a menu, follow the buttons in-game; the website is only the learning guide.',
@@ -1145,9 +1568,11 @@ ${rows}
 </table>`;
 }
 
-function examplesList(examples) {
+function examplesList(examples, hasCommands) {
   if (!examples.length) {
-    return '- No separate examples are listed yet. Use the command examples above as a starting point.';
+    return hasCommands
+      ? '- No separate examples are listed yet. Use the command examples above as a starting point.'
+      : '- Open the full reference below for exact permission-gated commands and examples.';
   }
   return examples.map((example) => `- \`${example}\``).join('\n');
 }
@@ -1169,8 +1594,8 @@ function groupedLists(plugins) {
 
 const pluginMarkdown = await readFile(pluginReadme, 'utf8');
 const plugins = parsePlugins(pluginMarkdown);
-const playerPlugins = plugins.filter((plugin) => plugin.category === 'Player Fun');
-const guidePlugins = plugins.filter((plugin) => plugin.file !== 'hoppers-roadmap.md');
+const guidePlugins = plugins.filter((plugin) => !plugin.file.endsWith('-roadmap.md'));
+const playerPlugins = guidePlugins.filter((plugin) => plugin.category === 'Player Fun');
 const pluginDetails = new Map();
 const commandIndexRows = [];
 
@@ -1205,11 +1630,12 @@ for (const plugin of guidePlugins) {
   }
   const guideBody = override.guide ? escapeHtml(override.guide).replaceAll('\n\n', '\n\n') : guideParagraphs(markdown, plugin, commandData);
   const quickStart = override.quickStart ?? quickStartSteps(plugin, commandData);
-  const playerBullets = override.bullets ?? playerBulletItems(plugin, markdown, commandData);
+  const featureBullets = override.features ?? FEATURE_BULLET_OVERRIDES[slug] ?? featureBulletItems(plugin, markdown, commandData);
   const notes = override.notes ?? goodToKnow(plugin, commandData);
   const examples = override.examples ?? commandData.playerExamples;
-  const pageIntro = override.pageIntro ?? `This page introduces ${escapeHtml(plugin.name)} from a public server-docs point of view. It focuses on what the feature does in-game, how to get started when you have access, and which commands are useful.`;
-  const audienceHeading = override.audienceHeading ?? 'How Players Use It';
+  const audience = audienceInfo(plugin);
+  const pageIntro = override.pageIntro ?? audience.pageIntro;
+  const audienceHeading = override.audienceHeading ?? audience.heading;
   pluginDetails.set(slug, commandData);
 
   for (const command of override.includeInCommandIndex === false ? [] : commandData.playerCommands) {
@@ -1224,7 +1650,7 @@ for (const plugin of guidePlugins) {
 
   await writeFile(path.join(pluginGuideRoot, `${slug}.mdx`), `---
 title: ${plugin.name} Guide
-description: Learn what ${plugin.name} does, how to use it, and which public commands are available.
+description: ${audience.description}
 ---
 
 ${pageIntro}
@@ -1237,9 +1663,9 @@ ${escapeHtml(purpose)}
 
 ${guideBody}
 
-## Things You Can Do
+Available features include:
 
-${markdownList(playerBullets)}
+${featureList(featureBullets)}
 
 ## Quick Start
 
@@ -1247,11 +1673,11 @@ ${numberedList(quickStart)}
 
 ## Commands
 
-${commandData.playerCommands.length ? pluginCommandTable(plugin, commandData) : 'No player-facing commands are listed for this plugin yet.'}
+${commandData.playerCommands.length ? pluginCommandTable(plugin, commandData) : audience.noCommands}
 
 ${commandData.playerAliases.length ? `## Aliases\n\n${commandData.playerAliases.map((alias) => `- \`${alias}\``).join('\n')}\n\n` : ''}## Examples
 
-${examplesList(examples)}
+${examplesList(examples, commandData.playerCommands.length > 0)}
 
 ## Good To Know
 
@@ -1392,4 +1818,4 @@ The links below open the raw synced Markdown in GitHub. They are public document
 ${groupedLists(plugins)}
 `);
 
-console.log(`Generated Starlight content for ${plugins.length} plugin docs.`);
+console.log(`Generated Starlight content for ${guidePlugins.length} current plugin guides.`);

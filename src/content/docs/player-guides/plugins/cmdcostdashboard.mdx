@@ -1,26 +1,28 @@
 ---
 title: CmdCostDashboard Guide
-description: Learn what CmdCostDashboard does, how to use it, and which public commands are available.
+description: Learn what CmdCostDashboard does, how staff use it, and which public staff commands are available.
 ---
 
-This page introduces CmdCostDashboard from a public server-docs point of view. It focuses on what the feature does in-game, how to get started when you have access, and which commands are useful.
+This page introduces CmdCostDashboard as a public staff guide. It focuses on what the tool does, how authorized staff get started, and which commands are useful.
 
 ## What It Does
 
 CmdCostDashboard is a read-only server-management plugin for reviewing server command costs, observed command usage, and money removed by command fees.
 
-## How Players Use It
+## How Staff Use It
 
-Start in-game with /cmdcosts. The sections below explain what CmdCostDashboard is for, which commands players can try, and what to expect when your account has access.
+Start with /cmdcosts. The sections below explain what CmdCostDashboard is for, which commands authorized staff can use, and what its output means.
 
-## Things You Can Do
+Available features include:
 
-- Observe player command usage through server command preprocess events.
+- Read CMI command cost manager availability and configured cost count.
+- Read configured CMI command cost entries from the runtime manager for dashboard display.
+- Observe player command usage through Paper command preprocess events.
 - Correlate negative CMIUserBalanceChangeEvent deltas near recent player commands.
 - Track observed uses, correlated fee count, and money removed by command.
 - Flag low-cost/high-use commands as potentially too cheap.
-- Simulate server command cost usability for an online player without executing the command.
-- Write timestamped support reports to the shared cache folder.
+- Flag high configured costs as potentially too expensive.
+- Flag configured-cost commands with repeated uses but no correlated fees as possible confusion or bypass cases.
 
 ## Quick Start
 
@@ -76,10 +78,8 @@ Start in-game with /cmdcosts. The sections below explain what CmdCostDashboard i
 
 ## Good To Know
 
-- Some commands may be hidden until your group, event progress, or unlocks allow them.
-- If a command opens a menu, follow the buttons in-game; the website is only the learning guide.
-- You may also see /commandcosts or /ccosts as a shortcut.
-- Top lists and leaderboards are public-facing progress views when the feature enables them.
+- This is a permission-gated staff or server-management feature, not a normal player feature.
+- Review the full reference before changing settings or using any command that can write data.
 
 ## Full Reference
 

@@ -1,24 +1,28 @@
 ---
 title: 1MBStaffMsg Guide
-description: Learn what 1MBStaffMsg does, how to use it, and which public commands are available.
+description: Learn what 1MBStaffMsg does, how staff use it, and which public staff commands are available.
 ---
 
-This page introduces 1MBStaffMsg from a public server-docs point of view. It focuses on what the feature does in-game, how to get started when you have access, and which commands are useful.
+This page introduces 1MBStaffMsg as a public staff guide. It focuses on what the tool does, how authorized staff get started, and which commands are useful.
 
 ## What It Does
 
 Runtime recent history helper for server staffmsg and /s recent.
 
-## How Players Use It
+## How Staff Use It
 
-Start in-game with /s recent. The sections below explain what 1MBStaffMsg is for, which commands players can try, and what to expect when your account has access.
+Start with /s recent. The sections below explain what 1MBStaffMsg is for, which commands authorized staff can use, and what its output means.
 
-## Things You Can Do
+Available features include:
 
+- Captures staff messages sent through /s &lt;message&gt;, /staffmsg &lt;message&gt;, and /cmi staffmsg &lt;message&gt;.
 - Adds /s recent [page], /staffmsg recent [page], /cmi staffmsg recent [page], and /1mbstaffmsg recent [page].
-- Adds recent as a tab suggestion for /s, /staffmsg, and /cmi staffmsg when the sender can use server staffmsg.
-- Recent rows are compact.
+- Adds recent as a tab suggestion for /s, /staffmsg, and /cmi staffmsg when the sender can use CMI staffmsg.
+- Uses CMI's existing cmi.command.staffmsg permission by default, so the same staff members who can use staffmsg can view staffmsg recent history.
+- Stores recent messages only in memory. Restarting or reloading clears the runtime list.
+- Recent rows are compact. Hover over the sender for world, coordinates, time, source command, and online staff recipients.
 - Clicking a recent sender suggests /s for a quick staffmsg reply.
+- Shift-clicking a recent sender inserts /cmi tppos &lt;x&gt; &lt;y&gt; &lt;z&gt; &lt;world&gt; for fast staff teleport follow-up.
 
 ## Quick Start
 
@@ -85,8 +89,8 @@ Start in-game with /s recent. The sections below explain what 1MBStaffMsg is for
 
 ## Good To Know
 
-- Some commands may be hidden until your group, event progress, or unlocks allow them.
-- If a command opens a menu, follow the buttons in-game; the website is only the learning guide.
+- This is a permission-gated staff or server-management feature, not a normal player feature.
+- Review the full reference before changing settings or using any command that can write data.
 
 ## Full Reference
 

@@ -1,27 +1,28 @@
 ---
 title: WorthDrift Guide
-description: Learn what WorthDrift does, how to use it, and which public commands are available.
+description: Learn what WorthDrift does, how staff use it, and which public staff commands are available.
 ---
 
-This page introduces WorthDrift from a public server-docs point of view. It focuses on what the feature does in-game, how to get started when you have access, and which commands are useful.
+This page introduces WorthDrift as a public staff guide. It focuses on what the tool does, how authorized staff get started, and which commands are useful.
 
 ## What It Does
 
 Server sell-event drift analyzer plus ShopGUI+ buyPrice vs server Worth.yml Markdown reports for missing, drifting, duplicate, not-in-worth, illegal-item, and exception-filtered review.
 
-## How Players Use It
+## How Staff Use It
 
-Start in-game with /worthdrift. The sections below explain what WorthDrift is for, which commands players can try, and what to expect when your account has access.
+Start with /worthdrift. The sections below explain what WorthDrift is for, which commands authorized staff can use, and what its output means.
 
-## Things You Can Do
+Available features include:
 
-- Read per-material sold amounts and payments from server's sell event.
+- Listen to CMIPlayerItemsSellEvent at monitor priority.
+- Read per-material sold amounts and payments from CMI's sell event.
+- Compare observed unit payment against CMI WorthManager / WorthItem configured sell price.
+- Detect material-level drift when observed average differs from configured worth by configured percent and absolute thresholds.
+- Flag high-value materials based on configured or observed unit value.
 - Flag player concentration when one player accounts for a large share of a material's observed payment.
-- Ask server WorthItem whether an exploit recipe is known for a material.
+- Ask CMI WorthItem whether an exploit recipe is known for a material.
 - Keep a bounded recent sample list for report context.
-- Report per-row ShopGUI+ drift with material, worth value, current shop value, expected shop value, difference, percent drift, file, shop id, entry id, slot, and page.
-- Support Markdown exports for GitHub tables or Discord-friendly bullet lists.
-- Write timestamped support reports to the shared cache folder.
 
 ## Quick Start
 
@@ -125,10 +126,8 @@ Start in-game with /worthdrift. The sections below explain what WorthDrift is fo
 
 ## Good To Know
 
-- Some commands may be hidden until your group, event progress, or unlocks allow them.
-- If a command opens a menu, follow the buttons in-game; the website is only the learning guide.
-- You may also see /wdrift as a shortcut.
-- Top lists and leaderboards are public-facing progress views when the feature enables them.
+- This is a permission-gated staff or server-management feature, not a normal player feature.
+- Review the full reference before changing settings or using any command that can write data.
 
 ## Full Reference
 
