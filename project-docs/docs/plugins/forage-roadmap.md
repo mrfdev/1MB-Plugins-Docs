@@ -2,7 +2,7 @@
 
 This page preserves the planning notes for the `/forage` feature plugin. It is intentionally a roadmap, not a claim that every feature listed here exists today. The implemented v1 reference lives in [forage.md](forage.md).
 
-The goal is to build Forage gradually as a player-facing nature progression system for Paper 26.1.2+ and Java 25. It should complement mcMMO Woodcutting/Herbalism, JobsReborn jobs, and Pyro-style progression plugins without replacing them or creating economy loops.
+The goal is to build Forage gradually as a player-facing nature progression system for Paper 26.2+ and Java 25. It should complement mcMMO Woodcutting/Herbalism, JobsReborn jobs, and Pyro-style progression plugins without replacing them or creating economy loops.
 
 ## Product Direction
 

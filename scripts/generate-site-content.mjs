@@ -75,6 +75,7 @@ const PLAYER_GUIDE_OVERRIDES = {
     },
     notes: [
       'AFK postcards are private welcome-back summaries, not public broadcasts.',
+      'The pending-token explanation is plain text; only the short "Click this text to claim them now." call to action runs /afkshrine claim.',
       'Pending tokens are not spendable until you claim them with /afkshrine claim.',
       'Reward trades preview first; commands that spend tokens or items require confirmation.',
       'Some presets, tools, upgrades, and previews may be locked by rank, event progress, beta access, or server configuration.',

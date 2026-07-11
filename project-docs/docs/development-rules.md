@@ -3,7 +3,7 @@
 ## Runtime Baseline
 
 - Java 25+
-- Paper 26.1.2+
+- Paper 26.2+
 - CMI installed
 - CMILib installed
 - CMI-API used at compile time

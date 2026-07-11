@@ -205,10 +205,10 @@ dust-color
 dust-size
 ```
 
-`type` uses Bukkit/Paper `Particle` enum names. The Paper 26.1.2 enum page is:
+`type` uses Bukkit/Paper `Particle` enum names. The Paper 26.2 enum page is:
 
 ```text
-https://jd.papermc.io/paper/26.1.2/org/bukkit/Particle.html
+https://jd.papermc.io/paper/26.2/org/bukkit/Particle.html
 ```
 
 Particles that need extra data fall back to `DUST`, because this plugin only safely supplies data for `DUST`.

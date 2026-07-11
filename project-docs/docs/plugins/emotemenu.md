@@ -335,7 +335,7 @@ Useful admin checks:
 /1mbcmi debug plugin emotemenu config
 ```
 
-The local Paper 26.1.2 test server currently has `1MB-emotes.yml` with many CMI alias entries. With the default config and the file present, `/emotes aliases` should show simple entries as disabled and richer entries as enabled unless they were explicitly overridden. `/emotes disabled` opens the admin GUI for hidden entries.
+The local Paper 26.2 test server currently has `1MB-emotes.yml` with many CMI alias entries. With the default config and the file present, `/emotes aliases` should show simple entries as disabled and richer entries as enabled unless they were explicitly overridden. `/emotes disabled` opens the admin GUI for hidden entries.
 
 Config fallback emotes still exist, but they also default to disabled with `|false` at the end of each entry. If the CMI alias file is missing, `/emotes` will only show fallback entries that were changed to `|true` or enabled with `/emotes enable <id>`.
 
@@ -394,7 +394,7 @@ The target heads use each online player's Paper player profile so skins render i
 
 - Runs the configured CMI alias-editor emote commands as the player.
 - Uses `cmi ctext emotes` by default for the help book, but this is configurable.
-- Uses Paper's dialog API for the search input on Paper 26.1.2+, with a chat prompt fallback if dialogs are disabled or unavailable.
+- Uses Paper's dialog API for the search input on Paper 26.2+, with a chat prompt fallback if dialogs are disabled or unavailable.
 - Uses the shared `1MB-CMIAPI-LIB` GUI service, config loader, translations, pagination, placeholders, and debug registration.
 - Depends on CMI and CMILib at runtime like the other feature jars.
 - Uses Paper online-player and command dispatch APIs.

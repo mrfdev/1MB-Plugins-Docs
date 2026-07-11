@@ -7,73 +7,73 @@ This project uses separate jars for the shared library and every feature plugin.
 All jars should follow this shape:
 
 ```text
-1MB-CMIAPI-<Feature>-v<version>-<build>-j25-26.1.2.jar
+1MB-CMIAPI-<Feature>-v<version>-<build>-j25-26.2.jar
 ```
 
 Examples:
 
 ```text
-1MB-CMIAPI-LIB-v1.0.0-519-j25-26.1.2.jar
-1MB-CMIAPI-AFKShrine-v1.0.0-519-j25-26.1.2.jar
-1MB-CMIAPI-RecordingMode-v1.0.0-519-j25-26.1.2.jar
-1MB-CMIAPI-SellStreaks-v1.0.0-519-j25-26.1.2.jar
-1MB-CMIAPI-ScheduledTips-v1.0.0-519-j25-26.1.2.jar
-1MB-CMIAPI-Visit-v1.0.0-519-j25-26.1.2.jar
-1MB-CMIAPI-PassportDiscovery-v1.0.0-519-j25-26.1.2.jar
-1MB-CMIAPI-SocialGatherings-v1.0.0-519-j25-26.1.2.jar
-1MB-CMIAPI-JourneyMap-v1.0.0-519-j25-26.1.2.jar
-1MB-CMIAPI-KitStreaks-v1.0.0-519-j25-26.1.2.jar
-1MB-CMIAPI-MessageFont-v1.0.0-519-j25-26.1.2.jar
-1MB-CMIAPI-Nick-v1.0.0-519-j25-26.1.2.jar
-1MB-CMIAPI-EmoteMenu-v1.0.0-519-j25-26.1.2.jar
-1MB-CMIAPI-PvPToggle-v1.0.0-519-j25-26.1.2.jar
-1MB-CMIAPI-Boosters-v1.0.0-519-j25-26.1.2.jar
-1MB-CMIAPI-NameMC-v1.0.0-519-j25-26.1.2.jar
-1MB-CMIAPI-Exchange-v1.0.0-519-j25-26.1.2.jar
-1MB-CMIAPI-VoteTokens-v1.0.0-519-j25-26.1.2.jar
-1MB-CMIAPI-DiscordChat-v1.0.0-519-j25-26.1.2.jar
-1MB-CMIAPI-GameTypes-v1.0.0-519-j25-26.1.2.jar
-1MB-CMIAPI-BirthdayLanterns-v1.0.0-519-j25-26.1.2.jar
-1MB-CMIAPI-LavaBoots-v1.0.0-519-j25-26.1.2.jar
-1MB-CMIAPI-Spawners-v1.0.0-519-j25-26.1.2.jar
-1MB-CMIAPI-Collect-v1.0.0-519-j25-26.1.2.jar
-1MB-CMIAPI-Forage-v1.0.0-519-j25-26.1.2.jar
-1MB-CMIAPI-MobHat-v1.0.0-519-j25-26.1.2.jar
-1MB-CMIAPI-PlayerTodo-v1.0.0-519-j25-26.1.2.jar
-1MB-CMIAPI-Refer-v1.0.0-519-j25-26.1.2.jar
-1MB-CMIAPI-TPAuto-v1.0.0-519-j25-26.1.2.jar
-1MB-CMIAPI-Menu-v1.0.0-519-j25-26.1.2.jar
-1MB-CMIAPI-StaffCenter-v1.0.0-519-j25-26.1.2.jar
-1MB-CMIAPI-Profile-v1.0.0-519-j25-26.1.2.jar
-1MB-CMIAPI-FilterLab-v1.0.0-519-j25-26.1.2.jar
-1MB-CMIAPI-FilterGuard-v1.0.0-519-j25-26.1.2.jar
-1MB-CMIAPI-WarningLens-v1.0.0-519-j25-26.1.2.jar
-1MB-CMIAPI-NotableMsg-v1.0.0-519-j25-26.1.2.jar
-1MB-CMIAPI-1MBStaffMsg-v1.0.0-519-j25-26.1.2.jar
-1MB-CMIAPI-CmdCostDashboard-v1.0.0-519-j25-26.1.2.jar
-1MB-CMIAPI-CMIConfig-v1.0.0-519-j25-26.1.2.jar
-1MB-CMIAPI-ConsoleNoiseRouter-v1.0.0-519-j25-26.1.2.jar
-1MB-CMIAPI-EconomyGuardian-v1.0.0-519-j25-26.1.2.jar
-1MB-CMIAPI-StartupDoctor-v1.0.0-519-j25-26.1.2.jar
-1MB-CMIAPI-UpdateSmoke-v1.0.0-519-j25-26.1.2.jar
-1MB-CMIAPI-PluginVersions-v1.0.0-519-j25-26.1.2.jar
-1MB-CMIAPI-PlaceholderHealth-v1.0.0-519-j25-26.1.2.jar
-1MB-CMIAPI-Potions-v1.0.0-519-j25-26.1.2.jar
-1MB-CMIAPI-Upgrade-v1.0.0-519-j25-26.1.2.jar
-1MB-CMIAPI-EndCrystals-v1.0.0-519-j25-26.1.2.jar
-1MB-CMIAPI-WorldSnapshot-v1.0.0-519-j25-26.1.2.jar
-1MB-CMIAPI-SparkReviewer-v1.0.0-519-j25-26.1.2.jar
-1MB-CMIAPI-Hoppers-v1.0.0-519-j25-26.1.2.jar
-1MB-CMIAPI-EventRecorder-v1.0.0-519-j25-26.1.2.jar
-1MB-CMIAPI-CMIProbe-v1.0.0-519-j25-26.1.2.jar
-1MB-CMIAPI-CMIDatabase-v1.0.0-519-j25-26.1.2.jar
-1MB-CMIAPI-PlaceholderProbe-v1.0.0-519-j25-26.1.2.jar
-1MB-CMIAPI-PermissionProbe-v1.0.0-519-j25-26.1.2.jar
-1MB-CMIAPI-CMIPlaceholderCheck-v1.0.0-519-j25-26.1.2.jar
-1MB-CMIAPI-1MBPlaceholders-v1.0.0-519-j25-26.1.2.jar
-1MB-CMIAPI-WarpAudit-v1.0.0-519-j25-26.1.2.jar
-1MB-CMIAPI-WorthDrift-v1.0.0-519-j25-26.1.2.jar
-1MB-CMIAPI-WorthHelper-v1.0.0-519-j25-26.1.2.jar
+1MB-CMIAPI-LIB-v1.0.0-522-j25-26.2.jar
+1MB-CMIAPI-AFKShrine-v1.0.0-522-j25-26.2.jar
+1MB-CMIAPI-RecordingMode-v1.0.0-522-j25-26.2.jar
+1MB-CMIAPI-SellStreaks-v1.0.0-522-j25-26.2.jar
+1MB-CMIAPI-ScheduledTips-v1.0.0-522-j25-26.2.jar
+1MB-CMIAPI-Visit-v1.0.0-522-j25-26.2.jar
+1MB-CMIAPI-PassportDiscovery-v1.0.0-522-j25-26.2.jar
+1MB-CMIAPI-SocialGatherings-v1.0.0-522-j25-26.2.jar
+1MB-CMIAPI-JourneyMap-v1.0.0-522-j25-26.2.jar
+1MB-CMIAPI-KitStreaks-v1.0.0-522-j25-26.2.jar
+1MB-CMIAPI-MessageFont-v1.0.0-522-j25-26.2.jar
+1MB-CMIAPI-Nick-v1.0.0-522-j25-26.2.jar
+1MB-CMIAPI-EmoteMenu-v1.0.0-522-j25-26.2.jar
+1MB-CMIAPI-PvPToggle-v1.0.0-522-j25-26.2.jar
+1MB-CMIAPI-Boosters-v1.0.0-522-j25-26.2.jar
+1MB-CMIAPI-NameMC-v1.0.0-522-j25-26.2.jar
+1MB-CMIAPI-Exchange-v1.0.0-522-j25-26.2.jar
+1MB-CMIAPI-VoteTokens-v1.0.0-522-j25-26.2.jar
+1MB-CMIAPI-DiscordChat-v1.0.0-522-j25-26.2.jar
+1MB-CMIAPI-GameTypes-v1.0.0-522-j25-26.2.jar
+1MB-CMIAPI-BirthdayLanterns-v1.0.0-522-j25-26.2.jar
+1MB-CMIAPI-LavaBoots-v1.0.0-522-j25-26.2.jar
+1MB-CMIAPI-Spawners-v1.0.0-522-j25-26.2.jar
+1MB-CMIAPI-Collect-v1.0.0-522-j25-26.2.jar
+1MB-CMIAPI-Forage-v1.0.0-522-j25-26.2.jar
+1MB-CMIAPI-MobHat-v1.0.0-522-j25-26.2.jar
+1MB-CMIAPI-PlayerTodo-v1.0.0-522-j25-26.2.jar
+1MB-CMIAPI-Refer-v1.0.0-522-j25-26.2.jar
+1MB-CMIAPI-TPAuto-v1.0.0-522-j25-26.2.jar
+1MB-CMIAPI-Menu-v1.0.0-522-j25-26.2.jar
+1MB-CMIAPI-StaffCenter-v1.0.0-522-j25-26.2.jar
+1MB-CMIAPI-Profile-v1.0.0-522-j25-26.2.jar
+1MB-CMIAPI-FilterLab-v1.0.0-522-j25-26.2.jar
+1MB-CMIAPI-FilterGuard-v1.0.0-522-j25-26.2.jar
+1MB-CMIAPI-WarningLens-v1.0.0-522-j25-26.2.jar
+1MB-CMIAPI-NotableMsg-v1.0.0-522-j25-26.2.jar
+1MB-CMIAPI-1MBStaffMsg-v1.0.0-522-j25-26.2.jar
+1MB-CMIAPI-CmdCostDashboard-v1.0.0-522-j25-26.2.jar
+1MB-CMIAPI-CMIConfig-v1.0.0-522-j25-26.2.jar
+1MB-CMIAPI-ConsoleNoiseRouter-v1.0.0-522-j25-26.2.jar
+1MB-CMIAPI-EconomyGuardian-v1.0.0-522-j25-26.2.jar
+1MB-CMIAPI-StartupDoctor-v1.0.0-522-j25-26.2.jar
+1MB-CMIAPI-UpdateSmoke-v1.0.0-522-j25-26.2.jar
+1MB-CMIAPI-PluginVersions-v1.0.0-522-j25-26.2.jar
+1MB-CMIAPI-PlaceholderHealth-v1.0.0-522-j25-26.2.jar
+1MB-CMIAPI-Potions-v1.0.0-522-j25-26.2.jar
+1MB-CMIAPI-Upgrade-v1.0.0-522-j25-26.2.jar
+1MB-CMIAPI-EndCrystals-v1.0.0-522-j25-26.2.jar
+1MB-CMIAPI-WorldSnapshot-v1.0.0-522-j25-26.2.jar
+1MB-CMIAPI-SparkReviewer-v1.0.0-522-j25-26.2.jar
+1MB-CMIAPI-Hoppers-v1.0.0-522-j25-26.2.jar
+1MB-CMIAPI-EventRecorder-v1.0.0-522-j25-26.2.jar
+1MB-CMIAPI-CMIProbe-v1.0.0-522-j25-26.2.jar
+1MB-CMIAPI-CMIDatabase-v1.0.0-522-j25-26.2.jar
+1MB-CMIAPI-PlaceholderProbe-v1.0.0-522-j25-26.2.jar
+1MB-CMIAPI-PermissionProbe-v1.0.0-522-j25-26.2.jar
+1MB-CMIAPI-CMIPlaceholderCheck-v1.0.0-522-j25-26.2.jar
+1MB-CMIAPI-1MBPlaceholders-v1.0.0-522-j25-26.2.jar
+1MB-CMIAPI-WarpAudit-v1.0.0-522-j25-26.2.jar
+1MB-CMIAPI-WorthDrift-v1.0.0-522-j25-26.2.jar
+1MB-CMIAPI-WorthHelper-v1.0.0-522-j25-26.2.jar
 ```
 
 ## Local Build
@@ -114,7 +114,7 @@ Then review, commit, and push the public docs repository separately.
 Every successful library or feature build should copy matching jars into:
 
 ```text
-servers/Paper-26.1.2/plugins/
+servers/Paper-26.2/plugins/
 ```
 
 Use either:
@@ -129,7 +129,9 @@ or:
 scripts/copy-built-jars-to-local-server.sh
 ```
 
-The Gradle task syncs all built project jars to `servers/Paper-26.1.2/plugins/`, removes older active `1MB-CMIAPI-*.jar` files from that test server folder, and verifies that active project jars match the current build metadata. GameTypes/BentoBox deployment is handled outside the repository-local sync flow because the BentoBox environment is no longer a local repository test instance.
+The Gradle task syncs all built project jars to `servers/Paper-26.2/plugins/`, removes older active `1MB-CMIAPI-*.jar` files from that test server folder, and verifies that active project jars match the current build metadata. GameTypes/BentoBox deployment is handled outside the repository-local sync flow because the BentoBox environment is no longer a local repository test instance.
+
+Retired local servers live under the Git-ignored `archive/` directory and are excluded from build, sync, staging, and test workflows. Do not point release tasks at an archived server; `servers/Paper-26.2/` is the only active repository-local test target.
 
 ## Stage Tested Jars For Live
 
@@ -139,7 +141,7 @@ After the Paper test server has loaded and tested the jars, stage that tested se
 gradle stageTestedJarsForLive
 ```
 
-This copies the active tested jars from `servers/Paper-26.1.2/plugins/` into:
+This copies the active tested jars from `servers/Paper-26.2/plugins/` into:
 
 ```text
 build/tested-jars/live/

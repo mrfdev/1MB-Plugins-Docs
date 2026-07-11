@@ -3,7 +3,7 @@
 The Gradle scaffold is present. The current baseline is:
 
 - Java 25+
-- Paper 26.1.2+
+- Paper 26.2+
 - separate jars for every feature
 - a separate shared library jar
 
@@ -32,16 +32,16 @@ This is a read-only drift check against the public `1MB-Plugins-Docs` checkout. 
 Expected jar naming:
 
 ```text
-1MB-CMIAPI-LIB-v1.0.0-519-j25-26.1.2.jar
-1MB-CMIAPI-AFKShrine-v1.0.0-519-j25-26.1.2.jar
-1MB-CMIAPI-StaffCenter-v1.0.0-519-j25-26.1.2.jar
-1MB-CMIAPI-Profile-v1.0.0-519-j25-26.1.2.jar
+1MB-CMIAPI-LIB-v1.0.0-522-j25-26.2.jar
+1MB-CMIAPI-AFKShrine-v1.0.0-522-j25-26.2.jar
+1MB-CMIAPI-StaffCenter-v1.0.0-522-j25-26.2.jar
+1MB-CMIAPI-Profile-v1.0.0-522-j25-26.2.jar
 ```
 
 After a successful feature or library build, copy the output jar into:
 
 ```text
-servers/Paper-26.1.2/plugins/
+servers/Paper-26.2/plugins/
 ```
 
 The helper task and script handle the Paper test server sync:
@@ -52,6 +52,8 @@ scripts/copy-built-jars-to-local-server.sh
 ```
 
 The Gradle task copies all built 1MB-CMIAPI jars to the Paper test server, removes stale active project jars from that folder, and verifies the remaining active project jars match the current build metadata. The shell script targets one server folder at a time. GameTypes/BentoBox deployment is handled separately from this repository-local sync flow.
+
+Retired server instances are stored under the Git-ignored `archive/` directory. Gradle does not build against, sync to, stage from, or test against archived instances; `servers/Paper-26.2/` is the sole active repository-local target.
 
 After the Paper test server has been used for live testing, stage exactly those tested jars for a manual live deployment:
 
@@ -69,10 +71,10 @@ them. For example, NotableMsg and 1MBStaffMsg compile against DiscordSRV's API
 from:
 
 ```text
-servers/Paper-26.1.2/compile-support/DiscordSRV-1.30.5-SNAPSHOT-18f33ad.jar
+servers/Paper-26.2/compile-support/DiscordSRV-1.30.5-SNAPSHOT-18f33ad.jar
 ```
 
-Keep DiscordSRV disabled or absent from `servers/Paper-26.1.2/plugins/` during
+Keep DiscordSRV disabled or absent from `servers/Paper-26.2/plugins/` during
 normal local CMI-API testing so server start/stop events do not post to live
 Discord channels.
 

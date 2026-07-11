@@ -195,7 +195,7 @@ spark profiler cancel
 
 Spark output still appears in console and `logs/latest.log`. SparkReviewer scans the log for `https://spark.lucko.me/...` URLs so the profile link and the runtime snapshot can be reviewed together.
 
-Paper 26.1.2+ bundles Spark. Check it with:
+Paper 26.2+ bundles Spark. Check it with:
 
 ```text
 /sparkreviewer spark status
@@ -261,7 +261,7 @@ The script uses only the Python standard library. It scans `latest.log`, config 
 To run a one-label server workflow from the command line:
 
 ```text
-scripts/run-spark-reviewer-workflow.sh servers/Paper-26.1.2 Paper-26.1.2.jar mfm-on 180
+scripts/run-spark-reviewer-workflow.sh servers/Paper-26.2 Paper-26.2.jar mfm-on 180
 ```
 
 That helper starts the server with `java -jar ... nogui`, waits for startup, sends `/sparkreviewer stress <label> <seconds>` through console input, waits for the profile window, sends `/sparkreviewer dump`, stops the server, and writes an offline Markdown report. For an MFM comparison, run it once with hopper control enabled and once with hopper control disabled, then compare the two copied server folders or the plugin snapshots.

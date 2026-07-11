@@ -87,10 +87,9 @@ enabled: true
 debug: false
 output.page-size: 10
 checks.expected-java: "25"
-checks.expected-paper: "26.1.2"
+checks.expected-paper: "26.2"
 checks.compatibility-matrix:
-  - "26.1.2@25"
-  - "26.1.2@26"
+  - "26.2@25"
   - "26.2@26"
 checks.require-placeholderapi: true
 checks.require-current-build: true

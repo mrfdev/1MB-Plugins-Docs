@@ -1,6 +1,6 @@
 # Forage
 
-Forage is a player-facing nature progression plugin for `/forage`. It is built for Paper 26.1.2+ and Java 25 and depends on CMI, CMILib, and `1MB-CMIAPI-Lib`.
+Forage is a player-facing nature progression plugin for `/forage`. It is built for Paper 26.2+ and Java 25 and depends on CMI, CMILib, and `1MB-CMIAPI-Lib`.
 
 Version 1 focuses on a testable core rather than the full long-term design. Players use curated PDC-marked Forage tools to earn Forage XP, Forage Points, skill branch progress, tool soul progress, daily, weekly, and monthly quest progress, leaderboard ranks, camp-only tool upgrades, camp turn-ins, and small treasure rolls from configured source families. Most v1 families are natural block routes, while Tier 2 sword and mace routes can also listen for configured entity kills. Normal tools still work as Minecraft tools, but they do not feed the Forage skill.
 

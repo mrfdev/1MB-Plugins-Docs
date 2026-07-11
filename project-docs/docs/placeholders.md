@@ -1319,6 +1319,7 @@ CMIPlaceholderCheck placeholders:
 %onemb_mc_version%
 %onemb_java_version%
 %onemb_paper_version%
+%onemb_paper_target%
 %onemb_server_engine%
 %onemb_online_players%
 %onemb_max_players%
