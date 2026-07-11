@@ -297,6 +297,7 @@ const PLAYER_GUIDE_OVERRIDES = {
   votetokens: {
     summary: 'Trade vote tokens through safe menus, track tiers, and use eligible vote reward tools.',
     intro: 'VoteTokens gives players a safer menu for vote-token rewards. Open the menu to review trades, check progress, and use token tools when your account has access.',
+    afterFeatures: voteTokenUpgradeGuide(),
   },
 };
 
@@ -1466,6 +1467,93 @@ ${rows}
 </table>`;
 }
 
+function voteTokenUpgradeGuide() {
+  const groups = [
+    {
+      heading: 'Tier 1, Layer 1',
+      rows: [
+        ['Hero Diamond Elytra', 'Elytra', 'V to X', 'Available', 'Available', 'Protection V to VI'],
+        ['Hero Emerald Sword', 'Diamond sword', 'V to X', 'Available', 'Available', 'Sharpness V to VI; Netherite sword'],
+        ['Hero Iron Pickaxe', 'Iron pickaxe', 'V to X', 'Available', 'Available', 'Efficiency V to VI; Netherite pickaxe'],
+        ['Hero Gold Bow', 'Bow', 'V to X', 'Available', 'Available', 'None'],
+        ['Hero Quartz Chestplate', 'Chainmail chestplate', 'V to X', 'Available', 'Available', 'Protection V to VI'],
+        ['Hero Netherite Leggings', 'Netherite leggings', 'V to X', 'Available', 'Available', 'Protection VI'],
+      ],
+    },
+    {
+      heading: 'Tier 2, Layer 1',
+      rows: [
+        ['Elite Diamond Resources', 'Light blue shulker box', 'No durability', 'No durability benefit', 'Available', 'None'],
+        ['Elite Emerald Axe', 'Golden axe', 'V to X', 'Already included', 'Available', 'Sharpness VI; Netherite axe'],
+        ['Elite Iron Shovel', 'Iron shovel', 'V to X', 'Already included', 'Available', 'Netherite shovel; Efficiency VI already included'],
+        ['Elite Gold Rod', 'Fishing rod', 'V to X', 'Available', 'Available', 'None'],
+        ['Elite Quartz Boots', 'Chainmail boots', 'V to X', 'Available', 'Available', 'Protection VI'],
+        ['Elite Netherite Exp', 'Dragon breath', 'Blocked', 'Blocked', 'Blocked', 'No VoteTokens tools'],
+      ],
+    },
+    {
+      heading: 'Tier 2, Layer 2',
+      rows: [
+        ['Elite Conduit Box', 'Light blue shulker box', 'No durability', 'No durability benefit', 'Available', 'None'],
+        ['Elite Emerald Spear', 'Trident', 'V to X', 'Available', 'Available', 'None'],
+        ['Elite Iron Pickaxe', 'Diamond pickaxe', 'V to X', 'Already included', 'Available', 'Efficiency V to VI; Netherite pickaxe'],
+        ['Elite Gold Shears', 'Shears', 'V to X', 'Available', 'Available', 'Efficiency VI'],
+        ['Elite Quartz Helmet', 'Turtle helmet', 'V to X', 'Available', 'Available', 'Protection IV to VI'],
+        ['Elite Netherite Hoe', 'Netherite hoe', 'V to X', 'Available', 'Available', 'Efficiency VI already included'],
+      ],
+    },
+    {
+      heading: 'Tier 3, Layer 1',
+      rows: [
+        ['Ancient Diamond Shield', 'Shield', 'IV to X', 'Available', 'Available', 'Nine shield presets'],
+      ],
+    },
+  ];
+
+  const tables = groups.map((group) => {
+    const rows = group.rows.map(([item, baseItem, unbreaking, unbreakable, soulbind, other]) => `    <tr>
+      <td data-label="Vote item"><strong>${escapeHtml(item)}</strong></td>
+      <td data-label="Base item">${escapeHtml(baseItem)}</td>
+      <td data-label="Unbreaking X">${escapeHtml(unbreaking)}</td>
+      <td data-label="Make Unbreakable">${escapeHtml(unbreakable)}</td>
+      <td data-label="Soulbind">${escapeHtml(soulbind)}</td>
+      <td data-label="Other options">${escapeHtml(other)}</td>
+    </tr>`).join('\n');
+
+    return `### ${group.heading}
+
+<table class="vote-upgrade-table">
+  <thead>
+    <tr>
+      <th>Vote item</th>
+      <th>Base item</th>
+      <th>Unbreaking X</th>
+      <th>Make Unbreakable</th>
+      <th>Soulbind</th>
+      <th>Other item-specific options</th>
+    </tr>
+  </thead>
+  <tbody>
+${rows}
+  </tbody>
+</table>`;
+  }).join('\n\n');
+
+  return `## Vote Item Upgrade Guide
+
+Use this chart before spending extra vote tokens. **Available** means the current captured reward can benefit from that paid tool. **Already included** means the item already has that result and does not need it. An option not shown for an item is not supported.
+
+Every equipment reward already has Mending I or Mending II, so none of the currently enabled rewards need the Mending I tool. **Sync Enchant Lore** is a free repair for the 16 enchanted equipment rewards: it makes matching vanilla-enchant lore agree with the real enchant levels and leaves custom augment lore alone.
+
+${tables}
+
+The nine shield designs are **Cerulean Crest**, **Vote Star**, **Emerald Grove**, **Nether Sigil**, **Ocean Tide**, **Royal Bloom**, **Dragon Relic**, **Trial Gale**, and **Ancient Omen**. The other Tier 3 reward slots are not enabled yet.
+
+Shulker boxes can be soulbound, but they have no durability for Unbreaking or Unbreakable to protect. The Dragon Breath EXP reward is deliberately blocked from every VoteTokens tool.
+
+**Unbreaking X** slows durability loss, but the item can still break. **Make Unbreakable** stops normal durability loss. Once an item is Unbreakable, adding Unbreaking X gives no extra vanilla durability benefit. Paid choices use the tool cost shown in the VoteTokens GUI.`;
+}
+
 function commandIndexTable(rows, guidePathPrefix = '../plugins/') {
   const htmlRows = rows
     .map((row) => `    <tr>
@@ -1668,7 +1756,7 @@ Available features include:
 
 ${featureList(featureBullets)}
 
-## Quick Start
+${override.afterFeatures ? `${override.afterFeatures}\n\n` : ''}## Quick Start
 
 ${numberedList(quickStart)}
 
