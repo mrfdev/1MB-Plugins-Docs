@@ -26,7 +26,7 @@ Available features include:
 
 ## Vote Item Upgrade Guide
 
-Use this chart before spending extra vote tokens. **Available** means the current captured reward can benefit from that paid tool. **Already included** means the item already has that result and does not need it. An option not shown for an item is not supported.
+Use this chart before spending extra vote tokens. **Available** means the current captured reward can benefit from that paid tool. **Unavailable: already Unbreakable** means both durability choices are disabled for that item. An option not shown for an item is not supported.
 
 Every equipment reward already has Mending I or Mending II, so none of the currently enabled rewards need the Mending I tool. **Sync Enchant Lore** is a free repair for the 16 enchanted equipment rewards: it makes matching vanilla-enchant lore agree with the real enchant levels and leaves custom augment lore alone.
 
@@ -120,16 +120,16 @@ Every equipment reward already has Mending I or Mending II, so none of the curre
     <tr>
       <td data-label="Vote item"><strong>Elite Emerald Axe</strong></td>
       <td data-label="Base item">Golden axe</td>
-      <td data-label="Unbreaking X">V to X</td>
-      <td data-label="Make Unbreakable">Already included</td>
+      <td data-label="Unbreaking X">Unavailable: already Unbreakable</td>
+      <td data-label="Make Unbreakable">Already Unbreakable</td>
       <td data-label="Soulbind">Available</td>
       <td data-label="Other options">Sharpness VI; Netherite axe</td>
     </tr>
     <tr>
       <td data-label="Vote item"><strong>Elite Iron Shovel</strong></td>
       <td data-label="Base item">Iron shovel</td>
-      <td data-label="Unbreaking X">V to X</td>
-      <td data-label="Make Unbreakable">Already included</td>
+      <td data-label="Unbreaking X">Unavailable: already Unbreakable</td>
+      <td data-label="Make Unbreakable">Already Unbreakable</td>
       <td data-label="Soulbind">Available</td>
       <td data-label="Other options">Netherite shovel; Efficiency VI already included</td>
     </tr>
@@ -193,8 +193,8 @@ Every equipment reward already has Mending I or Mending II, so none of the curre
     <tr>
       <td data-label="Vote item"><strong>Elite Iron Pickaxe</strong></td>
       <td data-label="Base item">Diamond pickaxe</td>
-      <td data-label="Unbreaking X">V to X</td>
-      <td data-label="Make Unbreakable">Already included</td>
+      <td data-label="Unbreaking X">Unavailable: already Unbreakable</td>
+      <td data-label="Make Unbreakable">Already Unbreakable</td>
       <td data-label="Soulbind">Available</td>
       <td data-label="Other options">Efficiency V to VI; Netherite pickaxe</td>
     </tr>
@@ -254,7 +254,7 @@ The nine shield designs are **Cerulean Crest**, **Vote Star**, **Emerald Grove**
 
 Shulker boxes can be soulbound, but they have no durability for Unbreaking or Unbreakable to protect. The Dragon Breath EXP reward is deliberately blocked from every VoteTokens tool.
 
-**Unbreaking X** slows durability loss, but the item can still break. **Make Unbreakable** stops normal durability loss. Once an item is Unbreakable, adding Unbreaking X gives no extra vanilla durability benefit. Paid choices use the tool cost shown in the VoteTokens GUI.
+**Unbreaking X** slows durability loss, but the item can still break. **Make Unbreakable** stops normal durability loss. Once an item's real Unbreakable flag is true, both Make Unbreakable and Unbreaking X are unavailable before token-cost checks. Paid choices use the tool cost shown in the VoteTokens GUI.
 
 ## Quick Start
 
