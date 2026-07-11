@@ -1472,12 +1472,12 @@ function voteTokenUpgradeGuide() {
     {
       heading: 'Tier 1, Layer 1',
       rows: [
-        ['Hero Diamond Elytra', 'Elytra', 'V to X', 'Available', 'Available', 'Protection V to VI'],
-        ['Hero Emerald Sword', 'Diamond sword', 'V to X', 'Available', 'Available', 'Sharpness V to VI; Netherite sword'],
-        ['Hero Iron Pickaxe', 'Iron pickaxe', 'V to X', 'Available', 'Available', 'Efficiency V to VI; Netherite pickaxe'],
-        ['Hero Gold Bow', 'Bow', 'V to X', 'Available', 'Available', 'None'],
-        ['Hero Quartz Chestplate', 'Chainmail chestplate', 'V to X', 'Available', 'Available', 'Protection V to VI'],
-        ['Hero Netherite Leggings', 'Netherite leggings', 'V to X', 'Available', 'Available', 'Protection VI'],
+        ['Hero Diamond Elytra', 'Elytra', 'V to X', 'After Unbreaking X', 'Available', 'Protection V to VI'],
+        ['Hero Emerald Sword', 'Diamond sword', 'V to X', 'After Unbreaking X', 'Available', 'Sharpness V to VI; Netherite sword'],
+        ['Hero Iron Pickaxe', 'Iron pickaxe', 'V to X', 'After Unbreaking X', 'Available', 'Efficiency V to VI; Netherite pickaxe'],
+        ['Hero Gold Bow', 'Bow', 'V to X', 'After Unbreaking X', 'Available', 'None'],
+        ['Hero Quartz Chestplate', 'Chainmail chestplate', 'V to X', 'After Unbreaking X', 'Available', 'Protection V to VI'],
+        ['Hero Netherite Leggings', 'Netherite leggings', 'V to X', 'After Unbreaking X', 'Available', 'Protection VI'],
       ],
     },
     {
@@ -1486,8 +1486,8 @@ function voteTokenUpgradeGuide() {
         ['Elite Diamond Resources', 'Light blue shulker box', 'No durability', 'No durability benefit', 'Available', 'None'],
         ['Elite Emerald Axe', 'Golden axe', 'Unavailable: already Unbreakable', 'Already Unbreakable', 'Available', 'Sharpness VI; Netherite axe'],
         ['Elite Iron Shovel', 'Iron shovel', 'Unavailable: already Unbreakable', 'Already Unbreakable', 'Available', 'Netherite shovel; Efficiency VI already included'],
-        ['Elite Gold Rod', 'Fishing rod', 'V to X', 'Available', 'Available', 'None'],
-        ['Elite Quartz Boots', 'Chainmail boots', 'V to X', 'Available', 'Available', 'Protection VI'],
+        ['Elite Gold Rod', 'Fishing rod', 'V to X', 'After Unbreaking X', 'Available', 'None'],
+        ['Elite Quartz Boots', 'Chainmail boots', 'V to X', 'After Unbreaking X', 'Available', 'Protection VI'],
         ['Elite Netherite Exp', 'Dragon breath', 'Blocked', 'Blocked', 'Blocked', 'No VoteTokens tools'],
       ],
     },
@@ -1495,17 +1495,17 @@ function voteTokenUpgradeGuide() {
       heading: 'Tier 2, Layer 2',
       rows: [
         ['Elite Conduit Box', 'Light blue shulker box', 'No durability', 'No durability benefit', 'Available', 'None'],
-        ['Elite Emerald Spear', 'Trident', 'V to X', 'Available', 'Available', 'None'],
+        ['Elite Emerald Spear', 'Trident', 'V to X', 'After Unbreaking X', 'Available', 'None'],
         ['Elite Iron Pickaxe', 'Diamond pickaxe', 'Unavailable: already Unbreakable', 'Already Unbreakable', 'Available', 'Efficiency V to VI; Netherite pickaxe'],
-        ['Elite Gold Shears', 'Shears', 'V to X', 'Available', 'Available', 'Efficiency VI'],
-        ['Elite Quartz Helmet', 'Turtle helmet', 'V to X', 'Available', 'Available', 'Protection IV to VI'],
-        ['Elite Netherite Hoe', 'Netherite hoe', 'V to X', 'Available', 'Available', 'Efficiency VI already included'],
+        ['Elite Gold Shears', 'Shears', 'V to X', 'After Unbreaking X', 'Available', 'Efficiency VI'],
+        ['Elite Quartz Helmet', 'Turtle helmet', 'V to X', 'After Unbreaking X', 'Available', 'Protection IV to VI'],
+        ['Elite Netherite Hoe', 'Netherite hoe', 'V to X', 'After Unbreaking X', 'Available', 'Efficiency VI already included'],
       ],
     },
     {
       heading: 'Tier 3, Layer 1',
       rows: [
-        ['Ancient Diamond Shield', 'Shield', 'IV to X', 'Available', 'Available', 'Nine shield presets'],
+        ['Ancient Diamond Shield', 'Shield', 'IV to X', 'After Unbreaking X', 'Available', 'Nine shield presets'],
       ],
     },
   ];
@@ -1541,7 +1541,7 @@ ${rows}
 
   return `## Vote Item Upgrade Guide
 
-Use this chart before spending extra vote tokens. **Available** means the current captured reward can benefit from that paid tool. **Unavailable: already Unbreakable** means both durability choices are disabled for that item. An option not shown for an item is not supported.
+Use this chart before spending extra vote tokens. **After Unbreaking X** means Make Unbreakable stays locked until the item's real enchant reaches level 10. Reaching Unbreaking X and applying Unbreakable are two separately paid actions. **Unavailable: already Unbreakable** means both durability choices are disabled for that item. An option not shown for an item is not supported.
 
 Every equipment reward already has Mending I or Mending II, so none of the currently enabled rewards need the Mending I tool. **Sync Enchant Lore** is a free repair for the 16 enchanted equipment rewards: it makes matching vanilla-enchant lore agree with the real enchant levels and leaves custom augment lore alone.
 
@@ -1551,7 +1551,7 @@ The nine shield designs are **Cerulean Crest**, **Vote Star**, **Emerald Grove**
 
 Shulker boxes can be soulbound, but they have no durability for Unbreaking or Unbreakable to protect. The Dragon Breath EXP reward is deliberately blocked from every VoteTokens tool.
 
-**Unbreaking X** slows durability loss, but the item can still break. **Make Unbreakable** stops normal durability loss. Once an item's real Unbreakable flag is true, both Make Unbreakable and Unbreaking X are unavailable before token-cost checks. Paid choices use the tool cost shown in the VoteTokens GUI.`;
+For equipment below level 10, **Unbreaking X** is step 1 and **Make Unbreakable** is step 2. Each step charges the tool cost shown in the VoteTokens GUI. With the current default of 64 of each captured extra-token type per action, the full path costs 128 of each type. Existing items that already have the real Unbreakable flag keep it without a retroactive charge; both durability choices remain unavailable for those items.`;
 }
 
 function commandIndexTable(rows, guidePathPrefix = '../plugins/') {

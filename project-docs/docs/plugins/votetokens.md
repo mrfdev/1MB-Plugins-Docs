@@ -169,18 +169,18 @@ The tools page is opened from the index GUI. Players place one eligible vote rew
 
 Tools:
 
-- Enchant Upgrades opens a second tools view with Mending I, Unbreaking X, Efficiency VI, Protection VI, and Sharpness VI. Each enchant is applied through the CMILib item API with a Bukkit fallback, then verified on the GUI input item before extra tokens are consumed. When the input item's real Unbreakable flag is already true, the Unbreaking X button becomes an unavailable gray item because that enchant would provide no durability benefit. Protection VI normally remains armor-only, with one narrow exception: a certified VoteTokens Elytra that already has Protection V can advance to Protection VI. The upgrade rewrites the matching custom `Protection V` lore line to `Protection VI` while preserving its style.
+- Enchant Upgrades opens a second tools view with Mending I, Unbreaking X, Efficiency VI, Protection VI, and Sharpness VI. Each enchant is applied through the CMILib item API with a Bukkit fallback, then verified on the GUI input item before extra tokens are consumed. Unbreaking X is step 1 of the Unbreakable path. Once the real enchant reaches level 10, its button becomes an unavailable gray `Already Unbreaking X` item and the main Tools page unlocks Make Unbreakable. When the input item's real Unbreakable flag is already true, the Unbreaking X button instead explains that the enchant would provide no durability benefit. Protection VI normally remains armor-only, with one narrow exception: a certified VoteTokens Elytra that already has Protection V can advance to Protection VI. The upgrade rewrites the matching custom `Protection V` lore line to `Protection VI` while preserving its style.
 - Sync Enchant Lore is a free repair action that reads the item's real Bukkit/Paper enchant levels and corrects existing lore lines that exactly name those vanilla `minecraft:` enchants. It adds a missing level to a line such as `Mending`, corrects stale levels such as `Unbreaking III` when the real enchant is Unbreaking IV, preserves the line's visible style, and does not change the real enchantments. Unknown or custom lore such as `Sage II`, `Banana 5`, or other plugin augments is left unchanged. The action does not insert missing lore lines or remove lore for absent enchants.
 - Netherite Upgrade converts only configured VoteTokens reward trade ids to their approved netherite material. It preserves the title, lore, enchants, persistent data, and other item metadata.
 - Shield Presets opens a dedicated tools view with nine built-in banner designs. The third row uses rare-pattern combinations intended to be difficult or expensive to reproduce in normal survival play. A preset only applies to a certified VoteTokens reward shield, preserves the shield's name/lore/markers, hides the raw banner-pattern tooltip, adds a `Forged design` lore line, and consumes the normal extra-token tools cost.
-- Make Unbreakable uses CMILib's item API directly on the GUI input item because CMI's `/cmi unbreakable` command only works reliably against a real held item. It also writes the visible `Forged to Unbreakable` lore line when applying the flag.
-- Make Unbreakable rejects items that do not use durability and items whose real Unbreakable flag is already true before any extra vote tokens are checked or consumed. Its GUI button becomes an unavailable gray item for those inputs.
+- Make Unbreakable is step 2 and requires the item's real Unbreaking enchant to be level 10 or higher. Below level 10, its GUI button becomes an unavailable gray `Requires Unbreaking X` item and stale/direct attempts are rejected before token-cost checks. Once eligible, it uses CMILib's item API directly on the GUI input item and writes the visible `Forged to Unbreakable` lore line.
+- Make Unbreakable also rejects items that do not use durability and items whose real Unbreakable flag is already true before any extra vote tokens are checked or consumed. Existing items upgraded directly under the earlier rule remain Unbreakable; no retroactive cost or downgrade is applied.
 - Add Soulbind writes the ItemSoulBind owner tag directly as `itemsoulbind:soulbinduuid` with the player's UUID string; no ItemSoulBind command is dispatched.
 - The Tool Cost chest uses colored lore for each extra token type and can be clicked to open a read-only preview of the captured extra vote tokens. If an item is already in the tools input slot, the plugin returns it to the player before opening that preview.
 
 ## Enabled Vote Item Upgrade Matrix
 
-This matrix was verified against the 19 enabled captured rewards and the same eligibility rules used by the tools GUI. `Available` means the current captured reward can benefit from that paid tool. `Unavailable: already Unbreakable` means neither durability tool can be selected for that reward. Only the additional upgrades shown in the last column are supported for that reward.
+This matrix was verified against the 19 enabled captured rewards and the same eligibility rules used by the tools GUI. `After Unbreaking X` means Make Unbreakable is locked until the real enchant reaches level 10; reaching Unbreaking X and then applying Unbreakable are two separately paid actions. `Unavailable: already Unbreakable` means neither durability tool can be selected for that reward. Only the additional upgrades shown in the last column are supported for that reward.
 
 Every equipment reward below already has Mending I or Mending II, so none of the current rewards need the Mending I tool. Sync Enchant Lore is a free maintenance action for the 16 enchanted equipment rewards. It updates matching vanilla-enchant lore only and leaves custom augment lore unchanged.
 
@@ -188,12 +188,12 @@ Every equipment reward below already has Mending I or Mending II, so none of the
 
 | Reward | Base item | Unbreaking X | Make Unbreakable | Soulbind | Additional paid upgrades |
 | --- | --- | --- | --- | --- | --- |
-| `t1_l1_i1` Hero Diamond Elytra | Elytra | Available, from V | Available | Available | Protection V -> VI |
-| `t1_l1_i2` Hero Emerald Sword | Diamond sword | Available, from V | Available | Available | Sharpness V -> VI; Netherite sword |
-| `t1_l1_i3` Hero Iron Pickaxe | Iron pickaxe | Available, from V | Available | Available | Efficiency V -> VI; Netherite pickaxe |
-| `t1_l1_i4` Hero Gold Bow | Bow | Available, from V | Available | Available | None |
-| `t1_l1_i5` Hero Quartz Chestplate | Chainmail chestplate | Available, from V | Available | Available | Protection V -> VI |
-| `t1_l1_i6` Hero Netherite Leggings | Netherite leggings | Available, from V | Available | Available | Protection VI |
+| `t1_l1_i1` Hero Diamond Elytra | Elytra | Available, from V | After Unbreaking X | Available | Protection V -> VI |
+| `t1_l1_i2` Hero Emerald Sword | Diamond sword | Available, from V | After Unbreaking X | Available | Sharpness V -> VI; Netherite sword |
+| `t1_l1_i3` Hero Iron Pickaxe | Iron pickaxe | Available, from V | After Unbreaking X | Available | Efficiency V -> VI; Netherite pickaxe |
+| `t1_l1_i4` Hero Gold Bow | Bow | Available, from V | After Unbreaking X | Available | None |
+| `t1_l1_i5` Hero Quartz Chestplate | Chainmail chestplate | Available, from V | After Unbreaking X | Available | Protection V -> VI |
+| `t1_l1_i6` Hero Netherite Leggings | Netherite leggings | Available, from V | After Unbreaking X | Available | Protection VI |
 
 ### Tier 2, Layer 1
 
@@ -202,8 +202,8 @@ Every equipment reward below already has Mending I or Mending II, so none of the
 | `t2_l1_i1` Elite Diamond Resources | Light blue shulker box | No durability | No durability benefit | Available | None |
 | `t2_l1_i2` Elite Emerald Axe | Golden axe | Unavailable: already Unbreakable | Already Unbreakable | Available | Sharpness VI; Netherite axe |
 | `t2_l1_i3` Elite Iron Shovel | Iron shovel | Unavailable: already Unbreakable | Already Unbreakable | Available | Netherite shovel; Efficiency VI already included |
-| `t2_l1_i4` Elite Gold Rod | Fishing rod | Available, from V | Available | Available | None |
-| `t2_l1_i5` Elite Quartz Boots | Chainmail boots | Available, from V | Available | Available | Protection VI |
+| `t2_l1_i4` Elite Gold Rod | Fishing rod | Available, from V | After Unbreaking X | Available | None |
+| `t2_l1_i5` Elite Quartz Boots | Chainmail boots | Available, from V | After Unbreaking X | Available | Protection VI |
 | `t2_l1_i6` Elite Netherite Exp | Dragon breath | Blocked | Blocked | Blocked | No VoteTokens tools |
 
 ### Tier 2, Layer 2
@@ -211,21 +211,21 @@ Every equipment reward below already has Mending I or Mending II, so none of the
 | Reward | Base item | Unbreaking X | Make Unbreakable | Soulbind | Additional paid upgrades |
 | --- | --- | --- | --- | --- | --- |
 | `t2_l2_i1` Elite Conduit Box | Light blue shulker box | No durability | No durability benefit | Available | None |
-| `t2_l2_i2` Elite Emerald Spear | Trident | Available, from V | Available | Available | None |
+| `t2_l2_i2` Elite Emerald Spear | Trident | Available, from V | After Unbreaking X | Available | None |
 | `t2_l2_i3` Elite Iron Pickaxe | Diamond pickaxe | Unavailable: already Unbreakable | Already Unbreakable | Available | Efficiency V -> VI; Netherite pickaxe |
-| `t2_l2_i4` Elite Gold Shears | Shears | Available, from V | Available | Available | Efficiency VI |
-| `t2_l2_i5` Elite Quartz Helmet | Turtle helmet | Available, from V | Available | Available | Protection IV -> VI |
-| `t2_l2_i6` Elite Netherite Hoe | Netherite hoe | Available, from V | Available | Available | Efficiency VI already included |
+| `t2_l2_i4` Elite Gold Shears | Shears | Available, from V | After Unbreaking X | Available | Efficiency VI |
+| `t2_l2_i5` Elite Quartz Helmet | Turtle helmet | Available, from V | After Unbreaking X | Available | Protection IV -> VI |
+| `t2_l2_i6` Elite Netherite Hoe | Netherite hoe | Available, from V | After Unbreaking X | Available | Efficiency VI already included |
 
 ### Tier 3, Layer 1
 
 | Reward | Base item | Unbreaking X | Make Unbreakable | Soulbind | Additional paid upgrades |
 | --- | --- | --- | --- | --- | --- |
-| `t3_l1_i1` Ancient Diamond Shield | Shield | Available, from IV | Available | Available | Nine shield presets |
+| `t3_l1_i1` Ancient Diamond Shield | Shield | Available, from IV | After Unbreaking X | Available | Nine shield presets |
 
 The enabled shield presets are Cerulean Crest, Vote Star, Emerald Grove, Nether Sigil, Ocean Tide, Royal Bloom, Dragon Relic, Trial Gale, and Ancient Omen. The other Tier 3 reward slots are disabled and are intentionally absent from this matrix.
 
-Unbreaking X and Make Unbreakable are separate choices for breakable equipment. Unbreaking X slows durability loss but the item can still break. Make Unbreakable stops normal durability loss. Once an item's real Unbreakable flag is true, both Make Unbreakable and Unbreaking X are disabled for that item before token-cost checks. With the default configuration, paid tools cost 64 of each of the six captured extra-token types.
+Unbreaking X and Make Unbreakable form a required two-step path for breakable equipment below level 10. Unbreaking X slows durability loss but the item can still break; after that paid upgrade, Make Unbreakable becomes available and stops normal durability loss. With the default configuration, each step costs 64 of each of the six captured extra-token types, so completing both steps costs 128 of each type. Once an item's real Unbreakable flag is true, both actions are disabled before token-cost checks.
 
 Some reward materials are intentionally blocked from the tools GUI even when they are valid VoteTokens rewards. The default block list includes `DRAGON_BREATH`, because the Dragon Breath EXP reward is not equipment and must not become unbreakable, soulbound, enchanted, shield-designed, or netherite-upgraded.
 
@@ -252,7 +252,7 @@ Staff can review old/customized items manually:
 
 `inspectheld` explains whether the held item is a normal vote token, an extra token, a hidden-marker reward, an exact captured reward, or a relaxed legacy reward match. `certify` with no player checks the staff member's own held item and auto-detects the captured reward. `certify <player>` checks that online player's held item and auto-detects the captured reward, so staff do not have to remember the tier/layer/item order. The explicit tier/layer/item form remains available for reviewed support tickets. Without `confirm`, certification requires both player-history support and a captured reward match. `confirm` is reserved for reviewed support-ticket cases and is logged.
 
-The tools cost is paid with the captured `extra-tokens` definitions in `tokens.yml`, not the normal tier trade tokens. With the default settings, all six extra token types must be captured and the player must have 64 of each in their inventory. Sync Enchant Lore is a maintenance action and does not consume extra vote tokens. Redundant Unbreakable and Unbreaking X attempts are rejected before the player's token inventory is checked.
+The tools cost is paid with the captured `extra-tokens` definitions in `tokens.yml`, not the normal tier trade tokens. With the default settings, all six extra token types must be captured and the player must have 64 of each in their inventory for each paid action. Sync Enchant Lore is a maintenance action and does not consume extra vote tokens. Prerequisite failures and redundant Unbreakable or Unbreaking X attempts are rejected before the player's token inventory is checked.
 
 While a player has a reward item in the tools input slot, VoteTokens writes a durable safety copy to `plugins/1MB-CMIAPI/VoteTokens/escrow/<uuid>.yml`. The record is updated after successful tool changes and cleared only after the item is safely returned to the player's inventory. If the server restarts or the player disconnects while the item is in the GUI, the plugin tries to return it on join or when the player opens the tools menu. If their inventory is full, the item stays in escrow instead of being dropped or silently lost. If a matching item is already present in the player's inventory during recovery, VoteTokens blocks the automatic restore and keeps the escrow file for staff review instead of risking a duplicate.
 
@@ -458,7 +458,7 @@ migration:
 - The Protection VI enchant tool permits an otherwise incompatible Elytra only when it is a certified VoteTokens reward whose captured reward is also an Elytra and whose current Protection level is exactly V. It does not grant Protection to ordinary Elytras, advance lower levels directly, or allow Protection VII and above.
 - Netherite upgrades require both the hidden VoteTokens reward marker and a matching configured source material for that trade id. This prevents generic diamond, gold, or iron items from being upgraded through the vote menu.
 - Shield presets require a certified VoteTokens reward shield and edit Paper/Bukkit `ShieldMeta` directly. They preserve existing item metadata, hidden reward markers, and ItemSoulBind data while replacing only the shield base color and banner pattern layers. The resulting shield also receives Paper's `TOOLTIP_DISPLAY` data component to hide only the raw shield pattern lines, plus a single updated `Forged design` lore line for the selected preset.
-- Unbreakable uses `CMIItemStack.setUnbreakable` from CMILib directly on the GUI input item, avoiding `/cmi unbreakable` command parsing and held-item assumptions. It verifies the new flag and `Forged to Unbreakable` lore marker before charging. If the real flag is already true, both Make Unbreakable and Unbreaking X are removed as actionable GUI choices and rejected again in preflight and mutation code. Certification and successful tool actions lightly normalize known VoteTokens marker lore, such as the tier marker and unbreakable marker, without rewriting arbitrary custom lore.
+- Unbreakable uses `CMIItemStack.setUnbreakable` from CMILib directly on the GUI input item, avoiding `/cmi unbreakable` command parsing and held-item assumptions. It requires a real Unbreaking level of at least 10 and verifies both that prerequisite and the final Unbreakable flag/lore before charging. The prerequisite is enforced by the dynamic GUI, preflight validation, and mutation code. If the real flag is already true, both Make Unbreakable and Unbreaking X are removed as actionable choices. Certification and successful tool actions lightly normalize known VoteTokens marker lore, such as the tier marker and unbreakable marker, without rewriting arbitrary custom lore.
 - Tool item recognition first uses exact captured reward matching, then optionally allows captured display-name plus captured lore matching for vote rewards that were enchanted or upgraded while preserving identity.
 - The soulbind tool writes `itemsoulbind:soulbinduuid` as a string in Bukkit persistent data when `tools.item-soul-bind-integration` is true. The value is the player's UUID. This matches the tag shown by `/cmi itemnbt <player>` under `PublicBukkitValues`. If the integration is disabled, VoteTokens falls back to its own marker only.
 - Dynamic player values in commands are limited to safe Java names, dot-prefixed Bedrock names, or UUIDs.
@@ -511,6 +511,7 @@ Recommended local tests:
 - Click the Tool Cost chest while a tool item is in the input slot and confirm that item is returned before the preview opens.
 - Try a tools upgrade without one of the six required extra token stacks and confirm the input item and tokens are unchanged. The chat response should use a short summary plus one readable line per missing extra token type.
 - Try each default tools upgrade with six matching extra-token stacks and confirm the item changes once, the extra tokens are removed, and `logs/player-tools.log` receives an entry.
+- Place a certified reward with Unbreaking below X in the main Tools page and confirm Make Unbreakable is a gray `Requires Unbreaking X` item. Attempt the action directly and confirm it is rejected before token checks. Buy Unbreaking X and confirm one tools cost is consumed, the enchant view changes to `Already Unbreaking X`, and Make Unbreakable becomes available after returning to the main Tools page. Buy Make Unbreakable and confirm a second tools cost is consumed, the real flag and `Forged to Unbreakable` lore are present, and both durability actions become unavailable.
 - Place an already-Unbreakable vote reward in the tools GUI and confirm Make Unbreakable becomes unavailable. Open Enchant Upgrades and confirm Unbreaking X is also unavailable. Directly attempt both actions and confirm they are rejected before token-cost checks without changing the item or consuming extra vote tokens.
 - Give a certified reward real Unbreaking IV, Mending II, and Protection IV enchants while its hidden-enchant lore says `Unbreaking III`, plain `Mending`, and `Protection V`; run Sync Enchant Lore and confirm those lines become `Unbreaking IV`, `Mending II`, and `Protection IV` without consuming tokens or changing the real enchants.
 - Add custom lore such as `Sage II`, `Banana 5`, and `Efficiency Boost V` to the same item and confirm Sync Enchant Lore leaves every custom line unchanged. Run it again and confirm it reports that the vanilla lore is already current without mutating the item.
