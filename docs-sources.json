@@ -16,6 +16,14 @@
       "adapter": "manifest",
       "repository": "mrfloris/LootChest",
       "defaultSource": "../Floodgate"
+    },
+    {
+      "id": "xmas-tree",
+      "name": "XMas Tree",
+      "category": "custom-server-plugin",
+      "adapter": "manifest",
+      "repository": "mrfdev/XMasTree",
+      "defaultSource": "../XMasTree"
     }
   ]
 }

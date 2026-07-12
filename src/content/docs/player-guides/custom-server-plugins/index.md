@@ -19,5 +19,10 @@ These are standalone plugins built specifically for 1MoreBlock outside the share
       <td>Discover repeatable loot containers with randomized rewards on 1MoreBlock.</td>
       <td><code>/lc</code>, <code>/lc info</code>, <code>/lc locate</code>, <code>/lc help</code></td>
     </tr>
+    <tr>
+      <td><a href="./xmas-tree/">XMas Tree</a></td>
+      <td>Plant, grow, and celebrate upgradeable Christmas trees with presents, streaks, milestones, and preserved legacy event trees.</td>
+      <td><code>/xmastree</code>, <code>/xmastree help</code>, <code>/xmastree info</code>, <code>/xmastree journal</code>, <a href="./xmas-tree/">+4 more</a></td>
+    </tr>
   </tbody>
 </table>
