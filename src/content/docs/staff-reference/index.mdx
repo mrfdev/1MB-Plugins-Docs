@@ -3,19 +3,27 @@ title: Staff Reference
 description: Public staff reference copied from the private project docs.
 ---
 
-This area links to the raw public documentation copy in `project-docs/`. It is useful for staff who need more detail than the player-facing guides.
+This area links to public-safe technical documentation imported from each registered source project. Every source owns a separate namespace, so synchronizing one project cannot replace another project's files.
 
-## Raw synced docs
+## 1MB-CMIAPI
 
-- [Project README](https://github.com/mrfdev/1MB-Plugins-Docs/blob/main/project-docs/README.md)
-- [Documentation index](https://github.com/mrfdev/1MB-Plugins-Docs/blob/main/project-docs/docs/README.md)
-- [Commands](https://github.com/mrfdev/1MB-Plugins-Docs/blob/main/project-docs/docs/commands.md)
-- [Permissions](https://github.com/mrfdev/1MB-Plugins-Docs/blob/main/project-docs/docs/permissions.md)
-- [Placeholders](https://github.com/mrfdev/1MB-Plugins-Docs/blob/main/project-docs/docs/placeholders.md)
-- [Features](https://github.com/mrfdev/1MB-Plugins-Docs/blob/main/project-docs/docs/features.md)
-- [Plugin docs folder](https://github.com/mrfdev/1MB-Plugins-Docs/blob/main/project-docs/docs/plugins)
-- [Sync metadata](https://github.com/mrfdev/1MB-Plugins-Docs/blob/main/project-docs/SYNCED_FROM.md)
+- [Project README](https://github.com/mrfdev/1MB-Plugins-Docs/blob/main/project-docs/cmi-api/README.md)
+- [Documentation index](https://github.com/mrfdev/1MB-Plugins-Docs/blob/main/project-docs/cmi-api/docs/README.md)
+- [Commands](https://github.com/mrfdev/1MB-Plugins-Docs/blob/main/project-docs/cmi-api/docs/commands.md)
+- [Permissions](https://github.com/mrfdev/1MB-Plugins-Docs/blob/main/project-docs/cmi-api/docs/permissions.md)
+- [Placeholders](https://github.com/mrfdev/1MB-Plugins-Docs/blob/main/project-docs/cmi-api/docs/placeholders.md)
+- [Features](https://github.com/mrfdev/1MB-Plugins-Docs/blob/main/project-docs/cmi-api/docs/features.md)
+- [Plugin docs folder](https://github.com/mrfdev/1MB-Plugins-Docs/tree/main/project-docs/cmi-api/docs/plugins)
+- [Sync metadata](https://github.com/mrfdev/1MB-Plugins-Docs/blob/main/project-docs/cmi-api/SYNCED_FROM.md)
+
+## Custom Server Plugins
+
+No projects have been published in this section yet.
+
+## Other Server Features
+
+No projects have been published in this section yet.
 
 ## Update flow
 
-When the private docs change, run `npm run docs:sync` from this public repository. That refreshes `project-docs/` from the private repo and regenerates these Starlight pages.
+`npm run docs:sync` refreshes only the CMI namespace. Use the registered project importer for standalone projects; curated third-party feature notes live under `catalog/other-server-features/`. Every update regenerates and validates the complete site before deployment.

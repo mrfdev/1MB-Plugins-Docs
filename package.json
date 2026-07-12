@@ -5,14 +5,20 @@
   "type": "module",
   "scripts": {
     "dev": "astro dev",
-    "build": "npm run docs:generate && astro build",
+    "build": "npm test && npm run docs:check && npm run docs:validate && astro build",
     "preview": "astro preview",
-    "docs:sync": "node scripts/sync-private-docs.mjs && node scripts/generate-site-content.mjs",
-    "docs:generate": "node scripts/generate-site-content.mjs"
+    "docs:sync": "node scripts/sync-docs.mjs --project cmi-api && npm run docs:generate",
+    "docs:sync:all": "node scripts/sync-docs.mjs --all && npm run docs:generate",
+    "docs:import": "node scripts/sync-docs.mjs --import",
+    "docs:generate": "node scripts/generate-site-content.mjs",
+    "docs:check": "node scripts/check-generated-docs.mjs",
+    "docs:validate": "node scripts/validate-docs.mjs",
+    "test": "node --test tests/*.test.mjs"
   },
   "dependencies": {
     "@astrojs/starlight": "^0.39.2",
     "astro": "^6.4.2",
+    "js-yaml": "^4.1.1",
     "starlight-theme-galaxy": "^0.8.0"
   }
 }

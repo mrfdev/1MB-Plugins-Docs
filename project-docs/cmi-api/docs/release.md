@@ -98,7 +98,7 @@ Before release handoff or public-docs updates, run:
 gradle checkPublicDocsSync
 ```
 
-This read-only check compares this private repo's `README.md` and `docs/` against the public `1MB-Plugins-Docs/project-docs/` mirror, regenerates Starlight content in a temporary copy, compares it with the committed public site content, and verifies the GitHub Pages domain metadata for `https://docs.1moreblock.com`.
+This read-only check compares this private repo's `README.md` and `docs/` against its isolated public `1MB-Plugins-Docs/project-docs/cmi-api/` namespace, regenerates the complete multi-project Starlight site in a temporary copy without replacing other project sources, compares it with the committed public site content, and verifies the GitHub Pages domain metadata for `https://docs.1moreblock.com`.
 
 If it reports drift, refresh the public docs repo from that repo:
 

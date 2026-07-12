@@ -1,0 +1,12 @@
+id: example-plugin
+name: Example Plugin
+category: custom-server-plugin
+summary: Replace this with a short player-facing summary.
+main_command: /example
+docs_url: https://docs.1moreblock.com/custom-server-plugins/example-plugin/
+player_guide: player-guide.md
+technical_readme: ../README.md
+java_target: "25"
+paper_target: "26.2"
+official_project: true
+repository: mrfdev/Example-Plugin

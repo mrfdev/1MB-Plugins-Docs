@@ -1,13 +1,16 @@
 import { mkdir, readFile, rm, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { CATEGORY_DEFINITIONS, loadAdditionalEntries, loadRegistry } from './docs-lib.mjs';
 
 const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const docsRoot = path.join(repoRoot, 'project-docs', 'docs');
+const cmiProjectRoot = path.join(repoRoot, 'project-docs', 'cmi-api');
+const docsRoot = path.join(cmiProjectRoot, 'docs');
 const contentRoot = path.join(repoRoot, 'src', 'content', 'docs');
 const pluginGuideRoot = path.join(contentRoot, 'player-guides', 'plugins');
 const pluginReadme = path.join(docsRoot, 'plugins', 'README.md');
 const publicRepoBlob = 'https://github.com/mrfdev/1MB-Plugins-Docs/blob/main';
+const publicRepoTree = 'https://github.com/mrfdev/1MB-Plugins-Docs/tree/main';
 
 const PLAYER_GUIDE_OVERRIDES = {
   afkshrine: {
@@ -1557,7 +1560,7 @@ For equipment below level 10, **Unbreaking X** is step 1 and **Make Unbreakable*
 function commandIndexTable(rows, guidePathPrefix = '../plugins/') {
   const htmlRows = rows
     .map((row) => `    <tr>
-      <td><a href="${guidePathPrefix}${row.slug}/">${escapeHtml(row.plugin)}</a></td>
+      <td><a href="${row.guideHref ?? `${guidePathPrefix}${row.slug}/`}">${escapeHtml(row.plugin)}</a></td>
       <td><code>${formatCommand(row.command)}</code></td>
       <td>${escapeHtml(friendlyText(row.description))}</td>
       <td><code>${formatCommand(row.example)}</code></td>
@@ -1666,13 +1669,146 @@ function examplesList(examples, hasCommands) {
   return examples.map((example) => `- \`${example}\``).join('\n');
 }
 
+function stripDocumentPreamble(markdown) {
+  let body = markdown.replace(/^---\s*\n[\s\S]*?\n---\s*\n/, '').trim();
+  body = body.replace(/^#\s+.+?\s*\n+/, '').trim();
+  return body;
+}
+
+function additionalSummary(entry, markdown) {
+  if (entry.manifest.summary) {
+    return clampText(cleanMarkdownCell(String(entry.manifest.summary)), 220);
+  }
+  const body = stripDocumentPreamble(markdown);
+  return clampText(firstParagraph(body) || `Player guide for ${entry.manifest.name}.`, 220);
+}
+
+function additionalEntryTable(entries, pathPrefix) {
+  if (!entries.length) {
+    return 'No guides have been published in this section yet.';
+  }
+  const rows = entries.map((entry) => {
+    const details = entry.commandData;
+    const href = `${pathPrefix}${entry.manifest.id}/`;
+    return `    <tr>
+      <td><a href="${href}">${escapeHtml(entry.manifest.name)}</a></td>
+      <td>${escapeHtml(entry.summary)}</td>
+      <td>${commandPreview(details, href)}</td>
+    </tr>`;
+  }).join('\n');
+  return `<table>
+  <thead>
+    <tr>
+      <th>Feature</th>
+      <th>Summary</th>
+      <th>Commands</th>
+    </tr>
+  </thead>
+  <tbody>
+${rows}
+  </tbody>
+</table>`;
+}
+
+function additionalTechnicalLinks(entry) {
+  if (entry.kind === 'imported') {
+    const root = `${publicRepoBlob}/project-docs/${entry.manifest.id}`;
+    return `- [Technical overview](${root}/README.md)\n- [Technical documentation folder](${publicRepoTree}/project-docs/${entry.manifest.id}/docs/)`;
+  }
+  const links = [`- [1MoreBlock feature notes](${publicRepoTree}/catalog/other-server-features/${entry.manifest.id}/)`];
+  if (entry.manifest.official_wiki) {
+    links.push(`- [Official plugin wiki](${entry.manifest.official_wiki})`);
+  }
+  return links.join('\n');
+}
+
+async function generateAdditionalGuides(entries) {
+  const categories = ['custom-server-plugin', 'other-server-feature'];
+  const grouped = new Map(categories.map((category) => [category, []]));
+  for (const entry of entries) {
+    grouped.get(entry.manifest.category)?.push(entry);
+  }
+
+  for (const category of categories) {
+    const definition = CATEGORY_DEFINITIONS[category];
+    const outputRoot = path.join(contentRoot, 'player-guides', definition.playerDirectory);
+    await rm(outputRoot, { recursive: true, force: true });
+    await mkdir(outputRoot, { recursive: true });
+
+    const categoryEntries = grouped.get(category);
+    for (const entry of categoryEntries) {
+      const source = await readFile(entry.playerGuideFile, 'utf8');
+      const body = stripDocumentPreamble(source);
+      const plugin = { name: entry.manifest.name, category: 'Player Fun', file: `${entry.manifest.id}.md` };
+      const commandData = extractCommandData(source);
+      if (entry.manifest.main_command && !commandData.playerCommands.includes(entry.manifest.main_command)) {
+        commandData.playerCommands.unshift(entry.manifest.main_command);
+      }
+      entry.commandData = commandData;
+      entry.summary = additionalSummary(entry, source);
+
+      const projectOutput = path.join(outputRoot, entry.manifest.id);
+      await mkdir(projectOutput, { recursive: true });
+      await writeFile(path.join(projectOutput, 'index.md'), `---
+title: ${JSON.stringify(`${entry.manifest.name} Guide`)}
+description: ${JSON.stringify(entry.summary)}
+---
+
+${body || `${entry.manifest.name} documentation is being prepared.`}
+
+## Reference Links
+
+${additionalTechnicalLinks(entry)}
+`);
+
+      for (const command of commandData.playerCommands) {
+        commandIndexRows.push({
+          slug: entry.manifest.id,
+          plugin: entry.manifest.name,
+          command,
+          description: commandData.descriptions.get(command) || commandDescription(command, plugin),
+          example: commandData.tableExamples?.get(command) || commandExample(command),
+          guideHref: `../${definition.playerDirectory}/${entry.manifest.id}/`,
+        });
+      }
+    }
+
+    await writeFile(path.join(outputRoot, 'index.md'), `---
+title: ${JSON.stringify(definition.label)}
+description: ${JSON.stringify(`Player guides for ${definition.label.toLowerCase()} available on 1MoreBlock.`)}
+---
+
+${category === 'custom-server-plugin'
+    ? 'These are standalone plugins built specifically for 1MoreBlock outside the shared 1MB-CMIAPI feature-plugin project.'
+    : 'These guides explain third-party server features as they are configured and used on 1MoreBlock, with links to official documentation where available.'}
+
+${additionalEntryTable(categoryEntries, './')}
+`);
+  }
+
+  return grouped;
+}
+
+function additionalStaffLists(entries) {
+  if (!entries.length) {
+    return 'No projects have been published in this section yet.';
+  }
+  return entries.map((entry) => {
+    const base = entry.kind === 'imported'
+      ? `${publicRepoBlob}/project-docs/${entry.manifest.id}/README.md`
+      : `${publicRepoTree}/catalog/other-server-features/${entry.manifest.id}`;
+    const extra = entry.manifest.official_wiki ? `; [official wiki](${entry.manifest.official_wiki})` : '';
+    return `- [${entry.manifest.name}](${base}) - ${entry.summary}${extra}`;
+  }).join('\n');
+}
+
 function groupedLists(plugins) {
   const groups = Map.groupBy(plugins, (plugin) => plugin.category);
   return Array.from(groups.entries())
     .map(([category, values]) => {
       const rows = values
         .map((plugin) => {
-          const url = `${publicRepoBlob}/project-docs/docs/plugins/${plugin.file}`;
+          const url = `${publicRepoBlob}/project-docs/cmi-api/docs/plugins/${plugin.file}`;
           return `- [${plugin.name}](${url}) - ${plugin.purpose}`;
         })
         .join('\n');
@@ -1774,16 +1910,22 @@ ${markdownList(notes)}
 
 ## Full Reference
 
-The [full synced ${plugin.name} reference](${publicRepoBlob}/project-docs/docs/plugins/${plugin.file}) is available for exact technical details.
+The [full synced ${plugin.name} reference](${publicRepoBlob}/project-docs/cmi-api/docs/plugins/${plugin.file}) is available for exact technical details.
 `);
 }
 
+const registry = await loadRegistry(repoRoot);
+const additionalEntries = await loadAdditionalEntries(repoRoot, registry);
+const additionalGroups = await generateAdditionalGuides(additionalEntries);
+const customServerPlugins = additionalGroups.get('custom-server-plugin');
+const otherServerFeatures = additionalGroups.get('other-server-feature');
+
 await writeFile(path.join(pluginGuideRoot, 'index.mdx'), `---
-title: Plugin Guides
-description: Friendly public guides for 1MoreBlock plugin features.
+title: 1MoreBlock Features
+description: Friendly public guides for features built in the 1MB-CMIAPI project.
 ---
 
-Each page introduces a feature in normal server language, then shows useful commands and examples you can try when you have access.
+These features are built together in the 1MB-CMIAPI project and share the 1MB Library. Each page introduces a feature in normal server language, then shows useful commands and examples you can try when you have access.
 
 ${pluginTable(guidePlugins, pluginDetails, './')}
 `);
@@ -1801,8 +1943,10 @@ This site explains the player-facing features, commands, and server systems that
 
 - [Getting started](./player-guides/getting-started/) gives players a friendly overview.
 - [Common player commands](./player-guides/commands/) lists useful commands and what they are for.
-- [Feature overview](./player-guides/features/) summarizes the player-facing plugin features.
-- [Plugin guides](./player-guides/plugins/) explain each feature, how to use it, commands, and examples.
+- [Feature overview](./player-guides/features/) summarizes all documented player-facing server features.
+- [1MoreBlock features](./player-guides/plugins/) cover the feature plugins built together in 1MB-CMIAPI.
+- [Custom server plugins](./player-guides/custom-server-plugins/) cover standalone plugins built specifically for 1MoreBlock.
+- [Other server features](./player-guides/other-server-features/) explain third-party features as they are configured on this server.
 - [Staff reference](./staff-reference/) links to the raw synced documentation for deeper staff review.
 
 ## Public URL
@@ -1849,11 +1993,11 @@ Commands can be permission-based. This list explains what common commands are me
 
 ${commandTable(PLAYER_COMMANDS)}
 
-For the fuller introduction to each feature, open the [plugin guides](../plugins/). Those pages explain what each feature does before listing commands.
+For fuller introductions, use [1MoreBlock features](../plugins/), [custom server plugins](../custom-server-plugins/), or [other server features](../other-server-features/). Those pages explain what each feature does before listing commands.
 
 ## All Listed Player Commands
 
-This table is generated from the synced plugin documentation. It filters out obvious admin, debug, reload, and global library commands.
+This table is generated from every registered project and curated feature guide. It filters out obvious admin, debug, reload, and global library commands.
 
 ${commandIndexTable(commandIndexRows, '../plugins/')}
 
@@ -1869,9 +2013,25 @@ title: Player Feature Overview
 description: Friendly summary of player-facing 1MoreBlock plugin features.
 ---
 
-These are the current player-facing feature guides generated from the synced project documentation. Open a feature when you want the friendly explanation, command list, and examples in one place.
+These are the current player-facing guides assembled from registered 1MoreBlock projects and curated server-feature documentation.
+
+## 1MoreBlock Features
+
+These features are built together in the 1MB-CMIAPI project.
 
 ${pluginTable(playerPlugins, pluginDetails, '../plugins/')}
+
+## Custom Server Plugins
+
+These standalone plugins are built specifically for 1MoreBlock outside the shared CMI feature-plugin project.
+
+${additionalEntryTable(customServerPlugins, '../custom-server-plugins/')}
+
+## Other Server Features
+
+These are third-party features documented for the way they are used on 1MoreBlock.
+
+${additionalEntryTable(otherServerFeatures, '../other-server-features/')}
 `);
 
 await writeFile(path.join(contentRoot, 'staff-reference', 'index.mdx'), `---
@@ -1879,22 +2039,30 @@ title: Staff Reference
 description: Public staff reference copied from the private project docs.
 ---
 
-This area links to the raw public documentation copy in \`project-docs/\`. It is useful for staff who need more detail than the player-facing guides.
+This area links to public-safe technical documentation imported from each registered source project. Every source owns a separate namespace, so synchronizing one project cannot replace another project's files.
 
-## Raw synced docs
+## 1MB-CMIAPI
 
-- [Project README](${publicRepoBlob}/project-docs/README.md)
-- [Documentation index](${publicRepoBlob}/project-docs/docs/README.md)
-- [Commands](${publicRepoBlob}/project-docs/docs/commands.md)
-- [Permissions](${publicRepoBlob}/project-docs/docs/permissions.md)
-- [Placeholders](${publicRepoBlob}/project-docs/docs/placeholders.md)
-- [Features](${publicRepoBlob}/project-docs/docs/features.md)
-- [Plugin docs folder](${publicRepoBlob}/project-docs/docs/plugins)
-- [Sync metadata](${publicRepoBlob}/project-docs/SYNCED_FROM.md)
+- [Project README](${publicRepoBlob}/project-docs/cmi-api/README.md)
+- [Documentation index](${publicRepoBlob}/project-docs/cmi-api/docs/README.md)
+- [Commands](${publicRepoBlob}/project-docs/cmi-api/docs/commands.md)
+- [Permissions](${publicRepoBlob}/project-docs/cmi-api/docs/permissions.md)
+- [Placeholders](${publicRepoBlob}/project-docs/cmi-api/docs/placeholders.md)
+- [Features](${publicRepoBlob}/project-docs/cmi-api/docs/features.md)
+- [Plugin docs folder](${publicRepoTree}/project-docs/cmi-api/docs/plugins)
+- [Sync metadata](${publicRepoBlob}/project-docs/cmi-api/SYNCED_FROM.md)
+
+## Custom Server Plugins
+
+${additionalStaffLists(customServerPlugins)}
+
+## Other Server Features
+
+${additionalStaffLists(otherServerFeatures)}
 
 ## Update flow
 
-When the private docs change, run \`npm run docs:sync\` from this public repository. That refreshes \`project-docs/\` from the private repo and regenerates these Starlight pages.
+\`npm run docs:sync\` refreshes only the CMI namespace. Use the registered project importer for standalone projects; curated third-party feature notes live under \`catalog/other-server-features/\`. Every update regenerates and validates the complete site before deployment.
 `);
 
 await writeFile(path.join(contentRoot, 'staff-reference', 'plugins.mdx'), `---
@@ -1905,6 +2073,14 @@ description: Staff index for public plugin reference docs.
 The links below open the raw synced Markdown in GitHub. They are public documentation files only; no source code or builds are published here.
 
 ${groupedLists(plugins)}
+
+## Custom Server Plugins
+
+${additionalStaffLists(customServerPlugins)}
+
+## Other Server Features
+
+${additionalStaffLists(otherServerFeatures)}
 `);
 
-console.log(`Generated Starlight content for ${guidePlugins.length} current plugin guides.`);
+console.log(`Generated Starlight content for ${guidePlugins.length} CMI guides, ${customServerPlugins.length} custom server plugins, and ${otherServerFeatures.length} other server features.`);

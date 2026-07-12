@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "projects": [
+    {
+      "id": "cmi-api",
+      "name": "1MB-CMIAPI",
+      "category": "one-more-block-feature",
+      "adapter": "cmi-api",
+      "repository": "mrfdev/1MB-CMIAPI",
+      "defaultSource": "../CMI-API"
+    }
+  ]
+}

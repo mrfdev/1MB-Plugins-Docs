@@ -29,8 +29,19 @@ export default defineConfig({
             { slug: 'player-guides/commands' },
             { slug: 'player-guides/features' },
             {
-              label: 'Plugin Guides',
+              label: '1MoreBlock Features',
+              collapsed: true,
               items: [{ autogenerate: { directory: 'player-guides/plugins' } }],
+            },
+            {
+              label: 'Custom Server Plugins',
+              collapsed: true,
+              items: [{ autogenerate: { directory: 'player-guides/custom-server-plugins' } }],
+            },
+            {
+              label: 'Other Server Features',
+              collapsed: true,
+              items: [{ autogenerate: { directory: 'player-guides/other-server-features' } }],
             },
           ],
         },
