@@ -4,7 +4,7 @@ Use this prompt when preparing a standalone 1MoreBlock project such as Lootbox, 
 
 ## Prerequisite
 
-Do not publish a standalone project's documentation until `1MB-Plugins-Docs` has a namespace-safe multi-project importer. The current CMI-API-only sync removes and recreates the complete mirror, so it must be replaced before multiple projects contribute.
+The namespace-safe multi-project importer is live in `/Users/floris/Projects/Codex/1MB-Plugins-Docs`. Follow the source-first publication order in this prompt. Never use the CMI-only `npm run docs:sync` command for a standalone project.
 
 ## Reusable Prompt
 
@@ -102,6 +102,7 @@ Create `docs/plugin-docs.yml` with verified values in this general form:
 id: <unique-lowercase-project-id>
 name: <player-facing plugin name>
 category: custom-server-plugin
+summary: <short player-facing summary>
 main_command: /<command>
 docs_url: https://docs.1moreblock.com/custom-server-plugins/<project-id>/
 player_guide: player-guide.md
@@ -109,6 +110,7 @@ technical_readme: ../README.md
 java_target: <verified version>
 paper_target: <verified version>
 official_project: true
+repository: <github-owner/repository>
 
 Use a stable project ID and URL. Do not include a build number in the URL.
 
@@ -117,8 +119,7 @@ NAMESPACE SAFETY
 This project owns only its unique namespace:
 
 project-docs/<project-id>/
-src/content/docs/player-guides/custom-server-plugins/<project-id>/
-src/content/docs/staff-reference/custom-server-plugins/<project-id>/
+src/content/docs/player-guides/custom-server-plugins/<project-id>/index.md
 
 Never delete or replace the complete `project-docs/`, `src/content/docs/`, player
 guides, staff reference, or another project's namespace.
@@ -132,20 +133,36 @@ The central `1MB-Plugins-Docs` repository is the only Starlight builder and GitH
 Pages publisher. This source project owns its documentation but must not independently
 regenerate or force-push the complete public site.
 
-If the central multi-project importer is not implemented yet, prepare and validate
-the project-local documentation only. Clearly report that publication is pending.
-Do not improvise a destructive sync.
+Use this exact publication order:
 
-If the importer already exists:
+1. Finish the source code, `/info` command, tests, and project-local documentation.
+2. Confirm `docs/player-guide.md` explicitly documents `<main command> info`.
+3. Run the source project's normal tests and build.
+4. Review, commit, and push the source project first.
+5. Confirm the source project's Git working tree is clean. Do not import docs from
+   an uncommitted source tree.
+6. In `/Users/floris/Projects/Codex/1MB-Plugins-Docs`, pull the latest public `main`
+   with `git pull --ff-only origin main` immediately before importing.
+7. Import only this source project with:
 
-1. Pull the latest public docs `main`.
-2. Import only this project's namespace.
-3. Generate the complete site.
-4. Run namespace, duplicate-ID, duplicate-URL, link, and drift checks.
-5. Build Starlight successfully.
-6. Review the resulting diff.
-7. Commit and push the source project and public docs separately.
-8. Verify the GitHub Pages deployment and live canonical page.
+   npm run docs:import -- --source /absolute/path/to/project
+   npm run docs:generate
+   npm test
+   npm run docs:check
+   npm run docs:validate
+   npm run build
+
+8. Review the public-repo diff. This project may update its own
+   `project-docs/<project-id>/` namespace, its generated custom-server-plugin page,
+   `docs-sources.json`, and shared generated indexes. Confirm that
+   `project-docs/cmi-api/` and every other project namespace remain intact.
+9. Commit and push the public docs repository separately. Never force-push it.
+10. Verify the GitHub Pages workflow and the live canonical page.
+
+`npm run docs:sync` is reserved for CMI-API. Do not run it to import this standalone
+project. If the public push is rejected because another project updated the docs,
+do not force it: update from `origin/main`, import this project again, regenerate,
+rerun every check, and then push normally.
 
 IMPLEMENTATION RULES
 
@@ -159,6 +176,7 @@ IMPLEMENTATION RULES
 - Do not claim a command, permission, placeholder, feature, or compatibility target
   unless verified from the repository.
 - Add focused tests for the new info command when the project's test setup permits it.
+- Ensure the player guide lists `<main command> info`; the central validator requires it.
 - Run the project's normal build and tests.
 - Report exactly what was documented, implemented, verified, and still needs review.
 
