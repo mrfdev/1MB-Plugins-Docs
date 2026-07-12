@@ -2,6 +2,14 @@
   "schemaVersion": 1,
   "projects": [
     {
+      "id": "antifire",
+      "name": "1MB AntiFire",
+      "category": "custom-server-plugin",
+      "adapter": "manifest",
+      "repository": "mrfdev/AntiFire",
+      "defaultSource": "../AntiFire"
+    },
+    {
       "id": "cmi-api",
       "name": "1MB-CMIAPI",
       "category": "one-more-block-feature",
