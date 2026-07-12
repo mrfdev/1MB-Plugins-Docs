@@ -25,6 +25,11 @@ These are standalone plugins built specifically for 1MoreBlock outside the share
       <td><code>/antipopup</code>, <code>/antipopup info</code></td>
     </tr>
     <tr>
+      <td><a href="./coreprotect-antixray/">1MB-AntiXRay</a></td>
+      <td>Review CoreProtect ore-break patterns, compare players, and investigate suspicious mining activity.</td>
+      <td><code>/xlu</code>, <code>/xlu info</code>, <code>/xlu help</code>, <code>/xlu &lt;player-or-uuid&gt; [days] [page]</code>, <a href="./coreprotect-antixray/">+3 more</a></td>
+    </tr>
+    <tr>
       <td><a href="./lootbox/">Lootbox</a></td>
       <td>Discover repeatable loot containers with randomized rewards on 1MoreBlock.</td>
       <td><code>/lc</code>, <code>/lc info</code>, <code>/lc locate</code>, <code>/lc help</code></td>

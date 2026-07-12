@@ -26,6 +26,14 @@
       "defaultSource": "../CMI-API"
     },
     {
+      "id": "coreprotect-antixray",
+      "name": "1MB-AntiXRay",
+      "category": "custom-server-plugin",
+      "adapter": "manifest",
+      "repository": "mrfloris/1MB-CoreProtect-AntiXray",
+      "defaultSource": "../1MB-CoreProtect-AntiXray"
+    },
+    {
       "id": "lootbox",
       "name": "Lootbox",
       "category": "custom-server-plugin",
