@@ -37,6 +37,8 @@ When chat notifications are selected, the batched sale message is hoverable and 
 AutoSell is built around anti-dupe and anti-farm guards:
 
 - off by default per player
+- background selling requires both `onembcmi.autosell.use` and `onembcmi.autosell.toggle` when a batch is scheduled and again before inventory mutation
+- losing either runtime permission turns the saved player profile off, including when the player rejoins with previously enabled AutoSell
 - global `enabled` emergency toggle in config
 - direct CMI `Worth.yml` read with live cache refresh, including quoted numeric CMI values
 - only normal inventory slots `9..35` are scanned
@@ -476,6 +478,8 @@ onembcmi.autosell.use
 onembcmi.autosell.toggle
 onembcmi.autosell.preview
 ```
+
+AutoSell requires both `onembcmi.autosell.use` and `onembcmi.autosell.toggle` for background selling. These permissions are checked when a sale is scheduled and immediately before the verified inventory mutation. If either permission is removed, an enabled profile is turned off and saved; restoring the permission does not silently resume selling, so the player must opt in again. A pending delayed batch also exits when the player switches AutoSell off before it runs.
 
 Admin permissions default to false:
 
