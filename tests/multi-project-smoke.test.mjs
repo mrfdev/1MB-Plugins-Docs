@@ -35,7 +35,17 @@ test('standalone imports and curated features preserve the CMI namespace', async
   await symlink(path.join(sourceRepo, 'node_modules'), path.join(repoRoot, 'node_modules'), 'dir');
 
   const cmiReadme = path.join(repoRoot, 'project-docs', 'cmi-api', 'README.md');
-  const cmiBefore = await readFile(cmiReadme, 'utf8');
+
+  const cmiSource = path.join(root, 'CMI-API');
+  await mkdir(cmiSource, { recursive: true });
+  await cp(path.join(repoRoot, 'project-docs', 'cmi-api', 'docs'), path.join(cmiSource, 'docs'), { recursive: true });
+  await writeFile(path.join(cmiSource, 'README.md'), '# Refreshed CMI Technical Documentation\n');
+
+  runNode(repoRoot, 'scripts/sync-docs.mjs', ['--import', '--source', cmiSource]);
+  assert.equal(
+    await readFile(cmiReadme, 'utf8'),
+    '# Refreshed CMI Technical Documentation\n',
+  );
 
   const standalone = path.join(root, '1MB-Lootbox');
   await mkdir(path.join(standalone, 'docs'), { recursive: true });
@@ -65,7 +75,10 @@ Open and review configured server lootboxes.
 `);
 
   runNode(repoRoot, 'scripts/sync-docs.mjs', ['--import', '--source', standalone]);
-  assert.equal(await readFile(cmiReadme, 'utf8'), cmiBefore);
+  assert.equal(
+    await readFile(cmiReadme, 'utf8'),
+    '# Refreshed CMI Technical Documentation\n',
+  );
 
   const external = path.join(repoRoot, 'catalog', 'other-server-features', 'mcmmo');
   await mkdir(external, { recursive: true });

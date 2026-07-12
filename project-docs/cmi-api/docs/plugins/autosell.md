@@ -16,7 +16,7 @@ The GUI uses the shared hardened GUI service with safe holders, cancelled clicks
 
 - a global on/off toggle
 - category toggles for CMI worth items
-- per-category material pages where players can toggle individual items
+- per-category material pages where players can toggle individual items, plus a top-row bulk control that turns every available item in that category on with left-click or off with right-click across all pages
 - value filters and notification settings
 - an inventory-full trigger for players who only want AutoSell to run when storage slots are nearly full
 - optional world toggles
@@ -29,6 +29,8 @@ The GUI uses the shared hardened GUI service with safe holders, cancelled clicks
 - the player head with today's AutoSell total, cap, broker level, broker points, next broker-level progress, top category, top item, best single batch, milestone progress, quest progress, sell chain, streak, trigger mode, and active boost
 
 AutoSell only runs after a short delayed batch, usually after a pickup or chunk move. The final sale runs on the main thread, snapshots exact stacks, rechecks that the inventory still matches, removes the items, pays the player, and refunds removed stacks if the economy payment fails.
+
+The bulk category-item control changes only the current category's non-blacklisted CMI worth items. It deliberately replaces the individual choices inside that category so `all off` really means all available items are off. Staff-blocked items remain blocked, other categories keep their existing choices, and players can immediately turn a small number of individual items back on or off after using the bulk action. Turning the category itself off or on from the Categories page does not erase its individual item choices.
 
 When chat notifications are selected, the batched sale message is hoverable and clickable. Hover shows the batch total, trigger, top sold materials, daily cap progress, broker status, milestone progress, quest progress, sell-chain status, streak status, and any active AutoSell boost. Click opens `/autosell recent` for the detailed sale history. Actionbar, title, and bossbar notification modes remain visual-only because Minecraft clients do not support hover/click actions there.
 

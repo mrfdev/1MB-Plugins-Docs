@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import { cp, mkdir, rename, rm, writeFile } from 'node:fs/promises';
+import { cp, mkdir, realpath, rename, rm, writeFile } from 'node:fs/promises';
 import { execFileSync } from 'node:child_process';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -109,6 +109,23 @@ async function importProject(registry, sourceOption) {
     throw new Error('--import requires --source /path/to/project.');
   }
   const sourceRoot = path.resolve(sourceOption);
+  const canonicalSourceRoot = await realpath(sourceRoot);
+  let registeredSource = null;
+  for (const project of registry.projects.filter((entry) => entry.adapter !== 'manifest')) {
+    try {
+      if (await realpath(path.resolve(repoRoot, project.defaultSource)) === canonicalSourceRoot) {
+        registeredSource = project;
+        break;
+      }
+    } catch {
+      // A registered source may not be checked out on this machine.
+    }
+  }
+  if (registeredSource) {
+    await syncProject(registeredSource, sourceRoot);
+    console.log(`Updated registered ${registeredSource.id} source without changing its adapter or category.`);
+    return;
+  }
   const manifest = await readManifest(path.join(sourceRoot, 'docs', 'plugin-docs.yml'));
   if (manifest.category !== 'custom-server-plugin') {
     throw new Error('Imported source projects must use category: custom-server-plugin. Curated third-party features belong in catalog/other-server-features/.');
