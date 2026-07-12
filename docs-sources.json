@@ -10,6 +10,14 @@
       "defaultSource": "../AntiFire"
     },
     {
+      "id": "antipopup",
+      "name": "AntiPopup",
+      "category": "custom-server-plugin",
+      "adapter": "manifest",
+      "repository": "mrfdev/AntiPopup",
+      "defaultSource": "../AntiPopup"
+    },
+    {
       "id": "cmi-api",
       "name": "1MB-CMIAPI",
       "category": "one-more-block-feature",

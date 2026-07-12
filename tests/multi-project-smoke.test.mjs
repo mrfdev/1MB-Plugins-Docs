@@ -105,7 +105,14 @@ Train the mcMMO skills that are enabled on 1MoreBlock.
 `);
 
   const generated = runNode(repoRoot, 'scripts/generate-site-content.mjs');
-  assert.match(generated, /3 custom server plugins, and 1 other server features/);
+  const registry = JSON.parse(await readFile(path.join(repoRoot, 'docs-sources.json'), 'utf8'));
+  const expectedCustomProjects = registry.projects.filter(
+    (project) => project.category === 'custom-server-plugin',
+  ).length;
+  assert.match(
+    generated,
+    new RegExp(`${expectedCustomProjects} custom server plugins, and 1 other server features`),
+  );
   runNode(repoRoot, 'scripts/validate-docs.mjs');
 
   assert.equal(

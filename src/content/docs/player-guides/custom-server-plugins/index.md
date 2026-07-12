@@ -20,6 +20,11 @@ These are standalone plugins built specifically for 1MoreBlock outside the share
       <td><code>/_antifire</code></td>
     </tr>
     <tr>
+      <td><a href="./antipopup/">AntiPopup</a></td>
+      <td>Hide the unsafe-server popup and limit vanilla chat reporting on 1MoreBlock.</td>
+      <td><code>/antipopup</code>, <code>/antipopup info</code></td>
+    </tr>
+    <tr>
       <td><a href="./lootbox/">Lootbox</a></td>
       <td>Discover repeatable loot containers with randomized rewards on 1MoreBlock.</td>
       <td><code>/lc</code>, <code>/lc info</code>, <code>/lc locate</code>, <code>/lc help</code></td>
