@@ -1,9 +1,30 @@
 import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
 import starlightThemeGalaxy from 'starlight-theme-galaxy';
+import { readFileSync } from 'node:fs';
+
+const docsSources = JSON.parse(
+  readFileSync(new URL('./docs-sources.json', import.meta.url), 'utf8'),
+);
+const standaloneRoutes = {
+  'custom-server-plugin': 'custom-server-plugins',
+  'other-server-feature': 'other-server-features',
+};
+const redirects = Object.fromEntries(
+  docsSources.projects
+    .filter((project) => standaloneRoutes[project.category])
+    .map((project) => {
+      const directory = standaloneRoutes[project.category];
+      return [
+        `/${directory}/${project.id}`,
+        `/player-guides/${directory}/${project.id}/`,
+      ];
+    }),
+);
 
 export default defineConfig({
   site: 'https://docs.1moreblock.com',
+  redirects,
   integrations: [
     starlight({
       title: '1MoreBlock Plugin Docs',

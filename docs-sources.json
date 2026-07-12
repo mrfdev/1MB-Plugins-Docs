@@ -8,6 +8,14 @@
       "adapter": "cmi-api",
       "repository": "mrfdev/1MB-CMIAPI",
       "defaultSource": "../CMI-API"
+    },
+    {
+      "id": "lootbox",
+      "name": "Lootbox",
+      "category": "custom-server-plugin",
+      "adapter": "manifest",
+      "repository": "mrfloris/LootChest",
+      "defaultSource": "../Floodgate"
     }
   ]
 }
