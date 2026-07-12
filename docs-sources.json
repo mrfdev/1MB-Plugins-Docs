@@ -10,6 +10,14 @@
       "defaultSource": "../CMI-API"
     },
     {
+      "id": "eventfloaties",
+      "name": "Summer Floaties",
+      "category": "custom-server-plugin",
+      "adapter": "manifest",
+      "repository": "mrfdev/1MB-EventFloaties",
+      "defaultSource": "../EventFloaties"
+    },
+    {
       "id": "lootbox",
       "name": "Lootbox",
       "category": "custom-server-plugin",

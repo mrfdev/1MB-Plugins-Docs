@@ -15,6 +15,11 @@ These are standalone plugins built specifically for 1MoreBlock outside the share
   </thead>
   <tbody>
     <tr>
+      <td><a href="./eventfloaties/">Summer Floaties</a></td>
+      <td>Build and verify summer floatie decorations for event rewards.</td>
+      <td><code>/floatie</code></td>
+    </tr>
+    <tr>
       <td><a href="./lootbox/">Lootbox</a></td>
       <td>Discover repeatable loot containers with randomized rewards on 1MoreBlock.</td>
       <td><code>/lc</code>, <code>/lc info</code>, <code>/lc locate</code>, <code>/lc help</code></td>
