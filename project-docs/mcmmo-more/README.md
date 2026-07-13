@@ -323,6 +323,7 @@ Placeholder examples:
 
 ## Versions
 
+- `1.0.0-048`: records the official mcMMO API guide as the primary integration research source to revisit as its maintainer expands it.
 - `1.0.0-047`: prepares source-local central docs onboarding with a player guide, importer manifest, split technical docs, and a clickable canonical docs link in `/mcmmore info`.
 - `1.0.0-046`: adds Arcane Dragon Breath source XP for successfully bottling dragon breath clouds, with anti-exploit cooldown and nearby cloud validation.
 - `1.0.0-045`: rebuilds the 26.1.2-target jar for Paper 26.2 compatibility testing while keeping 26.2 as an ignored local test-server target only.

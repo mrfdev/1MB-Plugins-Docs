@@ -21,6 +21,14 @@ That means the low-upgrade-risk route is a companion plugin that:
 
 All of those APIs still validate against `PrimarySkillType`, so a string like `walking` or `swimming` is rejected unless mcMMO itself has that enum constant.
 
+## Official API documentation watch
+
+Official mcMMO API guide: https://wiki.mcmmo.org/en/api/mcmmo-api
+
+This project already uses mcMMO's public `ExperienceAPI` reflectively for native power-level reads and the optional More-levels to native mcMMO-levels converter. The mcMMO maintainer indicated that the official API guide will be populated further, so treat that page as the primary documentation source to revisit before expanding mcMMO integration.
+
+When the guide grows, compare its documented lifecycle, compatibility guarantees, events, and preferred access patterns against the reflected methods currently used here. Do not replace the standalone custom-skill model unless mcMMO eventually documents a supported extension point for registering new primary skills.
+
 ## Why patching mcMMO is brittle
 
 Adding a real mcMMO skill would require touching at least:

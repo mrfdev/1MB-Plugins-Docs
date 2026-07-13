@@ -39,7 +39,7 @@ The jar name uses:
 Example:
 
 ```text
-1MB-mcMMO-More-v1.0.0-047-j25-26.1.2.jar
+1MB-mcMMO-More-v1.0.0-048-j25-26.1.2.jar
 ```
 
 ## Update

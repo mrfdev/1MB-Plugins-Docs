@@ -15,6 +15,7 @@ Deferred work that should not be lost, sorted by priority.
 
 ## Medium Priority
 
+- Revisit the official mcMMO API guide at https://wiki.mcmmo.org/en/api/mcmmo-api as the maintainer populates it; compare documented lifecycle/version guarantees, events, and preferred API access against the reflective `ExperienceAPI` methods used for native power reads and conversion.
 - Consider target-specific daily/weekly conversion caps if staff testing shows unlimited transactions are too generous.
 - Consider source-aware conversion weights later, such as Airborne `riptide` source credit favoring Tridents or Exploration `mounted_travel` source credit favoring Taming.
 - Consider optional non-command perk activation gestures that do not rely on double-sneak. Vanilla Paper cannot detect arbitrary keys such as `M` without a client mod, so evaluate server-visible options such as configured item right-click, offhand-swap double tap, drop-key double tap, or a menu click.

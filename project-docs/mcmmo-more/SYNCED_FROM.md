@@ -5,7 +5,7 @@ This namespace is a public documentation-only copy from the source project regis
 - Project: `1MB mcMMO More`
 - Project id: `mcmmo-more`
 - Source repository: `mrfdev/1MB-mcMMO-Skills`
-- Source commit: `ca2424e`
+- Source commit: `6cefeac`
 - Source state: `clean`
 - Copied files: `README.md` and `docs/`
 - Excluded on purpose: source code, jars, servers, databases, task logs, and internal checklists
