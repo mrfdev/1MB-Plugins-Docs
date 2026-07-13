@@ -15,6 +15,11 @@ These are standalone plugins built specifically for 1MoreBlock outside the share
   </thead>
   <tbody>
     <tr>
+      <td><a href="./1mb-xrayhunter/">1MB-XRayHunter</a></td>
+      <td>Staff-facing CoreProtect add-on for suspicious mining lookups, cached ore detail review, and large-archive X-ray triage.</td>
+      <td><code>/xrayhunter</code></td>
+    </tr>
+    <tr>
       <td><a href="./antifire/">1MB AntiFire</a></td>
       <td>Protects the server from unwanted fire spread and block burn damage while allowing controlled permanent fire where configured.</td>
       <td><code>/_antifire</code></td>

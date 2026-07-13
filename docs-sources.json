@@ -2,6 +2,14 @@
   "schemaVersion": 1,
   "projects": [
     {
+      "id": "1mb-xrayhunter",
+      "name": "1MB-XRayHunter",
+      "category": "custom-server-plugin",
+      "adapter": "manifest",
+      "repository": "mrfdev/XRayHunter",
+      "defaultSource": "../XRayHunter"
+    },
+    {
       "id": "antifire",
       "name": "1MB AntiFire",
       "category": "custom-server-plugin",
