@@ -50,6 +50,14 @@
       "defaultSource": "../Floodgate"
     },
     {
+      "id": "maphide",
+      "name": "1MB-MapHide",
+      "category": "custom-server-plugin",
+      "adapter": "manifest",
+      "repository": "mrfdev/1MB-MapHide",
+      "defaultSource": "../1MB-MapHide"
+    },
+    {
       "id": "xmas-tree",
       "name": "XMas Tree",
       "category": "custom-server-plugin",
