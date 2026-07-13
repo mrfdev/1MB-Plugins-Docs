@@ -99,6 +99,9 @@ export function validateManifest(manifest, sourceLabel = 'manifest') {
     throw new Error(`${sourceLabel} docs_url must be ${expectedPrefix}`);
   }
   assertSafeRelativePath(manifest.player_guide, `${sourceLabel} player_guide`);
+  if (manifest.staff_guide) {
+    assertSafeRelativePath(manifest.staff_guide, `${sourceLabel} staff_guide`);
+  }
   if (manifest.technical_readme) {
     assertPathRelativeToDocs(manifest.technical_readme, `${sourceLabel} technical_readme`);
   }
@@ -225,6 +228,9 @@ export async function loadAdditionalEntries(repoRoot, registry = null) {
       kind: 'catalog',
       root: entryRoot,
       playerGuideFile: path.join(entryRoot, assertSafeRelativePath(manifest.player_guide, `${id} player_guide`)),
+      staffGuideFile: manifest.staff_guide
+        ? path.join(entryRoot, assertSafeRelativePath(manifest.staff_guide, `${id} staff_guide`))
+        : null,
     });
   }
 
@@ -239,6 +245,9 @@ export async function loadAdditionalEntries(repoRoot, registry = null) {
     }
     if (!await pathIsFile(entry.playerGuideFile)) {
       throw new Error(`Player guide is missing for ${entry.manifest.id}: ${entry.playerGuideFile}`);
+    }
+    if (entry.staffGuideFile && !await pathIsFile(entry.staffGuideFile)) {
+      throw new Error(`Staff guide is missing for ${entry.manifest.id}: ${entry.staffGuideFile}`);
     }
     ids.add(entry.manifest.id);
     urls.add(entry.manifest.docs_url);

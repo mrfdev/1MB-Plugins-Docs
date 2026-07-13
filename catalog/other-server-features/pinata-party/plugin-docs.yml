@@ -1,0 +1,10 @@
+id: pinata-party
+name: "PinataParty"
+category: other-server-feature
+summary: "Run community pinata events where players work together to break a special mob and earn configured rewards."
+docs_url: https://docs.1moreblock.com/other-server-features/pinata-party/
+player_guide: player-guide.md
+staff_guide: staff-guide.md
+official_project: false
+official_wiki: https://www.spigotmc.org/resources/pinataparty.59318/
+last_reviewed: "2026-07-13"

@@ -1,0 +1,10 @@
+id: apis-and-libraries
+name: "APIs and Libraries"
+category: other-server-feature
+summary: "Explain the shared dependency plugins that power integrations but do not need separate player feature pages."
+docs_url: https://docs.1moreblock.com/other-server-features/apis-and-libraries/
+player_guide: player-guide.md
+staff_guide: staff-guide.md
+official_project: false
+official_wiki: https://github.com/PlaceholderAPI/PlaceholderAPI/wiki
+last_reviewed: "2026-07-13"

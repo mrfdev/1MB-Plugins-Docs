@@ -1586,7 +1586,7 @@ ${htmlRows}
 function commandPreview(details, guideHref) {
   const commands = details?.playerCommands ?? [];
   if (!commands.length) {
-    return 'No player commands listed yet.';
+    return 'No general player command.';
   }
   const preview = commands.slice(0, 4).map((command) => `<code>${formatCommand(command)}</code>`).join(', ');
   const hidden = commands.length - 4;
@@ -1716,9 +1716,13 @@ function additionalTechnicalLinks(entry) {
     const root = `${publicRepoBlob}/project-docs/${entry.manifest.id}`;
     return `- [Technical overview](${root}/README.md)\n- [Technical documentation folder](${publicRepoTree}/project-docs/${entry.manifest.id}/docs/)`;
   }
-  const links = [`- [1MoreBlock feature notes](${publicRepoTree}/catalog/other-server-features/${entry.manifest.id}/)`];
+  const links = [];
+  if (entry.staffGuideFile) {
+    links.push(`- [Staff and technical reference](/staff-reference/other-server-features/${entry.manifest.id}/)`);
+  }
+  links.push(`- [1MoreBlock feature notes](${publicRepoTree}/catalog/other-server-features/${entry.manifest.id}/)`);
   if (entry.manifest.official_wiki) {
-    links.push(`- [Official plugin wiki](${entry.manifest.official_wiki})`);
+    links.push(`- [Official plugin documentation](${entry.manifest.official_wiki})`);
   }
   return links.join('\n');
 }
@@ -1726,6 +1730,9 @@ function additionalTechnicalLinks(entry) {
 async function generateAdditionalGuides(entries) {
   const categories = ['custom-server-plugin', 'other-server-feature'];
   const grouped = new Map(categories.map((category) => [category, []]));
+  const staffOutputRoot = path.join(contentRoot, 'staff-reference', 'other-server-features');
+  await rm(staffOutputRoot, { recursive: true, force: true });
+  await mkdir(staffOutputRoot, { recursive: true });
   for (const entry of entries) {
     grouped.get(entry.manifest.category)?.push(entry);
   }
@@ -1762,6 +1769,26 @@ ${body || `${entry.manifest.name} documentation is being prepared.`}
 ${additionalTechnicalLinks(entry)}
 `);
 
+      if (entry.staffGuideFile) {
+        const staffSource = await readFile(entry.staffGuideFile, 'utf8');
+        const staffBody = stripDocumentPreamble(staffSource);
+        const staffProjectOutput = path.join(staffOutputRoot, entry.manifest.id);
+        await mkdir(staffProjectOutput, { recursive: true });
+        await writeFile(path.join(staffProjectOutput, 'index.md'), `---
+title: ${JSON.stringify(`${entry.manifest.name} Staff Reference`)}
+description: ${JSON.stringify(`Public-safe commands, permissions, configuration, integrations, and troubleshooting notes for ${entry.manifest.name}.`)}
+---
+
+${staffBody || `${entry.manifest.name} technical documentation is being prepared.`}
+
+## Reference Links
+
+- [Player guide](/player-guides/other-server-features/${entry.manifest.id}/)
+- [Curated source notes](${publicRepoTree}/catalog/other-server-features/${entry.manifest.id}/)
+${entry.manifest.official_wiki ? `- [Official plugin documentation](${entry.manifest.official_wiki})` : ''}
+`);
+      }
+
       for (const command of commandData.playerCommands) {
         commandIndexRows.push({
           slug: entry.manifest.id,
@@ -1797,8 +1824,10 @@ function additionalStaffLists(entries) {
   return entries.map((entry) => {
     const base = entry.kind === 'imported'
       ? `${publicRepoBlob}/project-docs/${entry.manifest.id}/README.md`
-      : `${publicRepoTree}/catalog/other-server-features/${entry.manifest.id}`;
-    const extra = entry.manifest.official_wiki ? `; [official wiki](${entry.manifest.official_wiki})` : '';
+      : entry.staffGuideFile
+        ? `./other-server-features/${entry.manifest.id}/`
+        : `${publicRepoTree}/catalog/other-server-features/${entry.manifest.id}`;
+    const extra = entry.manifest.official_wiki ? `; [official documentation](${entry.manifest.official_wiki})` : '';
     return `- [${entry.manifest.name}](${base}) - ${entry.summary}${extra}`;
   }).join('\n');
 }

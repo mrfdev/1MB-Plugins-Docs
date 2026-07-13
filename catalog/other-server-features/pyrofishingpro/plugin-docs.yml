@@ -1,0 +1,11 @@
+id: pyrofishingpro
+name: "PyroFishingPro"
+category: other-server-feature
+summary: "Add custom fish, fishing levels, Entropy, augments, deliveries, skills, tournaments, and a fish economy."
+main_command: "/fish"
+docs_url: https://docs.1moreblock.com/other-server-features/pyrofishingpro/
+player_guide: player-guide.md
+staff_guide: staff-guide.md
+official_project: false
+official_wiki: https://pyrotempus.gitbook.io/pyro-plugins/pyrofishingpro
+last_reviewed: "2026-07-13"

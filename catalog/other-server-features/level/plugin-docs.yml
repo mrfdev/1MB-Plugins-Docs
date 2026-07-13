@@ -1,0 +1,10 @@
+id: level
+name: "BentoBox Level"
+category: other-server-feature
+summary: "Calculate island value and provide personal and server-wide island rankings."
+docs_url: https://docs.1moreblock.com/other-server-features/level/
+player_guide: player-guide.md
+staff_guide: staff-guide.md
+official_project: false
+official_wiki: https://github.com/BentoBoxWorld/Level
+last_reviewed: "2026-07-13"

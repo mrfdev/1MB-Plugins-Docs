@@ -1,0 +1,10 @@
+id: worldborder
+name: "WorldBorder"
+category: other-server-feature
+summary: "Define and enforce world-scale boundaries and support safe border filling or trimming operations."
+docs_url: https://docs.1moreblock.com/other-server-features/worldborder/
+player_guide: player-guide.md
+staff_guide: staff-guide.md
+official_project: false
+official_wiki: https://github.com/Brettflan/WorldBorder
+last_reviewed: "2026-07-13"

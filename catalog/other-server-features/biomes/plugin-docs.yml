@@ -1,0 +1,10 @@
+id: biomes
+name: "BentoBox Biomes"
+category: other-server-feature
+summary: "Let island owners change configured island biomes through a menu or island command."
+docs_url: https://docs.1moreblock.com/other-server-features/biomes/
+player_guide: player-guide.md
+staff_guide: staff-guide.md
+official_project: false
+official_wiki: https://github.com/BentoBoxWorld/Biomes
+last_reviewed: "2026-07-13"

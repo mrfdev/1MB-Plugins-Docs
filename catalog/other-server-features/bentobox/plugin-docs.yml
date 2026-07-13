@@ -1,0 +1,10 @@
+id: bentobox
+name: "BentoBox"
+category: other-server-feature
+summary: "Provide the shared island platform behind 1MoreBlock SkyBlock, OneBlock, AcidIsland, CaveBlock, and SkyGrid modes."
+docs_url: https://docs.1moreblock.com/other-server-features/bentobox/
+player_guide: player-guide.md
+staff_guide: staff-guide.md
+official_project: false
+official_wiki: https://docs.bentobox.world/en/latest/
+last_reviewed: "2026-07-13"

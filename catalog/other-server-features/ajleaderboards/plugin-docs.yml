@@ -1,0 +1,10 @@
+id: ajleaderboards
+name: "ajLeaderboards"
+category: other-server-feature
+summary: "Display live and cached rankings from PlaceholderAPI values on signs, holograms, menus, and text."
+docs_url: https://docs.1moreblock.com/other-server-features/ajleaderboards/
+player_guide: player-guide.md
+staff_guide: staff-guide.md
+official_project: false
+official_wiki: https://wiki.ajg0702.us/ajLeaderboards/
+last_reviewed: "2026-07-13"

@@ -18,6 +18,7 @@ function manifest(overrides = {}) {
     main_command: '/lootbox',
     docs_url: 'https://docs.1moreblock.com/custom-server-plugins/lootbox/',
     player_guide: 'player-guide.md',
+    staff_guide: 'staff-guide.md',
     technical_readme: '../README.md',
     java_target: '25',
     paper_target: '26.2',
@@ -67,4 +68,5 @@ test('third-party feature manifests use their own canonical URL', () => {
     last_reviewed: '2026-07-12',
   }));
   assert.equal(value.category, 'other-server-feature');
+  assert.equal(value.staff_guide, 'staff-guide.md');
 });

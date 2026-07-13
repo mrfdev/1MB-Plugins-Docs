@@ -1,0 +1,10 @@
+id: mob-farm-manager
+name: "MobFarmManager"
+category: other-server-feature
+summary: "Protect server performance by limiting excessive mobs, entities, hoppers, and configured farm components."
+docs_url: https://docs.1moreblock.com/other-server-features/mob-farm-manager/
+player_guide: player-guide.md
+staff_guide: staff-guide.md
+official_project: false
+official_wiki: https://www.spigotmc.org/resources/mob-farm-manager-supports-1-7-10-up-to-1-21-hopper-support.15127/
+last_reviewed: "2026-07-13"

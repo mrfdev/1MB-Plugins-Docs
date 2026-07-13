@@ -1,0 +1,11 @@
+id: procosmetics
+name: "ProCosmetics"
+category: other-server-feature
+summary: "Offer a menu of visual cosmetics, gadgets, pets, morphs, effects, music, and treasure rewards."
+main_command: "/cosmetics"
+docs_url: https://docs.1moreblock.com/other-server-features/procosmetics/
+player_guide: player-guide.md
+staff_guide: staff-guide.md
+official_project: false
+official_wiki: https://github.com/File14/ProCosmetics/wiki
+last_reviewed: "2026-07-13"

@@ -1,0 +1,11 @@
+id: jobs
+name: "Jobs"
+category: other-server-feature
+summary: "Join professions, earn money and experience from configured activities, complete quests, and compare progress."
+main_command: "/jobs"
+docs_url: https://docs.1moreblock.com/other-server-features/jobs/
+player_guide: player-guide.md
+staff_guide: staff-guide.md
+official_project: false
+official_wiki: https://www.zrips.net/jobs/
+last_reviewed: "2026-07-13"

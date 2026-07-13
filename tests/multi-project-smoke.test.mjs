@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
-import { cp, mkdtemp, mkdir, readFile, symlink, writeFile } from 'node:fs/promises';
+import { cp, mkdtemp, mkdir, readFile, readdir, symlink, writeFile } from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
 import test from 'node:test';
@@ -89,6 +89,7 @@ summary: Train skills using the mcMMO features enabled on 1MoreBlock.
 main_command: /mcmmo
 docs_url: https://docs.1moreblock.com/other-server-features/mcmmo/
 player_guide: player-guide.md
+staff_guide: staff-guide.md
 official_project: false
 official_wiki: https://wiki.mcmmo.org/
 last_reviewed: "2026-07-12"
@@ -103,15 +104,27 @@ Train the mcMMO skills that are enabled on 1MoreBlock.
 | --- | --- | --- |
 | \`/mcmmo\` | Opens mcMMO help. | \`/mcmmo\` |
 `);
+  await writeFile(path.join(external, 'staff-guide.md'), `# mcMMO Staff Reference
+
+## Commands
+
+| Command | Permission | Purpose |
+| --- | --- | --- |
+| \`/mcmmo reload\` | \`mcmmo.admin\` | Reloads mcMMO configuration. |
+`);
 
   const generated = runNode(repoRoot, 'scripts/generate-site-content.mjs');
   const registry = JSON.parse(await readFile(path.join(repoRoot, 'docs-sources.json'), 'utf8'));
   const expectedCustomProjects = registry.projects.filter(
     (project) => project.category === 'custom-server-plugin',
   ).length;
+  const expectedOtherFeatures = (await readdir(
+    path.join(repoRoot, 'catalog', 'other-server-features'),
+    { withFileTypes: true },
+  )).filter((entry) => entry.isDirectory()).length;
   assert.match(
     generated,
-    new RegExp(`${expectedCustomProjects} custom server plugins, and 1 other server features`),
+    new RegExp(`${expectedCustomProjects} custom server plugins, and ${expectedOtherFeatures} other server features`),
   );
   runNode(repoRoot, 'scripts/validate-docs.mjs');
 
@@ -125,6 +138,10 @@ Train the mcMMO skills that are enabled on 1MoreBlock.
   );
   assert.match(
     await readFile(path.join(repoRoot, 'src', 'content', 'docs', 'player-guides', 'other-server-features', 'mcmmo', 'index.md'), 'utf8'),
-    /Official plugin wiki/,
+    /Official plugin documentation/,
+  );
+  assert.match(
+    await readFile(path.join(repoRoot, 'src', 'content', 'docs', 'staff-reference', 'other-server-features', 'mcmmo', 'index.md'), 'utf8'),
+    /mcMMO Staff Reference/,
   );
 });

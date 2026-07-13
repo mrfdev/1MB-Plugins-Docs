@@ -1,0 +1,11 @@
+id: player-shop-gui-plus
+name: "PlayerShopGUIPlus"
+category: other-server-feature
+summary: "Let players list items in a shared marketplace and buy listings from other players."
+main_command: "/playershop"
+docs_url: https://docs.1moreblock.com/other-server-features/player-shop-gui-plus/
+player_guide: player-guide.md
+staff_guide: staff-guide.md
+official_project: false
+official_wiki: https://www.spigotmc.org/resources/playershopguiplus.37707/
+last_reviewed: "2026-07-13"

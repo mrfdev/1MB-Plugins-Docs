@@ -1,0 +1,10 @@
+id: worldguard-extra-flags
+name: "WorldGuardExtraFlags"
+category: other-server-feature
+summary: "Extend WorldGuard regions with additional server-control flags beyond the standard flag set."
+docs_url: https://docs.1moreblock.com/other-server-features/worldguard-extra-flags/
+player_guide: player-guide.md
+staff_guide: staff-guide.md
+official_project: false
+official_wiki: https://github.com/aromaa/WorldGuardExtraFlags
+last_reviewed: "2026-07-13"

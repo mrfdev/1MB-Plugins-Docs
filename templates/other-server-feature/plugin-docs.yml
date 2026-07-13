@@ -5,6 +5,7 @@ summary: Replace this with a short explanation of the feature on 1MoreBlock.
 main_command: /example
 docs_url: https://docs.1moreblock.com/other-server-features/example-feature/
 player_guide: player-guide.md
+staff_guide: staff-guide.md
 official_project: false
 official_wiki: https://example.com/official-wiki
 last_reviewed: "2026-07-12"

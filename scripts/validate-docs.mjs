@@ -100,6 +100,21 @@ async function validateAdditionalEntries(entries) {
     if (!await pathIsFile(generated)) {
       problem(`Generated player guide is missing for ${manifest.id}. Run npm run docs:generate.`);
     }
+    if (entry.staffGuideFile) {
+      const generatedStaffGuide = path.join(
+        repoRoot,
+        'src',
+        'content',
+        'docs',
+        'staff-reference',
+        'other-server-features',
+        manifest.id,
+        'index.md',
+      );
+      if (!await pathIsFile(generatedStaffGuide)) {
+        problem(`Generated staff guide is missing for ${manifest.id}. Run npm run docs:generate.`);
+      }
+    }
   }
 }
 

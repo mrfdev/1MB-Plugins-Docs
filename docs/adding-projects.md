@@ -74,9 +74,10 @@ Third-party features are curated directly in this repository rather than copied 
 catalog/other-server-features/<feature-id>/
   plugin-docs.yml
   player-guide.md
+  staff-guide.md
 ```
 
-Use `category: other-server-feature`, the canonical `/other-server-features/<id>/` URL, and an `official_wiki` link. Explain the feature as configured on 1MoreBlock, including enabled commands, restrictions, ranks, worlds, and server-specific differences. Do not reproduce copyrighted wiki pages.
+Use `category: other-server-feature`, the canonical `/other-server-features/<id>/` URL, and an `official_wiki` link. Explain the feature as configured on 1MoreBlock, including enabled commands, restrictions, ranks, worlds, and server-specific differences. Set `staff_guide: staff-guide.md` when a rendered public-safe technical reference is available. Do not reproduce copyrighted wiki pages.
 
 ## Public-Safety Rules
 

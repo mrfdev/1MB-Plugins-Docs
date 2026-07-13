@@ -1,0 +1,11 @@
+id: pyrofarming
+name: "PyroFarming"
+category: other-server-feature
+summary: "Add custom crops, grow stations, farming progression, Elysium, markets, codex entries, and farm upgrades."
+main_command: "/farm"
+docs_url: https://docs.1moreblock.com/other-server-features/pyrofarming/
+player_guide: player-guide.md
+staff_guide: staff-guide.md
+official_project: false
+official_wiki: https://pyrotempus.gitbook.io/pyro-plugins/pyrofarming
+last_reviewed: "2026-07-13"

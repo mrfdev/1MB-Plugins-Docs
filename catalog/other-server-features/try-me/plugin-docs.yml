@@ -1,0 +1,11 @@
+id: try-me
+name: "TryMe"
+category: other-server-feature
+summary: "Run short chat and gameplay challenges that players can answer or complete for configured rewards."
+main_command: "/tryme"
+docs_url: https://docs.1moreblock.com/other-server-features/try-me/
+player_guide: player-guide.md
+staff_guide: staff-guide.md
+official_project: false
+official_wiki: https://www.spigotmc.org/resources/tryme.3330/
+last_reviewed: "2026-07-13"

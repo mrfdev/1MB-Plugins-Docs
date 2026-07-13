@@ -1,0 +1,11 @@
+id: bolt
+name: "Bolt"
+category: other-server-feature
+summary: "Protect individual containers, doors, signs, and supported entities with ownership and access rules."
+main_command: "/lock"
+docs_url: https://docs.1moreblock.com/other-server-features/bolt/
+player_guide: player-guide.md
+staff_guide: staff-guide.md
+official_project: false
+official_wiki: https://github.com/pop4959/Bolt/wiki
+last_reviewed: "2026-07-13"

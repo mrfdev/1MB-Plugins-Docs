@@ -1,0 +1,10 @@
+id: border
+name: "BentoBox Border"
+category: other-server-feature
+summary: "Show and enforce a visible personal island boundary."
+docs_url: https://docs.1moreblock.com/other-server-features/border/
+player_guide: player-guide.md
+staff_guide: staff-guide.md
+official_project: false
+official_wiki: https://github.com/BentoBoxWorld/Border
+last_reviewed: "2026-07-13"

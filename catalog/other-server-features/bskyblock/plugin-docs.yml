@@ -1,0 +1,11 @@
+id: bskyblock
+name: "BSkyBlock"
+category: other-server-feature
+summary: "Play the classic SkyBlock island mode with teams, challenges, levels, and warps."
+main_command: "/is"
+docs_url: https://docs.1moreblock.com/other-server-features/bskyblock/
+player_guide: player-guide.md
+staff_guide: staff-guide.md
+official_project: false
+official_wiki: https://github.com/BentoBoxWorld/BSkyBlock
+last_reviewed: "2026-07-13"
