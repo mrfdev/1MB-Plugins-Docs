@@ -50,6 +50,11 @@ These are standalone plugins built specifically for 1MoreBlock outside the share
       <td><code>/mcstats</code></td>
     </tr>
     <tr>
+      <td><a href="./mcmmo-more/">1MB mcMMO More</a></td>
+      <td>Adds 1MoreBlock-owned grindable skills alongside mcMMO without patching mcMMO itself.</td>
+      <td><code>/mcmmore</code></td>
+    </tr>
+    <tr>
       <td><a href="./plotmarkers/">PlotMarkers</a></td>
       <td>Shows PlotSquared plot owners and boundaries on BlueMap.</td>
       <td><code>/plotmarkers</code>, <code>/plotmarkers info</code></td>

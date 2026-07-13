@@ -1,0 +1,12 @@
+id: mcmmo-more
+name: 1MB mcMMO More
+category: custom-server-plugin
+summary: Adds 1MoreBlock-owned grindable skills alongside mcMMO without patching mcMMO itself.
+main_command: /mcmmore
+docs_url: https://docs.1moreblock.com/custom-server-plugins/mcmmo-more/
+player_guide: player-guide.md
+technical_readme: ../README.md
+java_target: 25
+paper_target: 26.1.2
+official_project: true
+repository: mrfdev/1MB-mcMMO-Skills

@@ -66,6 +66,14 @@
       "defaultSource": "../mcMMODiscordAlert"
     },
     {
+      "id": "mcmmo-more",
+      "name": "1MB mcMMO More",
+      "category": "custom-server-plugin",
+      "adapter": "manifest",
+      "repository": "mrfdev/1MB-mcMMO-Skills",
+      "defaultSource": "../1MB-mcMMO-Skills"
+    },
+    {
       "id": "plotmarkers",
       "name": "PlotMarkers",
       "category": "custom-server-plugin",
