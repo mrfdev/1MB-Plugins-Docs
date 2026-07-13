@@ -58,6 +58,14 @@
       "defaultSource": "../1MB-MapHide"
     },
     {
+      "id": "plotmarkers",
+      "name": "PlotMarkers",
+      "category": "custom-server-plugin",
+      "adapter": "manifest",
+      "repository": "mrfdev/PlotMarkers",
+      "defaultSource": "../PlotMarkers"
+    },
+    {
       "id": "shopchest",
       "name": "ShopChest",
       "category": "custom-server-plugin",

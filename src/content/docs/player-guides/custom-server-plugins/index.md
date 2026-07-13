@@ -45,6 +45,11 @@ These are standalone plugins built specifically for 1MoreBlock outside the share
       <td><code>/map hide</code>, <code>/bmpc</code>, <code>/bmpc toggle</code>, <code>/bmpc show</code>, <a href="./maphide/">+3 more</a></td>
     </tr>
     <tr>
+      <td><a href="./plotmarkers/">PlotMarkers</a></td>
+      <td>Shows PlotSquared plot owners and boundaries on BlueMap.</td>
+      <td><code>/plotmarkers</code>, <code>/plotmarkers info</code></td>
+    </tr>
+    <tr>
       <td><a href="./shopchest/">ShopChest</a></td>
       <td>Create persistent player chest shops with holograms and Vault economy trading.</td>
       <td><code>/shop</code></td>
