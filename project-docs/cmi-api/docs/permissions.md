@@ -21,6 +21,8 @@ onembcmi.global.config.set
 onembcmi.global.docs
 onembcmi.global.gui
 onembcmi.global.rules
+onembcmi.global.player
+onembcmi.global.validate
 onembcmi.global.translations
 onembcmi.global.clean.cache
 onembcmi.global.clean.playerdata
@@ -478,6 +480,15 @@ onembendcrystals.debug
 onembendcrystals.reload
 onembendcrystals.toggle
 onembendcrystals.break
+onembcmi.antifire.use
+onembcmi.antifire.admin
+onembcmi.antifire.debug
+onembcmi.antifire.reload
+onembcmi.antifire.toggle
+onembantifire.admin
+onembantifire.debug
+onembantifire.reload
+onembantifire.toggle
 onembcmi.worldsnapshot.use
 onembcmi.worldsnapshot.capture
 onembcmi.worldsnapshot.view

@@ -10,14 +10,6 @@
       "defaultSource": "../XRayHunter"
     },
     {
-      "id": "antifire",
-      "name": "1MB AntiFire",
-      "category": "custom-server-plugin",
-      "adapter": "manifest",
-      "repository": "mrfdev/AntiFire",
-      "defaultSource": "../AntiFire"
-    },
-    {
       "id": "antipopup",
       "name": "AntiPopup",
       "category": "custom-server-plugin",

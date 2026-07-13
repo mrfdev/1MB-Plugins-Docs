@@ -35,6 +35,9 @@ This page documents the global command shape. Individual plugins have their own 
 /1mbcmi rules [page]
 /1mbcmi rules validate
 /1mbcmi rules test <rule>
+/1mbcmi player resolve <name|uuid>
+/1mbcmi player cached <name|uuid>
+/1mbcmi validate <material|world|duration|uuid|money|id|page|feature> <value>
 /1mbcmi translations status
 /1mbcmi translations missing [plugin|all]
 /1mbcmi translations reload
@@ -73,6 +76,9 @@ This page documents the global command shape. Individual plugins have their own 
 | `/1mbcmi rules [page]` | Lists configured safe shared action rules. |
 | `/1mbcmi rules validate` | Validates shared action rule ids, triggers, conditions, and action safety. |
 | `/1mbcmi rules test <rule>` | Previews a shared action rule without dispatching unsafe command actions. |
+| `/1mbcmi player resolve <name|uuid>` | Resolves an exact real name, known UUID, or unique CMI nickname from local online/cache data. |
+| `/1mbcmi player cached <name|uuid>` | Resolves an exact real name or known UUID while intentionally ignoring nicknames. |
+| `/1mbcmi validate <material\|world\|duration\|uuid\|money\|id\|page\|feature> <value>` | Validates and canonicalizes one common command argument without changing server state. |
 | `/1mbcmi translations status` | Shows missing and extra translation key counts for each registered feature. |
 | `/1mbcmi translations missing [plugin\|all]` | Lists missing and extra translation keys for one feature or all features. |
 | `/1mbcmi translations reload` | Reloads shared and feature translation files. |
@@ -82,6 +88,37 @@ This page documents the global command shape. Individual plugins have their own 
 Command output is rendered with Paper's Adventure MiniMessage support. The shared library uses a restrained pastel palette for headers, labels, values, list items, and notes so console and chat output is easier to scan without turning debug output into a rainbow.
 
 Dynamic values such as player input, config values, event details, and log snippets are escaped before rendering so they cannot inject MiniMessage formatting.
+
+## Safe Player Resolution
+
+The owner-only player resolver exposes the same shared lookup rules available to feature plugins:
+
+```text
+/1mbcmi player resolve Floris
+/1mbcmi player resolve 123e4567-e89b-12d3-a456-426614174000
+/1mbcmi player cached Floris
+```
+
+`resolve` accepts exact real names, canonical or compact known UUIDs, and unique CMI nicknames. `cached` accepts only exact real names and known UUIDs, which makes it suitable for commands where a nickname must never select an offline account. Exact real names take precedence over nicknames. If one name or nickname maps to multiple UUIDs, the result is ambiguous and no account is selected.
+
+Both modes use online players, Paper's offline cache, and CMI's already-loaded user cache. They never use partial names, contact Mojang or another remote profile service, or create a new offline-player identity. Output includes the canonical UUID, real name, online state, match type, and source.
+
+## Shared Argument Validation
+
+The owner-only validation command uses the same reusable service exposed to feature plugins:
+
+```text
+/1mbcmi validate material minecraft:oak_log
+/1mbcmi validate world general
+/1mbcmi validate duration 1h30m
+/1mbcmi validate uuid 123e4567-e89b-12d3-a456-426614174000
+/1mbcmi validate money 10000.50
+/1mbcmi validate id summer-event
+/1mbcmi validate page 3
+/1mbcmi validate feature autosell
+```
+
+Material output is normalized to its canonical Paper key. World validation accepts currently loaded worlds. Bare durations mean seconds; compound durations use descending `w`, `d`, `h`, `m`, and `s` parts. UUIDs may be canonical or compact 32-digit values. Default money validation allows plain non-negative values with no currency symbol, comma, exponent, or more than two effective decimal places. Safe ids use `a-z`, `0-9`, underscore, and hyphen. Pages start at one, and feature ids must exist in the current feature registry.
 
 ## Owner Permission Probe
 
@@ -1500,6 +1537,32 @@ EndCrystals:
 /_endcrystals debug all
 /_endcrystals debug protected
 ```
+
+AntiFire:
+
+```text
+/_antifire
+/_antifire info
+/_antifire help
+/_antifire debug
+/_antifire debug overview
+/_antifire debug status
+/_antifire debug runtime
+/_antifire debug health
+/_antifire debug hooks
+/_antifire debug commands
+/_antifire debug permissions
+/_antifire debug placeholders
+/_antifire debug config
+/_antifire debug set config <path> <value>
+/_antifire debug all
+/_antifire reload
+/_antifire toggle allow-permanent-soul-fire true
+/_antifire toggle prevent-fire-spread true
+/_antifire toggle extinguish-delay-ticks 100
+```
+
+`/_antifire info` is public. Bare `/_antifire` shows trusted help to an authorized admin and otherwise falls back to the public information page. Debug, reload, and toggle require explicit AntiFire permissions; operator status alone does not grant the default-false admin nodes. Console remains allowed. No `/antifire` alias is registered.
 
 WorldSnapshot:
 

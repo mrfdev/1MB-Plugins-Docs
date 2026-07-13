@@ -10,17 +10,21 @@ const standaloneRoutes = {
   'custom-server-plugin': 'custom-server-plugins',
   'other-server-feature': 'other-server-features',
 };
-const redirects = Object.fromEntries(
-  docsSources.projects
-    .filter((project) => standaloneRoutes[project.category])
-    .map((project) => {
-      const directory = standaloneRoutes[project.category];
-      return [
-        `/${directory}/${project.id}`,
-        `/player-guides/${directory}/${project.id}/`,
-      ];
-    }),
-);
+const redirects = {
+  '/custom-server-plugins/antifire': '/player-guides/plugins/antifire/',
+  '/player-guides/custom-server-plugins/antifire': '/player-guides/plugins/antifire/',
+  ...Object.fromEntries(
+    docsSources.projects
+      .filter((project) => standaloneRoutes[project.category])
+      .map((project) => {
+        const directory = standaloneRoutes[project.category];
+        return [
+          `/${directory}/${project.id}`,
+          `/player-guides/${directory}/${project.id}/`,
+        ];
+      }),
+  ),
+};
 
 export default defineConfig({
   site: 'https://docs.1moreblock.com',

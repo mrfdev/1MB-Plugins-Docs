@@ -1382,6 +1382,22 @@ EndCrystals placeholders:
 %onembcmi_endcrystals.protected_types.count%
 ```
 
+AntiFire placeholders:
+
+AntiFire publishes the values independently; `1MB-CMIAPI-Lib` registers them under the shared `onembcmi` PlaceholderAPI expansion when both the library and PlaceholderAPI are available. Fire protection itself does not depend on either plugin.
+
+```text
+%onembcmi_antifire.enabled%
+%onembcmi_antifire.protection.fire_spread%
+%onembcmi_antifire.protection.block_burn%
+%onembcmi_antifire.extinguish.enabled%
+%onembcmi_antifire.permanent.soul_fire%
+%onembcmi_antifire.runtime.tracked_fire%
+%onembcmi_antifire.runtime.prevented_spread%
+%onembcmi_antifire.runtime.prevented_burn%
+%onembcmi_antifire.runtime.extinguished%
+```
+
 WorldSnapshot placeholders:
 
 ```text

@@ -2,9 +2,11 @@
 
 ## Purpose
 
-`1MB-CMIAPI-Lib` is the shared runtime library for the 1MB CMI-API feature jars. It owns common diagnostics, feature registration, config visibility, translation health, shared GUI examples, safe action rules, cache cleanup, debug bundles, and PlaceholderAPI routing for global and feature placeholders.
+`1MB-CMIAPI-Lib` is the shared runtime library for the 1MB CMI-API feature jars. It owns common diagnostics, feature registration, config visibility, translation health, shared GUI examples, safe action rules, command argument validation, safe player resolution, cache cleanup, debug bundles, and PlaceholderAPI routing for global and feature placeholders.
 
 It must be installed in `/plugins/` next to CMI, CMILib, and any 1MB CMI-API feature jars.
+
+AntiFire is intentionally different from ordinary feature jars. It loads independently in Paper's `STARTUP` phase with no CMI/library dependency. If AntiFire is present, this library attaches later to its typed read-only status service for `/1mbcmi status`, doctor/support output, and `%onembcmi_antifire.*%` routing. The library cannot modify AntiFire or delay its protection startup.
 
 Feature jars without a custom local debug command inherit `/<plugin-command> debug` from this library. That fallback is permission locked to `onembcmi.<plugin>.admin` and prints plugin/build metadata, target PaperMC version, Java target, runtime Java version, server API/engine strings, required dependency/optional hook load state, and paginated commands, permissions, placeholders, and config pages.
 
@@ -44,6 +46,9 @@ Feature configs are validated and repaired through the shared `FeatureSettings` 
 /1mbcmi rules [page]
 /1mbcmi rules validate
 /1mbcmi rules test <rule>
+/1mbcmi player resolve <name|uuid>
+/1mbcmi player cached <name|uuid>
+/1mbcmi validate <material|world|duration|uuid|money|id|page|feature> <value>
 /1mbcmi translations reload
 /1mbcmi translations status
 /1mbcmi translations missing [id|all]
@@ -75,6 +80,12 @@ Useful examples:
 /1mbcmi rules
 /1mbcmi rules validate
 /1mbcmi rules test welcome-test
+/1mbcmi player resolve Floris
+/1mbcmi player cached 123e4567-e89b-12d3-a456-426614174000
+/1mbcmi validate material minecraft:oak_log
+/1mbcmi validate duration 1h30m
+/1mbcmi validate money 10000.50
+/1mbcmi validate feature autosell
 /1mbcmi translations status
 /1mbcmi translations missing all
 /1mbcmi translations reload
@@ -97,8 +108,70 @@ onembcmi.global.config.set
 onembcmi.global.docs
 onembcmi.global.gui
 onembcmi.global.rules
+onembcmi.global.player
+onembcmi.global.validate
 onembcmi.global.translations
 ```
+
+## Safe Player Resolver
+
+`SafePlayerResolver` gives feature plugins one consistent identity result for online and known offline players. Feature classes extending `AbstractCmiApiFeaturePlugin` access it through `playerResolver()`.
+
+| Method | Lookup rules |
+| --- | --- |
+| `resolve(raw)` | Exact real name, known canonical/compact UUID, or unique CMI nickname; online and offline matches are allowed. |
+| `resolveCached(raw)` | Exact real name or known canonical/compact UUID; nickname matching is disabled. |
+| `resolveOnline(raw)` | Exact real name, known UUID, or unique CMI nickname, but only if the selected account is online. |
+
+Each result has a `FOUND`, `NOT_FOUND`, `AMBIGUOUS`, `INVALID`, or `ERROR` status. A found result includes the UUID, real name when known, online state, match type, matched value, and source (`ONLINE`, `PAPER_CACHE`, or `CMI_CACHE`). Ambiguous results list every distinct UUID instead of picking one silently. Exact real-name matches take precedence over nickname matches.
+
+```java
+SafePlayerResolver.Resolution result = playerResolver().resolve(rawTarget);
+if (!result.found()) {
+    featureError(sender, result.message());
+    return;
+}
+UUID targetId = result.player().uuid();
+Player online = Bukkit.getPlayer(targetId);
+```
+
+The Paper/CMI directory adapter must run on the Paper server thread. It uses exact online names, `Bukkit.getOfflinePlayerIfCached` for cached names, Paper's known-player list for UUID checks, and CMI's already-loaded user map for real names and nicknames. CMI entries marked as fake accounts are excluded. The resolver never performs partial matching, calls a remote profile service, invokes a name lookup that can synthesize a player, or creates an offline-player record.
+
+The owner commands require `onembcmi.global.player`. `/1mbcmi player resolve ...` includes nickname matching; `/1mbcmi player cached ...` is the strict real-identity check.
+
+## Shared Command Argument Validators
+
+`CommandArgumentValidators` gives every feature plugin one structured validation result for common command inputs. Feature classes extending `AbstractCmiApiFeaturePlugin` can access it through `argumentValidators()`. A result contains `valid`, the typed value when valid, its canonical `normalized` text, and a player-readable message. Invalid input is not silently replaced with a fallback value.
+
+Supported validators:
+
+| Validator | Result and default rules |
+| --- | --- |
+| `material` | Resolves a Paper material and returns its canonical `minecraft:*` key. |
+| `world` | Resolves a currently loaded Paper world and preserves its actual name. |
+| `duration` | Returns `Duration`; bare numbers mean seconds and compound values use descending `w`, `d`, `h`, `m`, and `s` parts. Default maximum is 3650 days. |
+| `uuid` | Returns `UUID`; canonical and compact 32-digit forms are accepted and normalized. |
+| `money` | Returns `BigDecimal`; defaults to `0` through `1000000000000000` with at most two effective decimal places. Currency symbols, commas, and exponents are rejected. |
+| `safeId` | Returns a lowercase id containing only `a-z`, `0-9`, underscore, or hyphen. Default maximum length is 48. |
+| `page` | Returns a positive integer page, with an optional caller-provided maximum. |
+| `featureId` | Resolves a safe id against the live 1MB feature registry. |
+
+Feature plugins can apply tighter duration, money, safe-id, and page bounds through the overloads:
+
+```java
+CommandArgumentValidators.Validation<Duration> result = argumentValidators().duration(
+    rawDuration,
+    Duration.ofSeconds(1),
+    Duration.ofHours(2)
+);
+if (!result.valid()) {
+    featureError(sender, result.message());
+    return;
+}
+Duration duration = result.value();
+```
+
+The read-only `/1mbcmi validate ...` command exposes the default rules for owner diagnostics. It uses real Paper materials, loaded worlds, and the live feature registry, requires `onembcmi.global.validate`, and does not edit configs or player data.
 
 ## Generated Command And Permission Docs
 

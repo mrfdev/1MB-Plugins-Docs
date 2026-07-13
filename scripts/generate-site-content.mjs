@@ -85,6 +85,46 @@ const PLAYER_GUIDE_OVERRIDES = {
       'Bed rest and same-location checks are intentionally conservative so AFKShrine stays a fun passive feature instead of a farm.',
     ],
   },
+  antifire: {
+    summary: 'Protect builds from unwanted fire spread and block burning while preserving configured permanent fireplaces.',
+    description: 'Learn how AntiFire protects builds in the background and how players can view its public protection status.',
+    intro: 'AntiFire is the server fire-protection layer. It starts early, blocks unwanted fire spread and block burning, removes temporary fire after a delay, and preserves configured permanent fireplaces.',
+    guide: 'AntiFire works passively, so players do not need to enable it or manage settings. Use the public info command when you want to confirm which protections are active. Trusted staff have separate permission-gated controls in the full technical reference.',
+    pageIntro: 'This page explains the AntiFire protection players benefit from automatically and the safe public commands anyone can use to inspect it.',
+    audienceHeading: 'How Players Use It',
+    features: [
+      'Automatic protection against natural fire spread when the server setting is enabled.',
+      'Block-burn prevention so protected builds are not consumed by nearby fire.',
+      'Delayed cleanup for tracked temporary fire caused by players, lightning, lava, and other configured ignition sources.',
+      'Permanent fire on netherrack so intentional fireplaces can keep burning.',
+      'Optional permanent soul fire on soul sand and soul soil when staff enable it.',
+      'A public protection summary showing the active fire-spread, block-burn, cleanup, and permanent-soul-fire states.',
+      'Early independent startup so fire protection does not wait for CMI or the shared 1MB library.',
+    ],
+    quickStart: [
+      'You do not need to enable AntiFire; its protection runs automatically.',
+      'Run `/_antifire info` to view the public plugin, build-target, and protection summary.',
+      'Run `/_antifire` for the same public summary when you do not have trusted management access.',
+    ],
+    commands: [
+      '/_antifire',
+      '/_antifire info',
+    ],
+    examples: [
+      '/_antifire info',
+      '/_antifire',
+    ],
+    commandDescriptions: {
+      '/_antifire': 'Shows the public AntiFire information page for regular players.',
+      '/_antifire info': 'Shows the public plugin, build-target, and active protection summary.',
+    },
+    notes: [
+      'AntiFire is passive protection, not a gameplay progression system.',
+      'It prevents fire spread and block burning; it does not currently prevent fire damage to players or mobs.',
+      'Reload, toggle, and debug controls are restricted to explicitly trusted staff and are documented in the full reference.',
+      'The maintained jar is 1MB-CMIAPI-AntiFire; the old standalone jar must not run beside it.',
+    ],
+  },
   boosters: {
     summary: 'Check which server-wide boosters are active for skills, jobs, points, and special events.',
     intro: 'Boosters lets players check the current server booster status from one simple place. Use it when you want to know whether skill, job, points, or event multipliers are active before you start grinding.',
@@ -1889,6 +1929,7 @@ for (const plugin of guidePlugins) {
   const notes = override.notes ?? goodToKnow(plugin, commandData);
   const examples = override.examples ?? commandData.playerExamples;
   const audience = audienceInfo(plugin);
+  const pageDescription = override.description ?? audience.description;
   const pageIntro = override.pageIntro ?? audience.pageIntro;
   const audienceHeading = override.audienceHeading ?? audience.heading;
   pluginDetails.set(slug, commandData);
@@ -1905,7 +1946,7 @@ for (const plugin of guidePlugins) {
 
   await writeFile(path.join(pluginGuideRoot, `${slug}.mdx`), `---
 title: ${plugin.name} Guide
-description: ${audience.description}
+description: ${pageDescription}
 ---
 
 ${pageIntro}

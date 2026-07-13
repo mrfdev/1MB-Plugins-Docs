@@ -1,0 +1,70 @@
+---
+title: AntiFire Guide
+description: Learn how AntiFire protects builds in the background and how players can view its public protection status.
+---
+
+This page explains the AntiFire protection players benefit from automatically and the safe public commands anyone can use to inspect it.
+
+## What It Does
+
+AntiFire is the server fire-protection layer. It starts early, blocks unwanted fire spread and block burning, removes temporary fire after a delay, and preserves configured permanent fireplaces.
+
+## How Players Use It
+
+AntiFire works passively, so players do not need to enable it or manage settings. Use the public info command when you want to confirm which protections are active. Trusted staff have separate permission-gated controls in the full technical reference.
+
+Available features include:
+
+- Automatic protection against natural fire spread when the server setting is enabled.
+- Block-burn prevention so protected builds are not consumed by nearby fire.
+- Delayed cleanup for tracked temporary fire caused by players, lightning, lava, and other configured ignition sources.
+- Permanent fire on netherrack so intentional fireplaces can keep burning.
+- Optional permanent soul fire on soul sand and soul soil when staff enable it.
+- A public protection summary showing the active fire-spread, block-burn, cleanup, and permanent-soul-fire states.
+- Early independent startup so fire protection does not wait for CMI or the shared 1MB library.
+
+## Quick Start
+
+1. You do not need to enable AntiFire; its protection runs automatically.
+2. Run `/_antifire info` to view the public plugin, build-target, and protection summary.
+3. Run `/_antifire` for the same public summary when you do not have trusted management access.
+
+## Commands
+
+<table class="command-table plugin-command-table">
+  <thead>
+    <tr>
+      <th>Command</th>
+      <th>What it does</th>
+      <th>Example</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>/_antifire</code></td>
+      <td>Shows the public AntiFire information page for regular players.</td>
+      <td><code>/_antifire</code></td>
+    </tr>
+    <tr>
+      <td><code>/_antifire info</code></td>
+      <td>Shows the public plugin, build-target, and active protection summary.</td>
+      <td><code>/_antifire info</code></td>
+    </tr>
+  </tbody>
+</table>
+
+## Examples
+
+- `/_antifire info`
+- `/_antifire`
+
+## Good To Know
+
+- AntiFire is passive protection, not a gameplay progression system.
+- It prevents fire spread and block burning; it does not currently prevent fire damage to players or mobs.
+- Reload, toggle, and debug controls are restricted to explicitly trusted staff and are documented in the full reference.
+- The maintained jar is 1MB-CMIAPI-AntiFire; the old standalone jar must not run beside it.
+
+## Full Reference
+
+The [full synced AntiFire reference](https://github.com/mrfdev/1MB-Plugins-Docs/blob/main/project-docs/cmi-api/docs/plugins/antifire.md) is available for exact technical details.

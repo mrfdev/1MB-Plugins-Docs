@@ -20,11 +20,6 @@ These are standalone plugins built specifically for 1MoreBlock outside the share
       <td><code>/xrayhunter</code></td>
     </tr>
     <tr>
-      <td><a href="./antifire/">1MB AntiFire</a></td>
-      <td>Protects the server from unwanted fire spread and block burn damage while allowing controlled permanent fire where configured.</td>
-      <td><code>/_antifire</code></td>
-    </tr>
-    <tr>
       <td><a href="./antipopup/">AntiPopup</a></td>
       <td>Hide the unsafe-server popup and limit vanilla chat reporting on 1MoreBlock.</td>
       <td><code>/antipopup</code>, <code>/antipopup info</code></td>
