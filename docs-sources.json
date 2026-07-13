@@ -48,6 +48,14 @@
       "adapter": "manifest",
       "repository": "mrfdev/XMasTree",
       "defaultSource": "../XMasTree"
+    },
+    {
+      "id": "xrayheuristics",
+      "name": "1MB XRayHeuristics",
+      "category": "custom-server-plugin",
+      "adapter": "manifest",
+      "repository": "mrfdev/AntiXrayHeuristics",
+      "defaultSource": "../AntiXrayHeuristics"
     }
   ]
 }

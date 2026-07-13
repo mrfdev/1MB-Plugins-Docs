@@ -39,5 +39,10 @@ These are standalone plugins built specifically for 1MoreBlock outside the share
       <td>Plant, grow, and celebrate upgradeable Christmas trees with presents, streaks, milestones, and preserved legacy event trees.</td>
       <td><code>/xmastree</code>, <code>/xmastree help</code>, <code>/xmastree info</code>, <code>/xmastree journal</code>, <a href="./xmas-tree/">+4 more</a></td>
     </tr>
+    <tr>
+      <td><a href="./xrayheuristics/">1MB XRayHeuristics</a></td>
+      <td>Heuristic Anti-XRay add-on that tracks suspicious mining patterns and staff handling workflows.</td>
+      <td><code>/xrayer</code>, <code>/xrayer info</code>, <code>/xrayer help</code>, <code>/xrayer suspicion [player]</code></td>
+    </tr>
   </tbody>
 </table>
