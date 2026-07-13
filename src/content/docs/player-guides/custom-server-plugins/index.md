@@ -40,6 +40,11 @@ These are standalone plugins built specifically for 1MoreBlock outside the share
       <td><code>/floatie</code></td>
     </tr>
     <tr>
+      <td><a href="./headdisplays/">HeadDisplays</a></td>
+      <td>Staff tool for floating head-display labels, documented here as a patched third-party compatibility artifact for Paper 26.2 testing.</td>
+      <td><code>/hd</code>, <code>/hd info</code>, <code>/hd list [page]</code>, <code>/hd edit &lt;display id&gt;</code></td>
+    </tr>
+    <tr>
       <td><a href="./lootbox/">Lootbox</a></td>
       <td>Discover repeatable loot containers with randomized rewards on 1MoreBlock.</td>
       <td><code>/lc</code>, <code>/lc info</code>, <code>/lc locate</code>, <code>/lc help</code></td>

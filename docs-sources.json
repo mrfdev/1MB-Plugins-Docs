@@ -50,6 +50,14 @@
       "defaultSource": "../EventFloaties"
     },
     {
+      "id": "headdisplays",
+      "name": "HeadDisplays",
+      "category": "custom-server-plugin",
+      "adapter": "manifest",
+      "repository": "not-published",
+      "defaultSource": "../HeadDisplays"
+    },
+    {
       "id": "lootbox",
       "name": "Lootbox",
       "category": "custom-server-plugin",

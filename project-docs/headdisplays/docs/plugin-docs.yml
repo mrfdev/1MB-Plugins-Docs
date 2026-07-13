@@ -1,0 +1,15 @@
+id: headdisplays
+name: HeadDisplays
+category: custom-server-plugin
+summary: Staff tool for floating head-display labels, documented here as a patched third-party compatibility artifact for Paper 26.2 testing.
+main_command: /hd
+docs_url: https://docs.1moreblock.com/custom-server-plugins/headdisplays/
+player_guide: player-guide.md
+technical_readme: ../README.md
+java_target: "21"
+paper_target: "26.1.2 primary, 26.2 experimental compatibility"
+official_project: true
+repository: null
+source_available: false
+third_party_plugin: true
+patched_artifact: HeadDisplays-1.12.9-26.2-display-fix.jar
