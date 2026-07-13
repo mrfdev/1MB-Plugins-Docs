@@ -1,0 +1,12 @@
+id: eventfloaties
+name: Summer Floaties
+category: custom-server-plugin
+summary: Build and verify summer floatie decorations for event rewards.
+main_command: /floatie
+docs_url: https://docs.1moreblock.com/custom-server-plugins/eventfloaties/
+player_guide: player-guide.md
+technical_readme: ../README.md
+java_target: 25
+paper_target: "26.1.2"
+official_project: true
+repository: mrfdev/1MB-EventFloaties
