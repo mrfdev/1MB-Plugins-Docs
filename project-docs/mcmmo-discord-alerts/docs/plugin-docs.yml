@@ -1,0 +1,13 @@
+id: mcmmo-discord-alerts
+name: mcMMO Discord Alerts
+category: custom-server-plugin
+summary: Announces 1MoreBlock mcMMO power-level milestones in Discord with compact skill summaries.
+main_command: /mcstats
+docs_url: https://docs.1moreblock.com/custom-server-plugins/mcmmo-discord-alerts/
+player_guide: player-guide.md
+technical_readme: ../README.md
+java_target: "not-applicable"
+paper_target: "26.1.2"
+official_project: true
+official_wiki: https://docs.discordsrv.com/alerts/
+last_reviewed: "2026-07-12"

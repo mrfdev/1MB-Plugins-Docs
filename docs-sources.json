@@ -58,6 +58,14 @@
       "defaultSource": "../1MB-MapHide"
     },
     {
+      "id": "mcmmo-discord-alerts",
+      "name": "mcMMO Discord Alerts",
+      "category": "custom-server-plugin",
+      "adapter": "manifest",
+      "repository": "not-published",
+      "defaultSource": "../mcMMODiscordAlert"
+    },
+    {
       "id": "plotmarkers",
       "name": "PlotMarkers",
       "category": "custom-server-plugin",

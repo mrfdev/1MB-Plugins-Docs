@@ -45,6 +45,11 @@ These are standalone plugins built specifically for 1MoreBlock outside the share
       <td><code>/map hide</code>, <code>/bmpc</code>, <code>/bmpc toggle</code>, <code>/bmpc show</code>, <a href="./maphide/">+3 more</a></td>
     </tr>
     <tr>
+      <td><a href="./mcmmo-discord-alerts/">mcMMO Discord Alerts</a></td>
+      <td>Announces 1MoreBlock mcMMO power-level milestones in Discord with compact skill summaries.</td>
+      <td><code>/mcstats</code></td>
+    </tr>
+    <tr>
       <td><a href="./plotmarkers/">PlotMarkers</a></td>
       <td>Shows PlotSquared plot owners and boundaries on BlueMap.</td>
       <td><code>/plotmarkers</code>, <code>/plotmarkers info</code></td>
