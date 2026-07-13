@@ -58,6 +58,14 @@
       "defaultSource": "../1MB-MapHide"
     },
     {
+      "id": "shopchest",
+      "name": "ShopChest",
+      "category": "custom-server-plugin",
+      "adapter": "manifest",
+      "repository": "mrfdev/ShopChest",
+      "defaultSource": "../ShopChest"
+    },
+    {
       "id": "xmas-tree",
       "name": "XMas Tree",
       "category": "custom-server-plugin",

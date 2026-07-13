@@ -45,6 +45,11 @@ These are standalone plugins built specifically for 1MoreBlock outside the share
       <td><code>/map hide</code>, <code>/bmpc</code>, <code>/bmpc toggle</code>, <code>/bmpc show</code>, <a href="./maphide/">+3 more</a></td>
     </tr>
     <tr>
+      <td><a href="./shopchest/">ShopChest</a></td>
+      <td>Create persistent player chest shops with holograms and Vault economy trading.</td>
+      <td><code>/shop</code></td>
+    </tr>
+    <tr>
       <td><a href="./xmas-tree/">XMas Tree</a></td>
       <td>Plant, grow, and celebrate upgradeable Christmas trees with presents, streaks, milestones, and preserved legacy event trees.</td>
       <td><code>/xmastree</code>, <code>/xmastree help</code>, <code>/xmastree info</code>, <code>/xmastree journal</code>, <a href="./xmas-tree/">+4 more</a></td>
