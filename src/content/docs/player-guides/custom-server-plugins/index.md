@@ -25,6 +25,11 @@ These are standalone plugins built specifically for 1MoreBlock outside the share
       <td>No general player command.</td>
     </tr>
     <tr>
+      <td><a href="./bookexport/">BookExport</a></td>
+      <td>Turn Minecraft books into reviewable UTF-8 drafts and safely publish approved pages as CMI CustomText files.</td>
+      <td><code>/bookexport info</code>, <code>/bookexport help</code>, <code>/bookexport stage [title]</code>, <code>/bookexport</code>, <a href="./bookexport/">+1 more</a></td>
+    </tr>
+    <tr>
       <td><a href="./coreprotect-antixray/">1MB-AntiXRay</a></td>
       <td>Review CoreProtect ore-break patterns, compare players, and investigate suspicious mining activity.</td>
       <td><code>/xlu</code>, <code>/xlu info</code>, <code>/xlu help</code>, <code>/xlu &lt;player-or-uuid&gt; [days] [page]</code>, <a href="./coreprotect-antixray/">+3 more</a></td>

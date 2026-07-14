@@ -18,6 +18,14 @@
       "defaultSource": "../AntiPopup"
     },
     {
+      "id": "bookexport",
+      "name": "BookExport",
+      "category": "custom-server-plugin",
+      "adapter": "manifest",
+      "repository": "mrfdev/1MB-CMI-BookExport",
+      "defaultSource": "../BookExport"
+    },
+    {
       "id": "cmi-api",
       "name": "1MB-CMIAPI",
       "category": "one-more-block-feature",
