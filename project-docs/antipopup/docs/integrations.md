@@ -1,48 +1,46 @@
-# Integrations
+# Runtime Boundary and Bundled Libraries
 
-## Bundled Runtime Libraries
+## Standalone Runtime
 
-The standalone jar shades its required runtime libraries, including:
+The deployable JAR relocates the runtime libraries it needs:
 
-- PacketEvents Spigot `2.13.1-SNAPSHOT`
-- BoostedYAML `1.3`
-- bStats Bukkit `3.0.0`
-- FoliaLib `0.2.3`
-- Adventure platform and serializer components
+- PacketEvents `2.13.0`
+- Adventure NBT `5.2.0`
 
-Do not install separate copies of these as AntiPopup dependencies.
+PacketEvents is relocated. Adventure NBT is kept in its standard package because
+it implements Paper's Adventure 5 API; bundling or relocating a second Adventure
+API would create incompatible component types.
+PacketEvents' bundled bStats implementation is excluded. Its hard-coded metrics
+bootstrap is redirected to inert linkage shims, so the embedded packet engine
+does not start a telemetry service.
 
-## ViaVersion
+AntiPopup itself owns only five classes. The standalone JAR remains about 4.5
+MiB because PacketEvents' complete reflection-driven injector and protocol
+library is retained; its generic compatibility internals do not make old
+clients or proxies supported deployment paths.
 
-ViaVersion is the only optional plugin with direct hook code. If ViaVersion is
-installed, AntiPopup loads its hook after confirming the plugin is enabled.
-ViaVersion 4 is explicitly rejected by that hook. The compile-time integration
-target is ViaVersion 5.4.0; test the exact installed build before production use.
+Paper supplies the Paper API, Adventure API 5.2.0, and Netty.
+AntiPopup does not bundle CraftBukkit/NMS, BoostedYAML, FoliaLib, ViaVersion API,
+or a proxy implementation.
 
-The two bundled protocol modifiers target historical server-version comparisons.
-On this fork's Paper 26.2 target neither modifier is expected to activate.
-ViaVersion can still translate clients independently, but no client-version
-compatibility matrix has been certified for this fork.
+PacketEvents calls its Paper/Bukkit bootstrap artifact and builder `spigot`.
+Those upstream names remain visible in source imports, but this fork compiles,
+describes, verifies, and tests only a Paper plugin. No Spigot server artifact is
+produced or supported.
 
-## Other Soft Dependencies
+## No External Integrations
 
-`plugin.yml` also orders AntiPopup after ProtocolLib, ProtocolSupport,
-ViaBackwards, ViaRewind, and Geyser-Spigot when those plugins are present. No
-direct integration implementation for those names exists in the active source,
-and none is required to run AntiPopup.
+Build `006` declares no soft dependencies and supports no proxy or
+protocol-translation integration. Its only certified path is a native 26.2
+client joining Paper 26.2 directly. A proxy or translated old-client connection
+is not a supported deployment path.
 
-## Paper, Folia, and Logging
+The plugin does not expose commands, permissions, settings, placeholders, or a
+public API.
 
-Paper 26.2 supplies Bukkit, CraftBukkit/NMS, Netty, and Log4j runtime classes.
-`folia-supported: true` is declared and FoliaLib schedules delayed work, but a
-dedicated Folia runtime test has not been completed.
+## Paper Runtime
 
-The optional `filter-not-secure` feature installs a Log4j root filter at
-startup. Test it with any plugin that also changes server logging.
-
-## Metrics and Placeholders
-
-bStats is disabled by default. When enabled it uses plugin metrics ID `16308`
-and a custom chart that reports whether ViaVersion is enabled.
-
-AntiPopup has no PlaceholderAPI expansion or public placeholders.
+The production source uses the Paper/Bukkit API, while embedded PacketEvents
+uses Paper's Adventure types. It contains no versioned NMS class and no Folia
+support declaration. Build `006` handles only the modern `JOIN_GAME` packet;
+the historical `SERVER_DATA` old-client path is not included.

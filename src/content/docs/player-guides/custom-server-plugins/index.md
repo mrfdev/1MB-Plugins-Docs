@@ -21,8 +21,8 @@ These are standalone plugins built specifically for 1MoreBlock outside the share
     </tr>
     <tr>
       <td><a href="./antipopup/">AntiPopup</a></td>
-      <td>Hide the unsafe-server popup and limit vanilla chat reporting on 1MoreBlock.</td>
-      <td><code>/antipopup</code>, <code>/antipopup info</code></td>
+      <td>Hide Minecraft's unsafe-server login popup for native Paper 26.2 players.</td>
+      <td>No general player command.</td>
     </tr>
     <tr>
       <td><a href="./coreprotect-antixray/">1MB-AntiXRay</a></td>

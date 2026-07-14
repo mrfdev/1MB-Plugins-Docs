@@ -2,83 +2,68 @@
 
 ## The Plugin Will Not Load
 
-Check all three items:
+Confirm that:
 
 1. The server is Paper 26.2.
-2. The runtime is Java 25 or the separately verified Java 26.0.1.
-3. Only one AntiPopup jar is present in `plugins/`.
+2. The runtime is Java 25 or newer.
+3. Only one AntiPopup JAR is present in `plugins/`.
+4. The file name is `1MB-AntiPopup-v14.0.0-006-j25-26.2.jar`.
 
-`UnsupportedClassVersionError` indicates an older Java runtime; this build uses
-Java 25 class-file version 69.
+`UnsupportedClassVersionError` means the runtime is older than Java 25; this
+build uses class-file version 69. This branch no longer contains the old
+`No valid injector found` NMS version switch.
 
-`No valid injector found for the server version!` means PacketEvents did not
-detect exact server version `26.2` while `block-chat-reports` was enabled.
-Other Paper/Minecraft versions are outside this fork's scope.
+## The Popup Returned
 
-## The Popup or Reportable Chat Returned
+- Confirm the server is the certified Paper 26.2 build line.
+- Confirm the joining client is native 26.2 rather than an older or translated
+  client.
+- Confirm the connection does not pass through a proxy or protocol translator.
+- Confirm startup logged `Initiated embedded PacketEvents for Paper 26.2.`
+- Record the exact Paper build, Java version, client version, and JAR checksum.
 
-- Confirm `show-popup: false`.
-- Confirm `block-chat-reports: true`.
-- Restart the server after changing `block-chat-reports`.
-- Look for `[AntiPopup] Hooked on 26.2` during startup.
-- Record the client version and whether ViaVersion, ViaBackwards, ViaRewind, or
-  Geyser is translating its protocol.
+If the popup still returns inside that exact boundary, stop the server and
+keep the build `006` logs for diagnosis. 1MoreBlock can restore its retained
+build `005` JAR. Public users may try archived build `003`, but it restores the
+full commands/config/setup/chat-report/bStats/Log4j/legacy-client surface and is
+unsupported. There is no configuration or reload path in build `006` itself.
 
-`show-popup` is read dynamically and can be refreshed with
-`/antipopup reload`; injector changes require a restart.
+## A Feature Is Missing After Updating to Build 006
 
-## Info Is Not Available to a Player
+That is expected if the missing feature is a command, configuration toggle,
+reload/setup action, chat-report modification, metric, console filter,
+legacy-client path, or translator integration. Build `006` intentionally
+contains none of them. If the server still requires that behavior, use archived
+build `003` after reviewing its release notes, and never load both JARs together.
 
-`antipopup.commands` defaults to everyone. Check whether a permissions plugin
-explicitly denies it. The command should return the installed version and a
-clickable link to:
+## A New Paper or Client Version Was Released
+
+Do not assume that a successful build alone certifies a new protocol. Paper
+26.2.1, 26.3, and later versions need a disposable candidate branch, a strict
+build, and a direct matching-client login test. Continue using the last
+certified JAR until that work passes.
+
+## Java 26 Final-Field Warning
+
+PacketEvents 2.13.0 reflectively attaches to Paper's network channel list. Java
+26.0.1 permits this but prints a warning that a future Java release may block
+it. Build `006` completed startup, plugin listing, and clean shutdown despite
+the warning.
+
+To explicitly authorize this access on Java 26, add the following JVM argument
+before `-jar`:
 
 ```text
-https://docs.1moreblock.com/custom-server-plugins/antipopup/
+--enable-final-field-mutation=ALL-UNNAMED
 ```
 
-## Setup or Reload Does Nothing
+Treat a later JDK that actually blocks the operation as a failed certification:
+update PacketEvents or the server launch policy on a disposable branch before
+production use.
 
-Both operations require Bukkit's local server console. They intentionally reject
-players, command blocks, and remote-console senders.
+## Reporting a Reproducible Problem
 
-`setup` only requests a restart when `enforce-secure-profile` was true and
-needed to be changed. Verify `properties-location` if it cannot find the
-expected file.
-
-## A Reloaded Setting Did Not Take Effect
-
-Only `show-popup` and `send-header` are read dynamically by the packet
-listener. Restart after changing startup-bound settings such as
-`block-chat-reports`, `clickable-urls`, `filter-not-secure`, metrics, or
-the properties path.
-
-## Chat Formatting or Another Chat Plugin Breaks
-
-Keep `clickable-urls: false` unless the full chat stack has been tested. When
-enabled, AntiPopup takes over Bukkit chat delivery and can conflict with another
-formatter.
-
-## Java 26 Prints a Reflection Warning
-
-The captured terminal output from the verified Java 26.0.1 smoke test logged a
-final-field reflection warning from the bundled packet stack, but AntiPopup
-still enabled, selected the Paper 26.2
-injector, reached Paper's ready state, and shut down cleanly. Treat a warning
-separately from an actual enable failure and retain the complete startup log when
-reporting it.
-
-## Configuration Problems After an Update
-
-1. Stop the server.
-2. Back up `plugins/AntiPopup/config.yml`.
-3. Compare it with the defaults documented in
-   [Configuration](configuration.md).
-4. Keep `config-version` under BoostedYAML's control.
-5. Start again and inspect the complete AntiPopup startup section.
-
-For reproducible Paper 26.2 issues, use the
-[mrfdev/AntiPopup issue tracker](https://github.com/mrfdev/AntiPopup/issues) and
-include the Paper build, Java version, AntiPopup version, plugin list,
-configuration with credentials, tokens, private addresses, and other private
-values removed, plus a similarly sanitized complete log link.
+Use the [mrfdev/AntiPopup issue tracker](https://github.com/mrfdev/AntiPopup/issues)
+and include the Paper build, Java version, AntiPopup version/JAR name, plugin
+list, native client version, JAR checksum, and a sanitized complete log. Remove
+credentials, tokens, private addresses, and other private values first.
