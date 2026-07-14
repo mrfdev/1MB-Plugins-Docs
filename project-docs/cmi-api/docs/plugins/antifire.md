@@ -11,7 +11,7 @@ The former standalone player-guide URL redirects to the canonical 1MB-CMIAPI fea
 
 ## Migration Notes
 
-- Install `1MB-CMIAPI-AntiFire-v1.0.0-530-j25-26.2.jar`. It shares the CMI-API build number and release pipeline, but it does not require CMI, CMILib, or `1MB-CMIAPI-Lib` at runtime.
+- Install `1MB-CMIAPI-AntiFire-v1.0.0-531-j25-26.2.jar`. It shares the CMI-API build number and release pipeline, but it does not require CMI, CMILib, or `1MB-CMIAPI-Lib` at runtime.
 - Remove or disable the old standalone `1MB-AntiFire-*.jar`; both versions own `/_antifire` and must not run together.
 - The only registered command remains `/_antifire`. No `/antifire` alias is added.
 - Runtime configuration now lives at `plugins/1MB-CMIAPI/AntiFire/config.yml`.
@@ -128,7 +128,7 @@ Boolean settings accept friendly command values such as `true`, `false`, `on`, `
 ## Build And Data
 
 ```text
-Jar: 1MB-CMIAPI-AntiFire-v1.0.0-530-j25-26.2.jar
+Jar: 1MB-CMIAPI-AntiFire-v1.0.0-531-j25-26.2.jar
 Java target: 25
 Paper API target: 26.2
 Config: plugins/1MB-CMIAPI/AntiFire/config.yml

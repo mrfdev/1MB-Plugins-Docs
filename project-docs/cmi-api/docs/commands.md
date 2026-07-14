@@ -1055,6 +1055,43 @@ Collect:
 
 `/collect` opens the seasonal event GUI. Players submit configured weekly items through a safe inventory scan rather than by dragging items into a GUI. Only untouched vanilla item stacks count; renamed, lored, damaged, enchanted, custom-model, PDC, or otherwise modified items are ignored. Players can review personal stats, personal bests, community goal progress, scavenger hunt state, top-3 highlighted leaderboard heads, Hall of Fame archives, streaks, claim participation/milestone/top-10 rewards, occasionally discover capped virtual Lucky Finds during valid submissions, and use `/collect exchange` to trade duplicate Collect reward items for configured event score. Admin debug commands can force the event open, test a week, test an event day, test a date, switch the active event, inspect player data, reset one player's event state, force/clear a daily scavenger hunt, run passive feed checks, and export a Discord-friendly markdown report for an event. Leaderboards use event score, which can include configured catch-up, rest, streak, lucky-find, scavenger, community, and duplicate reward exchange bonuses, while reports also keep raw vanilla item totals. Reward, submission, scavenger, and Discord feed command hooks are console-dispatched only after strict allowed-prefix checks.
 
+CoconutHunt:
+
+```text
+/coconut
+/coconut info
+/coconut help
+/coconut progress
+/coconut milestones
+/coconut streak
+/coconut community
+/coconut rewards
+/coconut points
+/coconut shop
+/coconut claim <reward-id|all>
+/coconut admin reload
+/coconut admin status
+/coconut admin debug <true|false>
+/coconut admin day <1-7|off>
+/coconut admin date <yyyy-mm-dd|off>
+/coconut admin event <validate|snapshot|start|end>
+/coconut admin event force-mutation --confirm
+/coconut admin event snapshot --force-confirm
+/coconut admin coconut give [amount] [unlock-day]
+/coconut admin coconut register [unlock-day]
+/coconut admin coconut inspect
+/coconut admin coconut <enable|disable|remove>
+/coconut admin coconut list [page]
+/coconut admin coconut validate
+/coconut admin coconut waves auto [days] [seed]
+/coconut admin inspect <player>
+/coconut admin reset <player> <event-id> <--dry-run|--confirm>
+/coconut admin report [event-id]
+/coconut admin shop regrant <online-player> <offer-id>
+```
+
+`/coconut` opens the six-row seven-day event overview from any permitted information world. Players can review cumulative wave progress, personal collection milestones, their exact participation calendar, community goals, Coconut Point earnings/spending, all claimable rewards, the perfect-completion checklist, and configured MobHat offers. Claims and purchases work only in configured reward worlds and between event start and the claim deadline. Staff setup commands give stacked PDC setup heads, register looked-at heads, inspect or change registry entries, validate the exact expected total, and deterministically assign only unassigned coconuts across waves. `/coconut admin event validate` additionally preflights worlds, milestone/reward alignment, allowlists, placeholders, every configured command list, and registry integrity before start/snapshot actions. Debug date/day controls use a separate `debug_<event>` profile and keep reward commands suppressed by default. Once created, the immutable snapshot blocks setup edits through the claim deadline; emergency replacement requires the one-minute force-mutation confirmation, clean validation, and a second explicit snapshot confirmation. Player reset has mandatory dry-run/confirm forms, and a recorded shop purchase can be regranted without charging points.
+
 Forage:
 
 ```text

@@ -845,6 +845,38 @@ Collect placeholders:
 %onembcmi_collect.top.alltime.1.line%
 ```
 
+CoconutHunt placeholders:
+
+```text
+%onembcmi_CoconutHunt.enabled%
+%onembcmi_CoconutHunt.event.id%
+%onembcmi_CoconutHunt.event.state%
+%onembcmi_CoconutHunt.event.day%
+%onembcmi_CoconutHunt.event.days_total%
+%onembcmi_CoconutHunt.event.time_remaining%
+%onembcmi_CoconutHunt.coconuts.registered%
+%onembcmi_CoconutHunt.coconuts.expected%
+%onembcmi_CoconutHunt.coconuts.available%
+%onembcmi_CoconutHunt.player.found%
+%onembcmi_CoconutHunt.player.total%
+%onembcmi_CoconutHunt.player.percent%
+%onembcmi_CoconutHunt.player.remaining%
+%onembcmi_CoconutHunt.player.today%
+%onembcmi_CoconutHunt.player.streak.current%
+%onembcmi_CoconutHunt.player.streak.best%
+%onembcmi_CoconutHunt.player.points%
+%onembcmi_CoconutHunt.player.claimable%
+%onembcmi_CoconutHunt.player.perfect_eligible%
+%onembcmi_CoconutHunt.community.total%
+%onembcmi_CoconutHunt.community.today%
+%onembcmi_CoconutHunt.community.target%
+%onembcmi_CoconutHunt.community.percent%
+%onembcmi_CoconutHunt.community.player_contribution%
+%onembcmi_CoconutHunt.runtime.hologram_provider%
+```
+
+CoconutHunt placeholder reads use cached profile, snapshot, and community state. They do not create claims, change progress, spend points, or run commands.
+
 Forage placeholders:
 
 ```text
