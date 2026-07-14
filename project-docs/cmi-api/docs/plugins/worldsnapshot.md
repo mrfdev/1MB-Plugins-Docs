@@ -23,7 +23,7 @@ The normal workflow is:
 - Captures selected volatile runtime fields such as time, storm, players, and loaded chunks for display.
 - Excludes volatile runtime fields from diffs by default so time/weather/player movement does not create noisy diffs.
 - Scans selected CMI YAML files for world-related and operational toggle paths.
-- Shows a compact world list with environment, difficulty, animal/monster spawning, autosave, and distance settings.
+- Shows a compact world list with environment, difficulty, the animal spawn limit, monster spawning, autosave, and distance settings.
 - Shows detailed entries for one world with pagination.
 - Compares the current state against the stored baseline.
 - Dumps the stored baseline to the shared cache folder.
@@ -176,7 +176,7 @@ Paper world entries include:
 
 - environment
 - difficulty
-- animal and monster spawning flags
+- the supported monster-spawning flag
 - autosave
 - view distance
 - simulation distance
@@ -209,7 +209,7 @@ Because this is a read-only config scan, it is safe to remove the jar later with
 
 ## Paper API Usage
 
-WorldSnapshot uses modern Paper/Bukkit world APIs for loaded worlds, world borders, spawn categories, gamerules, and command handling. It uses `Registry.GAME_RULE` for gamerule discovery rather than deprecated gamerule enumeration.
+WorldSnapshot uses modern Paper/Bukkit world APIs for loaded worlds, world borders, spawn categories, gamerules, and command handling. Animal spawning is represented by `SpawnCategory.ANIMAL` limits because Paper 26.2 no longer maintains the legacy per-world `allow-animals` boolean. It uses `Registry.GAME_RULE` for gamerule discovery rather than deprecated gamerule enumeration.
 
 ## Data And Cache
 

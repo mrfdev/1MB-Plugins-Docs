@@ -357,6 +357,7 @@ const FEATURE_BULLET_OVERRIDES = {
   autosell: [
     'An opt-in AutoSell toggle with GUI controls for categories, individual materials, value filters, worlds, and notifications.',
     'A top-row category control that turns all available items in the current category on with left-click or off with right-click across every material page.',
+    'An adjacent item view that filters the category to all available items, only off items, or only on items, with a glint on enabled choices for quick scanning.',
     'Pure-vanilla item checks that protect the hotbar, offhand, armor, named items, custom items, and blocked materials.',
     'Delayed batch selling with a preview, exact-stack recheck, server economy payment, and item refund if payment fails.',
     'Daily sell caps, inventory-full triggering, recent sale results, and quick blacklist actions from warnings.',
