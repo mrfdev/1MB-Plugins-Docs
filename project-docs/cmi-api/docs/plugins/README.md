@@ -28,13 +28,14 @@ Every feature jar that does not implement a local debug command inherits `/<plug
 | Player Fun | [NameMC](namemc.md) | `/namemc` NameMC like verification, one-time CMI/LuckPerms rewards, legacy permissions, and `%onembnamemc_*%` placeholders. |
 | Player Fun | [Exchange](exchange.md) | `/exchange` GUI exchanges for item, money, and EXP hand-ins, migrated from the old standalone 1MBTrades plugin. |
 | Player Fun | [VoteTokens](votetokens.md) | `/votetokens` secure vote-token GUI exchanges with tier/layer progress, CMI kit rewards, hidden reward identity markers, extra-token item tools with shield presets, and staff migration tools for old manual exchanges. |
-| Player Fun | [DiscordChat](discordchat.md) | `/discordchat` DiscordSRV server-chat engagement tracker with quality-gated EXP, conversation clusters, first-Discord broadcasts, community pulse, recurring bonus windows, linked-account streaks, top lists, point rewards, safe item tools, dependency-aware reward checks, opt-out reminders, milestone celebration privacy, and staff smoke/community/economy/archive/award reports. |
+| Player Fun | [DiscordChat](discordchat.md) | `/discordchat` DiscordSRV server-chat engagement tracker with quality-gated EXP, continuous floor conversion, separate streak bonuses, conversation clusters, first-Discord broadcasts, community pulse, recurring bonus windows, linked-account streaks, top lists, two-step point rewards with player/global cooldowns, safe item tools, dependency-aware reward checks, opt-out reminders, milestone celebration privacy, and staff smoke/community/economy/archive/award reports. |
 | Player Fun | [GameTypes](gametypes.md) | `/gametype` safe BentoBox menu adapter for OneBlock, SkyBlock, AcidIsland, CaveBlock, and SkyGrid, with world detection and config-driven addon buttons. |
 | Player Fun | [BirthdayLanterns](birthdaylanterns.md) | `/birthday` collectible birthday, player anniversary, and server milestone lantern rewards with PDC item identity, finite wish charges, strict birthday/guestbook input, GUI claims, presets, mail variants, and configurable CMI reward commands. |
 | Player Fun | [LavaBoots](lavaboots.md) | `/lavaboots` finite PDC-marked lava-assist boots with dyed leather themes, charge, durability drain, offhand fuel, movement assist, short fire-resistance windows, lava vision event tiers, and repair/anvil/enchant guards. |
 | Player Fun | [Spawners](spawners.md) | `/spawners` CMI spawner shop GUI with Paper entity discovery, spawn egg shop icons, tier-split friendly pages, glint availability markers, blocked utility-entity filters, restricted admin-only spawner browsing, CMI placespawner permission checks, confirmation purchases, CMI-backed Vault economy payments, annual event limits, stock caps, event progress, admin toggles, shift-click spawner editing, per-id disables, price overrides, category moves, future tier/group tools, DiscordSRV staff logs, setup command exports, and safe sell-section scaffolding. |
 | Player Fun | [Collect](collect.md) | `/collect` seasonal event GUI for safe inventory-scanned item submissions, event-score bonuses, capped virtual Lucky Finds, community progress, personal milestones, hidden future weeks, top-3 highlighted leaderboards, streaks, PDC keepsake rewards, duplicate reward exchange, reward command hooks, and admin debug week/day/date controls. |
-| Player Fun | [Coconut Hunt](coconut.md) | `/coconut` seven-day Summer Beach hunt with 200 registered heads, cumulative waves, immutable snapshots, personal collection and daily participation tracks, community goals, Coconut Points, safe claims, MobHat offers, and transient CMI/Paper visuals. |
+| Player Fun | [Coconut Hunt](coconut.md) | `/coconut` seven-day Summer Beach hunt with 200 registered heads, cumulative waves, immutable snapshots, personal collection and daily participation tracks, community goals, Coconut Points, safe claims, MobHat offers, an active 15-head isolated debug workflow with guarded resets, and transient CMI/Paper visuals. |
+| Player Fun | [Halloween Ghost Hunt](ghosthunt.md) | `/ghosthunt` themed edition in the shared CoconutHunt jar with event-bound Ghost heads, private positional effects, accessibility modes, Haunting Chains, historical claims, guarded activation, immutable snapshots, and isolated debug data. |
 | Player Fun | [Forage](forage.md) | `/forage` v1 tool-gated nature progression with curated PDC tools, CMI-backed Vault camp shop, Tier 2 pickaxe/brush/sword/mace unlocks, block and entity source families with non-overlapping default tool ownership, player XP/tool XP balance presets, global and per-family daily caps, XP/points, daily, weekly, and monthly quests, read-only top boards, camp-ready feedback, camp-only tier upgrades, diamond refinement, controlled Unbreaking/Efficiency improvements, camp-anchor turn-ins, multi-tier Forage Dust growth pulses with rare legendary treasure dust, tool soul lore, chunk exhaustion, WorldGuard global-only checks, camp validation, camp-only Repair & Merge, tips, placeholders, and safe GUI handling. |
 | Player Fun | [AutoSell](autosell.md) | `/autosell` opt-in CMI Worth.yml inventory cleanup with hardened GUI category/material/filter/world toggles, per-category material pages, pure-vanilla item checks, hotbar/offhand/armor protection, exact-stack sell verification, Vault/CMI payments, daily caps, broker progress, quest hub with claimable rewards and period pages, visible milestone tree with bulk-batch milestones, sell chains, daily/weekly streak bonuses, `/rate`-visible AutoSell happy-hour boosts, chunk-change and overheat anti-farm guards, material/world blacklists, quick blacklist actions from numbered warnings, player category/material stats, admin analytics reports, and Markdown exports. |
 | Player Fun | [Forage Roadmap](forage-roadmap.md) | Planning notes for long-term `/forage` expansion with camps, skill trees, seasonal profiles, magic growth systems, derbies, storage-hardening discussion, and staged v2/v3 rollout ideas. |
@@ -114,71 +115,71 @@ Runtime jars use this shape:
 Examples:
 
 ```text
-1MB-CMIAPI-LIB-v1.0.0-531-j25-26.2.jar
-1MB-CMIAPI-AFKShrine-v1.0.0-531-j25-26.2.jar
-1MB-CMIAPI-RecordingMode-v1.0.0-531-j25-26.2.jar
-1MB-CMIAPI-SellStreaks-v1.0.0-531-j25-26.2.jar
-1MB-CMIAPI-ScheduledTips-v1.0.0-531-j25-26.2.jar
-1MB-CMIAPI-Visit-v1.0.0-531-j25-26.2.jar
-1MB-CMIAPI-PassportDiscovery-v1.0.0-531-j25-26.2.jar
-1MB-CMIAPI-SocialGatherings-v1.0.0-531-j25-26.2.jar
-1MB-CMIAPI-JourneyMap-v1.0.0-531-j25-26.2.jar
-1MB-CMIAPI-KitStreaks-v1.0.0-531-j25-26.2.jar
-1MB-CMIAPI-MessageFont-v1.0.0-531-j25-26.2.jar
-1MB-CMIAPI-Nick-v1.0.0-531-j25-26.2.jar
-1MB-CMIAPI-EmoteMenu-v1.0.0-531-j25-26.2.jar
-1MB-CMIAPI-PvPToggle-v1.0.0-531-j25-26.2.jar
-1MB-CMIAPI-Boosters-v1.0.0-531-j25-26.2.jar
-1MB-CMIAPI-NameMC-v1.0.0-531-j25-26.2.jar
-1MB-CMIAPI-Exchange-v1.0.0-531-j25-26.2.jar
-1MB-CMIAPI-VoteTokens-v1.0.0-531-j25-26.2.jar
-1MB-CMIAPI-DiscordChat-v1.0.0-531-j25-26.2.jar
-1MB-CMIAPI-GameTypes-v1.0.0-531-j25-26.2.jar
-1MB-CMIAPI-BirthdayLanterns-v1.0.0-531-j25-26.2.jar
-1MB-CMIAPI-LavaBoots-v1.0.0-531-j25-26.2.jar
-1MB-CMIAPI-Spawners-v1.0.0-531-j25-26.2.jar
-1MB-CMIAPI-Collect-v1.0.0-531-j25-26.2.jar
-1MB-CMIAPI-CoconutHunt-v1.0.0-531-j25-26.2.jar
-1MB-CMIAPI-Forage-v1.0.0-531-j25-26.2.jar
-1MB-CMIAPI-AutoSell-v1.0.0-531-j25-26.2.jar
-1MB-CMIAPI-MobHat-v1.0.0-531-j25-26.2.jar
-1MB-CMIAPI-PlayerTodo-v1.0.0-531-j25-26.2.jar
-1MB-CMIAPI-Refer-v1.0.0-531-j25-26.2.jar
-1MB-CMIAPI-TPAuto-v1.0.0-531-j25-26.2.jar
-1MB-CMIAPI-Menu-v1.0.0-531-j25-26.2.jar
-1MB-CMIAPI-StaffCenter-v1.0.0-531-j25-26.2.jar
-1MB-CMIAPI-Profile-v1.0.0-531-j25-26.2.jar
-1MB-CMIAPI-FilterLab-v1.0.0-531-j25-26.2.jar
-1MB-CMIAPI-FilterGuard-v1.0.0-531-j25-26.2.jar
-1MB-CMIAPI-WarningLens-v1.0.0-531-j25-26.2.jar
-1MB-CMIAPI-NotableMsg-v1.0.0-531-j25-26.2.jar
-1MB-CMIAPI-1MBStaffMsg-v1.0.0-531-j25-26.2.jar
-1MB-CMIAPI-CmdCostDashboard-v1.0.0-531-j25-26.2.jar
-1MB-CMIAPI-CMIConfig-v1.0.0-531-j25-26.2.jar
-1MB-CMIAPI-ConsoleNoiseRouter-v1.0.0-531-j25-26.2.jar
-1MB-CMIAPI-EconomyGuardian-v1.0.0-531-j25-26.2.jar
-1MB-CMIAPI-StartupDoctor-v1.0.0-531-j25-26.2.jar
-1MB-CMIAPI-UpdateSmoke-v1.0.0-531-j25-26.2.jar
-1MB-CMIAPI-PluginVersions-v1.0.0-531-j25-26.2.jar
-1MB-CMIAPI-PlaceholderHealth-v1.0.0-531-j25-26.2.jar
-1MB-CMIAPI-Potions-v1.0.0-531-j25-26.2.jar
-1MB-CMIAPI-SchedulerCheck-v1.0.0-531-j25-26.2.jar
-1MB-CMIAPI-Upgrade-v1.0.0-531-j25-26.2.jar
-1MB-CMIAPI-EndCrystals-v1.0.0-531-j25-26.2.jar
-1MB-CMIAPI-AntiFire-v1.0.0-531-j25-26.2.jar
-1MB-CMIAPI-WorldSnapshot-v1.0.0-531-j25-26.2.jar
-1MB-CMIAPI-SparkReviewer-v1.0.0-531-j25-26.2.jar
-1MB-CMIAPI-Hoppers-v1.0.0-531-j25-26.2.jar
-1MB-CMIAPI-EventRecorder-v1.0.0-531-j25-26.2.jar
-1MB-CMIAPI-PlaceholderProbe-v1.0.0-531-j25-26.2.jar
-1MB-CMIAPI-PermissionProbe-v1.0.0-531-j25-26.2.jar
-1MB-CMIAPI-CMIPlaceholderCheck-v1.0.0-531-j25-26.2.jar
-1MB-CMIAPI-1MBPlaceholders-v1.0.0-531-j25-26.2.jar
-1MB-CMIAPI-WarpAudit-v1.0.0-531-j25-26.2.jar
-1MB-CMIAPI-WorthDrift-v1.0.0-531-j25-26.2.jar
-1MB-CMIAPI-WorthHelper-v1.0.0-531-j25-26.2.jar
-1MB-CMIAPI-CMIProbe-v1.0.0-531-j25-26.2.jar
-1MB-CMIAPI-CMIDatabase-v1.0.0-531-j25-26.2.jar
+1MB-CMIAPI-LIB-v1.0.0-536-j25-26.2.jar
+1MB-CMIAPI-AFKShrine-v1.0.0-536-j25-26.2.jar
+1MB-CMIAPI-RecordingMode-v1.0.0-536-j25-26.2.jar
+1MB-CMIAPI-SellStreaks-v1.0.0-536-j25-26.2.jar
+1MB-CMIAPI-ScheduledTips-v1.0.0-536-j25-26.2.jar
+1MB-CMIAPI-Visit-v1.0.0-536-j25-26.2.jar
+1MB-CMIAPI-PassportDiscovery-v1.0.0-536-j25-26.2.jar
+1MB-CMIAPI-SocialGatherings-v1.0.0-536-j25-26.2.jar
+1MB-CMIAPI-JourneyMap-v1.0.0-536-j25-26.2.jar
+1MB-CMIAPI-KitStreaks-v1.0.0-536-j25-26.2.jar
+1MB-CMIAPI-MessageFont-v1.0.0-536-j25-26.2.jar
+1MB-CMIAPI-Nick-v1.0.0-536-j25-26.2.jar
+1MB-CMIAPI-EmoteMenu-v1.0.0-536-j25-26.2.jar
+1MB-CMIAPI-PvPToggle-v1.0.0-536-j25-26.2.jar
+1MB-CMIAPI-Boosters-v1.0.0-536-j25-26.2.jar
+1MB-CMIAPI-NameMC-v1.0.0-536-j25-26.2.jar
+1MB-CMIAPI-Exchange-v1.0.0-536-j25-26.2.jar
+1MB-CMIAPI-VoteTokens-v1.0.0-536-j25-26.2.jar
+1MB-CMIAPI-DiscordChat-v1.0.0-536-j25-26.2.jar
+1MB-CMIAPI-GameTypes-v1.0.0-536-j25-26.2.jar
+1MB-CMIAPI-BirthdayLanterns-v1.0.0-536-j25-26.2.jar
+1MB-CMIAPI-LavaBoots-v1.0.0-536-j25-26.2.jar
+1MB-CMIAPI-Spawners-v1.0.0-536-j25-26.2.jar
+1MB-CMIAPI-Collect-v1.0.0-536-j25-26.2.jar
+1MB-CMIAPI-CoconutHunt-v1.0.0-536-j25-26.2.jar
+1MB-CMIAPI-Forage-v1.0.0-536-j25-26.2.jar
+1MB-CMIAPI-AutoSell-v1.0.0-536-j25-26.2.jar
+1MB-CMIAPI-MobHat-v1.0.0-536-j25-26.2.jar
+1MB-CMIAPI-PlayerTodo-v1.0.0-536-j25-26.2.jar
+1MB-CMIAPI-Refer-v1.0.0-536-j25-26.2.jar
+1MB-CMIAPI-TPAuto-v1.0.0-536-j25-26.2.jar
+1MB-CMIAPI-Menu-v1.0.0-536-j25-26.2.jar
+1MB-CMIAPI-StaffCenter-v1.0.0-536-j25-26.2.jar
+1MB-CMIAPI-Profile-v1.0.0-536-j25-26.2.jar
+1MB-CMIAPI-FilterLab-v1.0.0-536-j25-26.2.jar
+1MB-CMIAPI-FilterGuard-v1.0.0-536-j25-26.2.jar
+1MB-CMIAPI-WarningLens-v1.0.0-536-j25-26.2.jar
+1MB-CMIAPI-NotableMsg-v1.0.0-536-j25-26.2.jar
+1MB-CMIAPI-1MBStaffMsg-v1.0.0-536-j25-26.2.jar
+1MB-CMIAPI-CmdCostDashboard-v1.0.0-536-j25-26.2.jar
+1MB-CMIAPI-CMIConfig-v1.0.0-536-j25-26.2.jar
+1MB-CMIAPI-ConsoleNoiseRouter-v1.0.0-536-j25-26.2.jar
+1MB-CMIAPI-EconomyGuardian-v1.0.0-536-j25-26.2.jar
+1MB-CMIAPI-StartupDoctor-v1.0.0-536-j25-26.2.jar
+1MB-CMIAPI-UpdateSmoke-v1.0.0-536-j25-26.2.jar
+1MB-CMIAPI-PluginVersions-v1.0.0-536-j25-26.2.jar
+1MB-CMIAPI-PlaceholderHealth-v1.0.0-536-j25-26.2.jar
+1MB-CMIAPI-Potions-v1.0.0-536-j25-26.2.jar
+1MB-CMIAPI-SchedulerCheck-v1.0.0-536-j25-26.2.jar
+1MB-CMIAPI-Upgrade-v1.0.0-536-j25-26.2.jar
+1MB-CMIAPI-EndCrystals-v1.0.0-536-j25-26.2.jar
+1MB-CMIAPI-AntiFire-v1.0.0-536-j25-26.2.jar
+1MB-CMIAPI-WorldSnapshot-v1.0.0-536-j25-26.2.jar
+1MB-CMIAPI-SparkReviewer-v1.0.0-536-j25-26.2.jar
+1MB-CMIAPI-Hoppers-v1.0.0-536-j25-26.2.jar
+1MB-CMIAPI-EventRecorder-v1.0.0-536-j25-26.2.jar
+1MB-CMIAPI-PlaceholderProbe-v1.0.0-536-j25-26.2.jar
+1MB-CMIAPI-PermissionProbe-v1.0.0-536-j25-26.2.jar
+1MB-CMIAPI-CMIPlaceholderCheck-v1.0.0-536-j25-26.2.jar
+1MB-CMIAPI-1MBPlaceholders-v1.0.0-536-j25-26.2.jar
+1MB-CMIAPI-WarpAudit-v1.0.0-536-j25-26.2.jar
+1MB-CMIAPI-WorthDrift-v1.0.0-536-j25-26.2.jar
+1MB-CMIAPI-WorthHelper-v1.0.0-536-j25-26.2.jar
+1MB-CMIAPI-CMIProbe-v1.0.0-536-j25-26.2.jar
+1MB-CMIAPI-CMIDatabase-v1.0.0-536-j25-26.2.jar
 ```
 
 [Documentation index](../README.md)

@@ -97,7 +97,7 @@ This plugin should not be used as a hopper, farm, or AFK seller. It is meant for
 | `/autosell admin report` | admin/console | Prints a compact economy report with top earners, categories, materials, cap usage, and export hint. |
 | `/autosell admin export` | admin/console | Writes a Discord-friendly Markdown report. |
 | `/autosell admin heatmap [page]` | admin/console | Shows chunk revenue hotspots from verified AutoSell batches. |
-| `/autosell admin heatmap export` | admin/console | Writes a Markdown chunk revenue heatmap. |
+| `/autosell admin heatmap export [-players]` | admin/console | Writes a Markdown chunk revenue heatmap; `-players` adds tracked last-known player names. |
 | `/autosell admin tuning start` | admin/console | Starts passive observation for broker/cap/worth review. |
 | `/autosell admin tuning status` | admin/console | Shows the current passive observation sample. |
 | `/autosell admin tuning report` | admin/console | Shows suggestions based on observed sales, caps, warnings, materials, and chunks. |
@@ -352,7 +352,10 @@ AutoSell records verified sale revenue by chunk when `heatmap.enabled` is true. 
 ```text
 /autosell admin heatmap
 /autosell admin heatmap export
+/autosell admin heatmap export -players
 ```
+
+The normal export remains anonymous and includes only the unique-player count for each chunk. The explicit `-players` variant adds a `Player names` column using AutoSell's saved last-known profile names; historical UUIDs without a saved name remain visible as UUIDs. Player names are never looked up remotely. Player-inclusive exports use an `autosell-heatmap-players-*.md` filename so staff can distinguish them before sharing a report.
 
 Passive tuning sessions are started manually when staff want to watch live behavior for a while:
 

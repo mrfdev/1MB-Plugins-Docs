@@ -2,7 +2,7 @@
 
 CoconutHunt adds a reusable seven-day `/coconut` event for the Summer Beach. Staff place 200 special coconut heads, assign them across seven cumulative waves, and validate the setup before the event starts. Players return as new waves unlock, find each coconut once for themselves, build a daily participation streak, help community goals, claim milestone rewards, earn Coconut Points, and redeem those points for configured MobHat cosmetics.
 
-CoconutHunt is an isolated player-fun feature plugin. It uses the shared 1MB library for commands, translations, GUI safety, build metadata, PlaceholderAPI, and playerdata, but it does not change Collect, BirthdayLanterns, KitStreaks, SocialGatherings, or MobHat behavior.
+CoconutHunt remains an isolated player-fun feature plugin, but its mature event logic is now a reusable themed-hunt engine. The same `1MB-CMIAPI-CoconutHunt` jar serves Summer through `/coconut` and Halloween through `/ghosthunt`; keeping one plugin preserves every legacy CoconutHunt file, PDC marker, permission, placeholder, registry entry, snapshot, and player record without a risky data move. See [Halloween Ghost Hunt](ghosthunt.md) for the Ghost edition. The plugin uses the shared 1MB library for commands, translations, GUI safety, build metadata, PlaceholderAPI, and playerdata, but it does not change Collect, BirthdayLanterns, KitStreaks, SocialGatherings, or MobHat behavior.
 
 ## Available Features
 
@@ -17,20 +17,25 @@ CoconutHunt is an isolated player-fun feature plugin. It uses the shared 1MB lib
 - capped nearby-player bonus points without shared discovery credit
 - unique community discovery totals, daily goals, contribution gates, and claims
 - a configurable MobHat redemption shop with confirmation and support regrant
-- per-player proximity holograms, particles, spotting sounds, and discovery effects
-- CMI holograms when compatible, with private Paper TextDisplay fallback
+- a bundled coconut head texture with optional custom texture override and automatic loaded-head refresh
+- private per-player Paper TextDisplay holograms, particles, spotting sounds, and discovery effects
+- configurable discovery-title timing plus clear current-wave completion guidance
+- concise hoverable reward/offer failures that identify the clicked entry and exact missing progress
 - setup heads, registration, inspection, enable/disable, removal, validation, and deterministic wave assignment
 - optional event cuboids without requiring WorldGuard
-- isolated debug event data with date/day overrides and reward commands off by default
+- isolated debug event data that is active on day 1 by default, uses a configurable 15-head test target, and keeps reward commands off by default
+- guarded one-player resets and complete debug-event resets that preserve registered heads and configuration
 - restart-safe event lifecycle hooks and offline participant-end processing
 - safe allowlisted command hooks for lifecycle, discovery, claims, and purchases
 - shared playerdata persistence, global community state, staff reports, and cached placeholders
+- configured-edition history and exact old-event claims through each edition's claim deadline
+- guarded `/hunt admin event` preflight and activation with immutable-snapshot verification and an audit record
 
 ## Player Experience
 
 Run `/coconut` from any allowed information world, then use `Visit the Summer Beach` to reach the hunt. The shared footer opens your progress, goes back, returns to the CoconutHunt overview or `/menu`, and closes the GUI. The help page can post the clickable player-guide URL in chat.
 
-Right-click an unlocked coconut with your main hand to discover it. Each coconut counts once for you and remains available to every other player. Seven cumulative waves unlock during the event, so missed locations stay available later; missed participation days do not.
+Right-click an unlocked coconut with your main hand to discover it. Left-clicking is not a discovery action. Each private hologram is a compact `☀`: gold means you have not found that coconut, while green means you have. Green sparkles distinguish an unlocked gold coconut from one waiting for a future wave; future-wave and already-found coconuts do not sparkle. Each coconut counts once for you and remains available to every other player. Seven cumulative waves unlock during the event, so missed locations stay available later; missed participation days do not.
 
 The overview and related pages show:
 
@@ -47,41 +52,59 @@ The other pages cover wave progress, collection milestones, the seven-day calend
 
 Every standard six-row page uses the same footer: the player's head opens personal progress, `Back` returns to the prior CoconutHunt page, the nether star returns to the CoconutHunt overview, `Back to Server /menu` closes the event GUI and runs `/menu`, and the barrier closes the inventory. The help page's `Player Documentation` button keeps the long URL out of item lore; clicking it closes the GUI and posts the complete clickable `https://docs.1moreblock.com/player-guides/plugins/coconut/` link in chat. Coconut Points use a gold-nugget icon, and the MobHat shop uses an emerald trading icon rather than an unresolved player head.
 
-The first discovery is saved before side effects, counts once for that player and once for the community, awards configured points, and gives a brief private celebration. Repeated clicks only show a cooldown-protected `Already found` response. Future-wave coconuts remain locked until their configured day.
+The first discovery is saved before side effects, counts once for that player and once for the community, awards configured points, and gives a private celebration. The title uses configurable fade/stay timing and remains fully visible for 60 ticks (three seconds) by default. Completing the last coconut assigned to a wave produces a distinct completion title, chat guidance to check `/coconut rewards`, and the current Coconut Point balance. Repeated clicks only show a cooldown-protected `Already found` response. Future-wave coconuts remain locked until their configured day.
+
+Clicking a locked reward or unavailable shop offer sends one short chat line. Hovering that line shows the exact reward/offer name and a specific reason such as remaining finds, required streak, community target, personal contribution, or incomplete perfect-reward checks.
 
 Found coconuts are permanent for the edition and are never spent. Coconut Points are the spendable value.
 
 ## Event And World Rules
 
-Production defaults are intentionally conservative:
+Runtime and debug defaults in `config.yml` are intentionally conservative:
 
 ```yaml
 enabled: true
 debug:
   enabled: false
   allow-any-world: true
+  expected-coconuts: 15
   date-override: ''
   day-override: 0
   execute-reward-commands: false
 worlds:
-  production:
-    - summer
-  reward-claim:
-    - general
-    - wild
-    - cave
-    - acid
-    - skyblock
-    - skygrid
-    - oneblock
   allow-info-gui-outside-production: true
-time:
-  zone: Europe/Amsterdam
 ```
+
+The live Summer rules belong to `events.yml` so each annual edition is isolated:
+
+```yaml
+events:
+  summer_2026:
+    theme: coconut
+    reward-profile: legacy
+    timezone: Europe/Amsterdam
+    worlds:
+      production: [summer]
+      reward-claim: [general, wild, cave, acid, skyblock, skygrid, oneblock]
+    points:
+      teamwork:
+        enabled: true
+        radius: 12.0
+        bonus: 1
+        cooldown-seconds: 120
+        daily-cap: 10
+    visit:
+      commands:
+        - cmi warp summer {player}
+```
+
+Older flat `worlds`, `time`, `points`, `social`, `community`, `visit`, setup-texture, and visual values remain accepted as one-time Summer migration defaults. New runtime edits belong in `events.yml` for edition mechanics and worlds, or `themes.yml` for Coconut presentation, textures, messages, and visuals.
 
 With debug disabled, placement, registration, discovery, proximity visuals, and event gameplay only work in `summer` and inside enabled event cuboids. With no cuboid enabled, the complete production world is valid. Information pages can open in other worlds, while claims and shop purchases are limited to the configured reward worlds.
 
 With debug enabled and `allow-any-world: true`, staff can test gameplay in any loaded test-server world. Debug uses the effective event id `debug_<source-event>` and therefore has a separate coconut registry, snapshot, player progress, community totals, and lifecycle keys. Debug-placed heads cannot alter the production `summer_2026` setup. Configured reward commands remain suppressed unless `debug.execute-reward-commands` is deliberately enabled.
+
+Debug is deliberately convenient: if both date and day overrides are off, it behaves as an active event on day 1 regardless of the real calendar. `debug.expected-coconuts` defaults to `15`, so a small setup can pass validation and create a real immutable debug snapshot. Collection rewards above the debug total are hidden as unreachable; with 15 heads, the 5- and 10-find collection milestones remain available. `/coconut admin expected <count|production>` changes that debug-only total in game. `production` stores zero and makes debug use the source event's full expected count again. None of these settings changes the production event definition.
 
 ## Sample Event Dates
 
@@ -97,19 +120,78 @@ events:
 
 These are **sample dates only**. Set the real production start, inclusive end, and inclusive claim deadline before creating the live snapshot. The event clock uses `Europe/Amsterdam` by default and never hardcodes 2026 dates in Java.
 
-## Staff Setup
+## Quick Admin Test: 15 Coconuts
 
-1. Set the real dates and confirm `active-event: summer_2026`.
-2. Configure the optional coconut texture. A blank value uses a labeled player-head fallback without remote profile lookups.
+Use this exact first-test sequence on the test server:
+
+```text
+/coconut admin debug true
+/coconut admin expected 15
+/coconut admin status
+/coconut admin coconut give 15 0
+```
+
+The command gives 15 setup heads backed by CoconutHunt's five bundled coconut skins. You do **not** type an id, world, coordinates, or other details for each one. Place every head as a block. Each placement independently chooses a random skin and writes that persistent texture variant together with a unique UUID, the debug event id, world, coordinates, optional region, unlock day, and placement time into the block PDC and `coconuts.yml` registry. Using unlock day `0` leaves them ready for automatic wave assignment. Reloads and chunk refreshes reapply the saved variant rather than reshuffling existing coconuts; older registry entries receive a stable mixed assignment once during migration.
+
+After placing all 15:
+
+```text
+/coconut admin coconut waves auto 7 2026
+/coconut admin coconut validate
+/coconut admin event validate
+/coconut admin event snapshot
+```
+
+`waves auto` distributes only the unassigned heads across seven deterministic cumulative waves. Both validation commands must report no issues. The snapshot command locks the tested denominator and wave membership. Because debug is active on day 1 by default, the lifecycle may already create the same clean snapshot after validation succeeds; in that case the explicit command safely reports that it kept the existing immutable snapshot.
+
+You can immediately right-click a day-1 coconut with the **same admin account** that placed it. An alt is not required for normal discovery, GUI, point, milestone, claim, reset, or persistence testing. Admin permissions do not make the account ineligible, and the normal player permissions default to true. Use a second account only to test independent per-player finds, two-player community counting, nearby-player social bonus points, or other genuinely multiplayer behavior.
+
+Move through event days without waiting:
+
+```text
+/coconut admin day 2
+/coconut admin day 7
+/coconut admin day off
+/coconut admin date 2026-07-28
+/coconut admin date off
+```
+
+An explicit day tests that active wave. An explicit date can test upcoming, active, claiming, and closed phases. Turning both overrides off returns debug to its automatic active day-1 state.
+
+### Reset Test Data
+
+Preview and reset only one player's current debug record:
+
+```text
+/coconut admin reset player mrfloris --dry-run
+/coconut admin reset player mrfloris --confirm
+```
+
+Add an event id before the flag to target a specific edition, for example `debug_summer_2026` or `summer_2026`. A player reset removes only that player's selected CoconutHunt edition. It preserves every other player, community and snapshot state, the coconut registry, all event/reward configuration, and unrelated shared playerdata.
+
+Preview and restart the complete isolated debug event:
+
+```text
+/coconut admin reset event --dry-run
+/coconut admin reset event --confirm
+```
+
+The event-wide form is intentionally available only while debug mode is enabled. It removes all players' current debug-edition progress plus that debug snapshot, community totals, and lifecycle receipts. It preserves `config.yml`, `events.yml`, `rewards.yml`, all registered debug heads in `coconuts.yml`, every production record, and every unrelated shared playerdata section. If the preserved 15-head registry still validates, CoconutHunt immediately recreates a clean active debug snapshot so testing can restart without placing the heads again. There is no production-wide reset command.
+
+## Production Staff Setup
+
+1. Set the approved live dates and edition mechanics under `events.summer_2026`, then run `/coconut admin debug false`.
+2. Keep the five bundled skins under `themes.coconut.head.texture-values` in `themes.yml`, or replace that list with Mojang texture URLs/base64 values. Invalid entries are skipped, each placement chooses from the valid pool, and the selected variant is saved permanently. Existing flat setup-texture values are migrated as Summer defaults.
 3. Configure and enable a beach cuboid if the whole `summer` world should not be valid.
 4. Give stacked setup heads with `/coconut admin coconut give [amount] [unlock-day]`.
-5. Place heads in valid locations. Every placed block receives a new stable UUID, PDC identity, registry entry, and timestamp.
+5. Place heads in valid locations. Every placed block receives a random saved coconut-skin variant, new stable UUID, PDC identity, registry entry, and timestamp.
 6. Convert an existing player head by looking at it and using `/coconut admin coconut register [unlock-day]`.
 7. Leave heads unassigned with day `0`, then run `/coconut admin coconut waves auto 7 2026`. Explicit day assignments are preserved.
 8. Run `/coconut admin coconut validate` and resolve every issue.
 9. Confirm validation reports exactly `200` enabled coconuts with valid ids, unique locations, loaded worlds, skull/PDC state, zones, and unlock days.
 10. Run `/coconut admin event validate` to preflight the world lists, milestone/reward alignment, every hook/reward/shop/visit command template, and the complete coconut registry.
-11. Create the immutable snapshot with `/coconut admin event snapshot`, or let the lifecycle create it at event start after the same preflight succeeds.
+11. Inspect `/hunt admin event status summer_2026`, then run `/hunt admin event activate summer_2026 --dry-run`.
+12. Activate with `/hunt admin event activate summer_2026 --confirm`. Activation creates or verifies the immutable snapshot, preserves the previously selected event, and writes an audit record. A genuinely live switch requires `--force-confirm`.
 
 `waves auto` is deterministic for the same registry and seed and distributes only unassigned coconuts approximately evenly. Coconuts assigned to day 3 unlock on day 3 and remain available through day 7.
 
@@ -125,7 +207,7 @@ For a genuine emergency during an active event:
 /coconut admin event force-mutation --confirm
 ```
 
-This opens a one-minute correction window. Correct the registry, run validation, and then use:
+This opens the short correction window configured by `activation.force-confirm-window-seconds`. Correct the registry, run validation, and then use:
 
 ```text
 /coconut admin event snapshot --force-confirm
@@ -183,7 +265,8 @@ Player commands:
 /coconut rewards
 /coconut points
 /coconut shop
-/coconut claim all
+/coconut claim <reward-id|all> [event-id]
+/coconut history [event-id]
 ```
 
 ### Player Command Reference
@@ -201,8 +284,9 @@ Player commands:
 | `/coconut points` | Opens Coconut Point balance, earned/spent totals, and earning history. | `/coconut points` |
 | `/coconut shop` | Opens the confirmation-gated MobHat cosmetic shop. | `/coconut shop` |
 | `/coconut claim all` | Claims every currently eligible reward in the correct dependency order. | `/coconut claim all` |
+| `/coconut history [event-id]` | Lists configured Coconut editions or opens one exact historical edition. | `/coconut history summer_2026` |
 
-Players normally claim one selected reward from its GUI button. The equivalent direct single-reward form is `/coconut claim <reward-id>`.
+Players normally claim one selected reward from its GUI button. The direct form is `/coconut claim <reward-id|all> [event-id]`; the optional event id keeps old-edition claims bound to that edition's own snapshot, claim deadline, reward worlds, and claim records.
 
 Staff commands:
 
@@ -210,6 +294,7 @@ Staff commands:
 /coconut admin reload
 /coconut admin status
 /coconut admin debug <true|false>
+/coconut admin expected <count|production>
 /coconut admin day <1-7|off>
 /coconut admin date <yyyy-mm-dd|off>
 /coconut admin event validate
@@ -227,13 +312,19 @@ Staff commands:
 /coconut admin coconut validate
 /coconut admin coconut waves auto [days] [seed]
 /coconut admin inspect <player>
-/coconut admin reset <player> <event-id> --dry-run
-/coconut admin reset <player> <event-id> --confirm
+/coconut admin reset player <player> [event-id] --dry-run
+/coconut admin reset player <player> [event-id] --confirm
+/coconut admin reset event --dry-run
+/coconut admin reset event --confirm
 /coconut admin report [event-id]
 /coconut admin shop regrant <online-player> <offer-id>
+/hunt admin event list
+/hunt admin event status <event-id>
+/hunt admin event activate <event-id> --dry-run
+/hunt admin event activate <event-id> <--confirm|--force-confirm>
 ```
 
-Admin player resolution uses the shared safe cached/online resolver. Reset always requires an explicit dry-run or confirmation. Event start/end hooks and each daily wave hook use durable at-most-once keys, including catch-up after restart.
+Admin player resolution uses the shared safe cached/online resolver. Every reset requires an explicit dry-run or confirmation. The complete event reset is debug-only and preserves configuration and setup; production has only the guarded per-player form. Event start/end hooks and each daily wave hook use durable at-most-once keys, including catch-up after restart.
 
 ## Examples
 
@@ -260,12 +351,13 @@ Admin player resolution uses the shared safe cached/online resolver. Reset alway
 | `onembcmi.CoconutHunt.shop` | true | Use the Coconut Points shop. |
 | `onembcmi.CoconutHunt.admin` | false | Parent for every CoconutHunt admin permission and status. |
 | `onembcmi.CoconutHunt.admin.reload` | false | Reload all CoconutHunt files and runtime caches. |
-| `onembcmi.CoconutHunt.admin.debug` | false | Toggle debug and set date/day overrides. |
+| `onembcmi.CoconutHunt.admin.debug` | false | Toggle debug and set its expected count or date/day overrides. |
 | `onembcmi.CoconutHunt.admin.event` | false | Validate and manage lifecycle/snapshots. |
 | `onembcmi.CoconutHunt.admin.coconut` | false | Manage setup heads, registry entries, and waves. |
 | `onembcmi.CoconutHunt.admin.inspect` | false | Inspect players and regrant recorded shop purchases. |
-| `onembcmi.CoconutHunt.admin.reset` | false | Dry-run or confirm a player event reset. |
+| `onembcmi.CoconutHunt.admin.reset` | false | Dry-run or confirm a player reset or isolated debug-event reset. |
 | `onembcmi.CoconutHunt.admin.report` | false | Write event reports. |
+| `onembcmi.Hunt.admin.event` | false | List, preflight, and activate production editions with `/hunt`. |
 
 Admin permissions default false, including for operators. Individual child permissions work without requiring the parent node.
 Direct server console is trusted for non-player admin commands; player-only GUI, setup-item, targeted-block, discovery, claim, and purchase actions still require an in-game player.
@@ -306,6 +398,7 @@ Reads use loaded cached profile, snapshot, and community state and do not claim 
 
 ```text
 plugins/1MB-CMIAPI/CoconutHunt/config.yml
+plugins/1MB-CMIAPI/CoconutHunt/themes.yml
 plugins/1MB-CMIAPI/CoconutHunt/events.yml
 plugins/1MB-CMIAPI/CoconutHunt/rewards.yml
 plugins/1MB-CMIAPI/CoconutHunt/coconuts.yml
@@ -313,13 +406,14 @@ plugins/1MB-CMIAPI/CoconutHunt/state.yml
 plugins/1MB-CMIAPI/CoconutHunt/reports/
 ```
 
-- `config.yml` controls runtime, worlds, debug isolation, points, social caps, reminders, visit commands, persistence, GUI, textures, effects, and provider choice.
-- `events.yml` contains reusable edition dates, expected count, waves, milestones, optional cuboids, and announcement behavior.
-- `rewards.yml` contains reward tracks, point bonuses, command hooks, security prefixes, perfect reward, and MobHat offers.
-- `coconuts.yml` stores stable placed-coconut ids, positions, event, zone, unlock day, enabled state, and timestamps.
-- `state.yml` stores immutable snapshots, unique community discoveries, daily totals/goals, and lifecycle hook keys.
+- `config.yml` controls plugin/runtime switches, debug isolation, persistence, GUI behavior, and guarded activation timing; its old flat Summer values remain migration inputs.
+- `themes.yml` contains Coconut and Ghost terminology, icons, head texture pools, messages, documentation links, visuals, effects, and optional chain rules.
+- `events.yml` contains reusable edition dates, themes, reward profiles, worlds, point/teamwork rules, expected count, waves, milestones, optional cuboids, visit commands, and announcements.
+- `rewards.yml` contains per-profile reward tracks, point bonuses, command hooks, security prefixes, perfect rewards, and shop offers.
+- `coconuts.yml` keeps its legacy name and stores stable themed collectible ids, positions, event/theme, texture variant, zone, unlock day, enabled state, and timestamps.
+- `state.yml` stores immutable snapshots, unique community discoveries, daily totals/goals, lifecycle hook keys, selected production event, and activation audit records.
 
-Both registry and global-state files use atomic replacement writes. A lifecycle hook is dispatched only after its at-most-once key has been durably written. Player discovery, claims, and purchases persist their player record before command side effects.
+Both registry and global-state files use atomic replacement writes. Registry schema 3 and state/event/reward/theme/player schema 2 migrations require deterministic, idempotent `*.pre-schema-<target>-from-<source>.bak` backups before older data is rewritten; migration is refused if a required backup cannot be created. A lifecycle hook is dispatched only after its at-most-once key has been durably written. Player discovery, claims, and purchases persist their player record before command side effects.
 
 Player state is kept in the shared store:
 
@@ -366,11 +460,11 @@ Commands come only from configuration, have leading slashes stripped, reject lin
 
 ## Holograms And Effects
 
-`visuals.holograms.provider: AUTO` prefers transient CMI holograms using the installed CMI API. CoconutHunt uses a private naming/group prefix, does not save these holograms into the owner's normal CMI hologram configuration, caps nearby holograms per player, and never changes unrelated holograms.
+`visuals.holograms.provider: AUTO` uses private Paper TextDisplay entities. This is the reliable default on Paper 26.2 and avoids the CMI transient adapter silently accepting a hologram without visibly rendering it. Set the provider to `CMI` only when deliberately testing that adapter; a CMI exception still falls back to Paper.
 
-If CMI is unavailable or incompatible, CoconutHunt falls back to private Paper TextDisplay entities. The selected provider appears in `/coconut admin status`, `%onembcmi_CoconutHunt.runtime.hologram_provider%`, and `/1mbcmi debug plugin CoconutHunt all`.
+Holograms are private to each player, show only for nearby snapshot coconuts, and use the compact prefix `☀` icon: gold is not found and green is found. They are capped by `visuals.max-holograms-per-player` (five by default) to avoid visual clutter. Green spotting particles show only on unlocked, not-yet-found coconuts. The selected provider appears in `/coconut admin status`, `%onembcmi_CoconutHunt.runtime.hologram_provider%`, and `/1mbcmi debug plugin CoconutHunt all`.
 
-Nearby checks use the registry's chunk index rather than scanning all 200 coconuts for every player. Holograms and displays are cleaned on quit, teleport/world change, chunk unload, reload, event end, and plugin disable. Spotting, discovery, already-found, and locked sound keys and pitches are independently configurable and clamped at runtime.
+Nearby checks use the registry's chunk index rather than scanning all 200 coconuts for every player. Holograms and displays are cleaned on quit, teleport/world change, chunk unload, reload, event end, and plugin disable. Spotting, discovery, already-found, and locked sound keys and pitches are independently configurable and clamped at runtime. Discovery title settings are `visuals.titles.enabled`, `fade-in-ticks`, `stay-ticks`, and `fade-out-ticks`; 20 ticks equal one second.
 
 ## Runtime Metadata
 
@@ -382,13 +476,13 @@ The shared report includes commands, granular permissions, placeholders, config/
 
 ## Build And Integrations
 
-Build 531 produces:
+Build 535 produces:
 
 ```text
-1MB-CMIAPI-CoconutHunt-v1.0.0-531-j25-26.2.jar
+1MB-CMIAPI-CoconutHunt-v1.0.0-535-j25-26.2.jar
 ```
 
-CMI, CMILib, and `1MB-CMIAPI-Lib` are required runtime dependencies. CoconutHunt uses the shared library for feature registration, translated messages, hardened GUI sessions, safe player resolution, documentation metadata, PlaceholderAPI registration, and shared playerdata. It uses the installed CMI runtime for the configured kit/warp/broadcast command surface and prefers its transient hologram API when compatible. CMILib remains part of the common runtime baseline.
+CMI, CMILib, and `1MB-CMIAPI-Lib` are required runtime dependencies. CoconutHunt uses the shared library for feature registration, translated messages, hardened GUI sessions, safe player resolution, documentation metadata, PlaceholderAPI registration, and shared playerdata. It uses the installed CMI runtime for configured kit/warp/broadcast commands; private Paper TextDisplays provide the default proximity holograms. CMILib remains part of the common runtime baseline.
 
 Modern Paper 26.2 APIs provide player-head profile data, PDC identity, skull tile updates, Adventure text, particles, sounds, displays, scheduler/listener behavior, and entity/material validation. PlaceholderAPI, LuckPerms, Vault, and MobHat are optional hooks; LuckPerms plus MobHat enable the default cosmetic shop, while the rest of the event stays available if optional integrations are absent. No paid/private dependency jar is bundled in the feature jar.
 
@@ -403,7 +497,9 @@ Modern Paper 26.2 APIs provide player-head profile data, PDC identity, skull til
 - [ ] Confirm MobHat and LuckPerms are available or deliberately leave the shop unavailable.
 - [ ] Run coconut validation and require zero issues with exactly 200 enabled heads.
 - [ ] Run `/coconut admin event validate` and require zero config, command-template, reward, world, or registry issues.
+- [ ] Review `/hunt admin event status summer_2026`, run the activation dry-run, and confirm the selected event/audit after activation.
 - [ ] Review deterministic wave counts and spot-check explicit assignments.
+- [ ] Complete a 15-head isolated debug run and verify the player and full debug-event reset dry-runs before confirming either one.
 - [ ] Create and record the immutable production snapshot before announcing the event.
 - [ ] Keep debug reward commands off and reset disposable debug profiles after testing.
 - [ ] Test all seven day/date overrides, claims, restart persistence, two-player discovery, visuals, and event end with real players.

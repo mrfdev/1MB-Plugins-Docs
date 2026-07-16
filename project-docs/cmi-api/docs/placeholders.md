@@ -877,6 +877,41 @@ CoconutHunt placeholders:
 
 CoconutHunt placeholder reads use cached profile, snapshot, and community state. They do not create claims, change progress, spend points, or run commands.
 
+GhostHunt placeholders are served as an event-specific runtime alias by the same jar:
+
+```text
+%onembcmi_GhostHunt.enabled%
+%onembcmi_GhostHunt.event.id%
+%onembcmi_GhostHunt.event.state%
+%onembcmi_GhostHunt.event.day%
+%onembcmi_GhostHunt.event.days_total%
+%onembcmi_GhostHunt.event.time_remaining%
+%onembcmi_GhostHunt.ghosts.registered%
+%onembcmi_GhostHunt.ghosts.expected%
+%onembcmi_GhostHunt.ghosts.available%
+%onembcmi_GhostHunt.player.found%
+%onembcmi_GhostHunt.player.total%
+%onembcmi_GhostHunt.player.percent%
+%onembcmi_GhostHunt.player.remaining%
+%onembcmi_GhostHunt.player.today%
+%onembcmi_GhostHunt.player.streak.current%
+%onembcmi_GhostHunt.player.streak.best%
+%onembcmi_GhostHunt.player.points%
+%onembcmi_GhostHunt.player.claimable%
+%onembcmi_GhostHunt.player.perfect_eligible%
+%onembcmi_GhostHunt.player.effects%
+%onembcmi_GhostHunt.player.haunting_chain%
+%onembcmi_GhostHunt.player.haunting_chain_best%
+%onembcmi_GhostHunt.community.total%
+%onembcmi_GhostHunt.community.today%
+%onembcmi_GhostHunt.community.target%
+%onembcmi_GhostHunt.community.percent%
+%onembcmi_GhostHunt.community.player_contribution%
+%onembcmi_GhostHunt.runtime.hologram_provider%
+```
+
+Ghost reads have the same side-effect-free contract and use only the selected Ghost edition's cached profile, immutable snapshot, and community state.
+
 Forage placeholders:
 
 ```text

@@ -1,6 +1,6 @@
 # DiscordChat
 
-DiscordChat is a player-fun feature plugin for turning the DiscordSRV `#server-chat` bridge into a gentle engagement loop. Linked players earn DiscordChat EXP from meaningful chat, emotes, and daily participation. Streak milestones convert stored EXP into spendable points, and those points can be traded in game through `/discordchat rewards`.
+DiscordChat is a player-fun feature plugin for turning the DiscordSRV `#server-chat` bridge into a gentle engagement loop. Linked players earn DiscordChat EXP from meaningful chat, emotes, and daily participation. Every complete `25` EXP converts into one spendable point by default, while streak milestones award separate bonus points. Points can be traded in game through `/discordchat rewards`.
 
 The plugin is report-first and reward-safe: it only records DiscordSRV events, stores local player progress, and runs configured reward commands after a player confirms a point trade in game. It does not post to Discord, moderate Discord, or change DiscordSRV configuration.
 
@@ -11,7 +11,7 @@ When Menu is installed and enabled, `/menu` includes a DiscordChat button and th
 | Command | Explanation | Example |
 | --- | --- | --- |
 | `/discordchat` | Opens the DiscordChat overview GUI with points, streak, tracked words/emotes, reminders, rewards, and milestones. | `/discordchat` |
-| `/discordchat status` | Shows your linked state, points, pending EXP, current streak, longest streak, and tracked chat totals. | `/discordchat status` |
+| `/discordchat status` | Shows your linked state, points, EXP progress toward the next point, tracked point sources, current streak, longest streak, and chat totals. | `/discordchat status` |
 | `/discordchat top [points\|streak\|messages\|words\|emotes]` | Shows the top 10 DiscordChat profiles for a public metric. | `/discordchat top streak` |
 | `/discordchat pulse` | Opens the community pulse GUI with today's activity, seven-day totals, and active XP boosts. Console receives the same data as chat output. | `/discordchat pulse` |
 | `/discordchat rewards` | Opens the point trade GUI. | `/discordchat rewards` |
@@ -23,6 +23,7 @@ When Menu is installed and enabled, `/menu` includes a DiscordChat button and th
 | `/discordchat celebrations` | Toggles whether your own major DiscordChat milestone broadcasts can be announced publicly. | `/discordchat celebrations` |
 | `/discordchat prefix <preset\|off>` | Selects an unlocked DiscordChat prefix placeholder preset. | `/discordchat prefix discord` |
 | `/discordchat suffix <preset\|off>` | Selects an unlocked DiscordChat suffix placeholder preset. | `/discordchat suffix chatty` |
+| `/discordchat admin check` | Runs the read-only reward readiness report for catalog ids, dependencies, CMI kits, command templates and roots, LuckPerms targets, costs, and unused definitions. | `/discordchat admin check` |
 | `/discordchat admin inspect <player\|uuid>` | Staff view for another player's DiscordChat progress. | `/discordchat admin inspect mrfloris` |
 | `/discordchat admin export <player\|uuid>` | Writes a Markdown staff report under `plugins/1MB-CMIAPI/DiscordChat/exports/`. | `/discordchat admin export mrfloris` |
 | `/discordchat admin community [days]` | Writes a Markdown community activity report for the last N days. | `/discordchat admin community 30` |
@@ -32,12 +33,15 @@ When Menu is installed and enabled, `/menu` includes a DiscordChat button and th
 | `/discordchat admin event start <duration> <multiplier> [reason]` | Starts a temporary DiscordChat XP multiplier that Boosters `/rate` can display while active. | `/discordchat admin event start 2h 2 community-night` |
 | `/discordchat admin event stop` | Stops the temporary DiscordChat XP multiplier. | `/discordchat admin event stop` |
 | `/discordchat admin award <player\|uuid> helpful [reason]` | Adds the configured staff-recognition XP/points for a standout helpful reply. | `/discordchat admin award mrfloris helpful answered redstone question` |
-| `/discordchat admin award <player\|uuid> xp <amount> [reason]` | Adds audited pending XP, clamped by `manual-awards.max-exp`. | `/discordchat admin award mrfloris xp 50 community help` |
+| `/discordchat admin award <player\|uuid> xp <amount> [reason]` | Adds audited XP, immediately converts complete point units, and reports the converted amount. The XP is clamped by `manual-awards.max-exp`. | `/discordchat admin award mrfloris xp 50 community help` |
 | `/discordchat admin award <player\|uuid> points <amount> [reason]` | Adds audited spendable points, clamped by `manual-awards.max-points`. | `/discordchat admin award mrfloris points 25 event helper` |
 | `/discordchat admin collectible [player] [amount]` | Creates stamped DiscordChat keepsake items for building the collectible reward kit. | `/discordchat admin collectible mrfloris 8` |
 | `/discordchat admin grantpoints <player\|uuid> <amount> [reason]` | Adds spendable points with audit logging. | `/discordchat admin grantpoints mrfloris 100 event-prize` |
 | `/discordchat admin takepoints <player\|uuid> <amount> [reason]` | Removes spendable points with audit logging. | `/discordchat admin takepoints mrfloris 50 correction` |
-| `/discordchat admin reset <player\|uuid> confirm` | Deletes one player's DiscordChat data file. | `/discordchat admin reset mrfloris confirm` |
+| `/discordchat admin transaction status <player\|uuid> [transaction-id]` | Shows the active or most recent persisted reward transaction, command progress, attempts, retry safety, and failure reason. | `/discordchat admin transaction status mrfloris` |
+| `/discordchat admin transaction retry <player\|uuid> [confirm]` | Retries the active failed transaction from its persisted command progress without charging again. Use `confirm` only when delivery progress is marked uncertain. The player must be online. | `/discordchat admin transaction retry mrfloris` |
+| `/discordchat admin transaction refund <player\|uuid> confirm` | Returns the reserved points and one-time eligibility for the active pending, delivered, or failed transaction. A second refund is refused. | `/discordchat admin transaction refund mrfloris confirm` |
+| `/discordchat admin reset <player\|uuid> confirm` | Deletes one player's live DiscordChat profile and last-known-good backup. | `/discordchat admin reset mrfloris confirm` |
 | `/discordchat admin smoke` | Shows DiscordSRV hook state, target channel, linked account count, and tracking counters. | `/discordchat admin smoke` |
 | `/discordchat reload` | Reloads config, milestone values, and reward definitions. | `/discordchat reload` |
 | `/discordchat debug` | Shared debug page with runtime, build, Paper, Java, category, and docs metadata. | `/discordchat debug` |
@@ -59,7 +63,7 @@ DiscordChat subscribes to DiscordSRV's API when DiscordSRV is loaded:
 - Bot messages, unlinked Discord accounts, non-target DiscordSRV channels, and command-like messages are ignored for rewards and reported by `/discordchat admin smoke`.
 - Unlinked in-game players can receive a cooldown-protected reminder after normal in-game chat, but the plugin no longer prompts on join by default.
 
-The plugin stores the latest known Minecraft name, Discord id, linked state, lifetime totals, daily totals, current streak, longest streak, milestone completions, pending EXP, spendable points, and claimed one-time rewards.
+The plugin stores the latest known Minecraft name, Discord id, linked state, lifetime totals, daily totals, current streak, longest streak, milestone completions, the sub-threshold EXP remainder, spendable points, claimed one-time rewards, and the bounded reward transaction ledger.
 
 ## EXP, Points, And Milestones
 
@@ -81,7 +85,8 @@ Default behavior:
 - Daily message EXP is capped at `60`.
 - The first tracked chat activity on a new Amsterdam calendar day increments the streak and adds `10` streak EXP.
 - Milestones are `7`, `30`, `90`, `100`, `180`, and `365` days by default.
-- On a new milestone, pending EXP converts to points at `25` EXP per point, then the player receives a bonus worth at least `25` points or `20%` of current points, whichever is higher.
+- Every XP award immediately converts complete units using floor conversion. At the default ratio, `24.9` EXP remains pending, `25` EXP becomes `1` point with `0` pending, and `62.7` EXP becomes `2` points with `12.7` pending.
+- On a new milestone, the player receives a separate bonus worth at least `25` points or `20%` of current points, whichever is higher. Milestone completion does not control ordinary XP conversion.
 - Major milestones can broadcast a friendly in-game celebration. Players can use `/discordchat celebrations` to keep their own milestone announcements private.
 
 The milestone display intentionally uses the next target style:
@@ -96,11 +101,11 @@ Offline Discord chat can still count as long as DiscordSRV can resolve the Disco
 
 Links and screenshots are handled conservatively: a link-only message earns no XP, but a link with useful context can pass the normal quality checks. Question marks and exclamation marks are not secret bonus triggers; the current model stays transparent and rewards the same quality rules everyone can understand.
 
-With default values, a highly active linked player can earn roughly `70` to `81` pending EXP per day before weekly/monthly/yearly first-Discord bonuses and event multipliers. At `25` EXP per point, that is about `2` to `3` points per active day from XP, plus milestone conversion and milestone bonuses. That makes `100-180` point rewards cheap, `220-350` point rewards medium, and `500-650` point rewards expensive under default tuning.
+With default values, a highly active linked player can earn roughly `70` to `81` EXP per day before weekly/monthly/yearly first-Discord bonuses and event multipliers. At `25` EXP per point, complete units convert immediately into about `2` to `3` points per active day, with the remainder carrying forward. Milestone bonus points are additional. That makes `100-180` point rewards cheap, `220-350` point rewards medium, and `500-650` point rewards expensive under default tuning.
 
 ## Default Rewards
 
-The default reward set is configurable and intentionally server-owned. Commands run as console after the player spends points in game.
+The default reward set is configurable and intentionally server-owned. Selecting a reward opens an owner-bound confirmation page showing its exact cost, repeatability, cooldown, current balance, and balance after purchase. Only the second click can create a persisted reservation, so a rejected command does not silently consume points or one-time eligibility.
 
 - Discord group: adds LuckPerms parent `1mb_discordchat` once.
 - DiscordChat kit: runs `cmi kit discordchat_bundle {player} -s`.
@@ -111,8 +116,8 @@ The default reward set is configurable and intentionally server-owned. Commands 
 - Player head bundle: runs `cmi kit discordchat_heads {player} -s`.
 - Fireworks bundle: runs `cmi kit discordchat_fireworks {player} -s`.
 - Welcome points bundle: runs the configured external `/points` reward command.
-- 15m mcMMO booster: runs `rate start mcmmo 15m 4` for a server-wide 4x mcMMO booster.
-- 15m Jobs booster: runs `rate start jobs 15m 6` for a server-wide 6x Jobs booster.
+- 15m mcMMO booster: runs `rate start mcmmo 15m 4` for a server-wide 4x mcMMO booster. Its default cooldown is one hour, server-wide.
+- 15m Jobs booster: runs `rate start jobs 15m 6` for a server-wide 6x Jobs booster. Its default cooldown is one hour, server-wide.
 - Allay MobHat unlock: grants MobHat use/wear plus `onembcmi.mobhat.mob.allay`.
 - JourneyMap bundle: runs `cmi kit discordchat_journeymap {player} -s`.
 - Passport bundle: runs `cmi kit discordchat_passport {player} -s`.
@@ -127,13 +132,32 @@ The default reward set is configurable and intentionally server-owned. Commands 
 
 All commands run as console and support `{player}`, `%player%`, `{uuid}`, and `%uuid%`. Player names are sanitized before commands dispatch.
 
-The booster rewards depend on the 1MB Boosters feature plugin and its `/rate start` command. mcMMO and Jobs still need to be present and configured on the server for those boosts to do anything useful. These rewards are intentionally mid-tier because they benefit everyone online, not only the player who spends the DiscordChat points.
+Reward redemption follows this transaction flow:
+
+1. Bind each visible slot to the reward id rendered in that exact owner-bound menu session.
+2. Open a second confirmation view. If the reward definition changes during a config reload, the old confirmation is rejected and the updated details must be reviewed again.
+3. Render and validate every configured command before changing playerdata.
+4. Recheck points, one-time ownership, active transactions, and player/global cooldown eligibility inside the synchronized reservation boundary.
+5. Require every Bukkit command root to exist and every referenced `cmi kit <name>` kit to exist and be enabled.
+6. Atomically create a `pending` transaction, reserve the point cost, and reserve one-time eligibility where applicable.
+7. Dispatch each recorded command in order. After every accepted command, atomically persist the completed-command count.
+8. Persist `delivered` only after every command is accepted, then persist `finalized` with the successful reward timestamp to close the reservation while retaining its history.
+9. Persist a rejected or exceptional delivery as `failed`. The reservation remains held so staff can inspect the exact command progress and choose retry or refund. Failed and refunded delivery does not start a cooldown.
+10. A staff retry returns the same record to `pending`, increments its attempt counter, resumes after the persisted command count, and never deducts the cost a second time.
+11. A staff refund persists `refunded`, returns the original cost, and restores one-time eligibility exactly once.
+12. On startup, fully recorded delivery is finalized automatically. Incomplete delivery becomes `failed`; uncertain retries require the explicit `confirm` argument. Legacy `rewards.pending` records from older builds are migrated and refunded using their previous behavior.
+
+Every record keeps its resolved commands, original command templates, progress, attempts, timestamps, retry-safety flag, failure reason, and transition history. Terminal `finalized` and `refunded` records remain available for inspection; `rewards.transaction-history-limit` retains the newest records per player and never prunes an active transaction.
+
+Transaction events are also written to `logs/reward.log` with the transaction id, reward id, state, and relevant cost or command count. Arbitrary console-command effects cannot be reversed automatically after another plugin applies them. If command two fails after command one ran, staff can retry from command two or deliberately refund after reviewing the partial delivery. Keep multi-command rewards idempotent and validate them before enabling live spending.
+
+The booster rewards depend on the 1MB Boosters feature plugin and its `/rate start` command. mcMMO and Jobs still need to be present and configured on the server for those boosts to do anything useful. These rewards are intentionally mid-tier because they benefit everyone online, not only the player who spends the DiscordChat points. Their one-hour `global` cooldown prevents a different player from immediately stacking the same server-wide reward and survives plugin/server restarts.
 
 MobHat, JourneyMap, and PassportDiscovery rewards are dependency-aware. If the required feature plugin is missing or the configured MobHat mob is not enabled, the reward shows as unavailable and the server refuses the trade instead of spending points.
 
-Item tools use an escrow file while the GUI is open. The item is returned on close, quit, kick, plugin disable, join, or when `/discordchat tools` opens again. If a matching item is already present during restore, the plugin keeps the escrow file and asks for staff review instead of risking a duplicate.
+Item tools use an identity-bound escrow file while the GUI is open. Escrow replacements are flushed and atomically moved into place, and each payload must decode to exactly one item for the UUID in its filename. The item is returned on close, quit, kick, plugin disable, join, or when `/discordchat tools` opens again. If a matching item is already present during restore, the plugin keeps the escrow file and asks for staff review instead of risking a duplicate. Invalid YAML, a mismatched UUID, a missing item, or an undecodable item is moved to `escrow/quarantine/` and reported instead of being treated as an empty record. If a restored item cannot be removed from escrow, the inventory change is rolled back so the live record is not duplicated silently.
 
-The DiscordChat GUIs use owner-bound session ids. Old menus, wrong-owner menus, top-inventory drags, shift-clicks, number-key swaps, offhand swaps, and unsupported click types are cancelled before any reward or tool logic runs. Normal left/right clicks in the player's own inventory are allowed only while the tools menu is open so the player can pick up one item for the protected tool slot.
+The DiscordChat GUIs use owner-bound session ids. Reward slots carry an immutable slot-to-id snapshot, and the confirmation holder carries the exact reward definition the player reviewed. Old menus, wrong-owner menus, stale/changed confirmations, top-inventory drags, shift-clicks, number-key swaps, offhand swaps, and unsupported click types are cancelled before any reward or tool logic runs. Normal left/right clicks in the player's own inventory are allowed only while the tools menu is open so the player can pick up one item for the protected tool slot.
 
 ### Required Reward Kits
 
@@ -154,6 +178,8 @@ Create these CMI kits before enabling their matching rewards:
 
 Use the `discordchat_<type>` prefix for any future reward kits so config and docs stay easy to scan.
 
+`rewards.ids` is the authoritative catalog membership and GUI-order list. A reward definition under `rewards.definitions.<id>` is never loaded merely because it exists: its id must also appear in `rewards.ids`. Removing an id from the list removes that reward from the loaded catalog without deleting its definition. Missing, duplicate, unsafe, or noncanonical list entries are reported by `/discordchat admin check`; an enabled definition omitted from the list is reported as an unused warning.
+
 Setup helpers:
 
 ```text
@@ -171,12 +197,14 @@ onembcmi.discordchat.rewards
 onembcmi.discordchat.tools
 onembcmi.discordchat.optout
 onembcmi.discordchat.admin
+onembcmi.discordchat.admin.check
 onembcmi.discordchat.admin.inspect
 onembcmi.discordchat.admin.export
 onembcmi.discordchat.admin.archive
 onembcmi.discordchat.admin.event
 onembcmi.discordchat.admin.award
 onembcmi.discordchat.admin.points
+onembcmi.discordchat.admin.transactions
 onembcmi.discordchat.admin.reset
 onembcmi.discordchat.admin.reload
 onembcmi.discordchat.admin.smoke
@@ -288,7 +316,6 @@ bonus-windows.definitions.<id>.end
 bonus-windows.definitions.<id>.multiplier
 points.exp-per-point
 milestones.days
-milestones.convert-exp-on-hit
 milestones.bonus-percent-of-current-points
 milestones.flat-bonus-points
 milestone-broadcast.enabled
@@ -303,7 +330,10 @@ cosmetics.prefix.presets
 cosmetics.suffix.presets
 rewards.enabled
 rewards.ids
+rewards.transaction-history-limit
 rewards.definitions.<id>.*
+rewards.definitions.<id>.cooldown-seconds
+rewards.definitions.<id>.cooldown-scope
 rewards.definitions.<id>.requires-plugin
 rewards.definitions.<id>.requires-mobhat-mob
 tools.enabled
@@ -315,10 +345,35 @@ collectible.display-name
 collectible.lore
 ```
 
+Fresh installations write both `rewards.enabled: false` and `tools.enabled: false`. Chat tracking, EXP, points, milestones, and read-only reward/tool previews can therefore be configured without exposing point spending. Existing installations keep their explicitly saved values when upgrading; this default change does not turn an already enabled live setup off. Enable rewards only after `/discordchat admin check` has no `FAIL` rows and live delivery testing passes, and enable tools only after reviewing their costs and item behavior.
+
+Every built-in reward has `cooldown-seconds` and `cooldown-scope`. A value of `0` disables its cooldown. Scope `player` tracks the last successful purchase for that player; scope `global` uses the newest successful timestamp across all profiles and blocks that reward for everyone until expiry. The built-in mcMMO and Jobs boosters default to `3600` seconds with `global` scope. Cooldowns begin only when delivery finalizes, not when the confirmation GUI opens or a transaction is reserved.
+
+`points.exp-per-point` defaults to `25`. Every XP credit uses floor conversion immediately, and `xp.pending` therefore contains only the remainder below the configured ratio. Existing profiles are converted atomically during startup and reload, so previously stranded balances are preserved as points plus their exact one-decimal remainder. Converted points accumulate under `points.lifetime-from-exp`; streak bonuses accumulate separately under `points.lifetime-milestone-bonus`. The obsolete `milestones.convert-exp-on-hit` setting is removed automatically from upgraded configuration files.
+
+## Reward Readiness
+
+Run these commands after editing rewards or changing server plugins, kits, permissions, or commands:
+
+```text
+/discordchat reload
+/discordchat admin check
+```
+
+The report is read-only and uses the live server state. It checks the authoritative `rewards.ids` list, enabled/unused definitions, available GUI capacity, required plugins and MobHat choices, every referenced CMI kit, reward command templates and Bukkit command roots, LuckPerms permission/group targets, positive point costs, GUI materials, valid cooldown values/scopes, persistent global cooldown history, and whether `/rate start` rewards use a global cooldown of at least 15 minutes.
+
+- `OK` means the category passed.
+- `WARN` means staff must review an intentional or externally unverifiable choice, such as an enabled unused definition or a dynamically registered external permission.
+- `FAIL` blocks launch readiness and identifies a missing or unsafe dependency or value.
+
+A report with zero failures is a static/runtime preflight, not proof that another plugin's reward command produced the intended item or effect. Complete one live purchase plus the documented transaction retry/refund smoke test before granting player access.
+
 ## Data And Logs
 
 ```text
 plugins/1MB-CMIAPI/DiscordChat/players/<uuid>.yml
+plugins/1MB-CMIAPI/DiscordChat/players/backups/<uuid>.yml
+plugins/1MB-CMIAPI/DiscordChat/players/quarantine/<uuid>-<timestamp>.yml
 plugins/1MB-CMIAPI/DiscordChat/community.yml
 plugins/1MB-CMIAPI/DiscordChat/logs/reward.log
 plugins/1MB-CMIAPI/DiscordChat/logs/points.log
@@ -333,18 +388,37 @@ plugins/1MB-CMIAPI/DiscordChat/logs/tools.log
 plugins/1MB-CMIAPI/DiscordChat/logs/fireworks.log
 plugins/1MB-CMIAPI/DiscordChat/logs/collectible.log
 plugins/1MB-CMIAPI/DiscordChat/escrow/<uuid>.yml
+plugins/1MB-CMIAPI/DiscordChat/escrow/quarantine/<uuid>-<timestamp>.yml
 plugins/1MB-CMIAPI/DiscordChat/exports/discordchat-<player>-<timestamp>.md
 plugins/1MB-CMIAPI/DiscordChat/exports/discordchat-community-<days>d-<timestamp>.md
 plugins/1MB-CMIAPI/DiscordChat/exports/discordchat-daily-archive-<mode>-<days>d-<timestamp>.md
 ```
 
-The data files are intentionally local to this feature because they are engagement stats, not global identity data.
+The data files are intentionally local to this feature because they are engagement stats, not global identity data. Player profiles use fail-closed storage: every replacement is written to a same-directory temporary file, flushed, and atomically moved into place. Before an existing live profile is replaced, its validated contents become the last-known-good backup. A new profile receives both a live copy and an initial backup.
+
+Every stored profile must be valid YAML and its `identity.uuid` must match the UUID in its filename. If the live copy is missing or unreadable but the backup validates, DiscordChat restores the backup automatically. An unreadable live copy is preserved in `players/quarantine/` before restoration. If neither copy is trustworthy, DiscordChat refuses that profile read or mutation, leaves the evidence untouched, reports the storage problem to staff, and tells an affected in-game command/GUI user that nothing was changed. `/discordchat admin reset <player|uuid> confirm` removes both the live profile and its backup; quarantined evidence is intentionally retained for staff review.
+
+Reward transactions are stored under `rewards.transactions.<transaction-id>` in the player's profile. `rewards.active-transaction` points to the unresolved record, while `rewards.last-transaction` keeps terminal records easy to inspect. Valid statuses are `pending`, `delivered`, `finalized`, `failed`, and `refunded`. Successful reward timestamps are stored under `rewards.cooldowns.<reward-id>.last-success-at-millis`; global cooldown state is rebuilt from those atomically stored profile values during startup/reload. Do not edit these paths while the server is running; use the transaction status, retry, and refund commands instead.
+
+Tool escrow uses the same fail-closed principle but is intentionally separate from profile backups. A valid active file is cleared only after the protected item is confirmed back in the player's inventory. Malformed or undecodable records are preserved in `escrow/quarantine/` for manual staff recovery; the plugin never deletes them as if no item existed.
+
+## Automated Core Tests
+
+Run the focused DiscordChat suite with:
+
+```text
+gradle :plugins:player-fun:discordchat:test
+```
+
+The 71-test suite covers quality metrics and every no-XP decision, repeat-window ordering, idempotent/consecutive/reset streak progression, floor EXP accrual and remainder conversion, reward transaction transitions and persisted ledgers, profile backup/quarantine/atomic-write behavior, reward command rendering and unsafe-placeholder rejection, cooldowns, immutable GUI reward bindings, fresh-install spending defaults, escrow save/load/clear/quarantine behavior, and every inventory recovery decision including rollback and the possible-duplicate alarm. Full Bukkit inventory sessions, real serialized `ItemStack` recovery, config reload races, and DiscordSRV callback concurrency remain test-server integration checks because they require a running Paper/DiscordSRV environment.
 
 ## Smoke Test
 
 After installing the jar and restarting the test server:
 
 ```text
+/discordchat reload
+/discordchat admin check
 /discordchat admin smoke
 /discordchat link
 ```
@@ -358,7 +432,13 @@ Then link a test account through DiscordSRV, type once in `#server-chat`, type o
 /discordchat admin smoke
 ```
 
-Expected result: `admin smoke` shows DiscordSRV loaded/subscribed, the configured channel id, linked-account count, and the tracked counters increasing.
+Expected result: `admin check` has no `FAIL` rows, and `admin smoke` shows DiscordSRV loaded/subscribed, the configured channel id, linked-account count, and the tracked counters increasing.
+
+For reward confirmation/cooldown testing, grant a test account enough points, open `/discordchat rewards`, and click a reward once. Verify that no points move and the confirmation page shows the exact cost and post-purchase balance. Cancel once, reopen it, then confirm. For either booster, verify the reward becomes unavailable for one hour to a second account as well, remains unavailable after a restart, and starts no cooldown when a deliberately failed transaction is refunded.
+
+For XP conversion testing, use `/discordchat admin award <player> xp <amount> <reason>` and inspect `/discordchat status`. Starting from zero, award `24` XP and verify `0` points with `24/25` progress. Award `1` more and verify `1` point with `0/25`. Award `62` and verify another `2` points with `12/25` remaining. Reaching a streak milestone should add its configured bonus independently without changing that remainder.
+
+For escrow recovery testing, place one disposable item in the tools input slot and confirm `escrow/<uuid>.yml` exists. Close the GUI with inventory space and confirm the item returns and the file clears. Repeat with a full inventory and confirm the item remains in escrow. On the test server only, corrupt a disposable escrow file before login and confirm it moves to `escrow/quarantine/`, the original bytes remain available for staff, and no replacement item is granted automatically.
 
 ## Feature Decisions And Ideas
 
@@ -429,7 +509,9 @@ TODO reward ideas:
 - Help output remains player-friendly and does not print permission nodes.
 - Technical metadata and permission lists live under `/discordchat debug`.
 - DiscordSRV is a soft dependency. The plugin still loads without DiscordSRV, and `/discordchat admin smoke` explains what is missing.
-- Reward commands are config-owned, console-dispatched, and use sanitized player placeholders.
+- Reward commands are config-owned, console-dispatched, use sanitized player placeholders, and are preflighted before an atomic point reservation is written.
+- Missing or disabled CMI kits and unavailable command roots are rejected before reservation. Rejected, exceptional, or interrupted dispatches remain in a durable failed transaction for deliberate staff retry/refund; they cannot disappear, double-charge, or auto-repeat uncertain commands, and all transitions are audited.
+- Player profiles are identity-validated, atomically replaced, and backed up before replacement. A malformed live file is never treated as a blank account or overwritten; recovery requires a validated backup and preserves the malformed copy in quarantine.
 - GUI actions are owner/session checked, click-throttled, and handled at high event priority. Stale menus close without running actions.
-- The item tools GUI has one mutable input slot. The item is saved to disk escrow while present, returned on close/quit/kick/plugin disable, and kept in escrow for staff review if automatic recovery would risk a duplicate.
+- The item tools GUI has one mutable input slot. The item is atomically saved to identity-validated disk escrow while present, returned on close/quit/kick/plugin disable, and kept for staff review if automatic recovery would risk a duplicate. Malformed records are quarantined rather than deleted.
 - The plugin does not require a player to have Discord; players can opt out of invite reminders.

@@ -21,6 +21,8 @@ gradle clean refreshBuildDocs build
 
 `refreshBuildDocs` updates documented jar names and build metadata examples after `buildNumber` changes. `build` also runs `verifyBuildMetadata`, which fails if docs or generated debug metadata are stale.
 
+Stop the Paper 26.2 test server before running `syncBuiltJarsToProjectServer`. The task checks the configured world's `session.lock` and refuses to replace loaded plugin jars while Paper is running; overwriting a live jar can leave Paper's lazy plugin classloader unable to load classes that were not used before the replacement.
+
 To check whether the public Starlight docs mirror is current, run:
 
 ```bash
@@ -32,11 +34,11 @@ This is a read-only drift check against the public `1MB-Plugins-Docs` checkout. 
 Expected jar naming:
 
 ```text
-1MB-CMIAPI-LIB-v1.0.0-531-j25-26.2.jar
-1MB-CMIAPI-AntiFire-v1.0.0-531-j25-26.2.jar
-1MB-CMIAPI-AFKShrine-v1.0.0-531-j25-26.2.jar
-1MB-CMIAPI-StaffCenter-v1.0.0-531-j25-26.2.jar
-1MB-CMIAPI-Profile-v1.0.0-531-j25-26.2.jar
+1MB-CMIAPI-LIB-v1.0.0-536-j25-26.2.jar
+1MB-CMIAPI-AntiFire-v1.0.0-536-j25-26.2.jar
+1MB-CMIAPI-AFKShrine-v1.0.0-536-j25-26.2.jar
+1MB-CMIAPI-StaffCenter-v1.0.0-536-j25-26.2.jar
+1MB-CMIAPI-Profile-v1.0.0-536-j25-26.2.jar
 ```
 
 After a successful feature or library build, copy the output jar into:

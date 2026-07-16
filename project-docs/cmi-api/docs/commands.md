@@ -390,6 +390,12 @@ AFKShrine:
 /afkshrine tools list
 /afkshrine tools claim netherite_spear
 /afkshrine tools claim netherite_spear confirm
+/afkshrine books
+/afkshrine books list
+/afkshrine books claim books_starter
+/afkshrine books claim books_starter confirm
+/afkshrine debug grant <player> claimed-points <amount>
+/afkshrine debug grant <online-player> token-items <amount>
 /afkshrine milestones
 /afkshrine milestones time
 /afkshrine milestones quests
@@ -885,23 +891,35 @@ DiscordChat:
 /discordchat help
 /discordchat status
 /discordchat top points
+/discordchat pulse
 /discordchat rewards
 /discordchat tools
 /discordchat milestones
 /discordchat history
 /discordchat link
 /discordchat optout
+/discordchat celebrations
 /discordchat prefix discord
 /discordchat suffix chatty
+/discordchat admin check
 /discordchat admin inspect mrfloris
 /discordchat admin export mrfloris
 /discordchat admin community 30
+/discordchat admin archive 180 preview
+/discordchat admin archive 180 confirm
 /discordchat admin collectible mrfloris 8
 /discordchat admin event status
 /discordchat admin event start 2h 2 community-night
 /discordchat admin event stop
+/discordchat admin award mrfloris helpful answered-redstone-question
+/discordchat admin award mrfloris xp 50 community-help
+/discordchat admin award mrfloris points 25 event-helper
 /discordchat admin grantpoints mrfloris 100 event-prize
 /discordchat admin takepoints mrfloris 50 correction
+/discordchat admin transaction status mrfloris
+/discordchat admin transaction retry mrfloris
+/discordchat admin transaction retry mrfloris confirm
+/discordchat admin transaction refund mrfloris confirm
 /discordchat admin reset mrfloris confirm
 /discordchat admin smoke
 /discordchat reload
@@ -1055,7 +1073,7 @@ Collect:
 
 `/collect` opens the seasonal event GUI. Players submit configured weekly items through a safe inventory scan rather than by dragging items into a GUI. Only untouched vanilla item stacks count; renamed, lored, damaged, enchanted, custom-model, PDC, or otherwise modified items are ignored. Players can review personal stats, personal bests, community goal progress, scavenger hunt state, top-3 highlighted leaderboard heads, Hall of Fame archives, streaks, claim participation/milestone/top-10 rewards, occasionally discover capped virtual Lucky Finds during valid submissions, and use `/collect exchange` to trade duplicate Collect reward items for configured event score. Admin debug commands can force the event open, test a week, test an event day, test a date, switch the active event, inspect player data, reset one player's event state, force/clear a daily scavenger hunt, run passive feed checks, and export a Discord-friendly markdown report for an event. Leaderboards use event score, which can include configured catch-up, rest, streak, lucky-find, scavenger, community, and duplicate reward exchange bonuses, while reports also keep raw vanilla item totals. Reward, submission, scavenger, and Discord feed command hooks are console-dispatched only after strict allowed-prefix checks.
 
-CoconutHunt:
+Themed Hunts (`CoconutHunt` jar):
 
 ```text
 /coconut
@@ -1068,10 +1086,12 @@ CoconutHunt:
 /coconut rewards
 /coconut points
 /coconut shop
-/coconut claim <reward-id|all>
+/coconut claim <reward-id|all> [event-id]
+/coconut history [event-id]
 /coconut admin reload
 /coconut admin status
 /coconut admin debug <true|false>
+/coconut admin expected <count|production>
 /coconut admin day <1-7|off>
 /coconut admin date <yyyy-mm-dd|off>
 /coconut admin event <validate|snapshot|start|end>
@@ -1085,12 +1105,55 @@ CoconutHunt:
 /coconut admin coconut validate
 /coconut admin coconut waves auto [days] [seed]
 /coconut admin inspect <player>
-/coconut admin reset <player> <event-id> <--dry-run|--confirm>
+/coconut admin reset player <player> [event-id] <--dry-run|--confirm>
+/coconut admin reset event <--dry-run|--confirm>
 /coconut admin report [event-id]
 /coconut admin shop regrant <online-player> <offer-id>
+/ghosthunt
+/ghosthunt info
+/ghosthunt help
+/ghosthunt progress
+/ghosthunt milestones
+/ghosthunt streak
+/ghosthunt community
+/ghosthunt rewards
+/ghosthunt points
+/ghosthunt shop
+/ghosthunt claim <reward-id|all> [event-id]
+/ghosthunt history [event-id]
+/ghosthunt effects <full|reduced|off>
+/ghosthunt admin reload
+/ghosthunt admin status
+/ghosthunt admin debug <true|false>
+/ghosthunt admin expected <count|production>
+/ghosthunt admin day <1-7|off>
+/ghosthunt admin date <yyyy-mm-dd|off>
+/ghosthunt admin event <validate|snapshot|start|end>
+/ghosthunt admin event force-mutation --confirm
+/ghosthunt admin event snapshot --force-confirm
+/ghosthunt admin ghost give [amount] [unlock-day]
+/ghosthunt admin ghost register [unlock-day]
+/ghosthunt admin ghost inspect
+/ghosthunt admin ghost <enable|disable|remove>
+/ghosthunt admin ghost list [page]
+/ghosthunt admin ghost validate
+/ghosthunt admin ghost waves auto [days] [seed]
+/ghosthunt admin inspect <player>
+/ghosthunt admin reset player <player> [event-id] <--dry-run|--confirm>
+/ghosthunt admin reset event <--dry-run|--confirm>
+/ghosthunt admin report [event-id]
+/ghosthunt admin shop regrant <online-player> <offer-id>
+/hunt admin event list
+/hunt admin event status <event-id>
+/hunt admin event activate <event-id> --dry-run
+/hunt admin event activate <event-id> <--confirm|--force-confirm>
 ```
 
-`/coconut` opens the six-row seven-day event overview from any permitted information world. Players can review cumulative wave progress, personal collection milestones, their exact participation calendar, community goals, Coconut Point earnings/spending, all claimable rewards, the perfect-completion checklist, and configured MobHat offers. Claims and purchases work only in configured reward worlds and between event start and the claim deadline. Staff setup commands give stacked PDC setup heads, register looked-at heads, inspect or change registry entries, validate the exact expected total, and deterministically assign only unassigned coconuts across waves. `/coconut admin event validate` additionally preflights worlds, milestone/reward alignment, allowlists, placeholders, every configured command list, and registry integrity before start/snapshot actions. Debug date/day controls use a separate `debug_<event>` profile and keep reward commands suppressed by default. Once created, the immutable snapshot blocks setup edits through the claim deadline; emergency replacement requires the one-minute force-mutation confirmation, clean validation, and a second explicit snapshot confirmation. Player reset has mandatory dry-run/confirm forms, and a recorded shop purchase can be regranted without charging points.
+`/coconut` and `/ghosthunt` open themed six-row event overviews from permitted information worlds. Each annual edition has an isolated registry, snapshot, progress, points, community state, claims, purchases, receipts, reports, and debug namespace. Players can review cumulative waves, collection milestones, participation calendars, community goals, currency history, configured offers, and exact current or historical rewards. `/ghosthunt effects full|reduced|off` controls only private Ghost visuals, sounds, titles, and Darkness; participation and reward eligibility remain unchanged. Historical views and claims stay bound to the requested edition's snapshot, claim deadline, reward worlds, and claim records.
+
+The themed setup commands give PDC setup heads, register looked-at heads, inspect or change only matching event/theme entries, validate the exact expected total, and deterministically assign unassigned collectibles across waves. Event validation preflights worlds, regions, visuals, milestones/rewards, allowlists, command templates, and registry integrity. Debug uses separate `debug_<event>` data, defaults to an immediately active day 1 and a 15-item target, and suppresses live reward commands by default. Once created, the immutable snapshot blocks setup edits through the claim deadline; emergency replacement requires the configurable short force-mutation window, clean validation, and a second explicit snapshot confirmation. Player and debug-event resets require dry-run or confirm; event-wide reset preserves setup/configuration and cannot target production. Recorded shop delivery can be regranted without charging again.
+
+Use `/hunt admin event status <event-id>` and `activate ... --dry-run` before production selection. Confirmation creates or verifies the target immutable snapshot, preserves the previous event, and writes an activation audit. It does not rewrite dates, merge or delete progress, invalidate old claims, or silently end the prior event. Switching away from an event currently inside its live dates is refused unless staff use the additional `--force-confirm` form.
 
 Forage:
 
@@ -1182,6 +1245,7 @@ AutoSell:
 /autosell admin export
 /autosell admin heatmap
 /autosell admin heatmap export
+/autosell admin heatmap export -players
 /autosell admin tuning start
 /autosell admin tuning status
 /autosell admin tuning report

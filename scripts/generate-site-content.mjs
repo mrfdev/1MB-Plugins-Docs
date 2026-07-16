@@ -387,9 +387,9 @@ const FEATURE_BULLET_OVERRIDES = {
   ],
   discordchat: [
     'DiscordChat EXP for meaningful linked-account activity in the DiscordSRV server-chat bridge.',
-    'Daily participation streaks and milestones that convert stored EXP into spendable points.',
+    'Automatic floor conversion of complete EXP units into spendable points, with streak milestones adding separate bonus points.',
     'A GUI with personal status, tracked activity, community pulse, milestones, history, and public top lists.',
-    'Preview-first point reward trades and safe point-funded item tools.',
+    'Two-step point reward confirmations, per-reward cooldowns, and safe point-funded item tools.',
     'Temporary community XP bonus windows that can also appear in /rate.',
     'Unlockable chat prefix and suffix presets.',
     'Personal controls for Discord reminders and public milestone celebrations.',
