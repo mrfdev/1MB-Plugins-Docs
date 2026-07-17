@@ -71,8 +71,8 @@ These are standalone plugins built specifically for 1MoreBlock outside the share
     </tr>
     <tr>
       <td><a href="./shopchest/">ShopChest</a></td>
-      <td>Create persistent player chest shops with holograms and Vault economy trading.</td>
-      <td><code>/shop</code></td>
+      <td>Create persistent container shops with holograms and Vault economy trading.</td>
+      <td><code>/shops</code></td>
     </tr>
     <tr>
       <td><a href="./xmas-tree/">XMas Tree</a></td>
