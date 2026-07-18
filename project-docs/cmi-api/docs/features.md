@@ -57,7 +57,7 @@ These are the first feature candidates now using the shared library scaffold:
 | Server Management | CMIConfig | Owner GUI for selected CMI/CMILib config toggles | [CMIConfig](plugins/cmiconfig.md) |
 | Server Management | ConsoleNoiseRouter | CMI console message classifier and cache dump helper | [ConsoleNoiseRouter](plugins/consolenoiserouter.md) |
 | Server Management | EconomyGuardian | Read-only CMI economy balance anomaly watcher | [EconomyGuardian](plugins/economyguardian.md) |
-| Server Management | StartupDoctor | Startup/runtime diagnostics | [StartupDoctor](plugins/startupdoctor.md) |
+| Server Management | StartupDoctor | Startup/runtime diagnostics and read-only Paper safety checks | [StartupDoctor](plugins/startupdoctor.md) |
 | Server Management | UpdateSmoke | Post-update smoke checks for runtime compatibility, hooks, command registration and dispatch, placeholders, feature metadata, and key CMI/CMILib APIs | [UpdateSmoke](plugins/updatesmoke.md) |
 | Server Management | PluginVersions | Plugin version inventory, tested Java/Paper/dependency gate, URL curation, and Markdown/Discord export reports migrated from the standalone PluginVersions project | [PluginVersions](plugins/pluginversions.md) |
 | Server Management | PlaceholderHealth | Read-only PlaceholderAPI health monitor for configured CMI and 1MB placeholders with ok/warn/error checks and Markdown exports | [PlaceholderHealth](plugins/placeholderhealth.md) |

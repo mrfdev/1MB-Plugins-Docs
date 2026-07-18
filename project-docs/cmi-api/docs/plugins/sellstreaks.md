@@ -163,7 +163,9 @@ sellstreaks:
 
 ## Safety
 
-SellStreaks only rewards after real CMI sell events. It does not fake sell events, edit CMI worth values, remove items, execute arbitrary commands, or change CMI sell behavior. Admin material input is strictly normalized through CMILib material parsing. Economy rewards can be disabled with `rewards.enabled` or `rewards.use-vault-economy`. Use `tracking.ignored-materials` for materials that should not count toward streaks, goals, top lists, or rewards. Use `rewards.daily-player-cap` to limit daily SellStreak payouts per player.
+SellStreaks only rewards after real CMI sell events. It does not fake sell events, edit CMI worth values, remove items, execute arbitrary commands, or change CMI sell behavior. Every payout uses a durable idempotency receipt tied to its claim id. Reward-cap/profile state is saved before the Vault deposit; a rejected deposit rolls the claim back, while an uncertain boundary stays visible through `/sellstreak debug transactions`.
+
+Admin material input is strictly normalized through CMILib material parsing. Economy rewards can be disabled with `rewards.enabled` or `rewards.use-vault-economy`. Use `tracking.ignored-materials` for materials that should not count toward streaks, goals, top lists, or rewards. Use `rewards.daily-player-cap` to limit daily SellStreak payouts per player.
 
 ## Future Social Rewards
 

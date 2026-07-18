@@ -252,7 +252,8 @@ CMILib and CMI are required through the shared 1MB-CMIAPI plugin stack.
 - reward command templates are controlled by config, not by player input.
 - player names and UUIDs are inserted only into configured command templates.
 - commands longer than 220 characters are skipped.
-- duplicate claims are checked through shared playerdata and, for online players, the configured permission markers.
+- duplicate claims are checked through shared playerdata, the durable referral idempotency receipt, and, for online players, the configured permission markers.
+- Both players' referral state is saved before either reward command list runs. A partial or interrupted delivery remains visible through `/refer debug transactions` instead of reopening the claim.
 - admin reset only removes the `refer` section from shared playerdata; it does not automatically revoke LuckPerms permissions.
 
 ## Testing

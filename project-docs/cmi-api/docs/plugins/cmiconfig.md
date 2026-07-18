@@ -76,7 +76,7 @@ CMILib:
 Paper:
 
 - Paper/Bukkit inventory, command, event, plugin metadata, and YAML APIs are used.
-- GUI actions are permission-gated and run on the main server thread.
+- GUI actions are permission-gated, deferred out of `InventoryClickEvent`, revalidated, and run on the main server thread.
 - GUI click handling cancels all clicks while a CMIConfig inventory is open, including clicks in the player inventory area.
 - GUI drag handling cancels inventory drags while a CMIConfig inventory is open.
 
@@ -113,9 +113,9 @@ Then it updates only the targeted boolean line.
 
 This plugin is intentionally an owner/admin tool. It does not expose broad YAML editing, arbitrary paths, or free-form command execution. It only lists boolean paths that are present in the parsed YAML and can also be mapped back to a safe inline boolean line in the original file.
 
-The GUI treats every open CMIConfig inventory as read-only except for its registered buttons. Shift-clicks, number-key swaps, offhand swaps, player-inventory clicks, and drag attempts are cancelled so items cannot be moved into or out of the virtual menu.
+The GUI treats every open CMIConfig inventory as read-only except for its registered plain left-click buttons. Shift-clicks, right-clicks, number-key swaps, offhand swaps, player-inventory clicks, and drag attempts are cancelled so items cannot be moved into or out of the virtual menu.
 
-Close-style actions use a short delayed close instead of closing the inventory from inside the click event.
+Every page is bound to the opening player's UUID, a random session nonce, and the exact server-side inventory instance. Stale or foreign pages cannot navigate or confirm a toggle. Accepted actions execute on the following tick and revalidate the current session and permission first. The final confirmation rechecks `onembcmi.cmiconfig.toggle`, and toggle-and-reload also rechecks `onembcmi.cmiconfig.reload`. If the underlying boolean changed after the confirmation page opened, the write fails closed and asks the owner to refresh instead of overwriting newer state. Sessions are invalidated on close, quit, kick, world change, reload, and plugin shutdown. Close-style actions use a short session-bound delayed close.
 
 Use extra care with `modules.yml` and larger CMI systems. The GUI can flip the value, create the backup, and run `cmi reload`, but CMI may still need a full stop/start before some settings truly apply.
 

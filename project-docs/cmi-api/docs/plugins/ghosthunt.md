@@ -354,7 +354,7 @@ cmi kit ghosthunt_reward_box_2026 {player} -s
 
 That kit is a manual launch dependency. Create and review it, or replace the command before activation. The sample Bat and Phantom shop entries are disabled by default because no production cosmetic integration is assumed.
 
-Claims and purchases retain CoconutHunt's durable claim-before-command rule. Every configured command is validated against `command-security.allowed-prefixes` before the claim/purchase record and point change are saved. Commands run only afterward. A dispatch failure cannot duplicate the claim or charge on retry; it is logged for staff review. Debug reward commands remain suppressed unless explicitly enabled.
+Claims, purchases, and staff regrants use the shared hunt engine's durable idempotent receipts. Every configured command is validated against `command-security.allowed-prefixes` before the claim/purchase record and point change are saved. Commands run only afterward and each delivery boundary is checkpointed. A dispatch failure cannot reopen the claim or charge; staff can inspect it through `/ghosthunt debug transactions`. Debug reward commands remain suppressed unless explicitly enabled.
 
 ## Performance And Cleanup
 

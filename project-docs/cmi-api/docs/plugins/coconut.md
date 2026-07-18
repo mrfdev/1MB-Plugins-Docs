@@ -219,6 +219,8 @@ Replacement is refused unless validation is clean. The force window must still b
 
 Collection and streak rewards are earned separately and remain claimable from event start through the claim deadline. Shop purchases use the same active/claim-window boundary. Community rewards require both the configured global threshold and the configured minimum personal contribution.
 
+Claims, shop purchases, and staff regrants use durable idempotent receipts. Claim/purchase markers and Coconut Point changes are saved before command delivery, and each command boundary is checkpointed. Interrupted or ambiguous delivery remains visible through `/coconut debug transactions` instead of reopening the claim or charging again.
+
 The perfect 2026 reward requires all of the following:
 
 - every coconut id in the immutable snapshot was found
@@ -242,7 +244,7 @@ The default point sources are first finds, collection claims, streak claims, qua
 
 The default shop examples are Rabbit, Armadillo, Frog, and Turtle MobHat permissions. Every offer has a stable id, icon, lore, minimum lifetime finds, point price, one-time/repeatable rule, MobHat type, and a list of commands. Found count is only an eligibility gate. Purchases deduct Coconut Points, never found progress.
 
-Before purchase, CoconutHunt rechecks the player's balance, found count, prior purchase id, existing permission, MobHat/LuckPerms availability, and the complete command allowlist. The purchase id and point charge are saved before commands run. If command dispatch then fails, the purchase remains recorded to prevent duplication; staff can correct delivery without charging again:
+Before purchase, CoconutHunt rechecks the player's balance, found count, prior purchase id, existing permission, MobHat/LuckPerms availability, and the complete command allowlist. The purchase id and point charge are saved before commands run. If command dispatch then fails, the purchase remains recorded to prevent duplication; staff can inspect the durable receipt and correct delivery without charging again:
 
 ```text
 /coconut admin shop regrant <online-player> <offer-id>

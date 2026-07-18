@@ -419,6 +419,7 @@ These are enough for holograms and ajLeaderboards around the Forage camp/NPC are
 - No RCON support is used or expected.
 - Player text input is not accepted in v1, so command injection risk is limited to admin-controlled config command hooks.
 - The CMI ctext guide command only allows the safe `cmi ctext` prefix.
+- Treasure delivery, quest claims, tool purchases, branch selection, tool improvements, Repair & Merge, compost turn-ins, and Forage Dust purchases use durable idempotent receipts. Exact changed items and inventory slots remain in payload escrow until money/points/profile state and delivery are finalized; unresolved operations are listed by `/forage debug transactions`.
 - Tool upgrades and improvements do not open an escrow inventory. They re-read the held main-hand Forage tool at confirmation time, withdraw configured costs, mutate only the trusted PDC-marked item, and refund costs if the item changed.
 - Branch selection uses only configured ids, revalidates level/cooldown/point costs after GUI confirmation, and stores only sanitized branch ids.
 - Repair & Merge does not open an escrow inventory. It reads the main hand, offhand, and inventory treasure marker at confirmation time, then re-validates before changing items.

@@ -645,6 +645,7 @@ Paper:
 - Type ids are normalized to strict lowercase `a-z`, `0-9`, `_`, and `-`.
 - Player commands never accept arbitrary console command text.
 - Configured reward commands are trusted admin-authored config and are stripped of a leading `/`.
+- One gathering completion creates one durable idempotency receipt containing the exact participant set and random winner. Every participant cooldown/profile is saved before any success reward command runs; a partial save is rolled back as a group, and interrupted delivery remains visible through `/gathering debug transactions`.
 - Player opt-out and cooldown data is stored under the `socialgatherings` shared playerdata section.
 - Reward design should stay light: snacks, cosmetics, tiny blocks, sounds, particles, and optional story kits.
 - Use type cooldowns, player cooldowns, and `anti-grind.max-same-type-streak` to prevent repeat farming.

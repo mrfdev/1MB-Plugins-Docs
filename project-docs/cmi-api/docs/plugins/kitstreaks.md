@@ -302,6 +302,7 @@ Shared Library:
 - Kit, track, and reward ids are normalized to lowercase letters, numbers, `_`, and `-`.
 - Player-facing commands never execute arbitrary typed command text.
 - Reward commands are trusted admin config only and have length limits.
+- Manual and automatic milestone rewards share one durable idempotency receipt per player/reward id. Claim state is saved before commands run, and interrupted delivery remains visible through `/kitstreak debug transactions`.
 - Admin reset can remove all KitStreaks playerdata or just one track/kit section.
 - The plugin stores only its own `kitstreaks` section in shared playerdata.
 - CMI remains the source of truth for whether a kit can actually be claimed.

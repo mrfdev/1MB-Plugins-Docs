@@ -142,6 +142,10 @@ rewards:
       - infinitycake
 ```
 
+## Transaction Safety
+
+Reward claims, one-time reward mail, finite wish-lantern charges, and the optional collectible-use command path open durable idempotent receipts before changing profile state, held items, or running commands. Claim item lists and finite lantern items are preserved in exact payload escrow until delivery completes. A restart or failed command leaves an inspectable receipt instead of silently reissuing the reward; staff can review it with `/birthday debug transactions`.
+
 ## Testing
 
 Recommended test flow:

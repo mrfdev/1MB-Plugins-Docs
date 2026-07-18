@@ -489,7 +489,9 @@ The file is written to `plugins/1MB-CMIAPI/Collect/reports/` as a `.md` file so 
 
 Collect does not use RCON and does not accept raw player input for commands. Reward and submission commands are console-dispatched only after placeholder replacement and a strict allowed-prefix check. Commands containing newlines, semicolons, pipes, or chained operators are blocked.
 
-The GUI is managed by the shared hardened GUI service, which cancels unsafe clicks and drags, uses safe holders, and debounces repeated actions. Submissions remove matching untouched vanilla materials directly from normal inventory storage after the click, so players cannot duplicate items by placing them into a custom inventory. Custom or modified items are never removed or counted.
+The GUI is managed by the shared hardened GUI service, which cancels unsafe clicks and drags, uses safe holders, and debounces repeated actions. Submissions, reward claims, and duplicate-reward exchanges use durable idempotent receipts. A submission snapshots exact before/after storage slots and event stats before applying either; reward items and consumed duplicates use exact payload escrow until profile state and delivery are finalized. Uncertain operations remain visible through `/collect debug transactions`.
+
+Submissions remove matching untouched vanilla materials directly from normal inventory storage after the click, so players cannot duplicate items by placing them into a custom inventory. Custom or modified items are never removed or counted.
 
 Trash to Treasure never accepts arbitrary items. It checks the Collect reward PDC marker, active event id, reward claim id, and owner UUID when `trash-to-treasure.require-owner` is true. It rescans the inventory during the confirmation click and refuses to remove anything unless another copy with the same claim id still remains.
 

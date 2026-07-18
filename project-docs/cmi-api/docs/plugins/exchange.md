@@ -334,6 +334,8 @@ Player data records usage counts by trade id. This is what enforces `max-trades`
 
 Audit logs record admin changes and trade attempts with useful context such as trade id, player, status, costs, and missing requirements.
 
+Every completed trade also has a durable idempotent receipt under `transactions/`. Before any mutation, Exchange stores exact before/after storage inventory, money/EXP state, usage count, and configured costs in payload escrow. It revalidates those exact values at apply time, checkpoints every reward command, and clears escrow only after delivery. Automatic compensation restores the exact cost state when safe; ambiguity remains visible through `/exchange debug transactions`.
+
 ## CMI, CMILib, And CMI-API Usage
 
 Exchange depends on CMI, CMILib, and `1MB-CMIAPI-Lib`. It uses the shared 1MB-CMIAPI feature registry, MiniMessage output, config comments, debug metadata, runtime paths, and PlaceholderAPI registration path.
@@ -344,14 +346,15 @@ CMI is used mainly through configured command hooks, so server owners can keep u
 
 Exchange uses Paper/Bukkit command APIs, custom inventory holders, inventory click and drag events, scheduler tasks, item serialization, player inventory APIs, YAML configuration, plugin metadata, and PlaceholderAPI hooks when available.
 
-GUI inventories use a custom `InventoryHolder`, cancel top-inventory clicks and drags, reject non-button click types, track active GUI sessions by player UUID, and delay close-button actions by a few ticks for Paper custom-inventory safety.
+GUI inventories use a custom `InventoryHolder` bound to the opening player's UUID, random session nonce, session id, and exact inventory instance. They cancel every click and drag while the managed menu is open, accept only registered plain left-click buttons, reject stale or foreign sessions, and defer accepted actions to the next tick for Paper custom-inventory safety. Quit, kick, world change, page replacement, and shutdown invalidate the session; delayed closes and refreshes remain bound to the originating session.
 
 ## Security Notes
 
 - `/exchange` is player-facing and only opens configured GUI menus.
 - All admin mutation commands require `onembcmi.exchange.admin`.
-- GUI clicks are cancelled and only the plugin's own top inventory is handled.
-- The confirm button has a per-player click cooldown and an in-flight processing guard.
+- GUI clicks are cancelled and only the opening player, current nonce/session id, and exact plugin-owned top inventory can activate a button.
+- Every accepted menu action has a one-at-a-time session guard. The confirm button also has a per-player click cooldown and a dedicated in-flight trade guard.
+- Trade execution uses a request token plus durable idempotency receipt, exact cost escrow, and authoritative revalidation immediately before applying inventory, money, EXP, and usage changes.
 - Dynamic command alias input is sanitized before command dispatch.
 - Inline admin values reject line breaks and NUL characters.
 - Trade ids are restricted to lowercase letters, numbers, underscores, and hyphens.

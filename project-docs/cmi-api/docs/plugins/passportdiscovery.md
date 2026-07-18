@@ -509,6 +509,7 @@ Paper API usage includes player movement, world change, block break/place, item 
 - Player input is limited to known subcommands, online player names, strict type ids, and sanitized entry ids.
 - Admin reset requires explicit admin/reset permission.
 - `/passport admin dump` writes to the feature cache folder only.
-- The plugin does not execute console commands, move money, teleport players, or modify CMI data.
+- Generated stamp-box trades use a durable idempotency receipt. Credit and one-time claim state are saved before the allowlisted kit-permission command runs; failures remain inspectable through `/passport debug transactions`.
+- Outside those configured stamp-box reward commands, the plugin does not move money, teleport players, or modify CMI data.
 
 [Plugin index](README.md)

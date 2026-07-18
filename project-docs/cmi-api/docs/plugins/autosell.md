@@ -38,6 +38,7 @@ When chat notifications are selected, the batched sale message is hoverable and 
 
 AutoSell is built around anti-dupe and anti-farm guards:
 
+- Every item sale opens a durable idempotent receipt before inventory mutation, escrows the exact removed slot stacks, checkpoints the Vault payout, and restores the items if the payout is rejected. Milestone and quest rewards persist their one-time/profile state before command delivery. Broker-point cap purchases use the same player transaction lock, persist the point debit and cap together, reject duplicate lifetime purchases, and restore the previous points and cap if persistence or receipt checkpointing fails. Uncertain sale, reward, or purchase boundaries remain visible through `/autosell debug transactions`.
 - off by default per player
 - background selling requires both `onembcmi.autosell.use` and `onembcmi.autosell.toggle` when a batch is scheduled and again before inventory mutation
 - losing either runtime permission turns the saved player profile off, including when the player rejoins with previously enabled AutoSell
@@ -64,6 +65,16 @@ AutoSell is built around anti-dupe and anti-farm guards:
 - passive tuning sessions collect observations and suggestions only; they never edit config values automatically
 
 This plugin should not be used as a hopper, farm, or AFK seller. It is meant for players who move around and manually mine, dig, chop, or gather while keeping their inventory tidy.
+
+### 1MB Reward Protection
+
+AutoSell participates in the shared 1MB reward-delivery safety service. This closes the gap where a player leaves AutoSell on, claims a kit or other reward made from ordinary vanilla blocks, and has those new items sold during a later inventory scan.
+
+- A manual 1MB reward claim, trade, shop purchase, or consumable reward is blocked while that player's AutoSell is active. The check happens before points, tokens, captured items, claim markers, or consumable charges are changed. The player receives a clickable **Turn off AutoSell** action that runs `/autosell toggle`, then they can retry the original claim.
+- An automatic 1MB reward turns AutoSell off first, cancels any pending delayed sale, and saves the off state before reward commands run. If the off state cannot be saved, delivery fails closed. The player is told that AutoSell was turned off and can enable it again after checking the reward.
+- Reward retry and staff recovery routes use the same automatic preparation while the player is online.
+
+This contract covers integrated reward paths in the 1MB-CMIAPI feature plugins. AutoSell cannot identify the origin of an ordinary item after an unrelated plugin, crate, direct CMI kit command, or manual staff action puts it into an inventory. Players and staff should still turn AutoSell off before claiming or giving vanilla-item rewards from systems outside the 1MB reward safety service.
 
 ## Commands
 
@@ -204,6 +215,8 @@ If the GUI says `Broker level: 0` but `Broker points: 2`, that is valid. It usua
 Broker progress counts legitimate AutoSell item volume. Players increase broker level by keeping AutoSell enabled and selling eligible pure vanilla items from normal inventory storage slots. By default, every 10,000 sold items adds one broker level, grants broker points, and can add a small temporary daily bonus capped by `broker.max-multiplier-bonus`. Broker points can also come from quests and milestones, so a player can have broker points while still being broker level 0.
 
 Players can spend broker points in `/autosell caps` to unlock higher daily AutoSell caps for their account. The active cap is the highest value from the player's permission/group cap, an active weekly unlock, and any lifetime unlock. Weekly unlocks last 7 days by default and are cheaper for players who only need a temporary market push. Lifetime unlocks cost more, stay in AutoSell player data, and keep working even if the player's group changes. The old automatic broker-point cap behavior is available only when `caps.legacy-automatic-point-unlocks` is enabled.
+
+Each cap purchase is journaled before broker points change. Weekly purchases use the originating GUI request as their idempotency boundary, while a lifetime option has one permanent player-and-option key. Rapid duplicate clicks therefore cannot charge twice for the same request or lifetime unlock. If AutoSell cannot save the changed point balance and cap, it restores both and reports that nothing was spent; ambiguous failures stay locked for staff inspection through `/autosell debug transactions`.
 
 Default weekly cap unlocks are:
 

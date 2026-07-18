@@ -17,7 +17,7 @@ These are the AFKShrine features players should be able to learn about from the 
 - Dynamic bossbar progress: while the player is AFK, the bossbar can rotate through session duration, minimum-session progress, estimated session cap, pending tokens, daily cap, streak, seasonal quest progress, and community milestone progress.
 - Tokens, claim, and rewards: qualifying AFK sessions create pending AFKShrine tokens. Players use `/afkshrine claim` to move pending tokens into their spendable balance, then `/afkshrine rewards` and `/afkshrine trade` to review and claim configured rewards.
 - Milestones and quests: players can discover time, biome, safety, risk, adventure, weather, seasonal, dimension, collection, and streak goals through `/afkshrine milestones`, `/afkshrine quests`, `/afkshrine album`, and `/afkshrine resets`.
-- Presets and personalization: players can list and choose unlocked particle presets with `/afkshrine presets` and `/afkshrine preset`, with hover details explaining each preset without exposing permission nodes.
+- Presets and personalization: players can list and choose unlocked particle presets with `/afkshrine presets` and `/afkshrine preset`, including a true multi-color Rainbow dust ring, with hover details explaining each preset without exposing permission nodes.
 - Bed rest: sleeping in a bed can optionally count as a tiny AFKShrine-adjacent activity with low pending-token rewards and same-area cooldown protection.
 - Community milestones: server-wide claimed-token totals can unlock temporary celebration windows or visual shrine themes when configured.
 - Tools and upgrades: when enabled, `/afkshrine tools` can let players spend captured AFKShrine special items on staff-configured upgrades. `/afkshrine books` independently exposes only lore-book exchanges through `onembcmi.afkshrine.books`, so staff can release the books while spear, shield, and other tools stay locked.
@@ -175,6 +175,8 @@ While a player is actively AFK, the bossbar can rotate through progress views in
 
 `/afkshrine gui` and `/afkshrine menu` open the player-facing AFKShrine hub. It uses the shared 1MB light-blue frame style, a player head in the bottom-left stats slot, pagination in the middle of the bottom row, a `Back to /menu` button beside the close button, and a barrier close button in the bottom-right. The first page is an index with deeper pages for player stats, claiming pending tokens, reward trades, permitted tools and upgrades, lore-book exchanges, milestone/album progress, streaks, seasonal quests, community milestones, presets with GUI preview cooldown, leaderboards, bed rest info, and chat command help. Players with only `onembcmi.afkshrine.books` see the lore-book button and its five book kits but do not see the tools, spear, or shield buttons. GUI lore uses the same soft pastel tooltip style as other 1MB menus, with readable `key: value` lines and highlighted click actions. Captured item template previews are staff-only and require `onembcmi.afkshrine.admin` or `onembcmi.afkshrine.admin.capture`.
 
+Each AFKShrine GUI page is bound to the opening player's UUID, a random session nonce, and the exact server-side inventory instance. Only registered plain left-click actions are accepted. Actions execute on the next server tick and revalidate the current session and permission before navigation, claiming, previews, or chat transitions. Stale pages and delayed callbacks are rejected, and sessions are cleared on close, quit, kick, world change, reload, and plugin shutdown.
+
 `/afkshrine rewards [page]` shows a player-first trade overview. At the top it separates `Claimed tokens available to trade with` from `Pending tokens earned`, then each configured reward is marked `AVAILABLE`, `NEED <amount>`, `CLAIMED`, `DISABLED`, or `PREVIEW` from console. Each entry shows cost, one-time or repeatable claim type, already-claimed state when relevant, configured command count, missing tokens, and a safe clickable `/afkshrine trade <reward>` preview command when the player can afford it.
 
 `/afkshrine stats` is player-first. For players it opens personal page 1, showing `Pending tokens earned`, `Claimed tokens available to trade with`, lifetime tokens, current/last AFK session, daily cap left, streaks, milestones, quests, preset, and rested state. `/afkshrine stats personal` and `/afkshrine stats 1` show the same personal page. `/afkshrine stats server`, `/afkshrine stats global`, and `/afkshrine stats 2` show page 2 with server-wide runtime counters such as AFK enters/leaves/kicks, total observed AFK time, server pending/claimed/traded token totals, quest totals, and cache size. Console defaults to the server page.
@@ -234,6 +236,7 @@ onembcmi.afkshrine.style.lantern
 onembcmi.afkshrine.style.cherry
 onembcmi.afkshrine.style.storm
 onembcmi.afkshrine.style.echo
+onembcmi.afkshrine.style.rainbow
 onembcmi.afkshrine.style.*
 onembcmi.afkshrine.preview
 onembcmi.afkshrine.admin
@@ -402,6 +405,7 @@ styles.usage-log.log-preview-start
 styles.<style>.display-name
 styles.<style>.permission
 styles.<style>.particle-color
+styles.<style>.particle-colors
 styles.<style>.bossbar-color
 styles.<style>.bossbar-title
 styles.<style>.preview-title
@@ -601,7 +605,7 @@ Players can learn the configured progression families with `/afkshrine milestone
 
 Players can inspect repeatable goals with `/afkshrine resets [category|daily|weekly|monthly|ready|used|complete|inactive] [page]` or the `Reset Summary` button in `/afkshrine gui` or `/afkshrine menu`. The summary uses the same rules as the award code and labels each entry as ready now, used this window, inactive right now, repeatable, or one-time complete. Daily, weekly, and monthly reset dates are shown in server time. Milestone and quest rewards are not claimed one-by-one; when a player completes a qualifying AFK session, the reward is added as pending AFKShrine tokens, and `/afkshrine claim` moves those pending tokens into the spendable trade balance.
 
-Default configured styles include 26 presets: `default`, `mint`, `twilight`, `ember`, `aurora`, `ocean`, `amethyst`, `blossom`, `frost`, `honey`, `void`, `prism`, `meadow`, `sunrise`, `coral`, `lagoon`, `lavender`, `copper`, `emerald`, `sapphire`, `pearl`, `dusk`, `lantern`, `cherry`, `storm`, and `echo`. The default style is usable by everyone; the other starter/rank/seasonal/rare styles are permission-gated so they can be staff-only, donor-only, rank-based, or unlocked later through another system.
+Default configured styles include 27 presets: `default`, `mint`, `twilight`, `ember`, `aurora`, `ocean`, `amethyst`, `blossom`, `frost`, `honey`, `void`, `prism`, `meadow`, `sunrise`, `coral`, `lagoon`, `lavender`, `copper`, `emerald`, `sapphire`, `pearl`, `dusk`, `lantern`, `cherry`, `storm`, `echo`, and `rainbow`. The default style is usable by everyone; the other starter/rank/seasonal/rare styles are permission-gated so they can be staff-only, donor-only, rank-based, or unlocked later through another system.
 
 World tracking is default-deny. Normal AFKShrine points only count in `tracking.allowed-worlds`, which defaults to `general`, `wild`, `nether`, `end`, `oneblock`, `skyblock`, `skygrid`, `acid`, and `cave`. `tracking.disabled-worlds` is a hard block and defaults to `spawn`, `builders`, and `legacy`.
 
@@ -791,13 +795,15 @@ Staff can review them in-game with:
 
 Community claim audit rows are included in staff exports from `logs/community.log`. Session rows also include repeat-zone and danger-score columns so staff can review candidate changes before switching either system to active mode. Sleep rows include bed-rest seconds, awarded tokens, blocker reason, bed location, and coarse cooldown zone.
 
-`/afkshrine admin check` is read-only and console-safe. It reports dependency state, debug mode, point caps, minimum session time, bed-rest reward caps/cooldown, dynamic bossbar mode/update settings, grace recovery settings, rested/no-repeat/danger-score modes, allowed/disabled/event world overlap, seasonal quest set counts, community milestone configuration, default preset access, non-default preset permissions, invalid preset colors, reward row shape, captured tool/action readiness, configured console command counts, and whether session/sleep/trade/tools audit logs are enabled.
+`/afkshrine admin check` is read-only and console-safe. It reports dependency state, debug mode, point caps, minimum session time, bed-rest reward caps/cooldown, dynamic bossbar mode/update settings, grace recovery settings, rested/no-repeat/danger-score modes, allowed/disabled/event world overlap, seasonal quest set counts, community milestone configuration, default preset access, non-default preset permissions, invalid preset colors or palettes, reward row shape, captured tool/action readiness, configured console command counts, and whether session/sleep/trade/tools audit logs are enabled.
 
 `/afkshrine admin report` writes a Markdown report into the AFKShrine cache folder. The report includes runtime counters, point/economy counters, active/preview/disabled counts, rested/no-repeat/danger/tool/sleep runtime counters, dynamic bossbar settings, seasonal/community state, the current config summary, readiness findings, repeated-zone audit rows, and recent session/sleep/trade/tools/community audit rows. It is meant for passive staff review after a live test window.
 
 `/afkshrine admin journal [latest|YYYY-MM] [markdown|discord]` writes monthly balancing/support journals into `plugins/1MB-CMIAPI/CMIAPILIB/cache/plugins/afkshrine/journals/`. The exporter reads existing audit logs on demand and does not change player balances, rewards, or config. `markdown` creates table-heavy GitHub-friendly review notes; `discord` creates a no-table bullet version for staff channels. Both formats include unique player counts, AFK and bed-rest token totals, no-token reasons, top token earners, AFK time leaders, worlds, biomes, repeat-zone states, danger-score factors, milestone/quest hits, reward trade usage, tool-action usage, recent support samples, and generated balancing notes. Each run writes a timestamped file plus a `*-latest.md` copy for the same period and format.
 
 Reward trades and optional hooks are still owner-configured console commands. The readiness check/report call this out for manual review, but they do not block or rewrite commands.
+
+AFK session settlement, bed-rest settlement, pending-token claims, reward trades, community claims, and tool/book exchanges use durable idempotent receipts. Exact captured item costs and before/after inventory slots are held in payload escrow until profile state and command delivery are finalized. A restart or uncertain command leaves an unresolved receipt instead of awarding or charging twice. Staff can inspect and reconcile these through `/afkshrine debug transactions` and `/afkshrine debug transaction <uuid>`.
 
 ## Data
 
@@ -920,6 +926,8 @@ Runtime dump files are written to the AFKShrine cache folder and include active,
 
 AFKShrine uses `1MB-CMIAPI-LIB` for feature registration, strict permission checks, config defaults, translation defaults, MiniMessage output styling, tab filtering, shared `PlayerDataStore` UUID load/save, plugin-scoped playerdata cleanup, and debug metadata.
 
+Its bespoke inventory menus follow the shared GUI security contract: every page is bound to the opening player's UUID, a random session nonce, and the exact server-side inventory instance. Only plain left-click actions registered by that page are accepted. Actions run on the following tick after the session and base permission are revalidated; reward, tool, claim, and preset actions also recheck their specific permission at action time. Close, quit, kick, world change, reload, and shutdown invalidate stale sessions.
+
 ## Particle Presets
 
 Players can list and select their AFKShrine particle preset with:
@@ -935,10 +943,30 @@ The older `/afkshrine styles` and `/afkshrine style <style>` forms still work, b
 Built-in presets are:
 
 ```text
-default, mint, twilight, ember, aurora, ocean, amethyst, blossom, frost, honey, void, prism, meadow, sunrise, coral, lagoon, lavender, copper, emerald, sapphire, pearl, dusk, lantern, cherry, storm, echo
+default, mint, twilight, ember, aurora, ocean, amethyst, blossom, frost, honey, void, prism, meadow, sunrise, coral, lagoon, lavender, copper, emerald, sapphire, pearl, dusk, lantern, cherry, storm, echo, rainbow
 ```
 
 Older configs that already have `styles.available` can still receive newly shipped built-in presets when `styles.auto-add-default-presets` is true. Staff can lock or unlock any preset by changing `styles.<preset>.permission` and the matching LuckPerms node.
+
+The built-in `rainbow` preset uses 14 ring points and seven configured colors, so each color appears twice around the player. Every update rotates both the ring and its color assignment. Access is controlled by `onembcmi.afkshrine.style.rainbow`, which defaults to false.
+
+`styles.<preset>.particle-color` remains the single-color value and fallback for every preset. An optional `styles.<preset>.particle-colors` list enables a true multi-color ring for any preset:
+
+```yaml
+styles:
+  rainbow:
+    particle-color: '#ff595e'
+    particle-colors:
+    - '#ff595e'
+    - '#ff924c'
+    - '#ffca3a'
+    - '#8ac926'
+    - '#52b8e8'
+    - '#4267ac'
+    - '#b36ae2'
+```
+
+Palettes are capped at 32 entries. Invalid entries are ignored at render time and reported by `/afkshrine admin check`; if no valid palette colors remain, AFKShrine safely falls back to `particle-color`. Presets without `particle-colors` render exactly as they did before. The implementation uses Paper's supported [`Particle.DustOptions`](https://docs.papermc.io/paper/dev/particles/#dust-particles) color and size data.
 
 Each preset has friendly display metadata:
 
@@ -947,7 +975,7 @@ styles.<preset>.tier
 styles.<preset>.unlock-label
 ```
 
-`/afkshrine presets` lists every preset as a hoverable row. `/afkshrine preset` shows the player's current preset first, then the same hoverable rows. The tooltip explains the tier, unlock hint, dust-ring particle color, radius, dust size, sparkle behavior, and bossbar color without exposing permission nodes. Rows the player can use are clickable and run `/afkshrine preset <preset>` to change their persistent preference; locked rows explain the unlock hint but do not run a command. This keeps the player output useful while leaving node details in `/afkshrine debug permissions` and `/1mbcmi debug plugin afkshrine permissions`.
+`/afkshrine presets` lists every preset as a hoverable row. `/afkshrine preset` shows the player's current preset first, then the same hoverable rows. The tooltip explains the tier, unlock hint, dust-ring particle color or palette size, radius, dust size, sparkle behavior, and bossbar color without exposing permission nodes. Rows the player can use are clickable and run `/afkshrine preset <preset>` to change their persistent preference; locked rows explain the unlock hint but do not run a command. This keeps the player output useful while leaving node details in `/afkshrine debug permissions` and `/1mbcmi debug plugin afkshrine permissions`.
 
 Long-term preset usage is appended to:
 

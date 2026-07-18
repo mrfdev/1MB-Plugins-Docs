@@ -182,6 +182,8 @@ onembcmi.lavaboots.debug
 
 LavaBoots does not use RCON and does not register real custom enchantments. Fake enchants are item lore only. The plugin uses PDC for trusted identity and applies behavior only while the marked boots are worn in allowed worlds.
 
+Magma-cream and fire-charge refuels use a monotonic PDC refuel sequence as their idempotency key. The exact boots and fuel slot before/after state are escrowed before mutation, so a failed checkpoint can restore both without stripping third-party item data. Uncertain refuels remain visible through `/lavaboots debug transactions`.
+
 The anti-cheat-friendly movement assist has hard caps per level. Sprint burst has a cooldown. Sneak braking gives players control in lava without adding flight-style behavior.
 
 The repair guards are intentionally conservative. If a player has LavaBoots in inventory, common repair/anvil commands such as `/anvil`, `/cmi anvil`, `/repair`, `/cmi repair`, `/fix`, and `/cmi fix` are blocked until the boots are moved elsewhere.

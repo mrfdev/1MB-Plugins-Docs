@@ -2,7 +2,7 @@
 
 ## Purpose
 
-`1MB-CMIAPI-Lib` is the shared runtime library for the 1MB CMI-API feature jars. It owns common diagnostics, feature registration, config visibility, translation health, shared GUI examples, safe action rules, command argument validation, safe player resolution, cache cleanup, debug bundles, and PlaceholderAPI routing for global and feature placeholders.
+`1MB-CMIAPI-Lib` is the shared runtime library for the 1MB CMI-API feature jars. It owns common diagnostics, feature registration, config visibility, translation health, shared GUI examples, safe action rules, command argument validation, safe player resolution, reward-delivery safety, cache cleanup, debug bundles, and PlaceholderAPI routing for global and feature placeholders.
 
 It must be installed in `/plugins/` next to CMI, CMILib, and any 1MB CMI-API feature jars.
 
@@ -10,9 +10,15 @@ AntiFire is intentionally different from ordinary feature jars. It loads indepen
 
 Feature jars without a custom local debug command inherit `/<plugin-command> debug` from this library. That fallback is permission locked to `onembcmi.<plugin>.admin` and prints plugin/build metadata, target PaperMC version, Java target, runtime Java version, server API/engine strings, required dependency/optional hook load state, and paginated commands, permissions, placeholders, and config pages.
 
+The shared GUI contract includes owner-bound sessions, unpredictable nonces, exact inventory identity, explicit click allowlists, deferred actions, one-action-at-a-time gating, rapid-click debounce, lifecycle invalidation, and shutdown cleanup. The reusable automated and Paper test procedure is maintained in [GUI Adversarial Test Matrix](../gui-adversarial-test-matrix.md). `GuiInputPolicy` is also used by AFKShrine, CMIConfig, and Exchange so bespoke holders reject the same number-key, offhand, drop, double-click, creative, bottom-inventory, invalid-slot, and drag paths.
+
+`InventoryCapacity` provides a common exact-stack capacity preflight for item-delivery actions. A full inventory with no empty or matching-stack capacity must refuse before costs are committed or leave the item in its authoritative durable escrow.
+
 In-game list output stays paginated so chat remains readable. Console senders receive the full list in one command for debug pages that use the shared pagination renderer, which makes support logs easier to copy and review.
 
 Feature configs are validated and repaired through the shared `FeatureSettings` loader. Missing default keys are added safely on startup or reload while existing values are preserved. Use `/<plugin-command> debug health` or `/1mbcmi debug plugin <id> health` to see expected config keys, repaired defaults from the last reload, missing keys, and validation issues.
+
+The shared `GuiService` uses a custom holder bound to the opening player's UUID, an unpredictable session nonce, and the exact server-side inventory instance. A stale page, mismatched owner, replaced inventory, or delayed callback cannot activate a button. Buttons accept only plain left-click by default; features must explicitly opt in to right-click or shift-click behavior. Accepted actions run on the next server tick, delayed close/actions remain bound to the originating session, terminal actions reject extra clicks, and open sessions are invalidated on close, quit, kick, world change, or plugin shutdown. The public `GuiSessionRegistry` exposes the same owner, nonce, and reference-identity checks to bespoke feature GUIs that cannot use `GuiService` directly.
 
 ## Commands
 
@@ -172,6 +178,69 @@ Duration duration = result.value();
 ```
 
 The read-only `/1mbcmi validate ...` command exposes the default rules for owner diagnostics. It uses real Paper materials, loaded worlds, and the live feature registry, requires `onembcmi.global.validate`, and does not edit configs or player data.
+
+## Shared Reward Delivery Safety
+
+`RewardDeliverySafety` lets one feature provide a fail-closed safety check that every other feature can call immediately before delivering a reward. AutoSell registers the first provider: it prevents ordinary vanilla reward items from being sold when a player forgot that AutoSell was still active.
+
+Feature plugins extending `AbstractCmiApiFeaturePlugin` use one of two entry points:
+
+```java
+if (!allowManualRewardClaim(player, "the AFKShrine starter kit")) {
+    return;
+}
+
+if (!prepareAutomaticRewardDelivery(player, "the referral reward")) {
+    return;
+}
+```
+
+`allowManualRewardClaim(...)` blocks an active AutoSell user, explains that nothing was spent, and supplies a clickable `/autosell toggle` action. It must run before deducting currency or items, marking a one-time claim, or consuming a reward charge. `prepareAutomaticRewardDelivery(...)` turns AutoSell off, cancels its pending delayed batch, and persists the off state before automatic commands run. A failed provider or failed safe-state save blocks delivery.
+
+New reward implementations must guard every delivery route, including GUI clicks, bulk claims, automatic milestones, staff retries, and recovery commands. The service protects integrated 1MB feature rewards only; it cannot infer that an ordinary item came from an unrelated plugin or direct staff command.
+
+## Durable Reward And Trade Transactions
+
+Every feature plugin receives a feature-scoped `DurableOperationService` and `DurablePayloadEscrowStore` from `AbstractCmiApiFeaturePlugin`. Player rewards, claims, purchases, trades, payouts, costs, conversions, and item transformations use these services before changing inventory, money, EXP, points, one-time state, or external command delivery.
+
+Receipts use explicit states:
+
+| State | Meaning |
+| --- | --- |
+| `prepared` | The request and idempotency key are durable; no side effect has started. |
+| `applying` | Cost or authoritative profile/inventory state is about to change. |
+| `applied` | The cost or authoritative state was saved; delivery has not been confirmed. |
+| `delivering` | A direct item or command side effect is at its uncertain boundary. |
+| `delivered` | Delivery was verified, but final cleanup still has to complete. |
+| `finalized` | Delivery and cleanup completed successfully. |
+| `failed` | Staff review is required; the receipt records whether a retry is known to be safe. |
+| `refunded` | Staff or automatic compensation restored the cost/state. |
+| `rolled_back` | No lasting side effect remains, so the same idempotency request may start again. |
+
+The journal writes a temporary file, forces it to disk, and atomically replaces the receipt. Existing receipts have a known-good backup. Malformed primary files restore from a valid backup or are quarantined; they are never treated as an empty transaction history. Command delivery writes `delivering` before each dispatch and checkpoints accepted commands afterward. A dispatch return value is recorded as acceptance, not treated as proof that an external kit, permission, or item was semantically delivered.
+
+Exact inventory and mutable-item operations can store before/after contents under:
+
+```text
+plugins/1MB-CMIAPI/<Feature>/transactions/payloads/
+```
+
+The payload is cleared before finalization. Failed cleanup or ambiguous delivery leaves the receipt unresolved rather than risking a second item or charge. On restart, `prepared` work rolls back automatically; `applying`, `delivering`, and `delivered` boundaries fail closed for review; an `applied` command operation is marked failed with safe-retry provenance.
+
+Each feature exposes owner-only recovery pages through its normal debug command:
+
+```text
+/<feature-command> debug transactions [page]
+/<feature-command> debug transaction <uuid>
+/<feature-command> debug transaction <uuid> retry [force] confirm
+/<feature-command> debug transaction <uuid> delivered confirm
+/<feature-command> debug transaction <uuid> refunded confirm
+/<feature-command> debug transaction <uuid> finalize confirm
+```
+
+Retry repeats only the remaining stored commands and is refused when the journal cannot prove a safe recovery boundary. Direct item, money, EXP, or profile ambiguity must be reconciled manually before staff acknowledge delivery or refund. All recovery actions require the feature's admin permission and are themselves state-checked and idempotent.
+
+Full terminal receipts are bounded so high-volume features such as AutoSell do not grow one file per sale forever. The newest 2,048 terminal receipts remain intact. Older `finalized` and `refunded` receipts become SHA-256 idempotency tombstones in the atomic, backup-backed `terminal-tombstones.yml`; up to 50,000 recent tombstones are retained. Unresolved receipts are never compacted. Old `rolled_back` receipts need no tombstone because retrying them is intentionally allowed.
 
 ## Generated Command And Permission Docs
 

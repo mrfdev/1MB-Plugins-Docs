@@ -254,7 +254,11 @@ Staff can review old/customized items manually:
 
 The tools cost is paid with the captured `extra-tokens` definitions in `tokens.yml`, not the normal tier trade tokens. With the default settings, all six extra token types must be captured and the player must have 64 of each in their inventory for each paid action. Sync Enchant Lore is a maintenance action and does not consume extra vote tokens. Prerequisite failures and redundant Unbreakable or Unbreaking X attempts are rejected before the player's token inventory is checked.
 
-While a player has a reward item in the tools input slot, VoteTokens writes a durable safety copy to `plugins/1MB-CMIAPI/VoteTokens/escrow/<uuid>.yml`. The record is updated after successful tool changes and cleared only after the item is safely returned to the player's inventory. If the server restarts or the player disconnects while the item is in the GUI, the plugin tries to return it on join or when the player opens the tools menu. If their inventory is full, the item stays in escrow instead of being dropped or silently lost. If a matching item is already present in the player's inventory during recovery, VoteTokens blocks the automatic restore and keeps the escrow file for staff review instead of risking a duplicate.
+While a player has a reward item in the tools input slot, VoteTokens writes a durable safety copy to `plugins/1MB-CMIAPI/VoteTokens/escrow/<uuid>.yml`. Each update is serialized and validated first, flushed to a uniquely named temporary file, and atomically replaces the primary record only after the write succeeds. A failed update therefore leaves the previous safety record readable. Existing escrow files from older VoteTokens builds use the same envelope and load without migration.
+
+The record is updated after successful tool changes and cleared only after the item is safely returned to the player's inventory. If clearing fails after an inventory return, VoteTokens immediately removes the returned item again; if that rollback also fails, it writes a severe log and audit entry identifying a possible duplicate for staff review. If the server restarts or the player disconnects while the item is in the GUI, the plugin tries to return it on join or when the player opens the tools menu. A full inventory or matching item leaves the primary escrow record untouched.
+
+Malformed YAML, a mismatched UUID, a missing item, or item data that Paper cannot decode is never treated as an empty escrow. VoteTokens moves the unreadable file to `plugins/1MB-CMIAPI/VoteTokens/escrow/quarantine/<uuid>-<timestamp>.yml`, logs and audits the exact path and reason, and blocks that recovery attempt without deleting the evidence. Quarantined records require staff inspection.
 
 Default netherite upgrade allow-list:
 
@@ -390,6 +394,7 @@ plugins/1MB-CMIAPI/VoteTokens/rewards.yml
 plugins/1MB-CMIAPI/VoteTokens/import/old-votes.log
 plugins/1MB-CMIAPI/VoteTokens/players/<uuid>.yml
 plugins/1MB-CMIAPI/VoteTokens/escrow/<uuid>.yml
+plugins/1MB-CMIAPI/VoteTokens/escrow/quarantine/<uuid>-<timestamp>.yml
 plugins/1MB-CMIAPI/VoteTokens/logs/player-trades.log
 plugins/1MB-CMIAPI/VoteTokens/logs/admin-actions.log
 plugins/1MB-CMIAPI/VoteTokens/logs/legacy-certifications.log
@@ -459,12 +464,15 @@ migration:
 - Each GUI open has an active session id. Stale holders, wrong-owner holders, and non-player interactions are cancelled before any action can run.
 - Dragging into the GUI is blocked.
 - Every trade uses a per-player processing lock and a fresh validation at confirmation time.
+- Vote-token trades and tool transformations also use durable request-token receipts. Exact token storage before/after state, direct reward items, and tool input/output are stored in transaction payload escrow before mutation. Command progress is checkpointed, compensation clears escrow before rollback/refund, and unresolved work is inspectable through `/votetokens debug transactions`.
 - Reward setup creation uses plain text only, applies fixed VoteTokens styling, writes the hidden PDC reward marker, and stores the exact preview item in `rewards.yml`.
 - Tokens are compared with the captured item using Paper/Bukkit `ItemStack#isSimilar`, so custom names, lore, enchantments, model data, and serialized metadata must match.
 - Tokens are removed from cloned storage contents first, then applied atomically to the player's storage contents.
 - A free inventory slot is required by default after the token removal simulation, so an exact 64-token stack can free its own slot but a 70-token stack in a full inventory will not.
 - The tools GUI has exactly one mutable top-inventory input slot. All other GUI slots stay cancelled, and the input item is returned on close. Moving between the tools hub and enchant view transfers that one input slot instead of returning or duplicating it. Opening the extra-token preview returns that input item first because the preview is informational only.
-- The tools input slot uses a disk escrow file while occupied, blocks drag placement, stores the item safely instead of dropping it if the player's inventory is full during recovery, and refuses automatic recovery when a matching item is already present.
+- The tools input slot uses an atomically replaced disk escrow file while occupied, blocks drag placement, stores the item safely instead of dropping it if the player's inventory is full during recovery, and refuses automatic recovery when a matching item is already present.
+- Escrow files validate their UUID and item payload before use. Malformed, mismatched, missing-item, and undecodable records move to a timestamped quarantine file for staff recovery instead of being cleared as empty.
+- Successful inventory recovery clears the primary escrow record before it is finalized. A clear failure removes the returned item again; a failed rollback is escalated as a possible duplicate in the server log and `logs/player-tools.log`.
 - Tools only modify one item at a time and consume extra vote tokens from cloned player storage contents before applying the changed storage state.
 - Tools reject materials listed in `tools.blocked-materials` before auto-certification, token-cost checks, or item mutation. By default this blocks `DRAGON_BREATH`, so EXP rewards can be traded and previewed but cannot be made unbreakable, soulbound, enchanted, shield-designed, or netherite-upgraded.
 - Enchant tools use the CMILib item API directly on the GUI input item, verify the final enchantment level, rewrite matching custom lore such as `Efficiency V` or `Efficiency -> 5`, and insert a missing VoteTokens enchant lore line when a new enchant is added.
@@ -521,6 +529,8 @@ Recommended local tests:
 - Place an item in the tools input slot and confirm `escrow/<uuid>.yml` appears; remove/close the menu and confirm the escrow file clears.
 - Fill the player's inventory, close the tools GUI with an item in the input slot, and confirm the item stays in escrow and is restored after making space.
 - Simulate stale escrow while the matching item is already in the player's inventory and confirm recovery is blocked for staff review instead of returning a duplicate.
+- On a disposable test copy, corrupt an escrow YAML file and confirm it moves to `escrow/quarantine/`, remains byte-for-byte available for staff inspection, and is not interpreted as an empty record.
+- On a disposable test copy, deny deletion of a readable escrow record during recovery and confirm the returned inventory item is rolled back. Also verify the server and audit log clearly flag the possible-duplicate outcome if that rollback is deliberately forced to fail.
 - Click the Tool Cost chest and confirm the read-only extra-token preview opens with the captured lapis, emerald, iron, gold, redstone, and copper items.
 - Click the Tool Cost chest while a tool item is in the input slot and confirm that item is returned before the preview opens.
 - Try a tools upgrade without one of the six required extra token stacks and confirm the input item and tokens are unchanged. The chat response should use a short summary plus one readable line per missing extra token type.

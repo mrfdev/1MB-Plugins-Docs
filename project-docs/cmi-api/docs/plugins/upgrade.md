@@ -251,6 +251,8 @@ Upgrade does not automatically change groups on join. It only suggests an upgrad
 
 Every apply action re-checks the player's current LuckPerms state and eligibility. If another admin already upgraded the player, the second click is rejected as already handled. A short duplicate-action lock also prevents several clicks from dispatching the same transition at once.
 
+Each promotion also opens a durable player/transition idempotency receipt before any LuckPerms or CMI command runs. Command progress is checkpointed individually, so an interrupted multi-command promotion is blocked for review through `/_upgrade debug transactions` rather than replayed from the beginning.
+
 The default apply flow uses:
 
 ```text

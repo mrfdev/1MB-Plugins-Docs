@@ -208,6 +208,7 @@ Optional hooks:
 - Admin live checks require exact online Minecraft names.
 - Runtime config edits are limited to approved scalar keys and validate URL templates, number ranges, server address text, user-agent text, and permission node format.
 - Reward commands are console-trusted admin config. The plugin substitutes trusted Bukkit player data and skips rendered commands containing control characters.
+- The one-time NameMC reward uses a durable player/reward idempotency receipt. Verification state is saved before commands run, and failed delivery remains inspectable through `/namemc debug transactions` instead of being paid twice.
 - A global cooldown protects NameMC from accidental API spam.
 
 ## Testing Checklist

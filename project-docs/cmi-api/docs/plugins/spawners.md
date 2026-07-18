@@ -318,7 +318,9 @@ cmi.dropspawner.rabbit
 
 ## Safety Notes
 
-Spawners uses the shared hardened GUI service: custom holders, cancelled unsafe clicks/drags, delayed close actions, and same-slot click debouncing. Purchases also have their own short action lock, check inventory space before taking money, refund on inventory failure, and never trust client-side item movement inside the GUI.
+Spawners uses the shared hardened GUI service: custom holders, cancelled unsafe clicks/drags, delayed close actions, and same-slot click debouncing. Spawner purchases, pickaxe purchases, and buybacks use durable idempotent receipts. Exact delivery or consumed items are escrowed before the Vault withdrawal/deposit, and compensation clears escrow before closing the receipt. Uncertain operations remain visible through `/spawners debug transactions`.
+
+Purchases also have their own short action lock, check inventory space before taking money, refund on inventory failure, and never trust client-side item movement inside the GUI.
 
 Spawn egg icons and the hidden-enchant glint are visual shop indicators only. Purchased items are still generated as real Paper spawner items with PDC identity and a stored spawned entity type.
 

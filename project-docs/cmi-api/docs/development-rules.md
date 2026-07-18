@@ -42,6 +42,7 @@ Before adding or expanding a feature plugin, confirm:
 - Staff/moderation tools redact sensitive reasons unless the sender has the explicit narrower permission.
 - Read-only tools do not execute CMI commands, alter CMI files, or mutate player state.
 - Destructive cleanup keeps playerdata out of broad cache cleaning and requires dry-run/confirm flows.
+- Every player-facing reward path calls `allowManualRewardClaim(...)` before spending or marking a claim; automatic, retry, and recovery delivery calls `prepareAutomaticRewardDelivery(...)` before commands or inventory mutation.
 
 ## Data
 

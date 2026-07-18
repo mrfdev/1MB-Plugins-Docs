@@ -4,15 +4,15 @@ DiscordChat is a player-fun feature plugin for turning the DiscordSRV `#server-c
 
 The plugin is report-first and reward-safe: it only records DiscordSRV events, stores local player progress, and runs configured reward commands after a player confirms a point trade in game. It does not post to Discord, moderate Discord, or change DiscordSRV configuration.
 
-When Menu is installed and enabled, `/menu` includes a DiscordChat button and the DiscordChat GUI pages show a Main Menu shortcut beside their close controls.
+DiscordChat's overview, rewards, confirmation, pulse, tools, and milestone GUIs use the standard 1MB light-blue frame. Every page keeps the viewing player's head in the bottom-left, navigation/help controls in the bottom center, a **Back to Server Menu** shortcut immediately left of the bottom-right close barrier, and the same owner-bound session protections. The player head opens that player's full status in chat.
 
 ## Commands
 
 | Command | Explanation | Example |
 | --- | --- | --- |
 | `/discordchat` | Opens the DiscordChat overview GUI with points, streak, tracked words/emotes, reminders, rewards, and milestones. | `/discordchat` |
-| `/discordchat status` | Shows your linked state, points, EXP progress toward the next point, tracked point sources, current streak, longest streak, and chat totals. | `/discordchat status` |
-| `/discordchat top [points\|streak\|messages\|words\|emotes]` | Shows the top 10 DiscordChat profiles for a public metric. | `/discordchat top streak` |
+| `/discordchat status [player\|uuid]` | Shows your detailed linked state, points, EXP progress, streak, and chat totals. Looking up another player shows a limited public status; self/staff-only diagnostics stay hidden. | `/discordchat status mrfloris` |
+| `/discordchat top [points\|streak\|messages\|words\|emotes]` | Shows the top 10 DiscordChat profiles for a public metric. Rows use the CMI display name when available, show the Minecraft name and UUID on hover, and open that player's public status when clicked. | `/discordchat top streak` |
 | `/discordchat pulse` | Opens the community pulse GUI with today's activity, seven-day totals, and active XP boosts. Console receives the same data as chat output. | `/discordchat pulse` |
 | `/discordchat rewards` | Opens the point trade GUI. | `/discordchat rewards` |
 | `/discordchat tools` | Opens the point-funded item tools GUI for Unbreaking IV, Fortune IV, and Looting IV. | `/discordchat tools` |
@@ -264,6 +264,7 @@ discordsrv.channel-id
 discordsrv.game-channel-name
 discordsrv.count-discord-to-game
 discordsrv.count-game-to-discord
+gui.filler-material
 calendar.zone-id
 invite-prompts.enabled
 invite-prompts.on-join-enabled
@@ -453,7 +454,7 @@ Implemented first:
 7. Low-effort messages, bot commands, repeats, link-only messages, and caps-heavy shouting are tracked but do not earn XP.
 8. Scoreboard placeholders now include prefix, suffix, and event status fields.
 9. First meaningful Discord-origin message bonuses are tracked per player for day, week, month, and year.
-10. `/discordchat top` lists the top 10 players by points, streak, messages, words, or emotes.
+10. `/discordchat top` lists the top 10 players by points, streak, messages, words, or emotes, using CMI display names with hover identity and clickable public status rows.
 11. Milestone history is shown in the milestone GUI once new milestones are hit.
 12. `/discordchat debug economy` estimates reward pacing from the current config.
 13. `/discordchat debug noxp` summarizes no-XP reasons for staff tuning.
@@ -512,6 +513,6 @@ TODO reward ideas:
 - Reward commands are config-owned, console-dispatched, use sanitized player placeholders, and are preflighted before an atomic point reservation is written.
 - Missing or disabled CMI kits and unavailable command roots are rejected before reservation. Rejected, exceptional, or interrupted dispatches remain in a durable failed transaction for deliberate staff retry/refund; they cannot disappear, double-charge, or auto-repeat uncertain commands, and all transitions are audited.
 - Player profiles are identity-validated, atomically replaced, and backed up before replacement. A malformed live file is never treated as a blank account or overwritten; recovery requires a validated backup and preserves the malformed copy in quarantine.
-- GUI actions are owner/session checked, click-throttled, and handled at high event priority. Stale menus close without running actions.
+- GUI actions are owner/session checked, click-throttled, and handled at high event priority. Stale menus close without running actions. All DiscordChat pages use the shared light-blue frame, player-head footer, centered back/help navigation, server-menu shortcut, and bottom-right close control.
 - The item tools GUI has one mutable input slot. The item is atomically saved to identity-validated disk escrow while present, returned on close/quit/kick/plugin disable, and kept for staff review if automatic recovery would risk a duplicate. Malformed records are quarantined rather than deleted.
 - The plugin does not require a player to have Discord; players can opt out of invite reminders.

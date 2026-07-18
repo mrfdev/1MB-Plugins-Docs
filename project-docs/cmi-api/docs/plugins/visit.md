@@ -338,6 +338,7 @@ visits:
 - Visit warps are hidden and placed in a dedicated CMI group by default.
 - Generated visit warp names are filtered from `/warp` and `/warps` tab completions as an extra guard around CMI hidden warp behavior.
 - Visit economy costs are whole-number amounts. `economy.server-percent` is removed from the visitor payment; the remainder is deposited into the visit owner's balance.
+- A paid visit uses one durable idempotency receipt from visitor withdrawal through teleport and owner-share deposit. A failed teleport refunds the visitor, and an uncertain owner deposit remains unresolved in `/visit debug transactions` instead of charging or paying twice.
 - Player-facing `/visit info` and `/visit list` do not expose the generated hidden CMI warp name. Staff can inspect hidden warp details with `/visit admin warps` or `/visit admin inspect <player>`.
 - Visit cooldowns have two layers. `cooldowns.global-seconds` is a visitor-wide runtime cooldown for `/visit <player>` so one player cannot rapidly run through the visit list. Owner profiles are stored per visit and enforced per visitor/owner pair after a successful teleport. Owners can choose `short`, `normal`, `long`, or `off`; the actual seconds are controlled by config.
 - Admin delete removes only the Visit record and its generated hidden CMI warp.

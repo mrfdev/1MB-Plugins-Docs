@@ -47,13 +47,13 @@ Available features include:
       <td><code>/discordchat</code></td>
     </tr>
     <tr>
-      <td><code>/discordchat status</code></td>
-      <td>Shows your linked state, points, EXP progress toward the next point, tracked point sources, current streak, longest streak, and chat totals.</td>
+      <td><code>/discordchat status [player|<wbr />uuid]</code></td>
+      <td>Shows your detailed linked state, points, EXP progress, streak, and chat totals. Looking up another player shows a limited public status; self/staff-only diagnostics stay hidden.</td>
       <td><code>/discordchat status</code></td>
     </tr>
     <tr>
       <td><code>/discordchat top [points|<wbr />streak|<wbr />messages|<wbr />words|<wbr />emotes]</code></td>
-      <td>Shows the top 10 DiscordChat profiles for a public metric.</td>
+      <td>Shows the top 10 DiscordChat profiles for a public metric. Rows use the server display name when available, show the Minecraft name and UUID on hover, and open that player's public status when clicked.</td>
       <td><code>/discordchat top</code></td>
     </tr>
     <tr>
@@ -112,7 +112,7 @@ Available features include:
 ## Examples
 
 - `/discordchat`
-- `/discordchat status`
+- `/discordchat status mrfloris`
 - `/discordchat top streak`
 - `/discordchat pulse`
 - `/discordchat rewards`

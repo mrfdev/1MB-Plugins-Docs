@@ -1181,6 +1181,12 @@ StartupDoctor placeholders:
 %onembcmi_startupdoctor.cmilib.version%
 %onembcmi_startupdoctor.java.version%
 %onembcmi_startupdoctor.paper.version%
+%onembcmi_startupdoctor.paper.safety.result%
+%onembcmi_startupdoctor.paper.safety.findings.count%
+%onembcmi_startupdoctor.paper.safety.failures.count%
+%onembcmi_startupdoctor.paper.safety.warnings.count%
+%onembcmi_startupdoctor.paper.safety.notes.count%
+%onembcmi_startupdoctor.paper.safety.passes.count%
 %onembcmi_startupdoctor.cmiapi.usable%
 %onembcmi_startupdoctor.cmilib.usable%
 %onembcmi_startupdoctor.placeholderapi.loaded%

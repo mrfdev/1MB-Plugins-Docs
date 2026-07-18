@@ -238,6 +238,7 @@ Shared Library:
 
 - Milestone ids are normalized and restricted to lowercase letters, numbers, `_`, and `-`.
 - Reward commands are trusted admin config only and are limited in length when parsed.
+- Manual and automatic milestone rewards share a stable idempotency key. The claimed marker is saved before command delivery, and a failed or interrupted delivery remains in `/journeymap debug transactions` for explicit retry or reconciliation.
 - Player names for admin inspect are restricted to normal Minecraft username shape before resolving cached/offline players.
 - Player commands do not accept arbitrary command text.
 - Playtime can only move upward in stored data.

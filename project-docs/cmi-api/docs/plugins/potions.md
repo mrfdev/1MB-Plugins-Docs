@@ -305,6 +305,8 @@ Potions creates items directly with the Paper/Bukkit item API rather than dispat
 
 Potion input is strict and config-driven. Admin commands accept only configured lowercase ids or generated style aliases, known online player names, the three known forms, numeric variant indexes, bounded amounts, and allowlisted scalar config fields.
 
+Paid/command-backed potion consumption uses the item's persistent instance id as a durable idempotency key. The exact consumed item plus pre-charge money and EXP state are escrowed before mutation. Failed compensation restores the exact item and charge state when possible; uncertainty remains visible through `/potions debug transactions`.
+
 The generated item stores a fixed duration in ticks through Paper/Bukkit potion metadata. It does not schedule repeating tasks and does not create infinite effects. Lingering potions use the normal Minecraft lingering cloud behavior for that fixed custom effect.
 
 If Potions is uninstalled, Minecraft/Paper still sees the item as a normal custom potion, so the base effect remains usable. Runtime disable checks, drink costs, success messages, sounds, particles, optional commands, and inspection require Potions to be installed.
