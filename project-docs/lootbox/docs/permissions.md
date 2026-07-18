@@ -6,6 +6,7 @@ commands to selected groups.
 
 | Permission | Default | Purpose |
 | --- | --- | --- |
+| `lootchest.audit` | Operator | Run the read-only lifecycle consistency audit. |
 | `lootchest.info` | Everyone | Use `/lc info`. |
 | `lootchest.admin` | Operator | Full administrative access through the runtime admin override. |
 | `lootchest.*` | Operator | Grants every administrative subcommand. |
@@ -28,7 +29,6 @@ commands to selected groups.
 | `lootchest.setpos` | Operator | Move a Lootbox. |
 | `lootchest.setprotection` | Operator | Change spawn protection. |
 | `lootchest.settime` | Operator | Change respawn time. |
-| `lootchest.togglefall` | Operator | Toggle a falling-package effect. |
 | `lootchest.tp` | Operator | Teleport to a Lootbox. |
 
 Regular interaction with a spawned Lootbox does not require one of these command

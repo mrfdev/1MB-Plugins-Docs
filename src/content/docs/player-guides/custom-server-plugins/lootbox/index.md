@@ -32,8 +32,8 @@ shown on one visit is not guaranteed on the next visit.
 - Repeatable reward containers with staff-configured respawn times.
 - Different container styles, including chests, barrels, shulker boxes, and copper chests.
 - Randomized reward chances and reward limits for individual Lootboxes.
-- Visual particles, names, timers, and falling-package arrival effects.
-- World-wide, local-world, or network announcements depending on server configuration.
+- Visual particles, names, and timers.
+- Server-wide or current-world announcements depending on server configuration.
 
 ## Commands
 
@@ -45,7 +45,7 @@ shown on one visit is not guaranteed on the next visit.
 
 All creation, editing, teleportation, forced respawn, and removal commands are
 administrative. See the
-[technical command reference](https://github.com/mrfloris/LootChest/blob/master/docs/commands.md)
+[technical command reference](https://github.com/mrfdev/1MB-LootChest/blob/master/docs/commands.md)
 for those tools.
 
 ## Rank Requirements
@@ -84,7 +84,7 @@ regions and world rules can also control where random Lootboxes are allowed to a
 ## Technical Documentation
 
 Administrators and developers can use the
-[Lootbox technical overview](https://github.com/mrfloris/LootChest/blob/master/README.md).
+[Lootbox technical overview](https://github.com/mrfdev/1MB-LootChest/blob/master/README.md).
 The canonical public page is
 [docs.1moreblock.com/custom-server-plugins/lootbox/](https://docs.1moreblock.com/custom-server-plugins/lootbox/).
 

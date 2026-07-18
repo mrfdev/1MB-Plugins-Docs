@@ -4,14 +4,20 @@ Lootbox stores global behavior in `plugins/LootChest/config.yml`, translatable
 messages and menu labels in `lang.yml`, and persistent Lootbox definitions in
 `data.yml`. The folder name remains `LootChest` for update compatibility.
 
+Lootbox owns these files directly through Paper's YAML API. Existing files are
+never replaced during a normal startup, and missing defaults are added without
+overwriting local values. Saves use ordered atomic file replacement. On clean
+shutdown, `data.yml` is copied to the existing numbered `backups/` format and
+the newest ten backups are retained. If `data.yml` is invalid, the damaged file
+is preserved as `data.yml.invalid-<timestamp>` before the newest valid numbered
+backup is restored.
+
 ## General Settings
 
 | Key | Default | Meaning |
 | --- | --- | --- |
-| `CheckForUpdates` | `false` | Run the upstream update check during startup. The 1MoreBlock build keeps it off. |
-| `Debug` | `false` | Log verbose adapter details such as the selected falling-package implementation. |
+| `Debug` | `false` | Log verbose Lootbox diagnostic details. |
 | `ConsoleMessages` | `true` | Enable normal plugin startup/status messages. |
-| `EnableLootin` | `false` | Integrate compatible spawned containers with Lootin. |
 | `Cooldown_Before_Plugin_Start` | `0` | Delay chest loading, in seconds, to allow worlds to load. |
 | `UseHologram` | `true` | Request CMI holograms. They are disabled safely when CMI is unavailable. |
 | `Hologram_distance_to_chest` | `1` | Vertical hologram offset. |
@@ -19,11 +25,12 @@ messages and menu labels in `lang.yml`, and persistent Lootbox definitions in
 | `RemoveChestAfterFirstOpening` | `false` | Remove the physical container after its first completed opening. |
 | `Destroy_Naturally_Instead_Of_Removing_Chest` | `true` | Drop the container item when a Lootbox is collected or broken. |
 | `Protect_From_Explosions` | `false` | Keep Lootboxes out of explosion block removal. |
-| `PreventHopperPlacingUnderLootChest` | `true` | Block nearby hopper placement and movement. |
+| `PreventHopperPlacingUnderLootChest` | `true` | Block automated item transfers to or from Lootboxes and direct hopper placement underneath them. The legacy key name is retained for config compatibility. |
 | `Radius_Without_Monsters_For_Opening_Chest` | `0` | Require no hostile mobs within this radius; `0` disables the check. |
-| `respawn_protection_time_in_second_by_default` | `0` | Default interaction protection after spawn. |
+| `respawn_protection_time_in_second_by_default` | `0` | Default post-spawn protection from player access, plugin-initiated inventory opens, automated transfer, and explosion removal. |
 | `Minimum_Number_Of_Players_For_Natural_Spawning` | `0` | Minimum online players for timed spawning. |
 | `Minimum_Number_Of_Players_For_Command_Spawning` | `0` | Minimum online players for bulk command spawning. |
+| `Scheduler.Chests_Per_Tick` | `1` | Maximum saved Lootboxes processed per tick during startup, reload, respawn-all, or despawn-all. |
 
 ## Rewards and Respawning
 
@@ -49,7 +56,9 @@ time are stored per Lootbox in `data.yml`.
 | `Minimum_Height_For_Random_Spawn` | `0` | Lower random-spawn Y boundary. |
 | `Max_Height_For_Random_Spawn` | `200` | Upper random-spawn Y boundary. |
 | `WorldBorder_Check_For_Spawn` | `true` | Reject locations outside the world border. |
-| `Prevent_Chest_Spawn_In_Protected_Places` | `false` | Consult supported claim/region plugins before random spawning. |
+
+Random spawning does not query claim plugins. The 1MoreBlock server deliberately
+places Lootboxes only in staff-selected worlds and regions.
 
 ## Particles
 
@@ -68,17 +77,12 @@ whose data type is `Void`. This prevents options that require color, block, item
 trail, or vibration payloads from silently failing. Legacy saved names are mapped
 when a safe equivalent exists.
 
-## Falling Package
+## Legacy Falling-Package Settings
 
-| Key | Default | Meaning |
-| --- | --- | --- |
-| `Fall_Effect.Block` | `CHEST` | Material rendered by the falling package. |
-| `Fall_Effect.Height` | `50` | Starting height above the destination. |
-| `Fall_Effect.Enabled` | `true` | Default effect state for newly created Lootboxes. |
-| `Fall_Effect.Enable_Fireworks` | `true` | Add fireworks during the descent. |
-| `Fall_Effect.Speed` | `0.8` | Downward animation speed. |
-
-Paper 26.2 uses the bundled native `v_26_2` adapter.
+The falling-package animation was removed in build 198 because the 1MoreBlock
+server does not use it and it required version-specific Minecraft internals.
+Existing `Fall_Effect` configuration remains inert for rollback safety, and saved
+per-chest `fall` values are migrated to `false` when data is saved.
 
 ## Timer and Notifications
 
@@ -86,16 +90,25 @@ Paper 26.2 uses the bundled native `v_26_2` adapter.
 Available timer substitutions are `%Hours`, `%Minutes`, `%Seconds`, `%Hsep`, `%Msep`,
 `%Ssep`, and `%Hologram`.
 
+The supported hologram runtime is CMI `9.8.8.5` with CMILib `1.5.9.9`. When
+either optional dependency is unavailable, Lootbox keeps all non-hologram
+features active and reports the integration state through `/lc info`.
+
 `respawn_notify` controls natural, command, bulk, world-only, and collection
 messages. Notification text supports MiniMessage plus `[Chest]`, `[World]`, `[x]`,
-`[y]`, and `[z]` where the corresponding message path supplies them.
+`[y]`, and `[z]` where the corresponding message path supplies them. Notifications
+are delivered only to players on the current Paper server; this edition has no
+proxy or cross-server broadcast mode.
 
 ## Reload and Restart Behavior
 
 Use `/lc reload` for `config.yml`, `lang.yml`, and `data.yml`. It rebuilds the
-particle catalog and respawns loaded Lootboxes. Restart Paper after adding/removing
-CMI or other integration plugins, changing `Particles.enable`, or changing the
-particle scheduler interval so startup-only hooks and tasks are recreated cleanly.
+particle catalog, recreates its scheduler tasks, and respawns loaded Lootboxes in
+batches. The completion message is sent only after every batch has finished.
+Restart Paper after adding or removing CMI or another integration plugin.
+
+An invalid `config.yml` or `lang.yml` fails startup without overwriting the
+administrator's file. Correct the reported YAML error and restart Paper.
 
 MiniMessage formatting is accepted throughout locale, menus, notifications, and
 hologram text. Existing legacy color codes remain readable for migration.

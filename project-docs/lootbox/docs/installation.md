@@ -4,11 +4,11 @@
 
 - Paper 26.2.
 - Java 25.
-- The release jar `LootChest-2.5.9.1-paper-26.2-j25-CMI.jar`.
-- CMI and CMILib for holograms. Lootboxes continue without holograms when CMI is absent.
+- The release jar `1MB-LootChest-v2.5.9.1-225-CMI-j25-26.2.jar`.
+- Optional CMI `9.8.8.5` and CMILib `1.5.9.9` when holograms are required.
 
-Do not install this build on Spigot, legacy Minecraft versions, Paper 26.1, or an
-older Java runtime.
+DecentHolograms is not a supported backend for this build.
+Lootbox continues without holograms when CMI or CMILib is absent.
 
 ## Fresh Installation
 
@@ -19,7 +19,7 @@ older Java runtime.
 5. Start Paper and wait for `LootChest ... Plugin loaded`.
 6. Run `/lc info`, `/lc help`, and `/lc list`.
 7. Create a disposable test Lootbox and verify open, empty, break, respawn,
-   particle, falling-package, and hologram behavior before using production data.
+   particle, and hologram behavior before using production data.
 
 ## Updating
 
@@ -30,17 +30,26 @@ older Java runtime.
 5. Start Paper and inspect `logs/latest.log` for LootChest errors.
 6. Run `/lc reload` and `/lc respawnall`, then verify representative container types.
 
+The current live-approved source is preserved by the
+`1mb-lootchest-v2.5.9.1-build225-approved` tag. Build 224 is retained as the
+immediately previous rollback point.
+
 Saved particle names are validated against the running Paper API. Removed or typed
 particles use `Particles.fallback_particle` and produce a concise warning.
 
 ## Building from Source
 
-From the repository root with JDK 25 and Maven available:
+Build releases from the canonical `master` branch. Increment `buildNumber` in the
+root `pom.xml` for each shipped jar, then build with JDK 25 and Maven:
 
 ```bash
-mvn package
+git switch master
+git pull --ff-only origin master
+export JAVA_HOME=$(/usr/libexec/java_home -v 25)
+mvn -DskipTests clean package
 ```
 
-The active reactor compiles against Paper API `26.2.build.29-alpha`, packages the
-native `v_26_2` adapter, emits Java 25 bytecode, and writes the named release jar
-to the root `target/` directory.
+The active reactor compiles against Paper API `26.2.build.60-beta`, emits Java 25
+bytecode, and writes the named release jar to the root `target/` directory. It
+does not compile or package version-specific Minecraft internals. Follow the
+[release process](release-process.md) before promoting a candidate to `master`.

@@ -62,7 +62,7 @@
       "name": "Lootbox",
       "category": "custom-server-plugin",
       "adapter": "manifest",
-      "repository": "mrfloris/LootChest",
+      "repository": "mrfdev/1MB-LootChest",
       "defaultSource": "../Floodgate"
     },
     {

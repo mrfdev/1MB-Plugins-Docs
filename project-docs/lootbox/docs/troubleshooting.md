@@ -8,10 +8,12 @@ LootChest exception in `logs/latest.log` rather than later shutdown noise.
 
 ## Hologram Is Missing
 
-- Confirm compatible CMI and CMILib builds enabled before LootChest.
+- Confirm CMI `9.8.8.5` and CMILib `1.5.9.9` enabled before LootChest.
 - Confirm `UseHologram: true`.
 - Run `/lc reload`, then `/lc respawnall`.
-- Look for `CMI is not enabled` or `LootChest holograms disabled after CMI error`.
+- Run `/lc info` and check the `Holograms` status line.
+- Look for `CMI and CMILib are not both enabled` or
+  `LootChest holograms disabled after CMI error`.
 - Use `/lc setholo <name> <text>`; `none`, `_`, and blank-like values disable it.
 
 ## Particle Is Missing
@@ -58,13 +60,8 @@ specific `lootchest.<subcommand>` permission or use `lootchest.admin`/
 `lootchest.*` for trusted administrators. `/lc create`, `/lc edit`, `/lc getname`,
 `/lc setpos`, and `/lc tp` must be run in-game.
 
-## No Proxy Announcement
-
-Confirm proxy support is enabled, `respawn_notify.bungee_broadcast: true`, and a
-player is online. Otherwise use global or per-world announcements.
-
 ## Privacy
 
-The custom build defaults its update checker off and does not start bStats metrics.
+The custom build contains neither the upstream update checker nor bStats metrics.
 If another plugin reports metrics or update notices, identify the plugin name in
-the message before changing Lootbox configuration.
+the message; Lootbox cannot originate either request.

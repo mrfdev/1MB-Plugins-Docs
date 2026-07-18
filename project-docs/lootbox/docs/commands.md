@@ -7,13 +7,14 @@ permissions default to server operators unless explicitly granted.
 | Command | Context | Description |
 | --- | --- | --- |
 | `/lc` or `/lc help` | Console/player | Show the configured help list. |
+| `/lc audit [name]` | Console/player | Inspect all Lootboxes or show saved/live container, index, display, particle, and respawn-task details for one named Lootbox without changing state. Player-facing chest names are clickable shortcuts to `/lc tp <name>`. |
 | `/lc info` | Console/player | Show the 1MoreBlock Lootbox introduction, version, and canonical docs link. |
 | `/lc create <name>` | Player | Register the filled supported container being targeted and open its editor. |
 | `/lc edit <name>` | Player | Open the graphical editor. |
 | `/lc copy <source> <destination>` | Console/player | Copy settings and rewards into an existing Lootbox. |
 | `/lc give <name> <player>` | Console/player | Roll that Lootbox's configured contents into an online player's inventory. |
 | `/lc getname` | Player | Identify the targeted Lootbox. |
-| `/lc list` | Console/player | List loaded internal Lootbox names. |
+| `/lc list` | Console/player | List loaded internal Lootbox names. In-game names are clickable and open their editor. |
 | `/lc locate` | Console/player | List available boxes with natural location announcements enabled. |
 | `/lc respawn <name>` | Console/player | Force one Lootbox to respawn. |
 | `/lc respawnall [world]` | Console/player | Force every Lootbox, optionally in one world, to respawn. |
@@ -27,13 +28,12 @@ permissions default to server operators unless explicitly granted.
 | `/lc setpos <name>` | Player | Move the Lootbox origin to the player's current block and facing. |
 | `/lc setprotection <name> <seconds>` | Console/player | Set post-spawn interaction protection. |
 | `/lc settime <name> <minutes>` | Console/player | Set the respawn interval in minutes and force a respawn. |
-| `/lc togglefall <name>` | Console/player | Toggle the falling-package effect for one Lootbox. |
 | `/lc tp <name>` | Player | Teleport to the Lootbox's current location. |
 
 ## Editor Workflow
 
 `/lc create` and `/lc edit` expose menus for contents, item chances, respawn time,
-container type, particle, copying, and per-box message/effect toggles. Text supplied
+container type, particle, copying, and per-box message toggles. Text supplied
 to `/lc setholo` accepts MiniMessage colors such as `<gold>` and hex colors such as
 `<#f9e2af>`.
 
