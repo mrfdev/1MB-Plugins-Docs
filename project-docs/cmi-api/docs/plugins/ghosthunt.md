@@ -367,7 +367,7 @@ Paper TextDisplays are private, transient, non-persistent, and invisible by defa
 The shared jar is:
 
 ```text
-1MB-CMIAPI-CoconutHunt-v1.0.0-535-j25-26.2.jar
+1MB-CMIAPI-CoconutHunt-v1.0.0-550-j25-26.2.jar
 ```
 
 It targets Java 25 and Paper 26.2 beta build 60 or newer. CMI, CMILib, and `1MB-CMIAPI-Lib` are required. PlaceholderAPI, LuckPerms, Vault, and MobHat are optional; disabled Ghost shop samples do not block the hunt.
