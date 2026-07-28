@@ -5,9 +5,10 @@ This namespace is a public documentation-only copy from the source project regis
 - Project: `ShopChest`
 - Project id: `shopchest`
 - Source repository: `mrfdev/ShopChest`
-- Source commit: `25d657d`
+- Source commit: `b9a370c`
 - Source state: `clean`
 - Copied files: `README.md` and `docs/`
+- Source-declared private docs exclusions: none
 - Excluded on purpose: source code, jars, servers, databases, task logs, and internal checklists
 
 Only `project-docs/shopchest/` is replaced when this source is synchronized. Other project namespaces remain untouched.
