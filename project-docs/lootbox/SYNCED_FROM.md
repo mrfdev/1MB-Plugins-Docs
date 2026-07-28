@@ -5,9 +5,10 @@ This namespace is a public documentation-only copy from the source project regis
 - Project: `Lootbox`
 - Project id: `lootbox`
 - Source repository: `mrfdev/1MB-LootChest`
-- Source commit: `f082f8d`
+- Source commit: `673d266`
 - Source state: `clean`
 - Copied files: `README.md` and `docs/`
+- Source-declared private docs exclusions: none
 - Excluded on purpose: source code, jars, servers, databases, task logs, and internal checklists
 
 Only `project-docs/lootbox/` is replaced when this source is synchronized. Other project namespaces remain untouched.
