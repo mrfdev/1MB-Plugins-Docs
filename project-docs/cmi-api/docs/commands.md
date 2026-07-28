@@ -165,10 +165,13 @@ Feature plugins that do not implement their own local debug command inherit a sh
 /<plugin> debug placeholders [page]
 /<plugin> debug config [page]
 /<plugin> debug set config <path> <value>
+/<plugin> debug enable <true|false>
 /<plugin> debug all
 ```
 
-The overview page shows the plugin name, technical introduction, category, docs URL, full `/1mbcmi debug plugin <id> all` support command, version/build, target PaperMC version, exact compiled Paper API coordinate/channel/build, Java target, runtime Java version, Bukkit/Paper runtime API string, server engine string, and links to the paginated subpages. The health page shows config default repair status, missing keys, validation issues, and metadata counts. In game, shared debug lists stay paginated; console senders receive all shared paginated rows in one command. Plugins with a richer custom debug command keep their own behavior.
+The overview page shows the plugin name, technical introduction, category, docs URL, full `/1mbcmi debug plugin <id> all` support command, version/build, target PaperMC version, exact compiled Paper API coordinate/channel/build, Java target, runtime Java version, Bukkit/Paper runtime API string, server engine string, active/dormant behavior state, and links to the paginated subpages. The health page shows config default repair status, missing keys, validation issues, and metadata counts. In game, shared debug lists stay paginated; console senders receive all shared paginated rows in one command. Plugins with a richer custom debug command keep their own behavior, while the lifecycle command is intercepted consistently before custom debug handling.
+
+`debug enable false` leaves the Bukkit plugin loaded and green but shuts down gameplay behavior; `debug enable true` starts it again without a restart. Both transitions atomically save `enabled:` in the feature config. Console, the feature admin permission, or `onembcmi.global.config.set` may change this state. While dormant, only `info`, `help`, safe shared `debug`, and this lifecycle control are available.
 
 Feature `/help` pages are intentionally player-facing: they list commands available to the sender, but do not print permission nodes. Use `/<plugin> debug permissions [page]` or `/1mbcmi debug plugin <id> permissions` when staff need the permission-oriented view.
 

@@ -4,9 +4,9 @@ This project uses separate jars for the shared library and every feature plugin.
 
 ## Activation Safety
 
-Fresh feature configs use the central `FeatureInstallPolicy` allowlist. The required library, standalone AntiFire, and the documented live features start enabled; every other shared feature starts fail closed with `enabled: false`. Existing server config values are never replaced by this default.
+Fresh feature configs use the central `FeatureInstallPolicy` allowlist. The required library, standalone AntiFire, and the documented live features start enabled; every other shared feature starts fail closed in dormant mode with `enabled: false`. A dormant feature remains loaded and green in Paper's `/plugins` output, but does not register gameplay listeners, tasks, placeholders, services, hooks, or an actionable player command surface. It retains only `info`, `help`, safe shared `debug`, and `/<feature-command> debug enable true|false` for authorized lifecycle management. Existing server config values are never replaced by this default.
 
-Before changing the allowlist, update its focused test and the installation documentation together. A clean-install verification must confirm that a non-allowlisted jar creates a disabled config and registers no runtime behavior, while an existing test-server config containing `enabled: true` still starts normally.
+Before changing the allowlist, update its focused test and the installation documentation together. A clean-install verification must confirm that a non-allowlisted jar creates a disabled config, stays green and loaded, reports `dormant`, exposes only the restricted dormant command surface, and registers no gameplay behavior. It must also confirm that live activation, live return to dormant mode, and an existing test-server config containing `enabled: true` work normally.
 
 ## Release Baseline
 

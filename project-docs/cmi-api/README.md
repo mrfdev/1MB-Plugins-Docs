@@ -185,7 +185,7 @@ The complete built jar set may be copied to a live server without exposing unfin
 - `PvPToggle`, `RecordingMode`, `Visit`, `VoteTokens`, `WorthDrift`, `WorthHelper`
 - the required `LIB` and standalone `AntiFire` jars
 
-Every other shared feature defaults to `enabled: false`. A startup-disabled feature creates its config, registers no feature commands, listeners, tasks, placeholders, or hooks, and disables its Bukkit plugin. Set its central feature config to `enabled: true` and restart the server when it is ready for testing.
+Every other shared feature defaults to `enabled: false`. A startup-disabled feature creates its config and stays loaded, so Paper shows the jar in green under `/plugins`, but its gameplay commands, listeners, tasks, placeholders, services, and hooks remain dormant. Only `info`, `help`, safe shared `debug` pages, and the admin lifecycle control remain available. Console or an admin with the feature admin permission or `onembcmi.global.config.set` can activate it live with `/<feature-command> debug enable true`; use the same command with `false` to return it to dormant mode. The setting is written atomically to the feature's `config.yml`, so no restart is required.
 
 Existing config values always win, including the repository test server's existing `enabled: true` values. Updating a jar therefore does not turn a configured live feature on or off. Unknown future feature ids fail closed until they are deliberately added to the allowlist.
 

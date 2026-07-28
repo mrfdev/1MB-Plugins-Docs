@@ -6,7 +6,7 @@ This namespace is a public documentation-only copy from the source project regis
 - Project id: `antipopup`
 - Source repository: `mrfdev/AntiPopup`
 - Source commit: `6801490`
-- Source state: `clean`
+- Source state: `local changes present at sync time`
 - Copied files: `README.md` and `docs/`
 - Excluded on purpose: source code, jars, servers, databases, task logs, and internal checklists
 

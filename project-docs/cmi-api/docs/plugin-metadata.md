@@ -44,7 +44,7 @@ generic
 
 - plugin id, display name, category, version, build, jar name
 - Java target, runtime Java, Paper target, exact compiled Paper API, runtime API, and server engine
-- health state: active, plugin-disabled, config-disabled, missing-dependencies, validation-failed, or runtime-missing
+- health state: active, dormant, behavior-inactive, plugin-disabled, missing-dependencies, validation-failed, or runtime-missing
 - CMI, CMILib, and shared library hook status
 - optional hook status for PlaceholderAPI, LuckPerms, and Vault
 - command count

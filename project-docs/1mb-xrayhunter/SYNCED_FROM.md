@@ -5,8 +5,8 @@ This namespace is a public documentation-only copy from the source project regis
 - Project: `1MB-XRayHunter`
 - Project id: `1mb-xrayhunter`
 - Source repository: `mrfdev/XRayHunter`
-- Source commit: `f616c68`
-- Source state: `clean`
+- Source commit: `6e70b6a`
+- Source state: `local changes present at sync time`
 - Copied files: `README.md` and `docs/`
 - Excluded on purpose: source code, jars, servers, databases, task logs, and internal checklists
 

@@ -10,8 +10,10 @@ This repository is the technical source of truth for the plugin. Public-safe pla
 
 - Main command: `/xrayhunter`
 - Public info entry point: `/xrayhunter info`
-- Paper compile target: `26.1.2`
-- Declared plugin compatibility floor: `1.21.11`
+- Paper server/API target: `26.2`
+- Paper API compile version: `26.2.build.84-stable`
+- Paper release channel: `STABLE`
+- Declared plugin API version: `26.2`
 - Java target: `25`
 - Required dependency: CoreProtect
 - Maintained CoreProtect target: `24.0-dev1` with API `12`
@@ -98,17 +100,14 @@ Important config notes:
 
 See [docs/configuration.md](docs/configuration.md) for the full setting-by-setting reference.
 
-## Compatibility And Integrations
+## Platform And Integrations
 
-This branch is intended to load the same jar on:
-
-- Paper `1.21.11`
-- Paper `26.1.2`
+This branch targets Paper `26.2` build `84` stable and newer compatible 26.2 builds.
 
 Build/runtime metadata:
 
-- compiled against Paper API `26.1.2`
-- declares plugin.yml `api-version: 1.21.11`
+- compiled against Paper API `26.2.build.84-stable`
+- declares plugin.yml `api-version: '26.2'`
 - targets Java `25`
 
 CoreProtect notes:
@@ -125,19 +124,19 @@ This plugin does not currently register PlaceholderAPI placeholders.
 Build the plugin with Gradle:
 
 ```bash
-./gradlew build
+JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk-25.0.4.jdk/Contents/Home ./gradlew build
 ```
 
 Optional clean rebuild:
 
 ```bash
-./gradlew clean build
+JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk-25.0.4.jdk/Contents/Home ./gradlew clean build
 ```
 
 Artifact naming pattern:
 
 ```text
-build/libs/1MB-XRayHunter-v<plugin-version>-<build-number>-j25-26.1.2.jar
+build/libs/1MB-XRayHunter-v<plugin-version>-<build-number>-j25-26.2.jar
 ```
 
 Build behavior:
@@ -145,6 +144,14 @@ Build behavior:
 - each successful jar build increments `version.properties`
 - each successful jar build writes a new jar into `build/libs/`
 - older jars remain unless you run `clean`
+- the normal `check`/`build` lifecycle verifies generated metadata, docs release coordinates, jar naming, and Java 25 bytecode
+
+Runtime smoke tests can select either maintained JDK without changing server scripts:
+
+```bash
+JAVA_BIN=/Library/Java/JavaVirtualMachines/jdk-25.0.4.jdk/Contents/Home/bin/java /Users/floris/Projects/Codex/servers/run-test-server --paper 26.2 --plugin build/libs/<jar>.jar --foreground
+JAVA_BIN=/Library/Java/JavaVirtualMachines/jdk-26.0.2.jdk/Contents/Home/bin/java /Users/floris/Projects/Codex/servers/run-test-server --paper 26.2 --plugin build/libs/<jar>.jar --foreground
+```
 
 ## Installation
 

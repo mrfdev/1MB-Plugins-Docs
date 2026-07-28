@@ -35,6 +35,8 @@ onembcmi.<plugin>.use
 onembcmi.<plugin>.admin
 ```
 
+The shared dormant lifecycle accepts console, `onembcmi.<plugin>.admin`, or `onembcmi.global.config.set` for `/<plugin-command> debug enable true|false`. Dormant jars remain green in `/plugins`, but player gameplay commands and runtime behavior stay unavailable. Grant the global config-set node only to staff who may change any feature's persisted configuration; otherwise grant the narrower feature admin node.
+
 Example feature permissions:
 
 ```text

@@ -6,18 +6,17 @@
 - Java `25`
 - CoreProtect installed and enabled
 
-Verified branch targets:
+Server target:
 
-- Paper `1.21.11`
-- Paper `26.1.2`
+- Paper `26.2` build `84` stable or a newer compatible 26.2 build
 
 Compile target:
 
-- Paper API `26.1.2`
+- Paper API `26.2.build.84-stable`
 
-Declared plugin compatibility floor:
+Declared plugin API version:
 
-- `api-version: 1.21.11`
+- `api-version: '26.2'`
 
 CoreProtect target:
 
@@ -56,13 +55,13 @@ The plugin keeps its own data folder as:
 Use the normal Gradle build:
 
 ```bash
-./gradlew build
+JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk-25.0.4.jdk/Contents/Home ./gradlew build
 ```
 
 Jar naming pattern:
 
 ```text
-build/libs/1MB-XRayHunter-v<plugin-version>-<build-number>-j25-26.1.2.jar
+build/libs/1MB-XRayHunter-v<plugin-version>-<build-number>-j25-26.2.jar
 ```
 
 Build behavior:
@@ -74,8 +73,10 @@ Build behavior:
 Optional clean rebuild:
 
 ```bash
-./gradlew clean build
+JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk-25.0.4.jdk/Contents/Home ./gradlew clean build
 ```
+
+The build must run on JDK `25.0.4` and emits Java `25` bytecode. Runtime smoke testing is also supported on JDK `26.0.2` through the shared runner's `JAVA_BIN` override.
 
 ## First-Run Readiness Checks
 

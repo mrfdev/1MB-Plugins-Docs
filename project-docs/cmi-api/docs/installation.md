@@ -109,7 +109,16 @@ These jars start enabled on a fresh installation:
 - `1MB-CMIAPI-WorthDrift`
 - `1MB-CMIAPI-WorthHelper`
 
-All other feature jars create `config.yml` with `enabled: false` on first install. They register no feature commands, listeners, scheduled tasks, placeholders, or integrations and appear disabled to Paper. To activate one, set `enabled: true` in `plugins/1MB-CMIAPI/<FeatureName>/config.yml` and restart the server.
+All other feature jars create `config.yml` with `enabled: false` on first install. Paper keeps those jars loaded and shows them in green under `/plugins`, while their gameplay commands, listeners, scheduled tasks, placeholders, services, and integrations remain dormant. The only remaining command surface is `info`, `help`, safe shared `debug`, and the admin lifecycle control.
+
+Activate or dormant a feature live with:
+
+```text
+/<feature-command> debug enable true
+/<feature-command> debug enable false
+```
+
+Console, the feature's `onembcmi.<feature-id>.admin` permission, or `onembcmi.global.config.set` may use this control. It atomically persists `enabled: true|false` in `plugins/1MB-CMIAPI/<FeatureName>/config.yml`; a server restart is not required. The equivalent central command remains `/1mbcmi config set <feature-id> enabled <true|false>`.
 
 This is a missing-value default, not an upgrade override. Existing `enabled: true` and `enabled: false` values are preserved. The project test server can therefore keep all of its existing beta features enabled while a fresh live installation fails closed. New feature ids also default to disabled until the live allowlist is deliberately updated and tested.
 
