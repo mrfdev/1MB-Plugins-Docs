@@ -5,9 +5,10 @@ This namespace is a public documentation-only copy from the source project regis
 - Project: `AntiPopup`
 - Project id: `antipopup`
 - Source repository: `mrfdev/AntiPopup`
-- Source commit: `6801490`
-- Source state: `local changes present at sync time`
+- Source commit: `a63c790`
+- Source state: `clean`
 - Copied files: `README.md` and `docs/`
+- Source-declared private docs exclusions: none
 - Excluded on purpose: source code, jars, servers, databases, task logs, and internal checklists
 
 Only `project-docs/antipopup/` is replaced when this source is synchronized. Other project namespaces remain untouched.
