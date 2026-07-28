@@ -42,7 +42,7 @@ The key after `onembxmastree_` can use dotted or underscore form. For example, b
 | `%onembxmastree_player.streak_best%` | `12` | Best daily present-opening streak for the placeholder player. |
 | `%onembxmastree_player.milestones_claimable%` | `1` | Claimable personal milestone count for the placeholder player. |
 | `%onembxmastree_community.gifts_opened%` | `100` | Community-wide present gifts opened. |
-| `%onembxmastree_version%` | `2.1.0-051` | Loaded plugin version. |
+| `%onembxmastree_version%` | `2.1.1-054` | Loaded plugin version. |
 
 ## Example CMI Hologram
 

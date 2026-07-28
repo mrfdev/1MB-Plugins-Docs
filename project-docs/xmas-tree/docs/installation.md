@@ -1,13 +1,14 @@
 # XMas Tree Installation and Building
 
-## Compatibility
+## Target Environment
 
 | Requirement | Value |
 | --- | --- |
 | Server | Paper 26.2 |
-| Java runtime | Java 25 or newer compatible runtime |
+| Paper release | Build 84, `STABLE` channel |
+| Java runtime | Java 25 |
 | Build target | Java 25 bytecode |
-| Compile API | Paper API `26.2.build.29-alpha` |
+| Compile API | `io.papermc.paper:paper-api:26.2.build.84-stable` |
 | Plugin API version | `26.2` |
 | Optional dependency | PlaceholderAPI `2.12.3-DEV-266` or compatible build |
 
@@ -19,12 +20,12 @@
 4. Copy the current jar into `plugins`.
 5. Start the server.
 6. Check console for startup warnings.
-7. Run `/xmastree`, `/xmastree info`, and `/xmastree debug diagnostics`.
+7. Run `/xmastree`, `/xmastree info`, `/xmastree smoke`, and `/xmastree debug diagnostics`.
 
 Current jar name:
 
 ```text
-1MB-XMas-2026-v2.1.0-051-v25-26.2.jar
+1MB-XMas-2026-v2.1.1-054-j25-26.2.jar
 ```
 
 ## Updating From an Older Event
@@ -41,6 +42,7 @@ Before testing live data:
 ```text
 /xmastree data backup all
 /xmastree data validate
+/xmastree smoke
 /xmastree debug diagnostics
 ```
 
@@ -53,7 +55,7 @@ Requirements:
 - JDK 25
 - Gradle
 - Centralized Paper 26.2 cache at `/Users/floris/Projects/Codex/servers/cache/Paper-26.2`
-- PlaceholderAPI build `266` in the centralized Paper 26.2 cache
+- PlaceholderAPI build `266` in the centralized `servers/shared-plugins/` compile-support folder
 
 Build and copy the release jar into `libs/`:
 
@@ -71,6 +73,12 @@ Print build metadata:
 
 ```bash
 gradle printBuildConfig
+```
+
+Run the complete release metadata, Java bytecode, documentation, and maintained Paper-state checks:
+
+```bash
+gradle releaseCheck
 ```
 
 Optional deprecated API lint pass:

@@ -28,7 +28,7 @@ The old `/xmas` command is not registered by this plugin, leaving it free for a 
 | `/xmastree gifts remove <index>` | `onembxmastree.command.gifts` | Removes a configured gift reward by list index. |
 | `/xmastree gifts weight <index> <weight>` | `onembxmastree.command.gifts` | Sets a positive whole-number roll weight for a gift reward. |
 | `/xmastree gifts addhand` | `onembxmastree.command.addhand` | Adds the held item to the gift pool and saves it to `config.yml`. |
-| `/xmastree addhand` | `onembxmastree.command.addhand` | Compatibility shortcut for `/xmastree gifts addhand`. |
+| `/xmastree addhand` | `onembxmastree.command.addhand` | Short form for `/xmastree gifts addhand`. |
 
 ## Staff and Admin Commands
 
@@ -47,6 +47,7 @@ The old `/xmas` command is not registered by this plugin, leaving it free for a 
 | `/xmastree data validate` | `onembxmastree.command.data` | Validates `trees.yml` for invalid IDs, owners, levels, locations, worlds, requirements, and duplicate locations. |
 | `/xmastree data report` | `onembxmastree.command.data` | Shows an event wrap-up report with tree, gift, milestone, and returning-player summary data. |
 | `/xmastree data migrate-world <from> <to> [dry-run\|apply]` | `onembxmastree.command.data` | Reviews or rewrites saved tree world names. `apply` creates a backup first. |
+| `/xmastree smoke` | `onembxmastree.command.smoke` | Runs staff smoke checks for info/reload/data/debug readiness and PlaceholderAPI registration state. |
 | `/xmastree milestones test <key> [player]` | `onembxmastree.command.test` | Previews personal milestone reward commands without claiming or running them. |
 | `/xmastree community test <key>` | `onembxmastree.command.test` | Previews community milestone reward commands without claiming or running them. |
 | `/xmastree community claim <key> confirm` | `onembxmastree.command.community.claim` | Claims a ready community milestone reward. Requires explicit `confirm`. |

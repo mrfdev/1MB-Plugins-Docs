@@ -15,6 +15,7 @@ All current permissions use the `onembxmastree` namespace.
 | `onembxmastree.command.inspect` | `op` | Allows `/xmastree inspect`. |
 | `onembxmastree.command.test` | `op` | Allows `/xmastree test sound`, `/xmastree test particle`, `/xmastree test refund`, and reward preview tests. |
 | `onembxmastree.command.data` | `op` | Allows `/xmastree data backup`, `/xmastree data validate`, `/xmastree data report`, and `/xmastree data migrate-world`. |
+| `onembxmastree.command.smoke` | `op` | Allows `/xmastree smoke`. |
 | `onembxmastree.command.journal` | `true` | Allows `/xmastree journal` and `/xmastree journal gui`. |
 | `onembxmastree.command.milestones` | `true` | Allows `/xmastree milestones`. |
 | `onembxmastree.command.milestones.claim` | `true` | Allows `/xmastree milestones claim <key>`. |

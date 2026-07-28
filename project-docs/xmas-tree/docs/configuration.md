@@ -33,7 +33,7 @@ The plugin preserves existing admin-edited values while adding missing defaults 
 
 ## Presents and Gifts
 
-`xmas.presents` controls the player-head textures used for present blocks. Modern entries should be `textures.minecraft.net` URLs. Old player-name entries still load for compatibility, but diagnostics warn about them.
+`xmas.presents` controls the player-head textures used for present blocks. Modern entries should be `textures.minecraft.net` URLs. Old player-name entries still load as legacy data, but diagnostics warn about them.
 
 `xmas.gifts` controls rewards from opened presents. Supported formats:
 

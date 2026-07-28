@@ -12,9 +12,9 @@ The Gradle build creates the current Paper 26.2 target jar in `build/libs`:
 
 | Jar | Purpose |
 | --- | --- |
-| `1MB-XMas-2026-v2.1.0-051-v25-26.2.jar` | Modern Paper 26.2 build, Java 25 bytecode. |
+| `1MB-XMas-2026-v2.1.1-054-j25-26.2.jar` | Stable Paper 26.2 build, Java 25 bytecode. |
 
-The checked-in source compiles against the Paper 26.2 API, targets Java 25, and declares `api-version: 26.2`. This fork now treats Paper 26.2 as the primary winter 2026 target, with future 26.x builds as the expected forward-compatibility path.
+The checked-in source compiles against `io.papermc.paper:paper-api:26.2.build.84-stable`, targets Java 25, and declares `api-version: 26.2`. The maintained test server uses Paper 26.2 build 84 from the `STABLE` channel.
 
 ## Features
 
@@ -28,11 +28,14 @@ The checked-in source compiles against the Paper 26.2 API, targets Java 25, and 
 - Optional resource refunds when a tree is destroyed or cleaned up after the event.
 - Configurable per-stage particles using Paper 26.2 particle names.
 - `/xmastree debug` sections for `status`, `commands`, `permissions`, `placeholders`, `config`, and `diagnostics`, plus live global boolean toggles.
+- `/xmastree smoke` staff sanity checks for post-build and post-reload testing.
 - Single primary `/xmastree` command; `/xmas` is no longer registered by this plugin.
 - Optional PlaceholderAPI placeholders for CMI holograms, ajLeaderboards, scoreboards, and menus.
 - Legacy `trees.yml` world-name alias support for renamed destination worlds.
 - Comment-preserving `config.yml` syncing that keeps admin values while safely adding missing defaults and missing template comments.
 - Present heads are tagged with plugin PDC data, so gift handling no longer depends on deprecated skull profile reads.
+- Present head textures use Paper 26.2's typed `Bukkit.createProfile` and `ResolvableProfile` APIs without reflection.
+- Generated build metadata keeps status/debug output aligned with the Gradle release version, Paper target, API coordinate, Java target, and jar name.
 
 ## Documentation
 
@@ -53,12 +56,12 @@ Canonical public docs URL:
 ## v2 changelog
 
 - modernize the plugin from the legacy deployed build to an actively maintained Paper 26.2 / Java 25 Gradle build
-- simplify the build around the active Paper 26.2 target and remove the retired 1.x local server dependency
+- simplify the build around the active Paper 26.2 target and remove the retired local server dependency
 - keep build output clean and predictable in `build/libs` with the 2026 versioned jar naming
 
 - keep legacy tree data compatible by continuing to read `plugins/X-Mas/trees.yml`
 - add world alias migration support so old saved trees can survive renamed worlds
-- preserve old event data while modernizing the runtime and admin tooling
+- preserve old event data while modernizing the Paper 26.2 runtime and admin tooling
 
 - make `/xmastree` the primary command
 - remove the old `/xmas` command alias so this plugin keeps one clear command surface
@@ -74,7 +77,7 @@ Canonical public docs URL:
 - add separate permissions for `status`, `help`, `give`, `gifts`, `addhand`, `reload`, `debug`, `debug.toggle`, `end`, and `tree.override`
 
 - add a modern debug system with named categories: `status`, `commands`, `permissions`, `placeholders`, `config`, and `diagnostics`
-- keep numeric debug pages working as a legacy shortcut
+- keep numeric debug pages working for existing staff habits
 - improve debug output formatting with clearer key/value coloring
 - make invalid debug page or section requests return a helpful response instead of silently falling back
 - add `/xmastree debug toggle <key> true|false` for live boolean config changes
@@ -82,13 +85,14 @@ Canonical public docs URL:
 - add `/xmastree inspect` for staff tree support checks, including owner, tree UUID, level, location, remaining requirements, refund preview, present timer, and scheduled presents
 - expand `/xmastree inspect` with owner online state, owner tree count, world/chunk state, built block count, next level, next-level space check, gift cooldown, nearby present count, requirement progress, spent resources, and refund state
 - make `/xmastree reload` print a reload report with locale, gift/head/tree counts, key toggles, sound volumes, and config/data warnings
+- add `/xmastree smoke` for quick post-build checks covering info/reload/data/debug/PAPI readiness
 - add `/xmastree test sound` and `/xmastree test particle` so admins can preview reloadable sound volume and particle settings without waiting for live tree interactions
 - add `/xmastree test refund` for a safe dry run of refund delivery without editing blocks, inventories, tree data, or config
 - add `/xmastree data backup` and `/xmastree data validate` for safe `trees.yml` support checks before event work or migration testing
 - add `/xmastree data migrate-world <from> <to> [dry-run|apply]` so saved tree world names can be reviewed and migrated safely with an automatic backup
 - add `/xmastree gifts list`, `/xmastree gifts roll`, and `/xmastree gifts remove <index>` for command-line gift pool management before a GUI exists
 - add weighted gift pools with `/xmastree gifts weight <index> <weight>` while keeping old simple gift entries compatible as weight `1`
-- add `/xmastree gifts addhand` as the grouped gift-management command, while keeping `/xmastree addhand` as a compatibility shortcut
+- add `/xmastree gifts addhand` as the grouped gift-management command, while keeping `/xmastree addhand` as a short form
 - add present head diagnostics for valid texture URLs, legacy player-name heads, invalid head entries, invalid gift entries, and tree-data validation warnings
 
 - add optional PlaceholderAPI support with the `onembxmastree` namespace
@@ -96,7 +100,7 @@ Canonical public docs URL:
 - add player highest-tree placeholders for CMI holograms, scoreboards, and ajLeaderboards
 - document placeholders in the README and show them in debug output
 
-- modernize message handling with MiniMessage support while keeping legacy color compatibility
+- modernize message handling with MiniMessage support while keeping legacy color-code support for old edited messages
 - improve player-facing text, prefixes, debug output, and help text
 - change the visible plugin and chat identity toward `XMas Tree` for clearer user-facing output
 - make the Christmas Crystal display name non-italic
@@ -123,6 +127,9 @@ Canonical public docs URL:
 - refresh `.gitignore` for local dev/test folders and obvious OS/build junk
 - remove deprecated skull-profile reads from gameplay logic and add an opt-in Gradle deprecation lint switch for future work
 - promote the fork to a Paper 26.2-first custom 1MB target with a minor version bump
+- move the release to Paper 26.2 stable build 84 and exact API coordinate `26.2.build.84-stable`
+- replace the temporary reflective head-profile bridge with Paper's typed `ResolvableProfile` API
+- add release drift checks for generated metadata, docs, Java 25 bytecode, and maintained PaperScript state
 
 ## Installation
 
@@ -135,8 +142,8 @@ Canonical public docs URL:
 
 For the 2026 target, use the modern Paper 26.2 jar:
 
-- Paper 26.2: `1MB-XMas-2026-v2.1.0-051-v25-26.2.jar`
-- Future 26.x: use the same jar for forward-compatibility testing
+- Paper 26.2: `1MB-XMas-2026-v2.1.1-054-j25-26.2.jar`
+- Future 26.x: use the same jar for forward testing
 
 ## Building
 
@@ -145,9 +152,9 @@ Requirements:
 - JDK 25
 - Gradle
 - Centralized Paper server cache at `/Users/floris/Projects/Codex/servers/cache/Paper-26.2`
-- PlaceholderAPI build `266` in the centralized 26.2 cache, sourced from the matching 26.2 1MB CMI-API server setup
+- PlaceholderAPI build `266` in the centralized `servers/shared-plugins/` compile-support folder
 
-This repo no longer requires a local `servers/` folder for compilation. If an ignored local `servers/` folder exists here for ad-hoc compatibility testing, treat it as optional local data rather than part of the project.
+This repo no longer requires a local `servers/` folder for compilation. If an ignored local `servers/` folder exists here for ad-hoc Paper testing, treat it as optional local data rather than part of the project.
 
 Build the current Paper 26.2 jar:
 
@@ -169,17 +176,25 @@ gradle paper262Jar
 
 `buildAllJars` now:
 
-- compiles against centralized Paper API `26.2.build.29-alpha`
+- compiles against `io.papermc.paper:paper-api:26.2.build.84-stable`
+- targets stable Paper 26.2 build `84`
 - declares plugin `api-version: 26.2`
 - keeps the Java release target at `25`
 - writes the standard jar to `build/libs/`
 - copies the same jar into `libs/` for the centralized test runner
-- prints the active build config, compile target, declared plugin API version, and forward-compatibility target
+- verifies generated metadata, checked-in release docs, Java 25 bytecode, and maintained PaperScript state
+- prints the active semantic version, build number, compile coordinate, Paper target, and Java target
 
 You can also inspect the build metadata directly with:
 
 ```bash
 gradle printBuildConfig
+```
+
+Run the complete release validation without cleaning:
+
+```bash
+gradle releaseCheck
 ```
 
 Run an explicit deprecated-API lint pass when doing future refactors:
@@ -207,7 +222,7 @@ The only command registered by this plugin is `/xmastree`. The old `/xmas` alias
 | `/xmastree gifts remove <index>` | Removes a configured gift reward by the index shown in `/xmastree gifts list`. |
 | `/xmastree gifts weight <index> <weight>` | Sets a configured gift reward's roll weight. Weight must be a positive whole number. |
 | `/xmastree gifts addhand` | Adds the item in your main hand to the gift list and saves it to `config.yml`. |
-| `/xmastree addhand` | Compatibility shortcut for `/xmastree gifts addhand`. |
+| `/xmastree addhand` | Short form for `/xmastree gifts addhand`. |
 | `/xmastree reload` | Reloads config, translations, theme, prefix, crystal item text, present heads, gifts, luck settings, and tree level requirements, then prints a reload report with warning diagnostics. |
 | `/xmastree inspect` | Inspects the tree you are looking at, or the nearest tree if no tree block is targeted. |
 | `/xmastree inspect nearest <player>` | Inspects the nearest loaded tree to an online player. |
@@ -220,6 +235,7 @@ The only command registered by this plugin is `/xmastree`. The old `/xmas` alias
 | `/xmastree data validate` | Reads `trees.yml` and reports missing worlds, invalid IDs, owners, levels, coordinates, requirements, and duplicate locations. |
 | `/xmastree data report` | Shows an event wrap-up report with saved/loaded tree counts, owners, level counts, gifts opened, milestone claim counts, legacy trees preserved, and returning-player reward candidates. |
 | `/xmastree data migrate-world <from> <to> [dry-run\|apply]` | Counts or rewrites saved tree world names in `trees.yml`. `dry-run` is the default. `apply` creates a backup first, writes the change, and should be followed by a server restart before testing migrated trees. |
+| `/xmastree smoke` | Runs staff smoke checks for info/reload/data/debug readiness and PlaceholderAPI registration state. |
 | `/xmastree journal [player]` | Shows tree count, highest tree level, gift-open totals, streaks, claimable milestone count, recent tree history, and claimed milestone history. Viewing another player requires `onembxmastree.tree.override`. |
 | `/xmastree journal gui [player]` | Opens an informational journal GUI for yourself or, with override permission, another player. |
 | `/xmastree milestones [player]` | Shows personal milestone progress and claim state. Viewing another player requires `onembxmastree.tree.override`. |
@@ -229,7 +245,7 @@ The only command registered by this plugin is `/xmastree`. The old `/xmas` alias
 | `/xmastree community test <key>` | Previews community milestone reward commands without claiming or running them. |
 | `/xmastree community claim <key> confirm` | Claims a ready community milestone reward. Defaults to staff/admin access and requires `confirm`. |
 | `/xmastree debug` | Opens the `status` debug section by default. |
-| `/xmastree debug [section\|page]` | Shows debug output for `status`, `commands`, `permissions`, `placeholders`, `config`, or `diagnostics`. Numeric pages `1-6` still work as a legacy shortcut. |
+| `/xmastree debug [section\|page]` | Shows debug output for `status`, `commands`, `permissions`, `placeholders`, `config`, or `diagnostics`. Numeric pages `1-6` still work. |
 | `/xmastree debug toggle <key> true\|false` | Toggles supported global boolean config keys and reloads the plugin config. |
 | `/xmastree end` | Ends the event and sets `core.plugin-enabled` to `false`. |
 
@@ -246,7 +262,7 @@ The preferred debug syntax is category-based:
 | `config` | `/xmastree debug config` | The current values of the toggleable global config keys. |
 | `diagnostics` | `/xmastree debug diagnostics` | Present head, gift pool, and tree-data warning counts plus warning details. |
 
-Numeric compatibility remains available for existing habits and old screenshots:
+Numeric page selectors remain available for existing habits and old screenshots:
 
 | Page | Section |
 | --- | --- |
@@ -282,6 +298,7 @@ Numeric compatibility remains available for existing habits and old screenshots:
 | `onembxmastree.command.inspect` | `op` | Allows `/xmastree inspect`. |
 | `onembxmastree.command.test` | `op` | Allows `/xmastree test sound`, `/xmastree test particle`, and `/xmastree test refund`. |
 | `onembxmastree.command.data` | `op` | Allows `/xmastree data backup`, `/xmastree data validate`, `/xmastree data report`, and `/xmastree data migrate-world`. |
+| `onembxmastree.command.smoke` | `op` | Allows `/xmastree smoke`. |
 | `onembxmastree.command.journal` | `true` | Allows `/xmastree journal` and `/xmastree journal gui`. |
 | `onembxmastree.command.milestones` | `true` | Allows `/xmastree milestones`. |
 | `onembxmastree.command.milestones.claim` | `true` | Allows `/xmastree milestones claim <key>`. |
@@ -393,7 +410,7 @@ Admins can preview or apply a world-name rewrite directly against `trees.yml`:
 
 The first command is a dry run. The `apply` command creates a timestamped backup in `plugins/X-Mas/backups/`, rewrites matching saved world names, and should be followed by a server restart before testing migrated legacy trees.
 
-Present head entries in `xmas.presents` should use `textures.minecraft.net` URLs. Old player-name entries are still accepted for compatibility, but `/xmastree reload` and `/xmastree debug diagnostics` warn about them because texture URLs are more predictable on Paper 26.x.
+Present head entries in `xmas.presents` should use `textures.minecraft.net` URLs. Old player-name entries are still accepted as legacy data, but `/xmastree reload` and `/xmastree debug diagnostics` warn about them because texture URLs are more predictable on Paper 26.x.
 
 Invalid present head entries are skipped when config loads. This includes blank values, malformed URLs, and non-`textures.minecraft.net` URLs. Invalid gift entries are also skipped and reported in diagnostics.
 
@@ -425,7 +442,7 @@ The fork also ships a small semantic pastel tag set for locale files and command
 - `<xm-command>` command/path accent text
 - `<xm-success>`, `<xm-warning>`, `<xm-error>`, `<xm-info>` status tones
 
-Legacy `&` color codes are still parsed for compatibility when a message does not contain MiniMessage tags.
+Legacy `&` color codes are still parsed when a message does not contain MiniMessage tags.
 
 The active translation path is:
 
@@ -474,7 +491,7 @@ The dotted key after `onembxmastree_` is supported to keep the placeholders read
 | `%onembxmastree_player.streak_best%` | `12` | Best daily present-opening streak for the placeholder player. |
 | `%onembxmastree_player.milestones_claimable%` | `1` | Claimable personal milestone count for the placeholder player. |
 | `%onembxmastree_community.gifts_opened%` | `100` | Community-wide present gifts opened. |
-| `%onembxmastree_version%` | `2.1.0-051` | Loaded plugin version. |
+| `%onembxmastree_version%` | `2.1.1-054` | Loaded plugin version. |
 
 CMI hologram example:
 
@@ -493,14 +510,14 @@ ajLeaderboards placeholder examples:
 %onembxmastree_player.trees%
 ```
 
-## Compatibility notes
+## Legacy Data Notes
 
 - Back up `plugins/X-Mas/trees.yml` before upgrading a live server.
 - Existing tree records are loaded from the same `trees.yml` format.
 - When saved world names no longer match the current server world names, `migration.world-aliases` can remap them without rewriting `trees.yml`.
 - Existing present head player-name entries are still accepted, but new configs should prefer Mojang texture URLs.
 - The modern jars are compiled with Java 25 bytecode and should be run on Java 25.
-- The Paper 26.2 jar is the intended winter 2026 target, and the same jar should be used for forward-compatibility testing on newer 26.x builds.
+- The Paper 26.2 jar is the intended winter 2026 target, and the same jar should be used for forward testing on newer 26.x builds.
 
 ## Security notes
 
@@ -512,7 +529,7 @@ ajLeaderboards placeholder examples:
 
 ## Support
 
-Please report bugs, compatibility problems, and upgrade questions in the GitHub issues section:
+Please report bugs, Paper upgrade problems, and questions in the GitHub issues section:
 
 [github.com/mrfdev/XMasTree/issues](https://github.com/mrfdev/XMasTree/issues)
 

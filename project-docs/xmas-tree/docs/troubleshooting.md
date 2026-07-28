@@ -8,6 +8,7 @@ Run these commands before editing data:
 /xmastree
 /xmastree info
 /xmastree reload
+/xmastree smoke
 /xmastree debug diagnostics
 /xmastree data validate
 ```
@@ -145,6 +146,7 @@ Open an issue with:
 - Java version
 - relevant console errors
 - `/xmastree debug diagnostics` output
+- `/xmastree smoke` output
 - `/xmastree data validate` output, if tree data is involved
 
 [github.com/mrfdev/XMasTree/issues](https://github.com/mrfdev/XMasTree/issues)
