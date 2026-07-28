@@ -12,7 +12,7 @@ Each trade is a separate YAML file, so staff can add, clone, disable, and test i
 
 ## Migration Notes
 
-- The current jar is `1MB-CMIAPI-Exchange-v1.0.0-522-j25-26.2.jar`.
+- The current jar is `1MB-CMIAPI-Exchange-v1.0.1-554-j25-26.2.jar`.
 - The public command is `/exchange`.
 - The old standalone command `/_trade` is not registered by this feature plugin.
 - Runtime config lives at `plugins/1MB-CMIAPI/Exchange/config.yml`.
@@ -46,6 +46,7 @@ Each trade is a separate YAML file, so staff can add, clone, disable, and test i
 /exchange clone <source> <newId>
 /exchange delete <trade>
 /exchange delete confirm <trade>
+/exchange capture floatie-token <trade>
 /exchange capture requirements <trade>
 /exchange capture icon <trade>
 /exchange capture reward <trade>
@@ -86,6 +87,7 @@ Each trade is a separate YAML file, so staff can add, clone, disable, and test i
 /exchange debug summer_event reset mrfloris
 /exchange create winter_event
 /exchange clone summer_event autumn_event
+/exchange capture floatie-token summer_event
 /exchange capture requirements summer_event
 /exchange capture icon summer_event
 /exchange capture reward summer_event
@@ -282,7 +284,73 @@ commands:
   fail: []
 ```
 
-Use `/exchange capture requirements <trade>` while the required items are in your main inventory. Use `/exchange capture icon <trade>` and `/exchange capture reward <trade>` while holding the preview item in your main hand.
+New exchanges are created disabled. Configure and test them first, then use `/exchange toggle <trade> true` as the final activation step.
+
+Use `/exchange capture requirements <trade>` while all required items are in your main inventory outside the hotbar. This captures an AND-style collection: the player must provide every captured stack.
+
+Use `/exchange capture floatie-token <trade>` while holding a secure EventFloaties token in your main hand. This command:
+
+- rejects ordinary nautilus shells and cosmetically renamed items
+- requires the `eventfloaties:floatie_id` PDC identity written by EventFloaties
+- replaces the trade's requirements with that one held token stack
+- uses the held stack amount as the number of tokens consumed per exchange
+- matches future cosmetic name, lore, and CustomModelData changes by authoritative floatie id
+
+Use `/exchange capture icon <trade>` and `/exchange capture reward <trade>` while holding the preview item in your main hand. `capture reward` sets the GUI preview only; add a success command to deliver the actual reward.
+
+## Summer Floatie Token Trades
+
+Create the real token through EventFloaties first:
+
+```text
+/floatie admin give mrfloris duck 1
+```
+
+Hold that token in your main hand. To exchange one Duck token for one Heavy Core:
+
+```text
+/exchange create floatie_duck_heavy_core
+/exchange capture floatie-token floatie_duck_heavy_core
+/exchange set display floatie_duck_heavy_core <gradient:#34d5ff:#ffd166><bold>Duck Token: Heavy Core</bold></gradient>
+/exchange set description floatie_duck_heavy_core Trade one Duck floatie token for a Heavy Core.
+/exchange set category floatie_duck_heavy_core summer_floaties
+/exchange set permission floatie_duck_heavy_core onembcmi.exchange.summer_floaties
+/exchange set max floatie_duck_heavy_core unlimited
+/exchange set worlds floatie_duck_heavy_core global
+```
+
+Hold a Heavy Core and set the GUI preview:
+
+```text
+/exchange capture reward floatie_duck_heavy_core
+```
+
+Add the actual payout and feedback:
+
+```text
+/exchange command add floatie_duck_heavy_core success console:minecraft:give %player% minecraft:heavy_core 1
+/exchange command add floatie_duck_heavy_core success message:<gradient:#34d5ff:#ffd166><bold>Floatie trade complete!</bold></gradient> <gray>You received a Heavy Core.</gray>
+```
+
+Review and dry-run before public access:
+
+```text
+/exchange debug floatie_duck_heavy_core
+/lp user mrfloris permission set onembcmi.exchange.summer_floaties true
+/exchange toggle floatie_duck_heavy_core true
+/exchange test floatie_duck_heavy_core mrfloris
+/exchange open floatie_duck_heavy_core
+```
+
+Grant the shared summer exchange permission to players only after the trade passes:
+
+```text
+/lp group default permission set onembcmi.exchange.summer_floaties true
+```
+
+For a Nether Star instead, use `minecraft:nether_star` in the reward preview and success command.
+
+Each captured floatie-token trade accepts one specific floatie id. To accept Duck, Swan, Crocodile, and other tokens for the same reward, create or clone one exchange per floatie type and capture that type's real token. To require one of every token in a single bundle trade, place one of each token in main-inventory slots outside the hotbar and run `/exchange capture requirements <trade>`.
 
 ## Command Hooks
 

@@ -40,11 +40,24 @@ test('standalone imports and curated features preserve the CMI namespace', async
   await mkdir(cmiSource, { recursive: true });
   await cp(path.join(repoRoot, 'project-docs', 'cmi-api', 'docs'), path.join(cmiSource, 'docs'), { recursive: true });
   await writeFile(path.join(cmiSource, 'README.md'), '# Refreshed CMI Technical Documentation\n');
+  await mkdir(path.join(cmiSource, 'docs', 'economy-review', 'baseline'), { recursive: true });
+  await writeFile(
+    path.join(cmiSource, 'docs', 'economy-review', 'baseline', 'private-live-config.yml'),
+    'private: true\n',
+  );
+  await writeFile(
+    path.join(cmiSource, '.public-docs-excludes'),
+    '# Paths are relative to docs/.\neconomy-review/baseline\n',
+  );
 
   runNode(repoRoot, 'scripts/sync-docs.mjs', ['--import', '--source', cmiSource]);
   assert.equal(
     await readFile(cmiReadme, 'utf8'),
     '# Refreshed CMI Technical Documentation\n',
+  );
+  await assert.rejects(
+    readFile(path.join(repoRoot, 'project-docs', 'cmi-api', 'docs', 'economy-review', 'baseline', 'private-live-config.yml')),
+    { code: 'ENOENT' },
   );
 
   const standalone = path.join(root, '1MB-Lootbox');

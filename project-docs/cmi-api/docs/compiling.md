@@ -2,8 +2,10 @@
 
 The Gradle scaffold is present. The current baseline is:
 
-- Java 25+
-- Paper 26.2+
+- Java 25 bytecode, built with JDK 25.0.4
+- Java 26.0.2 runtime compatibility smoke testing
+- Paper 26.2 stable build 84 or newer
+- Paper API `26.2.build.84-stable`
 - separate jars for every feature
 - a separate shared library jar
 
@@ -19,7 +21,35 @@ If a Gradle wrapper has not been generated yet, use the installed Gradle command
 gradle clean refreshBuildDocs build
 ```
 
-`refreshBuildDocs` updates documented jar names and build metadata examples after `buildNumber` changes. `build` also runs `verifyBuildMetadata`, which fails if docs or generated debug metadata are stale.
+`refreshBuildDocs` updates every documented 1MB jar name, semantic-version/build example, checklist metadata line, and Paper stable-build requirement from `gradle.properties`. `build` also runs `verifyBuildMetadata`, which fails if docs or generated debug metadata are stale.
+
+Build releases explicitly with JDK 25.0.4 even when the shell's default Java is newer:
+
+```bash
+JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk-25.0.4.jdk/Contents/Home \
+PATH="$JAVA_HOME/bin:$PATH" \
+gradle clean refreshBuildDocs build
+```
+
+The Gradle Java toolchain and `--release 25`-compatible compiler target keep the jars runnable on Java 25. A separate Paper startup using JDK 26.0.2 verifies forward runtime compatibility; it does not change the bytecode target.
+
+## Paper Stable Alignment
+
+The maintained test server uses PaperScript's stable channel and a build-number-free engine filename:
+
+```bash
+cd servers/Paper-26.2
+./paperscript.sh update
+./paperscript.sh status
+```
+
+The expected jar is `Paper-26.2.jar`. `verifyLocalPaperAlignment` reads PaperScript's saved state and configuration, checks the jar checksum, confirms `STABLE` channel selection and `Paper-{version}.jar` naming, and requires the installed Paper build to match `paperApiVersion`.
+
+```bash
+gradle verifyLocalPaperAlignment printProjectMetadata
+```
+
+`/1mbcmi version`, `/1mbcmi status`, inherited feature debug pages, PluginVersions debug output, and support bundles obtain the semantic version, build, Java target, Paper target, and exact compiled Paper API from generated `BuildConstants`.
 
 Stop the Paper 26.2 test server before running `syncBuiltJarsToProjectServer`. The task checks the configured world's `session.lock` and refuses to replace loaded plugin jars while Paper is running; overwriting a live jar can leave Paper's lazy plugin classloader unable to load classes that were not used before the replacement.
 
@@ -34,11 +64,11 @@ This is a read-only drift check against the public `1MB-Plugins-Docs` checkout. 
 Expected jar naming:
 
 ```text
-1MB-CMIAPI-LIB-v1.0.0-550-j25-26.2.jar
-1MB-CMIAPI-AntiFire-v1.0.0-550-j25-26.2.jar
-1MB-CMIAPI-AFKShrine-v1.0.0-550-j25-26.2.jar
-1MB-CMIAPI-StaffCenter-v1.0.0-550-j25-26.2.jar
-1MB-CMIAPI-Profile-v1.0.0-550-j25-26.2.jar
+1MB-CMIAPI-LIB-v1.0.1-554-j25-26.2.jar
+1MB-CMIAPI-AntiFire-v1.0.1-554-j25-26.2.jar
+1MB-CMIAPI-AFKShrine-v1.0.1-554-j25-26.2.jar
+1MB-CMIAPI-StaffCenter-v1.0.1-554-j25-26.2.jar
+1MB-CMIAPI-Profile-v1.0.1-554-j25-26.2.jar
 ```
 
 After a successful feature or library build, copy the output jar into:
@@ -57,6 +87,13 @@ scripts/copy-built-jars-to-local-server.sh
 The Gradle task copies all built 1MB-CMIAPI jars to the Paper test server, removes stale active project jars from that folder, and verifies the remaining active project jars match the current build metadata. The shell script targets one server folder at a time. GameTypes/BentoBox deployment is handled separately from this repository-local sync flow.
 
 Retired server instances are stored under the Git-ignored `archive/` directory. Gradle does not build against, sync to, stage from, or test against archived instances; `servers/Paper-26.2/` is the sole active repository-local target.
+
+The project-local launch script defaults to JDK 25.0.4. Override it for the Java 26 compatibility smoke without editing the script:
+
+```bash
+JAVA_BIN=/Library/Java/JavaVirtualMachines/jdk-26.0.2.jdk/Contents/Home/bin/java \
+./servers/Paper-26.2/1MB-minecraft.sh
+```
 
 After the Paper test server has been used for live testing, stage exactly those tested jars for a manual live deployment:
 

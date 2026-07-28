@@ -15,6 +15,7 @@ This directory contains the long-form documentation for the 1MB CMIAPI project.
 - [Hopper Settings Guide](hopper-settings-guide.md)
 - [Plugin Metadata And Debug Output](plugin-metadata.md)
 - [Release Process](release.md)
+- [Paper And Java Release Update Prompt](paper-java-release-update-prompt.md)
 - [Credits](credits.md)
 - [Development Rules](development-rules.md)
 
@@ -30,6 +31,7 @@ For developers:
 
 - start with [Development Rules](development-rules.md)
 - check [Plugin Metadata And Debug Output](plugin-metadata.md)
+- use [Paper And Java Release Update Prompt](paper-java-release-update-prompt.md) when aligning another plugin project
 - keep [Release Process](release.md) current when the build number changes
 
 For support/debugging:
@@ -42,6 +44,7 @@ For support/debugging:
 
 - [Plugin Index](plugins/README.md)
 - [1MB-CMIAPI-Lib](plugins/1mb-cmiapi-lib.md)
+- [Wiki Assistant](plugins/wiki.md)
 - [AFKShrine](plugins/afkshrine.md)
 - [RecordingMode](plugins/recordingmode.md)
 - [SellStreaks](plugins/sellstreaks.md)

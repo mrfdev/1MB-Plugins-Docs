@@ -14,6 +14,7 @@ These are the first feature candidates now using the shared library scaffold:
 | Category | Plugin | Status | Docs |
 | --- | --- | --- | --- |
 | Shared Library | 1MB-CMIAPI-Lib | Shared diagnostics, feature registry, config/debug helpers, translations, GUI examples, safe action rules, and global placeholders | [1MB-CMIAPI-Lib](plugins/1mb-cmiapi-lib.md) |
+| Player Fun | Wiki Assistant | Deterministic local Minecraft references, reviewed concise answers, validated article links, explicit ambiguity choices, safe Wiki search fallback, and an owner-resolvable passive topic wishlist | [Wiki Assistant](plugins/wiki.md) |
 | Player Fun | AFKShrine | Visual AFK effects, permission-gated presets, highlighted return data, points, quests, separately permissioned lore-book exchanges, readiness checks, and staff reports | [AFKShrine](plugins/afkshrine.md) |
 | Player Fun | RecordingMode | Per-player recording quiet mode | [RecordingMode](plugins/recordingmode.md) |
 | Player Fun | SellStreaks | CMI sell streaks and daily market goals | [SellStreaks](plugins/sellstreaks.md) |

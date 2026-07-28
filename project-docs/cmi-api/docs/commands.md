@@ -168,7 +168,7 @@ Feature plugins that do not implement their own local debug command inherit a sh
 /<plugin> debug all
 ```
 
-The overview page shows the plugin name, technical introduction, category, docs URL, full `/1mbcmi debug plugin <id> all` support command, version/build, target PaperMC version, Java target, runtime Java version, Bukkit/Paper API string, server engine string, and links to the paginated subpages. The health page shows config default repair status, missing keys, validation issues, and metadata counts. In game, shared debug lists stay paginated; console senders receive all shared paginated rows in one command. Plugins with a richer custom debug command keep their own behavior.
+The overview page shows the plugin name, technical introduction, category, docs URL, full `/1mbcmi debug plugin <id> all` support command, version/build, target PaperMC version, exact compiled Paper API coordinate/channel/build, Java target, runtime Java version, Bukkit/Paper runtime API string, server engine string, and links to the paginated subpages. The health page shows config default repair status, missing keys, validation issues, and metadata counts. In game, shared debug lists stay paginated; console senders receive all shared paginated rows in one command. Plugins with a richer custom debug command keep their own behavior.
 
 Feature `/help` pages are intentionally player-facing: they list commands available to the sender, but do not print permission nodes. Use `/<plugin> debug permissions [page]` or `/1mbcmi debug plugin <id> permissions` when staff need the permission-oriented view.
 
@@ -364,12 +364,59 @@ Every feature command supports a plain `info` subcommand that gives a player-fri
 Examples:
 
 ```text
+/wiki info
 /afkshrine info
 /chillparty info
 /recording info
 /visit info
 /passport info
 ```
+
+Wiki Assistant:
+
+```text
+/wiki
+/wiki how do squids spawn
+/wiki how do I breed frogs
+/wiki ancient city
+/wiki stone bricks
+/wiki choose 1
+/wiki recent
+/wikiadmin status
+/wikiadmin lookup squid spawning
+/wikiadmin cache stats
+/wikiadmin cache inspect Squid
+/wikiadmin cache refresh Squid --confirm
+/wikiadmin cache invalidate Squid --confirm
+/wikiadmin cache prune --dry-run
+/wikiadmin cache prune --confirm
+/wikiadmin aliases list
+/wikiadmin aliases add squid locations Squid
+/wikiadmin aliases remove squid locations --confirm
+/wikiadmin wishlist top
+/wikiadmin wishlist top 20
+/wikiadmin wishlist stats
+/wikiadmin wishlist inspect stone bricks
+/wikiadmin wishlist resolve deepslate https://minecraft.wiki/w/Deepslate
+/wikiadmin wishlist resolve deepslate https://minecraft.wiki/w/Deepslate --confirm
+/wikiadmin wishlist mark added stone bricks --confirm
+/wikiadmin wishlist mark ignored unsafe topic --confirm
+/wikiadmin wishlist prune --dry-run
+/wikiadmin wishlist prune --confirm
+/wikiadmin knowledge validate
+/wikiadmin knowledge reload
+/wikiadmin remote test --dry-run
+/wikiadmin remote test --confirm
+/wikiadmin policy status
+/wikiadmin reload
+/wikiadmin debug all
+```
+
+`/wiki choose` only accepts the numbered candidates from that player's current
+short-lived ambiguity session. `/wiki recent` is memory-only and is cleared on
+disconnect. Manual refresh is owner-only and still obeys every policy, queue,
+interval, budget, backoff, and circuit gate. This release has no production
+remote provider, so confirmed remote tests make no request.
 
 AFKShrine:
 
@@ -833,6 +880,7 @@ Exchange:
 /exchange clone summer_event autumn_event
 /exchange delete winter_event
 /exchange delete confirm winter_event
+/exchange capture floatie-token summer_event
 /exchange capture requirements summer_event
 /exchange capture icon summer_event
 /exchange capture reward summer_event

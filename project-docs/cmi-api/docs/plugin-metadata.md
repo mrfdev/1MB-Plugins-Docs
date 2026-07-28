@@ -14,12 +14,12 @@ Each plugin should register:
 id: afkshrine
 name: AFKShrine
 category: player-fun
-version: 1.0.0
-build: 550
+version: 1.0.1
+build: 554
 java-target: 25
 paper-target: 26.2
 jar-prefix: 1MB-CMIAPI
-jar-name: 1MB-CMIAPI-AFKShrine-v1.0.0-550-j25-26.2.jar
+jar-name: 1MB-CMIAPI-AFKShrine-v1.0.1-554-j25-26.2.jar
 repo: https://github.com/mrfdev/1MB-CMIAPI
 public-docs: https://docs.1moreblock.com
 dependencies: CMI, CMILib, 1MB-CMIAPI-LIB
@@ -43,6 +43,7 @@ generic
 `/1mbcmi debug plugin <plugin>` should show:
 
 - plugin id, display name, category, version, build, jar name
+- Java target, runtime Java, Paper target, exact compiled Paper API, runtime API, and server engine
 - health state: active, plugin-disabled, config-disabled, missing-dependencies, validation-failed, or runtime-missing
 - CMI, CMILib, and shared library hook status
 - optional hook status for PlaceholderAPI, LuckPerms, and Vault

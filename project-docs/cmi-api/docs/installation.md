@@ -10,71 +10,108 @@ Paper loads normal plugin jars from the top-level server `/plugins/` directory, 
 plugins/
   CMI-<version>.jar
   CMILib<version>.jar
-  1MB-CMIAPI-LIB-v1.0.0-550-j25-26.2.jar
-  1MB-CMIAPI-AntiFire-v1.0.0-550-j25-26.2.jar
-  1MB-CMIAPI-AFKShrine-v1.0.0-550-j25-26.2.jar
-  1MB-CMIAPI-RecordingMode-v1.0.0-550-j25-26.2.jar
-  1MB-CMIAPI-SellStreaks-v1.0.0-550-j25-26.2.jar
-  1MB-CMIAPI-ScheduledTips-v1.0.0-550-j25-26.2.jar
-  1MB-CMIAPI-Visit-v1.0.0-550-j25-26.2.jar
-  1MB-CMIAPI-PassportDiscovery-v1.0.0-550-j25-26.2.jar
-  1MB-CMIAPI-SocialGatherings-v1.0.0-550-j25-26.2.jar
-  1MB-CMIAPI-JourneyMap-v1.0.0-550-j25-26.2.jar
-  1MB-CMIAPI-KitStreaks-v1.0.0-550-j25-26.2.jar
-  1MB-CMIAPI-MessageFont-v1.0.0-550-j25-26.2.jar
-  1MB-CMIAPI-Nick-v1.0.0-550-j25-26.2.jar
-  1MB-CMIAPI-EmoteMenu-v1.0.0-550-j25-26.2.jar
-  1MB-CMIAPI-PvPToggle-v1.0.0-550-j25-26.2.jar
-  1MB-CMIAPI-Boosters-v1.0.0-550-j25-26.2.jar
-  1MB-CMIAPI-NameMC-v1.0.0-550-j25-26.2.jar
-  1MB-CMIAPI-Exchange-v1.0.0-550-j25-26.2.jar
-  1MB-CMIAPI-VoteTokens-v1.0.0-550-j25-26.2.jar
-  1MB-CMIAPI-DiscordChat-v1.0.0-550-j25-26.2.jar
-  1MB-CMIAPI-GameTypes-v1.0.0-550-j25-26.2.jar
-  1MB-CMIAPI-BirthdayLanterns-v1.0.0-550-j25-26.2.jar
-  1MB-CMIAPI-LavaBoots-v1.0.0-550-j25-26.2.jar
-  1MB-CMIAPI-Spawners-v1.0.0-550-j25-26.2.jar
-  1MB-CMIAPI-Collect-v1.0.0-550-j25-26.2.jar
-  1MB-CMIAPI-CoconutHunt-v1.0.0-550-j25-26.2.jar
-  1MB-CMIAPI-Forage-v1.0.0-550-j25-26.2.jar
-  1MB-CMIAPI-AutoSell-v1.0.0-550-j25-26.2.jar
-  1MB-CMIAPI-MobHat-v1.0.0-550-j25-26.2.jar
-  1MB-CMIAPI-PlayerTodo-v1.0.0-550-j25-26.2.jar
-  1MB-CMIAPI-Refer-v1.0.0-550-j25-26.2.jar
-  1MB-CMIAPI-TPAuto-v1.0.0-550-j25-26.2.jar
-  1MB-CMIAPI-Menu-v1.0.0-550-j25-26.2.jar
-  1MB-CMIAPI-StaffCenter-v1.0.0-550-j25-26.2.jar
-  1MB-CMIAPI-Profile-v1.0.0-550-j25-26.2.jar
-  1MB-CMIAPI-FilterLab-v1.0.0-550-j25-26.2.jar
-  1MB-CMIAPI-FilterGuard-v1.0.0-550-j25-26.2.jar
-  1MB-CMIAPI-WarningLens-v1.0.0-550-j25-26.2.jar
-  1MB-CMIAPI-NotableMsg-v1.0.0-550-j25-26.2.jar
-  1MB-CMIAPI-CmdCostDashboard-v1.0.0-550-j25-26.2.jar
-  1MB-CMIAPI-CMIConfig-v1.0.0-550-j25-26.2.jar
-  1MB-CMIAPI-ConsoleNoiseRouter-v1.0.0-550-j25-26.2.jar
-  1MB-CMIAPI-EconomyGuardian-v1.0.0-550-j25-26.2.jar
-  1MB-CMIAPI-StartupDoctor-v1.0.0-550-j25-26.2.jar
-  1MB-CMIAPI-UpdateSmoke-v1.0.0-550-j25-26.2.jar
-  1MB-CMIAPI-PluginVersions-v1.0.0-550-j25-26.2.jar
-  1MB-CMIAPI-PlaceholderHealth-v1.0.0-550-j25-26.2.jar
-  1MB-CMIAPI-Potions-v1.0.0-550-j25-26.2.jar
-  1MB-CMIAPI-Upgrade-v1.0.0-550-j25-26.2.jar
-  1MB-CMIAPI-EndCrystals-v1.0.0-550-j25-26.2.jar
-  1MB-CMIAPI-WorldSnapshot-v1.0.0-550-j25-26.2.jar
-  1MB-CMIAPI-SparkReviewer-v1.0.0-550-j25-26.2.jar
-  1MB-CMIAPI-Hoppers-v1.0.0-550-j25-26.2.jar
-  1MB-CMIAPI-EventRecorder-v1.0.0-550-j25-26.2.jar
-  1MB-CMIAPI-CMIProbe-v1.0.0-550-j25-26.2.jar
-  1MB-CMIAPI-CMIDatabase-v1.0.0-550-j25-26.2.jar
-  1MB-CMIAPI-PlaceholderProbe-v1.0.0-550-j25-26.2.jar
-  1MB-CMIAPI-PermissionProbe-v1.0.0-550-j25-26.2.jar
-  1MB-CMIAPI-CMIPlaceholderCheck-v1.0.0-550-j25-26.2.jar
-  1MB-CMIAPI-1MBPlaceholders-v1.0.0-550-j25-26.2.jar
-  1MB-CMIAPI-WarpAudit-v1.0.0-550-j25-26.2.jar
-  1MB-CMIAPI-WorthDrift-v1.0.0-550-j25-26.2.jar
+  1MB-CMIAPI-LIB-v1.0.1-554-j25-26.2.jar
+  1MB-CMIAPI-AntiFire-v1.0.1-554-j25-26.2.jar
+  1MB-CMIAPI-AFKShrine-v1.0.1-554-j25-26.2.jar
+  1MB-CMIAPI-RecordingMode-v1.0.1-554-j25-26.2.jar
+  1MB-CMIAPI-SellStreaks-v1.0.1-554-j25-26.2.jar
+  1MB-CMIAPI-ScheduledTips-v1.0.1-554-j25-26.2.jar
+  1MB-CMIAPI-Visit-v1.0.1-554-j25-26.2.jar
+  1MB-CMIAPI-PassportDiscovery-v1.0.1-554-j25-26.2.jar
+  1MB-CMIAPI-SocialGatherings-v1.0.1-554-j25-26.2.jar
+  1MB-CMIAPI-JourneyMap-v1.0.1-554-j25-26.2.jar
+  1MB-CMIAPI-KitStreaks-v1.0.1-554-j25-26.2.jar
+  1MB-CMIAPI-MessageFont-v1.0.1-554-j25-26.2.jar
+  1MB-CMIAPI-Nick-v1.0.1-554-j25-26.2.jar
+  1MB-CMIAPI-EmoteMenu-v1.0.1-554-j25-26.2.jar
+  1MB-CMIAPI-PvPToggle-v1.0.1-554-j25-26.2.jar
+  1MB-CMIAPI-Boosters-v1.0.1-554-j25-26.2.jar
+  1MB-CMIAPI-NameMC-v1.0.1-554-j25-26.2.jar
+  1MB-CMIAPI-Exchange-v1.0.1-554-j25-26.2.jar
+  1MB-CMIAPI-VoteTokens-v1.0.1-554-j25-26.2.jar
+  1MB-CMIAPI-DiscordChat-v1.0.1-554-j25-26.2.jar
+  1MB-CMIAPI-GameTypes-v1.0.1-554-j25-26.2.jar
+  1MB-CMIAPI-BirthdayLanterns-v1.0.1-554-j25-26.2.jar
+  1MB-CMIAPI-LavaBoots-v1.0.1-554-j25-26.2.jar
+  1MB-CMIAPI-Spawners-v1.0.1-554-j25-26.2.jar
+  1MB-CMIAPI-Collect-v1.0.1-554-j25-26.2.jar
+  1MB-CMIAPI-CoconutHunt-v1.0.1-554-j25-26.2.jar
+  1MB-CMIAPI-Forage-v1.0.1-554-j25-26.2.jar
+  1MB-CMIAPI-AutoSell-v1.0.1-554-j25-26.2.jar
+  1MB-CMIAPI-MobHat-v1.0.1-554-j25-26.2.jar
+  1MB-CMIAPI-PlayerTodo-v1.0.1-554-j25-26.2.jar
+  1MB-CMIAPI-Refer-v1.0.1-554-j25-26.2.jar
+  1MB-CMIAPI-TPAuto-v1.0.1-554-j25-26.2.jar
+  1MB-CMIAPI-Menu-v1.0.1-554-j25-26.2.jar
+  1MB-CMIAPI-StaffCenter-v1.0.1-554-j25-26.2.jar
+  1MB-CMIAPI-Profile-v1.0.1-554-j25-26.2.jar
+  1MB-CMIAPI-FilterLab-v1.0.1-554-j25-26.2.jar
+  1MB-CMIAPI-FilterGuard-v1.0.1-554-j25-26.2.jar
+  1MB-CMIAPI-WarningLens-v1.0.1-554-j25-26.2.jar
+  1MB-CMIAPI-NotableMsg-v1.0.1-554-j25-26.2.jar
+  1MB-CMIAPI-CmdCostDashboard-v1.0.1-554-j25-26.2.jar
+  1MB-CMIAPI-CMIConfig-v1.0.1-554-j25-26.2.jar
+  1MB-CMIAPI-ConsoleNoiseRouter-v1.0.1-554-j25-26.2.jar
+  1MB-CMIAPI-EconomyGuardian-v1.0.1-554-j25-26.2.jar
+  1MB-CMIAPI-StartupDoctor-v1.0.1-554-j25-26.2.jar
+  1MB-CMIAPI-UpdateSmoke-v1.0.1-554-j25-26.2.jar
+  1MB-CMIAPI-PluginVersions-v1.0.1-554-j25-26.2.jar
+  1MB-CMIAPI-PlaceholderHealth-v1.0.1-554-j25-26.2.jar
+  1MB-CMIAPI-Potions-v1.0.1-554-j25-26.2.jar
+  1MB-CMIAPI-Upgrade-v1.0.1-554-j25-26.2.jar
+  1MB-CMIAPI-EndCrystals-v1.0.1-554-j25-26.2.jar
+  1MB-CMIAPI-WorldSnapshot-v1.0.1-554-j25-26.2.jar
+  1MB-CMIAPI-SparkReviewer-v1.0.1-554-j25-26.2.jar
+  1MB-CMIAPI-Hoppers-v1.0.1-554-j25-26.2.jar
+  1MB-CMIAPI-EventRecorder-v1.0.1-554-j25-26.2.jar
+  1MB-CMIAPI-CMIProbe-v1.0.1-554-j25-26.2.jar
+  1MB-CMIAPI-CMIDatabase-v1.0.1-554-j25-26.2.jar
+  1MB-CMIAPI-PlaceholderProbe-v1.0.1-554-j25-26.2.jar
+  1MB-CMIAPI-PermissionProbe-v1.0.1-554-j25-26.2.jar
+  1MB-CMIAPI-CMIPlaceholderCheck-v1.0.1-554-j25-26.2.jar
+  1MB-CMIAPI-1MBPlaceholders-v1.0.1-554-j25-26.2.jar
+  1MB-CMIAPI-WarpAudit-v1.0.1-554-j25-26.2.jar
+  1MB-CMIAPI-WorthDrift-v1.0.1-554-j25-26.2.jar
 ```
 
 The common `1MB-CMIAPI-` prefix keeps the project jars together when sorted by filename.
+
+## First-Install Activation Policy
+
+It is safe to place the complete current 1MB-CMIAPI jar set in the live server's top-level `plugins/` directory. First-install defaults are centrally controlled rather than left to each feature implementation.
+
+These jars start enabled on a fresh installation:
+
+- `1MB-CMIAPI-LIB`
+- `1MB-CMIAPI-1MBPlaceholders`
+- `1MB-CMIAPI-1MBStaffMsg`
+- `1MB-CMIAPI-AFKShrine`
+- `1MB-CMIAPI-AntiFire`
+- `1MB-CMIAPI-AutoSell`
+- `1MB-CMIAPI-Boosters`
+- `1MB-CMIAPI-CoconutHunt`
+- `1MB-CMIAPI-EmoteMenu`
+- `1MB-CMIAPI-EndCrystals`
+- `1MB-CMIAPI-Exchange`
+- `1MB-CMIAPI-GameTypes`
+- `1MB-CMIAPI-Hoppers`
+- `1MB-CMIAPI-Menu`
+- `1MB-CMIAPI-MobHat`
+- `1MB-CMIAPI-NameMC`
+- `1MB-CMIAPI-NotableMsg`
+- `1MB-CMIAPI-PlayerTodo`
+- `1MB-CMIAPI-PluginVersions`
+- `1MB-CMIAPI-Profile`
+- `1MB-CMIAPI-PvPToggle`
+- `1MB-CMIAPI-RecordingMode`
+- `1MB-CMIAPI-Visit`
+- `1MB-CMIAPI-VoteTokens`
+- `1MB-CMIAPI-WorthDrift`
+- `1MB-CMIAPI-WorthHelper`
+
+All other feature jars create `config.yml` with `enabled: false` on first install. They register no feature commands, listeners, scheduled tasks, placeholders, or integrations and appear disabled to Paper. To activate one, set `enabled: true` in `plugins/1MB-CMIAPI/<FeatureName>/config.yml` and restart the server.
+
+This is a missing-value default, not an upgrade override. Existing `enabled: true` and `enabled: false` values are preserved. The project test server can therefore keep all of its existing beta features enabled while a fresh live installation fails closed. New feature ids also default to disabled until the live allowlist is deliberately updated and tested.
 
 Use `gradle syncBuiltJarsToProjectServer` for the repository-local Paper test server. After testing that exact folder, `gradle stageTestedJarsForLive` creates a clean `build/tested-jars/live/` handoff set for manual live deployment. The project does not use RCON for deployment.
 

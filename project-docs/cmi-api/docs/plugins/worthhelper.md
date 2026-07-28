@@ -131,7 +131,7 @@ review.special-materials
 review.hierarchy-notes
 ```
 
-`cmi.worth-file` defaults to `plugins/CMI/Saves/Worth.yml` relative to the running server root. Relative paths make the same jar work on the CMI-API test server and the isolated 1MBEconomy test server.
+`cmi.worth-file` defaults to `plugins/CMI/Saves/Worth.yml` relative to the running server root. Relative paths make the same jar work on the maintained CMI-API test server and other dedicated staging servers.
 
 ## Data
 
@@ -173,6 +173,6 @@ Suggested server test flow:
 /worthhelper debug all
 ```
 
-Then open the exported Markdown from the shared cache folder and compare suggested commands against the 1MBEconomy workbook/source-of-truth before changing CMI worth values manually.
+Then open the exported Markdown from the shared cache folder and compare suggested commands against the [migrated economy review baseline](../economy-review/README.md) before changing CMI worth values manually.
 
 [Plugin index](README.md)

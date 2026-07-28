@@ -1,6 +1,6 @@
 # Coconut Hunt
 
-CoconutHunt adds a reusable seven-day `/coconut` event for the Summer Beach. The Summer 2026 edition uses 70 special coconut heads, with 10 unlocking on each of seven cumulative days. Players return as new waves unlock, find each coconut once for themselves, build a daily participation streak, help community goals, claim milestone rewards, earn Coconut Points, and redeem those points for configured MobHat cosmetics.
+CoconutHunt adds a reusable seven-day `/coconut` event for the Summer Beach. The Summer 2026 edition uses 70 special coconut heads, with 10 unlocking on each of seven cumulative days. Players return as new waves unlock, find each coconut once for themselves, build a daily participation streak, help community goals, claim milestone rewards, earn Coconut Points, and redeem those points for configured cosmetics and event rewards.
 
 CoconutHunt remains an isolated player-fun feature plugin, but its mature event logic is now a reusable themed-hunt engine. The same `1MB-CMIAPI-CoconutHunt` jar serves Summer through `/coconut` and Halloween through `/ghosthunt`; keeping one plugin preserves every legacy CoconutHunt file, PDC marker, permission, placeholder, registry entry, snapshot, and player record without a risky data move. See [Halloween Ghost Hunt](ghosthunt.md) for the Ghost edition. The plugin uses the shared 1MB library for commands, translations, GUI safety, build metadata, PlaceholderAPI, and playerdata, but it does not change Collect, BirthdayLanterns, KitStreaks, SocialGatherings, or MobHat behavior.
 
@@ -16,7 +16,8 @@ CoconutHunt remains an isolated player-fun feature plugin, but its mature event 
 - Coconut Points with earned, spent, balance, and source totals
 - capped nearby-player bonus points without shared discovery credit
 - unique community discovery totals, daily goals, contribution gates, and claims
-- a configurable MobHat redemption shop with confirmation and support regrant
+- a configurable event shop with MobHat cosmetics, repeatable kits, fixed or one-of-many random delivery commands, confirmation, and support recovery
+- an authored 25-point Summer Consumables & Fireworks kit plus a disabled 5-point randomized Summer Secret template
 - a bundled coconut head texture with optional custom texture override and automatic loaded-head refresh
 - private per-player Paper TextDisplay holograms, particles, spotting sounds, and discovery effects
 - configurable discovery-title timing plus clear current-wave completion guidance
@@ -45,10 +46,10 @@ The overview and related pages show:
 - collection, streak, community, and perfect rewards with clear claimable or claimed states
 - Coconut Point balance, earned and spent totals, and a readable earning history
 - community totals, the daily goal, next target, and personal contribution
-- MobHat cosmetic offers with requirements, prices, ownership state, and purchase confirmation
+- event-shop offers with requirements, prices, repeatability or ownership state, and purchase confirmation
 - private proximity hints, spotting effects, discovery celebrations, and the `Visit the Summer Beach` action
 
-The other pages cover wave progress, collection milestones, the seven-day calendar, community rewards, all claims, the perfect-completion checklist, Coconut Points, the MobHat shop, help, and a discovered-coconut list. Undiscovered coordinates are never shown to normal players.
+The other pages cover wave progress, collection milestones, the seven-day calendar, community rewards, all claims, the perfect-completion checklist, Coconut Points, the event shop, help, and a discovered-coconut list. Undiscovered coordinates are never shown to normal players.
 
 Every standard six-row page uses the same footer: the player's head opens personal progress, `Back` returns to the prior CoconutHunt page, the nether star returns to the CoconutHunt overview, `Back to Server /menu` closes the event GUI and runs `/menu`, and the barrier closes the inventory. The help page's `Player Documentation` button keeps the long URL out of item lore; clicking it closes the GUI and posts the complete clickable `https://docs.1moreblock.com/player-guides/plugins/coconut/` link in chat. Coconut Points use a gold-nugget icon, and the MobHat shop uses an emerald trading icon rather than an unresolved player head.
 
@@ -255,13 +256,10 @@ Claims, shop purchases, and staff regrants use durable idempotent receipts. Clai
 The perfect 2026 reward requires all of the following:
 
 - every coconut id in the immutable snapshot was found
-- valid participation occurred on every configured event date
-- every required collection milestone was earned
-- every required streak milestone was earned
-- all required personal collection and streak rewards were claimed first
+- valid participation occurred on every configured event date, completing the seven-day participation streak
 - the perfect reward was not already claimed
 
-`Claim all` processes normal eligible rewards before the perfect reward. The default perfect command is:
+Intermediate collection, streak, and community rewards do not need to be claimed first. `Claim all` still processes normal eligible rewards before the perfect reward so players receive their point bonuses in a natural order. The default perfect command is:
 
 ```text
 cmi kit coconut_reward_box_2026 {player} -s
@@ -269,19 +267,50 @@ cmi kit coconut_reward_box_2026 {player} -s
 
 Confirm that this CMI kit exists before launch. Community success is not part of personal perfect eligibility.
 
-## Coconut Points And MobHat
+## Coconut Points And The Event Shop
 
-The default point sources are first finds, collection claims, streak claims, qualifying community claims, perfect completion, and capped social-search bonuses. A nearby participant never receives shared coconut credit; each player must click and discover the coconut independently.
+The default point sources are first finds, collection claims, streak claims, qualifying community claims, and capped social-search bonuses. The perfect reward currently delivers its kit without adding another point bonus. A nearby participant never receives shared coconut credit; each player must click and discover the coconut independently.
 
-The reusable reward profile contains Rabbit, Armadillo, Frog, and Turtle MobHat examples. This 70-coconut edition exposes only Rabbit and Armadillo because offers above an event's reachable total are filtered out automatically. Every offer has a stable id, icon, lore, minimum lifetime finds, point price, one-time/repeatable rule, MobHat type, and a list of commands. Found count is only an eligibility gate. Purchases deduct Coconut Points, never found progress.
+The reusable reward profile contains Rabbit, Armadillo, Frog, and Turtle MobHat examples plus a modest repeatable event kit. This 70-coconut edition exposes these reachable purchases:
 
-Before purchase, CoconutHunt rechecks the player's balance, found count, prior purchase id, existing permission, MobHat/LuckPerms availability, and the complete command allowlist. The purchase id and point charge are saved before commands run. If command dispatch then fails, the purchase remains recorded to prevent duplication; staff can inspect the durable receipt and correct delivery without charging again:
+| Offer | Minimum found | Price | Rule | Delivery |
+| --- | ---: | ---: | --- | --- |
+| Rabbit MobHat | 25 | 30 Coconut Points | one time | `onembcmi.mobhat.mob.rabbit` |
+| Summer Consumables & Fireworks | 25 | 25 Coconut Points | repeatable | `coconut_summer_consumables_2026` CMI kit |
+| Armadillo MobHat | 50 | 60 Coconut Points | one time | `onembcmi.mobhat.mob.armadillo` |
+
+Buying both MobHats costs 90 Coconut Points. A player who finds all 70 and claims every personal collection and streak bonus earns 156 points before optional community or teamwork bonuses, leaving at least 66 points after both MobHats. They can spend 50 of those points on two consumables kits and still retain 16 points. Additional community and social-search points can fund more repeat purchases.
+
+The `summer_secret` template is also configured as a repeatable 5-point offer, but defaults to `enabled: false` with no reward choices. Leave it disabled until `random-commands` contains reviewed commands. When enabled, every purchase selects exactly one random command before the transaction begins and stores that exact selection in the durable receipt.
+
+Offers above an event's reachable total are filtered out automatically. Every offer has a stable id, icon, lore, minimum lifetime finds, point price, one-time/repeatable rule, optional MobHat requirement, fixed command list, and optional random command list. Found count is only an eligibility gate. Purchases deduct Coconut Points, never found progress. The default Rabbit and Armadillo commands grant their matching LuckPerms node, and regression tests protect those command templates.
+
+Before purchase, CoconutHunt rechecks the player's balance, found count, one-time purchase state, relevant existing permission, required integrations, delivery commands, and complete command allowlist. Generic kits remain available when MobHat is absent. The purchase marker and point charge are saved before commands run. If command dispatch then fails, the purchase remains recorded to prevent duplication; staff can inspect its durable receipt. A deterministic purchase can also be regranted without another point charge:
 
 ```text
 /coconut admin shop regrant <online-player> <offer-id>
 ```
 
-If MobHat or LuckPerms is unavailable, the hunt and all non-shop pages remain functional and the shop shows an unavailable state.
+Randomized offers deliberately refuse this generic regrant command because a fresh random choice could produce a different reward. Recover those from the exact command stored in `/coconut debug transactions`. If MobHat or LuckPerms is unavailable, only MobHat offers show an unavailable state; generic event-kit offers and the rest of the hunt remain functional.
+
+### Summer Consumables Kit Setup
+
+The authored 25-point bundle contains:
+
+- 16 `Summer Skyrockets`, flight duration 1, with a colorful burst, trail, and flicker
+- 4 renamed honey bottles called `Coconut Cooler`
+- 8 renamed cookies called `Coconut Macaroons`
+- 8 renamed melon slices called `Chilled Watermelon`
+
+With `mrfloris` online and enough inventory room, run this from the test-server console:
+
+```text
+coconut admin kititems give mrfloris summer_consumables
+```
+
+Delivery is all-or-nothing: if the four stacks cannot fit, the inventory is restored and no items are dropped. The generated items carry namespaced CoconutHunt identity and can be captured into CMI's `coconut_summer_consumables_2026` kit. Create or update that kit on the test server, copy its reviewed CMI kit definition to live, and prove the console command `cmi kit coconut_summer_consumables_2026 mrfloris -s` before allowing purchases.
+
+Additional point sinks can be configured without changing the progression engine. Prefer one-time cosmetics, titles, emotes, particles, keepsakes, or modest event kits. Repeatable rewards should be priced and tested deliberately so optional teamwork/community points remain useful without becoming a route into the main server economy.
 
 ## Commands
 
@@ -315,7 +344,7 @@ Player commands:
 | `/coconut community` | Opens community totals, goals, rewards, and personal contribution. | `/coconut community` |
 | `/coconut rewards` | Opens all collection, streak, community, and perfect reward states. | `/coconut rewards` |
 | `/coconut points` | Opens Coconut Point balance, earned/spent totals, and earning history. | `/coconut points` |
-| `/coconut shop` | Opens the confirmation-gated MobHat cosmetic shop. | `/coconut shop` |
+| `/coconut shop` | Opens the confirmation-gated Coconut Points event shop. | `/coconut shop` |
 | `/coconut claim all` | Claims every currently eligible reward in the correct dependency order. | `/coconut claim all` |
 | `/coconut history [event-id]` | Lists configured Coconut editions or opens one exact historical edition. | `/coconut history summer_2026` |
 
@@ -351,6 +380,7 @@ Staff commands:
 /coconut admin reset event --confirm
 /coconut admin report [event-id]
 /coconut admin shop regrant <online-player> <offer-id>
+/coconut admin kititems give <online-player> summer_consumables
 /hunt admin event list
 /hunt admin event status <event-id>
 /hunt admin event activate <event-id> --dry-run
@@ -390,6 +420,7 @@ Admin player resolution uses the shared safe cached/online resolver. Every reset
 | `onembcmi.CoconutHunt.admin.inspect` | false | Inspect players and regrant recorded shop purchases. |
 | `onembcmi.CoconutHunt.admin.reset` | false | Dry-run or confirm a player reset or isolated debug-event reset. |
 | `onembcmi.CoconutHunt.admin.report` | false | Write event reports. |
+| `onembcmi.CoconutHunt.admin.kititems` | false | Generate an authored reward-kit sample atomically for an online player. |
 | `onembcmi.Hunt.admin.event` | false | List, preflight, and activate production editions with `/hunt`. |
 
 Admin permissions default false, including for operators. Individual child permissions work without requiring the parent node.
@@ -489,7 +520,7 @@ Available replacements include:
 {milestone} {streak} {community_total} {community_milestone} {mob_type}
 ```
 
-Commands come only from configuration, have leading slashes stripped, reject line breaks and unsafe replacements, and must match `command-security.allowed-prefixes`. The complete command list is validated before a claim or purchase is persisted, so one disallowed command rejects the whole action. Once a valid claim or purchase is durably saved, later console-dispatch failure does not roll it back or retry automatically because that could duplicate earlier commands. The failure is logged for staff support; shop deliveries can use the recorded-purchase regrant command.
+Commands come only from configuration, have leading slashes stripped, reject line breaks and unsafe replacements, and must match `command-security.allowed-prefixes`. Enabled shop offers must contain at least one fixed or random delivery command. The complete fixed list and every possible random choice are validated. A random offer selects one choice before persistence, and the durable operation stores that exact rendered command. Once a valid claim or purchase is durably saved, later console-dispatch failure does not roll it back or retry automatically because that could duplicate earlier commands. The failure is logged for staff support; deterministic shop deliveries can use the recorded-purchase regrant command, while random purchases must be recovered from their exact transaction receipt.
 
 ## Holograms And Effects
 
@@ -505,29 +536,31 @@ Nearby checks use the registry's chunk index rather than scanning every register
 /1mbcmi debug plugin CoconutHunt all
 ```
 
-The shared report includes commands, granular permissions, placeholders, config/data/cache paths, optional hooks, runtime health, and the active hologram provider. CoconutHunt targets Java 25 and Paper 26.2 beta build 60 or newer.
+The shared report includes commands, granular permissions, placeholders, config/data/cache paths, optional hooks, runtime health, and the active hologram provider. CoconutHunt targets Java 25 and Paper 26.2 stable build 84 or newer.
 
 ## Build And Integrations
 
 Build 550 produces:
 
 ```text
-1MB-CMIAPI-CoconutHunt-v1.0.0-550-j25-26.2.jar
+1MB-CMIAPI-CoconutHunt-v1.0.1-554-j25-26.2.jar
 ```
 
 CMI, CMILib, and `1MB-CMIAPI-Lib` are required runtime dependencies. CoconutHunt uses the shared library for feature registration, translated messages, hardened GUI sessions, safe player resolution, documentation metadata, PlaceholderAPI registration, and shared playerdata. It uses the installed CMI runtime for configured kit/warp/broadcast commands; private Paper TextDisplays provide the default proximity holograms. CMILib remains part of the common runtime baseline.
 
-Modern Paper 26.2 APIs provide player-head profile data, PDC identity, skull tile updates, Adventure text, particles, sounds, displays, scheduler/listener behavior, and entity/material validation. PlaceholderAPI, LuckPerms, Vault, and MobHat are optional hooks; LuckPerms plus MobHat enable the default cosmetic shop, while the rest of the event stays available if optional integrations are absent. No paid/private dependency jar is bundled in the feature jar.
+Modern Paper 26.2 APIs provide player-head profile data, PDC identity, skull tile updates, Adventure text, custom fireworks, particles, sounds, displays, scheduler/listener behavior, and entity/material validation. PlaceholderAPI, LuckPerms, Vault, and MobHat are optional hooks; LuckPerms plus MobHat enable cosmetic offers, while generic kit offers and the rest of the event stay available if those optional integrations are absent. No paid/private dependency jar is bundled in the feature jar.
 
 ## Launch Preflight
 
 - [ ] Confirm the approved schedule is July 26 through August 1 with claims through August 6 (`Europe/Amsterdam`).
-- [ ] Confirm Paper 26.2 beta build 60 or newer, Java 25, CMI, CMILib, and 1MB-CMIAPI-Lib are enabled.
+- [ ] Confirm Paper 26.2 stable build 84 or newer, Java 25, CMI, CMILib, and 1MB-CMIAPI-Lib are enabled.
 - [ ] Confirm the production world is exactly `summer` and optional cuboids match the beach.
 - [ ] Confirm reward worlds include every game mode where delivery is intended.
 - [ ] Review every command allowlist, hook, reward command, visit command, and shop permission.
 - [ ] Create `coconut_reward_box_2026` in CMI on both test and live, review its contents, and prove one safe successful perfect-reward delivery.
-- [ ] Confirm MobHat and LuckPerms are available or deliberately leave the shop unavailable.
+- [ ] Generate the four-stack summer bundle, create `coconut_summer_consumables_2026` in CMI on test and live, and prove repeat purchases deliver exactly one kit per charge.
+- [ ] Keep `summer_secret.enabled: false` until every possible 5-point random command is chosen, allowlisted, and tested.
+- [ ] Confirm MobHat and LuckPerms are available for cosmetic offers; generic event-kit offers must still work without them.
 - [ ] Run coconut validation and require zero issues with exactly 70 enabled heads, 10 assigned to each day.
 - [ ] Run `/coconut admin event validate` and require zero config, command-template, reward, world, or registry issues.
 - [ ] Review `/hunt admin event status summer_2026`, run the activation dry-run, and confirm the selected event/audit after activation.
