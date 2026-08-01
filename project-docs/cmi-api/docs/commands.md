@@ -833,6 +833,8 @@ Boosters:
 /rate debug all
 ```
 
+`/rate reload` reloads Boosters config and its editable `plugins/1MB-CMIAPI/Boosters/translations/locale_en.yml` text without restarting the server.
+
 NameMC:
 
 ```text
@@ -995,10 +997,12 @@ GameTypes:
 /gametype help
 /gametype menu
 /gametype menu oneblock
+/gametype menu chunkblock
 /gametype menu skyblock
 /gametype menu acid
 /gametype menu cave
 /gametype menu skygrid
+/chunkblock menu
 /gametype status
 /gametype reload
 /gametype debug
@@ -1839,6 +1843,82 @@ UpdateSmoke:
 /updatesmoke reload
 /usmoke status
 ```
+
+DropParty:
+
+```text
+/dropparty
+/dropparty menu [page]
+/dropparty status
+/dropparty claim
+/dropparty stats
+/dropparty top [page]
+/dropparty info
+/dropparty help
+/dropparty admin
+/dropparty admin menu [page]
+/dropparty admin status
+/dropparty admin create <id> <display name>
+/dropparty admin set <id> <display|story|schedule|duration|pool|location|enabled> <value>
+/dropparty admin start <id> <0|15|30|60>
+/dropparty admin stop
+/dropparty admin expire <id>
+/dropparty admin reactivate <id>
+/dropparty admin delete <id> confirm
+/dropparty admin geyser add <id>
+/dropparty admin geyser scan [radius]
+/dropparty admin geyser list
+/dropparty admin geyser validate
+/dropparty admin geyser remove <id>
+/dropparty admin loot add <pool> <id> <weight> [minimum] [maximum]
+/dropparty admin loot list <pool>
+/dropparty admin loot remove <pool> <id>
+/dropparty admin mini give [player] [seconds] [pool]
+/dropparty admin vault inspect <player>
+/dropparty admin vault recover <player> <refund|finalize>
+/dropparty admin debug <true|false>
+/dropparty admin reload
+/dropparty debug enable <true|false>
+```
+
+`/dropparty debug enable true|false` uses the shared live lifecycle and keeps the jar loaded/green while dormant. `/dropparty admin debug true|false` is the isolated date-independent test switch. Manual starts still require valid loaded vents, an approved non-empty loot pool, permissions, arena bounds, anti-idle movement, and durable storage. Free-form definition values use commands; the staff GUI handles common state/location/start/stop/expire/delete operations with authoritative click-time revalidation.
+
+Appreciation:
+
+```text
+/appreciate
+/thanks
+/appreciate received [page]
+/appreciate recent [page]
+/appreciate favorites [page]
+/appreciate stats [player]
+/appreciate badges
+/appreciate shop
+/appreciate settings
+/appreciate help
+/appreciate info
+/appreciate admin
+/appreciate admin menu
+/appreciate admin status
+/appreciate admin check
+/appreciate admin reload
+/appreciate admin inspect <receipt-uuid|player>
+/appreciate admin recover <receipt-uuid> <retry|funded|finalize|refund|rollback> confirm
+/appreciate admin quota reset <player>
+/appreciate admin points <get|give|take|set> <player> [amount]
+/appreciate admin gift status
+/appreciate admin gift <xp|money|item|anonymous> <enable|disable>
+/appreciate admin gift <xp|money> <add|remove> <amount>
+/appreciate admin audit [page]
+/appreciate admin expiry <receipt-uuid> <retry|finalize> confirm
+/appreciate debug status
+/appreciate debug mode <true|false>
+/appreciate debug notify <online-player>
+/appreciate debug grantpoints <player> <amount>
+/appreciate debug enable <true|false>
+```
+
+`/thanks` is an optional lifecycle-registered alias and requires a clean restart after its config setting changes. Appreciation installs dormant; `/appreciate debug enable true|false` activates or deactivates the full feature while keeping the jar loaded. Player sends use online-recipient selection, reviewed reasons including Birthday Appreciation, free/XP/money/exact-offhand gift choices, optional paid anonymity, and an authoritative confirmation. `/appreciate settings` controls new-gift acceptance, notices, sounds, particles, and shared nearby effects; later preference or staff-switch changes never invalidate an already-funded gift. Recipients can send one free reaction after completion. Unclaimed gifts return after 60 days by default while their written notes remain. Staff should inspect an unresolved receipt before any confirmed recovery or expiry-finalization action. `admin audit` is a receipt-only human-review report and never applies punishment automatically.
 
 ## Command Safety Rules
 

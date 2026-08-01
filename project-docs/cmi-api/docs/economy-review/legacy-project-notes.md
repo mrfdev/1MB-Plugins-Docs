@@ -81,9 +81,9 @@ now live under `docs/economy-review/baseline/`.
 
 Current economy test server jars:
 
-- `servers/Paper-26.2/plugins/1MB-CMIAPI-LIB-v1.0.1-554-j25-26.2.jar`
-- `servers/Paper-26.2/plugins/1MB-CMIAPI-WorthDrift-v1.0.1-554-j25-26.2.jar`
-- `servers/Paper-26.2/plugins/1MB-CMIAPI-WorthHelper-v1.0.1-554-j25-26.2.jar`
+- `servers/Paper-26.2/plugins/1MB-CMIAPI-LIB-v1.0.1-557-j25-26.2.jar`
+- `servers/Paper-26.2/plugins/1MB-CMIAPI-WorthDrift-v1.0.1-557-j25-26.2.jar`
+- `servers/Paper-26.2/plugins/1MB-CMIAPI-WorthHelper-v1.0.1-557-j25-26.2.jar`
 
 Available commands:
 

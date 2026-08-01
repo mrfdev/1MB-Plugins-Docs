@@ -18,9 +18,11 @@ The first merged version keeps parity with the old project where practical:
 - Remove or disable the old standalone `1MB-Boosters` jar before enabling `1MB-CMIAPI-Boosters`.
 - The new command is still `/rate`.
 - The new config lives at `plugins/1MB-CMIAPI/Boosters/config.yml`.
+- Editable player and admin text lives at `plugins/1MB-CMIAPI/Boosters/translations/locale_en.yml`.
 - Runtime state lives at `plugins/1MB-CMIAPI/Boosters/booster-state.yml`.
 - Per-player reminder preferences live at `plugins/1MB-CMIAPI/Boosters/player-reminders.yml`.
 - The plugin does not import old state files automatically. Start with a clean state or start/stop boosters once through `/rate`.
+- On first startup, an existing shared `plugins/1MB-CMIAPI/translations/boosters.yml` is copied into the new Boosters locale location and completed with any missing keys.
 
 ## Commands
 
@@ -145,9 +147,12 @@ plugins/1MB-CMIAPI/Boosters/config.yml
 
 Every config path is commented. Comments are re-applied on reload while existing values are preserved through the shared 1MB-CMIAPI config helper.
 
+The locale filename is selected by `locale.file`, which defaults to `locale_en.yml`.
+
 Key settings:
 
 ```text
+locale.file
 restore.delay-ticks
 features.mcmmo.enabled
 features.jobs.enabled
@@ -195,6 +200,27 @@ discordchat.config-file
 placeholders.legacy-onembboosters-expansion
 ```
 
+## Live-Editable Text
+
+Most `/rate` output, reminder text, command help, and admin feedback is loaded from:
+
+```text
+plugins/1MB-CMIAPI/Boosters/translations/locale_en.yml
+```
+
+Edit that file, then run `/rate reload`. A restart and a rebuilt jar are not required. The reload also refreshes Boosters config, tracked state, reminder preferences, integrations, and its PlaceholderAPI expansion, matching the command's existing behavior.
+
+The timed status row has separate placeholders for the configured booster duration and its current remaining time:
+
+```yaml
+status:
+  active-timed: "... {rate}x for {duration}. Time left: {remaining}."
+```
+
+Other status and reminder templates expose the placeholders visible in the bundled locale file, including `{scope}`, `{ingame}`, `{discord}`, `{reason}`, `{name}`, `{detail}`, and `{count}`. Dynamic values are escaped before MiniMessage rendering.
+
+Configured lifecycle broadcasts and console command hooks remain in `config.yml`; they were already live-editable through `/rate reload`.
+
 ## Behavior
 
 `/rate start mcmmo <time> <rate>` dispatches `/xprate <rate> <announce>` from console, stores the tracked state, schedules expiry, runs configured start hooks, and sends configured broadcasts.
@@ -208,6 +234,8 @@ placeholders.legacy-onembboosters-expansion
 Explicit admin stop commands use stored tracked state rather than passive display state, so staff can still reset a stale booster if its tracked end time has already passed.
 
 `/rate`, `/rate status`, debug state output, and PlaceholderAPI lookups are passive status reads. If they notice expired tracked state, they show the booster as inactive while the internal expiry timer/watchdog finalizes the normal end flow. They do not run stop broadcasts, stop hooks, or reset commands.
+
+A timed row distinguishes the original duration from the countdown, for example: `6x for 30m. Time left: 6m.`
 
 An internal once-per-second expiry watchdog also checks tracked mcMMO and Jobs state. This keeps automatic end broadcasts and reset commands reliable even if a single scheduled expiry task becomes stale or the server tick timing drifts.
 
@@ -246,6 +274,7 @@ Boosters uses Paper/Bukkit command, plugin, scheduler, YAML, and event APIs. It 
 
 ```text
 /rate
+/rate reload
 /rate start mcmmo 5m 2
 /rate reminders off
 /rate reminders on

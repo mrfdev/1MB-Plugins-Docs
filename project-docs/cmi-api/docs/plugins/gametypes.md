@@ -1,8 +1,8 @@
 # GameTypes
 
-GameTypes is a player-fun feature plugin that opens one safe BentoBox menu for several island game types. It detects the player's current BentoBox world when possible, or staff/CMI aliases can open a specific menu with `/gametype menu <type>`.
+GameTypes is a player-fun feature plugin that opens one safe BentoBox menu for several island game types. It detects the player's current BentoBox world when possible, accepts `/gametype menu <type>`, and natively routes the exact `/<game-command> menu` shortcut for configured game types.
 
-The first version is intentionally config-driven. It knows the common 1MoreBlock BentoBox game types, reads simple BentoBox addon-disable lists when they exist, and only runs reviewed player commands from config. It does not create islands directly through an internal API yet; it closes the GUI and dispatches normal BentoBox player commands such as `/oneblock go`, `/skyblock team`, or `/cave challenges`.
+The feature is intentionally config-driven. It knows the common 1MoreBlock BentoBox game types, reads simple BentoBox addon-disable lists when they exist, and only runs reviewed player commands from config. It does not create islands directly through an internal API; it closes the GUI and dispatches normal BentoBox player commands such as `/oneblock go`, `/chunkblock chunks`, `/skyblock team`, or `/cave challenges`.
 
 ## Commands
 
@@ -11,6 +11,7 @@ The first version is intentionally config-driven. It knows the common 1MoreBlock
 | `/gametype` | Opens the detected game type menu for the player's current world. If no BentoBox game type is detected, it opens the GameTypes index. Console receives status output. | `/gametype` |
 | `/gametype menu` | Opens the detected menu from the current world, or the GameTypes index from worlds such as wild, spawn, survival, or skylands. | `/gametype menu` |
 | `/gametype menu <type>` | Opens a specific configured menu when world detection is not possible, such as from `/wild`. | `/gametype menu oneblock` |
+| `/chunkblock menu` | Opens the ChunkBlock shortcut menu directly. Other `/chunkblock` commands continue to BentoBox unchanged. | `/chunkblock menu` |
 | `/gametype status` | Shows loaded hooks, enabled game types, the current world, and detection state. | `/gametype status` |
 | `/gametype reload` | Reloads GameTypes config and translations. | `/gametype reload` |
 | `/gametype info` | Shows the player-friendly intro, starter command, help command, and docs link. | `/gametype info` |
@@ -28,24 +29,28 @@ Default configured types:
 | Type id | Display | BentoBox/internal name | Command root |
 | --- | --- | --- | --- |
 | `oneblock` | OneBlock | `AOneBlock` | `/oneblock` |
+| `chunkblock` | ChunkBlock | `ChunkBlock` | `/chunkblock` |
 | `skyblock` | SkyBlock | `BSkyBlock` | `/skyblock` |
 | `acid` | AcidIsland | `AcidIsland` | `/acid` |
 | `cave` | CaveBlock | `CaveBlock` | `/cave` |
 | `skygrid` | SkyGrid | `SkyGrid` | `/skygrid` |
 
-CMI aliases can point game commands at the shared menu, for example:
+GameTypes natively routes the exact `/<configured-command> menu` form to the shared menu, for example:
 
 ```text
 /oneblock menu -> /gametype menu oneblock
+/chunkblock menu -> /gametype menu chunkblock
 /skyblock menu -> /gametype menu skyblock
 /cave menu -> /gametype menu cave
 ```
 
+This interception is deliberately narrow. `/chunkblock`, `/chunkblock go`, `/chunkblock phases`, `/chunkblock count`, and `/chunkblock chunks` continue to the BentoBox ChunkBlock addon. Existing CMI aliases remain compatible but are no longer required for this exact menu route. Set `commands.intercept-gametype-menu: false` to return all game-root command handling to BentoBox/CMI.
+
 When a player is already inside a configured game world, `/gametype menu` can detect the type from exact configured world names first and optional world-name fragments second.
 
-When a player is not inside a recognized BentoBox game type world, `/gametype` and `/gametype menu` open an index GUI instead of sending an error. The index shows the five configured game types and opens the selected menu directly, so players can still create, visit, or manage islands from hub-style worlds.
+When a player is not inside a recognized BentoBox game type world, `/gametype` and `/gametype menu` open an index GUI instead of sending an error. The index shows the six configured game types and opens the selected menu directly, so players can still create, visit, or manage islands from hub-style worlds.
 
-Game type menus use the bottom-right button as **Back to Index**, so players can quickly switch from OneBlock to SkyBlock, AcidIsland, CaveBlock, or SkyGrid. The index menu keeps the bottom-right button as **Close**.
+Game type menus use the bottom-right button as **Back to Index**, so players can quickly switch among OneBlock, ChunkBlock, SkyBlock, AcidIsland, CaveBlock, and SkyGrid. The index menu keeps the bottom-right button as **Close**.
 
 ## Menu Buttons
 
@@ -85,17 +90,18 @@ The `warp` button is labeled **Warps** and runs `/<type> warps`, not `/<type> wa
 
 The `farmersdance` button keeps the config id used by the addon folder, but runs `/<type> farmdance`, which is the BentoBox player command for that addon.
 
-OneBlock-only addon/special buttons:
+Progression and game-specific buttons:
 
 ```text
 topblock
+chunks
 phases
 count
 ```
 
 `reset` is disabled by default because it is destructive. If staff enable it, clicking the reset button opens a confirmation GUI first. Players must explicitly click the red confirm button before GameTypes runs the BentoBox reset command.
 
-`topblock`, `phases`, and `count` are enabled for OneBlock by default and disabled for the other game types. TopBlock also has a code-level OneBlock-only guard so older configs cannot accidentally show it in SkyBlock, AcidIsland, CaveBlock, or SkyGrid menus.
+`topblock` remains OneBlock-only. `phases` and `count` are enabled for OneBlock and ChunkBlock. `chunks` is ChunkBlock-only and opens its unlocked-territory view. The guards keep these buttons out of unrelated SkyBlock, AcidIsland, CaveBlock, and SkyGrid menus even when older configs are present.
 
 `scoreboard` runs `/sb` as the player and is shown in every game type menu. This is safe in test environments even without AnimatedScoreboard installed; the live server handles the actual toggle.
 
@@ -125,7 +131,13 @@ gametypes:
     core:
       dailyshop:
         command: cmi tppos -p:[playerName] skygrid;12.5;129;1.5;-90.00;1.50
+  chunkblock:
+    core:
+      dailyshop:
+        command: cmi tppos -p:[playerName] chunkblock;499.5;257;-1015.5;89.42;1.96
 ```
+
+ChunkBlock's daily-shop button is enabled and teleports to the reviewed shop location at `chunkblock;499.5;257;-1015.5;89.42;1.96`. Existing build 554 configs receive this location through a one-time migration when their ChunkBlock daily-shop command is still empty. A customized command or later administrator choice is preserved.
 
 For safety, console-dispatched menu commands are limited to the reviewed `cmi tppos -p:[playerName] world;x;y;z;yaw;pitch` shape.
 
@@ -175,7 +187,7 @@ gamemodes:
   - AOneBlock
 ```
 
-With this layout, Greenhouses will show for SkyBlock, AcidIsland, SkyGrid, and OneBlock, but not CaveBlock. Limits will show for all five configured GameTypes.
+With this layout, Greenhouses will show only for game types accepted by that addon configuration. Limits will show for every configured GameType accepted by its own configuration, including ChunkBlock when the addon lists internal name `ChunkBlock`.
 
 This means it is safe as an early helper, but the config remains the source of truth:
 
@@ -205,7 +217,7 @@ Staff can hide a button without stopping the server or manually editing YAML:
 /gametype debug set oneblock enabled false
 ```
 
-Use `global` when a button should disappear from every GameTypes menu. Use a game type id, such as `oneblock`, `skyblock`, `acid`, `cave`, or `skygrid`, when only that menu should change.
+Use `global` when a button should disappear from every GameTypes menu. Use a game type id, such as `oneblock`, `chunkblock`, `skyblock`, `acid`, `cave`, or `skygrid`, when only that menu should change.
 
 Friendly option names are the same ids shown in the menu/button docs. Aliases are accepted for common names:
 
@@ -356,6 +368,7 @@ detection:
   match-world-name-fragments: true
 commands:
   close-before-dispatch: true
+  intercept-gametype-menu: true
 buttons:
   core:
     kits:
@@ -367,6 +380,7 @@ buttons:
 gametypes:
   ids:
   - oneblock
+  - chunkblock
   - skyblock
   - acid
   - cave
@@ -424,8 +438,10 @@ Only left/right clicks on current-session top-menu buttons are accepted. Command
 On a BentoBox environment, test:
 
 - `/gametype menu oneblock` from a normal world.
+- `/gametype menu chunkblock` and `/chunkblock menu` from a normal world.
+- `/chunkblock go`, `/chunkblock phases`, `/chunkblock count`, and `/chunkblock chunks`, confirming these remain native BentoBox commands.
 - `/gametype menu` from each configured game world.
-- CMI aliases such as `/oneblock menu` pointing to `/gametype menu oneblock`.
+- Exact game-root menu routes such as `/oneblock menu` and `/chunkblock menu`.
 - Disabled addon detection after copying real BentoBox addon configs, especially `disabled-gamemodes` lists like Biomes.
 - `/gametype debug scan oneblock` and `/gametype debug scan skyblock`, checking scan paths and final visible/hidden reasons.
 - `debug.log-menu-dispatch` with a harmless button such as Help or Kits, then turn it back off.

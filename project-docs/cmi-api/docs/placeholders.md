@@ -1590,6 +1590,27 @@ WorthHelper placeholders:
 %onembcmi_worthhelper.cache.size%
 ```
 
+Appreciation placeholders:
+
+```text
+%onembcmi_appreciation_unclaimed%
+%onembcmi_appreciation_received_total%
+%onembcmi_appreciation_sent_total%
+%onembcmi_appreciation_unique_senders%
+%onembcmi_appreciation_unique_recipients%
+%onembcmi_appreciation_daily_remaining%
+%onembcmi_appreciation_weekly_remaining%
+%onembcmi_appreciation_cooldown%
+%onembcmi_appreciation_last_sender%
+%onembcmi_appreciation_top_reason%
+%onembcmi_appreciation_badge%
+%onembcmi_appreciation_title%
+%onembcmi_appreciation_style%
+%onembcmi_appreciation_points%
+%onembcmi_appreciation_points_lifetime%
+%onembcmi_appreciation_streak%
+```
+
 Placeholder paths are strict and allowlisted. Unknown or unsafe paths return an empty value instead of exposing internals or throwing noisy errors.
 
 [Documentation index](README.md)

@@ -543,7 +543,7 @@ The shared report includes commands, granular permissions, placeholders, config/
 Build 550 produces:
 
 ```text
-1MB-CMIAPI-CoconutHunt-v1.0.1-554-j25-26.2.jar
+1MB-CMIAPI-CoconutHunt-v1.0.1-557-j25-26.2.jar
 ```
 
 CMI, CMILib, and `1MB-CMIAPI-Lib` are required runtime dependencies. CoconutHunt uses the shared library for feature registration, translated messages, hardened GUI sessions, safe player resolution, documentation metadata, PlaceholderAPI registration, and shared playerdata. It uses the installed CMI runtime for configured kit/warp/broadcast commands; private Paper TextDisplays provide the default proximity holograms. CMILib remains part of the common runtime baseline.
