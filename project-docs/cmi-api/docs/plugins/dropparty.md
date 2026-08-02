@@ -365,7 +365,7 @@ No NMS or reflective server internals are used.
 ## Build And Target
 
 ```text
-jar: 1MB-CMIAPI-DropParty-v1.0.1-557-j25-26.2.jar
+jar: 1MB-CMIAPI-DropParty-v1.0.1-559-j25-26.2.jar
 Java target: 25
 Paper target: 26.2 stable build 84 or newer
 ```

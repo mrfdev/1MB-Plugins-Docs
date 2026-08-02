@@ -2,6 +2,8 @@
 
 Appreciation lets players send a limited, reviewed thank-you to another online player. A note may be free or include vanilla experience, money, or one exact offhand stack, and the recipient claims it later from a durable inbox.
 
+Player-facing chat uses the shared `[☻ Appreciation]` prefix. Its symbol is configured centrally through `locale.prefix-unicodes.appreciation` in `plugins/1MB-CMIAPI/CMIAPILIB/config.yml`.
+
 Recipients control which new gifts and notifications they accept, while already-funded gifts remain claimable regardless of later preference or staff changes.
 
 The optional `/thanks` command opens the same feature. It is registered through Paper's lifecycle command API and can be disabled in `config.yml` if another plugin needs that command; changing alias ownership requires a clean server restart.
@@ -336,7 +338,7 @@ Build target: Paper 26.2 stable, Java 25, project version `1.0.1`.
 Current test jar:
 
 ```text
-1MB-CMIAPI-Appreciation-v1.0.1-557-j25-26.2.jar
+1MB-CMIAPI-Appreciation-v1.0.1-559-j25-26.2.jar
 ```
 
 [Documentation index](README.md)

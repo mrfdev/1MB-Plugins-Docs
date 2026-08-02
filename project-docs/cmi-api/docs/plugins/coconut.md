@@ -374,6 +374,8 @@ Staff commands:
 /coconut admin coconut validate
 /coconut admin coconut waves auto [days] [seed]
 /coconut admin inspect <player>
+/coconut admin inspect <player> day <1-7> [page]
+/coconut admin inspect <player> rewards [page]
 /coconut admin reset player <player> [event-id] --dry-run
 /coconut admin reset player <player> [event-id] --confirm
 /coconut admin reset event --dry-run
@@ -387,7 +389,11 @@ Staff commands:
 /hunt admin event activate <event-id> <--confirm|--force-confirm>
 ```
 
-Admin player resolution uses the shared safe cached/online resolver. Every reset requires an explicit dry-run or confirmation. The complete event reset is debug-only and preserves configuration and setup; production has only the guarded per-player form. Event start/end hooks and each daily wave hook use durable at-most-once keys, including catch-up after restart.
+Admin player resolution uses the shared safe cached/online resolver. The text-only inspect overview works from chat or console and links to fixed five-row pages for each event day and for configured rewards. Day pages compare the player's finds with the immutable event snapshot. Missing rows expose a copyable CMI teleport command; in-game staff can click the missing entry to teleport or click the mail action to send that still-missing location to the player's cached real name. The server revalidates the event, snapshot entry, missing state, CMI provider, permission, and a short mail cooldown when the action runs.
+
+Reward inspection classifies every configured reward as claimed, ready, earned but blocked, or not earned. It prints the exact current eligibility or claim-window reason and, when retained, the durable claim transaction id, state, accepted command count, attempts, update time, and detail. A finalized transaction proves that the server accepted the configured commands; it does not prove the contents or later behavior of a separate kit or command provider. Legacy or compacted claims can therefore have a claim marker without retained external-delivery evidence.
+
+Every reset requires an explicit dry-run or confirmation. The complete event reset is debug-only and preserves configuration and setup; production has only the guarded per-player form. Event start/end hooks and each daily wave hook use durable at-most-once keys, including catch-up after restart.
 
 ## Examples
 
@@ -417,7 +423,7 @@ Admin player resolution uses the shared safe cached/online resolver. Every reset
 | `onembcmi.CoconutHunt.admin.debug` | false | Toggle debug and set its expected count or date/day overrides. |
 | `onembcmi.CoconutHunt.admin.event` | false | Validate and manage lifecycle/snapshots. |
 | `onembcmi.CoconutHunt.admin.coconut` | false | Manage setup heads, registry entries, and waves. |
-| `onembcmi.CoconutHunt.admin.inspect` | false | Inspect players and regrant recorded shop purchases. |
+| `onembcmi.CoconutHunt.admin.inspect` | false | Inspect daily finds/missing locations, reward reasons/transactions, and regrant recorded shop purchases. |
 | `onembcmi.CoconutHunt.admin.reset` | false | Dry-run or confirm a player reset or isolated debug-event reset. |
 | `onembcmi.CoconutHunt.admin.report` | false | Write event reports. |
 | `onembcmi.CoconutHunt.admin.kititems` | false | Generate an authored reward-kit sample atomically for an online player. |
@@ -536,14 +542,14 @@ Nearby checks use the registry's chunk index rather than scanning every register
 /1mbcmi debug plugin CoconutHunt all
 ```
 
-The shared report includes commands, granular permissions, placeholders, config/data/cache paths, optional hooks, runtime health, and the active hologram provider. CoconutHunt targets Java 25 and Paper 26.2 stable build 84 or newer.
+The shared report includes commands, granular permissions, placeholders, config/data/cache paths, optional hooks, runtime health, and the active hologram provider. CoconutHunt targets Java 25 and Paper 26.2 stable build 87 or newer.
 
 ## Build And Integrations
 
 Build 550 produces:
 
 ```text
-1MB-CMIAPI-CoconutHunt-v1.0.1-557-j25-26.2.jar
+1MB-CMIAPI-CoconutHunt-v1.0.1-559-j25-26.2.jar
 ```
 
 CMI, CMILib, and `1MB-CMIAPI-Lib` are required runtime dependencies. CoconutHunt uses the shared library for feature registration, translated messages, hardened GUI sessions, safe player resolution, documentation metadata, PlaceholderAPI registration, and shared playerdata. It uses the installed CMI runtime for configured kit/warp/broadcast commands; private Paper TextDisplays provide the default proximity holograms. CMILib remains part of the common runtime baseline.
@@ -553,7 +559,7 @@ Modern Paper 26.2 APIs provide player-head profile data, PDC identity, skull til
 ## Launch Preflight
 
 - [ ] Confirm the approved schedule is July 26 through August 1 with claims through August 6 (`Europe/Amsterdam`).
-- [ ] Confirm Paper 26.2 stable build 84 or newer, Java 25, CMI, CMILib, and 1MB-CMIAPI-Lib are enabled.
+- [ ] Confirm Paper 26.2 stable build 87 or newer, Java 25, CMI, CMILib, and 1MB-CMIAPI-Lib are enabled.
 - [ ] Confirm the production world is exactly `summer` and optional cuboids match the beach.
 - [ ] Confirm reward worlds include every game mode where delivery is intended.
 - [ ] Review every command allowlist, hook, reward command, visit command, and shop permission.

@@ -240,6 +240,8 @@ Themed staff commands:
 /ghosthunt admin ghost validate
 /ghosthunt admin ghost waves auto [days] [seed]
 /ghosthunt admin inspect <player>
+/ghosthunt admin inspect <player> day <1-7> [page]
+/ghosthunt admin inspect <player> rewards [page]
 /ghosthunt admin reset player <player> [event-id] <--dry-run|--confirm>
 /ghosthunt admin reset event <--dry-run|--confirm>
 /ghosthunt admin report [event-id]
@@ -258,6 +260,8 @@ Canonical production selection:
 
 Setup mutations are event-bound. A Coconut command cannot enable, disable, or remove a Ghost, and a setup head referencing an unknown/mismatched theme or event is refused.
 
+The text-only player inspection works from chat and console. Its day pages compare found ids against the immutable Ghost snapshot and provide copyable teleport commands plus revalidated in-game CMI mail actions for missing locations. Reward pages distinguish claimed, ready, earned-but-blocked, and not-earned rewards, print the exact reason, and show retained durable claim transaction evidence. Finalized dispatch means the server accepted configured commands; external kit contents still require provider-side evidence when a delivery is disputed.
+
 ## Permissions
 
 | Permission | Default | Purpose |
@@ -272,7 +276,7 @@ Setup mutations are event-bound. A Coconut command cannot enable, disable, or re
 | `onembcmi.GhostHunt.admin.debug` | false | Select and control isolated Halloween debug state. |
 | `onembcmi.GhostHunt.admin.event` | false | Validate snapshots and event lifecycle actions. |
 | `onembcmi.GhostHunt.admin.ghost` | false | Give/place/register/inspect/change/remove/validate Ghosts and assign waves. |
-| `onembcmi.GhostHunt.admin.inspect` | false | Inspect player event records and regrant recorded shop delivery. |
+| `onembcmi.GhostHunt.admin.inspect` | false | Inspect daily finds, missing locations, reward reasons/transactions, and recorded shop delivery. |
 | `onembcmi.GhostHunt.admin.reset` | false | Run guarded player or debug-event resets. |
 | `onembcmi.GhostHunt.admin.report` | false | Export event reports. |
 | `onembcmi.Hunt.admin.event` | false | List, preflight, and activate production editions with `/hunt`. |
@@ -367,10 +371,10 @@ Paper TextDisplays are private, transient, non-persistent, and invisible by defa
 The shared jar is:
 
 ```text
-1MB-CMIAPI-CoconutHunt-v1.0.1-557-j25-26.2.jar
+1MB-CMIAPI-CoconutHunt-v1.0.1-559-j25-26.2.jar
 ```
 
-It targets Java 25 and Paper 26.2 stable build 84 or newer. CMI, CMILib, and `1MB-CMIAPI-Lib` are required. PlaceholderAPI, LuckPerms, Vault, and MobHat are optional; disabled Ghost shop samples do not block the hunt.
+It targets Java 25 and Paper 26.2 stable build 87 or newer. CMI, CMILib, and `1MB-CMIAPI-Lib` are required. PlaceholderAPI, LuckPerms, Vault, and MobHat are optional; disabled Ghost shop samples do not block the hunt.
 
 - [ ] Approve the real event dates and claim deadline.
 - [ ] Confirm the production world is named `halloween` and any cuboid is correct.

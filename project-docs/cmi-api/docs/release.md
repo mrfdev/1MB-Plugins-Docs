@@ -10,7 +10,9 @@ Before changing the allowlist, update its focused test and the installation docu
 
 ## Release Baseline
 
-The current release baseline is Java 25 bytecode built with JDK 25.0.4, compatibility-smoked on JDK 26.0.2, and Paper 26.2 stable build 84 or newer. Gradle compiles against `paper-api:26.2.build.84-stable`.
+The current release baseline is Java 25 bytecode built with JDK 25.0.4, compatibility-smoked on JDK 26.0.2, and Paper 26.2 stable build 87 or newer. Gradle compiles against `paper-api:26.2.build.84-stable`.
+
+The exact pre-CMI-9.8.9.6 rollback combination is recorded in [Live-Tested Baseline: 2026-08-02](compatibility-baselines/live-tested-2026-08-02.md).
 
 Before changing source release metadata:
 
@@ -33,71 +35,71 @@ All jars should follow this shape:
 Examples:
 
 ```text
-1MB-CMIAPI-LIB-v1.0.1-557-j25-26.2.jar
-1MB-CMIAPI-AntiFire-v1.0.1-557-j25-26.2.jar
-1MB-CMIAPI-AFKShrine-v1.0.1-557-j25-26.2.jar
-1MB-CMIAPI-RecordingMode-v1.0.1-557-j25-26.2.jar
-1MB-CMIAPI-SellStreaks-v1.0.1-557-j25-26.2.jar
-1MB-CMIAPI-ScheduledTips-v1.0.1-557-j25-26.2.jar
-1MB-CMIAPI-Visit-v1.0.1-557-j25-26.2.jar
-1MB-CMIAPI-PassportDiscovery-v1.0.1-557-j25-26.2.jar
-1MB-CMIAPI-SocialGatherings-v1.0.1-557-j25-26.2.jar
-1MB-CMIAPI-JourneyMap-v1.0.1-557-j25-26.2.jar
-1MB-CMIAPI-KitStreaks-v1.0.1-557-j25-26.2.jar
-1MB-CMIAPI-MessageFont-v1.0.1-557-j25-26.2.jar
-1MB-CMIAPI-Nick-v1.0.1-557-j25-26.2.jar
-1MB-CMIAPI-EmoteMenu-v1.0.1-557-j25-26.2.jar
-1MB-CMIAPI-PvPToggle-v1.0.1-557-j25-26.2.jar
-1MB-CMIAPI-Boosters-v1.0.1-557-j25-26.2.jar
-1MB-CMIAPI-NameMC-v1.0.1-557-j25-26.2.jar
-1MB-CMIAPI-Exchange-v1.0.1-557-j25-26.2.jar
-1MB-CMIAPI-VoteTokens-v1.0.1-557-j25-26.2.jar
-1MB-CMIAPI-DiscordChat-v1.0.1-557-j25-26.2.jar
-1MB-CMIAPI-GameTypes-v1.0.1-557-j25-26.2.jar
-1MB-CMIAPI-BirthdayLanterns-v1.0.1-557-j25-26.2.jar
-1MB-CMIAPI-LavaBoots-v1.0.1-557-j25-26.2.jar
-1MB-CMIAPI-Spawners-v1.0.1-557-j25-26.2.jar
-1MB-CMIAPI-Collect-v1.0.1-557-j25-26.2.jar
-1MB-CMIAPI-CoconutHunt-v1.0.1-557-j25-26.2.jar
-1MB-CMIAPI-DropParty-v1.0.1-557-j25-26.2.jar
-1MB-CMIAPI-Appreciation-v1.0.1-557-j25-26.2.jar
-1MB-CMIAPI-Forage-v1.0.1-557-j25-26.2.jar
-1MB-CMIAPI-MobHat-v1.0.1-557-j25-26.2.jar
-1MB-CMIAPI-PlayerTodo-v1.0.1-557-j25-26.2.jar
-1MB-CMIAPI-Refer-v1.0.1-557-j25-26.2.jar
-1MB-CMIAPI-TPAuto-v1.0.1-557-j25-26.2.jar
-1MB-CMIAPI-Menu-v1.0.1-557-j25-26.2.jar
-1MB-CMIAPI-StaffCenter-v1.0.1-557-j25-26.2.jar
-1MB-CMIAPI-Profile-v1.0.1-557-j25-26.2.jar
-1MB-CMIAPI-FilterLab-v1.0.1-557-j25-26.2.jar
-1MB-CMIAPI-FilterGuard-v1.0.1-557-j25-26.2.jar
-1MB-CMIAPI-WarningLens-v1.0.1-557-j25-26.2.jar
-1MB-CMIAPI-NotableMsg-v1.0.1-557-j25-26.2.jar
-1MB-CMIAPI-1MBStaffMsg-v1.0.1-557-j25-26.2.jar
-1MB-CMIAPI-CmdCostDashboard-v1.0.1-557-j25-26.2.jar
-1MB-CMIAPI-CMIConfig-v1.0.1-557-j25-26.2.jar
-1MB-CMIAPI-ConsoleNoiseRouter-v1.0.1-557-j25-26.2.jar
-1MB-CMIAPI-EconomyGuardian-v1.0.1-557-j25-26.2.jar
-1MB-CMIAPI-StartupDoctor-v1.0.1-557-j25-26.2.jar
-1MB-CMIAPI-UpdateSmoke-v1.0.1-557-j25-26.2.jar
-1MB-CMIAPI-PluginVersions-v1.0.1-557-j25-26.2.jar
-1MB-CMIAPI-PlaceholderHealth-v1.0.1-557-j25-26.2.jar
-1MB-CMIAPI-Potions-v1.0.1-557-j25-26.2.jar
-1MB-CMIAPI-Upgrade-v1.0.1-557-j25-26.2.jar
-1MB-CMIAPI-EndCrystals-v1.0.1-557-j25-26.2.jar
-1MB-CMIAPI-WorldSnapshot-v1.0.1-557-j25-26.2.jar
-1MB-CMIAPI-SparkReviewer-v1.0.1-557-j25-26.2.jar
-1MB-CMIAPI-Hoppers-v1.0.1-557-j25-26.2.jar
-1MB-CMIAPI-EventRecorder-v1.0.1-557-j25-26.2.jar
-1MB-CMIAPI-CMIProbe-v1.0.1-557-j25-26.2.jar
-1MB-CMIAPI-CMIDatabase-v1.0.1-557-j25-26.2.jar
-1MB-CMIAPI-PlaceholderProbe-v1.0.1-557-j25-26.2.jar
-1MB-CMIAPI-PermissionProbe-v1.0.1-557-j25-26.2.jar
-1MB-CMIAPI-CMIPlaceholderCheck-v1.0.1-557-j25-26.2.jar
-1MB-CMIAPI-1MBPlaceholders-v1.0.1-557-j25-26.2.jar
-1MB-CMIAPI-WarpAudit-v1.0.1-557-j25-26.2.jar
-1MB-CMIAPI-WorthDrift-v1.0.1-557-j25-26.2.jar
-1MB-CMIAPI-WorthHelper-v1.0.1-557-j25-26.2.jar
+1MB-CMIAPI-LIB-v1.0.1-559-j25-26.2.jar
+1MB-CMIAPI-AntiFire-v1.0.1-559-j25-26.2.jar
+1MB-CMIAPI-AFKShrine-v1.0.1-559-j25-26.2.jar
+1MB-CMIAPI-RecordingMode-v1.0.1-559-j25-26.2.jar
+1MB-CMIAPI-SellStreaks-v1.0.1-559-j25-26.2.jar
+1MB-CMIAPI-ScheduledTips-v1.0.1-559-j25-26.2.jar
+1MB-CMIAPI-Visit-v1.0.1-559-j25-26.2.jar
+1MB-CMIAPI-PassportDiscovery-v1.0.1-559-j25-26.2.jar
+1MB-CMIAPI-SocialGatherings-v1.0.1-559-j25-26.2.jar
+1MB-CMIAPI-JourneyMap-v1.0.1-559-j25-26.2.jar
+1MB-CMIAPI-KitStreaks-v1.0.1-559-j25-26.2.jar
+1MB-CMIAPI-MessageFont-v1.0.1-559-j25-26.2.jar
+1MB-CMIAPI-Nick-v1.0.1-559-j25-26.2.jar
+1MB-CMIAPI-EmoteMenu-v1.0.1-559-j25-26.2.jar
+1MB-CMIAPI-PvPToggle-v1.0.1-559-j25-26.2.jar
+1MB-CMIAPI-Boosters-v1.0.1-559-j25-26.2.jar
+1MB-CMIAPI-NameMC-v1.0.1-559-j25-26.2.jar
+1MB-CMIAPI-Exchange-v1.0.1-559-j25-26.2.jar
+1MB-CMIAPI-VoteTokens-v1.0.1-559-j25-26.2.jar
+1MB-CMIAPI-DiscordChat-v1.0.1-559-j25-26.2.jar
+1MB-CMIAPI-GameTypes-v1.0.1-559-j25-26.2.jar
+1MB-CMIAPI-BirthdayLanterns-v1.0.1-559-j25-26.2.jar
+1MB-CMIAPI-LavaBoots-v1.0.1-559-j25-26.2.jar
+1MB-CMIAPI-Spawners-v1.0.1-559-j25-26.2.jar
+1MB-CMIAPI-Collect-v1.0.1-559-j25-26.2.jar
+1MB-CMIAPI-CoconutHunt-v1.0.1-559-j25-26.2.jar
+1MB-CMIAPI-DropParty-v1.0.1-559-j25-26.2.jar
+1MB-CMIAPI-Appreciation-v1.0.1-559-j25-26.2.jar
+1MB-CMIAPI-Forage-v1.0.1-559-j25-26.2.jar
+1MB-CMIAPI-MobHat-v1.0.1-559-j25-26.2.jar
+1MB-CMIAPI-PlayerTodo-v1.0.1-559-j25-26.2.jar
+1MB-CMIAPI-Refer-v1.0.1-559-j25-26.2.jar
+1MB-CMIAPI-TPAuto-v1.0.1-559-j25-26.2.jar
+1MB-CMIAPI-Menu-v1.0.1-559-j25-26.2.jar
+1MB-CMIAPI-StaffCenter-v1.0.1-559-j25-26.2.jar
+1MB-CMIAPI-Profile-v1.0.1-559-j25-26.2.jar
+1MB-CMIAPI-FilterLab-v1.0.1-559-j25-26.2.jar
+1MB-CMIAPI-FilterGuard-v1.0.1-559-j25-26.2.jar
+1MB-CMIAPI-WarningLens-v1.0.1-559-j25-26.2.jar
+1MB-CMIAPI-NotableMsg-v1.0.1-559-j25-26.2.jar
+1MB-CMIAPI-1MBStaffMsg-v1.0.1-559-j25-26.2.jar
+1MB-CMIAPI-CmdCostDashboard-v1.0.1-559-j25-26.2.jar
+1MB-CMIAPI-CMIConfig-v1.0.1-559-j25-26.2.jar
+1MB-CMIAPI-ConsoleNoiseRouter-v1.0.1-559-j25-26.2.jar
+1MB-CMIAPI-EconomyGuardian-v1.0.1-559-j25-26.2.jar
+1MB-CMIAPI-StartupDoctor-v1.0.1-559-j25-26.2.jar
+1MB-CMIAPI-UpdateSmoke-v1.0.1-559-j25-26.2.jar
+1MB-CMIAPI-PluginVersions-v1.0.1-559-j25-26.2.jar
+1MB-CMIAPI-PlaceholderHealth-v1.0.1-559-j25-26.2.jar
+1MB-CMIAPI-Potions-v1.0.1-559-j25-26.2.jar
+1MB-CMIAPI-Upgrade-v1.0.1-559-j25-26.2.jar
+1MB-CMIAPI-EndCrystals-v1.0.1-559-j25-26.2.jar
+1MB-CMIAPI-WorldSnapshot-v1.0.1-559-j25-26.2.jar
+1MB-CMIAPI-SparkReviewer-v1.0.1-559-j25-26.2.jar
+1MB-CMIAPI-Hoppers-v1.0.1-559-j25-26.2.jar
+1MB-CMIAPI-EventRecorder-v1.0.1-559-j25-26.2.jar
+1MB-CMIAPI-CMIProbe-v1.0.1-559-j25-26.2.jar
+1MB-CMIAPI-CMIDatabase-v1.0.1-559-j25-26.2.jar
+1MB-CMIAPI-PlaceholderProbe-v1.0.1-559-j25-26.2.jar
+1MB-CMIAPI-PermissionProbe-v1.0.1-559-j25-26.2.jar
+1MB-CMIAPI-CMIPlaceholderCheck-v1.0.1-559-j25-26.2.jar
+1MB-CMIAPI-1MBPlaceholders-v1.0.1-559-j25-26.2.jar
+1MB-CMIAPI-WarpAudit-v1.0.1-559-j25-26.2.jar
+1MB-CMIAPI-WorthDrift-v1.0.1-559-j25-26.2.jar
+1MB-CMIAPI-WorthHelper-v1.0.1-559-j25-26.2.jar
 ```
 
 ## Local Build

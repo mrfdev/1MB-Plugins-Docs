@@ -4,7 +4,7 @@ The Gradle scaffold is present. The current baseline is:
 
 - Java 25 bytecode, built with JDK 25.0.4
 - Java 26.0.2 runtime compatibility smoke testing
-- Paper 26.2 stable build 84 or newer
+- Paper 26.2 stable build 87 or newer
 - Paper API `26.2.build.84-stable`
 - separate jars for every feature
 - a separate shared library jar
@@ -64,11 +64,11 @@ This is a read-only drift check against the public `1MB-Plugins-Docs` checkout. 
 Expected jar naming:
 
 ```text
-1MB-CMIAPI-LIB-v1.0.1-557-j25-26.2.jar
-1MB-CMIAPI-AntiFire-v1.0.1-557-j25-26.2.jar
-1MB-CMIAPI-AFKShrine-v1.0.1-557-j25-26.2.jar
-1MB-CMIAPI-StaffCenter-v1.0.1-557-j25-26.2.jar
-1MB-CMIAPI-Profile-v1.0.1-557-j25-26.2.jar
+1MB-CMIAPI-LIB-v1.0.1-559-j25-26.2.jar
+1MB-CMIAPI-AntiFire-v1.0.1-559-j25-26.2.jar
+1MB-CMIAPI-AFKShrine-v1.0.1-559-j25-26.2.jar
+1MB-CMIAPI-StaffCenter-v1.0.1-559-j25-26.2.jar
+1MB-CMIAPI-Profile-v1.0.1-559-j25-26.2.jar
 ```
 
 After a successful feature or library build, copy the output jar into:

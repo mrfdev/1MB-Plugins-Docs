@@ -1160,6 +1160,8 @@ Themed Hunts (`CoconutHunt` jar):
 /coconut admin coconut validate
 /coconut admin coconut waves auto [days] [seed]
 /coconut admin inspect <player>
+/coconut admin inspect <player> day <1-7> [page]
+/coconut admin inspect <player> rewards [page]
 /coconut admin reset player <player> [event-id] <--dry-run|--confirm>
 /coconut admin reset event <--dry-run|--confirm>
 /coconut admin report [event-id]
@@ -1194,6 +1196,8 @@ Themed Hunts (`CoconutHunt` jar):
 /ghosthunt admin ghost validate
 /ghosthunt admin ghost waves auto [days] [seed]
 /ghosthunt admin inspect <player>
+/ghosthunt admin inspect <player> day <1-7> [page]
+/ghosthunt admin inspect <player> rewards [page]
 /ghosthunt admin reset player <player> [event-id] <--dry-run|--confirm>
 /ghosthunt admin reset event <--dry-run|--confirm>
 /ghosthunt admin report [event-id]
