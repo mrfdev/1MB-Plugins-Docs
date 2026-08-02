@@ -5,7 +5,7 @@ This namespace is a public documentation-only copy from the source project regis
 - Project: `1MB-CMIAPI`
 - Project id: `cmi-api`
 - Source repository: `mrfdev/1MB-CMIAPI`
-- Source commit: `89f006a9`
+- Source commit: `5275e02a`
 - Source state: `clean`
 - Copied files: `README.md` and `docs/`
 - Source-declared private docs exclusions: `docs/economy-review/baseline`

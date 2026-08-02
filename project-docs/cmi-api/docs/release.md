@@ -12,7 +12,7 @@ Before changing the allowlist, update its focused test and the installation docu
 
 The current release baseline is Java 25 bytecode built with JDK 25.0.4, compatibility-smoked on JDK 26.0.2, and Paper 26.2 stable build 87 or newer. Gradle compiles against `paper-api:26.2.build.84-stable`.
 
-The exact pre-CMI-9.8.9.6 rollback combination is recorded in [Live-Tested Baseline: 2026-08-02](compatibility-baselines/live-tested-2026-08-02.md).
+The exact pre-CMI-9.8.9.6 rollback combination is recorded in [Live-Tested Baseline: 2026-08-02](compatibility-baselines/live-tested-2026-08-02.md). The isolated replacement boot and remaining player test matrix are recorded in [CMI 9.8.9.6 Chat Compatibility Pass](compatibility-tests/cmi-9.8.9.6-chat.md).
 
 Before changing source release metadata:
 
