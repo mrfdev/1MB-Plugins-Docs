@@ -3,7 +3,7 @@ title: "AcidIsland Staff Reference"
 description: "Public-safe commands, permissions, configuration, integrations, and troubleshooting notes for AcidIsland."
 ---
 
-AcidIsland is loaded as a BentoBox game-mode add-on. Administration is namespaced under the configured player and admin commands for that mode.
+AcidIsland is loaded as a BentoBox game-mode add-on. On 1MoreBlock, players use `/acid` and staff administer the mode through `/adminacid`.
 
 > Verify destructive, economy-changing, permission-changing, and player-data commands against the installed build and an approved support case before running them.
 
@@ -11,7 +11,7 @@ AcidIsland is loaded as a BentoBox game-mode add-on. Administration is namespace
 
 | Command | Permission | Purpose |
 | --- | --- | --- |
-| `/acid admin` | `acidisland.admin.*` | Shows the mode administration surface; the exact admin alias is configurable. |
+| `/adminacid` | `acidisland.admin.*` | Shows the AcidIsland administration surface on 1MoreBlock. |
 | `/bentobox version` | `bentobox.admin.version` | Reports BentoBox and add-on versions. |
 | `/bentobox reload` | `bentobox.admin.reload` | Reloads BentoBox and add-ons after reviewed configuration changes. |
 
@@ -34,12 +34,12 @@ AcidIsland is loaded as a BentoBox game-mode add-on. Administration is namespace
 
 - BentoBox owns the island database and protection model; avoid editing game-mode data by hand while the server is running.
 - Challenges, Level, Warps, Border, Limits, Biomes, and other add-ons attach to this mode according to their per-world configuration.
-- Command labels and permission prefixes can be changed by game-mode configuration, so confirm them on the live build before granting wildcards.
+- The command roots are `/acid` for players and `/adminacid` for staff; permission nodes keep the `acidisland` namespace.
 
 ## Examples
 
 ```text
-/acid admin
+/adminacid
 /bentobox version
 /bentobox reload
 ```

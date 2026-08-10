@@ -14,9 +14,29 @@ import {
 
 const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const problems = [];
+const BENTOBOX_GAME_MODE_ROOTS = new Map([
+  ['aoneblock', { player: '/oneblock', admin: '/adminoneblock' }],
+  ['chunkblock', { player: '/chunkblock', admin: '/adminchunkblock' }],
+  ['bskyblock', { player: '/skyblock', admin: '/adminskyblock' }],
+  ['acidisland', { player: '/acid', admin: '/adminacid' }],
+  ['caveblock', { player: '/cave', admin: '/admincave' }],
+  ['skygrid', { player: '/skygrid', admin: '/adminskygrid' }],
+]);
+const DEPRECATED_BENTOBOX_PLAYER_ROOT = /(^|[\s|`(])\/(?:is(?:land)?|ob)(?=$|[\s|`,.;:)])/gim;
+const POSTFIX_BENTOBOX_ADMIN_ROOT = /(^|[\s|`(])\/(?:is(?:land)?|ob|oneblock|skyblock|acid|cave|chunkblock|skygrid)\s*admin(?=$|[\s|`,.;:)])/gim;
 
 function problem(message) {
   problems.push(message);
+}
+
+function lineNumberAt(source, offset) {
+  return source.slice(0, offset).split('\n').length;
+}
+
+function reportPatternMatches(source, file, pattern, message) {
+  for (const match of source.matchAll(new RegExp(pattern.source, pattern.flags))) {
+    problem(`${message}: ${path.relative(repoRoot, file)}:${lineNumberAt(source, match.index)}`);
+  }
 }
 
 async function validateNamespaces(registry) {
@@ -118,6 +138,59 @@ async function validateAdditionalEntries(entries) {
   }
 }
 
+async function validateBentoBoxCommandConventions(entries) {
+  for (const entry of entries.filter((candidate) => candidate.kind === 'catalog')) {
+    const guides = [];
+    const playerGuide = await readFile(entry.playerGuideFile, 'utf8');
+    guides.push({ file: entry.playerGuideFile, source: playerGuide });
+
+    let staffGuide = '';
+    if (entry.staffGuideFile) {
+      staffGuide = await readFile(entry.staffGuideFile, 'utf8');
+      guides.push({ file: entry.staffGuideFile, source: staffGuide });
+    }
+
+    const isBentoBoxGuide = BENTOBOX_GAME_MODE_ROOTS.has(entry.manifest.id)
+      || guides.some(({ source }) => /\bBentoBox\b/i.test(source));
+    if (!isBentoBoxGuide) {
+      continue;
+    }
+
+    if (['/is', '/island', '/ob'].includes(entry.manifest.main_command?.toLowerCase())) {
+      problem(`BentoBox manifest ${entry.manifest.id} uses deprecated player root ${entry.manifest.main_command}.`);
+    }
+
+    for (const { file, source } of guides) {
+      reportPatternMatches(
+        source,
+        file,
+        DEPRECATED_BENTOBOX_PLAYER_ROOT,
+        'Curated BentoBox guides must use a full 1MoreBlock player root',
+      );
+      reportPatternMatches(
+        source,
+        file,
+        POSTFIX_BENTOBOX_ADMIN_ROOT,
+        'BentoBox staff roots must use /admin<gametype>',
+      );
+    }
+
+    const expected = BENTOBOX_GAME_MODE_ROOTS.get(entry.manifest.id);
+    if (!expected) {
+      continue;
+    }
+    if (entry.manifest.main_command !== expected.player) {
+      problem(`BentoBox game mode ${entry.manifest.id} must use main_command: ${expected.player}.`);
+    }
+    if (!playerGuide.includes(`\`${expected.player}\``)) {
+      problem(`Player guide for ${entry.manifest.id} must document ${expected.player}.`);
+    }
+    if (entry.staffGuideFile && !staffGuide.includes(`\`${expected.admin}\``)) {
+      problem(`Staff guide for ${entry.manifest.id} must document ${expected.admin}.`);
+    }
+  }
+}
+
 async function validateGeneratedCategoryOwnership(entries) {
   for (const category of ['custom-server-plugin', 'other-server-feature']) {
     const definition = CATEGORY_DEFINITIONS[category];
@@ -148,6 +221,7 @@ async function main() {
   }
   if (!problems.length) {
     await validateAdditionalEntries(entries);
+    await validateBentoBoxCommandConventions(entries);
     await validateGeneratedCategoryOwnership(entries);
   }
 

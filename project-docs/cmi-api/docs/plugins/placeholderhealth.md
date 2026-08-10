@@ -1,5 +1,7 @@
 # PlaceholderHealth
 
+> PlaceholderHealth is now the Health module inside `1MB-CMIAPI-Placeholders`. Its config, permissions, placeholders, sample checks, and reports remain compatible; its command route is now `/_placeholders health`. See [Placeholders](placeholders.md) for parent lifecycle and migration controls.
+
 ## Purpose
 
 PlaceholderHealth is a read-only server-owner monitor for PlaceholderAPI output. It is meant for the known placeholders that matter to server operations, CMI holograms, ctext pages, ajLeaderboards, and 1MB feature dashboards.
@@ -19,24 +21,24 @@ It is different from PlaceholderProbe: PlaceholderProbe is for ad hoc single-pla
 ## Commands
 
 ```text
-/placeholderhealth
-/placeholderhealth info
-/placeholderhealth help
-/placeholderhealth check [player]
-/placeholderhealth list [page]
-/placeholderhealth export [player]
-/placeholderhealth reload
-/placeholderhealth debug [overview|health|hooks|commands|permissions|placeholders|config|all] [page]
+/_placeholders health
+/_placeholders health info
+/_placeholders health help
+/_placeholders health check [player]
+/_placeholders health list [page]
+/_placeholders health export [player]
+/_placeholders health reload
+/_placeholders health debug [overview|health|hooks|commands|permissions|placeholders|config|all] [page]
 ```
 
 Examples:
 
 ```text
-/placeholderhealth check mrfloris
-/placeholderhealth list
-/placeholderhealth export mrfloris
-/placeholderhealth debug placeholders
-/placeholderhealth debug all
+/_placeholders health check mrfloris
+/_placeholders health list
+/_placeholders health export mrfloris
+/_placeholders health debug placeholders
+/_placeholders health debug all
 ```
 
 ## Permissions

@@ -34,6 +34,7 @@ The root README is the front door. Detailed documentation lives under [`docs/`](
 - [Credits](docs/credits.md)
 - [Development Rules](docs/development-rules.md)
 - [Plugin Docs](docs/plugins/README.md)
+- [Shared Hunt: Coconut, Ghost, and Doors](docs/plugins/doors.md)
 
 Documentation is part of the definition of done for this repo. Every library, API surface, and feature plugin should be understandable from the repo docs and from in-game or console help/status/debug output. When a command, permission, placeholder, config path, hook, data path, jar name, version, or build number changes, the matching docs and registered debug/help metadata should be updated in the same change.
 
@@ -80,6 +81,7 @@ That means local testing servers can live inside the project without leaking pai
 CoconutHunt debug mode is isolated from production, runs as an active day-1 event when no date/day override is set, and expects 15 test coconuts by default:
 
 ```text
+/coconut admin enabled true
 /coconut admin debug true
 /coconut admin expected 15
 /coconut admin coconut give 15 0
@@ -88,7 +90,7 @@ CoconutHunt debug mode is isolated from production, runs as an active day-1 even
 Place all 15 setup heads. Every placement independently chooses one of the five bundled coconut skins, then records that persistent texture variant together with the head's stable id, event, world, coordinates, region, day, and timestamp; no manual per-head details are required. Then run:
 
 ```text
-/coconut admin coconut waves auto 7 2026
+/coconut admin coconut waves auto 7 2027
 /coconut admin coconut validate
 /coconut admin event validate
 /coconut admin event snapshot
@@ -96,7 +98,13 @@ Place all 15 setup heads. Every placement independently chooses one of the five 
 
 The same admin account can right-click the unlocked heads and test normal player progress. An alt is only needed for independent-player, community, and nearby social-bonus behavior. `/coconut admin day <1-7>` advances debug waves immediately.
 
-Use `/coconut admin reset player <player> [event-id] --dry-run|--confirm` for one player. Use `/coconut admin reset event --dry-run|--confirm` to restart the complete isolated debug edition while preserving all registered heads, configuration, production data, and unrelated shared playerdata. Production still requires approved dates in `events.yml` with debug disabled and deliberately has no event-wide reset command. The same jar now provides `/ghosthunt`; use the equivalent `/ghosthunt admin ghost ...` flow for `debug_halloween_2026`, then select a production edition through guarded `/hunt admin event status|activate` commands. See [Coconut Hunt](docs/plugins/coconut.md) and [Halloween Ghost Hunt](docs/plugins/ghosthunt.md) for complete setup, reset, reward, migration, and launch guides.
+Use `/coconut admin reset player <player> [event-id] --dry-run|--confirm` for one player. Use `/coconut admin reset event --dry-run|--confirm` to restart the complete isolated debug edition while preserving all registered heads, configuration, production data, and unrelated shared playerdata. Production still requires approved dates in `events.yml` with debug disabled and deliberately has no event-wide reset command.
+
+The shared jar defaults to Coconut disabled and Halloween Ghost Hunt enabled. `/ghost` is canonical and `/ghosthunt` remains its compatibility alias. Disabling one theme stops its participation, discovery, effects, visit action, and shop without disabling the shared jar; a read-only overview/history and already-earned claims remain available only while that edition is `ACTIVE` or `CLAIMING` and has an immutable snapshot. Upcoming editions and editions without a snapshot stay blocked. For a balanced four-wave debug setup, run `/ghost admin enabled true`, `/ghost admin debug true`, `/ghost admin expected 16`, `/ghost admin ghost give 16 0`, and `/ghost admin ghost waves auto 4 2026`. The production `halloween_2026` contract is October 30 through November 2, 20 Ghosts per day and 80 total, with four daily kit claims plus the perfect all-80 bonus. `/ghost hint` returns direction/distance guidance without coordinates. Before launch, create the CMI `halloween` warp, prepare the exact five enabled, non-empty, item-only CMI kits, and take a restorable world backup before placing the final 80 heads. Select a production edition only through guarded `/hunt admin event status|activate` commands. See [Coconut Hunt](docs/plugins/coconut.md) and [Halloween Ghost Hunt](docs/plugins/ghosthunt.md) for complete setup, reset, reward, migration, and launch guides.
+
+The public Event Hunts jar also hosts an isolated, dormant-by-default Door Hunt module. For players, `/hunt`, `/hunt info`, and `/hunt help` open a six-row Event Hunts index showing every installed module, its live/upcoming/dormant state, required worlds, primary command, and published dates. Clicking Coconut, Ghost, or Doors opens that module's GUI; dormant collectible hunts and Doors provide a read-only preview while every gameplay action remains guarded by its real runtime switch. A validated Event Hunts registry now drives the index, text listing, tab completion, and `/hunt <module>` routes; a future module must register unique metadata plus guarded status, command, and GUI contributors before it appears. `/hunt coconut`, `/hunt ghost`, and `/hunt doors` route only to their named module, while `/coconut`, `/ghost`, and `/doors` remain canonical shortcuts. `/doors` opens a Halloween GUI for travel, daily progress, hints, statistics, the coordinate-private journal, quests, reward-kit unlocks, retained seasons, and moving between the three hunts. Use `/hunt admin status` or `/hunt debug status` for the aggregate host view, and `/hunt admin modules` plus `/hunt admin module <module> <on|off>` for independent module switches. Door Hunt keeps the complete clean-room v3 behavior under the compatibility path `plugins/1MB-CMIAPI/CoconutHunt/Doors/` and shared player profiles under `doorshunt`. Validate and import a copied `plugins/OneMBTrickOrTreatDoors/` folder with `/doors admin migrate standalone --dry-run`, then `--confirm`; the source is never changed and the module is not enabled automatically. Never activate the standalone and combined Doors JARs together. See [Door Hunt](docs/plugins/doors.md), [administration](docs/plugins/doors-administration.md), and [testing](docs/plugins/doors-testing.md).
+
+Player onboarding remains `/doors` → `/halloween` → find a closed door with a golden pressure plate → knock three times within five seconds with an empty main hand. Daily results use the clean-room weighted trick/treat catalogue, whose command rows remain `target: all` where configured. Publication sources are `docs/plugins/doors.md` and `docs/plugins/doors-docs.yml`; the public mirror remains in `mrfdev/1MB-Plugins-Docs` at `https://docs.1moreblock.com/player-guides/plugins/doors/`.
 
 ## Runtime Installation
 
@@ -106,74 +114,69 @@ Paper loads normal plugin jars from the top-level server `/plugins/` directory. 
 
 - `plugins/CMI-<version>.jar`
 - `plugins/CMILib<version>.jar`
-- `plugins/1MB-CMIAPI-LIB-v1.0.1-559-j25-26.2.jar`
-- `plugins/1MB-CMIAPI-AFKShrine-v1.0.1-559-j25-26.2.jar` provides CMI AFK shrine effects, player-selectable permission-gated particle presets, highlighted welcome-back data, AFKShrine points, claim/exchange rewards, independently permissioned lore-book kits, milestones, quests, leaderboards, readiness checks, and passive staff Markdown reports
-- `plugins/1MB-CMIAPI-RecordingMode-v1.0.1-559-j25-26.2.jar`
-- `plugins/1MB-CMIAPI-SellStreaks-v1.0.1-559-j25-26.2.jar`
-- `plugins/1MB-CMIAPI-ScheduledTips-v1.0.1-559-j25-26.2.jar`
-- `plugins/1MB-CMIAPI-Visit-v1.0.1-559-j25-26.2.jar` provides player-owned hidden CMI visit warps with safe welcome messages, arrival titles, particles, sounds, and top-visit perk unlocks
-- `plugins/1MB-CMIAPI-PassportDiscovery-v1.0.1-559-j25-26.2.jar` includes `/passport warp`, replacing legacy WarpPassport for new installs
-- `plugins/1MB-CMIAPI-SocialGatherings-v1.0.1-559-j25-26.2.jar`
-- `plugins/1MB-CMIAPI-JourneyMap-v1.0.1-559-j25-26.2.jar`
-- `plugins/1MB-CMIAPI-KitStreaks-v1.0.1-559-j25-26.2.jar`
-- `plugins/1MB-CMIAPI-MessageFont-v1.0.1-559-j25-26.2.jar`
-- `plugins/1MB-CMIAPI-Nick-v1.0.1-559-j25-26.2.jar` provides safer `/nick` presets, GUI previews, cooldowns, related-name checks, history, favorites, ratings, and CMI nickname delegation
-- `plugins/1MB-CMIAPI-EmoteMenu-v1.0.1-559-j25-26.2.jar` provides `/emotes` with a hardened light-blue GUI, Paper dialog search, target picking, and CMI CustomAlias-backed emote review
-- `plugins/1MB-CMIAPI-PvPToggle-v1.0.1-559-j25-26.2.jar`
-- `plugins/1MB-CMIAPI-Boosters-v1.0.1-559-j25-26.2.jar`
-- `plugins/1MB-CMIAPI-NameMC-v1.0.1-559-j25-26.2.jar`
-- `plugins/1MB-CMIAPI-Exchange-v1.0.1-559-j25-26.2.jar` provides `/exchange`, migrated from the old standalone 1MBTrades plugin
-- `plugins/1MB-CMIAPI-VoteTokens-v1.0.1-559-j25-26.2.jar` provides `/votetokens` secure vote-token GUI exchanges, CMI kit rewards, hidden reward identity markers, reward setup item creation, extra-token item tools with shield presets, and staff migration tools for old manual exchanges
-- `plugins/1MB-CMIAPI-DiscordChat-v1.0.1-559-j25-26.2.jar` provides `/discordchat` DiscordSRV server-chat engagement tracking, continuous floor-based EXP conversion, separate streak milestone bonuses, conversation clusters, first-Discord broadcasts, community pulse, recurring bonus windows, linked-account streaks, two-step point rewards with player/global cooldowns, safe item tools, dependency-aware reward checks, opt-out reminders, milestone celebration privacy, and staff smoke/community/economy/archive/award reports
-- `plugins/1MB-CMIAPI-GameTypes-v1.0.1-559-j25-26.2.jar` provides `/gametype` safe BentoBox game type menus for OneBlock, ChunkBlock, SkyBlock, AcidIsland, CaveBlock, and SkyGrid
-- `plugins/1MB-CMIAPI-BirthdayLanterns-v1.0.1-559-j25-26.2.jar` provides `/birthday` collectible birthday, player anniversary, and server milestone lantern rewards with GUI claims, PDC item identity, finite wish charges, guestbook notes, presets, mail variants, and configurable CMI reward commands
-- `plugins/1MB-CMIAPI-LavaBoots-v1.0.1-559-j25-26.2.jar` provides `/lavaboots` finite PDC-marked lava-assist boots with dyed leather event themes, charge, durability drain, offhand magma/fire-charge fuel, movement assist, short fire-resistance windows, lava vision event tiers, and repair/anvil/enchant guards
-- `plugins/1MB-CMIAPI-Spawners-v1.0.1-559-j25-26.2.jar` provides `/spawners` CMI spawner shop GUI with Paper entity discovery, spawn egg shop icons, tier-split friendly pages, glint availability markers, blocked utility-entity filters, restricted admin-only spawner browsing, CMI placespawner permission checks, confirmation purchases, CMI-backed Vault economy payments, annual event limits, yearly stock caps, event progress, admin toggles, shift-click spawner editing, per-id disables, price overrides, category moves, future tier/group tools, DiscordSRV staff logs, setup command exports, and safe sell-section scaffolding
-- `plugins/1MB-CMIAPI-Collect-v1.0.1-559-j25-26.2.jar` provides `/collect` seasonal event GUI with safe vanilla-only inventory-scanned item submissions, event-score bonuses, capped virtual Lucky Finds, community progress, scavenger hunts, personal milestones, hidden future weeks, daily/weekly/monthly/all-event leaderboards with highlighted top-3 player heads, Hall of Fame archives, streaks, PDC keepsake rewards, duplicate reward exchange for event score, CMI reward command hooks, DiscordSRV event feed hooks, admin debug week/day/date controls, and Discord-friendly markdown event reports
-- `plugins/1MB-CMIAPI-CoconutHunt-v1.0.1-559-j25-26.2.jar` provides the shared themed-hunt engine: `/coconut` Summer Beach and `/ghosthunt` Halloween editions with event-isolated registries/progress/snapshots/rewards, cumulative waves, history and old-edition claims, guarded activation, private Paper proximity visuals, Ghost effect preferences and Haunting Chains, safe rewards, and isolated debug workflows
-- `plugins/1MB-CMIAPI-DropParty-v1.0.1-559-j25-26.2.jar` provides dormant-by-default scheduled/manual sulfur-geyser DropParties, hardened player/staff GUIs, CMI arena travel, approved exact-item eruptions, movement-based anti-idle checks, durable cross-world collection vaults, recoverable claims, stats, leaderboards, and non-destructive mini-party flares
-- `plugins/1MB-CMIAPI-Appreciation-v1.0.1-559-j25-26.2.jar` provides dormant-by-default `/appreciate` and optional `/thanks` player appreciation menus, reviewed reasons including birthdays, limited sending quotas, recipient gift/notification/accessibility preferences, free/XP/money/scope-safe item escrow, one free thank-you reaction, nearby shared celebrations, 60-day gift returns with preserved notes, anonymous sending, recent favorites, badges, streak points, permanent unlocks, CMI notifications, placeholders, staff gift switches, anti-farming review, and guarded recovery
-- `plugins/1MB-CMIAPI-Forage-v1.0.1-559-j25-26.2.jar` provides `/forage` v1 tool-gated nature progression with curated PDC tools, first-run guide/onboarding, CMI-backed Vault camp shop, Tier 2 pickaxe/brush/sword/mace unlocks, block and entity source families with non-overlapping default tool ownership, player XP/tool XP live balance presets, `/forage admin check`, `/forage admin livecheck`, and `/forage admin export [backup]`, global and per-family daily caps plus player/admin limit overviews, XP/points, daily, weekly, and monthly quests, read-only top boards, camp-ready feedback, UUID-owned camp anchors with admin claim management, camp-only tier upgrades, diamond refinement, controlled Unbreaking/Efficiency improvements, configurable camp-anchor turn-ins, multi-tier Forage Dust growth pulses with rare legendary treasure dust, tool soul lore, chunk exhaustion, WorldGuard global-only checks, camp validation, camp-only Repair & Merge, tips, placeholders, and safe GUI handling
-- `plugins/1MB-CMIAPI-AutoSell-v1.0.1-559-j25-26.2.jar` provides `/autosell` opt-in CMI Worth.yml inventory cleanup with hardened GUI category/material/filter/world toggles, per-category material pages, pure-vanilla item checks, hotbar/offhand/armor protection, exact-stack sell verification, Vault/CMI payments, daily caps, broker progress, quest hub with claimable rewards and period pages, visible milestone tree with bulk-batch milestones, sell chains, daily/weekly streak bonuses, preset/manual and disabled-by-default scheduled `/rate`-visible AutoSell Happy Hour boosts, chunk-change and overheat anti-farm guards, material/world blacklists, quick blacklist actions from numbered warnings, player category/material stats, chunk heatmaps, passive tuning suggestions, admin analytics reports, and Markdown exports
-- `plugins/1MB-CMIAPI-MobHat-v1.0.1-559-j25-26.2.jar`
-- `plugins/1MB-CMIAPI-PlayerTodo-v1.0.1-559-j25-26.2.jar`
-- `plugins/1MB-CMIAPI-Refer-v1.0.1-559-j25-26.2.jar`
-- `plugins/1MB-CMIAPI-TPAuto-v1.0.1-559-j25-26.2.jar`
-- `plugins/1MB-CMIAPI-Menu-v1.0.1-559-j25-26.2.jar`
-- `plugins/1MB-CMIAPI-StaffCenter-v1.0.1-559-j25-26.2.jar`
-- `plugins/1MB-CMIAPI-Profile-v1.0.1-559-j25-26.2.jar` provides `/profile` for staff-only Java/Bedrock identity review, cached CMI/log signals, Mojang account status, remote profile context, public ban-list review signals, manual notes, and Markdown exports
-- `plugins/1MB-CMIAPI-FilterLab-v1.0.1-559-j25-26.2.jar`
-- `plugins/1MB-CMIAPI-FilterGuard-v1.0.1-559-j25-26.2.jar`
-- `plugins/1MB-CMIAPI-WarningLens-v1.0.1-559-j25-26.2.jar`
-- `plugins/1MB-CMIAPI-NotableMsg-v1.0.1-559-j25-26.2.jar`
-- `plugins/1MB-CMIAPI-1MBStaffMsg-v1.0.1-559-j25-26.2.jar`
-- `plugins/1MB-CMIAPI-CmdCostDashboard-v1.0.1-559-j25-26.2.jar`
-- `plugins/1MB-CMIAPI-CMIConfig-v1.0.1-559-j25-26.2.jar`
-- `plugins/1MB-CMIAPI-ConsoleNoiseRouter-v1.0.1-559-j25-26.2.jar`
-- `plugins/1MB-CMIAPI-EconomyGuardian-v1.0.1-559-j25-26.2.jar`
-- `plugins/1MB-CMIAPI-StartupDoctor-v1.0.1-559-j25-26.2.jar`
-- `plugins/1MB-CMIAPI-UpdateSmoke-v1.0.1-559-j25-26.2.jar`
-- `plugins/1MB-CMIAPI-PluginVersions-v1.0.1-559-j25-26.2.jar` provides plugin inventory, tested Java/Paper/dependency gate checks, URL curation, and Markdown/Discord exports
-- `plugins/1MB-CMIAPI-PlaceholderHealth-v1.0.1-559-j25-26.2.jar` provides read-only PlaceholderAPI health checks for configured CMI and 1MB placeholder samples, ok/warn/error reporting, and Markdown exports
-- `plugins/1MB-CMIAPI-Potions-v1.0.1-559-j25-26.2.jar` provides `/_potions` for locked admin custom event potion forging plus player-safe `/potions` held-item inspection, split config/potions/particles files, PDC identity, GUI definition editing, collection bundle generation, 14-style generation, snapshotted item costs, particle/collection metadata, and runtime disable controls
-- `plugins/1MB-CMIAPI-SchedulerCheck-v1.0.1-559-j25-26.2.jar` provides direct-console `/_scheduler` checks for CMI scheduler YAML syntax, timing values, command lists, enabled toggles, and Markdown exports
-- `plugins/1MB-CMIAPI-Upgrade-v1.0.1-559-j25-26.2.jar` provides `/_upgrade` admin-only LuckPerms group upgrade suggestions and read-only rankup simulation from join date and playtime signals, with a review queue GUI, clickable inspect/apply actions, guarded re-checks, side-group preservation, optional cosmetic permission rewards, promotion feedback effects, Discord link reminders, and split `config.yml`/`groups.yml`
-- `plugins/1MB-CMIAPI-EndCrystals-v1.0.1-559-j25-26.2.jar` provides `/_endcrystals`, migrated from the old standalone 1MB-EndCrystals plugin
-- `plugins/1MB-CMIAPI-AntiFire-v1.0.1-559-j25-26.2.jar` provides independent `STARTUP` fire-spread and block-burn protection, delayed temporary-fire cleanup, `/_antifire`, automatic standalone config import, and a later read-only status/placeholder bridge into `1MB-CMIAPI-LIB`
-- `plugins/1MB-CMIAPI-WorldSnapshot-v1.0.1-559-j25-26.2.jar`
-- `plugins/1MB-CMIAPI-SparkReviewer-v1.0.1-559-j25-26.2.jar`
-- `plugins/1MB-CMIAPI-Hoppers-v1.0.1-559-j25-26.2.jar` provides `/_hoppers` for read-only hopper clog, watch/trigger/baseline, report comparison, storage-chain/container/material/redstone/ticket deep dives, world/chunk/player, region, Spark, notes, drift, history, and recommendation triage
-- `plugins/1MB-CMIAPI-Diagnostics-v1.0.1-559-j25-26.2.jar` provides removable `/_diagnostics` probes for disconnect, AFK, player-state, packet/protocol bridge context, compact item metadata clues, server-state, plugin-version, and recent server-log context with timestamped support logs
-- `plugins/1MB-CMIAPI-EventRecorder-v1.0.1-559-j25-26.2.jar`
-- `plugins/1MB-CMIAPI-CMIProbe-v1.0.1-559-j25-26.2.jar`
-- `plugins/1MB-CMIAPI-CMIDatabase-v1.0.1-559-j25-26.2.jar`
-- `plugins/1MB-CMIAPI-PlaceholderProbe-v1.0.1-559-j25-26.2.jar`
-- `plugins/1MB-CMIAPI-PermissionProbe-v1.0.1-559-j25-26.2.jar` provides owner-only `/_permissions` diagnosis for players, commands, plugins, feature access summaries, player access overviews, player/group comparisons, passive denied-check recording, live watch summaries, scoped reports, Markdown exports, context-aware LuckPerms source traces, expected-profile gap checks, wildcard/orphan scans, and Bukkit permission metadata
-- `plugins/1MB-CMIAPI-CMIPlaceholderCheck-v1.0.1-559-j25-26.2.jar`
-- `plugins/1MB-CMIAPI-1MBPlaceholders-v1.0.1-559-j25-26.2.jar` provides the migrated `%onemb_<key>%` PlaceholderAPI expansion and keeps `/_placeholders`
-- `plugins/1MB-CMIAPI-WarpAudit-v1.0.1-559-j25-26.2.jar` provides read-only CMI warp and portal hygiene checks
-- `plugins/1MB-CMIAPI-WorthDrift-v1.0.1-559-j25-26.2.jar` provides read-only CMI sell-event drift tracking plus ShopGUI+ `buyPrice` vs CMI `Worth.yml` Markdown reports with missing, drifting, duplicate, not-in-worth, illegal-item, GitHub-table, Discord-bullet, and exception-filtered modes
-- `plugins/1MB-CMIAPI-WorthHelper-v1.0.1-559-j25-26.2.jar` provides `/worthhelper` for read-only CMI Worth.yml and Paper recipe review exports
+- `plugins/1MB-CMIAPI-LIB-v1.0.1-566-j25-26.2.jar`
+- `plugins/1MB-CMIAPI-AFKShrine-v1.0.1-566-j25-26.2.jar` provides CMI AFK shrine effects, player-selectable permission-gated particle presets, highlighted welcome-back data, AFKShrine points, claim/exchange rewards, independently permissioned lore-book kits, milestones, quests, leaderboards, readiness checks, and passive staff Markdown reports
+- `plugins/1MB-CMIAPI-RecordingMode-v1.0.1-566-j25-26.2.jar`
+- `plugins/1MB-CMIAPI-SellStreaks-v1.0.1-566-j25-26.2.jar`
+- `plugins/1MB-CMIAPI-ScheduledTips-v1.0.1-566-j25-26.2.jar`
+- `plugins/1MB-CMIAPI-Visit-v1.0.1-566-j25-26.2.jar` provides player-owned hidden CMI visit warps with safe welcome messages, arrival titles, particles, sounds, and top-visit perk unlocks
+- `plugins/1MB-CMIAPI-PassportDiscovery-v1.0.1-566-j25-26.2.jar` includes `/passport warp`, replacing legacy WarpPassport for new installs
+- `plugins/1MB-CMIAPI-SocialGatherings-v1.0.1-566-j25-26.2.jar`
+- `plugins/1MB-CMIAPI-JourneyMap-v1.0.1-566-j25-26.2.jar`
+- `plugins/1MB-CMIAPI-KitStreaks-v1.0.1-566-j25-26.2.jar`
+- `plugins/1MB-CMIAPI-Nick-v1.0.1-566-j25-26.2.jar` provides safer `/nick` presets, GUI previews, cooldowns, related-name checks, history, favorites, ratings, and CMI nickname delegation
+- `plugins/1MB-CMIAPI-EmoteMenu-v1.0.1-566-j25-26.2.jar` provides `/emotes` with a hardened light-blue GUI, Paper dialog search, target picking, and CMI CustomAlias-backed emote review
+- `plugins/1MB-CMIAPI-PvPToggle-v1.0.1-566-j25-26.2.jar`
+- `plugins/1MB-CMIAPI-Boosters-v1.0.1-566-j25-26.2.jar`
+- `plugins/1MB-CMIAPI-NameMC-v1.0.1-566-j25-26.2.jar`
+- `plugins/1MB-CMIAPI-Exchange-v1.0.1-566-j25-26.2.jar` provides `/exchange`, migrated from the old standalone 1MBTrades plugin
+- `plugins/1MB-CMIAPI-VoteTokens-v1.0.1-566-j25-26.2.jar` provides `/votetokens` secure vote-token GUI exchanges, CMI kit rewards, hidden reward identity markers, reward setup item creation, extra-token item tools with shield presets, and staff migration tools for old manual exchanges
+- `plugins/1MB-CMIAPI-DiscordChat-v1.0.1-566-j25-26.2.jar` provides `/discordchat` DiscordSRV server-chat engagement tracking, continuous floor-based EXP conversion, separate streak milestone bonuses, conversation clusters, first-Discord broadcasts, community pulse, recurring bonus windows, linked-account streaks, two-step point rewards with player/global cooldowns, safe item tools, dependency-aware reward checks, opt-out reminders, milestone celebration privacy, and staff smoke/community/economy/archive/award reports
+- `plugins/1MB-CMIAPI-GameTypes-v1.0.1-566-j25-26.2.jar` provides `/gametype` safe BentoBox game type menus for OneBlock, ChunkBlock, SkyBlock, AcidIsland, CaveBlock, and SkyGrid
+- `plugins/1MB-CMIAPI-BirthdayLanterns-v1.0.1-566-j25-26.2.jar` provides `/birthday` collectible birthday, player anniversary, and server milestone lantern rewards with GUI claims, PDC item identity, finite wish charges, guestbook notes, presets, mail variants, and configurable CMI reward commands
+- `plugins/1MB-CMIAPI-LavaBoots-v1.0.1-566-j25-26.2.jar` provides `/lavaboots` finite PDC-marked lava-assist boots with dyed leather event themes, charge, durability drain, offhand magma/fire-charge fuel, movement assist, short fire-resistance windows, lava vision event tiers, and repair/anvil/enchant guards
+- `plugins/1MB-CMIAPI-Spawners-v1.0.1-566-j25-26.2.jar` provides `/spawners` CMI spawner shop GUI with Paper entity discovery, spawn egg shop icons, tier-split friendly pages, glint availability markers, blocked utility-entity filters, restricted admin-only spawner browsing, CMI placespawner permission checks, confirmation purchases, CMI-backed Vault economy payments, annual event limits, yearly stock caps, event progress, admin toggles, shift-click spawner editing, per-id disables, price overrides, category moves, future tier/group tools, DiscordSRV staff logs, setup command exports, and safe sell-section scaffolding
+- `plugins/1MB-CMIAPI-Collect-v1.0.1-566-j25-26.2.jar` provides `/collect` seasonal event GUI with safe vanilla-only inventory-scanned item submissions, event-score bonuses, capped virtual Lucky Finds, community progress, scavenger hunts, personal milestones, hidden future weeks, daily/weekly/monthly/all-event leaderboards with highlighted top-3 player heads, Hall of Fame archives, streaks, PDC keepsake rewards, duplicate reward exchange for event score, CMI reward command hooks, DiscordSRV event feed hooks, admin debug week/day/date controls, and Discord-friendly markdown event reports
+- `plugins/1MB-CMIAPI-EventHunts-v1.0.1-566-j25-26.2.jar` provides the shared `/hunt` Event Hunts index and themed-hunt engine: a disabled-by-default preserved `/coconut` Summer 2027 edition, enabled `/ghost` (`/ghosthunt` alias) Halloween 2026 weekend with four 20-Ghost waves and five kit rewards, and the independently switched `/doors` event module. The legacy `CoconutHunt` data, permission, placeholder, and PDC namespaces remain unchanged.
+- `plugins/1MB-CMIAPI-DropParty-v1.0.1-566-j25-26.2.jar` provides dormant-by-default scheduled/manual sulfur-geyser DropParties, hardened player/staff GUIs, CMI arena travel, approved exact-item eruptions, movement-based anti-idle checks, durable cross-world collection vaults, recoverable claims, stats, leaderboards, and non-destructive mini-party flares
+- `plugins/1MB-CMIAPI-Appreciation-v1.0.1-566-j25-26.2.jar` provides dormant-by-default `/appreciate` and optional `/thanks` player appreciation menus, reviewed reasons including birthdays, limited sending quotas, recipient gift/notification/accessibility preferences, free/XP/money/scope-safe item escrow, one free thank-you reaction, nearby shared celebrations, 60-day gift returns with preserved notes, anonymous sending, recent favorites, badges, streak points, permanent unlocks, CMI notifications, placeholders, staff gift switches, anti-farming review, and guarded recovery
+- `plugins/1MB-CMIAPI-Forage-v1.0.1-566-j25-26.2.jar` provides `/forage` v1 tool-gated nature progression with curated PDC tools, first-run guide/onboarding, CMI-backed Vault camp shop, Tier 2 pickaxe/brush/sword/mace unlocks, block and entity source families with non-overlapping default tool ownership, player XP/tool XP live balance presets, `/forage admin check`, `/forage admin livecheck`, and `/forage admin export [backup]`, global and per-family daily caps plus player/admin limit overviews, XP/points, daily, weekly, and monthly quests, read-only top boards, camp-ready feedback, UUID-owned camp anchors with admin claim management, camp-only tier upgrades, diamond refinement, controlled Unbreaking/Efficiency improvements, configurable camp-anchor turn-ins, multi-tier Forage Dust growth pulses with rare legendary treasure dust, tool soul lore, chunk exhaustion, WorldGuard global-only checks, camp validation, camp-only Repair & Merge, tips, placeholders, and safe GUI handling
+- `plugins/1MB-CMIAPI-AutoSell-v1.0.1-566-j25-26.2.jar` provides `/autosell` opt-in CMI Worth.yml inventory cleanup with hardened GUI category/material/filter/world toggles, per-category material pages, pure-vanilla item checks, hotbar/offhand/armor protection, exact-stack sell verification, Vault/CMI payments, daily caps, broker progress, quest hub with claimable rewards and period pages, visible milestone tree with bulk-batch milestones, sell chains, daily/weekly streak bonuses, preset/manual and disabled-by-default scheduled `/rate`-visible AutoSell Happy Hour boosts, chunk-change and overheat anti-farm guards, material/world blacklists, quick blacklist actions from numbered warnings, player category/material stats, chunk heatmaps, passive tuning suggestions, admin analytics reports, and Markdown exports
+- `plugins/1MB-CMIAPI-MobHat-v1.0.1-566-j25-26.2.jar`
+- `plugins/1MB-CMIAPI-PlayerTodo-v1.0.1-566-j25-26.2.jar`
+- `plugins/1MB-CMIAPI-Refer-v1.0.1-566-j25-26.2.jar`
+- `plugins/1MB-CMIAPI-TPAuto-v1.0.1-566-j25-26.2.jar`
+- `plugins/1MB-CMIAPI-Menu-v1.0.1-566-j25-26.2.jar`
+- `plugins/1MB-CMIAPI-StaffCenter-v1.0.1-566-j25-26.2.jar`
+- `plugins/1MB-CMIAPI-Profile-v1.0.1-566-j25-26.2.jar` provides `/profile` for staff-only Java/Bedrock identity review, cached CMI/log signals, Mojang account status, remote profile context, public ban-list review signals, manual notes, and Markdown exports
+- `plugins/1MB-CMIAPI-ContentGuard-v1.0.1-566-j25-26.2.jar` hosts independently switchable FilterLab simulation and FilterGuard enforcement modules while preserving their existing commands and configuration
+- `plugins/1MB-CMIAPI-WarningLens-v1.0.1-566-j25-26.2.jar`
+- `plugins/1MB-CMIAPI-TeamMsg-v1.0.1-566-j25-26.2.jar` hosts independently switchable 1MBStaffMsg and NotableMsg modules while preserving `/s`, `/1mbstaffmsg`, `/n`, permissions, placeholders, prefixes, and existing config files
+- `plugins/1MB-CMIAPI-CmdCostDashboard-v1.0.1-566-j25-26.2.jar`
+- `plugins/1MB-CMIAPI-CMIConfig-v1.0.1-566-j25-26.2.jar`
+- `plugins/1MB-CMIAPI-ConsoleNoiseRouter-v1.0.1-566-j25-26.2.jar`
+- `plugins/1MB-CMIAPI-EconomyGuardian-v1.0.1-566-j25-26.2.jar`
+- `plugins/1MB-CMIAPI-StartupDoctor-v1.0.1-566-j25-26.2.jar`
+- `plugins/1MB-CMIAPI-UpdateSmoke-v1.0.1-566-j25-26.2.jar`
+- `plugins/1MB-CMIAPI-PluginVersions-v1.0.1-566-j25-26.2.jar` provides plugin inventory, tested Java/Paper/dependency gate checks, URL curation, and Markdown/Discord exports
+- `plugins/1MB-CMIAPI-Placeholders-v1.0.1-566-j25-26.2.jar` hosts the production `%onemb_*%` provider plus independently switchable Catalog, Probe, and Health modules behind `/_placeholders`
+- `plugins/1MB-CMIAPI-Potions-v1.0.1-566-j25-26.2.jar` provides `/_potions` for locked admin custom event potion forging plus player-safe `/potions` held-item inspection, split config/potions/particles files, PDC identity, GUI definition editing, collection bundle generation, 14-style generation, snapshotted item costs, particle/collection metadata, and runtime disable controls
+- `plugins/1MB-CMIAPI-SchedulerCheck-v1.0.1-566-j25-26.2.jar` provides direct-console `/_scheduler` checks for CMI scheduler YAML syntax, timing values, command lists, enabled toggles, and Markdown exports
+- `plugins/1MB-CMIAPI-Upgrade-v1.0.1-566-j25-26.2.jar` provides `/_upgrade` admin-only LuckPerms group upgrade suggestions and read-only rankup simulation from join date and playtime signals, with a review queue GUI, clickable inspect/apply actions, guarded re-checks, side-group preservation, optional cosmetic permission rewards, promotion feedback effects, Discord link reminders, and split `config.yml`/`groups.yml`
+- `plugins/1MB-CMIAPI-EndCrystals-v1.0.1-566-j25-26.2.jar` provides `/_endcrystals`, migrated from the old standalone 1MB-EndCrystals plugin
+- `plugins/1MB-CMIAPI-AntiFire-v1.0.1-566-j25-26.2.jar` provides independent `STARTUP` fire-spread and block-burn protection, delayed temporary-fire cleanup, `/_antifire`, automatic standalone config import, and a later read-only status/placeholder bridge into `1MB-CMIAPI-LIB`
+- `plugins/1MB-CMIAPI-WorldSnapshot-v1.0.1-566-j25-26.2.jar`
+- `plugins/1MB-CMIAPI-SparkReviewer-v1.0.1-566-j25-26.2.jar`
+- `plugins/1MB-CMIAPI-Hoppers-v1.0.1-566-j25-26.2.jar` provides `/_hoppers` for read-only hopper clog, watch/trigger/baseline, report comparison, storage-chain/container/material/redstone/ticket deep dives, world/chunk/player, region, Spark, notes, drift, history, and recommendation triage
+- `plugins/1MB-CMIAPI-Diagnostics-v1.0.1-566-j25-26.2.jar` provides removable `/_diagnostics` probes for disconnect, AFK, player-state, packet/protocol bridge context, compact item metadata clues, server-state, plugin-version, and recent server-log context with timestamped support logs
+- `plugins/1MB-CMIAPI-EventRecorder-v1.0.1-566-j25-26.2.jar`
+- `plugins/1MB-CMIAPI-BedrockChatBridge-v1.0.1-566-j25-26.2.jar`
+- `plugins/1MB-CMIAPI-CMIProbe-v1.0.1-566-j25-26.2.jar`
+- `plugins/1MB-CMIAPI-CMIDatabase-v1.0.1-566-j25-26.2.jar`
+- `plugins/1MB-CMIAPI-PermissionProbe-v1.0.1-566-j25-26.2.jar` provides owner-only `/_permissions` diagnosis for players, commands, plugins, feature access summaries, player access overviews, player/group comparisons, passive denied-check recording, live watch summaries, scoped reports, Markdown exports, context-aware LuckPerms source traces, expected-profile gap checks, wildcard/orphan scans, and Bukkit permission metadata
+- `plugins/1MB-CMIAPI-WarpAudit-v1.0.1-566-j25-26.2.jar` provides read-only CMI warp and portal hygiene checks
+- `plugins/1MB-CMIAPI-WorthDrift-v1.0.1-566-j25-26.2.jar` provides read-only CMI sell-event drift tracking plus ShopGUI+ `buyPrice` vs CMI `Worth.yml` Markdown reports with missing, drifting, duplicate, not-in-worth, illegal-item, GitHub-table, Discord-bullet, and exception-filtered modes
+- `plugins/1MB-CMIAPI-WorthHelper-v1.0.1-566-j25-26.2.jar` provides `/worthhelper` for read-only CMI Worth.yml and Paper recipe review exports
 
 The common `1MB-CMIAPI-` prefix keeps the jars grouped together when sorted by name. Repository folders and build output may be organized by category, but installed runtime jars should stay in `/plugins/` for normal Paper loading and feature isolation.
 
@@ -181,9 +184,9 @@ The common `1MB-CMIAPI-` prefix keeps the jars grouped together when sorted by n
 
 The complete built jar set may be copied to a live server without exposing unfinished features. On first install, the shared bootstrap writes `enabled: true` only for the current live allowlist:
 
-- `1MBPlaceholders`, `1MBStaffMsg`, `AFKShrine`, `AutoSell`, `Boosters`, `CoconutHunt`
+- `Placeholders`, `AFKShrine`, `AutoSell`, `BedrockChatBridge`, `Boosters`, `CoconutHunt`, `TeamMsg`
 - `EmoteMenu`, `EndCrystals`, `Exchange`, `GameTypes`, `Hoppers`, `Menu`
-- `MobHat`, `NameMC`, `NotableMsg`, `PlayerTodo`, `PluginVersions`, `Profile`
+- `MobHat`, `NameMC`, `PlayerTodo`, `PluginVersions`, `Profile`
 - `PvPToggle`, `RecordingMode`, `Visit`, `VoteTokens`, `WorthDrift`, `WorthHelper`
 - the required `LIB` and standalone `AntiFire` jars
 
@@ -345,9 +348,9 @@ PlaceholderAPI placeholders should follow this shape:
 - `%onembcmi_kitstreaks.current.streak%`
 - `%onembcmi_kitstreaks.current.health%`
 - `%onembcmi_kitstreaks.track.daily.streak%`
-- `%onembcmi_messagefont.current.font%`
-- `%onembcmi_messagefont.plain.enabled%`
-- `%onembcmi_messagefont.current.remaining_seconds%`
+- `%onembcmi_teammsg.modules.staffmsg.enabled%`
+- `%onembcmi_teammsg.modules.notablemsg.enabled%`
+- `%onembcmi_contentguard.modules.guard.enabled%`
 - `%onembcmi_nick.current.plain%`
 - `%onembcmi_nick.current.style%`
 - `%onembcmi_nick.rating.average%`
@@ -421,6 +424,10 @@ PlaceholderAPI placeholders should follow this shape:
 - `%onembcmi_cmidb.global.event.enabled%`
 - `%onembcmi_cmidb.player.quest.bridge.started%`
 - `%onembcmidb_quest_bridge_started%`
+- `%onembcmi_placeholders.modules.provider.enabled%`
+- `%onembcmi_placeholders.modules.catalog.enabled%`
+- `%onembcmi_placeholders.modules.probe.enabled%`
+- `%onembcmi_placeholders.modules.health.enabled%`
 - `%onembcmi_placeholderprobe.identifiers.count%`
 - `%onembcmi_placeholderprobe.last.output%`
 - `%onembcmi_placeholderprobe.last.state%`

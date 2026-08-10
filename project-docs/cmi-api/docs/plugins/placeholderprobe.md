@@ -1,5 +1,7 @@
 # PlaceholderProbe
 
+> PlaceholderProbe is now the Probe module inside `1MB-CMIAPI-Placeholders`. Its config, permissions, placeholders, bounded history, and parsing behavior remain compatible; its command route is now `/_placeholders probe`. See [Placeholders](placeholders.md) for parent lifecycle and migration controls.
+
 ## Purpose
 
 PlaceholderProbe is a generic developer and staff utility for safely testing PlaceholderAPI output from console or in game. It is aimed at CMI placeholders, the shared `onembcmi` expansion, and any other PlaceholderAPI expansion that is currently registered.
@@ -22,36 +24,32 @@ The first version is intentionally strict: it parses one placeholder token at a 
 ## Commands
 
 ```text
-/placeholderprobe status
-/placeholderprobe parse <placeholder> [online-player]
-/placeholderprobe samples [page] [online-player]
-/placeholderprobe identifiers [page]
-/placeholderprobe search <text> [page]
-/placeholderprobe recent [page]
-/placeholderprobe stats
-/placeholderprobe clear
-/placeholderprobe dump
-/placeholderprobe reload
+/_placeholders probe status
+/_placeholders probe parse <placeholder> [online-player]
+/_placeholders probe samples [page] [online-player]
+/_placeholders probe identifiers [page]
+/_placeholders probe search <text> [page]
+/_placeholders probe recent [page]
+/_placeholders probe stats
+/_placeholders probe clear
+/_placeholders probe dump
+/_placeholders probe reload
 ```
 
-Alias:
-
-```text
-/pprobe
-```
+The former `/placeholderprobe` and `/pprobe` command labels are retired. Use the nested `/_placeholders probe` route.
 
 Useful examples:
 
 ```text
-/placeholderprobe parse %onembcmi_global.status.loaded%
-/placeholderprobe parse %onembcmi_startupdoctor.last.result%
-/placeholderprobe parse %cmi_user_name% Steve
-/placeholderprobe identifiers
-/placeholderprobe search cmi
-/placeholderprobe samples
-/placeholderprobe recent
-/placeholderprobe stats
-/placeholderprobe dump
+/_placeholders probe parse %onembcmi_global.status.loaded%
+/_placeholders probe parse %onembcmi_startupdoctor.last.result%
+/_placeholders probe parse %cmi_user_name% Steve
+/_placeholders probe identifiers
+/_placeholders probe search cmi
+/_placeholders probe samples
+/_placeholders probe recent
+/_placeholders probe stats
+/_placeholders probe dump
 ```
 
 Global library examples:
@@ -161,7 +159,7 @@ Default sample placeholders include a small mix of `onembcmi` and CMI placeholde
 PlaceholderProbe writes support dumps to the shared cache area:
 
 ```text
-plugins/1MB-CMIAPI/CMIAPILIB/cache/plugins/placeholderprobe/placeholderprobe-recent.log
+plugins/1MB-CMIAPI/CMIAPILIB/cache/plugins/_placeholders probe/_placeholders probe-recent.log
 ```
 
 It does not write playerdata or persistent server state.

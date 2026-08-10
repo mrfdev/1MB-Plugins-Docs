@@ -14,20 +14,22 @@ BentoBox Greenhouses is a BentoBox add-on used by one or more 1MoreBlock island 
 
 | Command | What it does |
 | --- | --- |
-| `/is greenhouse` | Shows greenhouse help or management for SkyBlock when enabled. |
+| `/skyblock greenhouse` | Shows greenhouse help or management for SkyBlock. |
+| `/oneblock greenhouse` | Shows greenhouse help or management for OneBlock. |
 | `/acid greenhouse` | Shows greenhouse help in AcidIsland when enabled. |
+| `/skygrid greenhouse` | Shows greenhouse help or management for SkyGrid. |
 
 ## Getting started
 
 1. Enter the relevant island game mode first.
-2. Use `/is greenhouse` or `/acid greenhouse` to open the feature.
-3. Check the game-mode help if the command label differs, because BentoBox commands can be customized per mode.
+2. Use `/skyblock greenhouse`, `/oneblock greenhouse`, `/acid greenhouse`, or `/skygrid greenhouse` for the mode you are playing.
+3. Use that same full game-mode root for related add-on commands.
 
 ## Player notes
 
 - Availability, prices, cooldowns, limits, and rewards are controlled by 1MoreBlock configuration.
-- An add-on may be enabled for one island mode but not another.
-- Use the command root for your current island mode, such as `/is`, `/ob`, `/acid`, `/cave`, or `/skygrid`.
+- Greenhouses is currently configured for SkyBlock, OneBlock, AcidIsland, and SkyGrid.
+- The full 1MoreBlock game-mode roots are `/oneblock`, `/chunkblock`, `/skyblock`, `/acid`, `/cave`, and `/skygrid`.
 
 ## Official resources
 

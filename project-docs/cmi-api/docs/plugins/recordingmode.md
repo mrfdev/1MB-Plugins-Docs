@@ -15,7 +15,7 @@ For private messages, RecordingMode does not rely only on CMI's `acceptingPM` op
 - Defaults can disable PMs, TPA requests, money requests, staff messages, NotableMsg `/n` messages, and ScheduledTips while recording.
 - `/recording set <channel> <on|off>` controls what stays enabled while recording.
 - `/recording set staffmsgs <on|off>` controls whether `/s` staff messages stay visible while recording.
-- `/recording set notablemsgs <on|off>` is offered in tab completion when `1MB-CMIAPI-NotableMsg` is installed and enabled.
+- `/recording set notablemsgs <on|off>` is offered in tab completion when TeamMsg (or the legacy standalone NotableMsg jar) is installed and enabled.
 - `/recording set tips <on|off>` is offered in tab completion when `1MB-CMIAPI-ScheduledTips` is installed and enabled.
 - `/recording set map <on|off>` is offered in tab completion when `1MB-MapHide` is installed and enabled.
 - Previous CMI PM/TPA/money option states are captured and restored when recording mode turns off.

@@ -1,5 +1,7 @@
 # FilterLab
 
+> Since build 561, FilterLab is the Lab module inside the `1MB-CMIAPI-ContentGuard` jar. Its commands, aliases, permissions, placeholders, config, translations, and simulation behavior remain compatible. See [ContentGuard](contentguard.md) for parent lifecycle and migration controls.
+
 ## Purpose
 
 FilterLab is a staff-only test bench for safely simulating CMI `Settings/ChatFilter.yml` rules before relying on them live.

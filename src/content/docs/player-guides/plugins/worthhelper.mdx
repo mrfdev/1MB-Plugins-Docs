@@ -16,13 +16,13 @@ Start with /worthhelper. The sections below explain what WorthHelper is for, whi
 Available features include:
 
 - Read direct item worth values from plugins/CMI/Saves/Worth.yml.
+- Read CMI Worth.AutoGenerate.PriceIncrease from plugins/CMI/config.yml.
 - Enumerate Paper item materials for the running server version.
 - Inspect shaped, shapeless, cooking, stonecutting, smithing, and transmute recipes where Paper exposes enough information.
-- Compare current CMI worth against ingredient cost divided by output count.
-- Use cheapest priced ingredient choices when a recipe accepts alternatives.
-- Skip variant CMI worth keys such as enchantment-specific entries for the base material scan.
-- Flag missing direct worth values outside the configured review blacklist.
-- Mark potions, tipped arrows, ominous bottles, creative/test blocks, spawn eggs, spawners, trial spawners, and vaults as manual-review surfaces.
+- Read the matching Minecraft server's bundled villager_trade JSON definitions for all 13 villager professions and the wandering trader.
+- Parse and cache the bundled trade catalog asynchronously so repeated economy scans do not reread 388 JSON resources on the server thread.
+- Resolve nested vanilla trade tags and use the bundled trade_rebalance overlay only when Paper reports that datapack enabled.
+- Fail closed when the running Minecraft version does not exactly match the configured supported trade schema version.
 
 ## Quick Start
 
@@ -66,6 +66,11 @@ Available features include:
       <td>Runs the WorthHelper recipes action.</td>
       <td><code>/worthhelper recipes DIAMOND</code></td>
     </tr>
+    <tr>
+      <td><code>/worthhelper trades [material] [page]</code></td>
+      <td>Runs the WorthHelper trades action.</td>
+      <td><code>/worthhelper trades</code></td>
+    </tr>
   </tbody>
 </table>
 
@@ -81,6 +86,8 @@ Available features include:
 - `/worthhelper missing`
 - `/worthhelper recipes diamond_block`
 - `/worthhelper recipes minecraft:iron_ingot`
+- `/worthhelper trades`
+- `/worthhelper trades chainmail_helmet`
 
 ## Good To Know
 

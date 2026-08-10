@@ -212,7 +212,6 @@ Feature `/help` pages are intentionally player-facing: they list commands availa
 /1mbcmi debug plugin socialgatherings all
 /1mbcmi debug plugin journeymap all
 /1mbcmi debug plugin kitstreaks all
-/1mbcmi debug plugin messagefont all
 /1mbcmi debug plugin nick all
 /1mbcmi debug plugin emotemenu all
 /1mbcmi debug plugin pvptoggle all
@@ -225,10 +224,9 @@ Feature `/help` pages are intentionally player-facing: they list commands availa
 /1mbcmi debug plugin todo all
 /1mbcmi debug plugin staffcenter all
 /1mbcmi debug plugin profile all
-/1mbcmi debug plugin filterlab all
-/1mbcmi debug plugin filterguard all
+/1mbcmi debug plugin contentguard all
 /1mbcmi debug plugin warninglens all
-/1mbcmi debug plugin notablemsg all
+/1mbcmi debug plugin teammsg all
 /1mbcmi debug plugin cmdcostdashboard all
 /1mbcmi debug plugin cmiconfig all
 /1mbcmi debug plugin economyguardian all
@@ -241,9 +239,7 @@ Feature `/help` pages are intentionally player-facing: they list commands availa
 /1mbcmi debug plugin sparkreviewer all
 /1mbcmi debug plugin hoppers all
 /1mbcmi debug plugin diagnostics all
-/1mbcmi debug plugin placeholderprobe all
-/1mbcmi debug plugin cmiplaceholders all
-/1mbcmi debug plugin onembplaceholders all
+/1mbcmi debug plugin placeholders all
 /1mbcmi debug plugin warpaudit all
 /1mbcmi debug plugin worthdrift all
 /1mbcmi debug plugin worthhelper all
@@ -277,7 +273,7 @@ Feature `/help` pages are intentionally player-facing: they list commands availa
 /1mbcmi translations reload
 ```
 
-Feature examples for 1MBPlaceholders:
+Placeholders Provider examples:
 
 ```text
 /_placeholders
@@ -292,6 +288,22 @@ Feature examples for 1MBPlaceholders:
 /_placeholders backup
 /_placeholders reload
 /_placeholders debug all
+/_placeholders modules
+/_placeholders module catalog true
+```
+
+Placeholders Probe module:
+
+```text
+/_placeholders probe status
+/_placeholders probe parse %onembcmi_global.status.loaded%
+/_placeholders probe samples
+/_placeholders probe identifiers
+/_placeholders probe search cmi
+/_placeholders probe recent
+/_placeholders probe stats
+/_placeholders probe dump
+/_placeholders probe reload
 ```
 
 PluginVersions:
@@ -310,23 +322,23 @@ PluginVersions:
 /pv export discord
 ```
 
-PlaceholderHealth:
+Placeholders Health module:
 
 ```text
-/placeholderhealth
-/placeholderhealth info
-/placeholderhealth help
-/placeholderhealth check
-/placeholderhealth check mrfloris
-/placeholderhealth list
-/placeholderhealth export
-/placeholderhealth export mrfloris
-/placeholderhealth reload
-/placeholderhealth debug placeholders
-/placeholderhealth debug all
+/_placeholders health
+/_placeholders health info
+/_placeholders health help
+/_placeholders health check
+/_placeholders health check mrfloris
+/_placeholders health list
+/_placeholders health export
+/_placeholders health export mrfloris
+/_placeholders health reload
+/_placeholders health debug placeholders
+/_placeholders health debug all
 ```
 
-`/placeholderhealth` is a read-only server-owner monitor for configured PlaceholderAPI samples. It parses each configured CMI or `onembcmi` placeholder, flags unresolved, empty, slow, or erroring output, and can export the last or freshly-run check as a Discord-friendly Markdown report. Unlike `/placeholderprobe`, it is not for ad hoc one-off placeholder input; it is for the known sample set you want to keep healthy.
+`/_placeholders health` is a read-only server-owner monitor for configured PlaceholderAPI samples. It parses each configured CMI or `onembcmi` placeholder, flags unresolved, empty, slow, or erroring output, and can export the last or freshly-run check as a Discord-friendly Markdown report. Unlike `/_placeholders probe`, it is not for ad hoc one-off placeholder input; it is for the known sample set you want to keep healthy.
 
 Diagnostics:
 
@@ -602,11 +614,16 @@ SocialGatherings:
 /gathering info beaconrally
 /gathering info trailhike
 /gathering nearby
+/gathering adventure
 /gathering toggle off
 /gathering toggle on
 /gathering invite beach NikkiPixel
 /chillparty invite campfire Theo
 /gathering admin status
+/gathering admin inspect dinner
+/gathering admin modules
+/gathering admin module gatherings off
+/gathering admin module carnival on
 /gathering admin trigger dinner
 /gathering admin setarea beach here 18
 /gathering admin setcenter dinner here
@@ -620,6 +637,23 @@ SocialGatherings:
 /gathering admin enable beach
 /gathering admin disable beach
 /gathering admin reload
+/carnival
+/carnival games
+/carnival play archery
+/carnival tickets
+/carnival scores
+/carnival leaderboard archery
+/carnival prizes
+/carnival redeem example-prize
+/carnival admin status
+/carnival admin setpos archery 1 here
+/carnival admin setpos archery 2 looking
+/carnival admin setstart archery here
+/carnival admin addtarget archery 100 looking
+/carnival admin inspect archery
+/carnival admin validate archery
+/carnival admin show archery
+/carnival admin enable archery
 ```
 
 JourneyMap:
@@ -656,24 +690,6 @@ KitStreaks:
 /kitstreak admin reset mrfloris track daily
 /kitstreak admin reset mrfloris kit starter
 /kitstreak admin reload
-```
-
-MessageFont:
-
-```text
-/msgfont
-/msgfont status
-/msgfont list
-/msgfont set alt 30m
-/msgfont set uniform 2h
-/msgfont clear
-/msgfont plain on
-/msgfont plain off
-/msgfont preview illageralt
-/msgfont admin inspect mrfloris
-/msgfont admin reset mrfloris
-/msgfont admin reload
-/pmfont status
 ```
 
 Nick:
@@ -1145,6 +1161,7 @@ Themed Hunts (`CoconutHunt` jar):
 /coconut history [event-id]
 /coconut admin reload
 /coconut admin status
+/coconut admin enabled <true|false>
 /coconut admin debug <true|false>
 /coconut admin expected <count|production>
 /coconut admin day <1-7|off>
@@ -1166,53 +1183,98 @@ Themed Hunts (`CoconutHunt` jar):
 /coconut admin reset event <--dry-run|--confirm>
 /coconut admin report [event-id]
 /coconut admin shop regrant <online-player> <offer-id>
-/ghosthunt
-/ghosthunt info
-/ghosthunt help
-/ghosthunt progress
-/ghosthunt milestones
-/ghosthunt streak
-/ghosthunt community
-/ghosthunt rewards
-/ghosthunt points
-/ghosthunt shop
-/ghosthunt claim <reward-id|all> [event-id]
-/ghosthunt history [event-id]
-/ghosthunt effects <full|reduced|off>
-/ghosthunt admin reload
-/ghosthunt admin status
-/ghosthunt admin debug <true|false>
-/ghosthunt admin expected <count|production>
-/ghosthunt admin day <1-7|off>
-/ghosthunt admin date <yyyy-mm-dd|off>
-/ghosthunt admin event <validate|snapshot|start|end>
-/ghosthunt admin event force-mutation --confirm
-/ghosthunt admin event snapshot --force-confirm
-/ghosthunt admin ghost give [amount] [unlock-day]
-/ghosthunt admin ghost register [unlock-day]
-/ghosthunt admin ghost inspect
-/ghosthunt admin ghost <enable|disable|remove>
-/ghosthunt admin ghost list [page]
-/ghosthunt admin ghost validate
-/ghosthunt admin ghost waves auto [days] [seed]
-/ghosthunt admin inspect <player>
-/ghosthunt admin inspect <player> day <1-7> [page]
-/ghosthunt admin inspect <player> rewards [page]
-/ghosthunt admin reset player <player> [event-id] <--dry-run|--confirm>
-/ghosthunt admin reset event <--dry-run|--confirm>
-/ghosthunt admin report [event-id]
-/ghosthunt admin shop regrant <online-player> <offer-id>
+/ghost
+/ghost info
+/ghost help
+/ghost progress
+/ghost milestones
+/ghost streak
+/ghost community
+/ghost rewards
+/ghost points
+/ghost shop
+/ghost claim <reward-id|all> [event-id]
+/ghost history [event-id]
+/ghost hint
+/ghost effects <full|reduced|off>
+/ghost admin reload
+/ghost admin status
+/ghost admin enabled <true|false>
+/ghost admin debug <true|false>
+/ghost admin expected <count|production>
+/ghost admin day <1-4|off>
+/ghost admin date <yyyy-mm-dd|off>
+/ghost admin event <validate|snapshot|start|end>
+/ghost admin event force-mutation --confirm
+/ghost admin event snapshot --force-confirm
+/ghost admin ghost give [amount] [unlock-day]
+/ghost admin ghost register [unlock-day]
+/ghost admin ghost inspect
+/ghost admin ghost <enable|disable|remove>
+/ghost admin ghost list [page]
+/ghost admin ghost validate
+/ghost admin ghost waves auto [days] [seed]
+/ghost admin inspect <player>
+/ghost admin inspect <player> day <1-4> [page]
+/ghost admin inspect <player> rewards [page]
+/ghost admin rewards retry <online-player> <reward-id> [--force-confirm]
+/ghost admin reset player <player> [event-id] <--dry-run|--confirm>
+/ghost admin reset event <--dry-run|--confirm>
+/ghost admin report [event-id]
+/ghost admin shop regrant <online-player> <offer-id>
+/hunt
+/hunt info
+/hunt help
+/hunt calendar
+/hunt coconut [arguments...]
+/hunt ghost [arguments...]
+/hunt doors [arguments...]
+/hunt admin status
+/hunt admin preflight [all|coconut|ghost|doors]
+/hunt admin modules
+/hunt admin module <coconut|ghost|doors> <on|off>
+/hunt debug status
 /hunt admin event list
 /hunt admin event status <event-id>
 /hunt admin event activate <event-id> --dry-run
 /hunt admin event activate <event-id> <--confirm|--force-confirm>
+/doors
+/doors info
+/doors help
+/doors hint
+/doors stats [season]
+/doors journal [season] [page]
+/doors quests [stream] [season]
+/doors rewards [season]
+/doors admin migrate standalone --dry-run
+/doors admin migrate standalone --confirm
+/totdoors
+/totdoor
+/trickortreatdoors
+/regdoor [x y z]
+/regdoubdoor [x1 y1 z1 x2 y2 z2]
+/listdoors [page]
+/deldoor <id>
+/deldoorall confirm
+/reloadtotconfig
+/resetinteractions <online-player|uuid|all> confirm
 ```
 
-`/coconut` and `/ghosthunt` open themed six-row event overviews from permitted information worlds. Each annual edition has an isolated registry, snapshot, progress, points, community state, claims, purchases, receipts, reports, and debug namespace. Players can review cumulative waves, collection milestones, participation calendars, community goals, currency history, configured offers, and exact current or historical rewards. `/ghosthunt effects full|reduced|off` controls only private Ghost visuals, sounds, titles, and Darkness; participation and reward eligibility remain unchanged. Historical views and claims stay bound to the requested edition's snapshot, claim deadline, reward worlds, and claim records.
+For players, `/hunt`, `/hunt info`, and `/hunt help` open the six-row Event Hunts index. `/hunt calendar`, or clicking Coming Up in that index, opens a separate fixed six-row read-only calendar generated from the same registry. It lists every module in public live, upcoming, claims-open, ended, unpublished, then dormant order; displays concise `Europe/Amsterdam` dates and countdowns; and keeps event-card lore to at most nine lines. Calendar rendering never requests player progress or mutates event/reward state. Each index or calendar card opens that module's GUI only after resolving its current registry entry again. Dormant collectible hunts and Doors expose only a read-only preview; all progress, hints, discoveries, knocking, claims, and purchases still pass the module's normal runtime and event guards. Console receives the compact text index instead. Cards, text listings, tab completion, and `/hunt <module>` routing are derived from the validated Event Hunts module registry. A future module participates only after it provides unique metadata, a read-only status provider, and guarded command/GUI routes matching a managed runtime module. Staff use `/hunt admin status` or `/hunt debug status` for one immutable aggregate snapshot of module switches, lifecycle/effective editions, debug state, required worlds, registered/enabled/eligible/expected locations, reward providers, and pending/failed/uncertain claims. Every warning/failure includes an operator action; Door claim counts are explicitly limited to the loaded-player cache until the all-profile audit runs. `/hunt admin modules` uses the same severity model. Capturing this status never loads chunks, scans player files, reloads configuration, or mutates an event. Module-specific status commands remain available. `/hunt admin preflight [all|coconut|ghost|doors]` runs sequential deeper readiness checks with `PASS`, `WARN`, and `FAIL` results. It prepares only existing collectible chunks without terrain generation, reuses the authoritative Coconut/Ghost validators and Doors health report, and never activates, reloads, repairs, migrates, claims, or saves event state.
 
-The themed setup commands give PDC setup heads, register looked-at heads, inspect or change only matching event/theme entries, validate the exact expected total, and deterministically assign unassigned collectibles across waves. Event validation preflights worlds, regions, visuals, milestones/rewards, allowlists, command templates, and registry integrity. Debug uses separate `debug_<event>` data, defaults to an immediately active day 1 and a 15-item target, and suppresses live reward commands by default. Once created, the immutable snapshot blocks setup edits through the claim deadline; emergency replacement requires the configurable short force-mutation window, clean validation, and a second explicit snapshot confirmation. Player and debug-event resets require dry-run or confirm; event-wide reset preserves setup/configuration and cannot target production. Recorded shop delivery can be regranted without charging again.
+`/coconut`, `/ghost`, and `/doors` open themed six-row event overviews. The Door Hunt overview includes Halloween travel, daily progress, hints, statistics, a coordinate-private journal, quests, a persistent Treat Bag, separate milestone reward unlocks, retained seasons, an All Event Hunts return, and shortcuts to the sibling hunts. A successful Door treat is frozen as one durable receipt instead of being paid in the Halloween world; `/doors rewards [season]` lets the player claim one receipt at a time in a configured gameplay world without receiving CMI kit permission. Tricks still happen immediately at the door. `/ghosthunt` remains a compatibility alias for `/ghost`. Each annual edition has an isolated registry, snapshot, progress, points, community state, claims, purchases, receipts, reports, and debug namespace. The generated per-hunt defaults leave Coconut disabled and Ghost enabled while the shared jar remains enabled. `/ghost hint` returns cooldown-protected relative direction and distance guidance to an eligible unfound Ghost without revealing coordinates. `/ghost effects full|reduced|off` controls only private Ghost visuals, sounds, titles, Darkness, and capture presentation; participation and reward eligibility remain unchanged. Historical views and claims stay bound to the requested edition's snapshot, claim deadline, reward worlds, and claim records.
+
+All three reward GUIs use the same presentation-only status legend: gray `Locked`, yellow `In progress`, orange `Ready to claim`, green `Claimed`, and red `Delivery needs attention`. Collectible cards translate their existing eligibility, claim marker, and retained durable transaction; Door cards translate Treat Bag and milestone ledgers. A dispatched Door milestone remains ready because its kit is still collected through `/kits`. The shared labels do not change eligibility, permissions, commands, persistence, delivery, retry, or claim behavior.
+
+The `halloween_2026` contract is four cumulative daily waves of 20 Ghosts from October 30 through November 2. Reaching 20 new finds on one event date unlocks that date's independent `daily_1` through `daily_4` kit; missing one date does not block a later daily kit. Completing all four dates and all 80 snapshot Ghosts unlocks the separate bonus box. `summer_2027` preserves the seven-day/70-coconut design with provisional dates and remains disabled by default. A themed `admin enabled false` switch stops that theme's participation, discovery, effects, visit action, and shop. It does not strand support for a live immutable edition: read-only UI/history and already-earned claims remain available only while the edition is `ACTIVE` or `CLAIMING` and has an immutable snapshot. An upcoming edition or one without a snapshot is blocked.
+
+The themed setup commands give PDC setup heads, register looked-at heads, inspect or change only matching event/theme entries, validate the exact expected total, and deterministically assign unassigned collectibles across waves. Event validation preflights worlds, regions, visuals, milestones/rewards, allowlists, command templates, and registry integrity. Debug uses separate `debug_<event>` data, defaults to an immediately active day 1, uses 15 heads across seven floor/ceiling-balanced Coconut waves or exactly 16 heads across four Ghost waves, and suppresses live reward commands by default. Once created, the immutable snapshot blocks setup edits through the claim deadline; emergency replacement requires the configurable short force-mutation window, clean validation, and a second explicit snapshot confirmation. Player and debug-event resets require dry-run or confirm; event-wide reset preserves setup/configuration and cannot target production. Recorded shop delivery can be regranted without charging again.
+
+The five Halloween entitlements each require exactly one matching `cmi kit <kit> {player} -s` command. Every referenced CMI kit must exist, be enabled, contain at least one deliverable item, and contain no internal kit commands. Claim-time readiness processes the kit for the claiming player and refuses delivery unless all items fit in storage. The processed items are inserted synchronously; overflow or a runtime failure restores the prior inventory, and a successful inventory mutation is the delivery receipt. `/ghost admin rewards retry <online-player> <reward-id> [--force-confirm]` is limited to unresolved durable Halloween delivery records and never replays a finalized kit. Coconut rewards retain their legacy allowlisted console-command delivery contract, where dispatch acceptance is recorded but does not prove an external provider's result.
 
 Use `/hunt admin event status <event-id>` and `activate ... --dry-run` before production selection. Confirmation creates or verifies the target immutable snapshot, preserves the previous event, and writes an activation audit. It does not rewrite dates, merge or delete progress, invalidate old claims, or silently end the prior event. Switching away from an event currently inside its live dates is refused unless staff use the additional `--force-confirm` form.
+
+`/hunt` is the neutral graphical landing command for the independently switched modules. Routing preserves each handler and presentation; `/doors ghost` and `/doors coconut` are deliberately invalid. `/doors` keeps the complete clean-room v3 player, setup, season, reward, statistics, and reporting command surface. The full staff catalogue is maintained in [Door Hunt administration](plugins/doors-administration.md). The explicit importer validates a copied standalone folder off-thread, makes deterministic backups, writes a fingerprint receipt last, never changes the source, never enables Door Hunt automatically, and treats a second import of the same source as a no-op.
 
 Forage:
 
@@ -1483,6 +1545,25 @@ Menu:
 /menu debug all
 ```
 
+BedrockChatBridge:
+
+```text
+/bedrockchatbridge
+/bedrockchatbridge status
+/bedrockchatbridge info
+/bedrockchatbridge help
+/bedrockchatbridge debug status
+/bedrockchatbridge debug health
+/bedrockchatbridge debug hooks
+/bedrockchatbridge debug config
+/bedrockchatbridge debug set config debug true
+/bedrockchatbridge debug set config require-cmi-paper-chat true
+/bedrockchatbridge debug enable false
+/bedrockchatbridge debug enable true
+```
+
+The bridge command is operational metadata and lifecycle control, not a chat command. Cold startup and live enable both register the chat interceptor late, verify it is ordered after CMI's Paper formatter, and remain inactive if that ordering cannot be proven.
+
 CMIDatabase:
 
 ```text
@@ -1505,7 +1586,22 @@ CMIConfig:
 /cmiconfig reload
 ```
 
-NotableMsg:
+TeamMsg lifecycle and module controls:
+
+```text
+/teammsg status
+/teammsg module staffmsg true
+/teammsg module staffmsg false
+/teammsg module notablemsg true
+/teammsg module notablemsg false
+/teammsg reload
+/teammsg debug true
+/teammsg debug false
+/teammsg debug enable true
+/teammsg debug enable false
+```
+
+NotableMsg module compatibility commands:
 
 ```text
 /n test
@@ -1520,7 +1616,7 @@ NotableMsg:
 /n reload
 ```
 
-1MBStaffMsg:
+1MBStaffMsg module compatibility commands:
 
 ```text
 /s recent
@@ -1566,7 +1662,22 @@ EconomyGuardian:
 /economyguardian reload
 ```
 
-FilterLab:
+ContentGuard lifecycle and module controls:
+
+```text
+/contentguard status
+/contentguard module lab true
+/contentguard module lab false
+/contentguard module guard true
+/contentguard module guard false
+/contentguard reload
+/contentguard debug true
+/contentguard debug false
+/contentguard debug enable true
+/contentguard debug enable false
+```
+
+FilterLab module compatibility commands:
 
 ```text
 /filterlab
@@ -1578,7 +1689,7 @@ FilterLab:
 /filterlab reload
 ```
 
-FilterGuard:
+FilterGuard module compatibility commands:
 
 ```text
 /filterguard
@@ -1596,18 +1707,18 @@ FilterGuard:
 /filterguard reload
 ```
 
-CMIPlaceholderCheck:
+Placeholders Catalog module:
 
 ```text
-/cmiplaceholders status
-/cmiplaceholders check cmi
-/cmiplaceholders check balance
-/cmiplaceholders list
-/cmiplaceholders plugin CMI
-/cmiplaceholders plugin onembcmi
-/cmiplaceholders example %cmi_user_name% mrfloris
-/cmiplaceholders example %onembcmi_global.status.loaded%
-/cmiplaceholders reload
+/_placeholders catalog status
+/_placeholders catalog check cmi
+/_placeholders catalog check balance
+/_placeholders catalog list
+/_placeholders catalog plugin CMI
+/_placeholders catalog plugin onembcmi
+/_placeholders catalog example %cmi_user_name% mrfloris
+/_placeholders catalog example %onembcmi_global.status.loaded%
+/_placeholders catalog reload
 ```
 
 Potions:

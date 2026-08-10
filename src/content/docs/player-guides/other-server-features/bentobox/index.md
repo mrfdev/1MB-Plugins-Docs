@@ -1,6 +1,6 @@
 ---
 title: "BentoBox Guide"
-description: "Provide the shared island platform behind 1MoreBlock SkyBlock, OneBlock, AcidIsland, CaveBlock, and SkyGrid modes."
+description: "Provide the shared island platform behind 1MoreBlock SkyBlock, OneBlock, ChunkBlock, AcidIsland, CaveBlock, and SkyGrid modes."
 ---
 
 BentoBox is the island platform underneath several 1MoreBlock game modes. It supplies island ownership, teams, homes, protection, settings, and the add-on system used for challenges, levels, warps, limits, and more.
@@ -16,17 +16,26 @@ BentoBox is the island platform underneath several 1MoreBlock game modes. It sup
 
 ## Commands
 
-This feature does not require a general player command. It appears automatically, through another menu, or through staff-created content.
+Each 1MoreBlock game mode has its own explicit player command root:
+
+| Game mode | Player command root |
+| --- | --- |
+| OneBlock | `/oneblock` |
+| ChunkBlock | `/chunkblock` |
+| SkyBlock | `/skyblock` |
+| AcidIsland | `/acid` |
+| CaveBlock | `/cave` |
+| SkyGrid | `/skygrid` |
 
 ## Getting started
 
 1. Open the 1MoreBlock game-types menu.
-2. Choose a game mode, then use that mode command rather than `/bentobox`.
+2. Choose a game mode, then use its full command root from the table above rather than `/bentobox`.
 3. Read the individual game-mode and add-on pages for player commands.
 
 ## Player notes
 
-- BentoBox itself is the platform; player commands normally start with `/is`, `/ob`, `/acid`, `/cave`, or `/skygrid`.
+- Always use the explicit 1MoreBlock root for the mode you are playing. Generic or shortened island aliases are not used because several game modes run side by side.
 - Game modes have separate islands and progression.
 - Team and reset actions can permanently change island membership or progress, so read confirmations carefully.
 

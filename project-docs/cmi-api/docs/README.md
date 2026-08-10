@@ -54,7 +54,6 @@ For support/debugging:
 - [SocialGatherings](plugins/socialgatherings.md)
 - [JourneyMap](plugins/journeymap.md)
 - [KitStreaks](plugins/kitstreaks.md)
-- [MessageFont](plugins/messagefont.md)
 - [Nick](plugins/nick.md)
 - [EmoteMenu](plugins/emotemenu.md)
 - [PvPToggle](plugins/pvptoggle.md)
@@ -74,11 +73,9 @@ For support/debugging:
 - [Menu](plugins/menu.md)
 - [StaffCenter](plugins/staffcenter.md)
 - [Profile](plugins/profile.md)
-- [FilterLab](plugins/filterlab.md)
-- [FilterGuard](plugins/filterguard.md)
+- [ContentGuard](plugins/contentguard.md)
 - [WarningLens](plugins/warninglens.md)
-- [NotableMsg](plugins/notablemsg.md)
-- [1MBStaffMsg](plugins/staffmsg.md)
+- [TeamMsg](plugins/teammsg.md)
 - [CmdCostDashboard](plugins/cmdcostdashboard.md)
 - [CMIConfig](plugins/cmiconfig.md)
 - [ConsoleNoiseRouter](plugins/consolenoiserouter.md)
@@ -99,10 +96,8 @@ For support/debugging:
 - [EventRecorder](plugins/eventrecorder.md)
 - [CMIProbe](plugins/cmiprobe.md)
 - [CMIDatabase](plugins/cmidatabase.md)
-- [PlaceholderProbe](plugins/placeholderprobe.md)
+- [Placeholders](plugins/placeholders.md)
 - [PermissionProbe](plugins/permissionprobe.md)
-- [CMIPlaceholderCheck](plugins/cmiplaceholders.md)
-- [1MBPlaceholders](plugins/onembplaceholders.md)
 
 ## Documentation Rule
 

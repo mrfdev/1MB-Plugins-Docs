@@ -4,6 +4,8 @@ Public-safe technical notes for staff who configure or support this feature on 1
 
 ## Commands
 
+<!-- BentoBox game-mode staff commands use /admin<gametype>; platform /bentobox commands stay unchanged. -->
+
 | Command | Permission | Purpose |
 | --- | --- | --- |
 | `/example reload` | `example.admin` | Reloads the public configuration. |

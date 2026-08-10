@@ -18,21 +18,21 @@ BSkyBlock is one of 1MoreBlock's BentoBox island game modes. It gives the mode i
 
 | Command | What it does |
 | --- | --- |
-| `/is` | Opens BSkyBlock help or the main island command. |
-| `/is create` | Creates an island when creation is available. |
-| `/is home` | Returns to your island home. |
-| `/is team` | Shows the team-management commands. |
-| `/is settings` | Opens island settings when enabled. |
+| `/skyblock` | Opens BSkyBlock help or the main island command. |
+| `/skyblock create` | Creates an island when creation is available. |
+| `/skyblock home` | Returns to your island home. |
+| `/skyblock team` | Shows the team-management commands. |
+| `/skyblock settings` | Opens island settings when enabled. |
 
 ## Getting started
 
-1. Run `/is` and create an island, or open the 1MoreBlock game-types menu.
+1. Run `/skyblock` and create an island, or open the 1MoreBlock game-types menu.
 2. Read the starter messages and protect your starting resources.
 3. Use the Challenges and Level pages to plan progression.
 
 ## Player notes
 
-- Common aliases include `/is` and `/island`, but 1MoreBlock may customize aliases.
+- On 1MoreBlock, use `/skyblock` as the player command root for this mode.
 - Reset, team, coop, and visitor actions can be limited by cooldowns and rank permissions.
 - Never accept an island invitation until you understand whether it moves or resets your current island progress.
 

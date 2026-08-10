@@ -67,7 +67,7 @@ These features are built together in the 1MB-CMIAPI project and share the 1MB Li
       <td><a href="./socialgatherings/">SocialGatherings</a></td>
       <td>Player Fun</td>
       <td>Join small social activities around campfires, dinners, fishing, farms, markets, and other town spots.</td>
-      <td><code>/gathering</code>, <code>/gathering help</code>, <code>/gathering info</code>, <code>/gathering types [page]</code>, <a href="./socialgatherings/">+5 more</a></td>
+      <td><code>/gathering</code>, <code>/gathering help</code>, <code>/gathering info</code>, <code>/gathering types [page]</code>, <a href="./socialgatherings/">+15 more</a></td>
     </tr>
     <tr>
       <td><a href="./journeymap/">JourneyMap</a></td>
@@ -80,12 +80,6 @@ These features are built together in the 1MB-CMIAPI project and share the 1MB Li
       <td>Player Fun</td>
       <td>Track kit claim streaks, milestone calendars, and reward progress.</td>
       <td><code>/kitstreak info</code>, <code>/kitstreak status [track|<wbr />kit:&lt;kit&gt;]</code>, <code>/kitstreak tracks [page]</code>, <code>/kitstreak kits [page]</code>, <a href="./kitstreaks/">+4 more</a></td>
-    </tr>
-    <tr>
-      <td><a href="./messagefont/">MessageFont</a></td>
-      <td>Player Fun</td>
-      <td>Choose temporary private-message font styles, with a plain-mode option for readability.</td>
-      <td><code>/msgfont</code>, <code>/msgfont help</code>, <code>/msgfont status</code>, <code>/msgfont list [page]</code>, <a href="./messagefont/">+4 more</a></td>
     </tr>
     <tr>
       <td><a href="./nick/">Nick</a></td>
@@ -138,7 +132,7 @@ These features are built together in the 1MB-CMIAPI project and share the 1MB Li
     <tr>
       <td><a href="./gametypes/">GameTypes</a></td>
       <td>Player Fun</td>
-      <td>Open the right island-game menu for OneBlock, SkyBlock, AcidIsland, CaveBlock, or SkyGrid.</td>
+      <td>Open the right island-game menu for OneBlock, ChunkBlock, SkyBlock, AcidIsland, CaveBlock, or SkyGrid.</td>
       <td><code>/gametype</code>, <code>/gametype menu</code>, <code>/gametype menu &lt;type&gt;</code>, <code>/chunkblock menu</code>, <a href="./gametypes/">+3 more</a></td>
     </tr>
     <tr>
@@ -168,14 +162,20 @@ These features are built together in the 1MB-CMIAPI project and share the 1MB Li
     <tr>
       <td><a href="./coconut/">Coconut Hunt</a></td>
       <td>Player Fun</td>
-      <td>Player guide for Coconut Hunt, with commands, examples, and basic usage notes.</td>
-      <td><code>/coconut</code>, <code>/coconut info</code>, <code>/coconut progress</code>, <code>/coconut help</code>, <a href="./coconut/">+9 more</a></td>
+      <td>Open the shared Event Hunts index and follow the seven-day Summer Coconut Hunt when its season is active.</td>
+      <td><code>/hunt</code>, <code>/coconut</code>, <code>/coconut info</code>, <code>/coconut progress</code>, <a href="./coconut/">+9 more</a></td>
     </tr>
     <tr>
       <td><a href="./ghosthunt/">Halloween Ghost Hunt</a></td>
       <td>Player Fun</td>
-      <td>Player guide for Halloween Ghost Hunt, with commands, examples, and basic usage notes.</td>
-      <td><code>/ghosthunt</code>, <code>/ghosthunt info</code>, <code>/ghosthunt help</code>, <code>/ghosthunt progress</code>, <a href="./ghosthunt/">+9 more</a></td>
+      <td>Open the shared Event Hunts index and join the four-day Halloween Ghost Hunt when its weekend edition is active.</td>
+      <td><code>/hunt</code>, <code>/ghost</code>, <code>/ghost info</code>, <code>/ghost help</code>, <a href="./ghosthunt/">+11 more</a></td>
+    </tr>
+    <tr>
+      <td><a href="./doors/">Door Hunt</a></td>
+      <td>Player Fun</td>
+      <td>Join the daily Trick-or-Treat Door Hunt through the shared Event Hunts index when its Halloween season is active.</td>
+      <td><code>/hunt</code>, <code>/doors</code>, <code>/doors info</code>, <code>/doors help</code>, <a href="./doors/">+5 more</a></td>
     </tr>
     <tr>
       <td><a href="./dropparty/">DropParty</a></td>
@@ -244,16 +244,10 @@ These features are built together in the 1MB-CMIAPI project and share the 1MB Li
       <td><code>/profile &lt;target&gt;</code>, <code>/profile lookup &lt;target&gt;</code>, <code>/profile refresh &lt;target&gt;</code>, <code>/profile history &lt;target&gt; [page]</code>, <a href="./profile/">+7 more</a></td>
     </tr>
     <tr>
-      <td><a href="./filterlab/">FilterLab</a></td>
+      <td><a href="./contentguard/">ContentGuard</a></td>
       <td>Staff / Moderation</td>
-      <td>Player guide for FilterLab, with commands, examples, and basic usage notes.</td>
-      <td><code>/filterlab</code>, <code>/filterlab status</code>, <code>/filterlab rules [page]</code>, <code>/filterlab recent [page]</code></td>
-    </tr>
-    <tr>
-      <td><a href="./filterguard/">FilterGuard</a></td>
-      <td>Staff / Moderation</td>
-      <td>Server chat-filter style checks for signs, books, anvils, item names, and nicknames.</td>
-      <td><code>/filterguard</code>, <code>/filterguard status</code>, <code>/filterguard recent [page]</code>, <code>/filterguard rules [page]</code></td>
+      <td>Safely test CMI chat-filter rules and control enforcement across player-written text.</td>
+      <td><code>/contentguard status</code>, <code>/contentguard module &lt;lab|<wbr />guard&gt; &lt;true|<wbr />false&gt;</code>, <code>/filterlab</code>, <code>/filterlab test &lt;message&gt;</code>, <a href="./contentguard/">+6 more</a></td>
     </tr>
     <tr>
       <td><a href="./warninglens/">WarningLens</a></td>
@@ -262,16 +256,10 @@ These features are built together in the 1MB-CMIAPI project and share the 1MB Li
       <td><code>/warninglens status</code>, <code>/warninglens &lt;player&gt;</code>, <code>/warninglens recent [type|<wbr />all] [page]</code>, <code>/warninglens stats [type|<wbr />all]</code>, <a href="./warninglens/">+2 more</a></td>
     </tr>
     <tr>
-      <td><a href="./notablemsg/">NotableMsg</a></td>
+      <td><a href="./teammsg/">TeamMsg</a></td>
       <td>Staff / Moderation</td>
-      <td>Private /n helper channel for notable/community-assistant groups.</td>
-      <td><code>/n &lt;message&gt;</code>, <code>/n</code>, <code>/n toggle</code>, <code>/n on</code>, <a href="./notablemsg/">+5 more</a></td>
-    </tr>
-    <tr>
-      <td><a href="./staffmsg/">1MBStaffMsg</a></td>
-      <td>Staff / Moderation</td>
-      <td>Runtime recent history helper for server staffmsg and /s recent.</td>
-      <td><code>/s recent [page]</code>, <code>/staffmsg recent [page]</code>, <code>/cmi staffmsg recent [page]</code>, <code>/1mbstaffmsg recent [page]</code>, <a href="./staffmsg/">+3 more</a></td>
+      <td>Review staff-chat history and use the private notable channel through one consolidated staff tool.</td>
+      <td><code>/teammsg status</code>, <code>/teammsg module &lt;staffmsg|<wbr />notablemsg&gt; &lt;true|<wbr />false&gt;</code>, <code>/s &lt;message&gt;</code>, <code>/s recent [page]</code>, <a href="./teammsg/">+9 more</a></td>
     </tr>
     <tr>
       <td><a href="./cmdcostdashboard/">CmdCostDashboard</a></td>
@@ -314,12 +302,6 @@ These features are built together in the 1MB-CMIAPI project and share the 1MB Li
       <td>Server Management</td>
       <td>Plugin version inventory, tested Java/server/dependency gate, URL curation, and Markdown/Discord export reports migrated from the standalone PluginVersions project.</td>
       <td><code>/pv</code>, <code>/pv info</code>, <code>/pv help [page|<wbr />topic]</code>, <code>/pv list [page]</code>, <a href="./pluginversions/">+5 more</a></td>
-    </tr>
-    <tr>
-      <td><a href="./placeholderhealth/">PlaceholderHealth</a></td>
-      <td>Server Management</td>
-      <td>Player guide for PlaceholderHealth, with commands, examples, and basic usage notes.</td>
-      <td><code>/placeholderhealth</code>, <code>/placeholderhealth info</code>, <code>/placeholderhealth help</code>, <code>/placeholderhealth check [player]</code>, <a href="./placeholderhealth/">+1 more</a></td>
     </tr>
     <tr>
       <td><a href="./potions/">Potions</a></td>
@@ -391,13 +373,19 @@ These features are built together in the 1MB-CMIAPI project and share the 1MB Li
       <td><a href="./worthhelper/">WorthHelper</a></td>
       <td>Server Management</td>
       <td>Player guide for WorthHelper, with commands, examples, and basic usage notes.</td>
-      <td><code>/worthhelper</code>, <code>/worthhelper status</code>, <code>/worthhelper scan [page]</code>, <code>/worthhelper missing [page]</code>, <a href="./worthhelper/">+1 more</a></td>
+      <td><code>/worthhelper</code>, <code>/worthhelper status</code>, <code>/worthhelper scan [page]</code>, <code>/worthhelper missing [page]</code>, <a href="./worthhelper/">+2 more</a></td>
     </tr>
     <tr>
       <td><a href="./eventrecorder/">EventRecorder</a></td>
       <td>Generic / Dev</td>
       <td>Server event recorder for development and test sessions.</td>
       <td><code>/cmirecorder</code>, <code>/cmirecorder status</code>, <code>/cmirecorder events [page]</code>, <code>/cmirecorder on &lt;event&gt;</code>, <a href="./eventrecorder/">+20 more</a></td>
+    </tr>
+    <tr>
+      <td><a href="./bedrockchatbridge/">BedrockChatBridge</a></td>
+      <td>Generic / Dev</td>
+      <td>Verify the temporary fail-closed Bedrock chat compatibility bridge on authorized test servers.</td>
+      <td><code>/bedrockchatbridge</code>, <code>/bedrockchatbridge status</code>, <code>/bedrockchatbridge info</code>, <code>/bedrockchatbridge help</code></td>
     </tr>
     <tr>
       <td><a href="./cmiprobe/">CMIProbe</a></td>
@@ -412,27 +400,15 @@ These features are built together in the 1MB-CMIAPI project and share the 1MB Li
       <td><code>/cmidb status</code>, <code>/cmidb help</code>, <code>/cmidb global get &lt;key&gt;</code>, <code>/cmidb global has &lt;key&gt;</code>, <a href="./cmidatabase/">+6 more</a></td>
     </tr>
     <tr>
-      <td><a href="./placeholderprobe/">PlaceholderProbe</a></td>
+      <td><a href="./placeholders/">Placeholders</a></td>
       <td>Generic / Dev</td>
-      <td>Player guide for PlaceholderProbe, with commands, examples, and basic usage notes.</td>
-      <td><code>/placeholderprobe status</code>, <code>/placeholderprobe parse &lt;placeholder&gt; [online-player]</code>, <code>/placeholderprobe samples [page] [online-player]</code>, <code>/placeholderprobe identifiers [page]</code>, <a href="./placeholderprobe/">+5 more</a></td>
+      <td>Operate the shared 1MB placeholder provider and its Catalog, Probe, and Health diagnostics.</td>
+      <td><code>/_placeholders status</code>, <code>/_placeholders modules</code>, <code>/_placeholders module &lt;provider|<wbr />catalog|<wbr />probe|<wbr />health&gt; &lt;true|<wbr />false&gt;</code>, <code>/_placeholders list [category] [page]</code>, <a href="./placeholders/">+4 more</a></td>
     </tr>
     <tr>
       <td><a href="./permissionprobe/">PermissionProbe</a></td>
       <td>Generic / Dev</td>
       <td>Player guide for PermissionProbe, with commands, examples, and basic usage notes.</td>
-      <td>No general player command.</td>
-    </tr>
-    <tr>
-      <td><a href="./cmiplaceholders/">CMIPlaceholderCheck</a></td>
-      <td>Generic / Dev</td>
-      <td>Player guide for CMIPlaceholderCheck, with commands, examples, and basic usage notes.</td>
-      <td><code>/cmiplaceholders</code>, <code>/cmiplaceholders help</code>, <code>/cmiplaceholders status</code>, <code>/cmiplaceholders check &lt;keyword&gt; [page]</code>, <a href="./cmiplaceholders/">+3 more</a></td>
-    </tr>
-    <tr>
-      <td><a href="./onembplaceholders/">1MBPlaceholders</a></td>
-      <td>Generic / Dev</td>
-      <td>Player guide for 1MBPlaceholders, with commands, examples, and basic usage notes.</td>
       <td>No general player command.</td>
     </tr>
   </tbody>

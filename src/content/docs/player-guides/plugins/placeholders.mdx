@@ -1,0 +1,104 @@
+---
+title: Placeholders Guide
+description: Learn how authorized staff inspect the consolidated 1MB placeholder provider and diagnostic modules.
+---
+
+This page explains the permission-gated Placeholders controls used by authorized staff and testers. It is not a normal player feature.
+
+## What It Does
+
+Placeholders combines the production `%onemb_*%` provider with the former Catalog, Probe, and Health tools behind one `/_placeholders` command and independently switchable modules.
+
+## How Staff Use It
+
+Authorized staff use `/_placeholders status` and `/_placeholders modules` to inspect the parent and hosted modules. Provider data and the established permission, config, and placeholder namespaces remain compatible, while retired diagnostic roots now live under the Catalog, Probe, and Health subcommands.
+
+Available features include:
+
+- The production `%onemb_*%` PlaceholderAPI provider and its established data remain compatible.
+- Catalog search and concrete placeholder examples under `/_placeholders catalog`.
+- Bounded ad hoc parsing and expansion diagnostics under `/_placeholders probe`.
+- Configured operational checks and Markdown reports under `/_placeholders health`.
+- Independent Provider, Catalog, Probe, and Health lifecycle switches.
+
+## Quick Start
+
+1. Run `/_placeholders status` to inspect the provider and parent lifecycle.
+2. Use `/_placeholders modules` to review all four hosted module states.
+3. Open the full reference before enabling a dormant diagnostic module or editing provider data.
+
+## Commands
+
+<table class="command-table plugin-command-table">
+  <thead>
+    <tr>
+      <th>Command</th>
+      <th>What it does</th>
+      <th>Example</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>/_placeholders status</code></td>
+      <td>Shows the parent lifecycle and production provider state.</td>
+      <td><code>/_placeholders status</code></td>
+    </tr>
+    <tr>
+      <td><code>/_placeholders modules</code></td>
+      <td>Lists the Provider, Catalog, Probe, and Health module states.</td>
+      <td><code>/_placeholders modules</code></td>
+    </tr>
+    <tr>
+      <td><code>/_placeholders module &lt;provider|<wbr />catalog|<wbr />probe|<wbr />health&gt; &lt;true|<wbr />false&gt;</code></td>
+      <td>Enables or disables one hosted placeholder module.</td>
+      <td><code>/_placeholders module provider true</code></td>
+    </tr>
+    <tr>
+      <td><code>/_placeholders list [category] [page]</code></td>
+      <td>Lists configured production placeholder keys.</td>
+      <td><code>/_placeholders list</code></td>
+    </tr>
+    <tr>
+      <td><code>/_placeholders get &lt;key&gt;</code></td>
+      <td>Shows one configured production placeholder value.</td>
+      <td><code>/_placeholders get server_name</code></td>
+    </tr>
+    <tr>
+      <td><code>/_placeholders catalog check &lt;keyword&gt; [page]</code></td>
+      <td>Searches the known placeholder catalog by keyword.</td>
+      <td><code>/_placeholders catalog check player</code></td>
+    </tr>
+    <tr>
+      <td><code>/_placeholders probe parse &lt;placeholder&gt; [online-player]</code></td>
+      <td>Safely parses one concrete placeholder for diagnostic review.</td>
+      <td><code>/_placeholders probe parse %onemb_server_name%</code></td>
+    </tr>
+    <tr>
+      <td><code>/_placeholders health check [player]</code></td>
+      <td>Runs the configured operational placeholder sample set.</td>
+      <td><code>/_placeholders health check</code></td>
+    </tr>
+  </tbody>
+</table>
+
+## Examples
+
+- `/_placeholders status`
+- `/_placeholders modules`
+- `/_placeholders module provider true`
+- `/_placeholders list`
+- `/_placeholders get server_name`
+- `/_placeholders catalog check player`
+- `/_placeholders probe parse %onemb_server_name%`
+- `/_placeholders health check`
+
+## Good To Know
+
+- Placeholders is permission-gated and intended for authorized staff or test environments.
+- The former `/cmiplaceholders`, `/placeholderprobe`, and `/placeholderhealth` roots are retired; use the nested routes shown above.
+- The former 1MBPlaceholders provider data and `%onemb_*%` expansion remain compatible.
+- Do not load any of the four former standalone jars beside the consolidated Placeholders jar.
+
+## Full Reference
+
+The [full synced Placeholders reference](https://github.com/mrfdev/1MB-Plugins-Docs/blob/main/project-docs/cmi-api/docs/plugins/placeholders.md) is available for exact technical details.

@@ -7,30 +7,28 @@ This page introduces Coconut Hunt from a public server-docs point of view. It fo
 
 ## What It Does
 
-CoconutHunt adds a reusable seven-day /coconut event for the Summer Beach. The Summer 2026 edition uses 70 special coconut heads, with 10 unlocking on each of seven cumulative days. Players return as new waves unlock, find each coconut once for themselves, build a daily participation streak,...
+Coconut Hunt is the Summer module in the shared Event Hunts feature. Its preserved 2027 edition uses 70 collectible coconut heads across seven cumulative daily waves, with personal progress, rewards, Coconut Points, community goals, and an event shop.
 
 ## How Players Use It
 
-Run /coconut from any allowed information world, then use Visit the Summer Beach to reach the hunt. The shared footer opens your progress, goes back, returns to the CoconutHunt overview or /menu, and closes the GUI. The help page can post the clickable player-guide URL in chat.
-
-The overview and related pages show:
+Open `/hunt` for the shared seasonal-event index or `/coconut` for the Summer overview. During an active edition, travel to the Summer Beach and right-click an unlocked coconut with your main hand. Each coconut counts once for you and remains available to every other player.
 
 Available features include:
 
-- The current event day, unlocked cumulative waves, next unlock, and time remaining
-- Personal found / total progress, remaining coconuts, and a wave-by-wave breakdown
-- Today's participation, current and best streaks, and the seven-day calendar
-- Collection, streak, community, and perfect rewards with clear claimable or claimed states
-- Coconut Point balance, earned and spent totals, and a readable earning history
-- Community totals, the daily goal, next target, and personal contribution
-- Event-shop offers with requirements, prices, repeatability or ownership state, and purchase confirmation
-- Private proximity hints, spotting effects, discovery celebrations, and the Visit the Summer Beach action
+- A shared `/hunt` index for Coconut, Ghost, and Door Hunt events.
+- Seven cumulative Coconut waves so late players can catch up on unlocked locations.
+- Personal collection progress, participation streaks, and immutable edition snapshots.
+- Collection, streak, community, and perfect-completion rewards with durable delivery states.
+- Coconut Points, contribution totals, and a confirmation-gated event shop.
+- Private proximity hints, spotting effects, and discovery celebrations.
+- Current and historical edition views with guarded reward claims.
+- A preserved Summer 2027 module that remains dormant until staff deliberately activate it.
 
 ## Quick Start
 
-1. Start with `/coconut` to open or view Coconut Hunt.
-2. Use `/coconut info` when you want the in-game help or a short explanation.
-3. Try `/coconut progress` when you are ready to use one of the feature actions.
+1. Use `/hunt` to see every available Event Hunt, or `/coconut` to open the Summer overview directly.
+2. During an active Summer edition, use the visit action and right-click unlocked coconut heads with your main hand.
+3. Check `/coconut progress`, `/coconut streak`, and `/coconut rewards` as new waves unlock.
 
 ## Commands
 
@@ -44,75 +42,76 @@ Available features include:
   </thead>
   <tbody>
     <tr>
+      <td><code>/hunt</code></td>
+      <td>Opens the shared Event Hunts index for Coconut, Ghost, and Door Hunt events.</td>
+      <td><code>/hunt</code></td>
+    </tr>
+    <tr>
       <td><code>/coconut</code></td>
       <td>Opens the six-row Coconut Hunt overview.</td>
       <td><code>/coconut</code></td>
     </tr>
     <tr>
       <td><code>/coconut info</code></td>
-      <td>Shows the event introduction, current state, and documentation URL.</td>
+      <td>Shows the current Summer edition, state, and player documentation.</td>
       <td><code>/coconut info</code></td>
     </tr>
     <tr>
       <td><code>/coconut progress</code></td>
-      <td>Opens personal found totals and cumulative wave progress.</td>
+      <td>Shows personal finds and cumulative wave progress.</td>
       <td><code>/coconut progress</code></td>
     </tr>
     <tr>
       <td><code>/coconut help</code></td>
-      <td>Opens the player help GUI with the clickable documentation action.</td>
+      <td>Opens the Coconut Hunt player help page.</td>
       <td><code>/coconut help</code></td>
     </tr>
     <tr>
       <td><code>/coconut milestones</code></td>
-      <td>Opens personal coconut collection milestones and reward states.</td>
+      <td>Shows collection milestones and their reward states.</td>
       <td><code>/coconut milestones</code></td>
     </tr>
     <tr>
       <td><code>/coconut streak</code></td>
-      <td>Opens the seven-day participation calendar and streak totals.</td>
+      <td>Shows the seven-day participation calendar and streak totals.</td>
       <td><code>/coconut streak</code></td>
     </tr>
     <tr>
       <td><code>/coconut community</code></td>
-      <td>Opens community totals, goals, rewards, and personal contribution.</td>
+      <td>Shows community goals and your contribution.</td>
       <td><code>/coconut community</code></td>
     </tr>
     <tr>
       <td><code>/coconut rewards</code></td>
-      <td>Opens all collection, streak, community, and perfect reward states.</td>
+      <td>Shows collection, streak, community, and perfect reward states.</td>
       <td><code>/coconut rewards</code></td>
     </tr>
     <tr>
       <td><code>/coconut points</code></td>
-      <td>Opens Coconut Point balance, earned/spent totals, and earning history.</td>
+      <td>Shows your Coconut Point balance and earning history.</td>
       <td><code>/coconut points</code></td>
     </tr>
     <tr>
       <td><code>/coconut shop</code></td>
-      <td>Opens the confirmation-gated Coconut Points event shop.</td>
+      <td>Opens the confirmation-gated Coconut Points shop.</td>
       <td><code>/coconut shop</code></td>
     </tr>
     <tr>
       <td><code>/coconut claim &lt;reward-id|<wbr />all&gt; [event-id]</code></td>
-      <td>Claims an available Coconut Hunt reward.</td>
-      <td><code>/coconut claim example</code></td>
+      <td>Claims one eligible reward or every eligible reward in safe order.</td>
+      <td><code>/coconut claim all</code></td>
     </tr>
     <tr>
       <td><code>/coconut history [event-id]</code></td>
-      <td>Lists configured Coconut editions or opens one exact historical edition.</td>
-      <td><code>/coconut history</code></td>
-    </tr>
-    <tr>
-      <td><code>/coconut claim all</code></td>
-      <td>Claims every currently eligible reward in the correct dependency order.</td>
-      <td><code>/coconut claim all</code></td>
+      <td>Shows the current or a retained historical Coconut edition.</td>
+      <td><code>/coconut history summer_2027</code></td>
     </tr>
   </tbody>
 </table>
 
 ## Examples
 
+- `/hunt`
 - `/coconut`
 - `/coconut progress`
 - `/coconut streak`
@@ -121,15 +120,14 @@ Available features include:
 - `/coconut claim all`
 - `/coconut points`
 - `/coconut shop`
-- `/coconut help`
-- `/coconut info`
-- `/coconut milestones`
-- `/coconut history summer_2026`
+- `/coconut history summer_2027`
 
 ## Good To Know
 
-- Some commands may be hidden until your group, event progress, or unlocks allow them.
-- If a command opens a menu, follow the buttons in-game; the website is only the learning guide.
+- The preserved Summer 2027 module is dormant until staff deliberately enable and validate it.
+- Cumulative waves let you find older unlocked coconuts later, but missed participation dates stay missed.
+- Undiscovered coordinates are never shown to normal players.
+- Reward and shop delivery remains limited to configured gameplay worlds.
 
 ## Full Reference
 

@@ -17,20 +17,20 @@ BentoBox TopBlock is a BentoBox add-on used by one or more 1MoreBlock island gam
 
 | Command | What it does |
 | --- | --- |
-| `/ob topblock` | Shows the TopBlock ranking when this label is enabled. |
-| `/ob top` | May include or link to OneBlock rankings, depending on configuration. |
+| `/oneblock topblock` | Shows the TopBlock ranking when this label is enabled. |
+| `/oneblock top` | May include or link to OneBlock rankings, depending on configuration. |
 
 ## Getting started
 
 1. Enter the relevant island game mode first.
-2. Use `/ob topblock` or `/ob top` to open the feature.
-3. Check the game-mode help if the command label differs, because BentoBox commands can be customized per mode.
+2. Use `/oneblock topblock` or `/oneblock top` to open the feature.
+3. Use the full OneBlock root for related add-on commands.
 
 ## Player notes
 
 - Availability, prices, cooldowns, limits, and rewards are controlled by 1MoreBlock configuration.
 - An add-on may be enabled for one island mode but not another.
-- Use the command root for your current island mode, such as `/is`, `/ob`, `/acid`, `/cave`, or `/skygrid`.
+- TopBlock is OneBlock-only on 1MoreBlock, so its commands use the `/oneblock` root.
 
 ## Official resources
 

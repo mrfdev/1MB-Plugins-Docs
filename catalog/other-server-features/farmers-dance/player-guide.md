@@ -24,7 +24,7 @@ This feature does not require a general player command. It appears automatically
 
 - Availability, prices, cooldowns, limits, and rewards are controlled by 1MoreBlock configuration.
 - An add-on may be enabled for one island mode but not another.
-- Use the command root for your current island mode, such as `/is`, `/ob`, `/acid`, `/cave`, or `/skygrid`.
+- The full 1MoreBlock game-mode roots are `/oneblock`, `/chunkblock`, `/skyblock`, `/acid`, `/cave`, and `/skygrid`.
 
 ## Official resources
 

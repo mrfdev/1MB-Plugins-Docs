@@ -7,23 +7,29 @@ This page introduces Halloween Ghost Hunt from a public server-docs point of vie
 
 ## What It Does
 
-/ghosthunt themed edition in the shared CoconutHunt jar with event-bound Ghost heads, private positional effects, accessibility modes, Haunting Chains, historical claims, guarded activation, immutable snapshots, and isolated debug data.
+Halloween Ghost Hunt is the Ghost module in the shared Event Hunts feature. Its 2026 weekend edition uses four waves of 20 collectible Ghosts, daily kits, an all-80 bonus, personal visual preferences, coordinate-free hints, and durable edition snapshots.
 
 ## How Players Use It
 
-Run /ghosthunt, then use Visit the Halloween world to travel to the event. Right-click an unlocked Ghost head with the main hand. Left-clicking is not a discovery action. Every Ghost stays in the world for other players and counts only once per player for that edition.
-
-The visual modes are:
+Open `/hunt` for the shared seasonal-event index or `/ghost` for the Halloween overview. During an active edition, travel to the Halloween world and right-click an unlocked Ghost head with your main hand. Each Ghost counts once for you and remains available to other players.
 
 Available features include:
 
-- Open or view Halloween Ghost Hunt with /ghosthunt.
+- A shared `/hunt` index for Coconut, Ghost, and Door Hunt events.
+- Four daily waves of 20 Ghosts with catch-up collection access.
+- Four date-specific daily kits and an all-80 perfect-weekend reward.
+- Personal progress, streak, community, reward, point, shop, and history views.
+- Coordinate-free hints that never reveal a Ghost id or exact location.
+- Full, reduced, and off visual modes for private effects without changing participation.
+- Immutable edition snapshots and guarded current or historical reward claims.
+- The `/ghosthunt` compatibility alias while `/ghost` remains the recommended root.
 
 ## Quick Start
 
-1. Start with `/ghosthunt` to open or view Halloween Ghost Hunt.
-2. Use `/ghosthunt info` when you want the in-game help or a short explanation.
-3. Try `/ghosthunt help` when you are ready to use one of the feature actions.
+1. Use `/hunt` to see every available Event Hunt, or `/ghost` to open the Halloween overview directly.
+2. During an active edition, visit the Halloween world and right-click unlocked Ghost heads with your main hand.
+3. Use `/ghost hint` for a broad direction or `/ghost effects reduced` for quieter visuals.
+4. Check `/ghost rewards` after completing the current date target or larger collection goals.
 
 ## Commands
 
@@ -37,81 +43,103 @@ Available features include:
   </thead>
   <tbody>
     <tr>
-      <td><code>/ghosthunt</code></td>
-      <td>Opens or shows the main Halloween Ghost Hunt player view.</td>
-      <td><code>/ghosthunt</code></td>
+      <td><code>/hunt</code></td>
+      <td>Opens the shared Event Hunts index for Coconut, Ghost, and Door Hunt events.</td>
+      <td><code>/hunt</code></td>
     </tr>
     <tr>
-      <td><code>/ghosthunt info</code></td>
-      <td>Shows a friendly explanation of what Halloween Ghost Hunt does.</td>
-      <td><code>/ghosthunt info</code></td>
+      <td><code>/ghost</code></td>
+      <td>Opens the four-day Halloween Ghost Hunt overview.</td>
+      <td><code>/ghost</code></td>
     </tr>
     <tr>
-      <td><code>/ghosthunt help</code></td>
-      <td>Shows the Halloween Ghost Hunt commands available to you.</td>
-      <td><code>/ghosthunt help</code></td>
+      <td><code>/ghost info</code></td>
+      <td>Shows the current Halloween edition, state, and player documentation.</td>
+      <td><code>/ghost info</code></td>
     </tr>
     <tr>
-      <td><code>/ghosthunt progress</code></td>
-      <td>Runs the Halloween Ghost Hunt progress action.</td>
-      <td><code>/ghosthunt progress</code></td>
+      <td><code>/ghost help</code></td>
+      <td>Opens the Ghost Hunt player help page.</td>
+      <td><code>/ghost help</code></td>
     </tr>
     <tr>
-      <td><code>/ghosthunt milestones</code></td>
-      <td>Shows your Halloween Ghost Hunt milestones view.</td>
-      <td><code>/ghosthunt milestones</code></td>
+      <td><code>/ghost progress</code></td>
+      <td>Shows personal finds and four-wave progress.</td>
+      <td><code>/ghost progress</code></td>
     </tr>
     <tr>
-      <td><code>/ghosthunt streak</code></td>
-      <td>Runs the Halloween Ghost Hunt streak action.</td>
-      <td><code>/ghosthunt streak</code></td>
+      <td><code>/ghost milestones</code></td>
+      <td>Shows collection milestones and their reward states.</td>
+      <td><code>/ghost milestones</code></td>
     </tr>
     <tr>
-      <td><code>/ghosthunt community</code></td>
-      <td>Runs the Halloween Ghost Hunt community action.</td>
-      <td><code>/ghosthunt community</code></td>
+      <td><code>/ghost streak</code></td>
+      <td>Shows date-specific participation and streak totals.</td>
+      <td><code>/ghost streak</code></td>
     </tr>
     <tr>
-      <td><code>/ghosthunt rewards</code></td>
-      <td>Shows your Halloween Ghost Hunt rewards view.</td>
-      <td><code>/ghosthunt rewards</code></td>
+      <td><code>/ghost community</code></td>
+      <td>Shows community goals and your contribution.</td>
+      <td><code>/ghost community</code></td>
     </tr>
     <tr>
-      <td><code>/ghosthunt points</code></td>
-      <td>Runs the Halloween Ghost Hunt points action.</td>
-      <td><code>/ghosthunt points</code></td>
+      <td><code>/ghost rewards</code></td>
+      <td>Shows daily, collection, community, and perfect reward states.</td>
+      <td><code>/ghost rewards</code></td>
     </tr>
     <tr>
-      <td><code>/ghosthunt shop</code></td>
-      <td>Runs the Halloween Ghost Hunt shop action.</td>
-      <td><code>/ghosthunt shop</code></td>
+      <td><code>/ghost points</code></td>
+      <td>Shows your Ghost Point balance and earning history.</td>
+      <td><code>/ghost points</code></td>
     </tr>
     <tr>
-      <td><code>/ghosthunt claim &lt;reward-id|<wbr />all&gt; [event-id]</code></td>
-      <td>Claims an available Halloween Ghost Hunt reward.</td>
-      <td><code>/ghosthunt claim example</code></td>
+      <td><code>/ghost shop</code></td>
+      <td>Opens the confirmation-gated Ghost Points shop.</td>
+      <td><code>/ghost shop</code></td>
     </tr>
     <tr>
-      <td><code>/ghosthunt history [event-id]</code></td>
-      <td>Shows recent choices you can restore.</td>
-      <td><code>/ghosthunt history</code></td>
+      <td><code>/ghost claim &lt;reward-id|<wbr />all&gt; [event-id]</code></td>
+      <td>Claims eligible current or retained-edition rewards in safe order.</td>
+      <td><code>/ghost claim all</code></td>
     </tr>
     <tr>
-      <td><code>/ghosthunt effects &lt;full|<wbr />reduced|<wbr />off&gt;</code></td>
-      <td>Turns cosmetic effects on or off.</td>
-      <td><code>/ghosthunt effects example</code></td>
+      <td><code>/ghost history [event-id]</code></td>
+      <td>Shows current or retained Halloween editions without merging their progress.</td>
+      <td><code>/ghost history</code></td>
+    </tr>
+    <tr>
+      <td><code>/ghost hint</code></td>
+      <td>Gives a broad distance and direction hint without revealing exact coordinates.</td>
+      <td><code>/ghost hint</code></td>
+    </tr>
+    <tr>
+      <td><code>/ghost effects &lt;full|<wbr />reduced|<wbr />off&gt;</code></td>
+      <td>Changes private visual and sound effects without changing participation.</td>
+      <td><code>/ghost effects reduced</code></td>
     </tr>
   </tbody>
 </table>
 
+## Aliases
+
+- `/ghosthunt`
+
 ## Examples
 
-- No separate examples are listed yet. Use the command examples above as a starting point.
+- `/hunt`
+- `/ghost`
+- `/ghost progress`
+- `/ghost hint`
+- `/ghost effects reduced`
+- `/ghost rewards`
+- `/ghost claim all`
 
 ## Good To Know
 
-- Some commands may be hidden until your group, event progress, or unlocks allow them.
-- If a command opens a menu, follow the buttons in-game; the website is only the learning guide.
+- Each daily kit requires the configured number of new finds on that event date; older Ghosts remain collectible later.
+- Hints never reveal the Ghost id, block coordinates, or a teleport command.
+- Visual mode changes only private effects and never changes discovery or reward eligibility.
+- Use `/ghost`; `/ghosthunt` remains available only as a compatibility alias.
 
 ## Full Reference
 

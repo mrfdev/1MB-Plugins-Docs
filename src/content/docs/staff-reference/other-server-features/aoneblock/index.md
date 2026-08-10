@@ -3,7 +3,7 @@ title: "AOneBlock Staff Reference"
 description: "Public-safe commands, permissions, configuration, integrations, and troubleshooting notes for AOneBlock."
 ---
 
-AOneBlock is loaded as a BentoBox game-mode add-on. Administration is namespaced under the configured player and admin commands for that mode.
+AOneBlock is loaded as a BentoBox game-mode add-on. On 1MoreBlock, players use `/oneblock` and staff administer the mode through `/adminoneblock`.
 
 > Verify destructive, economy-changing, permission-changing, and player-data commands against the installed build and an approved support case before running them.
 
@@ -11,7 +11,7 @@ AOneBlock is loaded as a BentoBox game-mode add-on. Administration is namespaced
 
 | Command | Permission | Purpose |
 | --- | --- | --- |
-| `/ob admin` | `aoneblock.admin.*` | Shows the mode administration surface; the exact admin alias is configurable. |
+| `/adminoneblock` | `aoneblock.admin.*` | Shows the OneBlock administration surface on 1MoreBlock. |
 | `/bentobox version` | `bentobox.admin.version` | Reports BentoBox and add-on versions. |
 | `/bentobox reload` | `bentobox.admin.reload` | Reloads BentoBox and add-ons after reviewed configuration changes. |
 
@@ -34,12 +34,12 @@ AOneBlock is loaded as a BentoBox game-mode add-on. Administration is namespaced
 
 - BentoBox owns the island database and protection model; avoid editing game-mode data by hand while the server is running.
 - Challenges, Level, Warps, Border, Limits, Biomes, and other add-ons attach to this mode according to their per-world configuration.
-- Command labels and permission prefixes can be changed by game-mode configuration, so confirm them on the live build before granting wildcards.
+- The command roots are `/oneblock` for players and `/adminoneblock` for staff; permission nodes keep the `aoneblock` namespace.
 
 ## Examples
 
 ```text
-/ob admin
+/adminoneblock
 /bentobox version
 /bentobox reload
 ```

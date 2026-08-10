@@ -65,7 +65,7 @@ These features are built together in the 1MB-CMIAPI project.
       <td><a href="../plugins/socialgatherings/">SocialGatherings</a></td>
       <td>Player Fun</td>
       <td>Join small social activities around campfires, dinners, fishing, farms, markets, and other town spots.</td>
-      <td><code>/gathering</code>, <code>/gathering help</code>, <code>/gathering info</code>, <code>/gathering types [page]</code>, <a href="../plugins/socialgatherings/">+5 more</a></td>
+      <td><code>/gathering</code>, <code>/gathering help</code>, <code>/gathering info</code>, <code>/gathering types [page]</code>, <a href="../plugins/socialgatherings/">+15 more</a></td>
     </tr>
     <tr>
       <td><a href="../plugins/journeymap/">JourneyMap</a></td>
@@ -78,12 +78,6 @@ These features are built together in the 1MB-CMIAPI project.
       <td>Player Fun</td>
       <td>Track kit claim streaks, milestone calendars, and reward progress.</td>
       <td><code>/kitstreak info</code>, <code>/kitstreak status [track|<wbr />kit:&lt;kit&gt;]</code>, <code>/kitstreak tracks [page]</code>, <code>/kitstreak kits [page]</code>, <a href="../plugins/kitstreaks/">+4 more</a></td>
-    </tr>
-    <tr>
-      <td><a href="../plugins/messagefont/">MessageFont</a></td>
-      <td>Player Fun</td>
-      <td>Choose temporary private-message font styles, with a plain-mode option for readability.</td>
-      <td><code>/msgfont</code>, <code>/msgfont help</code>, <code>/msgfont status</code>, <code>/msgfont list [page]</code>, <a href="../plugins/messagefont/">+4 more</a></td>
     </tr>
     <tr>
       <td><a href="../plugins/nick/">Nick</a></td>
@@ -136,7 +130,7 @@ These features are built together in the 1MB-CMIAPI project.
     <tr>
       <td><a href="../plugins/gametypes/">GameTypes</a></td>
       <td>Player Fun</td>
-      <td>Open the right island-game menu for OneBlock, SkyBlock, AcidIsland, CaveBlock, or SkyGrid.</td>
+      <td>Open the right island-game menu for OneBlock, ChunkBlock, SkyBlock, AcidIsland, CaveBlock, or SkyGrid.</td>
       <td><code>/gametype</code>, <code>/gametype menu</code>, <code>/gametype menu &lt;type&gt;</code>, <code>/chunkblock menu</code>, <a href="../plugins/gametypes/">+3 more</a></td>
     </tr>
     <tr>
@@ -166,14 +160,20 @@ These features are built together in the 1MB-CMIAPI project.
     <tr>
       <td><a href="../plugins/coconut/">Coconut Hunt</a></td>
       <td>Player Fun</td>
-      <td>Player guide for Coconut Hunt, with commands, examples, and basic usage notes.</td>
-      <td><code>/coconut</code>, <code>/coconut info</code>, <code>/coconut progress</code>, <code>/coconut help</code>, <a href="../plugins/coconut/">+9 more</a></td>
+      <td>Open the shared Event Hunts index and follow the seven-day Summer Coconut Hunt when its season is active.</td>
+      <td><code>/hunt</code>, <code>/coconut</code>, <code>/coconut info</code>, <code>/coconut progress</code>, <a href="../plugins/coconut/">+9 more</a></td>
     </tr>
     <tr>
       <td><a href="../plugins/ghosthunt/">Halloween Ghost Hunt</a></td>
       <td>Player Fun</td>
-      <td>Player guide for Halloween Ghost Hunt, with commands, examples, and basic usage notes.</td>
-      <td><code>/ghosthunt</code>, <code>/ghosthunt info</code>, <code>/ghosthunt help</code>, <code>/ghosthunt progress</code>, <a href="../plugins/ghosthunt/">+9 more</a></td>
+      <td>Open the shared Event Hunts index and join the four-day Halloween Ghost Hunt when its weekend edition is active.</td>
+      <td><code>/hunt</code>, <code>/ghost</code>, <code>/ghost info</code>, <code>/ghost help</code>, <a href="../plugins/ghosthunt/">+11 more</a></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/doors/">Door Hunt</a></td>
+      <td>Player Fun</td>
+      <td>Join the daily Trick-or-Treat Door Hunt through the shared Event Hunts index when its Halloween season is active.</td>
+      <td><code>/hunt</code>, <code>/doors</code>, <code>/doors info</code>, <code>/doors help</code>, <a href="../plugins/doors/">+5 more</a></td>
     </tr>
     <tr>
       <td><a href="../plugins/dropparty/">DropParty</a></td>
@@ -354,7 +354,7 @@ These are third-party features documented for the way they are used on 1MoreBloc
     <tr>
       <td><a href="../other-server-features/aoneblock/">AOneBlock</a></td>
       <td>Progress through phases by repeatedly mining a regenerating OneBlock.</td>
-      <td><code>/ob</code>, <code>/ob home</code>, <code>/ob team</code>, <code>/ob settings</code></td>
+      <td><code>/oneblock</code>, <code>/oneblock home</code>, <code>/oneblock team</code>, <code>/oneblock settings</code></td>
     </tr>
     <tr>
       <td><a href="../other-server-features/apis-and-libraries/">APIs and Libraries</a></td>
@@ -368,13 +368,13 @@ These are third-party features documented for the way they are used on 1MoreBloc
     </tr>
     <tr>
       <td><a href="../other-server-features/bentobox/">BentoBox</a></td>
-      <td>Provide the shared island platform behind 1MoreBlock SkyBlock, OneBlock, AcidIsland, CaveBlock, and SkyGrid modes.</td>
+      <td>Provide the shared island platform behind 1MoreBlock SkyBlock, OneBlock, ChunkBlock, AcidIsland, CaveBlock, and SkyGrid modes.</td>
       <td>No general player command.</td>
     </tr>
     <tr>
       <td><a href="../other-server-features/biomes/">BentoBox Biomes</a></td>
       <td>Let island owners change configured island biomes through a menu or island command.</td>
-      <td><code>/is biomes</code>, <code>/ob biomes</code></td>
+      <td><code>/skyblock biomes</code></td>
     </tr>
     <tr>
       <td><a href="../other-server-features/bluemap/">BlueMap</a></td>
@@ -389,12 +389,12 @@ These are third-party features documented for the way they are used on 1MoreBloc
     <tr>
       <td><a href="../other-server-features/border/">BentoBox Border</a></td>
       <td>Show and enforce a visible personal island boundary.</td>
-      <td><code>/is border</code>, <code>/ob border</code></td>
+      <td><code>/skyblock border</code>, <code>/oneblock border</code></td>
     </tr>
     <tr>
       <td><a href="../other-server-features/bskyblock/">BSkyBlock</a></td>
       <td>Play the classic SkyBlock island mode with teams, challenges, levels, and warps.</td>
-      <td><code>/is</code>, <code>/is home</code>, <code>/is team</code>, <code>/is settings</code></td>
+      <td><code>/skyblock</code>, <code>/skyblock home</code>, <code>/skyblock team</code>, <code>/skyblock settings</code></td>
     </tr>
     <tr>
       <td><a href="../other-server-features/caveblock/">CaveBlock</a></td>
@@ -404,7 +404,7 @@ These are third-party features documented for the way they are used on 1MoreBloc
     <tr>
       <td><a href="../other-server-features/challenges/">BentoBox Challenges</a></td>
       <td>Offer structured island tasks, progression tiers, and configured rewards.</td>
-      <td><code>/is challenges</code>, <code>/ob challenges</code>, <code>/acid challenges</code></td>
+      <td><code>/skyblock challenges</code>, <code>/oneblock challenges</code>, <code>/acid challenges</code></td>
     </tr>
     <tr>
       <td><a href="../other-server-features/citizens/">Citizens</a></td>
@@ -439,7 +439,7 @@ These are third-party features documented for the way they are used on 1MoreBloc
     <tr>
       <td><a href="../other-server-features/greenhouses/">BentoBox Greenhouses</a></td>
       <td>Build recognized greenhouse structures that support configured biome or crop effects.</td>
-      <td><code>/is greenhouse</code>, <code>/acid greenhouse</code></td>
+      <td><code>/skyblock greenhouse</code>, <code>/oneblock greenhouse</code>, <code>/acid greenhouse</code>, <code>/skygrid greenhouse</code></td>
     </tr>
     <tr>
       <td><a href="../other-server-features/head-database/">HeadDatabase</a></td>
@@ -464,12 +464,12 @@ These are third-party features documented for the way they are used on 1MoreBloc
     <tr>
       <td><a href="../other-server-features/level/">BentoBox Level</a></td>
       <td>Calculate island value and provide personal and server-wide island rankings.</td>
-      <td><code>/is level</code>, <code>/is top</code>, <code>/ob level</code></td>
+      <td><code>/skyblock level</code>, <code>/skyblock top</code>, <code>/oneblock level</code></td>
     </tr>
     <tr>
       <td><a href="../other-server-features/limits/">BentoBox Limits</a></td>
       <td>Apply island-wide limits to configured blocks, entities, and other resources.</td>
-      <td><code>/is limits</code>, <code>/ob limits</code></td>
+      <td><code>/skyblock limits</code>, <code>/oneblock limits</code>, <code>/acid limits</code>, <code>/cave limits</code>, <a href="../other-server-features/limits/">+1 more</a></td>
     </tr>
     <tr>
       <td><a href="../other-server-features/luckperms/">LuckPerms</a></td>
@@ -479,7 +479,7 @@ These are third-party features documented for the way they are used on 1MoreBloc
     <tr>
       <td><a href="../other-server-features/magic-cobblestone-generator/">BentoBox MagicCobblestoneGenerator</a></td>
       <td>Upgrade island generators so they can produce configured ores and blocks.</td>
-      <td><code>/is generator</code>, <code>/ob generator</code></td>
+      <td><code>/skyblock generator</code>, <code>/oneblock generator</code></td>
     </tr>
     <tr>
       <td><a href="../other-server-features/mcmmo/">mcMMO</a></td>
@@ -574,7 +574,7 @@ These are third-party features documented for the way they are used on 1MoreBloc
     <tr>
       <td><a href="../other-server-features/topblock/">BentoBox TopBlock</a></td>
       <td>Rank OneBlock islands by their highest reached block or configured phase progress.</td>
-      <td><code>/ob topblock</code>, <code>/ob top</code></td>
+      <td><code>/oneblock topblock</code>, <code>/oneblock top</code></td>
     </tr>
     <tr>
       <td><a href="../other-server-features/trade-me/">TradeMe</a></td>
@@ -599,7 +599,7 @@ These are third-party features documented for the way they are used on 1MoreBloc
     <tr>
       <td><a href="../other-server-features/warps/">BentoBox Warps</a></td>
       <td>Let island owners publish a safe visitor warp and browse other public island warps.</td>
-      <td><code>/is warps</code>, <code>/is warp &lt;player&gt;</code>, <code>/is setwarp</code>, <code>/is deletewarp</code></td>
+      <td><code>/skyblock warps</code>, <code>/skyblock warp &lt;player&gt;</code>, <code>/skyblock setwarp</code>, <code>/skyblock deletewarp</code></td>
     </tr>
     <tr>
       <td><a href="../other-server-features/worldborder/">WorldBorder</a></td>

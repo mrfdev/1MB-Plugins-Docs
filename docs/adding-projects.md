@@ -79,6 +79,23 @@ catalog/other-server-features/<feature-id>/
 
 Use `category: other-server-feature`, the canonical `/other-server-features/<id>/` URL, and an `official_wiki` link. Explain the feature as configured on 1MoreBlock, including enabled commands, restrictions, ranks, worlds, and server-specific differences. Set `staff_guide: staff-guide.md` when a rendered public-safe technical reference is available. Do not reproduce copyrighted wiki pages.
 
+### BentoBox Command Conventions
+
+1MoreBlock runs several BentoBox game modes together, so player documentation must use the configured full root for the relevant mode:
+
+| Game mode | Player root | Staff administration root |
+| --- | --- | --- |
+| OneBlock | `/oneblock` | `/adminoneblock` |
+| ChunkBlock | `/chunkblock` | `/adminchunkblock` |
+| SkyBlock | `/skyblock` | `/adminskyblock` |
+| AcidIsland | `/acid` | `/adminacid` |
+| CaveBlock | `/cave` | `/admincave` |
+| SkyGrid | `/skygrid` | `/adminskygrid` |
+
+Do not publish the upstream generic island or shortened OneBlock aliases as 1MoreBlock commands. For add-ons, prefix the subcommand with every enabled mode's full root, such as `/skyblock greenhouse` or `/oneblock greenhouse`. Staff game-mode administration puts `admin` before the mode name; it is not appended to the player command. BentoBox platform commands such as `/bentobox version` remain unchanged.
+
+`npm run docs:validate` checks curated BentoBox manifests and guides for deprecated player roots and postfix admin forms.
+
 ## Public-Safety Rules
 
 - Verify commands, permissions, placeholders, versions, and behavior from the source project.

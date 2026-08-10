@@ -12,6 +12,8 @@ Explain the normal workflow, availability, worlds, ranks, and server-specific re
 
 ## Commands
 
+<!-- BentoBox guides must use the full configured mode root documented in docs/adding-projects.md. -->
+
 | Command | What it does | Example |
 | --- | --- | --- |
 | `/example` | Opens the feature. | `/example` |

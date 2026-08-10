@@ -13,6 +13,17 @@ const standaloneRoutes = {
 const redirects = {
   '/custom-server-plugins/antifire': '/player-guides/plugins/antifire/',
   '/player-guides/custom-server-plugins/antifire': '/player-guides/plugins/antifire/',
+  '/player-guides/plugins/filterlab': '/player-guides/plugins/contentguard/',
+  '/player-guides/plugins/filterguard': '/player-guides/plugins/contentguard/',
+  '/player-guides/plugins/notablemsg': '/player-guides/plugins/teammsg/',
+  '/player-guides/plugins/staffmsg': '/player-guides/plugins/teammsg/',
+  '/player-guides/plugins/messagefont': '/player-guides/plugins/',
+  '/player-guides/plugins/cmiplaceholders': '/player-guides/plugins/placeholders/',
+  '/player-guides/plugins/onembplaceholders': '/player-guides/plugins/placeholders/',
+  '/player-guides/plugins/placeholderhealth': '/player-guides/plugins/placeholders/',
+  '/player-guides/plugins/placeholderprobe': '/player-guides/plugins/placeholders/',
+  '/custom-server-plugins/trick-or-treat-doors': '/player-guides/plugins/doors/',
+  '/player-guides/custom-server-plugins/trick-or-treat-doors': '/player-guides/plugins/doors/',
   ...Object.fromEntries(
     docsSources.projects
       .filter((project) => standaloneRoutes[project.category])

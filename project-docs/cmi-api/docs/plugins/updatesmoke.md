@@ -100,8 +100,7 @@ commands.required:
   - updatesmoke
   - startupdoctor
   - cmiprobe
-  - placeholderprobe
-  - cmiplaceholders
+  - _placeholders
   - passport
   - visit
   - tips

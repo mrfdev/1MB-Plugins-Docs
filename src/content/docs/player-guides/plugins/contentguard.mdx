@@ -1,0 +1,120 @@
+---
+title: ContentGuard Guide
+description: Learn what ContentGuard does, how staff use it, and which public staff commands are available.
+---
+
+This page explains the permission-gated ContentGuard controls used by authorized staff. It is not a normal player feature.
+
+## What It Does
+
+ContentGuard combines the read-only FilterLab simulator with FilterGuard enforcement for signs, books, anvils, item names, entity name tags, and CMI nicknames.
+
+## How Staff Use It
+
+Authorized staff can inspect the parent lifecycle and both hosted modules with `/contentguard status`. FilterLab and FilterGuard keep their existing commands and configuration, while the parent command lets staff isolate either module without disabling the other one.
+
+Available features include:
+
+- Read-only FilterLab simulation, rule inspection, counters, and recent test results.
+- FilterGuard monitoring and configurable enforcement across supported player-written text surfaces.
+- Independent Lab and Guard lifecycle controls for safe testing or incident isolation.
+- Compatibility with the existing FilterLab and FilterGuard commands, permissions, placeholders, and configuration.
+
+## Quick Start
+
+1. Run `/contentguard status` to review the parent lifecycle and both module states.
+2. Use `/filterlab test this is a test message` to simulate a chat-filter rule without sending or punishing.
+3. Use `/filterguard test sign example text` to simulate one protected text surface.
+4. Open the full reference before changing module state or reloading either hosted module.
+
+## Commands
+
+<table class="command-table plugin-command-table">
+  <thead>
+    <tr>
+      <th>Command</th>
+      <th>What it does</th>
+      <th>Example</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>/contentguard status</code></td>
+      <td>Shows the ContentGuard lifecycle and current Lab and Guard module states.</td>
+      <td><code>/contentguard status</code></td>
+    </tr>
+    <tr>
+      <td><code>/contentguard module &lt;lab|<wbr />guard&gt; &lt;true|<wbr />false&gt;</code></td>
+      <td>Enables or disables the selected Lab or Guard module.</td>
+      <td><code>/contentguard module lab true</code></td>
+    </tr>
+    <tr>
+      <td><code>/filterlab</code></td>
+      <td>Shows the read-only FilterLab status overview.</td>
+      <td><code>/filterlab</code></td>
+    </tr>
+    <tr>
+      <td><code>/filterlab test &lt;message&gt;</code></td>
+      <td>Simulates text against loaded CMI chat-filter rules without sending or punishing.</td>
+      <td><code>/filterlab test this is a test message</code></td>
+    </tr>
+    <tr>
+      <td><code>/filterlab rules [page]</code></td>
+      <td>Lists loaded deny rules and their enabled state.</td>
+      <td><code>/filterlab rules 2</code></td>
+    </tr>
+    <tr>
+      <td><code>/filterlab recent [page]</code></td>
+      <td>Shows recent local FilterLab simulations from this runtime.</td>
+      <td><code>/filterlab recent</code></td>
+    </tr>
+    <tr>
+      <td><code>/filterguard</code></td>
+      <td>Shows the current FilterGuard enforcement status.</td>
+      <td><code>/filterguard</code></td>
+    </tr>
+    <tr>
+      <td><code>/filterguard test &lt;surface&gt; &lt;text&gt;</code></td>
+      <td>Simulates a supported text surface without editing live content.</td>
+      <td><code>/filterguard test sign example text</code></td>
+    </tr>
+    <tr>
+      <td><code>/filterguard rules [page]</code></td>
+      <td>Lists the loaded rules used by FilterGuard.</td>
+      <td><code>/filterguard rules</code></td>
+    </tr>
+    <tr>
+      <td><code>/filterguard recent [page]</code></td>
+      <td>Shows recent FilterGuard detections from this runtime.</td>
+      <td><code>/filterguard recent 2</code></td>
+    </tr>
+  </tbody>
+</table>
+
+## Aliases
+
+- `/chatfilterlab`
+- `/cfilterlab`
+- `/chatfilterguard`
+- `/cfguard`
+
+## Examples
+
+- `/contentguard status`
+- `/filterlab test this is a test message`
+- `/filterlab rules 2`
+- `/filterlab recent`
+- `/filterguard test sign example text`
+- `/filterguard test nickname example-name`
+- `/filterguard recent 2`
+
+## Good To Know
+
+- ContentGuard is permission-gated and intended for authorized staff.
+- ContentGuard starts dormant on a fresh installation until staff deliberately activate it.
+- Pausing Guard leaves the read-only FilterLab simulator available when Lab remains enabled.
+- Do not load the former standalone FilterLab or FilterGuard jars beside ContentGuard.
+
+## Full Reference
+
+The [full synced ContentGuard reference](https://github.com/mrfdev/1MB-Plugins-Docs/blob/main/project-docs/cmi-api/docs/plugins/contentguard.md) is available for exact technical details.

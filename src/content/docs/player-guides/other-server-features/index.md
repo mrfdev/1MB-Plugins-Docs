@@ -37,7 +37,7 @@ These guides explain third-party server features as they are configured and used
     <tr>
       <td><a href="./aoneblock/">AOneBlock</a></td>
       <td>Progress through phases by repeatedly mining a regenerating OneBlock.</td>
-      <td><code>/ob</code>, <code>/ob home</code>, <code>/ob team</code>, <code>/ob settings</code></td>
+      <td><code>/oneblock</code>, <code>/oneblock home</code>, <code>/oneblock team</code>, <code>/oneblock settings</code></td>
     </tr>
     <tr>
       <td><a href="./apis-and-libraries/">APIs and Libraries</a></td>
@@ -51,13 +51,13 @@ These guides explain third-party server features as they are configured and used
     </tr>
     <tr>
       <td><a href="./bentobox/">BentoBox</a></td>
-      <td>Provide the shared island platform behind 1MoreBlock SkyBlock, OneBlock, AcidIsland, CaveBlock, and SkyGrid modes.</td>
+      <td>Provide the shared island platform behind 1MoreBlock SkyBlock, OneBlock, ChunkBlock, AcidIsland, CaveBlock, and SkyGrid modes.</td>
       <td>No general player command.</td>
     </tr>
     <tr>
       <td><a href="./biomes/">BentoBox Biomes</a></td>
       <td>Let island owners change configured island biomes through a menu or island command.</td>
-      <td><code>/is biomes</code>, <code>/ob biomes</code></td>
+      <td><code>/skyblock biomes</code></td>
     </tr>
     <tr>
       <td><a href="./bluemap/">BlueMap</a></td>
@@ -72,12 +72,12 @@ These guides explain third-party server features as they are configured and used
     <tr>
       <td><a href="./border/">BentoBox Border</a></td>
       <td>Show and enforce a visible personal island boundary.</td>
-      <td><code>/is border</code>, <code>/ob border</code></td>
+      <td><code>/skyblock border</code>, <code>/oneblock border</code></td>
     </tr>
     <tr>
       <td><a href="./bskyblock/">BSkyBlock</a></td>
       <td>Play the classic SkyBlock island mode with teams, challenges, levels, and warps.</td>
-      <td><code>/is</code>, <code>/is home</code>, <code>/is team</code>, <code>/is settings</code></td>
+      <td><code>/skyblock</code>, <code>/skyblock home</code>, <code>/skyblock team</code>, <code>/skyblock settings</code></td>
     </tr>
     <tr>
       <td><a href="./caveblock/">CaveBlock</a></td>
@@ -87,7 +87,7 @@ These guides explain third-party server features as they are configured and used
     <tr>
       <td><a href="./challenges/">BentoBox Challenges</a></td>
       <td>Offer structured island tasks, progression tiers, and configured rewards.</td>
-      <td><code>/is challenges</code>, <code>/ob challenges</code>, <code>/acid challenges</code></td>
+      <td><code>/skyblock challenges</code>, <code>/oneblock challenges</code>, <code>/acid challenges</code></td>
     </tr>
     <tr>
       <td><a href="./citizens/">Citizens</a></td>
@@ -122,7 +122,7 @@ These guides explain third-party server features as they are configured and used
     <tr>
       <td><a href="./greenhouses/">BentoBox Greenhouses</a></td>
       <td>Build recognized greenhouse structures that support configured biome or crop effects.</td>
-      <td><code>/is greenhouse</code>, <code>/acid greenhouse</code></td>
+      <td><code>/skyblock greenhouse</code>, <code>/oneblock greenhouse</code>, <code>/acid greenhouse</code>, <code>/skygrid greenhouse</code></td>
     </tr>
     <tr>
       <td><a href="./head-database/">HeadDatabase</a></td>
@@ -147,12 +147,12 @@ These guides explain third-party server features as they are configured and used
     <tr>
       <td><a href="./level/">BentoBox Level</a></td>
       <td>Calculate island value and provide personal and server-wide island rankings.</td>
-      <td><code>/is level</code>, <code>/is top</code>, <code>/ob level</code></td>
+      <td><code>/skyblock level</code>, <code>/skyblock top</code>, <code>/oneblock level</code></td>
     </tr>
     <tr>
       <td><a href="./limits/">BentoBox Limits</a></td>
       <td>Apply island-wide limits to configured blocks, entities, and other resources.</td>
-      <td><code>/is limits</code>, <code>/ob limits</code></td>
+      <td><code>/skyblock limits</code>, <code>/oneblock limits</code>, <code>/acid limits</code>, <code>/cave limits</code>, <a href="./limits/">+1 more</a></td>
     </tr>
     <tr>
       <td><a href="./luckperms/">LuckPerms</a></td>
@@ -162,7 +162,7 @@ These guides explain third-party server features as they are configured and used
     <tr>
       <td><a href="./magic-cobblestone-generator/">BentoBox MagicCobblestoneGenerator</a></td>
       <td>Upgrade island generators so they can produce configured ores and blocks.</td>
-      <td><code>/is generator</code>, <code>/ob generator</code></td>
+      <td><code>/skyblock generator</code>, <code>/oneblock generator</code></td>
     </tr>
     <tr>
       <td><a href="./mcmmo/">mcMMO</a></td>
@@ -257,7 +257,7 @@ These guides explain third-party server features as they are configured and used
     <tr>
       <td><a href="./topblock/">BentoBox TopBlock</a></td>
       <td>Rank OneBlock islands by their highest reached block or configured phase progress.</td>
-      <td><code>/ob topblock</code>, <code>/ob top</code></td>
+      <td><code>/oneblock topblock</code>, <code>/oneblock top</code></td>
     </tr>
     <tr>
       <td><a href="./trade-me/">TradeMe</a></td>
@@ -282,7 +282,7 @@ These guides explain third-party server features as they are configured and used
     <tr>
       <td><a href="./warps/">BentoBox Warps</a></td>
       <td>Let island owners publish a safe visitor warp and browse other public island warps.</td>
-      <td><code>/is warps</code>, <code>/is warp &lt;player&gt;</code>, <code>/is setwarp</code>, <code>/is deletewarp</code></td>
+      <td><code>/skyblock warps</code>, <code>/skyblock warp &lt;player&gt;</code>, <code>/skyblock setwarp</code>, <code>/skyblock deletewarp</code></td>
     </tr>
     <tr>
       <td><a href="./worldborder/">WorldBorder</a></td>

@@ -17,20 +17,19 @@ BentoBox Biomes is a BentoBox add-on used by one or more 1MoreBlock island game 
 
 | Command | What it does |
 | --- | --- |
-| `/is biomes` | Opens biome choices for the current island mode. |
-| `/ob biomes` | Opens biome choices in OneBlock when enabled. |
+| `/skyblock biomes` | Opens the enabled SkyBlock biome choices. |
 
 ## Getting started
 
 1. Enter the relevant island game mode first.
-2. Use `/is biomes` or `/ob biomes` to open the feature.
-3. Check the game-mode help if the command label differs, because BentoBox commands can be customized per mode.
+2. Use `/skyblock biomes` to open the feature.
+3. Follow the menu prompts and confirm any cost before changing the biome.
 
 ## Player notes
 
 - Availability, prices, cooldowns, limits, and rewards are controlled by 1MoreBlock configuration.
-- An add-on may be enabled for one island mode but not another.
-- Use the command root for your current island mode, such as `/is`, `/ob`, `/acid`, `/cave`, or `/skygrid`.
+- Biomes is currently exposed through the SkyBlock command root on 1MoreBlock.
+- Other BentoBox features use the full root for their enabled mode: `/oneblock`, `/chunkblock`, `/skyblock`, `/acid`, `/cave`, or `/skygrid`.
 
 ## Official resources
 

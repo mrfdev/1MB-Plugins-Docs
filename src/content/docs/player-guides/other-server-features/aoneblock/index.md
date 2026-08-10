@@ -18,21 +18,21 @@ AOneBlock is one of 1MoreBlock's BentoBox island game modes. It gives the mode i
 
 | Command | What it does |
 | --- | --- |
-| `/ob` | Opens AOneBlock help or the main island command. |
-| `/ob create` | Creates an island when creation is available. |
-| `/ob home` | Returns to your island home. |
-| `/ob team` | Shows the team-management commands. |
-| `/ob settings` | Opens island settings when enabled. |
+| `/oneblock` | Opens AOneBlock help or the main island command. |
+| `/oneblock create` | Creates an island when creation is available. |
+| `/oneblock home` | Returns to your island home. |
+| `/oneblock team` | Shows the team-management commands. |
+| `/oneblock settings` | Opens island settings when enabled. |
 
 ## Getting started
 
-1. Run `/ob` and create an island, or open the 1MoreBlock game-types menu.
+1. Run `/oneblock` and create an island, or open the 1MoreBlock game-types menu.
 2. Read the starter messages and protect your starting resources.
 3. Use the Challenges and Level pages to plan progression.
 
 ## Player notes
 
-- Common aliases include `/ob` and `/oneblock`, but 1MoreBlock may customize aliases.
+- On 1MoreBlock, use `/oneblock` as the player command root for this mode.
 - Reset, team, coop, and visitor actions can be limited by cooldowns and rank permissions.
 - Never accept an island invitation until you understand whether it moves or resets your current island progress.
 

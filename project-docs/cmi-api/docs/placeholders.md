@@ -158,6 +158,16 @@ SocialGatherings placeholders:
 
 ```text
 %onembcmi_socialgatherings.enabled%
+%onembcmi_socialgatherings.debug%
+%onembcmi_socialgatherings.modules.gatherings.enabled%
+%onembcmi_socialgatherings.modules.carnival.enabled%
+%onembcmi_socialgatherings.adventure.open%
+%onembcmi_socialgatherings.adventure.schedule.enabled%
+%onembcmi_socialgatherings.adventure.next_open%
+%onembcmi_socialgatherings.adventure.time_until_open%
+%onembcmi_socialgatherings.adventure.time_until_close%
+%onembcmi_socialgatherings.adventure.activity_world_allowed%
+%onembcmi_socialgatherings.adventure.reward_world_allowed%
 %onembcmi_socialgatherings.opted_out%
 %onembcmi_socialgatherings.types%
 %onembcmi_socialgatherings.runtime.successes%
@@ -166,6 +176,24 @@ SocialGatherings placeholders:
 %onembcmi_socialgatherings.last.players%
 %onembcmi_socialgatherings.last.at%
 %onembcmi_socialgatherings.cache.size%
+```
+
+Carnival module placeholders (available while that module is active):
+
+```text
+%onembcmi_carnival.enabled%
+%onembcmi_carnival.storage.ready%
+%onembcmi_carnival.runtime.active_sessions%
+%onembcmi_carnival.games.archery.enabled%
+%onembcmi_carnival.games.archery.ready%
+%onembcmi_carnival.games.reaction.enabled%
+%onembcmi_carnival.games.reaction.ready%
+%onembcmi_carnival.tickets%
+%onembcmi_carnival.session.active%
+%onembcmi_carnival.session.game%
+%onembcmi_carnival.session.score%
+%onembcmi_carnival.archery.best%
+%onembcmi_carnival.reaction.best%
 ```
 
 JourneyMap placeholders:
@@ -222,31 +250,6 @@ Dynamic examples:
 %onembcmi_kitstreaks.track.daily.streak%
 %onembcmi_kitstreaks.track.daily.health%
 %onembcmi_kitstreaks.kit.starter.best%
-```
-
-MessageFont placeholders:
-
-```text
-%onembcmi_messagefont.enabled%
-%onembcmi_messagefont.current.font%
-%onembcmi_messagefont.current.expires_at%
-%onembcmi_messagefont.current.remaining_seconds%
-%onembcmi_messagefont.plain.enabled%
-%onembcmi_messagefont.fonts.count%
-%onembcmi_messagefont.runtime.rewrites%
-%onembcmi_messagefont.runtime.skipped%
-%onembcmi_messagefont.last.player%
-%onembcmi_messagefont.last.command%
-%onembcmi_messagefont.last.rewrite_at%
-%onembcmi_messagefont.cache.size%
-```
-
-Example checks:
-
-```text
-papi parse mrfloris %onembcmi_messagefont.current.font%
-papi parse mrfloris %onembcmi_messagefont.plain.enabled%
-papi parse mrfloris %onembcmi_messagefont.current.remaining_seconds%
 ```
 
 Nick placeholders:
@@ -875,7 +878,7 @@ CoconutHunt placeholders:
 %onembcmi_CoconutHunt.runtime.hologram_provider%
 ```
 
-CoconutHunt placeholder reads use cached profile, snapshot, and community state. They do not create claims, change progress, spend points, or run commands.
+CoconutHunt placeholder reads use cached profile, snapshot, and community state. `%onembcmi_CoconutHunt.enabled%` reflects both the master plugin switch and the independent `hunts.coconut.enabled` switch, which defaults false while Summer 2027 remains provisional. Reads do not create claims, change progress, spend points, or run commands.
 
 GhostHunt placeholders are served as an event-specific runtime alias by the same jar:
 
@@ -910,7 +913,52 @@ GhostHunt placeholders are served as an event-specific runtime alias by the same
 %onembcmi_GhostHunt.runtime.hologram_provider%
 ```
 
-Ghost reads have the same side-effect-free contract and use only the selected Ghost edition's cached profile, immutable snapshot, and community state.
+Ghost reads have the same side-effect-free contract and use only the selected Ghost edition's cached profile, immutable snapshot, and community state. `%onembcmi_GhostHunt.enabled%` reflects the master switch plus `hunts.ghost.enabled`, which defaults true independently of Coconut Hunt.
+
+Door Hunt registers a `DoorHunt` runtime alias and canonical dot-path placeholders such as `%onembcmi_DoorHunt.version%`, `%onembcmi_DoorHunt.event.start%`, `%onembcmi_DoorHunt.daily.remaining%`, `%onembcmi_DoorHunt.season.unique.doors%`, and dynamic `%onembcmi_DoorHunt.reward.<id>.state%`. Every canonical path maps to the corresponding compatibility token below by changing the dot-separated suffix to underscores. The full 38-token `%totdoors_*%` expansion remains available:
+
+```text
+%totdoors_version%
+%totdoors_build%
+%totdoors_state%
+%totdoors_ready%
+%totdoors_active%
+%totdoors_mode%
+%totdoors_debug%
+%totdoors_event_start%
+%totdoors_event_end%
+%totdoors_event_timezone%
+%totdoors_door_total%
+%totdoors_daily_completed%
+%totdoors_daily_total%
+%totdoors_daily_remaining%
+%totdoors_hint_ready%
+%totdoors_hint_cooldown_seconds%
+%totdoors_season_id%
+%totdoors_season_name%
+%totdoors_season_state%
+%totdoors_season_roster_total%
+%totdoors_season_interactions%
+%totdoors_season_unique_doors%
+%totdoors_season_treats%
+%totdoors_season_tricks%
+%totdoors_season_hints%
+%totdoors_season_active_days%
+%totdoors_season_current_streak%
+%totdoors_season_longest_streak%
+%totdoors_season_districts_found%
+%totdoors_milestones_earned%
+%totdoors_special_rewards_earned%
+%totdoors_special_reward_grants_dispatched%
+%totdoors_stream_<id>_progress%
+%totdoors_stream_<id>_next_target%
+%totdoors_stream_<id>_next_milestone%
+%totdoors_stream_<id>_complete%
+%totdoors_milestone_<id>_earned%
+%totdoors_reward_<id>_state%
+```
+
+Door placeholder reads are cache-only, return neutral values when the module/profile is unavailable, never load YAML synchronously, never expose coordinates, and never inherit the staff debug calendar bypass into public state. Dynamic stream, milestone, and reward ids are strictly validated.
 
 Forage placeholders:
 
@@ -1019,7 +1067,16 @@ Profile placeholders:
 %onembcmi_profile.cache.size%
 ```
 
-FilterLab placeholders:
+ContentGuard parent placeholders:
+
+```text
+%onembcmi_contentguard.enabled%
+%onembcmi_contentguard.debug%
+%onembcmi_contentguard.modules.lab.enabled%
+%onembcmi_contentguard.modules.guard.enabled%
+```
+
+FilterLab module compatibility placeholders:
 
 ```text
 %onembcmi_filterlab.enabled%
@@ -1035,7 +1092,7 @@ FilterLab placeholders:
 %onembcmi_filterlab.cache.size%
 ```
 
-FilterGuard placeholders:
+FilterGuard module compatibility placeholders:
 
 ```text
 %onembcmi_filterguard.enabled%
@@ -1068,7 +1125,16 @@ WarningLens placeholders:
 %onembcmi_warninglens.cache.size%
 ```
 
-NotableMsg placeholders:
+TeamMsg parent placeholders:
+
+```text
+%onembcmi_teammsg.enabled%
+%onembcmi_teammsg.debug%
+%onembcmi_teammsg.modules.staffmsg.enabled%
+%onembcmi_teammsg.modules.notablemsg.enabled%
+```
+
+NotableMsg module compatibility placeholders:
 
 ```text
 %onembcmi_notablemsg.enabled%
@@ -1086,7 +1152,7 @@ NotableMsg placeholders:
 %onembcmi_notablemsg.cache.size%
 ```
 
-1MBStaffMsg placeholders:
+1MBStaffMsg module compatibility placeholders:
 
 ```text
 %onembcmi_staffmsg.enabled%
@@ -1303,7 +1369,18 @@ Example player-scoped keys:
 %onembcmi_cmidb.player.quest.bridge.done%
 ```
 
-PlaceholderProbe placeholders:
+Placeholders parent lifecycle placeholders:
+
+```text
+%onembcmi_placeholders.enabled%
+%onembcmi_placeholders.debug%
+%onembcmi_placeholders.modules.provider.enabled%
+%onembcmi_placeholders.modules.catalog.enabled%
+%onembcmi_placeholders.modules.probe.enabled%
+%onembcmi_placeholders.modules.health.enabled%
+```
+
+Placeholders Probe module compatibility placeholders:
 
 ```text
 %onembcmi_placeholderprobe.enabled%
@@ -1342,7 +1419,7 @@ PermissionProbe placeholders:
 %onembcmi_permissionprobe.cache.size%
 ```
 
-PlaceholderHealth placeholders:
+Placeholders Health module compatibility placeholders:
 
 ```text
 %onembcmi_placeholderhealth.enabled%
@@ -1357,7 +1434,7 @@ PlaceholderHealth placeholders:
 %onembcmi_placeholderhealth.exports.written%
 ```
 
-CMIPlaceholderCheck placeholders:
+Placeholders Catalog module compatibility placeholders:
 
 ```text
 %onembcmi_cmiplaceholders.enabled%
@@ -1372,7 +1449,7 @@ CMIPlaceholderCheck placeholders:
 %onembcmi_cmiplaceholders.cache.size%
 ```
 
-1MBPlaceholders public PlaceholderAPI expansion:
+Placeholders Provider public PlaceholderAPI expansion:
 
 ```text
 %onemb_<key>%
@@ -1409,7 +1486,7 @@ CMIPlaceholderCheck placeholders:
 %onemb_rotating_greeting%
 ```
 
-1MBPlaceholders support/debug placeholders:
+Placeholders Provider compatibility support/debug placeholders:
 
 ```text
 %onembcmi_onembplaceholders.enabled%

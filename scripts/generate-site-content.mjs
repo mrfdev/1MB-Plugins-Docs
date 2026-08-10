@@ -125,6 +125,49 @@ const PLAYER_GUIDE_OVERRIDES = {
       'The maintained jar is 1MB-CMIAPI-AntiFire; the old standalone jar must not run beside it.',
     ],
   },
+  bedrockchatbridge: {
+    summary: 'Verify the temporary fail-closed Bedrock chat compatibility bridge on authorized test servers.',
+    description: 'Learn how authorized testers inspect the temporary Bedrock chat compatibility bridge.',
+    intro: 'BedrockChatBridge is a temporary compatibility feature for servers using CMI Paper chat and Floodgate. It reroutes only eligible Floodgate senders after CMI formatting, leaves Java chat untouched, and stops rerouting if its dependency or listener-order checks fail.',
+    guide: 'Authorized testers use the read-only status and information commands to confirm whether the bridge is active and why. Lifecycle changes and deeper diagnostics are permission-gated and remain in the full technical reference.',
+    pageIntro: 'This page explains the safe, read-only BedrockChatBridge checks available to authorized testers. It is not a normal player feature.',
+    audienceHeading: 'How Testers Use It',
+    features: [
+      'Floodgate-only chat rerouting after CMI has produced the viewer-specific message.',
+      'Java-player chat remains on its normal delivery path.',
+      'Fail-closed dependency, formatter, and listener-order checks before activation.',
+      'Read-only status and information commands for authorized verification.',
+    ],
+    quickStart: [
+      'Run `/bedrockchatbridge status` on an authorized test server to inspect the current bridge state.',
+      'Use `/bedrockchatbridge info` for a short explanation of the compatibility feature.',
+      'Open the full reference before running permission-gated lifecycle or hook diagnostics.',
+    ],
+    commands: [
+      '/bedrockchatbridge',
+      '/bedrockchatbridge status',
+      '/bedrockchatbridge info',
+      '/bedrockchatbridge help',
+    ],
+    examples: [
+      '/bedrockchatbridge',
+      '/bedrockchatbridge status',
+      '/bedrockchatbridge info',
+      '/bedrockchatbridge help',
+    ],
+    commandDescriptions: {
+      '/bedrockchatbridge': 'Shows the current bridge state and pending delivery count.',
+      '/bedrockchatbridge status': 'Shows whether the bridge is active, dormant, or unavailable.',
+      '/bedrockchatbridge info': 'Explains the temporary Floodgate and Paper-chat compatibility role.',
+      '/bedrockchatbridge help': 'Shows the BedrockChatBridge command help available to you.',
+    },
+    notes: [
+      'BedrockChatBridge is a temporary compatibility feature and should be removed once the upstream behavior no longer needs it.',
+      'The bridge requires Paper chat formatting and Floodgate; it does not reroute Java-player chat.',
+      'Configuration edits, lifecycle changes, and hook diagnostics are restricted to authorized staff.',
+    ],
+    includeInCommandIndex: false,
+  },
   boosters: {
     summary: 'Check which server-wide boosters are active for skills, jobs, points, and special events.',
     intro: 'Boosters lets players check the current server booster status from one simple place. Use it when you want to know whether skill, job, points, or event multipliers are active before you start grinding.',
@@ -135,23 +178,287 @@ const PLAYER_GUIDE_OVERRIDES = {
       'A personal reminder preference that players can turn on or off.',
     ],
   },
+  coconut: {
+    summary: 'Open the shared Event Hunts index and follow the seven-day Summer Coconut Hunt when its season is active.',
+    intro: 'Coconut Hunt is the Summer module in the shared Event Hunts feature. Its preserved 2027 edition uses 70 collectible coconut heads across seven cumulative daily waves, with personal progress, rewards, Coconut Points, community goals, and an event shop.',
+    guide: 'Open `/hunt` for the shared seasonal-event index or `/coconut` for the Summer overview. During an active edition, travel to the Summer Beach and right-click an unlocked coconut with your main hand. Each coconut counts once for you and remains available to every other player.',
+    features: [
+      'A shared `/hunt` index for Coconut, Ghost, and Door Hunt events.',
+      'Seven cumulative Coconut waves so late players can catch up on unlocked locations.',
+      'Personal collection progress, participation streaks, and immutable edition snapshots.',
+      'Collection, streak, community, and perfect-completion rewards with durable delivery states.',
+      'Coconut Points, contribution totals, and a confirmation-gated event shop.',
+      'Private proximity hints, spotting effects, and discovery celebrations.',
+      'Current and historical edition views with guarded reward claims.',
+      'A preserved Summer 2027 module that remains dormant until staff deliberately activate it.',
+    ],
+    quickStart: [
+      'Use `/hunt` to see every available Event Hunt, or `/coconut` to open the Summer overview directly.',
+      'During an active Summer edition, use the visit action and right-click unlocked coconut heads with your main hand.',
+      'Check `/coconut progress`, `/coconut streak`, and `/coconut rewards` as new waves unlock.',
+    ],
+    commands: [
+      '/hunt',
+      '/coconut',
+      '/coconut info',
+      '/coconut progress',
+      '/coconut help',
+      '/coconut milestones',
+      '/coconut streak',
+      '/coconut community',
+      '/coconut rewards',
+      '/coconut points',
+      '/coconut shop',
+      '/coconut claim <reward-id|all> [event-id]',
+      '/coconut history [event-id]',
+    ],
+    examples: [
+      '/hunt',
+      '/coconut',
+      '/coconut progress',
+      '/coconut streak',
+      '/coconut community',
+      '/coconut rewards',
+      '/coconut claim all',
+      '/coconut points',
+      '/coconut shop',
+      '/coconut history summer_2027',
+    ],
+    commandTableExamples: {
+      '/coconut claim <reward-id|all> [event-id]': '/coconut claim all',
+      '/coconut history [event-id]': '/coconut history summer_2027',
+    },
+    commandDescriptions: {
+      '/hunt': 'Opens the shared Event Hunts index for Coconut, Ghost, and Door Hunt events.',
+      '/coconut': 'Opens the six-row Coconut Hunt overview.',
+      '/coconut info': 'Shows the current Summer edition, state, and player documentation.',
+      '/coconut progress': 'Shows personal finds and cumulative wave progress.',
+      '/coconut help': 'Opens the Coconut Hunt player help page.',
+      '/coconut milestones': 'Shows collection milestones and their reward states.',
+      '/coconut streak': 'Shows the seven-day participation calendar and streak totals.',
+      '/coconut community': 'Shows community goals and your contribution.',
+      '/coconut rewards': 'Shows collection, streak, community, and perfect reward states.',
+      '/coconut points': 'Shows your Coconut Point balance and earning history.',
+      '/coconut shop': 'Opens the confirmation-gated Coconut Points shop.',
+      '/coconut claim <reward-id|all> [event-id]': 'Claims one eligible reward or every eligible reward in safe order.',
+      '/coconut history [event-id]': 'Shows the current or a retained historical Coconut edition.',
+    },
+    notes: [
+      'The preserved Summer 2027 module is dormant until staff deliberately enable and validate it.',
+      'Cumulative waves let you find older unlocked coconuts later, but missed participation dates stay missed.',
+      'Undiscovered coordinates are never shown to normal players.',
+      'Reward and shop delivery remains limited to configured gameplay worlds.',
+    ],
+  },
+  contentguard: {
+    summary: 'Safely test CMI chat-filter rules and control enforcement across player-written text.',
+    intro: 'ContentGuard combines the read-only FilterLab simulator with FilterGuard enforcement for signs, books, anvils, item names, entity name tags, and CMI nicknames.',
+    guide: 'Authorized staff can inspect the parent lifecycle and both hosted modules with `/contentguard status`. FilterLab and FilterGuard keep their existing commands and configuration, while the parent command lets staff isolate either module without disabling the other one.',
+    pageIntro: 'This page explains the permission-gated ContentGuard controls used by authorized staff. It is not a normal player feature.',
+    audienceHeading: 'How Staff Use It',
+    features: [
+      'Read-only FilterLab simulation, rule inspection, counters, and recent test results.',
+      'FilterGuard monitoring and configurable enforcement across supported player-written text surfaces.',
+      'Independent Lab and Guard lifecycle controls for safe testing or incident isolation.',
+      'Compatibility with the existing FilterLab and FilterGuard commands, permissions, placeholders, and configuration.',
+    ],
+    quickStart: [
+      'Run `/contentguard status` to review the parent lifecycle and both module states.',
+      'Use `/filterlab test this is a test message` to simulate a chat-filter rule without sending or punishing.',
+      'Use `/filterguard test sign example text` to simulate one protected text surface.',
+      'Open the full reference before changing module state or reloading either hosted module.',
+    ],
+    commands: [
+      '/contentguard status',
+      '/contentguard module <lab|guard> <true|false>',
+      '/filterlab',
+      '/filterlab test <message>',
+      '/filterlab rules [page]',
+      '/filterlab recent [page]',
+      '/filterguard',
+      '/filterguard test <surface> <text>',
+      '/filterguard rules [page]',
+      '/filterguard recent [page]',
+    ],
+    aliases: [
+      '/chatfilterlab',
+      '/cfilterlab',
+      '/chatfilterguard',
+      '/cfguard',
+    ],
+    examples: [
+      '/contentguard status',
+      '/filterlab test this is a test message',
+      '/filterlab rules 2',
+      '/filterlab recent',
+      '/filterguard test sign example text',
+      '/filterguard test nickname example-name',
+      '/filterguard recent 2',
+    ],
+    commandTableExamples: {
+      '/contentguard module <lab|guard> <true|false>': '/contentguard module lab true',
+      '/filterlab test <message>': '/filterlab test this is a test message',
+      '/filterlab rules [page]': '/filterlab rules 2',
+      '/filterguard test <surface> <text>': '/filterguard test sign example text',
+      '/filterguard recent [page]': '/filterguard recent 2',
+    },
+    commandDescriptions: {
+      '/contentguard status': 'Shows the ContentGuard lifecycle and current Lab and Guard module states.',
+      '/contentguard module <lab|guard> <true|false>': 'Enables or disables the selected Lab or Guard module.',
+      '/filterlab': 'Shows the read-only FilterLab status overview.',
+      '/filterlab test <message>': 'Simulates text against loaded CMI chat-filter rules without sending or punishing.',
+      '/filterlab rules [page]': 'Lists loaded deny rules and their enabled state.',
+      '/filterlab recent [page]': 'Shows recent local FilterLab simulations from this runtime.',
+      '/filterguard': 'Shows the current FilterGuard enforcement status.',
+      '/filterguard test <surface> <text>': 'Simulates a supported text surface without editing live content.',
+      '/filterguard rules [page]': 'Lists the loaded rules used by FilterGuard.',
+      '/filterguard recent [page]': 'Shows recent FilterGuard detections from this runtime.',
+    },
+    notes: [
+      'ContentGuard is permission-gated and intended for authorized staff.',
+      'ContentGuard starts dormant on a fresh installation until staff deliberately activate it.',
+      'Pausing Guard leaves the read-only FilterLab simulator available when Lab remains enabled.',
+      'Do not load the former standalone FilterLab or FilterGuard jars beside ContentGuard.',
+    ],
+    includeInCommandIndex: false,
+  },
+  doors: {
+    summary: 'Join the daily Trick-or-Treat Door Hunt through the shared Event Hunts index when its Halloween season is active.',
+    intro: 'Trick-or-Treat Doors turns the 1MoreBlock Halloween world into a daily door hunt. Find marked houses, knock correctly, and discover a family-friendly trick or a treat while building seasonal statistics, quests, milestones, and reward unlocks.',
+    guide: 'Open `/hunt` for the shared Event Hunts index or `/doors` for the Halloween Door Hunt overview. During an active season, travel with `/halloween`, find a closed door marked by a golden pressure plate, empty your main hand, and left-click the door three times within five seconds.',
+    features: [
+      'A shared `/hunt` index for Coconut, Ghost, and Door Hunt events.',
+      'Daily marked-door discoveries with weighted trick-or-treat results.',
+      'Coordinate-free hints toward an unfinished eligible door.',
+      'Personal seasonal totals, treat and trick counts, active days, and streaks.',
+      'A discovered-door journal that never reveals unfinished locations.',
+      'Quest streams and milestones based on event participation.',
+      'A persistent Treat Bag for claiming saved treats in configured gameplay worlds.',
+      'A dormant-by-default module that opens only during authorized event or staff-test windows.',
+    ],
+    quickStart: [
+      'Run `/hunt` to browse all Event Hunts, or `/doors` to open the Door Hunt overview directly.',
+      'During an active season, use `/halloween` and find a closed door with a golden pressure plate.',
+      'With an empty main hand, left-click the marked door three times within five seconds.',
+      'Use `/doors rewards` in an approved gameplay world to claim saved treats.',
+    ],
+    commands: [
+      '/hunt',
+      '/doors',
+      '/doors info',
+      '/doors help',
+      '/doors hint',
+      '/doors stats [season]',
+      '/doors journal [season] [page]',
+      '/doors quests [stream] [season]',
+      '/doors rewards [season]',
+    ],
+    aliases: [
+      '/totdoors',
+      '/totdoor',
+      '/trickortreatdoors',
+    ],
+    examples: [
+      '/hunt',
+      '/doors',
+      '/doors info',
+      '/doors hint',
+      '/doors stats',
+      '/doors journal',
+      '/doors quests',
+      '/doors rewards',
+    ],
+    notes: [
+      'Door Hunt is dormant until staff validate its copied data and deliberately open an event or test window.',
+      'The golden pressure plate marks the front side; the door must still be closed and your main hand must be empty.',
+      'Hints use broad distance and direction language and never reveal exact coordinates.',
+      'Treats stay in the durable Treat Bag until they can be claimed safely in a configured gameplay world.',
+    ],
+    excludeCommandsFromIndex: ['/hunt'],
+  },
   gametypes: {
-    summary: 'Open the right island-game menu for OneBlock, SkyBlock, AcidIsland, CaveBlock, or SkyGrid.',
+    summary: 'Open the right island-game menu for OneBlock, ChunkBlock, SkyBlock, AcidIsland, CaveBlock, or SkyGrid.',
     intro: 'GameTypes helps players find the correct menu for island-style game modes. Use it when you are in a BentoBox world or when you want the server to show the available game type menus.',
+  },
+  ghosthunt: {
+    summary: 'Open the shared Event Hunts index and join the four-day Halloween Ghost Hunt when its weekend edition is active.',
+    intro: 'Halloween Ghost Hunt is the Ghost module in the shared Event Hunts feature. Its 2026 weekend edition uses four waves of 20 collectible Ghosts, daily kits, an all-80 bonus, personal visual preferences, coordinate-free hints, and durable edition snapshots.',
+    guide: 'Open `/hunt` for the shared seasonal-event index or `/ghost` for the Halloween overview. During an active edition, travel to the Halloween world and right-click an unlocked Ghost head with your main hand. Each Ghost counts once for you and remains available to other players.',
+    features: [
+      'A shared `/hunt` index for Coconut, Ghost, and Door Hunt events.',
+      'Four daily waves of 20 Ghosts with catch-up collection access.',
+      'Four date-specific daily kits and an all-80 perfect-weekend reward.',
+      'Personal progress, streak, community, reward, point, shop, and history views.',
+      'Coordinate-free hints that never reveal a Ghost id or exact location.',
+      'Full, reduced, and off visual modes for private effects without changing participation.',
+      'Immutable edition snapshots and guarded current or historical reward claims.',
+      'The `/ghosthunt` compatibility alias while `/ghost` remains the recommended root.',
+    ],
+    quickStart: [
+      'Use `/hunt` to see every available Event Hunt, or `/ghost` to open the Halloween overview directly.',
+      'During an active edition, visit the Halloween world and right-click unlocked Ghost heads with your main hand.',
+      'Use `/ghost hint` for a broad direction or `/ghost effects reduced` for quieter visuals.',
+      'Check `/ghost rewards` after completing the current date target or larger collection goals.',
+    ],
+    commands: [
+      '/hunt',
+      '/ghost',
+      '/ghost info',
+      '/ghost help',
+      '/ghost progress',
+      '/ghost milestones',
+      '/ghost streak',
+      '/ghost community',
+      '/ghost rewards',
+      '/ghost points',
+      '/ghost shop',
+      '/ghost claim <reward-id|all> [event-id]',
+      '/ghost history [event-id]',
+      '/ghost hint',
+      '/ghost effects <full|reduced|off>',
+    ],
+    aliases: ['/ghosthunt'],
+    examples: [
+      '/hunt',
+      '/ghost',
+      '/ghost progress',
+      '/ghost hint',
+      '/ghost effects reduced',
+      '/ghost rewards',
+      '/ghost claim all',
+    ],
+    commandTableExamples: {
+      '/ghost claim <reward-id|all> [event-id]': '/ghost claim all',
+      '/ghost effects <full|reduced|off>': '/ghost effects reduced',
+    },
+    commandDescriptions: {
+      '/hunt': 'Opens the shared Event Hunts index for Coconut, Ghost, and Door Hunt events.',
+      '/ghost': 'Opens the four-day Halloween Ghost Hunt overview.',
+      '/ghost info': 'Shows the current Halloween edition, state, and player documentation.',
+      '/ghost help': 'Opens the Ghost Hunt player help page.',
+      '/ghost progress': 'Shows personal finds and four-wave progress.',
+      '/ghost milestones': 'Shows collection milestones and their reward states.',
+      '/ghost streak': 'Shows date-specific participation and streak totals.',
+      '/ghost community': 'Shows community goals and your contribution.',
+      '/ghost rewards': 'Shows daily, collection, community, and perfect reward states.',
+      '/ghost points': 'Shows your Ghost Point balance and earning history.',
+      '/ghost shop': 'Opens the confirmation-gated Ghost Points shop.',
+      '/ghost claim <reward-id|all> [event-id]': 'Claims eligible current or retained-edition rewards in safe order.',
+      '/ghost history [event-id]': 'Shows current or retained Halloween editions without merging their progress.',
+      '/ghost hint': 'Gives a broad distance and direction hint without revealing exact coordinates.',
+      '/ghost effects <full|reduced|off>': 'Changes private visual and sound effects without changing participation.',
+    },
+    notes: [
+      'Each daily kit requires the configured number of new finds on that event date; older Ghosts remain collectible later.',
+      'Hints never reveal the Ghost id, block coordinates, or a teleport command.',
+      'Visual mode changes only private effects and never changes discovery or reward eligibility.',
+      'Use `/ghost`; `/ghosthunt` remains available only as a compatibility alias.',
+    ],
+    excludeCommandsFromIndex: ['/hunt'],
   },
   kitstreaks: {
     summary: 'Track kit claim streaks, milestone calendars, and reward progress.',
     intro: 'KitStreaks helps players follow kit claim streaks and milestone rewards. It is meant for players who like daily or recurring kit progress and want to see what they have already claimed.',
-  },
-  messagefont: {
-    summary: 'Choose temporary private-message font styles, with a plain-mode option for readability.',
-    intro: 'MessageFont lets players choose a temporary style for private messages. It is meant as a cosmetic chat perk while still giving recipients a plain-mode option when they prefer easier-to-read messages.',
-    features: [
-      'A menu and paginated list for browsing available private-message font styles.',
-      'Temporary personal font selection without raw formatting codes.',
-      'Direct style selection for players who already know the style they want.',
-      'A recipient-side plain mode that keeps incoming private messages easy to read.',
-    ],
   },
   journeymap: {
     summary: 'Follow playtime eras, badges, milestones, and long-term journey rewards.',
@@ -224,6 +531,69 @@ const PLAYER_GUIDE_OVERRIDES = {
       '/nick museum <player>': "Shows another player's Nick collection when you have access.",
       '/nick realname <player>': "Shows a player's real Minecraft name when the command is available.",
     },
+  },
+  placeholders: {
+    summary: 'Operate the shared 1MB placeholder provider and its Catalog, Probe, and Health diagnostics.',
+    description: 'Learn how authorized staff inspect the consolidated 1MB placeholder provider and diagnostic modules.',
+    intro: 'Placeholders combines the production `%onemb_*%` provider with the former Catalog, Probe, and Health tools behind one `/_placeholders` command and independently switchable modules.',
+    guide: 'Authorized staff use `/_placeholders status` and `/_placeholders modules` to inspect the parent and hosted modules. Provider data and the established permission, config, and placeholder namespaces remain compatible, while retired diagnostic roots now live under the Catalog, Probe, and Health subcommands.',
+    pageIntro: 'This page explains the permission-gated Placeholders controls used by authorized staff and testers. It is not a normal player feature.',
+    audienceHeading: 'How Staff Use It',
+    features: [
+      'The production `%onemb_*%` PlaceholderAPI provider and its established data remain compatible.',
+      'Catalog search and concrete placeholder examples under `/_placeholders catalog`.',
+      'Bounded ad hoc parsing and expansion diagnostics under `/_placeholders probe`.',
+      'Configured operational checks and Markdown reports under `/_placeholders health`.',
+      'Independent Provider, Catalog, Probe, and Health lifecycle switches.',
+    ],
+    quickStart: [
+      'Run `/_placeholders status` to inspect the provider and parent lifecycle.',
+      'Use `/_placeholders modules` to review all four hosted module states.',
+      'Open the full reference before enabling a dormant diagnostic module or editing provider data.',
+    ],
+    commands: [
+      '/_placeholders status',
+      '/_placeholders modules',
+      '/_placeholders module <provider|catalog|probe|health> <true|false>',
+      '/_placeholders list [category] [page]',
+      '/_placeholders get <key>',
+      '/_placeholders catalog check <keyword> [page]',
+      '/_placeholders probe parse <placeholder> [online-player]',
+      '/_placeholders health check [player]',
+    ],
+    examples: [
+      '/_placeholders status',
+      '/_placeholders modules',
+      '/_placeholders module provider true',
+      '/_placeholders list',
+      '/_placeholders get server_name',
+      '/_placeholders catalog check player',
+      '/_placeholders probe parse %onemb_server_name%',
+      '/_placeholders health check',
+    ],
+    commandTableExamples: {
+      '/_placeholders module <provider|catalog|probe|health> <true|false>': '/_placeholders module provider true',
+      '/_placeholders get <key>': '/_placeholders get server_name',
+      '/_placeholders catalog check <keyword> [page]': '/_placeholders catalog check player',
+      '/_placeholders probe parse <placeholder> [online-player]': '/_placeholders probe parse %onemb_server_name%',
+    },
+    commandDescriptions: {
+      '/_placeholders status': 'Shows the parent lifecycle and production provider state.',
+      '/_placeholders modules': 'Lists the Provider, Catalog, Probe, and Health module states.',
+      '/_placeholders module <provider|catalog|probe|health> <true|false>': 'Enables or disables one hosted placeholder module.',
+      '/_placeholders list [category] [page]': 'Lists configured production placeholder keys.',
+      '/_placeholders get <key>': 'Shows one configured production placeholder value.',
+      '/_placeholders catalog check <keyword> [page]': 'Searches the known placeholder catalog by keyword.',
+      '/_placeholders probe parse <placeholder> [online-player]': 'Safely parses one concrete placeholder for diagnostic review.',
+      '/_placeholders health check [player]': 'Runs the configured operational placeholder sample set.',
+    },
+    notes: [
+      'Placeholders is permission-gated and intended for authorized staff or test environments.',
+      'The former `/cmiplaceholders`, `/placeholderprobe`, and `/placeholderhealth` roots are retired; use the nested routes shown above.',
+      'The former 1MBPlaceholders provider data and `%onemb_*%` expansion remain compatible.',
+      'Do not load any of the four former standalone jars beside the consolidated Placeholders jar.',
+    ],
+    includeInCommandIndex: false,
   },
   pvptoggle: {
     summary: 'Turn your own PvP state on or off and check your current PvP protection state.',
@@ -333,6 +703,88 @@ const PLAYER_GUIDE_OVERRIDES = {
       'Personal opt-in and opt-out controls for gathering participation.',
     ],
   },
+  teammsg: {
+    summary: 'Review staff-chat history and use the private notable channel through one consolidated staff tool.',
+    intro: 'TeamMsg combines the existing 1MBStaffMsg and NotableMsg features while preserving their familiar staff-chat and private-channel commands.',
+    guide: 'Authorized staff use `/s recent` to review recent CMI staff-chat messages and `/n` for the private notable or community-assistant channel. The parent `/teammsg` command reports lifecycle state and can isolate StaffMsg or NotableMsg without changing the other module.',
+    pageIntro: 'This page explains the permission-gated TeamMsg commands used by authorized staff. It is not a normal player feature.',
+    audienceHeading: 'How Staff Use It',
+    features: [
+      'Recent CMI staff-chat history through `/s recent` and its compatible forms.',
+      'A private `/n` channel for notable and community-assistant groups.',
+      'Persistent notable-channel mode and recent notable-message history.',
+      'Independent StaffMsg and NotableMsg lifecycle controls.',
+      'Compatibility with the existing commands, permissions, placeholders, and configuration from both former jars.',
+    ],
+    quickStart: [
+      'Run `/teammsg status` to review the parent lifecycle and both module states.',
+      'Use `/s recent` to review recent CMI staff-chat messages.',
+      'Use `/n <message>` for the private notable channel when you are authorized.',
+    ],
+    commands: [
+      '/teammsg status',
+      '/teammsg module <staffmsg|notablemsg> <true|false>',
+      '/s <message>',
+      '/s recent [page]',
+      '/n <message>',
+      '/n',
+      '/n toggle',
+      '/n on',
+      '/n off',
+      '/n status',
+      '/n recent [page]',
+      '/n help [page]',
+      '/n info',
+    ],
+    aliases: [
+      '/staffmsg <message>',
+      '/cmi staffmsg <message>',
+      '/staffmsg recent [page]',
+      '/cmi staffmsg recent [page]',
+      '/1mbstaffmsg recent [page]',
+    ],
+    examples: [
+      '/teammsg status',
+      '/teammsg module staffmsg true',
+      '/s Please check the spawn queue.',
+      '/s recent 2',
+      '/n Could someone check the spawn queue?',
+      '/n on',
+      '/n off',
+      '/n status',
+      '/n toggle',
+      '/n recent 2',
+      '/n help',
+    ],
+    commandTableExamples: {
+      '/teammsg module <staffmsg|notablemsg> <true|false>': '/teammsg module staffmsg true',
+      '/s <message>': '/s Please check the spawn queue.',
+      '/s recent [page]': '/s recent 2',
+      '/n <message>': '/n Could someone check the spawn queue?',
+      '/n recent [page]': '/n recent 2',
+    },
+    commandDescriptions: {
+      '/teammsg status': 'Shows the TeamMsg lifecycle and current StaffMsg and NotableMsg module states.',
+      '/teammsg module <staffmsg|notablemsg> <true|false>': 'Enables or disables the selected hosted communication module.',
+      '/s <message>': 'Sends a message through the existing CMI staff-chat workflow.',
+      '/s recent [page]': 'Shows recent CMI staff-chat messages.',
+      '/n <message>': 'Sends a message to the private notable channel.',
+      '/n': 'Toggles persistent notable-channel mode.',
+      '/n toggle': 'Toggles persistent notable-channel mode.',
+      '/n on': 'Turns persistent notable-channel mode on.',
+      '/n off': 'Turns persistent notable-channel mode off.',
+      '/n status': 'Shows your current notable-channel mode.',
+      '/n recent [page]': 'Shows recent notable-channel messages.',
+      '/n help [page]': 'Shows the notable-channel commands available to you.',
+      '/n info': 'Explains the private notable channel.',
+    },
+    notes: [
+      'TeamMsg is permission-gated and intended for authorized staff.',
+      'The existing `/s`, `/staffmsg`, `/cmi staffmsg`, `/1mbstaffmsg`, and `/n` workflows remain compatible.',
+      'Do not load the former standalone 1MBStaffMsg or NotableMsg jars beside TeamMsg.',
+    ],
+    includeInCommandIndex: false,
+  },
   tpauto: {
     summary: 'Automatically accept teleport requests from trusted players when you want easier visits.',
     intro: 'TPAuto lets players automatically accept incoming teleport requests when the feature is available to them. It is useful when you are hosting, building with friends, or helping visitors and do not want to accept every request manually.',
@@ -422,7 +874,7 @@ const FEATURE_BULLET_OVERRIDES = {
     'Camp-ready feedback, tool explanations, personal stats, tips, and progress placeholders.',
   ],
   gametypes: [
-    'One menu system for OneBlock, SkyBlock, AcidIsland, CaveBlock, and SkyGrid.',
+    'One menu system for OneBlock, ChunkBlock, SkyBlock, AcidIsland, CaveBlock, and SkyGrid.',
     'Automatic current-world detection with a game-type index when no island world is detected.',
     'Core island actions for travel, creation, teams, information, help, top lists, kits, and daily shops.',
     'Addon buttons for warps, challenges, levels, biomes, generators, borders, and other installed BentoBox features.',
@@ -757,11 +1209,14 @@ function friendlyText(value) {
   return sentenceCase(sentences || cleaned);
 }
 
-function markdownList(items) {
+function markdownList(items, curated = false) {
   if (!items.length) {
     return '- More player-facing details will be added here as the feature guide grows.';
   }
-  return items.map((item) => `- ${escapeHtml(clampText(friendlyText(item)))}`).join('\n');
+  return items.map((item) => {
+    const text = curated ? item.replace(/\s+/g, ' ').trim() : friendlyText(item);
+    return `- ${escapeHtml(clampText(text))}`;
+  }).join('\n');
 }
 
 function featureList(items) {
@@ -987,6 +1442,7 @@ function guideParagraphs(markdown, plugin, commandData) {
     extractSection(markdown, ['Player Experience']),
     extractSection(markdown, ['Player Flow']),
     extractSection(markdown, ['Player Guide']),
+    extractSection(markdown, ['How Players Use It']),
   ].filter(Boolean);
   const selected = sections
     .flatMap(paragraphs)
@@ -1047,6 +1503,8 @@ function featureBulletItems(plugin, markdown, commandData) {
     'Player Experience',
     'Player Flow',
     'Player Guide',
+    'How Players Use It',
+    'Available Features',
     'Features',
     'How Streaks Work',
     'Behavior',
@@ -1604,7 +2062,7 @@ function commandIndexTable(rows, guidePathPrefix = '../plugins/') {
     .map((row) => `    <tr>
       <td><a href="${row.guideHref ?? `${guidePathPrefix}${row.slug}/`}">${escapeHtml(row.plugin)}</a></td>
       <td><code>${formatCommand(row.command)}</code></td>
-      <td>${escapeHtml(friendlyText(row.description))}</td>
+      <td>${escapeHtml(row.curatedDescription ? row.description : friendlyText(row.description))}</td>
       <td><code>${formatCommand(row.example)}</code></td>
     </tr>`)
     .join('\n');
@@ -1681,11 +2139,17 @@ ${rows}
 
 function pluginCommandTable(plugin, commandData) {
   const rows = commandData.playerCommands
-    .map((command) => `    <tr>
+    .map((command) => {
+      const description = commandData.descriptions.get(command) || commandDescription(command, plugin);
+      const renderedDescription = commandData.curatedDescriptions?.has(command)
+        ? description
+        : friendlyText(description);
+      return `    <tr>
       <td><code>${formatCommand(command)}</code></td>
-      <td>${escapeHtml(friendlyText(commandData.descriptions.get(command) || commandDescription(command, plugin)))}</td>
+      <td>${escapeHtml(renderedDescription)}</td>
       <td><code>${formatCommand(commandData.tableExamples?.get(command) || commandExample(command))}</code></td>
-    </tr>`)
+    </tr>`;
+    })
     .join('\n');
 
   return `<table class="command-table plugin-command-table">
@@ -1866,7 +2330,7 @@ function additionalStaffLists(entries) {
     const base = entry.kind === 'imported'
       ? `${publicRepoBlob}/project-docs/${entry.manifest.id}/README.md`
       : entry.staffGuideFile
-        ? `./other-server-features/${entry.manifest.id}/`
+        ? `/staff-reference/other-server-features/${entry.manifest.id}/`
         : `${publicRepoTree}/catalog/other-server-features/${entry.manifest.id}`;
     const extra = entry.manifest.official_wiki ? `; [official documentation](${entry.manifest.official_wiki})` : '';
     return `- [${entry.manifest.name}](${base}) - ${entry.summary}${extra}`;
@@ -1907,6 +2371,7 @@ for (const plugin of guidePlugins) {
   const markdown = await readFile(path.join(docsRoot, 'plugins', plugin.file), 'utf8');
   const purpose = override.intro ?? introParagraph(markdown, plugin);
   const commandData = extractCommandData(markdown);
+  commandData.curatedDescriptions = new Set(Object.keys(override.commandDescriptions ?? {}));
   if (override.commands) {
     commandData.playerCommands = override.commands;
   }
@@ -1935,13 +2400,18 @@ for (const plugin of guidePlugins) {
   const audienceHeading = override.audienceHeading ?? audience.heading;
   pluginDetails.set(slug, commandData);
 
-  for (const command of override.includeInCommandIndex === false ? [] : commandData.playerCommands) {
+  const commandIndexExclusions = new Set(override.excludeCommandsFromIndex ?? []);
+  const indexCommands = override.includeInCommandIndex === false
+    ? []
+    : commandData.playerCommands.filter((command) => !commandIndexExclusions.has(command));
+  for (const command of indexCommands) {
     commandIndexRows.push({
       slug,
       plugin: plugin.name,
       command,
       description: commandData.descriptions.get(command) || commandDescription(command, plugin),
-      example: commandExample(command),
+      example: commandData.tableExamples?.get(command) || commandExample(command),
+      curatedDescription: commandData.curatedDescriptions.has(command),
     });
   }
 
@@ -1978,7 +2448,7 @@ ${examplesList(examples, commandData.playerCommands.length > 0)}
 
 ## Good To Know
 
-${markdownList(notes)}
+${markdownList(notes, Boolean(override.notes))}
 
 ## Full Reference
 

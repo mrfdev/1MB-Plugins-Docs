@@ -1,0 +1,139 @@
+---
+title: TeamMsg Guide
+description: Learn what TeamMsg does, how staff use it, and which public staff commands are available.
+---
+
+This page explains the permission-gated TeamMsg commands used by authorized staff. It is not a normal player feature.
+
+## What It Does
+
+TeamMsg combines the existing 1MBStaffMsg and NotableMsg features while preserving their familiar staff-chat and private-channel commands.
+
+## How Staff Use It
+
+Authorized staff use `/s recent` to review recent CMI staff-chat messages and `/n` for the private notable or community-assistant channel. The parent `/teammsg` command reports lifecycle state and can isolate StaffMsg or NotableMsg without changing the other module.
+
+Available features include:
+
+- Recent CMI staff-chat history through `/s recent` and its compatible forms.
+- A private `/n` channel for notable and community-assistant groups.
+- Persistent notable-channel mode and recent notable-message history.
+- Independent StaffMsg and NotableMsg lifecycle controls.
+- Compatibility with the existing commands, permissions, placeholders, and configuration from both former jars.
+
+## Quick Start
+
+1. Run `/teammsg status` to review the parent lifecycle and both module states.
+2. Use `/s recent` to review recent CMI staff-chat messages.
+3. Use `/n <message>` for the private notable channel when you are authorized.
+
+## Commands
+
+<table class="command-table plugin-command-table">
+  <thead>
+    <tr>
+      <th>Command</th>
+      <th>What it does</th>
+      <th>Example</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>/teammsg status</code></td>
+      <td>Shows the TeamMsg lifecycle and current StaffMsg and NotableMsg module states.</td>
+      <td><code>/teammsg status</code></td>
+    </tr>
+    <tr>
+      <td><code>/teammsg module &lt;staffmsg|<wbr />notablemsg&gt; &lt;true|<wbr />false&gt;</code></td>
+      <td>Enables or disables the selected hosted communication module.</td>
+      <td><code>/teammsg module staffmsg true</code></td>
+    </tr>
+    <tr>
+      <td><code>/s &lt;message&gt;</code></td>
+      <td>Sends a message through the existing CMI staff-chat workflow.</td>
+      <td><code>/s Please check the spawn queue.</code></td>
+    </tr>
+    <tr>
+      <td><code>/s recent [page]</code></td>
+      <td>Shows recent CMI staff-chat messages.</td>
+      <td><code>/s recent 2</code></td>
+    </tr>
+    <tr>
+      <td><code>/n &lt;message&gt;</code></td>
+      <td>Sends a message to the private notable channel.</td>
+      <td><code>/n Could someone check the spawn queue?</code></td>
+    </tr>
+    <tr>
+      <td><code>/n</code></td>
+      <td>Toggles persistent notable-channel mode.</td>
+      <td><code>/n</code></td>
+    </tr>
+    <tr>
+      <td><code>/n toggle</code></td>
+      <td>Toggles persistent notable-channel mode.</td>
+      <td><code>/n toggle</code></td>
+    </tr>
+    <tr>
+      <td><code>/n on</code></td>
+      <td>Turns persistent notable-channel mode on.</td>
+      <td><code>/n on</code></td>
+    </tr>
+    <tr>
+      <td><code>/n off</code></td>
+      <td>Turns persistent notable-channel mode off.</td>
+      <td><code>/n off</code></td>
+    </tr>
+    <tr>
+      <td><code>/n status</code></td>
+      <td>Shows your current notable-channel mode.</td>
+      <td><code>/n status</code></td>
+    </tr>
+    <tr>
+      <td><code>/n recent [page]</code></td>
+      <td>Shows recent notable-channel messages.</td>
+      <td><code>/n recent 2</code></td>
+    </tr>
+    <tr>
+      <td><code>/n help [page]</code></td>
+      <td>Shows the notable-channel commands available to you.</td>
+      <td><code>/n help</code></td>
+    </tr>
+    <tr>
+      <td><code>/n info</code></td>
+      <td>Explains the private notable channel.</td>
+      <td><code>/n info</code></td>
+    </tr>
+  </tbody>
+</table>
+
+## Aliases
+
+- `/staffmsg <message>`
+- `/cmi staffmsg <message>`
+- `/staffmsg recent [page]`
+- `/cmi staffmsg recent [page]`
+- `/1mbstaffmsg recent [page]`
+
+## Examples
+
+- `/teammsg status`
+- `/teammsg module staffmsg true`
+- `/s Please check the spawn queue.`
+- `/s recent 2`
+- `/n Could someone check the spawn queue?`
+- `/n on`
+- `/n off`
+- `/n status`
+- `/n toggle`
+- `/n recent 2`
+- `/n help`
+
+## Good To Know
+
+- TeamMsg is permission-gated and intended for authorized staff.
+- The existing `/s`, `/staffmsg`, `/cmi staffmsg`, `/1mbstaffmsg`, and `/n` workflows remain compatible.
+- Do not load the former standalone 1MBStaffMsg or NotableMsg jars beside TeamMsg.
+
+## Full Reference
+
+The [full synced TeamMsg reference](https://github.com/mrfdev/1MB-Plugins-Docs/blob/main/project-docs/cmi-api/docs/plugins/teammsg.md) is available for exact technical details.

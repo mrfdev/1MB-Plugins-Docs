@@ -1,18 +1,22 @@
 # FilterGuard
 
+> Since build 561, FilterGuard is the Guard module inside the `1MB-CMIAPI-ContentGuard` jar. Its commands, aliases, permissions, placeholders, prefix, config, translations, alerts, and enforcement behavior remain compatible. See [ContentGuard](contentguard.md) for parent lifecycle and migration controls.
+
 ## Purpose
 
-FilterGuard extends CMI chat-filter style checks to other player-written text surfaces: signs, wall signs, hanging signs, wall hanging signs, books, anvils, item names, and CMI nicknames.
+FilterGuard extends CMI chat-filter style checks to other player-written text surfaces: signs, wall signs, hanging signs, wall hanging signs, books, anvils, item names, entity name tags, and CMI nicknames.
 
 It uses CMI `Settings/ChatFilter.yml` deny rules when available. Version 1 can log, alert, cancel, or cancel-and-alert per surface through config.
 
 ## Features
 
 - Reads CMI `Settings/ChatFilter.yml` deny rules.
-- Checks sign text, wall sign text, hanging sign text, wall hanging sign text, book edits, anvil rename text, item-name rename text, and CMI nickname changes.
+- Checks sign text, wall sign text, hanging sign text, wall hanging sign text, book edits, anvil rename text, item-name rename text, entity name-tag use, and CMI nickname changes.
 - Supports per-surface `enabled` toggles.
 - Supports per-surface actions: `log`, `alert`, `cancel`, and `cancel-and-alert`.
-- Sends live alerts to staff with `onembcmi.filterguard.alert`.
+- Blocks matching sign edits, book edits/signing, anvil renames, item-name renames, entity name tags, and nickname changes by default.
+- Sends one prominent red live alert to staff with `onembcmi.filterguard.alert`.
+- Collapses Paper's repeated callbacks for the same blocked anvil rename into one detection and staff alert while continuing to block every result calculation.
 - Keeps bounded recent detections for the current runtime.
 - Provides a safe `/filterguard test <surface> <text>` command before enabling cancellation.
 - Registers command, permission, placeholder, and config metadata with `1MB-CMIAPI-LIB`.
@@ -45,6 +49,7 @@ wall-hanging-sign
 book
 anvil
 item-name
+entity-name
 nickname
 ```
 
@@ -72,9 +77,15 @@ Global library examples:
 /1mbcmi debug plugin filterguard placeholders
 /1mbcmi config filterguard
 /1mbcmi config set filterguard surfaces.signs.action cancel-and-alert
+/1mbcmi config set filterguard surfaces.books.action cancel-and-alert
+/1mbcmi config set filterguard surfaces.entity-names.action cancel-and-alert
 /1mbcmi config set filterguard surfaces.nicknames.enabled true
 /1mbcmi translations reload
 ```
+
+Beginning with build 562, FilterGuard performs this safety upgrade automatically when ContentGuard first loads an older config. Legacy `alert` defaults for all sign variants and books become `cancel-and-alert`; missing entity-name protection is added and enabled. A managed `config-version` marker makes the migration run only once. Explicit custom actions such as `log` or `cancel`, and an explicitly disabled entity-name surface, remain unchanged.
+
+No in-game config commands or manual reload are required. If the migration cannot be saved atomically, the Guard module fails closed and remains dormant while the Lab module and ContentGuard parent remain available for diagnosis.
 
 ## Permissions
 
@@ -111,10 +122,12 @@ Important config paths:
 ```text
 enabled
 debug
+config-version
 output.page-size
 recent.max
 rules.max-regex-length
 text.max-length
+alerts.anvil-duplicate-window-millis
 surfaces.signs.enabled
 surfaces.signs.action
 surfaces.wall-signs.enabled
@@ -129,6 +142,8 @@ surfaces.anvils.enabled
 surfaces.anvils.action
 surfaces.item-names.enabled
 surfaces.item-names.action
+surfaces.entity-names.enabled
+surfaces.entity-names.action
 surfaces.nicknames.enabled
 surfaces.nicknames.action
 ```
@@ -141,6 +156,8 @@ alert
 cancel
 cancel-and-alert
 ```
+
+All four sign variants, books, anvils, item names, entity name tags, and nicknames default to `cancel-and-alert`. Minecraft still closes the sign or book editor before the cancellable event is delivered, but the rejected text is not saved to the sign or book. A rejected name tag remains in the player's hand and the entity keeps its previous name.
 
 ## CMI / CMILib Usage
 

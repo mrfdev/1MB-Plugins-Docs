@@ -1,0 +1,17 @@
+id: trick-or-treat-doors
+name: Trick-or-Treat Doors
+category: custom-server-plugin
+summary: Explore the Halloween world, collect daily treats in a claim-later Treat Bag, face immediate tricks, and complete quests and milestone rewards.
+main_command: /doors
+docs_url: https://docs.1moreblock.com/player-guides/plugins/doors/
+player_guide: doors.md
+technical_readme: doors-administration.md
+java_target: 25
+paper_target: "26.2 build 105 stable"
+official_project: true
+repository: mrfdev/1MB-CMIAPI
+
+module: DoorHunt
+host_plugin: 1MB-CMIAPI-EventHunts
+data_folder: plugins/1MB-CMIAPI/CoconutHunt/Doors/
+standalone_import_source: plugins/OneMBTrickOrTreatDoors/

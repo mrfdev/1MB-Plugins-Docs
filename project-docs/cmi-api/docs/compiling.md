@@ -1,11 +1,15 @@
 # Compile Instructions
 
+## Shared Hunt feature
+
+Door Hunt is source inside the compatibility-named `:plugins:player-fun:coconuthunt` project, not another Gradle plugin and not another JavaPlugin. Run `gradle :plugins:player-fun:coconuthunt:test` for the Coconut/Ghost/Door focused suite, then `gradle clean refreshBuildDocs build` for the repository gate. The centralized Java 25 and `paperApiVersion=26.2.build.105-stable` settings apply to all three modules; do not import the standalone build-number mutation or its Paper coordinate. The output remains one `1MB-CMIAPI-EventHunts-v<version>-<build>-j25-26.2.jar` plus the normal library dependency.
+
 The Gradle scaffold is present. The current baseline is:
 
 - Java 25 bytecode, built with JDK 25.0.4
 - Java 26.0.2 runtime compatibility smoke testing
-- Paper 26.2 stable build 87 or newer
-- Paper API `26.2.build.84-stable`
+- Paper 26.2 stable build 105 or newer
+- Paper API `26.2.build.105-stable`
 - separate jars for every feature
 - a separate shared library jar
 
@@ -64,11 +68,11 @@ This is a read-only drift check against the public `1MB-Plugins-Docs` checkout. 
 Expected jar naming:
 
 ```text
-1MB-CMIAPI-LIB-v1.0.1-559-j25-26.2.jar
-1MB-CMIAPI-AntiFire-v1.0.1-559-j25-26.2.jar
-1MB-CMIAPI-AFKShrine-v1.0.1-559-j25-26.2.jar
-1MB-CMIAPI-StaffCenter-v1.0.1-559-j25-26.2.jar
-1MB-CMIAPI-Profile-v1.0.1-559-j25-26.2.jar
+1MB-CMIAPI-LIB-v1.0.1-566-j25-26.2.jar
+1MB-CMIAPI-AntiFire-v1.0.1-566-j25-26.2.jar
+1MB-CMIAPI-AFKShrine-v1.0.1-566-j25-26.2.jar
+1MB-CMIAPI-StaffCenter-v1.0.1-566-j25-26.2.jar
+1MB-CMIAPI-Profile-v1.0.1-566-j25-26.2.jar
 ```
 
 After a successful feature or library build, copy the output jar into:
@@ -107,7 +111,7 @@ The centralized server tooling may still be used for temporary automated test in
 
 Optional compile-only plugin API jars should not live in the active local test
 server `plugins/` folder unless the test server intentionally needs to load
-them. For example, NotableMsg and 1MBStaffMsg compile against DiscordSRV's API
+them. For example, the TeamMsg modules compile against DiscordSRV's API
 from:
 
 ```text

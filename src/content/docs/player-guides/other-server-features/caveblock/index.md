@@ -32,7 +32,7 @@ CaveBlock is one of 1MoreBlock's BentoBox island game modes. It gives the mode i
 
 ## Player notes
 
-- Common aliases include `/cave` and `/caveblock`, but 1MoreBlock may customize aliases.
+- On 1MoreBlock, use `/cave` as the player command root for this mode.
 - Reset, team, coop, and visitor actions can be limited by cooldowns and rank permissions.
 - Never accept an island invitation until you understand whether it moves or resets your current island progress.
 

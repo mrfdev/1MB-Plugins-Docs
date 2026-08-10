@@ -1,5 +1,7 @@
 # CMIPlaceholderCheck
 
+> CMIPlaceholderCheck is now the Catalog module inside `1MB-CMIAPI-Placeholders`. Its config, permissions, placeholders, and lookup behavior remain compatible; its command route is now `/_placeholders catalog`. See [Placeholders](placeholders.md) for parent lifecycle and migration controls.
+
 ## Purpose
 
 CMIPlaceholderCheck is a staff lookup helper for finding placeholders before they are used in CMI aliases, schedules, signs, holograms, tips, docs, or support replies.
@@ -7,10 +9,10 @@ CMIPlaceholderCheck is a staff lookup helper for finding placeholders before the
 It is inspired by CMI's `/cmi checkcommands` and `/cmi checkperms` style of quick lookups, but it keeps the command surface separate and safe:
 
 ```text
-/cmiplaceholders check <keyword>
+/_placeholders catalog check <keyword>
 ```
 
-The plugin does not hijack CMI internals. If `/cmi checkplaceholders <keyword>` is desired, the clean approach is to make a CMI alias that forwards to `/cmiplaceholders check <keyword>` while keeping this plugin responsible for the actual lookup.
+The plugin does not hijack CMI internals. If `/cmi checkplaceholders <keyword>` is desired, the clean approach is to make a CMI alias that forwards to `/_placeholders catalog check <keyword>` while keeping this plugin responsible for the actual lookup.
 
 ## Features
 
@@ -27,38 +29,33 @@ The plugin does not hijack CMI internals. If `/cmi checkplaceholders <keyword>` 
 ## Commands
 
 ```text
-/cmiplaceholders
-/cmiplaceholders help
-/cmiplaceholders status
-/cmiplaceholders check <keyword> [page]
-/cmiplaceholders list [page]
-/cmiplaceholders plugin <plugin> [page]
-/cmiplaceholders example <placeholder> [player]
-/cmiplaceholders reload
+/_placeholders catalog
+/_placeholders catalog help
+/_placeholders catalog status
+/_placeholders catalog check <keyword> [page]
+/_placeholders catalog list [page]
+/_placeholders catalog plugin <plugin> [page]
+/_placeholders catalog example <placeholder> [player]
+/_placeholders catalog reload
 ```
 
-Aliases:
-
-```text
-/cmipholders
-/checkplaceholders
-```
+The former `/cmiplaceholders`, `/cmipholders`, and `/checkplaceholders` command labels are retired. Use the nested `/_placeholders catalog` route.
 
 Useful examples:
 
 ```text
-/cmiplaceholders status
-/cmiplaceholders check cmi
-/cmiplaceholders check balance
-/cmiplaceholders check onembcmi
-/cmiplaceholders list
-/cmiplaceholders list 2
-/cmiplaceholders plugin CMI
-/cmiplaceholders plugin PlaceholderAPI
-/cmiplaceholders plugin onembcmi
-/cmiplaceholders example %cmi_user_name% mrfloris
-/cmiplaceholders example %onembcmi_global.status.loaded%
-/cmiplaceholders reload
+/_placeholders catalog status
+/_placeholders catalog check cmi
+/_placeholders catalog check balance
+/_placeholders catalog check onembcmi
+/_placeholders catalog list
+/_placeholders catalog list 2
+/_placeholders catalog plugin CMI
+/_placeholders catalog plugin PlaceholderAPI
+/_placeholders catalog plugin onembcmi
+/_placeholders catalog example %cmi_user_name% mrfloris
+/_placeholders catalog example %onembcmi_global.status.loaded%
+/_placeholders catalog reload
 ```
 
 Global library examples:
@@ -158,7 +155,7 @@ PlaceholderAPI identifiers are shown as wildcard entries such as:
 Those wildcard entries are for discovery only. To parse output, staff must pass a concrete placeholder:
 
 ```text
-/cmiplaceholders example %server_online%
+/_placeholders catalog example %server_online%
 ```
 
 ## CMI Integration
@@ -168,7 +165,7 @@ CMIPlaceholderCheck uses CMI as the main target source for configured CMI placeh
 If the server owner wants `/cmi checkplaceholders <keyword>`, create a CMI alias that forwards the typed keyword to:
 
 ```text
-cmiplaceholders check <keyword>
+_placeholders catalog check <keyword>
 ```
 
 This keeps CMIPlaceholderCheck removable and avoids brittle command injection into CMI itself.
@@ -178,7 +175,7 @@ This keeps CMIPlaceholderCheck removable and avoids brittle command injection in
 The plugin requires PlaceholderAPI. It uses:
 
 - registered expansion identifiers for catalog discovery
-- `PlaceholderAPI.setPlaceholders(...)` for `/cmiplaceholders example`
+- `PlaceholderAPI.setPlaceholders(...)` for `/_placeholders catalog example`
 
 If a placeholder returns unchanged or still contains `%`, the result is marked `unresolved`. Empty output is marked `empty`. Exceptions are caught and shown as `error`.
 
@@ -197,7 +194,7 @@ The plugin writes its config and translations through the shared library. It doe
 The cache placeholder reports the shared cache folder size for this feature:
 
 ```text
-plugins/1MB-CMIAPI/CMIAPILIB/cache/plugins/cmiplaceholders/
+plugins/1MB-CMIAPI/CMIAPILIB/cache/plugins/_placeholders catalog/
 ```
 
 ## Security Notes
@@ -212,14 +209,14 @@ plugins/1MB-CMIAPI/CMIAPILIB/cache/plugins/cmiplaceholders/
 ## Testing Checklist
 
 ```text
-/cmiplaceholders status
-/cmiplaceholders check cmi
-/cmiplaceholders check onembcmi
-/cmiplaceholders list
-/cmiplaceholders plugin CMI
-/cmiplaceholders plugin onembcmi
-/cmiplaceholders example %cmi_user_name% <online-player>
-/cmiplaceholders example %onembcmi_global.status.loaded%
+/_placeholders catalog status
+/_placeholders catalog check cmi
+/_placeholders catalog check onembcmi
+/_placeholders catalog list
+/_placeholders catalog plugin CMI
+/_placeholders catalog plugin onembcmi
+/_placeholders catalog example %cmi_user_name% <online-player>
+/_placeholders catalog example %onembcmi_global.status.loaded%
 /1mbcmi debug plugin cmiplaceholders all
 ```
 

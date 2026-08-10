@@ -13,6 +13,17 @@ Public-safe technical notes for staff who configure or support BentoBox on 1More
 | `/bentobox perms` | `bentobox.admin.perms` | Inspects generated permissions. |
 | `/bentobox reload` | `bentobox.admin.reload` | Reloads BentoBox and add-on configuration. |
 
+These BentoBox platform commands are separate from the configured 1MoreBlock game-mode roots:
+
+| Game mode | Player root | Staff administration root |
+| --- | --- | --- |
+| OneBlock | `/oneblock` | `/adminoneblock` |
+| ChunkBlock | `/chunkblock` | `/adminchunkblock` |
+| SkyBlock | `/skyblock` | `/adminskyblock` |
+| AcidIsland | `/acid` | `/adminacid` |
+| CaveBlock | `/cave` | `/admincave` |
+| SkyGrid | `/skygrid` | `/adminskygrid` |
+
 ## Permissions
 
 | Permission | Purpose | Suggested access |
@@ -33,6 +44,7 @@ Public-safe technical notes for staff who configure or support BentoBox on 1More
 - Game modes and add-ons must be compatible with the installed BentoBox snapshot.
 - The database owns island membership, ranks, protection, and locations; never hand-edit live data casually.
 - Permission nodes can be generated from configurable command labels and game-mode names.
+- 1MoreBlock puts `admin` before the game-mode name for staff roots; it is not appended to the player root.
 
 ## Examples
 

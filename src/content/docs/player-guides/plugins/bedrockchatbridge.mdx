@@ -1,0 +1,78 @@
+---
+title: BedrockChatBridge Guide
+description: Learn how authorized testers inspect the temporary Bedrock chat compatibility bridge.
+---
+
+This page explains the safe, read-only BedrockChatBridge checks available to authorized testers. It is not a normal player feature.
+
+## What It Does
+
+BedrockChatBridge is a temporary compatibility feature for servers using CMI Paper chat and Floodgate. It reroutes only eligible Floodgate senders after CMI formatting, leaves Java chat untouched, and stops rerouting if its dependency or listener-order checks fail.
+
+## How Testers Use It
+
+Authorized testers use the read-only status and information commands to confirm whether the bridge is active and why. Lifecycle changes and deeper diagnostics are permission-gated and remain in the full technical reference.
+
+Available features include:
+
+- Floodgate-only chat rerouting after CMI has produced the viewer-specific message.
+- Java-player chat remains on its normal delivery path.
+- Fail-closed dependency, formatter, and listener-order checks before activation.
+- Read-only status and information commands for authorized verification.
+
+## Quick Start
+
+1. Run `/bedrockchatbridge status` on an authorized test server to inspect the current bridge state.
+2. Use `/bedrockchatbridge info` for a short explanation of the compatibility feature.
+3. Open the full reference before running permission-gated lifecycle or hook diagnostics.
+
+## Commands
+
+<table class="command-table plugin-command-table">
+  <thead>
+    <tr>
+      <th>Command</th>
+      <th>What it does</th>
+      <th>Example</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>/bedrockchatbridge</code></td>
+      <td>Shows the current bridge state and pending delivery count.</td>
+      <td><code>/bedrockchatbridge</code></td>
+    </tr>
+    <tr>
+      <td><code>/bedrockchatbridge status</code></td>
+      <td>Shows whether the bridge is active, dormant, or unavailable.</td>
+      <td><code>/bedrockchatbridge status</code></td>
+    </tr>
+    <tr>
+      <td><code>/bedrockchatbridge info</code></td>
+      <td>Explains the temporary Floodgate and Paper-chat compatibility role.</td>
+      <td><code>/bedrockchatbridge info</code></td>
+    </tr>
+    <tr>
+      <td><code>/bedrockchatbridge help</code></td>
+      <td>Shows the BedrockChatBridge command help available to you.</td>
+      <td><code>/bedrockchatbridge help</code></td>
+    </tr>
+  </tbody>
+</table>
+
+## Examples
+
+- `/bedrockchatbridge`
+- `/bedrockchatbridge status`
+- `/bedrockchatbridge info`
+- `/bedrockchatbridge help`
+
+## Good To Know
+
+- BedrockChatBridge is a temporary compatibility feature and should be removed once the upstream behavior no longer needs it.
+- The bridge requires Paper chat formatting and Floodgate; it does not reroute Java-player chat.
+- Configuration edits, lifecycle changes, and hook diagnostics are restricted to authorized staff.
+
+## Full Reference
+
+The [full synced BedrockChatBridge reference](https://github.com/mrfdev/1MB-Plugins-Docs/blob/main/project-docs/cmi-api/docs/plugins/bedrockchatbridge.md) is available for exact technical details.

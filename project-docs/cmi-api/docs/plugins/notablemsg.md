@@ -1,5 +1,7 @@
 # NotableMsg
 
+> Since build 561, NotableMsg is a module inside the `1MB-CMIAPI-TeamMsg` jar. Its `/n` command, permissions, placeholders, prefix, config, translations, and runtime behavior remain compatible. See [TeamMsg](teammsg.md) for parent lifecycle and migration controls.
+
 NotableMsg is a private helper chat channel for notable/community-assistant groups. It intentionally uses only `/n` so the server's existing `/notable` command space remains available for other workflows.
 
 ## Features

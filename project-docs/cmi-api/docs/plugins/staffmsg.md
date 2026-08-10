@@ -1,5 +1,7 @@
 # 1MBStaffMsg
 
+> Since build 561, 1MBStaffMsg is the StaffMsg module inside the `1MB-CMIAPI-TeamMsg` jar. Its commands, permissions, placeholders, prefix, config, translations, and runtime behavior remain compatible. See [TeamMsg](teammsg.md) for parent lifecycle and migration controls.
+
 1MBStaffMsg is a small runtime helper for CMI's built-in staff message channel. CMI still owns the real `/cmi staffmsg` and `/staffmsg` delivery. This feature plugin watches staffmsg command usage, stores a short in-memory recent list, and intercepts recent-history commands such as `/s recent`.
 
 It is designed for servers that already use a CMI AliasEditor alias like `/s -> asPlayer! cmi staffmsg $1-`. You can keep using that alias for normal staff chat. When the first argument is `recent`, 1MBStaffMsg cancels the command and shows the recent staff message history instead.

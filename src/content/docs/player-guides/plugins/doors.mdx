@@ -1,0 +1,119 @@
+---
+title: Door Hunt Guide
+description: Learn what Door Hunt does, how to use it, and which public commands are available.
+---
+
+This page introduces Door Hunt from a public server-docs point of view. It focuses on what the feature does in-game, how to get started when you have access, and which commands are useful.
+
+## What It Does
+
+Trick-or-Treat Doors turns the 1MoreBlock Halloween world into a daily door hunt. Find marked houses, knock correctly, and discover a family-friendly trick or a treat while building seasonal statistics, quests, milestones, and reward unlocks.
+
+## How Players Use It
+
+Open `/hunt` for the shared Event Hunts index or `/doors` for the Halloween Door Hunt overview. During an active season, travel with `/halloween`, find a closed door marked by a golden pressure plate, empty your main hand, and left-click the door three times within five seconds.
+
+Available features include:
+
+- A shared `/hunt` index for Coconut, Ghost, and Door Hunt events.
+- Daily marked-door discoveries with weighted trick-or-treat results.
+- Coordinate-free hints toward an unfinished eligible door.
+- Personal seasonal totals, treat and trick counts, active days, and streaks.
+- A discovered-door journal that never reveals unfinished locations.
+- Quest streams and milestones based on event participation.
+- A persistent Treat Bag for claiming saved treats in configured gameplay worlds.
+- A dormant-by-default module that opens only during authorized event or staff-test windows.
+
+## Quick Start
+
+1. Run `/hunt` to browse all Event Hunts, or `/doors` to open the Door Hunt overview directly.
+2. During an active season, use `/halloween` and find a closed door with a golden pressure plate.
+3. With an empty main hand, left-click the marked door three times within five seconds.
+4. Use `/doors rewards` in an approved gameplay world to claim saved treats.
+
+## Commands
+
+<table class="command-table plugin-command-table">
+  <thead>
+    <tr>
+      <th>Command</th>
+      <th>What it does</th>
+      <th>Example</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>/hunt</code></td>
+      <td>Opens the shared seasonal-event index and routes its Doors card here.</td>
+      <td><code>/hunt</code></td>
+    </tr>
+    <tr>
+      <td><code>/doors</code></td>
+      <td>Opens the Halloween Door Hunt overview menu.</td>
+      <td><code>/doors</code></td>
+    </tr>
+    <tr>
+      <td><code>/doors info</code></td>
+      <td>Opens the overview with quick start, dates, daily progress, hint availability, travel, and feature pages.</td>
+      <td><code>/doors info</code></td>
+    </tr>
+    <tr>
+      <td><code>/doors help</code></td>
+      <td>Opens the graphical quick-start and help page.</td>
+      <td><code>/doors help</code></td>
+    </tr>
+    <tr>
+      <td><code>/doors hint</code></td>
+      <td>Gives a coordinate-free direction hint toward the nearest unfinished eligible door in your current world.</td>
+      <td><code>/doors hint</code></td>
+    </tr>
+    <tr>
+      <td><code>/doors stats [season]</code></td>
+      <td>Opens seasonal discoveries, results, active days, streaks, districts, and milestones.</td>
+      <td><code>/doors stats</code></td>
+    </tr>
+    <tr>
+      <td><code>/doors journal [season] [page]</code></td>
+      <td>Opens a paginated menu containing only doors you have already discovered.</td>
+      <td><code>/doors journal</code></td>
+    </tr>
+    <tr>
+      <td><code>/doors quests [stream] [season]</code></td>
+      <td>Opens current or historical quest-stream and milestone progress.</td>
+      <td><code>/doors quests</code></td>
+    </tr>
+    <tr>
+      <td><code>/doors rewards [season]</code></td>
+      <td>Opens the Treat Bag and the separate milestone-reward page. Treats are claimed one at a time in configured gameplay worlds.</td>
+      <td><code>/doors rewards</code></td>
+    </tr>
+  </tbody>
+</table>
+
+## Aliases
+
+- `/totdoors`
+- `/totdoor`
+- `/trickortreatdoors`
+
+## Examples
+
+- `/hunt`
+- `/doors`
+- `/doors info`
+- `/doors hint`
+- `/doors stats`
+- `/doors journal`
+- `/doors quests`
+- `/doors rewards`
+
+## Good To Know
+
+- Door Hunt is dormant until staff validate its copied data and deliberately open an event or test window.
+- The golden pressure plate marks the front side; the door must still be closed and your main hand must be empty.
+- Hints use broad distance and direction language and never reveal exact coordinates.
+- Treats stay in the durable Treat Bag until they can be claimed safely in a configured gameplay world.
+
+## Full Reference
+
+The [full synced Door Hunt reference](https://github.com/mrfdev/1MB-Plugins-Docs/blob/main/project-docs/cmi-api/docs/plugins/doors.md) is available for exact technical details.

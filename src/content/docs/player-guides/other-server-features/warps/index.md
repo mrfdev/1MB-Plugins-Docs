@@ -17,22 +17,22 @@ BentoBox Warps is a BentoBox add-on used by one or more 1MoreBlock island game m
 
 | Command | What it does |
 | --- | --- |
-| `/is warps` | Browses public SkyBlock island warps. |
-| `/is warp <player>` | Visits a player island warp. |
-| `/is setwarp` | Creates or updates your island warp when allowed. |
-| `/is deletewarp` | Removes your island warp. |
+| `/skyblock warps` | Browses public SkyBlock island warps. |
+| `/skyblock warp <player>` | Visits a player island warp. |
+| `/skyblock setwarp` | Creates or updates your island warp when allowed. |
+| `/skyblock deletewarp` | Removes your island warp. |
 
 ## Getting started
 
 1. Enter the relevant island game mode first.
-2. Use `/is warps` or `/is warp <player>` to open the feature.
-3. Check the game-mode help if the command label differs, because BentoBox commands can be customized per mode.
+2. Use `/skyblock warps` or `/skyblock warp <player>` to open the SkyBlock feature.
+3. Use that same full game-mode root for related add-on commands.
 
 ## Player notes
 
 - Availability, prices, cooldowns, limits, and rewards are controlled by 1MoreBlock configuration.
 - An add-on may be enabled for one island mode but not another.
-- Use the command root for your current island mode, such as `/is`, `/ob`, `/acid`, `/cave`, or `/skygrid`.
+- The full 1MoreBlock game-mode roots are `/oneblock`, `/chunkblock`, `/skyblock`, `/acid`, `/cave`, and `/skygrid`.
 
 ## Official resources
 

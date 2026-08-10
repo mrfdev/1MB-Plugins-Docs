@@ -6,6 +6,8 @@ SocialGatherings adds small social moments around CMI sit/chair behavior, beds, 
 
 The feature is intentionally low-reward. A successful gathering can show titles, sounds, particles, and run optional configured console commands, but it is guarded by type cooldowns, per-player cooldowns, and same-type streak limits so players cannot turn it into an AFK reward machine.
 
+The jar is now a modular host. The existing area-and-requirements behavior lives in the independently switchable `gatherings` module. The seasonal `carnival` module is also installed, but defaults off and has no invented world locations: staff must build, configure, validate, and explicitly open each booth. A shared, opt-in monthly adventure policy is prepared for the custom `lumifae` world. It can pause activity progress between event weekends while leaving the modules loaded and allowing scores and separately whitelisted reward claims. Future activity families such as Town Tours can be added without changing either current module.
+
 ## Features
 
 - Configurable party files under `plugins/1MB-CMIAPI/SocialGatherings/parties/`, with all defaults disabled until the town spot is built.
@@ -14,6 +16,7 @@ The feature is intentionally low-reward. A successful gathering can show titles,
 - Detect CMI portal use through `CMIPortalUseEvent` for maze/checkpoint style parties.
 - Also detects Paper player poses for sitting and sleeping, bed events, chat activity, item consumption, fishing activity, recent block breaks, recent bow shots, recent projectile throws, current vehicles, recent block interactions, held items, looking upward, sneaking, jumping, gliding, flint-and-steel/fire-charge heating, jukebox discs, nighttime, and helmet/hat materials.
 - Optional area matching by world, center, and radius, so a party can be tied to a specific town build.
+- A bounded `/gathering admin inspect <type>` report that describes configured requirements and counts relevant blocks in loaded chunks only. It caps the inspected radius and height and never creates a recurring scanner.
 - Optional nearby material checks such as campfires, tables/cakes/candles, sand/water, or any other server-defined block set.
 - Minimum participants and duration before the gathering completes.
 - Larger configured `great-players` values can be used by staff as a design target for bigger town builds.
@@ -21,6 +24,12 @@ The feature is intentionally low-reward. A successful gathering can show titles,
 - Per-player opt-out with `/gathering toggle`.
 - Clickable invite messages with `/gathering invite <type> <player>`.
 - Admin status, enable, disable, reload, and manual trigger commands for beta testing.
+- Independent host and module lifecycle controls. The plugin master switch can make the entire jar dormant, while `modules.gatherings.enabled` pauses only the existing gathering engine.
+- A dormant Gatherings module cancels its scan task, unregisters its listeners, and clears temporary participation state without deleting party YAML or playerdata.
+- An independently dormant Carnival module with Archery Gallery and Reaction Lights foundations, persistent personal bests, virtual tickets, durable leaderboards, and an initially locked prize counter.
+- Precise Carnival booth cuboids, explicit player start points, and exact target blocks with captured expected materials. Changed or missing target blocks fail validation and cannot score.
+- No Carnival world scanning. One bounded task advances only explicit active sessions; setup inspection checks at most the configured targets, refuses to load chunks, and routine profile/catalog/leaderboard file work runs away from the server thread.
+- Independent adventure gates: the monthly schedule and activity-world list control new progress/play, while the reward-world list controls Carnival prize claims without consulting the schedule.
 
 ## Commands
 
@@ -34,7 +43,9 @@ The feature is intentionally low-reward. A successful gathering can show titles,
 /gathering nearby
 /gathering toggle [on|off]
 /gathering invite <type> <player>
+/gathering adventure
 /gathering admin status [page]
+/gathering admin inspect <type>
 /gathering admin trigger <type>
 /gathering admin setarea <type> here <radius>
 /gathering admin setcenter <type> here
@@ -45,6 +56,8 @@ The feature is intentionally low-reward. A successful gathering can show titles,
 /gathering admin validate <type>
 /gathering admin enable <type>
 /gathering admin disable <type>
+/gathering admin modules
+/gathering admin module <gatherings|carnival> <on|off>
 /gathering admin reload
 ```
 
@@ -54,7 +67,11 @@ Setup and testing commands:
 | --- | --- |
 | `/gathering admin enable <type>` | Enables one party file after the town spot has been built and configured. |
 | `/gathering admin disable <type>` | Disables one party file without deleting its YAML setup. |
+| `/gathering admin modules` | Shows configured and runtime state for each installed module. |
+| `/gathering admin module <gatherings\|carnival> <on\|off>` | Activates or dormants one installed module without changing the plugin master switch or the other module. |
 | `/gathering admin status [page]` | Shows enabled state, participant counts, active duration, cooldowns, and latest runtime result. |
+| `/gathering adventure` | Shows whether adventure activities are open, the next opening/countdown, and the separate activity/reward world policies. |
+| `/gathering admin inspect <type>` | Performs one capped, loaded-chunk-only report of the area, expected materials, items, projectiles, vehicles, and relevant nearby block counts. |
 | `/gathering admin setarea <type> here <radius>` | Writes `area.enabled`, `area.world`, `area.center`, and `area.radius` from your current in-game location. |
 | `/gathering admin setcenter <type> here` | Moves an existing party area to your current in-game location without changing its radius. |
 | `/gathering admin setradius <type> <radius>` | Changes one party area's radius without moving its center. |
@@ -69,12 +86,45 @@ Setup and testing commands:
 
 Current setup can be done in-game for common area work. The commands write to `parties/<type>.yml` and reload the feature. You can still edit advanced requirements, rewards, materials, durations, and portal windows directly in the party YAML files.
 
+### Carnival commands
+
+```text
+/carnival
+/carnival games
+/carnival play <archery|reaction>
+/carnival cancel
+/carnival tickets
+/carnival scores [archery|reaction]
+/carnival leaderboard <archery|reaction> [page]
+/carnival prizes
+/carnival redeem <prize>
+/carnival admin status
+/carnival admin validate [archery|reaction]
+/carnival admin inspect <archery|reaction>
+/carnival admin setpos <archery|reaction> <1|2> <here|looking>
+/carnival admin setstart <archery|reaction> here
+/carnival admin resetbooth <archery|reaction>
+/carnival admin addtarget archery <points> <here|looking>
+/carnival admin addtarget reaction <here|looking>
+/carnival admin cleartargets <archery|reaction>
+/carnival admin enable <archery|reaction>
+/carnival admin disable <archery|reaction>
+/carnival admin show <archery|reaction>
+/carnival admin tp <archery|reaction>
+/carnival admin reload
+```
+
+Both starter games fail closed until a precise 3D cuboid, a start position inside it, and the minimum number of exact target blocks validate. `here` means the block at the administrator's feet; `looking` means the exact block in their line of sight up to 64 blocks. Registering a target snapshots its material. Validation and marker commands inspect only loaded target chunks and never load a chunk themselves. Archery counts only arrow entities launched by that player during the current Archery session, and a target whose material changed cannot score. Reaction Lights selects one configured block at a time and shows participant-only particles without changing the world build.
+
+Starting a game consumes one daily play and starts its cooldown, even if the player cancels, disconnects, dies, teleports away, leaves the booth, or the adventure window closes. This prevents cancellation from bypassing anti-grind controls. Scores and virtual tickets are stored in shared playerdata under `carnival`; personal-best leaderboards use an atomic, backup-backed module file. Reading scores and redeeming a prize do not require the activity schedule to be open. Redemption uses only its own enabled state, permission, storage checks, and optional reward-world whitelist.
+
 Aliases:
 
 ```text
 /gatherings
 /partyspot
 /chillparty
+/funfair
 ```
 
 Global library examples:
@@ -110,10 +160,12 @@ Global library examples:
 /gathering info beaconrally
 /gathering info trailhike
 /gathering nearby
+/gathering adventure
 /gathering toggle off
 /gathering toggle on
 /gathering invite beach NikkiPixel
 /gathering admin status
+/gathering admin inspect dinner
 /gathering admin trigger dinner
 /gathering admin setarea beach here 18
 /gathering admin setcenter dinner here
@@ -127,6 +179,13 @@ Global library examples:
 /gathering admin enable beach
 /gathering admin disable beach
 /gathering admin reload
+/carnival admin setpos archery 1 here
+/carnival admin setpos archery 2 looking
+/carnival admin setstart archery here
+/carnival admin addtarget archery 100 looking
+/carnival admin inspect archery
+/carnival admin validate archery
+/carnival admin show archery
 ```
 
 ## Permissions
@@ -138,12 +197,29 @@ onembcmi.socialgatherings.invite
 onembcmi.socialgatherings.admin
 onembcmi.socialgatherings.admin.trigger
 onembcmi.socialgatherings.admin.reload
+onembcmi.carnival.use
+onembcmi.carnival.play
+onembcmi.carnival.leaderboard
+onembcmi.carnival.redeem
+onembcmi.carnival.admin
+onembcmi.carnival.admin.setup
+onembcmi.carnival.admin.reload
 ```
 
 ## Placeholders
 
 ```text
 %onembcmi_socialgatherings.enabled%
+%onembcmi_socialgatherings.debug%
+%onembcmi_socialgatherings.modules.gatherings.enabled%
+%onembcmi_socialgatherings.modules.carnival.enabled%
+%onembcmi_socialgatherings.adventure.open%
+%onembcmi_socialgatherings.adventure.schedule.enabled%
+%onembcmi_socialgatherings.adventure.next_open%
+%onembcmi_socialgatherings.adventure.time_until_open%
+%onembcmi_socialgatherings.adventure.time_until_close%
+%onembcmi_socialgatherings.adventure.activity_world_allowed%
+%onembcmi_socialgatherings.adventure.reward_world_allowed%
 %onembcmi_socialgatherings.opted_out%
 %onembcmi_socialgatherings.types%
 %onembcmi_socialgatherings.runtime.successes%
@@ -154,9 +230,29 @@ onembcmi.socialgatherings.admin.reload
 %onembcmi_socialgatherings.cache.size%
 ```
 
+While Carnival is active, its module expansion also provides:
+
+```text
+%onembcmi_carnival.enabled%
+%onembcmi_carnival.storage.ready%
+%onembcmi_carnival.runtime.active_sessions%
+%onembcmi_carnival.games.archery.enabled%
+%onembcmi_carnival.games.archery.ready%
+%onembcmi_carnival.games.reaction.enabled%
+%onembcmi_carnival.games.reaction.ready%
+%onembcmi_carnival.tickets%
+%onembcmi_carnival.session.active%
+%onembcmi_carnival.session.game%
+%onembcmi_carnival.session.score%
+%onembcmi_carnival.archery.best%
+%onembcmi_carnival.reaction.best%
+```
+
+Use `%onembcmi_socialgatherings.modules.carnival.enabled%` for schedules or menus that must still read the Carnival switch while the module is dormant. Module-specific `onembcmi_carnival` values are intentionally unavailable after its runtime has been stopped.
+
 ## How Area Detection Works
 
-SocialGatherings currently uses a simple area-and-requirements model. It does not register exact chair, bed, balloon, BBQ, or landing-pad block locations yet.
+The Gatherings module uses a simple area-and-requirements model. It does not register exact chair, bed, balloon, BBQ, or landing-pad block locations. Carnival intentionally uses a different model: exact booth corners, a start point, and material-verified target blocks.
 
 Each party file can define one area:
 
@@ -187,6 +283,7 @@ Useful setup commands:
 /gathering admin show <type>
 /gathering admin tp <type>
 /gathering admin validate <type>
+/gathering admin inspect <type>
 /gathering admin enable <type>
 /gathering admin disable <type>
 /gathering admin status
@@ -407,6 +504,21 @@ Important config paths:
 
 ```text
 enabled
+debug
+modules.gatherings.enabled
+modules.carnival.enabled
+adventure.display-name
+adventure.activity-world-filter.enabled
+adventure.activity-world-filter.worlds
+adventure.reward-world-filter.enabled
+adventure.reward-world-filter.worlds
+adventure.schedule.enabled
+adventure.schedule.time-zone
+adventure.schedule.week-of-month
+adventure.schedule.opens.day
+adventure.schedule.opens.time
+adventure.schedule.closes.day
+adventure.schedule.closes.time
 scan.interval-seconds
 detection.sit-memory-seconds
 detection.chat-memory-seconds
@@ -425,6 +537,128 @@ invite.click-command
 parties.auto-create-defaults
 parties.types
 ```
+
+Lifecycle example:
+
+```yaml
+enabled: true
+debug: false
+
+modules:
+  gatherings:
+    enabled: true
+  carnival:
+    enabled: false
+
+adventure:
+  display-name: Lumifae Adventure
+  activity-world-filter:
+    enabled: false
+    worlds:
+      - lumifae
+  reward-world-filter:
+    enabled: false
+    worlds:
+      - lumifae
+      # Add the exact names of other worlds where claims should be permitted.
+  schedule:
+    enabled: false
+    time-zone: Europe/Amsterdam
+    week-of-month: FIRST
+    opens:
+      day: FRIDAY
+      time: '18:00'
+    closes:
+      day: MONDAY
+      time: '06:00'
+```
+
+- `enabled: false` makes the complete SocialGatherings feature host dormant. Paper still keeps the jar loaded so administrators can inspect it and activate it again safely.
+- `debug: true` enables global SocialGatherings troubleshooting output where supported.
+- `modules.gatherings.enabled: false` stops only the existing picnics, dinners, campfires, trails, and other `parties/*.yml` activities.
+- `modules.carnival.enabled: false` stops only Carnival listeners, the bounded active-session task, and temporary sessions. Its booth setup, profiles, leaderboards, tickets, and prize catalog remain stored.
+- All three adventure controls default off for migration safety. Copy and load the real world, confirm its exact world name, configure content, and then enable only the filters/schedule you want.
+- The activity-world filter and schedule affect Gatherings progress and Carnival play. When the schedule closes, active temporary progress/sessions are cleared without deleting setup, scores, tickets, or leaderboards.
+- The reward-world filter is independent. A closed schedule does not block `/carnival tickets`, scores, leaderboards, prize browsing, or `/carnival redeem`; a claim succeeds in any listed reward world when the Carnival module and prize counter remain enabled.
+- `week-of-month` accepts `FIRST`, `SECOND`, `THIRD`, `FOURTH`, or `LAST`. The sample opens on the first Friday of each month and closes the following Monday, using `Europe/Amsterdam` including its daylight-saving rules.
+- Use `/gathering adventure` and the adventure placeholders for menus, portals, or countdown displays. Changing the config requires the normal SocialGatherings reload.
+- Town Tours remains a future candidate and does not have a placeholder runtime switch.
+- Existing installations keep the `SocialGatherings/config.yml`, `parties/*.yml`, translation, playerdata, placeholder, permission, and transaction namespaces. When the new gathering switch is first added, the legacy `enabled` value is used as its migration starting state.
+
+### Carnival configuration and storage
+
+The Carnival module uses these files beneath the existing feature directory. `config.yml` is created during module initialization, `prizes.yml` when Carnival is first activated, and `leaderboards.yml` after the first persisted personal best:
+
+```text
+plugins/1MB-CMIAPI/SocialGatherings/Carnival/config.yml
+plugins/1MB-CMIAPI/SocialGatherings/Carnival/leaderboards.yml
+plugins/1MB-CMIAPI/SocialGatherings/Carnival/prizes.yml
+plugins/1MB-CMIAPI/translations/carnival.yml
+plugins/1MB-CMIAPI/playerdata/<uuid>.yml  # carnival.* profile section
+```
+
+Safe initial state:
+
+```yaml
+# SocialGatherings/config.yml
+modules:
+  carnival:
+    enabled: false
+
+# SocialGatherings/Carnival/config.yml
+tickets:
+  awarding-enabled: false
+  daily-cap: 100
+prizes:
+  redemption-enabled: false
+games:
+  archery:
+    enabled: false
+    booth:
+      world: ''
+      pos1: ''
+      pos2: ''
+      start: ''
+      start-radius: 3.0
+    targets: []
+  reaction:
+    enabled: false
+    booth:
+      world: ''
+      pos1: ''
+      pos2: ''
+      start: ''
+      start-radius: 3.0
+    targets: []
+```
+
+Recommended setup order:
+
+1. Leave `modules.carnival.enabled: false`, both games disabled, and both ticket controls false while Lumifae is copied and reviewed.
+2. Select opposite corner blocks with `/carnival admin setpos <game> 1 <here|looking>` and `setpos <game> 2 <here|looking>`. The whole two corner blocks are included in the cuboid.
+3. Stand at the intended starting spot inside the cuboid and run `/carnival admin setstart <game> here`.
+4. Register each exact target with `addtarget`. Archery targets include a score; Reaction targets do not. The command snapshots the target block's material and keeps the game disabled.
+5. Keep the booth and target chunks loaded, then run `/carnival admin inspect <game>`, `/carnival admin validate <game>`, and `/carnival admin show <game>`. Inspection refuses to load missing chunks and shows expected-versus-actual target materials.
+6. Enable only that game with `/carnival admin enable <game>`, activate the module with `/gathering admin module carnival on`, and test sessions with staff.
+7. Configure and test the Lumifae activity/reward world lists. Enable the monthly schedule only after checking its next opening with `/gathering adventure`.
+8. Keep ticket awarding and prize redemption false until real completion rates, cooldowns, target layout, protection behavior, command delivery, and full-inventory outcomes have been reviewed.
+
+The first radius-based Carnival foundation is read for migration only. A game that still has only `x`, `y`, `z`, and `radius` fails closed until staff selects `pos1`, `pos2`, and `start`. Use `/carnival admin resetbooth <game>` when intentionally moving a booth to another world; it clears that booth's saved selection and targets but does not alter any world blocks.
+
+`prizes.yml` is intentionally created with an empty catalog. A future reviewed entry uses this shape:
+
+```yaml
+schema: 1
+prizes:
+  example-prize:
+    enabled: false
+    display: Example Prize
+    cost: 25
+    commands:
+      - 'safe-server-command {player}'
+```
+
+Prize commands must not begin with `/` and cannot contain control characters, command separators, pipes, or boolean shell-style separators. Redemption checks the independent reward-world whitelist before reservation and again during delivery, but deliberately does not check the activity schedule. It also revalidates the online player and authoritative ticket balance, serializes concurrent redemptions, records the operation in the SocialGatherings durable transaction journal before deducting tickets, checkpoints every accepted command, and leaves uncertain delivery for explicit staff recovery instead of guessing or duplicating a reward.
 
 Existing configs keep their configured `parties.types` order, and the plugin appends any missing built-in default types at runtime so new disabled party examples become available after upgrades.
 

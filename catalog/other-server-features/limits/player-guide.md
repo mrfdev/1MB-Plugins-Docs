@@ -14,20 +14,23 @@ BentoBox Limits is a BentoBox add-on used by one or more 1MoreBlock island game 
 
 | Command | What it does |
 | --- | --- |
-| `/is limits` | Shows current limits for the SkyBlock island. |
-| `/ob limits` | Shows current limits for the OneBlock island. |
+| `/skyblock limits` | Shows current limits for the SkyBlock island. |
+| `/oneblock limits` | Shows current limits for the OneBlock island. |
+| `/acid limits` | Shows current limits for the AcidIsland island. |
+| `/cave limits` | Shows current limits for the CaveBlock island. |
+| `/skygrid limits` | Shows current limits for the SkyGrid island. |
 
 ## Getting started
 
 1. Enter the relevant island game mode first.
-2. Use `/is limits` or `/ob limits` to open the feature.
-3. Check the game-mode help if the command label differs, because BentoBox commands can be customized per mode.
+2. Use the full root for the supported mode you are playing, such as `/skyblock limits` or `/oneblock limits`.
+3. Use that same full game-mode root for related add-on commands.
 
 ## Player notes
 
 - Availability, prices, cooldowns, limits, and rewards are controlled by 1MoreBlock configuration.
-- An add-on may be enabled for one island mode but not another.
-- Use the command root for your current island mode, such as `/is`, `/ob`, `/acid`, `/cave`, or `/skygrid`.
+- Limits is currently configured for SkyBlock, OneBlock, AcidIsland, CaveBlock, and SkyGrid.
+- The full 1MoreBlock game-mode roots are `/oneblock`, `/chunkblock`, `/skyblock`, `/acid`, `/cave`, and `/skygrid`.
 
 ## Official resources
 

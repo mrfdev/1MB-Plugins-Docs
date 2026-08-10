@@ -146,18 +146,6 @@ onembcmi.kitstreaks.top
 onembcmi.kitstreaks.admin
 onembcmi.kitstreaks.admin.reset
 onembcmi.kitstreaks.admin.reload
-onembcmi.messagefont.use
-onembcmi.messagefont.set
-onembcmi.messagefont.preview
-onembcmi.messagefont.plain
-onembcmi.messagefont.font.default
-onembcmi.messagefont.font.alt
-onembcmi.messagefont.font.uniform
-onembcmi.messagefont.font.illageralt
-onembcmi.messagefont.admin
-onembcmi.messagefont.admin.inspect
-onembcmi.messagefont.admin.reset
-onembcmi.messagefont.admin.reload
 onembcmi.nick.use
 onembcmi.nick.set
 onembcmi.nick.bio
@@ -322,6 +310,7 @@ onembcmi.menu.admin
 onembcmi.menu.admin.open
 onembcmi.menu.admin.reload
 onembcmi.menu.admin.debug
+onembcmi.placeholders.admin
 onembcmi.onembplaceholders.use
 onembcmi.onembplaceholders.admin
 onembcmi.onembplaceholders.view
@@ -404,6 +393,7 @@ onembcmi.profile.bans
 onembcmi.profile.add
 onembcmi.profile.admin
 onembcmi.profile.admin.reload
+onembcmi.contentguard.admin
 onembcmi.filterlab.use
 onembcmi.filterlab.test
 onembcmi.filterlab.rules
@@ -422,6 +412,7 @@ onembcmi.warninglens.recent
 onembcmi.warninglens.view.reasons
 onembcmi.warninglens.admin
 onembcmi.warninglens.admin.reload
+onembcmi.teammsg.admin
 onembcmiapi.notablemsg
 onembcmiapi.notablemsg.admin
 onembcmi.notablemsg.admin
@@ -542,6 +533,7 @@ onembcmi.eventrecorder.dump
 onembcmi.eventrecorder.admin
 onembcmi.eventrecorder.admin.reload
 onembcmi.eventrecorder.record
+onembcmi.bedrockchatbridge.admin
 onembcmi.cmiprobe.use
 onembcmi.cmiprobe.managers
 onembcmi.cmiprobe.firecheck
@@ -594,11 +586,15 @@ onembcmi.placeholderhealth.debug
 
 Hoppers is staff-only. Normal players receive no default access to `/_hoppers`; grant `onembcmi.hoppers.admin` for full owner/admin use, or grant `onembcmi.hoppers.scan`, `onembcmi.hoppers.track`, `onembcmi.hoppers.watch`, `onembcmi.hoppers.trigger`, and `onembcmi.hoppers.baseline` to designated TPS-drop reviewers. `onembcmi.hoppers.scan` covers passive report pages such as risk, regions, world/chunk/player scopes, storage-chain probes, container saturation, material histograms, hopper minecarts, redstone context, chunk tickets, report comparison, MFM presets, dependency health, config drift, hotspot history, emergency guidance, and safe checklists. `onembcmi.hoppers.watch`, `onembcmi.hoppers.trigger`, and `onembcmi.hoppers.baseline` remain read-only. `onembcmi.hoppers.spark` dispatches Spark profiler commands, so grant it only to trusted admins. `onembcmi.hoppers.notes` writes report notes and Spark URL attachments into cache.
 
+BedrockChatBridge exposes only `onembcmi.bedrockchatbridge.admin`, which defaults false. It permits the shared `/bedrockchatbridge debug` diagnostics, config editing, and live enable/dormant control. Normal players need no bridge permission: eligible chat is selected exclusively through Floodgate's sender UUID check. Console and `onembcmi.global.config.set` retain the shared lifecycle override.
+
 Diagnostics is owner-only removable debug tooling. Grant `onembcmi.diagnostics.use` for `/_diagnostics status`, `onembcmi.diagnostics.view` for `/_diagnostics recent` and `/_diagnostics files`, and `onembcmi.diagnostics.dump` to write point-in-time support snapshots. `onembcmi.diagnostics.admin` unlocks shared debug pages, and `onembcmi.diagnostics.admin.reload` reloads the probe config. Normal players should not receive any Diagnostics nodes. All Diagnostics permission defaults are `false`, so operator status alone does not unlock the in-game command. Console can run `_diagnostics` without a permission lock.
 
 WorthHelper is staff-only and report-first. Grant `onembcmi.worthhelper.scan`, `onembcmi.worthhelper.view`, and `onembcmi.worthhelper.export` only to trusted economy reviewers; `onembcmi.worthhelper.admin` covers shared debug/config access. The plugin does not apply CMI worth changes.
 
-PlaceholderHealth is owner-facing and read-only. Grant `onembcmi.placeholderhealth.check` to trusted admins who may run the configured placeholder sample set, `onembcmi.placeholderhealth.list` to view configured sample ids, and `onembcmi.placeholderhealth.export` to write Markdown reports under the plugin data folder. `onembcmi.placeholderhealth.reload` reloads the health sample config. `onembcmi.placeholderhealth.admin` includes all child nodes, but defaults to false so operator status alone does not receive it from plugin.yml defaults.
+Placeholders keeps the Provider, Catalog, Probe, and Health permission namespaces compatible inside one jar. Grant `onembcmi.placeholders.admin` to owner-level staff who may inspect and toggle every module and use every module operation. Existing narrower grants under `onembcmi.onembplaceholders.*`, `onembcmi.cmiplaceholders.*`, `onembcmi.placeholderprobe.*`, and `onembcmi.placeholderhealth.*` continue to work.
+
+The Health module is owner-facing and read-only. Grant `onembcmi.placeholderhealth.check` to trusted admins who may run the configured placeholder sample set, `onembcmi.placeholderhealth.list` to view configured sample ids, and `onembcmi.placeholderhealth.export` to write Markdown reports under the plugin data folder. `onembcmi.placeholderhealth.reload` reloads the health sample config. `onembcmi.placeholderhealth.admin` includes all child nodes, but defaults to false so operator status alone does not receive it from plugin.yml defaults.
 
 Potions is locked by default. Grant `onembcmi.potions.admin` explicitly in LuckPerms to owner-level staff who may create and tune event potions; operator status alone does not receive the permission from plugin.yml defaults. Direct console can run the non-GUI management commands. `onembcmi.potions.bundle` covers full collection bundle generation from configured collection metadata. Players do not need a permission for `/potions`, which only shows safe held-item details for a Potions event item. Generated items carry PDC identity and snapshotted drink costs, and disabled ids are blocked by the plugin while it is installed.
 
@@ -608,9 +604,11 @@ Spawners grants `onembcmi.spawners.use`, `onembcmi.spawners.progress`, and `onem
 
 Collect grants `onembcmi.collect.use`, `onembcmi.collect.submit`, `onembcmi.collect.stats`, `onembcmi.collect.leaderboard`, and `onembcmi.collect.rewards` to players by default so `/collect` can open the event GUI, submit configured weekly untouched vanilla items, trigger capped virtual Lucky Find rolls from valid submissions, view standings/personal bests/community progress/Hall of Fame archives, claim earned participation, milestone, and top-10 rewards, and trade duplicate Collect reward keepsakes through `/collect exchange`. Modified stacks with names, lore, damage, enchantments, custom model data, PDC, or other item meta are ignored. Duplicate reward exchange only accepts PDC-marked Collect rewards from the active event and preserves one copy of each claim id. Admin permissions default to false. Grant `onembcmi.collect.test` for debug event/week/day/date controls and forced scavenger testing, `onembcmi.collect.feed` for manually running passive Discord feed/scavenger checks, `onembcmi.collect.inspect` for reviewing stored player event data, `onembcmi.collect.reset` for clearing one player's event data, `onembcmi.collect.reload` for reloading `config.yml`, `events.yml`, and `rewards.yml`, and `onembcmi.collect.report` for exporting Discord-friendly markdown event reports after an event. Reward/submission/scavenger/Discord feed command hooks are controlled by config allowed-prefix lists and are dispatched from direct server console only, never RCON.
 
-CoconutHunt grants `onembcmi.CoconutHunt.use`, `onembcmi.CoconutHunt.progress`, `onembcmi.CoconutHunt.rewards`, `onembcmi.CoconutHunt.claim`, and `onembcmi.CoconutHunt.shop` to players by default so `/coconut` can show Summer progress, historical editions, eligible claims, and configured offers. The same jar grants the equivalent `onembcmi.GhostHunt.use`, `.progress`, `.rewards`, `.claim`, and `.shop` nodes by default for `/ghosthunt`; `.use` also covers `history`, help, discovery, and `/ghosthunt effects full|reduced|off`. Setup, discovery, and proximity visuals remain restricted to each production event's worlds/regions unless isolated debug mode explicitly allows any world.
+CoconutHunt grants `onembcmi.CoconutHunt.use`, `onembcmi.CoconutHunt.progress`, `onembcmi.CoconutHunt.rewards`, `onembcmi.CoconutHunt.claim`, and `onembcmi.CoconutHunt.shop` to players by default so `/coconut` can show Summer progress, historical editions, eligible claims, and configured offers. The same jar grants the equivalent `onembcmi.GhostHunt.use`, `.progress`, `.rewards`, `.claim`, and `.shop` nodes by default for `/ghost`; `.use` also covers history, help, discovery, and `/ghost effects full|reduced|off`. `onembcmi.GhostHunt.hint` separately defaults true and permits the cooldown-protected `/ghost hint` direction/distance response; it never reveals ids or coordinates. `/ghosthunt` remains a compatibility alias. Setup, discovery, hints, and proximity visuals remain restricted to the active production event's worlds/regions unless isolated debug mode explicitly allows any world. Disabling one theme stops participation, discovery, effects, its visit action, and its shop. Read-only UI/history and already-earned claims remain available only when that edition is `ACTIVE` or `CLAIMING` and has an immutable snapshot; upcoming or unsnapshotted editions are blocked.
 
-Both `onembcmi.CoconutHunt.admin` and `onembcmi.GhostHunt.admin` and their children default false, including for operators. Themed children are `.admin.reload`, `.admin.debug`, `.admin.event`, `.admin.coconut` or `.admin.ghost`, `.admin.inspect`, `.admin.reset`, and `.admin.report`; they cover the matching theme's reload, debug clock/count, lifecycle/snapshot, setup registry, player review/regrant, guarded reset, and report actions. The inspect node includes read-only per-day snapshot comparison and reward/transaction diagnostics plus a revalidated CMI mail action for a player's still-missing location. Grant `onembcmi.Hunt.admin.event` for canonical `/hunt admin event list|status|activate` access; either themed `.admin.event` also authorizes that flow. Event-wide reset cannot target production and preserves registered heads, configuration, and unrelated shared playerdata. Child permissions work independently without the parent; direct server console remains trusted for non-player admin actions. Every configured command list is checked against narrow allowed prefixes before a claim or purchase is persisted, and no command is supplied by a player.
+Both `onembcmi.CoconutHunt.admin` and `onembcmi.GhostHunt.admin` and their children default false, including for operators. Themed children are `.admin.reload`, `.admin.debug`, `.admin.event`, `.admin.coconut` or `.admin.ghost`, `.admin.inspect`, `.admin.rewards`, `.admin.reset`, and `.admin.report`; they cover the matching theme's reload, debug clock/count, per-hunt enabled switch, lifecycle/snapshot, setup registry, player review/regrant, guarded reward recovery, reset, and report actions. `/coconut admin enabled` and `/ghost admin enabled` require the matching `.admin.event` node and affect only that hunt. The inspect node includes read-only per-day snapshot comparison and reward/transaction diagnostics plus a revalidated CMI mail action for a player's still-missing location. The dedicated `onembcmi.GhostHunt.admin.rewards` node defaults false and is required for `/ghost admin rewards retry <online-player> <reward-id> [--force-confirm]`; it retries only eligible unresolved direct Halloween kit receipts and cannot replay finalized deliveries. Grant `onembcmi.Hunt.admin.event` for canonical `/hunt admin event list|status|activate` access; either themed `.admin.event` also authorizes that flow. Event-wide reset cannot target production and preserves registered heads, configuration, and unrelated shared playerdata. Child permissions work independently without the parent; direct server console remains trusted for non-player admin actions. Every configured command list is checked against narrow allowed prefixes before a claim or purchase is persisted, and no command is supplied by a player.
+
+The aggregate `onembcmi.Hunt.admin` node and its children default false. `onembcmi.Hunt.admin.status` controls the aggregate `/hunt admin status` and `/hunt debug status` view; `onembcmi.Hunt.admin.preflight` controls the read-only `/hunt admin preflight [all|coconut|ghost|doors]` readiness report; `onembcmi.Hunt.admin.modules` controls `/hunt admin modules` plus `/hunt admin module <id> <on|off>`. Preflight is also trusted from direct server console, runs module checks sequentially, and cannot activate, reload, repair, migrate, claim, or persist changes. Door players receive `onembcmi.DoorHunt.use` by default; it explicitly grants the transition-compatible `totdoors.play` and `totdoors.command.info|hint|stats|journal|quests|rewards` nodes. The `rewards` node covers both viewing/claiming the Doors-only Treat Bag and viewing the separate milestone-kit ledger; treat claims invoke no player kit permission. Canonical Door admin permissions are under `onembcmi.DoorHunt.admin.*`, default false, and grant their exact `totdoors.admin.*` counterparts. `onembcmi.DoorHunt.admin.migrate` maps to `totdoors.admin.migrate` for the dry-run/confirm importer. The complete unshortened legacy permission catalogue remains documented and contract-tested in [Door Hunt administration](plugins/doors-administration.md). The legacy `totdoors.admin` aggregate retains operator compatibility for the transition release; new canonical admin nodes do not grant themselves to operators.
 
 Wiki Assistant grants `onembcmi.wiki.use` to players by default for `/wiki`, safe local questions, short-lived ambiguity choices, fixed-host Wiki search fallback, and the player's own memory-only recent list. `onembcmi.wiki.bypass-player-cooldown` defaults false and bypasses only the per-player command delay; it never bypasses remote policy or upstream safety limits. `onembcmi.wiki.admin` defaults false and grants read-only status, lookup, cache inspection/dry-run pruning, alias listing, passive wishlist top/stats/inspection/dry-run pruning, knowledge validation/reload, policy status, reload, and redacted debug output. `onembcmi.wiki.owner` also defaults false, including for operators, implies read-only admin access in code, and is required for confirmed refresh/invalidation/pruning, alias mutation, owner-verified wishlist URL resolution, wishlist review-state changes/confirmed pruning, and remote-test operations. Direct console is trusted for Wiki administration. No Wiki node enables original-query history, names/UUID/IP storage, guessed article URLs, remote search, response-body logging, content-to-LLM, or a real provider in this release. The optional passive wishlist stores only normalized unresolved topics, aggregate counts, timestamps, status, validated catalog hints, and query-specific opaque HMAC fingerprints.
 

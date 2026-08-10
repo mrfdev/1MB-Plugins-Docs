@@ -51,7 +51,7 @@ Available features include:
     </tr>
     <tr>
       <td><code>/_scheduler info</code></td>
-      <td>Shows the SchedulerCheck intro and server scheduler documentation link.</td>
+      <td>Shows the SchedulerCheck intro and CMI scheduler documentation link.</td>
       <td><code>/_scheduler info</code></td>
     </tr>
     <tr>
@@ -61,7 +61,7 @@ Available features include:
     </tr>
     <tr>
       <td><code>/_scheduler check</code></td>
-      <td>Parses and validates the configured server scheduler file.</td>
+      <td>Parses and validates the configured CMI scheduler file.</td>
       <td><code>/_scheduler check</code></td>
     </tr>
     <tr>
@@ -136,9 +136,9 @@ Available features include:
 
 ## Good To Know
 
-- A full /stop and server start is still the cleanest way to apply server scheduler file changes.
-- You can try /cmi reload or /cmi schedule &lt;key&gt; for server-side testing, but do not treat that as a full restart.
-- The scan warns about invalid booleans, invalid numbers, missing Commands on enabled schedules, risky command roots, unknown server specialized command prefixes, duplicate enabled schedules, common schedule-id typos,...
+- A full /stop and server start is still the cleanest way to apply CMI scheduler file changes.
+- You can try /cmi reload or /cmi schedule &lt;key&gt; for CMI-side testing, but do not treat that as a full restart.
+- The scan warns about invalid booleans, invalid numbers, missing Commands on enabled schedules, risky command roots, unknown CMI specialized command prefixes, duplicate enabled schedules, common schedule-id typos, and...
 - Exports may include scheduler command lines, so review reports before posting them publicly.
 
 ## Full Reference

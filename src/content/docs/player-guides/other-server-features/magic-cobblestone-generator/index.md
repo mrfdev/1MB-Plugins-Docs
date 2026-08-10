@@ -17,20 +17,20 @@ BentoBox MagicCobblestoneGenerator is a BentoBox add-on used by one or more 1Mor
 
 | Command | What it does |
 | --- | --- |
-| `/is generator` | Shows generator information in modes exposing this command. |
-| `/ob generator` | Shows OneBlock generator information when enabled. |
+| `/skyblock generator` | Shows SkyBlock generator information when enabled. |
+| `/oneblock generator` | Shows OneBlock generator information when enabled. |
 
 ## Getting started
 
 1. Enter the relevant island game mode first.
-2. Use `/is generator` or `/ob generator` to open the feature.
-3. Check the game-mode help if the command label differs, because BentoBox commands can be customized per mode.
+2. Use `/skyblock generator` or `/oneblock generator` to open the feature in that mode.
+3. Use that same full game-mode root for related add-on commands.
 
 ## Player notes
 
 - Availability, prices, cooldowns, limits, and rewards are controlled by 1MoreBlock configuration.
 - An add-on may be enabled for one island mode but not another.
-- Use the command root for your current island mode, such as `/is`, `/ob`, `/acid`, `/cave`, or `/skygrid`.
+- The full 1MoreBlock game-mode roots are `/oneblock`, `/chunkblock`, `/skyblock`, `/acid`, `/cave`, and `/skygrid`.
 
 ## Official resources
 

@@ -1,5 +1,7 @@
 # 1MBPlaceholders
 
+> 1MBPlaceholders is now the Provider module inside `1MB-CMIAPI-Placeholders`. `%onemb_*%`, `/_placeholders`, permissions, config, backups, logs, and runtime behavior remain compatible. See [Placeholders](placeholders.md) for parent lifecycle and migration controls.
+
 ## Purpose
 
 1MBPlaceholders is the CMI-API version of the old standalone `1MB-Placeholders` plugin. It keeps the same public command and PlaceholderAPI expansion:

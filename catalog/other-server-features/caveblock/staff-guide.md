@@ -1,6 +1,6 @@
 # CaveBlock Staff Reference
 
-CaveBlock is loaded as a BentoBox game-mode add-on. Administration is namespaced under the configured player and admin commands for that mode.
+CaveBlock is loaded as a BentoBox game-mode add-on. On 1MoreBlock, players use `/cave` and staff administer the mode through `/admincave`.
 
 > Verify destructive, economy-changing, permission-changing, and player-data commands against the installed build and an approved support case before running them.
 
@@ -8,7 +8,7 @@ CaveBlock is loaded as a BentoBox game-mode add-on. Administration is namespaced
 
 | Command | Permission | Purpose |
 | --- | --- | --- |
-| `/cave admin` | `caveblock.admin.*` | Shows the mode administration surface; the exact admin alias is configurable. |
+| `/admincave` | `caveblock.admin.*` | Shows the CaveBlock administration surface on 1MoreBlock. |
 | `/bentobox version` | `bentobox.admin.version` | Reports BentoBox and add-on versions. |
 | `/bentobox reload` | `bentobox.admin.reload` | Reloads BentoBox and add-ons after reviewed configuration changes. |
 
@@ -31,12 +31,12 @@ CaveBlock is loaded as a BentoBox game-mode add-on. Administration is namespaced
 
 - BentoBox owns the island database and protection model; avoid editing game-mode data by hand while the server is running.
 - Challenges, Level, Warps, Border, Limits, Biomes, and other add-ons attach to this mode according to their per-world configuration.
-- Command labels and permission prefixes can be changed by game-mode configuration, so confirm them on the live build before granting wildcards.
+- The command roots are `/cave` for players and `/admincave` for staff; permission nodes keep the `caveblock` namespace.
 
 ## Examples
 
 ```text
-/cave admin
+/admincave
 /bentobox version
 /bentobox reload
 ```
