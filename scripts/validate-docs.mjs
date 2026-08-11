@@ -121,18 +121,41 @@ async function validateAdditionalEntries(entries) {
       problem(`Generated player guide is missing for ${manifest.id}. Run npm run docs:generate.`);
     }
     if (entry.staffGuideFile) {
+      const staffDirectory = manifest.category === 'custom-server-plugin'
+        ? 'custom-server-plugins'
+        : 'other-server-features';
       const generatedStaffGuide = path.join(
         repoRoot,
         'src',
         'content',
         'docs',
         'staff-reference',
-        'other-server-features',
+        staffDirectory,
         manifest.id,
         'index.md',
       );
       if (!await pathIsFile(generatedStaffGuide)) {
         problem(`Generated staff guide is missing for ${manifest.id}. Run npm run docs:generate.`);
+      }
+    }
+    if (entry.catalogueJsonFile) {
+      const generatedCatalogue = path.join(
+        repoRoot,
+        'src',
+        'content',
+        'docs',
+        'player-guides',
+        definition.playerDirectory,
+        manifest.id,
+        'price-catalogue',
+        'index.mdx',
+      );
+      const publicJson = path.join(repoRoot, 'public', 'catalogues', manifest.id, 'price-catalogue.json');
+      const publicCsv = path.join(repoRoot, 'public', 'catalogues', manifest.id, 'price-catalogue.csv');
+      for (const file of [generatedCatalogue, publicJson, publicCsv]) {
+        if (!await pathIsFile(file)) {
+          problem(`Generated catalogue output is missing for ${manifest.id}: ${path.relative(repoRoot, file)}`);
+        }
       }
     }
   }

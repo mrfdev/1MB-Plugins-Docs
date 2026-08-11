@@ -87,6 +87,11 @@ export default defineConfig({
             { slug: 'staff-reference' },
             { slug: 'staff-reference/plugins' },
             {
+              label: 'Custom Server Plugins',
+              collapsed: true,
+              items: [{ autogenerate: { directory: 'staff-reference/custom-server-plugins' } }],
+            },
+            {
               label: 'Third-Party Plugins',
               collapsed: true,
               items: [{ autogenerate: { directory: 'staff-reference/other-server-features' } }],

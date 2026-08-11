@@ -1,0 +1,13 @@
+---
+title: "1MB Shop Price Catalogue"
+description: "Search configured buy prices, CMI Worth values, differences, and shop locations."
+---
+
+import PriceCatalogue from '../../../../../../components/PriceCatalogue.astro';
+
+This public snapshot compares exact base CMI Worth values with the configured static buy listings. It does not include player/rank modifiers, future rate changes, or purchases made after the generation timestamp.
+
+<PriceCatalogue
+  dataUrl="/catalogues/1mb-shopgui-plus/price-catalogue.json"
+  csvUrl="/catalogues/1mb-shopgui-plus/price-catalogue.csv"
+/>

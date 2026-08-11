@@ -62,7 +62,8 @@ test('standalone imports and curated features preserve the CMI namespace', async
 
   const standalone = path.join(root, '1MB-Lootbox');
   await mkdir(path.join(standalone, 'docs'), { recursive: true });
-  await writeFile(path.join(standalone, 'README.md'), '# Lootbox Technical Documentation\n');
+  await writeFile(path.join(standalone, 'README.md'), '# PRIVATE Lootbox Development Notes\n');
+  await writeFile(path.join(standalone, 'docs', 'technical-overview.md'), '# Public Lootbox Technical Documentation\n');
   await writeFile(path.join(standalone, 'docs', 'plugin-docs.yml'), `id: lootbox
 name: Lootboxes
 category: custom-server-plugin
@@ -70,11 +71,45 @@ summary: Collect and open configured server lootboxes.
 main_command: /lootbox
 docs_url: https://docs.1moreblock.com/custom-server-plugins/lootbox/
 player_guide: player-guide.md
-technical_readme: ../README.md
+staff_guide: staff-guide.md
+technical_readme: technical-overview.md
+public_readme: technical-overview.md
+catalogue_json: catalogue/price-catalogue.json
+catalogue_csv: catalogue/price-catalogue.csv
 java_target: "25"
 paper_target: "26.2"
 official_project: true
 `);
+  await writeFile(path.join(standalone, 'docs', 'staff-guide.md'), `# Lootboxes Staff Reference
+
+Use reviewed configuration and backups.
+`);
+  await mkdir(path.join(standalone, 'docs', 'catalogue'), { recursive: true });
+  await writeFile(path.join(standalone, 'docs', 'catalogue', 'price-catalogue.json'), JSON.stringify({
+    schemaVersion: 1,
+    source: { generatedAt: '2026-08-11T00:00:00Z' },
+    summary: { publishableLocations: 1, shops: 1, baseWorthMaterials: 1 },
+    items: [{
+      material: 'STONE',
+      cmiWorthPerItem: 1,
+      listings: [{
+        publishable: true,
+        shopUnitPrice: 100,
+        differencePerItem: 99,
+        multiplier: 100,
+        shop: 'survival_blocks',
+        file: 'survival_blocks.yml',
+        itemId: '1',
+        page: 1,
+        slot: 10,
+        command: '/buy survival_blocks 1',
+      }],
+    }],
+  }));
+  await writeFile(
+    path.join(standalone, 'docs', 'catalogue', 'price-catalogue.csv'),
+    'material,cmiWorthPerItem,shopUnitPrice\nSTONE,1,100\n',
+  );
   await writeFile(path.join(standalone, 'docs', 'player-guide.md'), `# Lootboxes
 
 Open and review configured server lootboxes.
@@ -143,7 +178,7 @@ Train the mcMMO skills that are enabled on 1MoreBlock.
 
   assert.equal(
     await readFile(path.join(repoRoot, 'project-docs', 'lootbox', 'README.md'), 'utf8'),
-    '# Lootbox Technical Documentation\n',
+    '# Public Lootbox Technical Documentation\n',
   );
   assert.match(
     await readFile(path.join(repoRoot, 'src', 'content', 'docs', 'player-guides', 'custom-server-plugins', 'lootbox', 'index.md'), 'utf8'),
@@ -156,5 +191,17 @@ Train the mcMMO skills that are enabled on 1MoreBlock.
   assert.match(
     await readFile(path.join(repoRoot, 'src', 'content', 'docs', 'staff-reference', 'other-server-features', 'mcmmo', 'index.md'), 'utf8'),
     /mcMMO Staff Reference/,
+  );
+  assert.match(
+    await readFile(path.join(repoRoot, 'src', 'content', 'docs', 'staff-reference', 'custom-server-plugins', 'lootbox', 'index.md'), 'utf8'),
+    /Lootboxes Staff Reference/,
+  );
+  assert.match(
+    await readFile(path.join(repoRoot, 'src', 'content', 'docs', 'player-guides', 'custom-server-plugins', 'lootbox', 'price-catalogue', 'index.mdx'), 'utf8'),
+    /PriceCatalogue/,
+  );
+  assert.deepEqual(
+    await readFile(path.join(repoRoot, 'public', 'catalogues', 'lootbox', 'price-catalogue.json'), 'utf8'),
+    await readFile(path.join(standalone, 'docs', 'catalogue', 'price-catalogue.json'), 'utf8'),
   );
 });

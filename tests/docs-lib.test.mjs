@@ -20,6 +20,9 @@ function manifest(overrides = {}) {
     player_guide: 'player-guide.md',
     staff_guide: 'staff-guide.md',
     technical_readme: '../README.md',
+    public_readme: 'technical-overview.md',
+    catalogue_json: 'catalogue/price-catalogue.json',
+    catalogue_csv: 'catalogue/price-catalogue.csv',
     java_target: '25',
     paper_target: '26.2',
     official_project: true,
@@ -42,6 +45,14 @@ test('manifest paths stay inside their project namespace', () => {
   assert.equal(assertPathRelativeToDocs('../README.md', 'readme'), 'README.md');
   assert.throws(() => assertSafeRelativePath('../../private.yml', 'guide'), /inside its project namespace/);
   assert.throws(() => assertPathRelativeToDocs('../../private.yml', 'readme'), /inside its project namespace/);
+  assert.throws(
+    () => validateManifest(manifest({ public_readme: '../PRIVATE.md' })),
+    /inside its project namespace/,
+  );
+  assert.throws(
+    () => validateManifest(manifest({ catalogue_csv: null })),
+    /both catalogue_json and catalogue_csv/,
+  );
 });
 
 test('standalone manifest requires its canonical category URL', () => {

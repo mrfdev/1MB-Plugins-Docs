@@ -105,6 +105,16 @@ export function validateManifest(manifest, sourceLabel = 'manifest') {
   if (manifest.technical_readme) {
     assertPathRelativeToDocs(manifest.technical_readme, `${sourceLabel} technical_readme`);
   }
+  if (manifest.public_readme) {
+    assertSafeRelativePath(manifest.public_readme, `${sourceLabel} public_readme`);
+  }
+  if (manifest.catalogue_json || manifest.catalogue_csv) {
+    if (!manifest.catalogue_json || !manifest.catalogue_csv) {
+      throw new Error(`${sourceLabel} must provide both catalogue_json and catalogue_csv.`);
+    }
+    assertSafeRelativePath(manifest.catalogue_json, `${sourceLabel} catalogue_json`);
+    assertSafeRelativePath(manifest.catalogue_csv, `${sourceLabel} catalogue_csv`);
+  }
   if (manifest.main_command && !String(manifest.main_command).startsWith('/')) {
     throw new Error(`${sourceLabel} main_command must start with /.`);
   }
@@ -210,6 +220,15 @@ export async function loadAdditionalEntries(repoRoot, registry = null) {
       kind: 'imported',
       root: namespaceRoot,
       playerGuideFile: path.join(namespaceRoot, 'docs', assertSafeRelativePath(manifest.player_guide, `${project.id} player_guide`)),
+      staffGuideFile: manifest.staff_guide
+        ? path.join(namespaceRoot, 'docs', assertSafeRelativePath(manifest.staff_guide, `${project.id} staff_guide`))
+        : null,
+      catalogueJsonFile: manifest.catalogue_json
+        ? path.join(namespaceRoot, 'docs', assertSafeRelativePath(manifest.catalogue_json, `${project.id} catalogue_json`))
+        : null,
+      catalogueCsvFile: manifest.catalogue_csv
+        ? path.join(namespaceRoot, 'docs', assertSafeRelativePath(manifest.catalogue_csv, `${project.id} catalogue_csv`))
+        : null,
     });
   }
 
@@ -248,6 +267,12 @@ export async function loadAdditionalEntries(repoRoot, registry = null) {
     }
     if (entry.staffGuideFile && !await pathIsFile(entry.staffGuideFile)) {
       throw new Error(`Staff guide is missing for ${entry.manifest.id}: ${entry.staffGuideFile}`);
+    }
+    if (entry.catalogueJsonFile && !await pathIsFile(entry.catalogueJsonFile)) {
+      throw new Error(`Catalogue JSON is missing for ${entry.manifest.id}: ${entry.catalogueJsonFile}`);
+    }
+    if (entry.catalogueCsvFile && !await pathIsFile(entry.catalogueCsvFile)) {
+      throw new Error(`Catalogue CSV is missing for ${entry.manifest.id}: ${entry.catalogueCsvFile}`);
     }
     ids.add(entry.manifest.id);
     urls.add(entry.manifest.docs_url);

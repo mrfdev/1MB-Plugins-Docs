@@ -31,6 +31,12 @@ docs/
 
 It may also provide commands, permissions, placeholders, configuration, installation, integrations, and troubleshooting pages.
 
+An imported project may opt into three public-safe extensions without changing any existing source:
+
+- `public_readme` selects a reviewed file under `docs/` to mirror as the namespace `README.md` instead of exposing the source repository's root README.
+- `staff_guide` renders a first-class page under `/staff-reference/custom-server-plugins/<id>/`.
+- `catalogue_json` and `catalogue_csv` publish an isolated searchable price-catalogue page plus namespaced static assets. Both catalogue paths are required together and must stay under `docs/`.
+
 Minimum manifest:
 
 ```yaml
@@ -47,6 +53,18 @@ paper_target: "26.2"
 official_project: true
 repository: mrfdev/1MB-Lootbox
 ```
+
+Example public-safe staff/catalogue additions:
+
+```yaml
+staff_guide: staff-guide.md
+public_readme: technical-overview.md
+technical_readme: technical-overview.md
+catalogue_json: catalogue/price-catalogue.json
+catalogue_csv: catalogue/price-catalogue.csv
+```
+
+The catalogue UI inserts imported strings with DOM `textContent`, never as HTML. Source projects remain responsible for publishing only sanitized catalogue fields; the site validator verifies paths and generated ownership, not whether private source data was safe to export.
 
 IDs use lowercase letters, numbers, and single hyphens. The canonical URL must exactly match the category and ID. Build numbers never belong in documentation URLs.
 
@@ -102,6 +120,7 @@ Do not publish the upstream generic island or shortened OneBlock aliases as 1Mor
 - Publish player guidance and public-safe staff administration details only.
 - Never publish credentials, private endpoints, paid files, databases, exploit-sensitive values, source code, or internal incident procedures.
 - Keep source documentation in its source project; do not hand-edit its mirrored copy.
+- Prefer `public_readme` when a source root README contains private development, release, or operational evidence.
 - Do not hand-edit generated Starlight pages. Change the source guide and regenerate.
 - Never force-push the public documentation repository as part of an individual project sync.
 

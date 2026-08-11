@@ -6,6 +6,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import {
   loadRegistry,
+  assertSafeRelativePath,
   pathIsDirectory,
   pathIsFile,
   projectNamespaceRoot,
@@ -65,7 +66,9 @@ async function validateSource(project, sourceRoot) {
     if (manifest.category !== project.category) {
       throw new Error(`Source manifest category ${manifest.category} does not match registry category ${project.category}.`);
     }
+    return manifest;
   }
+  return null;
 }
 
 async function loadPublicDocsExcludes(sourceRoot) {
@@ -108,7 +111,7 @@ function isExcludedDoc(source, docsRoot, exclusions) {
 async function syncProject(project, explicitSource = null) {
   const envSource = project.id === 'cmi-api' ? process.env.PRIVATE_DOCS_SOURCE : null;
   const sourceRoot = path.resolve(explicitSource ?? envSource ?? path.join(repoRoot, project.defaultSource));
-  await validateSource(project, sourceRoot);
+  const manifest = await validateSource(project, sourceRoot);
 
   const docsRoot = path.join(sourceRoot, 'docs');
   const publicDocsExclusions = await loadPublicDocsExcludes(sourceRoot);
@@ -120,7 +123,13 @@ async function syncProject(project, explicitSource = null) {
   await mkdir(stagingRoot, { recursive: true });
 
   try {
-    await cp(path.join(sourceRoot, 'README.md'), path.join(stagingRoot, 'README.md'));
+    const publicReadme = manifest?.public_readme
+      ? path.join(docsRoot, assertSafeRelativePath(manifest.public_readme, `${project.id} public_readme`))
+      : path.join(sourceRoot, 'README.md');
+    if (!await pathIsFile(publicReadme)) {
+      throw new Error(`Public README is missing for ${project.id}: ${publicReadme}`);
+    }
+    await cp(publicReadme, path.join(stagingRoot, 'README.md'));
     await cp(docsRoot, path.join(stagingRoot, 'docs'), {
       recursive: true,
       filter: (source) => !source.endsWith('.DS_Store')
@@ -132,9 +141,12 @@ async function syncProject(project, explicitSource = null) {
     const exclusionSummary = publicDocsExclusions.length > 0
       ? publicDocsExclusions.map((entry) => `\`docs/${entry}\``).join(', ')
       : 'none';
+    const readmeSource = manifest?.public_readme
+      ? `docs/${assertSafeRelativePath(manifest.public_readme, `${project.id} public_readme`)}`
+      : 'README.md';
     await writeFile(
       path.join(stagingRoot, 'SYNCED_FROM.md'),
-      `# Synced Source\n\nThis namespace is a public documentation-only copy from the source project registered as \`${project.id}\`.\n\n- Project: \`${project.name}\`\n- Project id: \`${project.id}\`\n- Source repository: \`${project.repository ?? 'not published'}\`\n- Source commit: \`${sourceCommit}\`\n- Source state: \`${sourceState}\`\n- Copied files: \`README.md\` and \`docs/\`\n- Source-declared private docs exclusions: ${exclusionSummary}\n- Excluded on purpose: source code, jars, servers, databases, task logs, and internal checklists\n\nOnly \`project-docs/${project.id}/\` is replaced when this source is synchronized. Other project namespaces remain untouched.\n`,
+      `# Synced Source\n\nThis namespace is a public documentation-only copy from the source project registered as \`${project.id}\`.\n\n- Project: \`${project.name}\`\n- Project id: \`${project.id}\`\n- Source repository: \`${project.repository ?? 'not published'}\`\n- Source commit: \`${sourceCommit}\`\n- Source state: \`${sourceState}\`\n- Public README source: \`${readmeSource}\`\n- Copied files: public \`README.md\` and \`docs/\`\n- Source-declared private docs exclusions: ${exclusionSummary}\n- Excluded on purpose: source code, jars, servers, databases, task logs, and internal checklists\n\nOnly \`project-docs/${project.id}/\` is replaced when this source is synchronized. Other project namespaces remain untouched.\n`,
     );
 
     await rm(targetRoot, { recursive: true, force: true });
