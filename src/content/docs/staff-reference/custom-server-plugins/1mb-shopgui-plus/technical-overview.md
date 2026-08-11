@@ -1,4 +1,7 @@
-# 1MB Shop technical overview
+---
+title: "1MB Shop technical overview"
+description: "Public-safe 1mb shop technical overview for 1MB Shop."
+---
 
 1MB Shop is 1MoreBlock's maintained, buy-only server shop. It targets modern Paper servers, exposes one `/buy` command, reads the server's approved vanilla shop catalogue, and leaves selling to CMI.
 
@@ -97,3 +100,8 @@ The first-party PlaceholderAPI expansion uses the identifier `onembshopgui`. Oth
 - [Permissions](https://docs.1moreblock.com/staff-reference/custom-server-plugins/1mb-shopgui-plus/permissions/)
 - [Placeholders](https://docs.1moreblock.com/staff-reference/custom-server-plugins/1mb-shopgui-plus/placeholders/)
 - [Public price catalogue](https://docs.1moreblock.com/player-guides/custom-server-plugins/1mb-shopgui-plus/price-catalogue/)
+
+## Reference Links
+
+- [Staff overview](/staff-reference/custom-server-plugins/1mb-shopgui-plus/)
+- [Player guide](/player-guides/custom-server-plugins/1mb-shopgui-plus/)

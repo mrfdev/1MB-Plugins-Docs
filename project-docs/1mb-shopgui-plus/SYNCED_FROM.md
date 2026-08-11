@@ -5,7 +5,7 @@ This namespace is a public documentation-only copy from the source project regis
 - Project: `1MB Shop`
 - Project id: `1mb-shopgui-plus`
 - Source repository: `mrfdev/1MB-ShopGuiPlus`
-- Source commit: `268d6b8`
+- Source commit: `1a44001`
 - Source state: `clean`
 - Public README source: `docs/technical-overview.md`
 - Copied files: public `README.md` and `docs/`

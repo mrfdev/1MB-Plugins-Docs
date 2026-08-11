@@ -35,6 +35,7 @@ An imported project may opt into three public-safe extensions without changing a
 
 - `public_readme` selects a reviewed file under `docs/` to mirror as the namespace `README.md` instead of exposing the source repository's root README.
 - `staff_guide` renders a first-class page under `/staff-reference/custom-server-plugins/<id>/`.
+- `staff_documents` is an optional slug-to-file map that renders public-safe child pages below that staff route. Slugs and files stay inside the project's imported namespace.
 - `catalogue_json` and `catalogue_csv` publish an isolated searchable price-catalogue page plus namespaced static assets. Both catalogue paths are required together and must stay under `docs/`.
 
 Minimum manifest:
@@ -58,6 +59,9 @@ Example public-safe staff/catalogue additions:
 
 ```yaml
 staff_guide: staff-guide.md
+staff_documents:
+  commands: commands.md
+  permissions: permissions.md
 public_readme: technical-overview.md
 technical_readme: technical-overview.md
 catalogue_json: catalogue/price-catalogue.json

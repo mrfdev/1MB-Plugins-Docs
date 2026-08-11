@@ -37,7 +37,7 @@ src/content/docs/staff-reference/custom-server-plugins/<project-id>/index.md
 public/catalogues/<project-id>/
 ```
 
-Staff guides and searchable catalogue assets are opt-in. They use the same project ID and cannot replace another project's namespace. A project with a private root README can declare a reviewed `public_readme` under its own `docs/` directory; projects without that field keep the original import behavior.
+Staff guides, child staff documents, and searchable catalogue assets are opt-in. They use the same project ID and cannot replace another project's namespace. A project with a private root README can declare a reviewed `public_readme` under its own `docs/` directory; projects without that field keep the original import behavior.
 
 ## Existing CMI Workflow
 
