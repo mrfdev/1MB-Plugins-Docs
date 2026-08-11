@@ -1,0 +1,271 @@
+---
+interface Props {
+  dataUrl: string;
+  csvUrl: string;
+}
+
+const { dataUrl, csvUrl } = Astro.props;
+---
+
+<section class="price-catalogue" data-catalogue-url={dataUrl}>
+  <div class="catalogue-summary" aria-live="polite">Loading the catalogue…</div>
+
+  <div class="catalogue-controls">
+    <label>
+      Search
+      <input type="search" placeholder="Material, shop, file, or command" autocomplete="off" data-search />
+    </label>
+    <label>
+      Listings
+      <select data-filter>
+        <option value="listed">Listed items</option>
+        <option value="all">All CMI Worth materials</option>
+        <option value="unlisted">Not listed in /buy</option>
+      </select>
+    </label>
+    <label>
+      Rows per page
+      <select data-page-size>
+        <option value="25">25</option>
+        <option value="50" selected>50</option>
+        <option value="100">100</option>
+      </select>
+    </label>
+  </div>
+
+  <p class="catalogue-download"><a href={csvUrl} download>Download the sanitized CSV snapshot</a></p>
+
+  <div class="table-wrap" tabindex="0">
+    <table>
+      <thead>
+        <tr>
+          <th>Material</th>
+          <th>CMI Worth / item</th>
+          <th>Shop / item</th>
+          <th>Difference / item</th>
+          <th>Multiplier</th>
+          <th>Location</th>
+        </tr>
+      </thead>
+      <tbody data-results></tbody>
+    </table>
+  </div>
+
+  <nav class="catalogue-pagination" aria-label="Catalogue pages">
+    <button type="button" data-previous>Previous</button>
+    <span data-page aria-live="polite"></span>
+    <button type="button" data-next>Next</button>
+  </nav>
+
+  <p class="catalogue-error" data-error hidden></p>
+</section>
+
+<script>
+  const formatter = new Intl.NumberFormat('en-US', {
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 4,
+  });
+
+  function textCell(value) {
+    const cell = document.createElement('td');
+    cell.textContent = value;
+    return cell;
+  }
+
+  function numeric(value) {
+    return Number.isFinite(value) ? formatter.format(value) : '—';
+  }
+
+  function flatten(items) {
+    const rows = [];
+    for (const item of items) {
+      const listings = item.listings.filter((listing) => listing.publishable !== false);
+      if (!listings.length) {
+        rows.push({ item, listing: null });
+        continue;
+      }
+      for (const listing of listings) {
+        rows.push({ item, listing });
+      }
+    }
+    return rows;
+  }
+
+  for (const root of document.querySelectorAll('.price-catalogue')) {
+    const summary = root.querySelector('[data-catalogue-url]') ?? root;
+    const search = root.querySelector('[data-search]');
+    const filter = root.querySelector('[data-filter]');
+    const pageSize = root.querySelector('[data-page-size]');
+    const results = root.querySelector('[data-results]');
+    const pageLabel = root.querySelector('[data-page]');
+    const previous = root.querySelector('[data-previous]');
+    const next = root.querySelector('[data-next]');
+    const summaryText = root.querySelector('.catalogue-summary');
+    const errorText = root.querySelector('[data-error]');
+    const url = root.getAttribute('data-catalogue-url');
+    let rows = [];
+    let currentPage = 1;
+
+    function render() {
+      const query = search.value.trim().toLowerCase();
+      const mode = filter.value;
+      const size = Number.parseInt(pageSize.value, 10);
+      const filtered = rows.filter(({ item, listing }) => {
+        if (mode === 'listed' && !listing) return false;
+        if (mode === 'unlisted' && listing) return false;
+        if (!query) return true;
+        const haystack = [
+          item.material,
+          listing?.shop,
+          listing?.file,
+          listing?.itemId,
+          listing?.command,
+        ].filter(Boolean).join(' ').toLowerCase();
+        return haystack.includes(query);
+      });
+      const pages = Math.max(1, Math.ceil(filtered.length / size));
+      currentPage = Math.min(currentPage, pages);
+      const start = (currentPage - 1) * size;
+      results.replaceChildren();
+
+      for (const { item, listing } of filtered.slice(start, start + size)) {
+        const row = document.createElement('tr');
+        row.append(textCell(item.material.replaceAll('_', ' ')));
+        row.append(textCell(numeric(item.cmiWorthPerItem)));
+        row.append(textCell(listing ? numeric(listing.shopUnitPrice) : 'Not listed'));
+        row.append(textCell(listing ? numeric(listing.differencePerItem) : '—'));
+        row.append(textCell(listing ? numeric(listing.multiplier) : '—'));
+        row.append(textCell(listing
+          ? `${listing.shop} · page ${listing.page} · slot ${listing.slot} · ${listing.command}`
+          : 'No /buy location'));
+        results.append(row);
+      }
+
+      if (!filtered.length) {
+        const row = document.createElement('tr');
+        const cell = textCell('No catalogue rows match this filter.');
+        cell.colSpan = 6;
+        row.append(cell);
+        results.append(row);
+      }
+      pageLabel.textContent = `Page ${currentPage} of ${pages} · ${filtered.length} row${filtered.length === 1 ? '' : 's'}`;
+      previous.disabled = currentPage <= 1;
+      next.disabled = currentPage >= pages;
+    }
+
+    search.addEventListener('input', () => { currentPage = 1; render(); });
+    filter.addEventListener('change', () => { currentPage = 1; render(); });
+    pageSize.addEventListener('change', () => { currentPage = 1; render(); });
+    previous.addEventListener('click', () => { currentPage -= 1; render(); });
+    next.addEventListener('click', () => { currentPage += 1; render(); });
+
+    try {
+      const response = await fetch(url, { credentials: 'same-origin' });
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      const data = await response.json();
+      if (data.schemaVersion !== 1 || !Array.isArray(data.items)) {
+        throw new Error('Unsupported catalogue schema');
+      }
+      rows = flatten(data.items);
+      const generated = new Date(data.source.generatedAt).toLocaleString();
+      summaryText.textContent = `${data.summary.publishableLocations.toLocaleString()} buy locations across ${data.summary.shops.toLocaleString()} shops; ${data.summary.baseWorthMaterials.toLocaleString()} exact CMI Worth materials. Generated ${generated}.`;
+      render();
+    } catch (error) {
+      summaryText.textContent = 'The searchable catalogue could not be loaded.';
+      errorText.hidden = false;
+      errorText.textContent = 'Try the CSV download or report this page to staff.';
+    }
+  }
+</script>
+
+<style>
+  .price-catalogue {
+    --catalogue-border: color-mix(in srgb, var(--sl-color-gray-5) 70%, transparent);
+  }
+
+  .catalogue-summary {
+    margin: 1rem 0;
+    padding: 0.85rem 1rem;
+    border: 1px solid var(--catalogue-border);
+    border-radius: 0.65rem;
+    background: color-mix(in srgb, var(--sl-color-accent-low) 45%, transparent);
+  }
+
+  .catalogue-controls {
+    display: grid;
+    grid-template-columns: minmax(14rem, 2fr) minmax(10rem, 1fr) minmax(8rem, 1fr);
+    gap: 0.75rem;
+    align-items: end;
+  }
+
+  .catalogue-controls label {
+    display: grid;
+    gap: 0.3rem;
+    font-weight: 600;
+  }
+
+  .catalogue-controls input,
+  .catalogue-controls select,
+  .catalogue-pagination button {
+    min-height: 2.5rem;
+    border: 1px solid var(--catalogue-border);
+    border-radius: 0.45rem;
+    padding: 0.45rem 0.65rem;
+    color: var(--sl-color-text);
+    background: var(--sl-color-bg-nav);
+  }
+
+  .catalogue-download {
+    margin: 0.85rem 0;
+  }
+
+  .table-wrap {
+    overflow-x: auto;
+    border: 1px solid var(--catalogue-border);
+    border-radius: 0.65rem;
+  }
+
+  table {
+    width: 100%;
+    min-width: 56rem;
+    margin: 0;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+  }
+
+  th,
+  td {
+    padding: 0.55rem 0.65rem;
+    border-bottom: 1px solid var(--catalogue-border);
+    text-align: left;
+    vertical-align: top;
+  }
+
+  th {
+    position: sticky;
+    top: 0;
+    background: var(--sl-color-bg-nav);
+  }
+
+  .catalogue-pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.75rem;
+    margin-top: 1rem;
+  }
+
+  .catalogue-pagination button:disabled {
+    opacity: 0.45;
+  }
+
+  .catalogue-error {
+    color: var(--sl-color-red-high);
+  }
+
+  @media (max-width: 50rem) {
+    .catalogue-controls {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

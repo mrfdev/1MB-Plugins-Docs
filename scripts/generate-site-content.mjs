@@ -1,4 +1,4 @@
-import { mkdir, readFile, rm, writeFile } from 'node:fs/promises';
+import { cp, mkdir, readFile, rm, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { CATEGORY_DEFINITIONS, loadAdditionalEntries, loadRegistry } from './docs-lib.mjs';
@@ -2219,7 +2219,16 @@ ${rows}
 function additionalTechnicalLinks(entry) {
   if (entry.kind === 'imported') {
     const root = `${publicRepoBlob}/project-docs/${entry.manifest.id}`;
-    return `- [Technical overview](${root}/README.md)\n- [Technical documentation folder](${publicRepoTree}/project-docs/${entry.manifest.id}/docs/)`;
+    const links = [];
+    if (entry.staffGuideFile) {
+      links.push(`- [Staff and technical reference](/staff-reference/custom-server-plugins/${entry.manifest.id}/)`);
+    }
+    if (entry.catalogueJsonFile) {
+      links.push(`- [Searchable price catalogue](./price-catalogue/)`);
+    }
+    links.push(`- [Technical overview](${root}/README.md)`);
+    links.push(`- [Technical documentation folder](${publicRepoTree}/project-docs/${entry.manifest.id}/docs/)`);
+    return links.join('\n');
   }
   const links = [];
   if (entry.staffGuideFile) {
@@ -2235,9 +2244,14 @@ function additionalTechnicalLinks(entry) {
 async function generateAdditionalGuides(entries) {
   const categories = ['custom-server-plugin', 'other-server-feature'];
   const grouped = new Map(categories.map((category) => [category, []]));
-  const staffOutputRoot = path.join(contentRoot, 'staff-reference', 'other-server-features');
-  await rm(staffOutputRoot, { recursive: true, force: true });
-  await mkdir(staffOutputRoot, { recursive: true });
+  const staffOutputRoots = new Map([
+    ['custom-server-plugin', path.join(contentRoot, 'staff-reference', 'custom-server-plugins')],
+    ['other-server-feature', path.join(contentRoot, 'staff-reference', 'other-server-features')],
+  ]);
+  for (const staffOutputRoot of staffOutputRoots.values()) {
+    await rm(staffOutputRoot, { recursive: true, force: true });
+    await mkdir(staffOutputRoot, { recursive: true });
+  }
   for (const entry of entries) {
     grouped.get(entry.manifest.category)?.push(entry);
   }
@@ -2274,10 +2288,34 @@ ${body || `${entry.manifest.name} documentation is being prepared.`}
 ${additionalTechnicalLinks(entry)}
 `);
 
+      if (entry.catalogueJsonFile && entry.catalogueCsvFile) {
+        const assetOutput = path.join(repoRoot, 'public', 'catalogues', entry.manifest.id);
+        await rm(assetOutput, { recursive: true, force: true });
+        await mkdir(assetOutput, { recursive: true });
+        await cp(entry.catalogueJsonFile, path.join(assetOutput, 'price-catalogue.json'));
+        await cp(entry.catalogueCsvFile, path.join(assetOutput, 'price-catalogue.csv'));
+        const catalogueOutput = path.join(projectOutput, 'price-catalogue');
+        await mkdir(catalogueOutput, { recursive: true });
+        await writeFile(path.join(catalogueOutput, 'index.mdx'), `---
+title: ${JSON.stringify(`${entry.manifest.name} Price Catalogue`)}
+description: ${JSON.stringify('Search configured buy prices, CMI Worth values, differences, and shop locations.')}
+---
+
+import PriceCatalogue from '../../../../../../components/PriceCatalogue.astro';
+
+This public snapshot compares exact base CMI Worth values with the configured static buy listings. It does not include player/rank modifiers, future rate changes, or purchases made after the generation timestamp.
+
+<PriceCatalogue
+  dataUrl=${JSON.stringify(`/catalogues/${entry.manifest.id}/price-catalogue.json`)}
+  csvUrl=${JSON.stringify(`/catalogues/${entry.manifest.id}/price-catalogue.csv`)}
+/>
+`);
+      }
+
       if (entry.staffGuideFile) {
         const staffSource = await readFile(entry.staffGuideFile, 'utf8');
         const staffBody = stripDocumentPreamble(staffSource);
-        const staffProjectOutput = path.join(staffOutputRoot, entry.manifest.id);
+        const staffProjectOutput = path.join(staffOutputRoots.get(entry.manifest.category), entry.manifest.id);
         await mkdir(staffProjectOutput, { recursive: true });
         await writeFile(path.join(staffProjectOutput, 'index.md'), `---
 title: ${JSON.stringify(`${entry.manifest.name} Staff Reference`)}
@@ -2288,9 +2326,10 @@ ${staffBody || `${entry.manifest.name} technical documentation is being prepared
 
 ## Reference Links
 
-- [Player guide](/player-guides/other-server-features/${entry.manifest.id}/)
-- [Curated source notes](${publicRepoTree}/catalog/other-server-features/${entry.manifest.id}/)
-${entry.manifest.official_wiki ? `- [Official plugin documentation](${entry.manifest.official_wiki})` : ''}
+- [Player guide](/player-guides/${definition.playerDirectory}/${entry.manifest.id}/)
+${entry.kind === 'imported'
+    ? `- [Technical overview](${publicRepoBlob}/project-docs/${entry.manifest.id}/README.md)\n- [Public source documentation](${publicRepoTree}/project-docs/${entry.manifest.id}/docs/)`
+    : `- [Curated source notes](${publicRepoTree}/catalog/other-server-features/${entry.manifest.id}/)\n${entry.manifest.official_wiki ? `- [Official plugin documentation](${entry.manifest.official_wiki})` : ''}`}
 `);
       }
 
@@ -2328,7 +2367,9 @@ function additionalStaffLists(entries) {
   }
   return entries.map((entry) => {
     const base = entry.kind === 'imported'
-      ? `${publicRepoBlob}/project-docs/${entry.manifest.id}/README.md`
+      ? entry.staffGuideFile
+        ? `/staff-reference/custom-server-plugins/${entry.manifest.id}/`
+        : `${publicRepoBlob}/project-docs/${entry.manifest.id}/README.md`
       : entry.staffGuideFile
         ? `/staff-reference/other-server-features/${entry.manifest.id}/`
         : `${publicRepoTree}/catalog/other-server-features/${entry.manifest.id}`;

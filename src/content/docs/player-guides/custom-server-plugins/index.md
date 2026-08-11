@@ -15,6 +15,11 @@ These are standalone plugins built specifically for 1MoreBlock outside the share
   </thead>
   <tbody>
     <tr>
+      <td><a href="./1mb-shopgui-plus/">1MB Shop</a></td>
+      <td>Browse and buy approved vanilla survival items through the 1MoreBlock /buy menu.</td>
+      <td><code>/buy</code></td>
+    </tr>
+    <tr>
       <td><a href="./1mb-xrayhunter/">1MB-XRayHunter</a></td>
       <td>Staff-facing CoreProtect add-on for suspicious mining lookups, cached ore detail review, and large-archive X-ray triage.</td>
       <td><code>/xrayhunter</code></td>

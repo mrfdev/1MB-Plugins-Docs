@@ -2,6 +2,14 @@
   "schemaVersion": 1,
   "projects": [
     {
+      "id": "1mb-shopgui-plus",
+      "name": "1MB Shop",
+      "category": "custom-server-plugin",
+      "adapter": "manifest",
+      "repository": "mrfdev/1MB-ShopGuiPlus",
+      "defaultSource": "../1MB-ShopGuiPlus"
+    },
+    {
       "id": "1mb-xrayhunter",
       "name": "1MB-XRayHunter",
       "category": "custom-server-plugin",

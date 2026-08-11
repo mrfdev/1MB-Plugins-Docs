@@ -1,0 +1,16 @@
+id: 1mb-shopgui-plus
+name: 1MB Shop
+category: custom-server-plugin
+summary: Browse and buy approved vanilla survival items through the 1MoreBlock /buy menu.
+main_command: /buy
+docs_url: https://docs.1moreblock.com/custom-server-plugins/1mb-shopgui-plus/
+player_guide: player-guide.md
+staff_guide: staff-guide.md
+technical_readme: technical-overview.md
+public_readme: technical-overview.md
+catalogue_json: catalogue/price-catalogue.json
+catalogue_csv: catalogue/price-catalogue.csv
+java_target: "25"
+paper_target: "26.2+"
+official_project: true
+repository: mrfdev/1MB-ShopGuiPlus
