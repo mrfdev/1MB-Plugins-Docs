@@ -53,5 +53,5 @@ Report a wrong price, duplicate charge, missing delivery, movable menu item, or 
 
 - [Staff and technical reference](/staff-reference/custom-server-plugins/1mb-shopgui-plus/)
 - [Searchable price catalogue](./price-catalogue/)
-- [Technical overview](https://github.com/mrfdev/1MB-Plugins-Docs/blob/main/project-docs/1mb-shopgui-plus/README.md)
+- [Technical overview](/staff-reference/custom-server-plugins/1mb-shopgui-plus/technical-overview/)
 - [Technical documentation folder](https://github.com/mrfdev/1MB-Plugins-Docs/tree/main/project-docs/1mb-shopgui-plus/docs/)

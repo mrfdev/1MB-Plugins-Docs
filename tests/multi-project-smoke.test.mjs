@@ -72,6 +72,8 @@ main_command: /lootbox
 docs_url: https://docs.1moreblock.com/custom-server-plugins/lootbox/
 player_guide: player-guide.md
 staff_guide: staff-guide.md
+staff_documents:
+  commands: commands.md
 technical_readme: technical-overview.md
 public_readme: technical-overview.md
 catalogue_json: catalogue/price-catalogue.json
@@ -83,6 +85,10 @@ official_project: true
   await writeFile(path.join(standalone, 'docs', 'staff-guide.md'), `# Lootboxes Staff Reference
 
 Use reviewed configuration and backups.
+`);
+  await writeFile(path.join(standalone, 'docs', 'commands.md'), `# Lootboxes Commands
+
+Only reviewed commands belong here.
 `);
   await mkdir(path.join(standalone, 'docs', 'catalogue'), { recursive: true });
   await writeFile(path.join(standalone, 'docs', 'catalogue', 'price-catalogue.json'), JSON.stringify({
@@ -195,6 +201,10 @@ Train the mcMMO skills that are enabled on 1MoreBlock.
   assert.match(
     await readFile(path.join(repoRoot, 'src', 'content', 'docs', 'staff-reference', 'custom-server-plugins', 'lootbox', 'index.md'), 'utf8'),
     /Lootboxes Staff Reference/,
+  );
+  assert.match(
+    await readFile(path.join(repoRoot, 'src', 'content', 'docs', 'staff-reference', 'custom-server-plugins', 'lootbox', 'commands.md'), 'utf8'),
+    /Only reviewed commands belong here/,
   );
   assert.match(
     await readFile(path.join(repoRoot, 'src', 'content', 'docs', 'player-guides', 'custom-server-plugins', 'lootbox', 'price-catalogue', 'index.mdx'), 'utf8'),

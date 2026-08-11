@@ -62,14 +62,14 @@ Statistics are local operational records. Do not publish player-level output or 
 
 ## More reference
 
-- [Complete command reference](commands.md)
-- [Permission reference](permissions.md)
-- [Placeholder reference](placeholders.md)
-- [Technical overview](technical-overview.md)
+- [Complete command reference](https://docs.1moreblock.com/staff-reference/custom-server-plugins/1mb-shopgui-plus/commands/)
+- [Permission reference](https://docs.1moreblock.com/staff-reference/custom-server-plugins/1mb-shopgui-plus/permissions/)
+- [Placeholder reference](https://docs.1moreblock.com/staff-reference/custom-server-plugins/1mb-shopgui-plus/placeholders/)
+- [Technical overview](https://docs.1moreblock.com/staff-reference/custom-server-plugins/1mb-shopgui-plus/technical-overview/)
 - [Searchable price catalogue](https://docs.1moreblock.com/player-guides/custom-server-plugins/1mb-shopgui-plus/price-catalogue/)
 
 ## Reference Links
 
 - [Player guide](/player-guides/custom-server-plugins/1mb-shopgui-plus/)
-- [Technical overview](https://github.com/mrfdev/1MB-Plugins-Docs/blob/main/project-docs/1mb-shopgui-plus/README.md)
+- [Technical overview](/staff-reference/custom-server-plugins/1mb-shopgui-plus/technical-overview/)
 - [Public source documentation](https://github.com/mrfdev/1MB-Plugins-Docs/tree/main/project-docs/1mb-shopgui-plus/docs/)

@@ -2226,7 +2226,10 @@ function additionalTechnicalLinks(entry) {
     if (entry.catalogueJsonFile) {
       links.push(`- [Searchable price catalogue](./price-catalogue/)`);
     }
-    links.push(`- [Technical overview](${root}/README.md)`);
+    const technicalDocument = entry.staffDocumentFiles.find((document) => document.slug === 'technical-overview');
+    links.push(technicalDocument
+      ? `- [Technical overview](/staff-reference/custom-server-plugins/${entry.manifest.id}/technical-overview/)`
+      : `- [Technical overview](${root}/README.md)`);
     links.push(`- [Technical documentation folder](${publicRepoTree}/project-docs/${entry.manifest.id}/docs/)`);
     return links.join('\n');
   }
@@ -2328,9 +2331,29 @@ ${staffBody || `${entry.manifest.name} technical documentation is being prepared
 
 - [Player guide](/player-guides/${definition.playerDirectory}/${entry.manifest.id}/)
 ${entry.kind === 'imported'
-    ? `- [Technical overview](${publicRepoBlob}/project-docs/${entry.manifest.id}/README.md)\n- [Public source documentation](${publicRepoTree}/project-docs/${entry.manifest.id}/docs/)`
+    ? `${entry.staffDocumentFiles.some((document) => document.slug === 'technical-overview')
+        ? `- [Technical overview](/staff-reference/custom-server-plugins/${entry.manifest.id}/technical-overview/)`
+        : `- [Technical overview](${publicRepoBlob}/project-docs/${entry.manifest.id}/README.md)`}\n- [Public source documentation](${publicRepoTree}/project-docs/${entry.manifest.id}/docs/)`
     : `- [Curated source notes](${publicRepoTree}/catalog/other-server-features/${entry.manifest.id}/)\n${entry.manifest.official_wiki ? `- [Official plugin documentation](${entry.manifest.official_wiki})` : ''}`}
 `);
+
+        for (const document of entry.staffDocumentFiles) {
+          const documentSource = await readFile(document.file, 'utf8');
+          const documentBody = stripDocumentPreamble(documentSource);
+          const heading = documentSource.match(/^#\s+(.+?)\s*$/m)?.[1] ?? `${entry.manifest.name} ${document.slug}`;
+          await writeFile(path.join(staffProjectOutput, `${document.slug}.md`), `---
+title: ${JSON.stringify(heading)}
+description: ${JSON.stringify(`Public-safe ${heading.toLowerCase()} for ${entry.manifest.name}.`)}
+---
+
+${documentBody || `${heading} documentation is being prepared.`}
+
+## Reference Links
+
+- [Staff overview](/staff-reference/custom-server-plugins/${entry.manifest.id}/)
+- [Player guide](/player-guides/${definition.playerDirectory}/${entry.manifest.id}/)
+`);
+        }
       }
 
       for (const command of commandData.playerCommands) {

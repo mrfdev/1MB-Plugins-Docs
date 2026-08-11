@@ -19,6 +19,10 @@ function manifest(overrides = {}) {
     docs_url: 'https://docs.1moreblock.com/custom-server-plugins/lootbox/',
     player_guide: 'player-guide.md',
     staff_guide: 'staff-guide.md',
+    staff_documents: {
+      commands: 'commands.md',
+      permissions: 'permissions.md',
+    },
     technical_readme: '../README.md',
     public_readme: 'technical-overview.md',
     catalogue_json: 'catalogue/price-catalogue.json',
@@ -52,6 +56,14 @@ test('manifest paths stay inside their project namespace', () => {
   assert.throws(
     () => validateManifest(manifest({ catalogue_csv: null })),
     /both catalogue_json and catalogue_csv/,
+  );
+  assert.throws(
+    () => validateManifest(manifest({ staff_documents: { '../private': 'commands.md' } })),
+    /lowercase letters/,
+  );
+  assert.throws(
+    () => validateManifest(manifest({ staff_documents: { commands: '../PRIVATE.md' } })),
+    /inside its project namespace/,
   );
 });
 

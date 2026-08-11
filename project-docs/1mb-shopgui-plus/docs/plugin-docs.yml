@@ -6,6 +6,11 @@ main_command: /buy
 docs_url: https://docs.1moreblock.com/custom-server-plugins/1mb-shopgui-plus/
 player_guide: player-guide.md
 staff_guide: staff-guide.md
+staff_documents:
+  technical-overview: technical-overview.md
+  commands: commands.md
+  permissions: permissions.md
+  placeholders: placeholders.md
 technical_readme: technical-overview.md
 public_readme: technical-overview.md
 catalogue_json: catalogue/price-catalogue.json

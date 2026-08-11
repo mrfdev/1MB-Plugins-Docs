@@ -91,9 +91,9 @@ The first-party PlaceholderAPI expansion uses the identifier `onembshopgui`. Oth
 
 ## Reference
 
-- [Player guide](player-guide.md)
-- [Staff operations](staff-guide.md)
-- [Commands](commands.md)
-- [Permissions](permissions.md)
-- [Placeholders](placeholders.md)
+- [Player guide](https://docs.1moreblock.com/player-guides/custom-server-plugins/1mb-shopgui-plus/)
+- [Staff operations](https://docs.1moreblock.com/staff-reference/custom-server-plugins/1mb-shopgui-plus/)
+- [Commands](https://docs.1moreblock.com/staff-reference/custom-server-plugins/1mb-shopgui-plus/commands/)
+- [Permissions](https://docs.1moreblock.com/staff-reference/custom-server-plugins/1mb-shopgui-plus/permissions/)
+- [Placeholders](https://docs.1moreblock.com/staff-reference/custom-server-plugins/1mb-shopgui-plus/placeholders/)
 - [Public price catalogue](https://docs.1moreblock.com/player-guides/custom-server-plugins/1mb-shopgui-plus/price-catalogue/)

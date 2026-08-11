@@ -102,6 +102,18 @@ export function validateManifest(manifest, sourceLabel = 'manifest') {
   if (manifest.staff_guide) {
     assertSafeRelativePath(manifest.staff_guide, `${sourceLabel} staff_guide`);
   }
+  if (manifest.staff_documents !== undefined) {
+    if (!manifest.staff_documents || typeof manifest.staff_documents !== 'object' || Array.isArray(manifest.staff_documents)) {
+      throw new Error(`${sourceLabel} staff_documents must be a slug-to-file object.`);
+    }
+    for (const [slug, file] of Object.entries(manifest.staff_documents)) {
+      assertProjectId(slug, `${sourceLabel} staff_documents slug`);
+      if (slug === 'index') {
+        throw new Error(`${sourceLabel} staff_documents cannot replace the staff index.`);
+      }
+      assertSafeRelativePath(file, `${sourceLabel} staff_documents.${slug}`);
+    }
+  }
   if (manifest.technical_readme) {
     assertPathRelativeToDocs(manifest.technical_readme, `${sourceLabel} technical_readme`);
   }
@@ -223,6 +235,10 @@ export async function loadAdditionalEntries(repoRoot, registry = null) {
       staffGuideFile: manifest.staff_guide
         ? path.join(namespaceRoot, 'docs', assertSafeRelativePath(manifest.staff_guide, `${project.id} staff_guide`))
         : null,
+      staffDocumentFiles: Object.entries(manifest.staff_documents ?? {}).map(([slug, file]) => ({
+        slug,
+        file: path.join(namespaceRoot, 'docs', assertSafeRelativePath(file, `${project.id} staff_documents.${slug}`)),
+      })),
       catalogueJsonFile: manifest.catalogue_json
         ? path.join(namespaceRoot, 'docs', assertSafeRelativePath(manifest.catalogue_json, `${project.id} catalogue_json`))
         : null,
@@ -250,6 +266,7 @@ export async function loadAdditionalEntries(repoRoot, registry = null) {
       staffGuideFile: manifest.staff_guide
         ? path.join(entryRoot, assertSafeRelativePath(manifest.staff_guide, `${id} staff_guide`))
         : null,
+      staffDocumentFiles: [],
     });
   }
 
@@ -267,6 +284,11 @@ export async function loadAdditionalEntries(repoRoot, registry = null) {
     }
     if (entry.staffGuideFile && !await pathIsFile(entry.staffGuideFile)) {
       throw new Error(`Staff guide is missing for ${entry.manifest.id}: ${entry.staffGuideFile}`);
+    }
+    for (const document of entry.staffDocumentFiles) {
+      if (!await pathIsFile(document.file)) {
+        throw new Error(`Staff document ${document.slug} is missing for ${entry.manifest.id}: ${document.file}`);
+      }
     }
     if (entry.catalogueJsonFile && !await pathIsFile(entry.catalogueJsonFile)) {
       throw new Error(`Catalogue JSON is missing for ${entry.manifest.id}: ${entry.catalogueJsonFile}`);
