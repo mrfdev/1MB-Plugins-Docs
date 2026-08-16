@@ -12,7 +12,7 @@ Each trade is a separate YAML file, so staff can add, clone, disable, and test i
 
 ## Migration Notes
 
-- The current jar is `1MB-CMIAPI-Exchange-v1.0.1-566-j25-26.2.jar`.
+- The current jar is `1MB-CMIAPI-Exchange-v1.0.2-569-j25-26.2.jar`.
 - The public command is `/exchange`.
 - The old standalone command `/_trade` is not registered by this feature plugin.
 - Runtime config lives at `plugins/1MB-CMIAPI/Exchange/config.yml`.
@@ -27,6 +27,18 @@ Each trade is a separate YAML file, so staff can add, clone, disable, and test i
 /exchange
 /exchange info
 /exchange help
+/exchange admin
+/exchange admin open [trade] [player]
+/exchange admin reload
+/exchange admin debug [status|commands|permissions|placeholders|config|all]
+/exchange admin create <id>
+/exchange admin clone <source> <newId>
+/exchange admin delete <trade>
+/exchange admin capture floatie-token|requirements|icon|reward <trade>
+/exchange admin set <field> <trade> <value>
+/exchange admin toggle <trade> <true|false>
+/exchange admin command add|clear <trade> <open|info|success|fail> [command]
+/exchange admin test <trade> [player]
 /exchange open [trade] [player]
 /exchange open category <category> [player]
 /exchange reload
@@ -75,6 +87,8 @@ Each trade is a separate YAML file, so staff can add, clone, disable, and test i
 ```text
 /exchange
 /exchange info
+/exchange admin
+/exchange admin create winter_event
 /exchange open summer_event
 /exchange open category vote
 /exchange reload
@@ -106,6 +120,8 @@ Each trade is a separate YAML file, so staff can add, clone, disable, and test i
 /exchange command clear summer_event fail
 /exchange test summer_event mrfloris
 ```
+
+`/exchange admin` is the preferred administration namespace. All existing direct management forms, including `/exchange create`, `/exchange set`, and `/exchange reload`, remain supported for compatibility.
 
 ## Permissions
 

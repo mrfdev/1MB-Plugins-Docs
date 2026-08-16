@@ -36,6 +36,7 @@ DiscordChat's overview, rewards, confirmation, pulse, tools, and milestone GUIs 
 | `/discordchat admin award <player\|uuid> xp <amount> [reason]` | Adds audited XP, immediately converts complete point units, and reports the converted amount. The XP is clamped by `manual-awards.max-exp`. | `/discordchat admin award mrfloris xp 50 community help` |
 | `/discordchat admin award <player\|uuid> points <amount> [reason]` | Adds audited spendable points, clamped by `manual-awards.max-points`. | `/discordchat admin award mrfloris points 25 event helper` |
 | `/discordchat admin collectible [player] [amount]` | Creates stamped DiscordChat keepsake items for building the collectible reward kit. | `/discordchat admin collectible mrfloris 8` |
+| `/discordchat admin reload` | Reloads configuration, translations, reward definitions, and live runtime state. | `/discordchat admin reload` |
 | `/discordchat admin grantpoints <player\|uuid> <amount> [reason]` | Adds spendable points with audit logging. | `/discordchat admin grantpoints mrfloris 100 event-prize` |
 | `/discordchat admin takepoints <player\|uuid> <amount> [reason]` | Removes spendable points with audit logging. | `/discordchat admin takepoints mrfloris 50 correction` |
 | `/discordchat admin transaction status <player\|uuid> [transaction-id]` | Shows the active or most recent persisted reward transaction, command progress, attempts, retry safety, and failure reason. | `/discordchat admin transaction status mrfloris` |

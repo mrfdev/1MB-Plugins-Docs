@@ -20,6 +20,7 @@ Detailed module references remain available in [1MBStaffMsg](staffmsg.md) and [N
 ```text
 /teammsg status
 /teammsg module <staffmsg|notablemsg> <true|false>
+/teammsg admin reload
 /teammsg reload
 /teammsg debug true
 /teammsg debug false

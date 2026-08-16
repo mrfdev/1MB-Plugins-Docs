@@ -154,12 +154,13 @@ The old `/1mbcmi permissions ...` command is no longer listed as a working analy
 
 ## Feature Debug Fallback
 
-Feature plugins that do not implement their own local debug command inherit a shared fallback from `1MB-CMIAPI-Lib`. The fallback is locked to that feature's admin permission, usually `onembcmi.<plugin>.admin`, and exposes:
+Feature plugins inherit shared support routes from `1MB-CMIAPI-Lib`. The fallback trusts direct server console and is otherwise locked to that feature's admin permission, usually `onembcmi.<plugin>.admin`, and exposes:
 
 ```text
 /<plugin> debug
 /<plugin> debug status
 /<plugin> debug health
+/<plugin> debug reload
 /<plugin> debug commands [page]
 /<plugin> debug permissions [page]
 /<plugin> debug placeholders [page]
@@ -169,7 +170,7 @@ Feature plugins that do not implement their own local debug command inherit a sh
 /<plugin> debug all
 ```
 
-The overview page shows the plugin name, technical introduction, category, docs URL, full `/1mbcmi debug plugin <id> all` support command, version/build, target PaperMC version, exact compiled Paper API coordinate/channel/build, Java target, runtime Java version, Bukkit/Paper runtime API string, server engine string, active/dormant behavior state, and links to the paginated subpages. The health page shows config default repair status, missing keys, validation issues, and metadata counts. In game, shared debug lists stay paginated; console senders receive all shared paginated rows in one command. Plugins with a richer custom debug command keep their own behavior, while the lifecycle command is intercepted consistently before custom debug handling.
+The overview page shows the plugin name, technical introduction, category, docs URL, full `/1mbcmi debug plugin <id> all` support command, version/build, target PaperMC version, exact compiled Paper API coordinate/channel/build, Java target, runtime Java version, Bukkit/Paper runtime API string, server engine string, active/dormant behavior state, and links to the paginated subpages. The health page shows config default repair status, missing keys, validation issues, and metadata counts. In game, shared debug lists stay paginated; console senders receive all shared paginated rows in one command. `debug reload` rereads configuration and translations and invokes the feature's live runtime reload hook, even when that feature owns richer custom debug pages. Prefer the documented `admin reload` route where one exists; the debug form is the consistent safety net. These are narrow feature reloads, not Paper's global `/reload`. Changes to plugin jars, `plugin.yml` command registration, or dependency availability can still require a clean server restart.
 
 `debug enable false` leaves the Bukkit plugin loaded and green but shuts down gameplay behavior; `debug enable true` starts it again without a restart. Both transitions atomically save `enabled:` in the feature config. Console, the feature admin permission, or `onembcmi.global.config.set` may change this state. While dormant, only `info`, `help`, safe shared `debug`, and this lifecycle control are available.
 
@@ -825,6 +826,11 @@ Boosters:
 /rate reminders on
 /rate info
 /rate help
+/rate admin
+/rate admin status
+/rate admin start all 1h 2
+/rate admin stop all
+/rate admin reload
 /rate start mcmmo 1h 2
 /rate start jobs 30m 2.5
 /rate start all 1h 2
@@ -850,6 +856,8 @@ Boosters:
 ```
 
 `/rate reload` reloads Boosters config and its editable `plugins/1MB-CMIAPI/Boosters/translations/locale_en.yml` text without restarting the server.
+
+`/rate admin` is the preferred administration namespace; the direct `start`, `stop`, and `reload` forms remain compatibility aliases.
 
 NameMC:
 
@@ -882,6 +890,18 @@ Exchange:
 /exchange
 /exchange info
 /exchange help
+/exchange admin
+/exchange admin open summer_event mrfloris
+/exchange admin reload
+/exchange admin debug status
+/exchange admin create winter_event
+/exchange admin clone summer_event autumn_event
+/exchange admin delete winter_event
+/exchange admin capture requirements summer_event
+/exchange admin set max summer_event 1
+/exchange admin toggle summer_event true
+/exchange admin command clear summer_event fail
+/exchange admin test summer_event mrfloris
 /exchange open summer_event
 /exchange open category vote
 /exchange reload
@@ -921,6 +941,8 @@ Exchange:
 /exchange command clear summer_event fail
 /exchange test summer_event mrfloris
 ```
+
+`/exchange admin` is the preferred administration namespace; the existing direct management forms remain compatibility aliases.
 
 VoteTokens:
 
@@ -991,6 +1013,7 @@ DiscordChat:
 /discordchat admin transaction refund mrfloris confirm
 /discordchat admin reset mrfloris confirm
 /discordchat admin smoke
+/discordchat admin reload
 /discordchat reload
 /discordchat debug
 /discordchat debug hooks
@@ -1092,6 +1115,7 @@ Spawners:
 /spawners help
 /spawners progress
 /spawners reload
+/spawners admin reload
 /spawners admin give mrfloris rabbit 1
 /spawners admin give mrfloris cow 4
 /spawners admin gui
@@ -1230,6 +1254,7 @@ Themed Hunts (`CoconutHunt` jar):
 /hunt ghost [arguments...]
 /hunt doors [arguments...]
 /hunt admin status
+/hunt admin reload
 /hunt admin preflight [all|coconut|ghost|doors]
 /hunt admin modules
 /hunt admin module <coconut|ghost|doors> <on|off>
@@ -1554,6 +1579,7 @@ BedrockChatBridge:
 /bedrockchatbridge help
 /bedrockchatbridge debug status
 /bedrockchatbridge debug health
+/bedrockchatbridge debug reload
 /bedrockchatbridge debug hooks
 /bedrockchatbridge debug config
 /bedrockchatbridge debug set config debug true
@@ -1594,6 +1620,7 @@ TeamMsg lifecycle and module controls:
 /teammsg module staffmsg false
 /teammsg module notablemsg true
 /teammsg module notablemsg false
+/teammsg admin reload
 /teammsg reload
 /teammsg debug true
 /teammsg debug false
@@ -1670,6 +1697,7 @@ ContentGuard lifecycle and module controls:
 /contentguard module lab false
 /contentguard module guard true
 /contentguard module guard false
+/contentguard admin reload
 /contentguard reload
 /contentguard debug true
 /contentguard debug false

@@ -5,10 +5,12 @@ This namespace is a public documentation-only copy from the source project regis
 - Project: `1MB-CMIAPI`
 - Project id: `cmi-api`
 - Source repository: `mrfdev/1MB-CMIAPI`
-- Source commit: `191f3dd1`
-- Source state: `local changes present at sync time`
-- Copied files: `README.md` and `docs/`
-- Source-declared private docs exclusions: `docs/economy-review`
+- Source commit: `7556026b`
+- Source state: `clean`
+- Public README source: `README.md`
+- Copied files: public `README.md` and `docs/`
+- Source-declared private docs exclusions: `docs/1mb-library-migration-plan.md`, `docs/adr`, `docs/agents`, `docs/compatibility-baselines/live-tested-working-2026-08-15.md`, `docs/economy-review`, `docs/feature-contract-reviews`, `docs/feature-contracts.md`
+- Public-repository required private docs exclusions: `docs/1mb-library-migration-plan.md`, `docs/adr`, `docs/agents`, `docs/compatibility-baselines/live-tested-working-2026-08-15.md`, `docs/economy-review`, `docs/feature-contract-reviews`, `docs/feature-contracts.md`
 - Excluded on purpose: source code, jars, servers, databases, task logs, and internal checklists
 
 Only `project-docs/cmi-api/` is replaced when this source is synchronized. Other project namespaces remain untouched.

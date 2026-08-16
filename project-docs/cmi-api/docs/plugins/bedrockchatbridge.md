@@ -34,6 +34,7 @@ The copy is staged through a temporary sibling and moved into place atomically w
 /bedrockchatbridge help
 /bedrockchatbridge debug status
 /bedrockchatbridge debug health
+/bedrockchatbridge debug reload
 /bedrockchatbridge debug hooks
 /bedrockchatbridge debug config
 /bedrockchatbridge debug set config <path> <value>
@@ -65,7 +66,7 @@ Keep `require-cmi-paper-chat` enabled. Turning the feature dormant leaves Java a
 On a disposable Paper server with CMI Paper chat and Floodgate enabled:
 
 1. Start cleanly and require the `Bridge active` listener-order log.
-2. Grant `onembcmi.bedrockchatbridge.admin`, then run `/bedrockchatbridge debug status` and `/bedrockchatbridge debug hooks`.
+2. Grant `onembcmi.bedrockchatbridge.admin`, then run `/bedrockchatbridge debug status`, `/bedrockchatbridge debug reload`, and `/bedrockchatbridge debug hooks`.
 3. Run `/bedrockchatbridge debug enable false`, confirm the bridge becomes dormant, then enable it and require another safe listener-order result.
 4. Send one Java message and one Floodgate message. Java delivery must be untouched; the Floodgate message must appear once per viewer with CMI's viewer-aware rendering.
 5. Stop cleanly and require no pending-delivery, scheduler, listener, or linkage errors.

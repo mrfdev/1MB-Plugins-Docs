@@ -316,6 +316,7 @@ Canonical production selection:
 
 ```text
 /hunt admin event list
+/hunt admin reload
 /hunt admin event status <event-id>
 /hunt admin event activate <event-id> --dry-run
 /hunt admin event activate <event-id> --confirm
@@ -345,6 +346,7 @@ The text-only player inspection works from chat and console. Its day pages compa
 | `onembcmi.GhostHunt.admin.rewards` | false | Retry an eligible unresolved direct Halloween kit delivery; finalized deliveries cannot be replayed. |
 | `onembcmi.GhostHunt.admin.reset` | false | Run guarded player or debug-event resets. |
 | `onembcmi.GhostHunt.admin.report` | false | Export event reports. |
+| `onembcmi.Hunt.admin.reload` | false | Reload the Event Hunts host configuration, registries, and all modules. |
 | `onembcmi.Hunt.admin.preflight` | false | Run the read-only aggregate or per-module readiness report. |
 | `onembcmi.Hunt.admin.event` | false | List, preflight, and activate production editions with `/hunt`. |
 
@@ -449,10 +451,10 @@ Paper TextDisplays are private, transient, non-persistent, and invisible by defa
 The shared jar is:
 
 ```text
-1MB-CMIAPI-EventHunts-v1.0.1-566-j25-26.2.jar
+1MB-CMIAPI-EventHunts-v1.0.2-569-j25-26.2.jar
 ```
 
-It targets Java 25 and Paper 26.2 stable build 105 or newer. CMI, CMILib, and `1MB-CMIAPI-Lib` are required. Deploy the CoconutHunt and shared-library jars from the same build; startup fails closed with one compatibility diagnostic if the shared library lacks the atomic playerdata API. PlaceholderAPI, LuckPerms, Vault, and MobHat are optional. The Halloween profile defines only its five launch rewards by default and does not require a Ghost shop offer.
+It targets Java 25 and Paper 26.2 stable build 111 or newer. CMI, CMILib, and `1MB-CMIAPI-Lib` are required. Deploy the CoconutHunt and shared-library jars from the same build; startup fails closed with one compatibility diagnostic if the shared library lacks the atomic playerdata API. PlaceholderAPI, LuckPerms, Vault, and MobHat are optional. The Halloween profile defines only its five launch rewards by default and does not require a Ghost shop offer.
 
 - [ ] Confirm October 30 through November 2, 2026 and the inclusive November 9 claim deadline.
 - [ ] Confirm the production world is named `halloween`, any cuboid is correct, and the CMI warp named `halloween` exists and lands safely there.

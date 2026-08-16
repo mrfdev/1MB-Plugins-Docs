@@ -123,6 +123,9 @@ Do not publish the upstream generic island or shortened OneBlock aliases as 1Mor
 - Verify commands, permissions, placeholders, versions, and behavior from the source project.
 - Publish player guidance and public-safe staff administration details only.
 - Never publish credentials, private endpoints, paid files, databases, exploit-sensitive values, source code, or internal incident procedures.
+- Keep internal plans, ADRs, agent instructions, task/review records, live operational baselines, and similar engineering material in the private source. Declare every private path in the source repository's `.public-docs-excludes`, relative to `docs/`.
+- For high-risk sources, mirror the mandatory exclusions in `docs-sources.json` as `requiredPrivateDocs`. Synchronization must fail if the source removes or narrows a required exclusion, and validation must fail if a guarded path appears in `project-docs/`.
+- Treat `.gitignore` as defense in depth only. It cannot prevent a sync script or site generator from reading a file that exists in the working tree.
 - Keep source documentation in its source project; do not hand-edit its mirrored copy.
 - Prefer `public_readme` when a source root README contains private development, release, or operational evidence.
 - Do not hand-edit generated Starlight pages. Change the source guide and regenerate.
@@ -130,11 +133,15 @@ Do not publish the upstream generic island or shortened OneBlock aliases as 1Mor
 
 ## Publishing Checklist
 
-1. Commit and push the source project's code and documentation.
-2. Pull the latest `1MB-Plugins-Docs/main`.
-3. Import only the changed project namespace.
-4. Run `npm test`.
-5. Run `npm run docs:generate`, `npm run docs:check`, and `npm run docs:validate`.
-6. Run `npm run build` and review the complete diff.
-7. Commit and push the public repository separately.
-8. Confirm the GitHub Pages workflow and live canonical page.
+1. Classify every new or changed source document as public-safe or private before synchronization.
+2. Update `.public-docs-excludes` and any matching `requiredPrivateDocs` policy before syncing.
+3. Commit and push the source project's code and documentation.
+4. Pull the latest `1MB-Plugins-Docs/main`.
+5. Import only the changed project namespace.
+6. Confirm `SYNCED_FROM.md` lists the expected source and required exclusions.
+7. Run `npm test`.
+8. Run `npm run docs:generate`, `npm run docs:check`, and `npm run docs:validate`.
+9. Run `npm run build` and review the complete diff, including removed and newly added files.
+10. Confirm no guarded internal path exists under `project-docs/` or generated site output.
+11. Commit and push the public repository separately.
+12. Confirm the GitHub Pages workflow and live canonical page.

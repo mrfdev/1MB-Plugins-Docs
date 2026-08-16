@@ -68,6 +68,12 @@ async function validateNamespaces(registry) {
     if (!await pathIsDirectory(path.join(namespace, 'docs'))) {
       problem(`Missing project-docs/${project.id}/docs/`);
     }
+    for (const requiredPrivateDoc of project.requiredPrivateDocs ?? []) {
+      const guardedTarget = path.join(namespace, 'docs', requiredPrivateDoc);
+      if (await pathIsFile(guardedTarget) || await pathIsDirectory(guardedTarget)) {
+        problem(`Private documentation must not be published: project-docs/${project.id}/docs/${requiredPrivateDoc}`);
+      }
+    }
     const markerFile = path.join(namespace, 'SYNCED_FROM.md');
     if (await pathIsFile(markerFile)) {
       const marker = await readFile(markerFile, 'utf8');
