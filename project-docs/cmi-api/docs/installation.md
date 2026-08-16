@@ -10,66 +10,66 @@ Paper loads normal plugin jars from the top-level server `/plugins/` directory, 
 plugins/
   CMI-<version>.jar
   CMILib<version>.jar
-  1MB-Lib-Core-v1.0.3-571-j25-26.2.jar
-  1MB-Lib-AntiFire-v1.0.3-571-j25-26.2.jar
-  1MB-Lib-AFKShrine-v1.0.3-571-j25-26.2.jar
-  1MB-Lib-RecordingMode-v1.0.3-571-j25-26.2.jar
-  1MB-Lib-SellStreaks-v1.0.3-571-j25-26.2.jar
-  1MB-Lib-ScheduledTips-v1.0.3-571-j25-26.2.jar
-  1MB-Lib-Visit-v1.0.3-571-j25-26.2.jar
-  1MB-Lib-PassportDiscovery-v1.0.3-571-j25-26.2.jar
-  1MB-Lib-SocialGatherings-v1.0.3-571-j25-26.2.jar
-  1MB-Lib-JourneyMap-v1.0.3-571-j25-26.2.jar
-  1MB-Lib-KitStreaks-v1.0.3-571-j25-26.2.jar
-  1MB-Lib-Nick-v1.0.3-571-j25-26.2.jar
-  1MB-Lib-EmoteMenu-v1.0.3-571-j25-26.2.jar
-  1MB-Lib-PvPToggle-v1.0.3-571-j25-26.2.jar
-  1MB-Lib-Boosters-v1.0.3-571-j25-26.2.jar
-  1MB-Lib-NameMC-v1.0.3-571-j25-26.2.jar
-  1MB-Lib-Exchange-v1.0.3-571-j25-26.2.jar
-  1MB-Lib-VoteTokens-v1.0.3-571-j25-26.2.jar
-  1MB-Lib-DiscordChat-v1.0.3-571-j25-26.2.jar
-  1MB-Lib-GameTypes-v1.0.3-571-j25-26.2.jar
-  1MB-Lib-BirthdayLanterns-v1.0.3-571-j25-26.2.jar
-  1MB-Lib-LavaBoots-v1.0.3-571-j25-26.2.jar
-  1MB-Lib-Spawners-v1.0.3-571-j25-26.2.jar
-  1MB-Lib-Collect-v1.0.3-571-j25-26.2.jar
-  1MB-Lib-EventHunts-v1.0.3-571-j25-26.2.jar
-  1MB-Lib-DropParty-v1.0.3-571-j25-26.2.jar
-  1MB-Lib-Appreciation-v1.0.3-571-j25-26.2.jar
-  1MB-Lib-Forage-v1.0.3-571-j25-26.2.jar
-  1MB-Lib-AutoSell-v1.0.3-571-j25-26.2.jar
-  1MB-Lib-MobHat-v1.0.3-571-j25-26.2.jar
-  1MB-Lib-PlayerTodo-v1.0.3-571-j25-26.2.jar
-  1MB-Lib-Refer-v1.0.3-571-j25-26.2.jar
-  1MB-Lib-TPAuto-v1.0.3-571-j25-26.2.jar
-  1MB-Lib-Menu-v1.0.3-571-j25-26.2.jar
-  1MB-Lib-StaffCenter-v1.0.3-571-j25-26.2.jar
-  1MB-Lib-Profile-v1.0.3-571-j25-26.2.jar
-  1MB-Lib-ContentGuard-v1.0.3-571-j25-26.2.jar
-  1MB-Lib-WarningLens-v1.0.3-571-j25-26.2.jar
-  1MB-Lib-TeamMsg-v1.0.3-571-j25-26.2.jar
-  1MB-Lib-CmdCostDashboard-v1.0.3-571-j25-26.2.jar
-  1MB-Lib-CMIConfig-v1.0.3-571-j25-26.2.jar
-  1MB-Lib-ConsoleNoiseRouter-v1.0.3-571-j25-26.2.jar
-  1MB-Lib-EconomyGuardian-v1.0.3-571-j25-26.2.jar
-  1MB-Lib-StartupDoctor-v1.0.3-571-j25-26.2.jar
-  1MB-Lib-UpdateSmoke-v1.0.3-571-j25-26.2.jar
-  1MB-Lib-PluginVersions-v1.0.3-571-j25-26.2.jar
-  1MB-Lib-Placeholders-v1.0.3-571-j25-26.2.jar
-  1MB-Lib-Potions-v1.0.3-571-j25-26.2.jar
-  1MB-Lib-Upgrade-v1.0.3-571-j25-26.2.jar
-  1MB-Lib-EndCrystals-v1.0.3-571-j25-26.2.jar
-  1MB-Lib-WorldSnapshot-v1.0.3-571-j25-26.2.jar
-  1MB-Lib-SparkReviewer-v1.0.3-571-j25-26.2.jar
-  1MB-Lib-Hoppers-v1.0.3-571-j25-26.2.jar
-  1MB-Lib-EventRecorder-v1.0.3-571-j25-26.2.jar
-  1MB-Lib-BedrockChatBridge-v1.0.3-571-j25-26.2.jar
-  1MB-Lib-CMIProbe-v1.0.3-571-j25-26.2.jar
-  1MB-Lib-CMIDatabase-v1.0.3-571-j25-26.2.jar
-  1MB-Lib-PermissionProbe-v1.0.3-571-j25-26.2.jar
-  1MB-Lib-WarpAudit-v1.0.3-571-j25-26.2.jar
-  1MB-Lib-WorthDrift-v1.0.3-571-j25-26.2.jar
+  1MB-Lib-Core-v1.0.3-572-j25-26.2.jar
+  1MB-Lib-AntiFire-v1.0.3-572-j25-26.2.jar
+  1MB-Lib-AFKShrine-v1.0.3-572-j25-26.2.jar
+  1MB-Lib-RecordingMode-v1.0.3-572-j25-26.2.jar
+  1MB-Lib-SellStreaks-v1.0.3-572-j25-26.2.jar
+  1MB-Lib-ScheduledTips-v1.0.3-572-j25-26.2.jar
+  1MB-Lib-Visit-v1.0.3-572-j25-26.2.jar
+  1MB-Lib-PassportDiscovery-v1.0.3-572-j25-26.2.jar
+  1MB-Lib-SocialGatherings-v1.0.3-572-j25-26.2.jar
+  1MB-Lib-JourneyMap-v1.0.3-572-j25-26.2.jar
+  1MB-Lib-KitStreaks-v1.0.3-572-j25-26.2.jar
+  1MB-Lib-Nick-v1.0.3-572-j25-26.2.jar
+  1MB-Lib-EmoteMenu-v1.0.3-572-j25-26.2.jar
+  1MB-Lib-PvPToggle-v1.0.3-572-j25-26.2.jar
+  1MB-Lib-Boosters-v1.0.3-572-j25-26.2.jar
+  1MB-Lib-NameMC-v1.0.3-572-j25-26.2.jar
+  1MB-Lib-Exchange-v1.0.3-572-j25-26.2.jar
+  1MB-Lib-VoteTokens-v1.0.3-572-j25-26.2.jar
+  1MB-Lib-DiscordChat-v1.0.3-572-j25-26.2.jar
+  1MB-Lib-GameTypes-v1.0.3-572-j25-26.2.jar
+  1MB-Lib-BirthdayLanterns-v1.0.3-572-j25-26.2.jar
+  1MB-Lib-LavaBoots-v1.0.3-572-j25-26.2.jar
+  1MB-Lib-Spawners-v1.0.3-572-j25-26.2.jar
+  1MB-Lib-Collect-v1.0.3-572-j25-26.2.jar
+  1MB-Lib-EventHunts-v1.0.3-572-j25-26.2.jar
+  1MB-Lib-DropParty-v1.0.3-572-j25-26.2.jar
+  1MB-Lib-Appreciation-v1.0.3-572-j25-26.2.jar
+  1MB-Lib-Forage-v1.0.3-572-j25-26.2.jar
+  1MB-Lib-AutoSell-v1.0.3-572-j25-26.2.jar
+  1MB-Lib-MobHat-v1.0.3-572-j25-26.2.jar
+  1MB-Lib-PlayerTodo-v1.0.3-572-j25-26.2.jar
+  1MB-Lib-Refer-v1.0.3-572-j25-26.2.jar
+  1MB-Lib-TPAuto-v1.0.3-572-j25-26.2.jar
+  1MB-Lib-Menu-v1.0.3-572-j25-26.2.jar
+  1MB-Lib-StaffCenter-v1.0.3-572-j25-26.2.jar
+  1MB-Lib-Profile-v1.0.3-572-j25-26.2.jar
+  1MB-Lib-ContentGuard-v1.0.3-572-j25-26.2.jar
+  1MB-Lib-WarningLens-v1.0.3-572-j25-26.2.jar
+  1MB-Lib-TeamMsg-v1.0.3-572-j25-26.2.jar
+  1MB-Lib-CmdCostDashboard-v1.0.3-572-j25-26.2.jar
+  1MB-Lib-CMIConfig-v1.0.3-572-j25-26.2.jar
+  1MB-Lib-ConsoleNoiseRouter-v1.0.3-572-j25-26.2.jar
+  1MB-Lib-EconomyGuardian-v1.0.3-572-j25-26.2.jar
+  1MB-Lib-StartupDoctor-v1.0.3-572-j25-26.2.jar
+  1MB-Lib-UpdateSmoke-v1.0.3-572-j25-26.2.jar
+  1MB-Lib-PluginVersions-v1.0.3-572-j25-26.2.jar
+  1MB-Lib-Placeholders-v1.0.3-572-j25-26.2.jar
+  1MB-Lib-Potions-v1.0.3-572-j25-26.2.jar
+  1MB-Lib-Upgrade-v1.0.3-572-j25-26.2.jar
+  1MB-Lib-EndCrystals-v1.0.3-572-j25-26.2.jar
+  1MB-Lib-WorldSnapshot-v1.0.3-572-j25-26.2.jar
+  1MB-Lib-SparkReviewer-v1.0.3-572-j25-26.2.jar
+  1MB-Lib-Hoppers-v1.0.3-572-j25-26.2.jar
+  1MB-Lib-EventRecorder-v1.0.3-572-j25-26.2.jar
+  1MB-Lib-BedrockChatBridge-v1.0.3-572-j25-26.2.jar
+  1MB-Lib-CMIProbe-v1.0.3-572-j25-26.2.jar
+  1MB-Lib-CMIDatabase-v1.0.3-572-j25-26.2.jar
+  1MB-Lib-PermissionProbe-v1.0.3-572-j25-26.2.jar
+  1MB-Lib-WarpAudit-v1.0.3-572-j25-26.2.jar
+  1MB-Lib-WorthDrift-v1.0.3-572-j25-26.2.jar
 ```
 
 The common `1MB-Lib-` prefix keeps the project JARs together when sorted by filename.
@@ -124,7 +124,7 @@ Console, the feature's `onembcmi.<feature-id>.admin` permission, or `onembcmi.gl
 
 This is a missing-value default, not an upgrade override. Existing `enabled: true` and `enabled: false` values are preserved. The project test server can therefore keep all of its existing beta features enabled while a fresh live installation fails closed. New feature ids also default to disabled until the live allowlist is deliberately updated and tested.
 
-Do not run `gradle syncBuiltJarsToProjectServer` for v1.0.3 until the deployment workflow manages both `1MB-CMIAPI-*` and `1MB-Lib-*` safely; the same hold applies to the standalone copy script. After that gate and testing the exact server folder, `gradle stageTestedJarsForLive` creates a clean `build/tested-jars/live/` handoff set for manual live deployment. The project does not use RCON for deployment.
+Use `gradle planProjectJarSync` first to validate the complete v1.0.3 candidate set and report how many legacy/current active files would be replaced without mutating the server. With Paper stopped, `gradle syncBuiltJarsToProjectServer` recoverably replaces both `1MB-CMIAPI-*` and `1MB-Lib-*` families as one set. After testing that exact server folder, `gradle stageTestedJarsForLive` creates a verified `build/tested-jars/live/` handoff set for manual live deployment. The staging task refuses legacy, stale, incomplete, unexpected, or duplicate identity sets and preserves the previous handoff on failure. The project does not use RCON for deployment.
 
 ## Runtime Data
 
