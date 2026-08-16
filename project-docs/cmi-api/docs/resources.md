@@ -24,7 +24,7 @@ This project builds companion plugins for CMI using CMI-API, CMILib, and modern 
 
 ## Project
 
-- Private project repository: https://github.com/mrfdev/1MB-CMIAPI
+- Private project repository: https://github.com/mrfdev/1MB-Library
 
 ## Optional Integrations
 

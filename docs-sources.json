@@ -38,7 +38,7 @@
       "name": "1MB Library",
       "category": "one-more-block-feature",
       "adapter": "cmi-api",
-      "repository": "mrfdev/1MB-CMIAPI",
+      "repository": "mrfdev/1MB-Library",
       "defaultSource": "../CMI-API",
       "requiredPrivateDocs": [
         "1mb-library-migration-plan.md",

@@ -4,7 +4,7 @@ Use this prompt when preparing a standalone 1MoreBlock project such as Lootbox, 
 
 ## Prerequisite
 
-The namespace-safe multi-project importer is live in `/Users/floris/Projects/Codex/1MB-Plugins-Docs`. Follow the source-first publication order in this prompt. Never use the CMI-only `npm run docs:sync` command for a standalone project.
+The namespace-safe multi-project importer is maintained in the separate `1MB-Plugins-Docs` checkout. Follow the source-first publication order in this prompt. Never use the CMI-only `npm run docs:sync` command for a standalone project.
 
 ## Reusable Prompt
 
@@ -141,7 +141,7 @@ Use this exact publication order:
 4. Review, commit, and push the source project first.
 5. Confirm the source project's Git working tree is clean. Do not import docs from
    an uncommitted source tree.
-6. In `/Users/floris/Projects/Codex/1MB-Plugins-Docs`, pull the latest public `main`
+6. In the local `1MB-Plugins-Docs` checkout, pull the latest public `main`
    with `git pull --ff-only origin main` immediately before importing.
 7. Import only this source project with:
 

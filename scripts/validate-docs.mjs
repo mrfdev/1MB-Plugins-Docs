@@ -6,6 +6,7 @@ import { fileURLToPath } from 'node:url';
 import {
   CATEGORY_DEFINITIONS,
   assertPathRelativeToDocs,
+  findLocalUserProfilePaths,
   loadAdditionalEntries,
   loadRegistry,
   pathIsDirectory,
@@ -79,6 +80,38 @@ async function validateNamespaces(registry) {
       const marker = await readFile(markerFile, 'utf8');
       if (!marker.includes(`Project id: \`${project.id}\``)) {
         problem(`Sync marker does not identify project ${project.id}.`);
+      }
+    }
+  }
+}
+
+async function listPublishedTextFiles(root) {
+  const files = [];
+  for (const entry of await readdir(root, { withFileTypes: true })) {
+    const absolute = path.join(root, entry.name);
+    if (entry.isDirectory()) {
+      files.push(...await listPublishedTextFiles(absolute));
+    } else if (entry.isFile() && /\.(?:md|mdx|json|ya?ml|txt|csv)$/i.test(entry.name)) {
+      files.push(absolute);
+    }
+  }
+  return files;
+}
+
+async function validatePublishedPrivacy(registry) {
+  for (const project of registry.projects.filter(
+    (candidate) => (candidate.requiredPrivateDocs ?? []).length > 0,
+  )) {
+    const namespace = path.join(repoRoot, 'project-docs', project.id);
+    if (!await pathIsDirectory(namespace)) {
+      continue;
+    }
+    for (const file of await listPublishedTextFiles(namespace)) {
+      const source = await readFile(file, 'utf8');
+      for (const localPath of findLocalUserProfilePaths(source)) {
+        problem(
+          `Published documentation must not contain local user-profile path ${localPath}: ${path.relative(repoRoot, file)}`,
+        );
       }
     }
   }
@@ -241,6 +274,7 @@ async function validateGeneratedCategoryOwnership(entries) {
 async function main() {
   const registry = await loadRegistry(repoRoot);
   await validateNamespaces(registry);
+  await validatePublishedPrivacy(registry);
 
   let entries = [];
   try {
