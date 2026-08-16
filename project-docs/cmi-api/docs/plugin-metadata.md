@@ -28,12 +28,12 @@ Each plugin should register:
 id: afkshrine
 name: AFKShrine
 category: player-fun
-version: 1.0.1
-build: 566
+version: 1.0.2
+build: 569
 java-target: 25
 paper-target: 26.2
 jar-prefix: 1MB-CMIAPI
-jar-name: 1MB-CMIAPI-AFKShrine-v1.0.1-566-j25-26.2.jar
+jar-name: 1MB-CMIAPI-AFKShrine-v1.0.2-569-j25-26.2.jar
 repo: https://github.com/mrfdev/1MB-CMIAPI
 public-docs: https://docs.1moreblock.com
 dependencies: CMI, CMILib, 1MB-CMIAPI-LIB

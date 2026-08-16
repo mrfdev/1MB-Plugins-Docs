@@ -96,6 +96,8 @@ Validation rejects malformed manifests, unsafe IDs and paths, duplicate IDs and 
 
 This repository intentionally excludes plugin source code, built jars, private server folders, databases, paid plugin files, internal task logs, credentials, and exploit-sensitive operational notes.
 
+High-risk sources use two matching controls: the private source declares `.public-docs-excludes`, and this public repository records mandatory `requiredPrivateDocs` entries in `docs-sources.json`. Synchronization refuses a weakened source policy, validation rejects guarded paths that appear in the public namespace, and `.gitignore` provides an additional staging safeguard. See [Adding Documentation Sources](docs/adding-projects.md#public-safety-rules).
+
 ## GitHub Pages
 
 Pushes to `main` run the Starlight build and deploy GitHub Pages.

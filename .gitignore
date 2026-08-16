@@ -25,3 +25,13 @@ todo.*.log
 servers/
 build/
 out/
+
+# Defense in depth for private source documentation. The sync and validation
+# policies must reject these paths before Git ignore rules are relevant.
+project-docs/cmi-api/docs/1mb-library-migration-plan.md
+project-docs/cmi-api/docs/adr/
+project-docs/cmi-api/docs/agents/
+project-docs/cmi-api/docs/compatibility-baselines/live-tested-working-2026-08-15.md
+project-docs/cmi-api/docs/economy-review/
+project-docs/cmi-api/docs/feature-contract-reviews/
+project-docs/cmi-api/docs/feature-contracts.md

@@ -198,6 +198,22 @@ export async function loadRegistry(repoRoot) {
     if (path.isAbsolute(project.defaultSource)) {
       throw new Error(`Registry project ${project.id} defaultSource must be a portable relative path.`);
     }
+    if (project.requiredPrivateDocs !== undefined) {
+      if (!Array.isArray(project.requiredPrivateDocs)) {
+        throw new Error(`Registry project ${project.id} requiredPrivateDocs must be an array.`);
+      }
+      const privatePaths = new Set();
+      for (const value of project.requiredPrivateDocs) {
+        const normalized = assertSafeRelativePath(value, `Registry project ${project.id} requiredPrivateDocs entry`);
+        if (normalized === '.') {
+          throw new Error(`Registry project ${project.id} requiredPrivateDocs cannot exclude all docs.`);
+        }
+        if (privatePaths.has(normalized)) {
+          throw new Error(`Registry project ${project.id} has duplicate requiredPrivateDocs entry: ${normalized}`);
+        }
+        privatePaths.add(normalized);
+      }
+    }
   }
   return registry;
 }

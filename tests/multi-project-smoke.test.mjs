@@ -37,6 +37,8 @@ test('standalone imports and curated features preserve the CMI namespace', async
   const cmiReadme = path.join(repoRoot, 'project-docs', 'cmi-api', 'README.md');
 
   const cmiSource = path.join(root, 'CMI-API');
+  const registry = JSON.parse(await readFile(path.join(repoRoot, 'docs-sources.json'), 'utf8'));
+  const cmiProject = registry.projects.find((project) => project.id === 'cmi-api');
   await mkdir(cmiSource, { recursive: true });
   await cp(path.join(repoRoot, 'project-docs', 'cmi-api', 'docs'), path.join(cmiSource, 'docs'), { recursive: true });
   await writeFile(path.join(cmiSource, 'README.md'), '# Refreshed CMI Technical Documentation\n');
@@ -45,9 +47,12 @@ test('standalone imports and curated features preserve the CMI namespace', async
     path.join(cmiSource, 'docs', 'economy-review', 'baseline', 'private-live-config.yml'),
     'private: true\n',
   );
+  await mkdir(path.join(cmiSource, 'docs', 'agents'), { recursive: true });
+  await writeFile(path.join(cmiSource, 'docs', 'agents', 'private-workflow.md'), '# Private workflow\n');
+  await writeFile(path.join(cmiSource, 'docs', '1mb-library-migration-plan.md'), '# Private migration\n');
   await writeFile(
     path.join(cmiSource, '.public-docs-excludes'),
-    '# Paths are relative to docs/.\neconomy-review/baseline\n',
+    `# Paths are relative to docs/.\n${cmiProject.requiredPrivateDocs.join('\n')}\n`,
   );
 
   runNode(repoRoot, 'scripts/sync-docs.mjs', ['--import', '--source', cmiSource]);
@@ -59,6 +64,23 @@ test('standalone imports and curated features preserve the CMI namespace', async
     readFile(path.join(repoRoot, 'project-docs', 'cmi-api', 'docs', 'economy-review', 'baseline', 'private-live-config.yml')),
     { code: 'ENOENT' },
   );
+  await assert.rejects(
+    readFile(path.join(repoRoot, 'project-docs', 'cmi-api', 'docs', 'agents', 'private-workflow.md')),
+    { code: 'ENOENT' },
+  );
+  await assert.rejects(
+    readFile(path.join(repoRoot, 'project-docs', 'cmi-api', 'docs', '1mb-library-migration-plan.md')),
+    { code: 'ENOENT' },
+  );
+
+  await writeFile(path.join(cmiSource, '.public-docs-excludes'), 'economy-review\n');
+  const rejectedSync = spawnSync(
+    process.execPath,
+    [path.join(repoRoot, 'scripts', 'sync-docs.mjs'), '--project', 'cmi-api', '--source', cmiSource],
+    { cwd: repoRoot, encoding: 'utf8' },
+  );
+  assert.notEqual(rejectedSync.status, 0);
+  assert.match(rejectedSync.stderr, /must declare these public-doc exclusions/);
 
   const standalone = path.join(root, '1MB-Lootbox');
   await mkdir(path.join(standalone, 'docs'), { recursive: true });
@@ -168,7 +190,6 @@ Train the mcMMO skills that are enabled on 1MoreBlock.
 `);
 
   const generated = runNode(repoRoot, 'scripts/generate-site-content.mjs');
-  const registry = JSON.parse(await readFile(path.join(repoRoot, 'docs-sources.json'), 'utf8'));
   const expectedCustomProjects = registry.projects.filter(
     (project) => project.category === 'custom-server-plugin',
   ).length;

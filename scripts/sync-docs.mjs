@@ -108,6 +108,22 @@ function isExcludedDoc(source, docsRoot, exclusions) {
   return exclusions.some((entry) => relative === entry || relative.startsWith(`${entry}/`));
 }
 
+function exclusionCovers(required, declared) {
+  return required === declared || required.startsWith(`${declared}/`);
+}
+
+function validateRequiredPrivateDocs(project, declaredExclusions) {
+  const required = project.requiredPrivateDocs ?? [];
+  const missing = required.filter((entry) => !declaredExclusions.some(
+    (declared) => exclusionCovers(entry, declared),
+  ));
+  if (missing.length > 0) {
+    throw new Error(
+      `Source ${project.id} must declare these public-doc exclusions in .public-docs-excludes: ${missing.join(', ')}`,
+    );
+  }
+}
+
 async function syncProject(project, explicitSource = null) {
   const envSource = project.id === 'cmi-api' ? process.env.PRIVATE_DOCS_SOURCE : null;
   const sourceRoot = path.resolve(explicitSource ?? envSource ?? path.join(repoRoot, project.defaultSource));
@@ -115,6 +131,7 @@ async function syncProject(project, explicitSource = null) {
 
   const docsRoot = path.join(sourceRoot, 'docs');
   const publicDocsExclusions = await loadPublicDocsExcludes(sourceRoot);
+  validateRequiredPrivateDocs(project, publicDocsExclusions);
   const projectDocsRoot = path.join(repoRoot, 'project-docs');
   const targetRoot = projectNamespaceRoot(repoRoot, project.id);
   const stagingRoot = path.join(projectDocsRoot, `.${project.id}.sync-${process.pid}`);
@@ -136,17 +153,27 @@ async function syncProject(project, explicitSource = null) {
         && !isExcludedDoc(source, docsRoot, publicDocsExclusions),
     });
 
+    for (const requiredPrivateDoc of project.requiredPrivateDocs ?? []) {
+      const guardedTarget = path.join(stagingRoot, 'docs', requiredPrivateDoc);
+      if (await pathIsFile(guardedTarget) || await pathIsDirectory(guardedTarget)) {
+        throw new Error(`Private documentation escaped the sync policy for ${project.id}: docs/${requiredPrivateDoc}`);
+      }
+    }
+
     const sourceCommit = readGit(sourceRoot, ['rev-parse', '--short', 'HEAD'], 'unknown');
     const sourceState = readGit(sourceRoot, ['status', '--porcelain']) ? 'local changes present at sync time' : 'clean';
     const exclusionSummary = publicDocsExclusions.length > 0
       ? publicDocsExclusions.map((entry) => `\`docs/${entry}\``).join(', ')
+      : 'none';
+    const requiredExclusionSummary = (project.requiredPrivateDocs ?? []).length > 0
+      ? project.requiredPrivateDocs.map((entry) => `\`docs/${entry}\``).join(', ')
       : 'none';
     const readmeSource = manifest?.public_readme
       ? `docs/${assertSafeRelativePath(manifest.public_readme, `${project.id} public_readme`)}`
       : 'README.md';
     await writeFile(
       path.join(stagingRoot, 'SYNCED_FROM.md'),
-      `# Synced Source\n\nThis namespace is a public documentation-only copy from the source project registered as \`${project.id}\`.\n\n- Project: \`${project.name}\`\n- Project id: \`${project.id}\`\n- Source repository: \`${project.repository ?? 'not published'}\`\n- Source commit: \`${sourceCommit}\`\n- Source state: \`${sourceState}\`\n- Public README source: \`${readmeSource}\`\n- Copied files: public \`README.md\` and \`docs/\`\n- Source-declared private docs exclusions: ${exclusionSummary}\n- Excluded on purpose: source code, jars, servers, databases, task logs, and internal checklists\n\nOnly \`project-docs/${project.id}/\` is replaced when this source is synchronized. Other project namespaces remain untouched.\n`,
+      `# Synced Source\n\nThis namespace is a public documentation-only copy from the source project registered as \`${project.id}\`.\n\n- Project: \`${project.name}\`\n- Project id: \`${project.id}\`\n- Source repository: \`${project.repository ?? 'not published'}\`\n- Source commit: \`${sourceCommit}\`\n- Source state: \`${sourceState}\`\n- Public README source: \`${readmeSource}\`\n- Copied files: public \`README.md\` and \`docs/\`\n- Source-declared private docs exclusions: ${exclusionSummary}\n- Public-repository required private docs exclusions: ${requiredExclusionSummary}\n- Excluded on purpose: source code, jars, servers, databases, task logs, and internal checklists\n\nOnly \`project-docs/${project.id}/\` is replaced when this source is synchronized. Other project namespaces remain untouched.\n`,
     );
 
     await rm(targetRoot, { recursive: true, force: true });

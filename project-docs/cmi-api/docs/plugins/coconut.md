@@ -401,6 +401,7 @@ Staff commands:
 /coconut admin shop regrant <online-player> <offer-id>
 /coconut admin kititems give <online-player> summer_consumables
 /hunt admin event list
+/hunt admin reload
 /hunt admin event status <event-id>
 /hunt admin event activate <event-id> --dry-run
 /hunt admin event activate <event-id> <--confirm|--force-confirm>
@@ -444,6 +445,7 @@ Every reset requires an explicit dry-run or confirmation. The complete event res
 | `onembcmi.CoconutHunt.admin.reset` | false | Dry-run or confirm a player reset or isolated debug-event reset. |
 | `onembcmi.CoconutHunt.admin.report` | false | Write event reports. |
 | `onembcmi.CoconutHunt.admin.kititems` | false | Generate an authored reward-kit sample atomically for an online player. |
+| `onembcmi.Hunt.admin.reload` | false | Reload the Event Hunts host configuration, registries, and all modules. |
 | `onembcmi.Hunt.admin.preflight` | false | Run the read-only aggregate or per-module readiness report. |
 | `onembcmi.Hunt.admin.event` | false | List, preflight, and activate production editions with `/hunt`. |
 
@@ -560,14 +562,14 @@ Nearby checks use the registry's chunk index rather than scanning every register
 /1mbcmi debug plugin CoconutHunt all
 ```
 
-The shared report includes commands, granular permissions, placeholders, config/data/cache paths, optional hooks, runtime health, and the active hologram provider. CoconutHunt targets Java 25 and Paper 26.2 stable build 105 or newer.
+The shared report includes commands, granular permissions, placeholders, config/data/cache paths, optional hooks, runtime health, and the active hologram provider. CoconutHunt targets Java 25 and Paper 26.2 stable build 111 or newer.
 
 ## Build And Integrations
 
 The current build produces:
 
 ```text
-1MB-CMIAPI-EventHunts-v1.0.1-566-j25-26.2.jar
+1MB-CMIAPI-EventHunts-v1.0.2-569-j25-26.2.jar
 ```
 
 CMI, CMILib, and `1MB-CMIAPI-Lib` are required runtime dependencies. Deploy CoconutHunt and `1MB-CMIAPI-Lib` from the same build. CoconutHunt verifies the shared atomic playerdata API before activating and fails closed with one actionable compatibility diagnostic instead of allowing repeated asynchronous linkage failures. CoconutHunt uses the shared library for feature registration, translated messages, hardened GUI sessions, safe player resolution, documentation metadata, PlaceholderAPI registration, and shared playerdata. It uses the installed CMI runtime for configured kit/warp/broadcast commands; private Paper TextDisplays provide the default proximity holograms. CMILib remains part of the common runtime baseline.
@@ -577,7 +579,7 @@ Modern Paper 26.2 APIs provide player-head profile data, PDC identity, skull til
 ## Launch Preflight
 
 - [ ] Approve or replace the provisional July 25 through July 31 schedule and August 5 claim deadline (`Europe/Amsterdam`).
-- [ ] Confirm Paper 26.2 stable build 105 or newer, Java 25, CMI, CMILib, and 1MB-CMIAPI-Lib are enabled.
+- [ ] Confirm Paper 26.2 stable build 111 or newer, Java 25, CMI, CMILib, and 1MB-CMIAPI-Lib are enabled.
 - [ ] Confirm the production world is exactly `summer` and optional cuboids match the beach.
 - [ ] Confirm reward worlds include every game mode where delivery is intended.
 - [ ] Review every command allowlist, hook, reward command, visit command, and shop permission.

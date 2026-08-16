@@ -32,6 +32,11 @@ The first merged version keeps parity with the old project where practical:
 /rate reminders [on|off|status]
 /rate info
 /rate help
+/rate admin
+/rate admin status
+/rate admin start <mcmmo|jobs|all> <time> <rate>
+/rate admin stop <mcmmo|jobs|all>
+/rate admin reload
 /rate start <mcmmo|jobs|all> <time> <rate>
 /rate stop <mcmmo|jobs|all>
 /rate reload
@@ -62,6 +67,8 @@ The first merged version keeps parity with the old project where practical:
 /rate reminders off
 /rate reminders on
 /rate info
+/rate admin
+/rate admin start all 1h 2
 /rate start mcmmo 1h 2
 /rate start jobs 30m 2.5
 /rate start all 1h 2
@@ -76,6 +83,8 @@ The first merged version keeps parity with the old project where practical:
 /rate debug set config logging.audit-to-console false
 /rate debug toggle display.sections.points
 ```
+
+`/rate admin` is the preferred administration namespace. The existing direct `/rate start`, `/rate stop`, and `/rate reload` forms remain supported for compatibility.
 
 ## Permissions
 

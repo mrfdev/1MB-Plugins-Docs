@@ -20,6 +20,7 @@ Detailed module references remain available in [FilterLab](filterlab.md) and [Fi
 ```text
 /contentguard status
 /contentguard module <lab|guard> <true|false>
+/contentguard admin reload
 /contentguard reload
 /contentguard debug true
 /contentguard debug false

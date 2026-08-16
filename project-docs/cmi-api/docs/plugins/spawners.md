@@ -40,6 +40,7 @@ Shop entries use matching spawn egg icons when Paper exposes a spawn egg materia
 /spawners help
 /spawners progress
 /spawners reload
+/spawners admin reload
 /spawners admin give <player> <type> [amount]
 /spawners admin gui
 /spawners admin disable <type>
