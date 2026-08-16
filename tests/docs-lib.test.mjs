@@ -5,6 +5,7 @@ import {
   assertPathRelativeToDocs,
   assertProjectId,
   assertSafeRelativePath,
+  findLocalUserProfilePaths,
   projectNamespaceRoot,
   validateManifest,
 } from '../scripts/docs-lib.mjs';
@@ -41,6 +42,18 @@ test('project ids cannot escape or overlap another namespace', () => {
   assert.equal(
     projectNamespaceRoot('/docs-repo', 'lootbox'),
     path.join('/docs-repo', 'project-docs', 'lootbox'),
+  );
+});
+
+test('local user-profile paths are rejected from public documentation', () => {
+  assert.deepEqual(findLocalUserProfilePaths('Use /path/to/1MB-Library or ../1MB-Library.'), []);
+  assert.deepEqual(
+    findLocalUserProfilePaths('Private checkout: /Users/example/Projects/1MB-Library'),
+    ['/Users/example/Projects/1MB-Library'],
+  );
+  assert.deepEqual(
+    findLocalUserProfilePaths('Private checkout: C:\\Users\\example\\Projects\\1MB-Library'),
+    ['C:\\Users\\example\\Projects\\1MB-Library'],
   );
 });
 

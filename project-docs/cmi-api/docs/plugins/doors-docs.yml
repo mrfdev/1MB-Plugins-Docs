@@ -9,7 +9,7 @@ technical_readme: doors-administration.md
 java_target: 25
 paper_target: "26.2 build 111 stable"
 official_project: true
-repository: mrfdev/1MB-CMIAPI
+repository: mrfdev/1MB-Library
 
 module: DoorHunt
 host_plugin: 1MB-CMIAPI-EventHunts

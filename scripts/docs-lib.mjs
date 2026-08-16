@@ -18,6 +18,10 @@ export const CATEGORY_DEFINITIONS = Object.freeze({
 });
 
 const PROJECT_ID_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
+const LOCAL_USER_PROFILE_PATH_PATTERNS = [
+  /\/Users\/[^/\s`"'<>]+(?:\/[^\s`"'<>]*)?/g,
+  /[A-Za-z]:\\Users\\[^\\\s`"'<>]+(?:\\[^\s`"'<>]*)?/g,
+];
 const REQUIRED_MANIFEST_FIELDS = [
   'id',
   'name',
@@ -40,6 +44,13 @@ export async function pathIsDirectory(directory) {
   } catch {
     return false;
   }
+}
+
+export function findLocalUserProfilePaths(source) {
+  if (typeof source !== 'string') {
+    return [];
+  }
+  return LOCAL_USER_PROFILE_PATH_PATTERNS.flatMap((pattern) => source.match(pattern) ?? []);
 }
 
 export function assertProjectId(value, label = 'Project id') {
