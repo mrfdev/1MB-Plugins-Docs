@@ -562,14 +562,14 @@ Nearby checks use the registry's chunk index rather than scanning every register
 /1mblib debug plugin CoconutHunt all
 ```
 
-The shared report includes commands, granular permissions, placeholders, config/data/cache paths, optional hooks, runtime health, and the active hologram provider. CoconutHunt targets Java 25 and Paper 26.2 stable build 111 or newer.
+The shared report includes commands, granular permissions, placeholders, config/data/cache paths, optional hooks, runtime health, and the active hologram provider. CoconutHunt targets Java 25 and Paper 26.2 stable build 112 or newer.
 
 ## Build And Integrations
 
 The current build produces:
 
 ```text
-1MB-Lib-EventHunts-v1.0.3-571-j25-26.2.jar
+1MB-Lib-EventHunts-v1.0.3-572-j25-26.2.jar
 ```
 
 CMI, CMILib, and `1MB-CMIAPI-Lib` are required runtime dependencies. Deploy CoconutHunt and `1MB-CMIAPI-Lib` from the same build. CoconutHunt verifies the shared atomic playerdata API before activating and fails closed with one actionable compatibility diagnostic instead of allowing repeated asynchronous linkage failures. CoconutHunt uses the shared library for feature registration, translated messages, hardened GUI sessions, safe player resolution, documentation metadata, PlaceholderAPI registration, and shared playerdata. It uses the installed CMI runtime for configured kit/warp/broadcast commands; private Paper TextDisplays provide the default proximity holograms. CMILib remains part of the common runtime baseline.
@@ -579,7 +579,7 @@ Modern Paper 26.2 APIs provide player-head profile data, PDC identity, skull til
 ## Launch Preflight
 
 - [ ] Approve or replace the provisional July 25 through July 31 schedule and August 5 claim deadline (`Europe/Amsterdam`).
-- [ ] Confirm Paper 26.2 stable build 111 or newer, Java 25, CMI, CMILib, and 1MB-CMIAPI-Lib are enabled.
+- [ ] Confirm Paper 26.2 stable build 112 or newer, Java 25, CMI, CMILib, and 1MB-CMIAPI-Lib are enabled.
 - [ ] Confirm the production world is exactly `summer` and optional cuboids match the beach.
 - [ ] Confirm reward worlds include every game mode where delivery is intended.
 - [ ] Review every command allowlist, hook, reward command, visit command, and shop permission.

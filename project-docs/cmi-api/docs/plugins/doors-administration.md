@@ -80,7 +80,7 @@ producing API call fails the build instead of silently entering a release.
    and the old TrickOrTreatV2 data before changing anything.
 3. Remove or archive every active standalone Trick-or-Treat JAR. Exactly one combined
    JAR with Paper identity `1MB-CMIAPI-EventHunts` may remain active in `plugins/`.
-4. Do not synchronize the v1.0.3 host until the project deployment workflow safely replaces both the legacy `1MB-CMIAPI-*` and new `1MB-Lib-*` artifact families.
+4. Run `gradle planProjectJarSync`, then use the stopped-server `gradle syncBuiltJarsToProjectServer` workflow, which safely replaces the legacy `1MB-CMIAPI-*` and current `1MB-Lib-*` artifact families as one managed set.
 5. Copy the complete authoritative standalone data to `plugins/OneMBTrickOrTreatDoors/`, then run `/doors admin migrate standalone --dry-run` and `/doors admin migrate standalone --confirm` while `modules.doors.enabled` remains false.
 6. Copy `data/v3-migration/CMI/Kits/halloween.yml` to
    `plugins/CMI/Kits/halloween.yml`. Confirm the enabled kits `tot01` through

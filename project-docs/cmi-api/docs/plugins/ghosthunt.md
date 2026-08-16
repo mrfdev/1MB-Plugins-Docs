@@ -451,10 +451,10 @@ Paper TextDisplays are private, transient, non-persistent, and invisible by defa
 The shared jar is:
 
 ```text
-1MB-Lib-EventHunts-v1.0.3-571-j25-26.2.jar
+1MB-Lib-EventHunts-v1.0.3-572-j25-26.2.jar
 ```
 
-It targets Java 25 and Paper 26.2 stable build 111 or newer. CMI, CMILib, and `1MB-CMIAPI-Lib` are required. Deploy the CoconutHunt and shared-library jars from the same build; startup fails closed with one compatibility diagnostic if the shared library lacks the atomic playerdata API. PlaceholderAPI, LuckPerms, Vault, and MobHat are optional. The Halloween profile defines only its five launch rewards by default and does not require a Ghost shop offer.
+It targets Java 25 and Paper 26.2 stable build 112 or newer. CMI, CMILib, and `1MB-CMIAPI-Lib` are required. Deploy the CoconutHunt and shared-library jars from the same build; startup fails closed with one compatibility diagnostic if the shared library lacks the atomic playerdata API. PlaceholderAPI, LuckPerms, Vault, and MobHat are optional. The Halloween profile defines only its five launch rewards by default and does not require a Ghost shop offer.
 
 - [ ] Confirm October 30 through November 2, 2026 and the inclusive November 9 claim deadline.
 - [ ] Confirm the production world is named `halloween`, any cuboid is correct, and the CMI warp named `halloween` exists and lands safely there.

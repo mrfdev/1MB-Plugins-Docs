@@ -1,6 +1,6 @@
 # Door Hunt testing (shared Hunt module)
 
-This is the complete clean-room v3 test and release handoff, adapted for `:plugins:player-fun:coconuthunt`. Run focused tests with `gradle :plugins:player-fun:coconuthunt:test` and the full gate with `gradle clean refreshBuildDocs test assemble verifyBuildMetadata verifyFeatureInstallPolicyCoverage`. Do not synchronize v1.0.3 until the dual-prefix deployment workflow is complete. The standalone source and its data remain rollback material; its JAR must never be active beside the combined Hunt JAR.
+This is the complete clean-room v3 test and release handoff, adapted for `:plugins:player-fun:coconuthunt`. Run focused tests with `gradle :plugins:player-fun:coconuthunt:test` and the full gate with `gradle clean refreshBuildDocs test assemble verifyBuildMetadata verifyFeatureInstallPolicyCoverage`. Before synchronizing v1.0.3, run `gradle planProjectJarSync`; the recoverable sync must pass its complete-set and mixed-prefix checks. The standalone source and its data remain rollback material; its JAR must never be active beside the combined Hunt JAR.
 
 # Paper 26.2 and future-minor staging checklist
 
@@ -39,7 +39,7 @@ After a numbered JAR passes automated and isolated smoke checks:
 1. Confirm the full test server is stopped cleanly.
 2. Move any standalone Trick-or-Treat Doors JAR to
    `plugins-disabled/feature-builds/`; never delete either data folder.
-3. After the dual-prefix deployment gate is complete, run `gradle syncBuiltJarsToProjectServer`; it refreshes every active 1MB Library artifact, not only Hunt.
+3. Run `gradle planProjectJarSync`, then—with Paper stopped—run `gradle syncBuiltJarsToProjectServer`; it recoverably refreshes every active 1MB Library artifact, not only Hunt.
 4. Verify that exactly one combined JAR with Paper identity `1MB-CMIAPI-EventHunts` is active, no standalone Doors JAR is active, and the embedded version, Paper target, and compatibility aliases match the verified artifact.
 5. Start the full stack, run `/totdoors debug health`, and complete the relevant
    connected-player checks before considering the build ready for production.

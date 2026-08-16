@@ -12,7 +12,7 @@ Before changing the allowlist, update its focused test and the installation docu
 
 ## Release Baseline
 
-The current release baseline is Java 25 bytecode built with JDK 25.0.4, compatibility-smoked on JDK 26.0.2, and Paper 26.2 stable build 111 or newer. Gradle compiles against `paper-api:26.2.build.111-stable`.
+The current release baseline is Java 25 bytecode built with JDK 25.0.4, compatibility-smoked on JDK 26.0.2, and Paper 26.2 stable build 112 or newer. Gradle compiles against `paper-api:26.2.build.112-stable`.
 
 The current source rollback point is recorded in [Live-Tested Working Baseline: 2026-08-15](compatibility-baselines/live-tested-working-2026-08-15.md). The exact pre-CMI-9.8.9.6 rollback combination is recorded in [Live-Tested Baseline: 2026-08-02](compatibility-baselines/live-tested-2026-08-02.md). The isolated replacement boot and remaining player test matrix are recorded in [CMI 9.8.9.6 Chat Compatibility Pass](compatibility-tests/cmi-9.8.9.6-chat.md).
 
@@ -37,66 +37,66 @@ All jars should follow this shape:
 Examples:
 
 ```text
-1MB-Lib-Core-v1.0.3-571-j25-26.2.jar
-1MB-Lib-AntiFire-v1.0.3-571-j25-26.2.jar
-1MB-Lib-AFKShrine-v1.0.3-571-j25-26.2.jar
-1MB-Lib-RecordingMode-v1.0.3-571-j25-26.2.jar
-1MB-Lib-SellStreaks-v1.0.3-571-j25-26.2.jar
-1MB-Lib-ScheduledTips-v1.0.3-571-j25-26.2.jar
-1MB-Lib-Visit-v1.0.3-571-j25-26.2.jar
-1MB-Lib-PassportDiscovery-v1.0.3-571-j25-26.2.jar
-1MB-Lib-SocialGatherings-v1.0.3-571-j25-26.2.jar
-1MB-Lib-JourneyMap-v1.0.3-571-j25-26.2.jar
-1MB-Lib-KitStreaks-v1.0.3-571-j25-26.2.jar
-1MB-Lib-Nick-v1.0.3-571-j25-26.2.jar
-1MB-Lib-EmoteMenu-v1.0.3-571-j25-26.2.jar
-1MB-Lib-PvPToggle-v1.0.3-571-j25-26.2.jar
-1MB-Lib-Boosters-v1.0.3-571-j25-26.2.jar
-1MB-Lib-NameMC-v1.0.3-571-j25-26.2.jar
-1MB-Lib-Exchange-v1.0.3-571-j25-26.2.jar
-1MB-Lib-VoteTokens-v1.0.3-571-j25-26.2.jar
-1MB-Lib-DiscordChat-v1.0.3-571-j25-26.2.jar
-1MB-Lib-GameTypes-v1.0.3-571-j25-26.2.jar
-1MB-Lib-BirthdayLanterns-v1.0.3-571-j25-26.2.jar
-1MB-Lib-LavaBoots-v1.0.3-571-j25-26.2.jar
-1MB-Lib-Spawners-v1.0.3-571-j25-26.2.jar
-1MB-Lib-Collect-v1.0.3-571-j25-26.2.jar
-1MB-Lib-EventHunts-v1.0.3-571-j25-26.2.jar
-1MB-Lib-DropParty-v1.0.3-571-j25-26.2.jar
-1MB-Lib-Appreciation-v1.0.3-571-j25-26.2.jar
-1MB-Lib-Forage-v1.0.3-571-j25-26.2.jar
-1MB-Lib-MobHat-v1.0.3-571-j25-26.2.jar
-1MB-Lib-PlayerTodo-v1.0.3-571-j25-26.2.jar
-1MB-Lib-Refer-v1.0.3-571-j25-26.2.jar
-1MB-Lib-TPAuto-v1.0.3-571-j25-26.2.jar
-1MB-Lib-Menu-v1.0.3-571-j25-26.2.jar
-1MB-Lib-StaffCenter-v1.0.3-571-j25-26.2.jar
-1MB-Lib-Profile-v1.0.3-571-j25-26.2.jar
-1MB-Lib-ContentGuard-v1.0.3-571-j25-26.2.jar
-1MB-Lib-WarningLens-v1.0.3-571-j25-26.2.jar
-1MB-Lib-TeamMsg-v1.0.3-571-j25-26.2.jar
-1MB-Lib-CmdCostDashboard-v1.0.3-571-j25-26.2.jar
-1MB-Lib-CMIConfig-v1.0.3-571-j25-26.2.jar
-1MB-Lib-ConsoleNoiseRouter-v1.0.3-571-j25-26.2.jar
-1MB-Lib-EconomyGuardian-v1.0.3-571-j25-26.2.jar
-1MB-Lib-StartupDoctor-v1.0.3-571-j25-26.2.jar
-1MB-Lib-UpdateSmoke-v1.0.3-571-j25-26.2.jar
-1MB-Lib-PluginVersions-v1.0.3-571-j25-26.2.jar
-1MB-Lib-Placeholders-v1.0.3-571-j25-26.2.jar
-1MB-Lib-Potions-v1.0.3-571-j25-26.2.jar
-1MB-Lib-Upgrade-v1.0.3-571-j25-26.2.jar
-1MB-Lib-EndCrystals-v1.0.3-571-j25-26.2.jar
-1MB-Lib-WorldSnapshot-v1.0.3-571-j25-26.2.jar
-1MB-Lib-SparkReviewer-v1.0.3-571-j25-26.2.jar
-1MB-Lib-Hoppers-v1.0.3-571-j25-26.2.jar
-1MB-Lib-EventRecorder-v1.0.3-571-j25-26.2.jar
-1MB-Lib-BedrockChatBridge-v1.0.3-571-j25-26.2.jar
-1MB-Lib-CMIProbe-v1.0.3-571-j25-26.2.jar
-1MB-Lib-CMIDatabase-v1.0.3-571-j25-26.2.jar
-1MB-Lib-PermissionProbe-v1.0.3-571-j25-26.2.jar
-1MB-Lib-WarpAudit-v1.0.3-571-j25-26.2.jar
-1MB-Lib-WorthDrift-v1.0.3-571-j25-26.2.jar
-1MB-Lib-WorthHelper-v1.0.3-571-j25-26.2.jar
+1MB-Lib-Core-v1.0.3-572-j25-26.2.jar
+1MB-Lib-AntiFire-v1.0.3-572-j25-26.2.jar
+1MB-Lib-AFKShrine-v1.0.3-572-j25-26.2.jar
+1MB-Lib-RecordingMode-v1.0.3-572-j25-26.2.jar
+1MB-Lib-SellStreaks-v1.0.3-572-j25-26.2.jar
+1MB-Lib-ScheduledTips-v1.0.3-572-j25-26.2.jar
+1MB-Lib-Visit-v1.0.3-572-j25-26.2.jar
+1MB-Lib-PassportDiscovery-v1.0.3-572-j25-26.2.jar
+1MB-Lib-SocialGatherings-v1.0.3-572-j25-26.2.jar
+1MB-Lib-JourneyMap-v1.0.3-572-j25-26.2.jar
+1MB-Lib-KitStreaks-v1.0.3-572-j25-26.2.jar
+1MB-Lib-Nick-v1.0.3-572-j25-26.2.jar
+1MB-Lib-EmoteMenu-v1.0.3-572-j25-26.2.jar
+1MB-Lib-PvPToggle-v1.0.3-572-j25-26.2.jar
+1MB-Lib-Boosters-v1.0.3-572-j25-26.2.jar
+1MB-Lib-NameMC-v1.0.3-572-j25-26.2.jar
+1MB-Lib-Exchange-v1.0.3-572-j25-26.2.jar
+1MB-Lib-VoteTokens-v1.0.3-572-j25-26.2.jar
+1MB-Lib-DiscordChat-v1.0.3-572-j25-26.2.jar
+1MB-Lib-GameTypes-v1.0.3-572-j25-26.2.jar
+1MB-Lib-BirthdayLanterns-v1.0.3-572-j25-26.2.jar
+1MB-Lib-LavaBoots-v1.0.3-572-j25-26.2.jar
+1MB-Lib-Spawners-v1.0.3-572-j25-26.2.jar
+1MB-Lib-Collect-v1.0.3-572-j25-26.2.jar
+1MB-Lib-EventHunts-v1.0.3-572-j25-26.2.jar
+1MB-Lib-DropParty-v1.0.3-572-j25-26.2.jar
+1MB-Lib-Appreciation-v1.0.3-572-j25-26.2.jar
+1MB-Lib-Forage-v1.0.3-572-j25-26.2.jar
+1MB-Lib-MobHat-v1.0.3-572-j25-26.2.jar
+1MB-Lib-PlayerTodo-v1.0.3-572-j25-26.2.jar
+1MB-Lib-Refer-v1.0.3-572-j25-26.2.jar
+1MB-Lib-TPAuto-v1.0.3-572-j25-26.2.jar
+1MB-Lib-Menu-v1.0.3-572-j25-26.2.jar
+1MB-Lib-StaffCenter-v1.0.3-572-j25-26.2.jar
+1MB-Lib-Profile-v1.0.3-572-j25-26.2.jar
+1MB-Lib-ContentGuard-v1.0.3-572-j25-26.2.jar
+1MB-Lib-WarningLens-v1.0.3-572-j25-26.2.jar
+1MB-Lib-TeamMsg-v1.0.3-572-j25-26.2.jar
+1MB-Lib-CmdCostDashboard-v1.0.3-572-j25-26.2.jar
+1MB-Lib-CMIConfig-v1.0.3-572-j25-26.2.jar
+1MB-Lib-ConsoleNoiseRouter-v1.0.3-572-j25-26.2.jar
+1MB-Lib-EconomyGuardian-v1.0.3-572-j25-26.2.jar
+1MB-Lib-StartupDoctor-v1.0.3-572-j25-26.2.jar
+1MB-Lib-UpdateSmoke-v1.0.3-572-j25-26.2.jar
+1MB-Lib-PluginVersions-v1.0.3-572-j25-26.2.jar
+1MB-Lib-Placeholders-v1.0.3-572-j25-26.2.jar
+1MB-Lib-Potions-v1.0.3-572-j25-26.2.jar
+1MB-Lib-Upgrade-v1.0.3-572-j25-26.2.jar
+1MB-Lib-EndCrystals-v1.0.3-572-j25-26.2.jar
+1MB-Lib-WorldSnapshot-v1.0.3-572-j25-26.2.jar
+1MB-Lib-SparkReviewer-v1.0.3-572-j25-26.2.jar
+1MB-Lib-Hoppers-v1.0.3-572-j25-26.2.jar
+1MB-Lib-EventRecorder-v1.0.3-572-j25-26.2.jar
+1MB-Lib-BedrockChatBridge-v1.0.3-572-j25-26.2.jar
+1MB-Lib-CMIProbe-v1.0.3-572-j25-26.2.jar
+1MB-Lib-CMIDatabase-v1.0.3-572-j25-26.2.jar
+1MB-Lib-PermissionProbe-v1.0.3-572-j25-26.2.jar
+1MB-Lib-WarpAudit-v1.0.3-572-j25-26.2.jar
+1MB-Lib-WorthDrift-v1.0.3-572-j25-26.2.jar
+1MB-Lib-WorthHelper-v1.0.3-572-j25-26.2.jar
 ```
 
 ## Local Build
@@ -140,7 +140,13 @@ Every successful library or feature build should copy matching jars into:
 servers/Paper-26.2/plugins/
 ```
 
-For v1.0.3, do not use either command until the deployment workflow safely manages both legacy `1MB-CMIAPI-*` and new `1MB-Lib-*` JAR families:
+Run the non-mutating preflight first:
+
+```bash
+gradle planProjectJarSync
+```
+
+With Paper stopped, either entry point invokes the same authoritative recoverable workflow for both legacy `1MB-CMIAPI-*` and current `1MB-Lib-*` JAR families:
 
 ```bash
 gradle syncBuiltJarsToProjectServer
@@ -152,7 +158,7 @@ or:
 scripts/copy-built-jars-to-local-server.sh
 ```
 
-After that dual-prefix gate is complete, the Gradle task will replace the project JAR family in `servers/Paper-26.2/plugins/` and verify that active project JARs match the current build metadata. GameTypes/BentoBox deployment is handled outside the repository-local sync flow because the BentoBox environment is no longer a local repository test instance.
+The task validates the complete candidate set before mutation, moves prior managed JARs into a transaction rollback directory, activates the candidate set, and verifies exact filenames, build suffix, Core, expected/unique Paper identities, and byte-for-byte copies. Ordinary activation or verification failures restore the prior set. An interrupted transaction blocks later plan/sync attempts until its staged candidates, rollback JARs, and active server state are inspected; do not delete the retained rollback material blindly. GameTypes/BentoBox deployment is handled outside the repository-local sync flow because the BentoBox environment is no longer a local repository test instance.
 
 Retired local servers live under the Git-ignored `archive/` directory and are excluded from build, sync, staging, and test workflows. Do not point release tasks at an archived server; `servers/Paper-26.2/` is the only active repository-local test target.
 
@@ -170,7 +176,7 @@ This copies the active tested jars from `servers/Paper-26.2/plugins/` into:
 build/tested-jars/live/
 ```
 
-This task does not touch live servers and does not use RCON. It is only a clean handoff folder for the jars that were actually tested locally.
+This task does not touch live servers and does not use RCON. It atomically replaces the handoff only when the test server contains the exact complete current build; a legacy, stale, incomplete, unexpected, or duplicate identity set fails without changing an earlier handoff.
 
 ## GitHub Repository
 
