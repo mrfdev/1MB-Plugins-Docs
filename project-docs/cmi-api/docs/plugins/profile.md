@@ -248,7 +248,7 @@ Profile uses the shared debug fallback:
 /profile debug placeholders [page]
 /profile debug config [page]
 /profile debug all
-/1mbcmi debug plugin profile all
+/1mblib debug plugin profile all
 ```
 
 [Plugin index](README.md)

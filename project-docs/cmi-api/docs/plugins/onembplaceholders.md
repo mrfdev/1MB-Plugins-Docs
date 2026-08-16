@@ -77,12 +77,12 @@ Useful examples:
 Global library examples:
 
 ```text
-/1mbcmi debug plugin onembplaceholders
-/1mbcmi debug plugin onembplaceholders commands
-/1mbcmi debug plugin onembplaceholders permissions
-/1mbcmi debug plugin onembplaceholders placeholders
-/1mbcmi debug plugin onembplaceholders config
-/1mbcmi debug plugin onembplaceholders all
+/1mblib debug plugin onembplaceholders
+/1mblib debug plugin onembplaceholders commands
+/1mblib debug plugin onembplaceholders permissions
+/1mblib debug plugin onembplaceholders placeholders
+/1mblib debug plugin onembplaceholders config
+/1mblib debug plugin onembplaceholders all
 ```
 
 ## Permissions
@@ -232,7 +232,7 @@ It does not modify CMI internals. It depends on CMI/CMILib because this repo’s
 
 ## 1MB-CMIAPI-LIB Usage
 
-1MBPlaceholders uses `1MB-CMIAPI-LIB` for feature registration, central data paths, commented config loading, translations, MiniMessage output styling, command metadata, permission/debug metadata, PlaceholderAPI support placeholders, and shared `/1mbcmi debug plugin onembplaceholders all` visibility.
+1MBPlaceholders uses `1MB-CMIAPI-LIB` for feature registration, central data paths, commented config loading, translations, MiniMessage output styling, command metadata, permission/debug metadata, PlaceholderAPI support placeholders, and shared `/1mblib debug plugin onembplaceholders all` visibility.
 
 ## Paper API Usage
 

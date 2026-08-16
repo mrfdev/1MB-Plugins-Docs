@@ -47,14 +47,14 @@ Useful examples:
 Global library examples:
 
 ```text
-/1mbcmi debug plugin economyguardian
-/1mbcmi debug plugin economyguardian all
-/1mbcmi debug plugin economyguardian commands
-/1mbcmi debug plugin economyguardian permissions
-/1mbcmi debug plugin economyguardian placeholders
-/1mbcmi config economyguardian
-/1mbcmi config set economyguardian thresholds.spike-absolute 25000
-/1mbcmi translations reload
+/1mblib debug plugin economyguardian
+/1mblib debug plugin economyguardian all
+/1mblib debug plugin economyguardian commands
+/1mblib debug plugin economyguardian permissions
+/1mblib debug plugin economyguardian placeholders
+/1mblib config economyguardian
+/1mblib config set economyguardian thresholds.spike-absolute 25000
+/1mblib translations reload
 ```
 
 ## Permissions

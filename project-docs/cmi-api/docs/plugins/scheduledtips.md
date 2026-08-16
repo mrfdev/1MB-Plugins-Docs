@@ -2,7 +2,7 @@
 
 ## Purpose
 
-ScheduledTips replaces simple CMI `scheduler.yml` tip broadcasts with a dedicated 1MB CMI-API feature plugin. It rotates through configured tips, sends them as clickable Adventure messages, and gives players control over what they keep seeing.
+ScheduledTips replaces simple CMI `scheduler.yml` tip broadcasts with a dedicated 1MB Library feature plugin. It rotates through configured tips, sends them as clickable Adventure messages, and gives players control over what they keep seeing.
 
 It covers the current CMI scheduled-tip workflow while adding player-friendly controls and optional dynamic awareness of live `/rate` boosters:
 
@@ -57,14 +57,14 @@ It covers the current CMI scheduled-tip workflow while adding player-friendly co
 Global library examples:
 
 ```text
-/1mbcmi debug plugin scheduledtips
-/1mbcmi debug plugin scheduledtips all
-/1mbcmi config scheduledtips
-/1mbcmi config set scheduledtips schedule.interval-seconds 600
+/1mblib debug plugin scheduledtips
+/1mblib debug plugin scheduledtips all
+/1mblib config scheduledtips
+/1mblib config set scheduledtips schedule.interval-seconds 600
 /tips admin add discord Join our <color:#bde0fe>Discord</color> with /discord.
 /tips admin disable-tip profile
 /tips admin set dismiss.after-seen-count 8
-/1mbcmi translations reload
+/1mblib translations reload
 ```
 
 ## Permissions
@@ -100,7 +100,7 @@ CMI:
 
 - CMI remains a runtime dependency in the project stack.
 - ScheduledTips is intended to replace CMI scheduler.yml tip broadcasts when you want per-player dismiss/toggle behavior.
-- Player-facing ScheduledTips chat uses the shared feature-prefix system with visible prefix name `Tips`, so scheduled tip broadcasts and `/tips` responses do not use the generic `1MB CMI-API` library prefix. The symbol comes from `plugins/1MB-CMIAPI/CMIAPILIB/config.yml` under `locale.prefix-unicodes.scheduledtips`.
+- Player-facing ScheduledTips chat uses the shared feature-prefix system with visible prefix name `Tips`, so scheduled tip broadcasts and `/tips` responses do not use the generic `1MB Library` library prefix. The symbol comes from `plugins/1MB-CMIAPI/CMIAPILIB/config.yml` under `locale.prefix-unicodes.scheduledtips`.
 - When the Boosters feature is installed, ScheduledTips can ask the shared Boosters service for live `/rate` booster state and replace matching booster tips with a clickable reminder.
 - Future versions can inspect or import existing CMI scheduler-style tip command text if we decide that is useful.
 

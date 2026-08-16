@@ -31,11 +31,11 @@ The first version focuses on safety: it scans known config files for boolean fea
 Global library examples:
 
 ```text
-/1mbcmi debug plugin cmiconfig
-/1mbcmi debug plugin cmiconfig all
-/1mbcmi config cmiconfig
-/1mbcmi config set cmiconfig scan.include-cmi-settings false
-/1mbcmi translations reload
+/1mblib debug plugin cmiconfig
+/1mblib debug plugin cmiconfig all
+/1mblib config cmiconfig
+/1mblib config set cmiconfig scan.include-cmi-settings false
+/1mblib translations reload
 ```
 
 ## Permissions

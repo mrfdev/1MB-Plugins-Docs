@@ -55,12 +55,12 @@ Useful examples:
 Global library examples:
 
 ```text
-/1mbcmi debug plugin placeholderprobe
-/1mbcmi debug plugin placeholderprobe all
-/1mbcmi debug clean cache plugin placeholderprobe
-/1mbcmi config placeholderprobe
-/1mbcmi config set placeholderprobe recent.max 150
-/1mbcmi translations reload
+/1mblib debug plugin placeholderprobe
+/1mblib debug plugin placeholderprobe all
+/1mblib debug clean cache plugin placeholderprobe
+/1mblib config placeholderprobe
+/1mblib config set placeholderprobe recent.max 150
+/1mblib translations reload
 ```
 
 ## Permissions

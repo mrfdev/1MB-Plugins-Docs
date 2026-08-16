@@ -35,7 +35,7 @@
     },
     {
       "id": "cmi-api",
-      "name": "1MB-CMIAPI",
+      "name": "1MB Library",
       "category": "one-more-block-feature",
       "adapter": "cmi-api",
       "repository": "mrfdev/1MB-CMIAPI",

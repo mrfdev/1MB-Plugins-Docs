@@ -61,14 +61,14 @@ Useful examples:
 Global library examples:
 
 ```text
-/1mbcmi debug plugin cmiplaceholders
-/1mbcmi debug plugin cmiplaceholders commands
-/1mbcmi debug plugin cmiplaceholders permissions
-/1mbcmi debug plugin cmiplaceholders placeholders
-/1mbcmi debug plugin cmiplaceholders config
-/1mbcmi debug plugin cmiplaceholders all
-/1mbcmi config cmiplaceholders
-/1mbcmi config set cmiplaceholders output.entries-per-page 12
+/1mblib debug plugin cmiplaceholders
+/1mblib debug plugin cmiplaceholders commands
+/1mblib debug plugin cmiplaceholders permissions
+/1mblib debug plugin cmiplaceholders placeholders
+/1mblib debug plugin cmiplaceholders config
+/1mblib debug plugin cmiplaceholders all
+/1mblib config cmiplaceholders
+/1mblib config set cmiplaceholders output.entries-per-page 12
 ```
 
 ## Permissions
@@ -217,7 +217,7 @@ plugins/1MB-CMIAPI/CMIAPILIB/cache/plugins/_placeholders catalog/
 /_placeholders catalog plugin onembcmi
 /_placeholders catalog example %cmi_user_name% <online-player>
 /_placeholders catalog example %onembcmi_global.status.loaded%
-/1mbcmi debug plugin cmiplaceholders all
+/1mblib debug plugin cmiplaceholders all
 ```
 
 [Back to plugin index](README.md)

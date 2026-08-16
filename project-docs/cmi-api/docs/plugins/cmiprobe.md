@@ -44,11 +44,11 @@ Useful examples:
 Global library examples:
 
 ```text
-/1mbcmi debug plugin cmiprobe
-/1mbcmi debug plugin cmiprobe all
-/1mbcmi debug clean cache plugin cmiprobe --dry-run
-/1mbcmi config cmiprobe
-/1mbcmi config set cmiprobe output.page-size 15
+/1mblib debug plugin cmiprobe
+/1mblib debug plugin cmiprobe all
+/1mblib debug clean cache plugin cmiprobe --dry-run
+/1mblib config cmiprobe
+/1mblib config set cmiprobe output.page-size 15
 ```
 
 ## Permissions

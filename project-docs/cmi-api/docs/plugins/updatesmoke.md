@@ -2,7 +2,7 @@
 
 ## Purpose
 
-UpdateSmoke is a post-update smoke tester for the CMI and 1MB CMI-API stack. It is meant to be run after updating Paper, CMI, CMILib, PlaceholderAPI, or any 1MB feature jar.
+UpdateSmoke is a post-update smoke tester for the CMI and 1MB Library stack. It is meant to be run after updating Paper, CMI, CMILib, PlaceholderAPI, or any 1MB feature jar.
 
 It does not reload plugins, change configs, mutate player data, or repair anything automatically. It gives staff a compact checklist result so update testing starts with the obvious compatibility signals: accepted Paper/Java matrix, hooks, versions, registered features, command registration, read-only command dispatch paths, placeholder parsing, and selected CMI/CMILib API access.
 
@@ -27,7 +27,7 @@ Examples:
 /updatesmoke report
 /updatesmoke report 3
 /updatesmoke reload
-/1mbcmi debug plugin updatesmoke all
+/1mblib debug plugin updatesmoke all
 ```
 
 ## Command Behavior
@@ -139,7 +139,7 @@ Server owners can add future Mojang/Paper targets to `checks.compatibility-matri
 
 Server owners can add or remove command and placeholder samples to match the exact installed feature jars. If a feature is temporarily not installed, remove its command from `commands.required` before treating a failed smoke run as a real update blocker.
 
-The command smoke layer discovers loaded `1MB-CMIAPI-*` command roots from Bukkit's command map, then dispatches each root with the configured read-only argument shapes. By default it also runs `/1mbcmi debug plugin <feature> all` for every registered feature. Dispatches are considered passing when they complete without throwing; Bukkit returning `false` can optionally be treated as a warning with `commands.smoke.return-false-is-warning`.
+The command smoke layer discovers loaded `1MB-CMIAPI-*` command roots from Bukkit's command map, then dispatches each root with the configured read-only argument shapes. By default it also runs `/1mblib debug plugin <feature> all` for every registered feature. Dispatches are considered passing when they complete without throwing; Bukkit returning `false` can optionally be treated as a warning with `commands.smoke.return-false-is-warning`.
 
 ## Checks
 

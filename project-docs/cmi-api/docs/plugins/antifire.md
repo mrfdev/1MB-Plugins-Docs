@@ -11,14 +11,14 @@ The former standalone player-guide URL redirects to the canonical 1MB-CMIAPI fea
 
 ## Migration Notes
 
-- Install `1MB-CMIAPI-AntiFire-v1.0.2-570-j25-26.2.jar`. It shares the CMI-API build number and release pipeline, but it does not require CMI, CMILib, or `1MB-CMIAPI-Lib` at runtime.
+- Install `1MB-Lib-AntiFire-v1.0.3-571-j25-26.2.jar`. It shares the CMI-API build number and release pipeline, but it does not require CMI, CMILib, or `1MB-CMIAPI-Lib` at runtime.
 - Remove or disable the old standalone `1MB-AntiFire-*.jar`; both versions own `/_antifire` and must not run together.
 - The only registered command remains `/_antifire`. No `/antifire` alias is added.
 - Runtime configuration now lives at `plugins/1MB-CMIAPI/AntiFire/config.yml`.
 - When the new config does not exist, AntiFire copies values from `plugins/1MB-AntiFire/config.yml` automatically before adding missing defaults and comments. It does not overwrite an existing shared config or delete the legacy file.
 - The legacy `onembantifire.*` permission nodes remain accepted so existing LuckPerms grants continue working.
 - AntiFire uses Paper's `STARTUP` load phase and declares `loadbefore` for CMI, CMILib, and `1MB-CMIAPI-Lib`. Its listeners, scheduler, config, and `/_antifire` command are owned locally, so a failure in any later dependency cannot prevent fire protection from enabling.
-- When `1MB-CMIAPI-Lib` loads later, it discovers AntiFire through a typed Paper service and exposes a read-only summary in `/1mbcmi status`, `/1mbcmi doctor`, support bundles, and the shared PlaceholderAPI expansion. The library cannot reload, toggle, or write AntiFire config.
+- When `1MB-CMIAPI-Lib` loads later, it discovers AntiFire through a typed Paper service and exposes a read-only summary in `/1mblib status`, `/1mblib doctor`, support bundles, and the shared PlaceholderAPI expansion. The library cannot reload, toggle, or write AntiFire config.
 
 ## Commands
 
@@ -128,7 +128,7 @@ Boolean settings accept friendly command values such as `true`, `false`, `on`, `
 ## Build And Data
 
 ```text
-Jar: 1MB-CMIAPI-AntiFire-v1.0.2-570-j25-26.2.jar
+Jar: 1MB-Lib-AntiFire-v1.0.3-571-j25-26.2.jar
 Java target: 25
 Paper API target: 26.2
 Config: plugins/1MB-CMIAPI/AntiFire/config.yml

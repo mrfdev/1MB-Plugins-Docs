@@ -5,7 +5,7 @@
 Placeholders combines the production 1MB PlaceholderAPI expansion and three owner-facing diagnostic tools in one independently switchable feature jar:
 
 ```text
-1MB-CMIAPI-Placeholders-v<version>-<build>-j25-26.2.jar
+1MB-Lib-Placeholders-v<version>-<build>-j25-26.2.jar
 ```
 
 The plugin registers only `/_placeholders`. It does not register `/placeholders`, which remains available for the live server's existing command owner.
@@ -89,7 +89,7 @@ Parent lifecycle commands:
 /_placeholders module <provider|catalog|probe|health> <true|false>
 ```
 
-`/_placeholders reload` reloads the Provider only. Each diagnostic route owns its module reload. `/1mbcmi config placeholders` and `/1mbcmi debug plugin placeholders all` inspect the parent lifecycle.
+`/_placeholders reload` reloads the Provider only. Each diagnostic route owns its module reload. `/1mblib config placeholders` and `/1mblib debug plugin placeholders all` inspect the parent lifecycle.
 
 ## Defaults
 
@@ -208,7 +208,7 @@ Stop the server and replace these four jars:
 with:
 
 ```text
-1MB-CMIAPI-Placeholders-*.jar
+1MB-Lib-Placeholders-*.jar
 ```
 
 Do not leave an old provider jar installed beside the consolidated jar: both would attempt to register `/_placeholders` and the `onemb` PlaceholderAPI expansion.

@@ -83,14 +83,14 @@ Useful examples:
 Global library examples:
 
 ```text
-/1mbcmi debug plugin sparkreviewer
-/1mbcmi debug plugin sparkreviewer commands
-/1mbcmi debug plugin sparkreviewer permissions
-/1mbcmi debug plugin sparkreviewer placeholders
-/1mbcmi debug plugin sparkreviewer config
-/1mbcmi debug plugin sparkreviewer all
-/1mbcmi config sparkreviewer
-/1mbcmi config set sparkreviewer spark.default-seconds 300
+/1mblib debug plugin sparkreviewer
+/1mblib debug plugin sparkreviewer commands
+/1mblib debug plugin sparkreviewer permissions
+/1mblib debug plugin sparkreviewer placeholders
+/1mblib debug plugin sparkreviewer config
+/1mblib debug plugin sparkreviewer all
+/1mblib config sparkreviewer
+/1mblib config set sparkreviewer spark.default-seconds 300
 ```
 
 ## Permissions
@@ -279,7 +279,7 @@ It does not write playerdata and does not edit Paper, CMI, or MobFarmManager con
 
 ## CMI / CMILib Usage
 
-CMI and CMILib are required runtime dependencies because this plugin is part of the 1MB CMI-API feature set.
+CMI and CMILib are required runtime dependencies because this plugin is part of the 1MB Library feature set.
 
 SparkReviewer uses CMI status in reports and optionally reads selected CMI YAML files for operational clues. It does not call closed-source CMI internals and does not change CMI state.
 

@@ -6,7 +6,7 @@ PermissionProbe is an owner-only read-only diagnosis tool for checking why a pla
 
 The main command is `/_permissions`. The command is locked behind `onembcmi.permissionprobe.use`, so only trusted admins who have that node should be able to see or run any probe output.
 
-PermissionProbe replaces the older `/1mbcmi permissions ...` analyzer. The library command now only prints a compatibility note pointing admins to `/_permissions`.
+PermissionProbe replaces the deprecated Library `permissions` analyzer. Both `/1mblib permissions ...` and the `/1mbcmi` compatibility alias now only point admins to `/_permissions`.
 
 ## Commands
 
@@ -220,7 +220,7 @@ The command keeps the last probe summary and recent denial aggregates in memory 
 
 ## CMI-API Usage
 
-PermissionProbe uses `1MB-CMIAPI-LIB` for feature registration, config defaults, translations, strict permission checks, shared debug pages, placeholders, tab filtering, and metadata exposed through `/1mbcmi debug plugin permissionprobe all`.
+PermissionProbe uses `1MB-CMIAPI-LIB` for feature registration, config defaults, translations, strict permission checks, shared debug pages, placeholders, tab filtering, and metadata exposed through `/1mblib debug plugin permissionprobe all`.
 
 ## Runtime Hooks
 

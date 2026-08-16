@@ -7,13 +7,13 @@ Several enabled plugins are infrastructure rather than standalone player feature
 ## What it adds
 
 - **BlueBridgeCore, BlueBridgeWB, and BlueBridgeWG:** bridge BlueMap with WorldBorder and WorldGuard data. Used by BlueMap, WorldBorder, and WorldGuard map presentation. [GitHub](https://github.com/Mark-225/BlueBridge)
-- **CMILib:** shared Zrips library required by CMI, Jobs, MobFarmManager, and TradeMe, and required by the custom 1MB-CMIAPI library/features. [Official resource](https://www.spigotmc.org/resources/cmilib.87610/)
+- **CMILib:** shared Zrips library required by CMI, Jobs, MobFarmManager, and TradeMe, and by the 1MB Library Feature Plugins that integrate with CMI. [Official resource](https://www.spigotmc.org/resources/cmilib.87610/)
 - **DeluxeMenus:** inventory-menu engine used by configured server menus or integrations where selected. It consumes commands, permissions, and PlaceholderAPI values. [Official wiki](https://wiki.helpch.at/clips-plugins/deluxemenus)
-- **PlaceholderAPI:** common placeholder broker used by scoreboards, menus, leaderboards, chat, CMI, Jobs, Pyro plugins, custom 1MB-CMIAPI features, and many other displays. [Official wiki](https://github.com/PlaceholderAPI/PlaceholderAPI/wiki)
+- **PlaceholderAPI:** common placeholder broker used by scoreboards, menus, leaderboards, chat, CMI, Jobs, Pyro plugins, 1MB Library Feature Plugins, and many other displays. [Official wiki](https://github.com/PlaceholderAPI/PlaceholderAPI/wiki)
 - **PyroLib:** hard dependency for PyroFarming, PyroFishingPro, PyroMining, and PyroWelcomesPro. [Official documentation](https://pyrotempus.gitbook.io/pyro-plugins)
 - **Vault:** economy/permission/chat service abstraction used by CMI economy consumers, shops, Jobs, TradeMe, Pyro plugins, VotingPlugin, and other integrations. [GitHub](https://github.com/MilkBowl/Vault)
 - **Votifier:** receives signed callbacks from voting sites and passes them to VotingPlugin. It does not decide rewards itself. [NuVotifier GitHub](https://github.com/NuVotifier/NuVotifier)
-- **1MB-CMIAPI-Lib:** the custom shared library used by all modular 1MB-CMIAPI feature plugins. It has its own project documentation in the 1MB plugin section.
+- **1MB Library Core:** the custom shared library used by all modular 1MB Library Feature Plugins. Its Paper plugin identity remains `1MB-CMIAPI-Lib` for compatibility, and it has its own project documentation in the 1MB plugin section.
 
 ## Commands
 

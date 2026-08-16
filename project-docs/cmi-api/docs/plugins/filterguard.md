@@ -70,17 +70,17 @@ Useful examples:
 Global library examples:
 
 ```text
-/1mbcmi debug plugin filterguard
-/1mbcmi debug plugin filterguard all
-/1mbcmi debug plugin filterguard commands
-/1mbcmi debug plugin filterguard permissions
-/1mbcmi debug plugin filterguard placeholders
-/1mbcmi config filterguard
-/1mbcmi config set filterguard surfaces.signs.action cancel-and-alert
-/1mbcmi config set filterguard surfaces.books.action cancel-and-alert
-/1mbcmi config set filterguard surfaces.entity-names.action cancel-and-alert
-/1mbcmi config set filterguard surfaces.nicknames.enabled true
-/1mbcmi translations reload
+/1mblib debug plugin filterguard
+/1mblib debug plugin filterguard all
+/1mblib debug plugin filterguard commands
+/1mblib debug plugin filterguard permissions
+/1mblib debug plugin filterguard placeholders
+/1mblib config filterguard
+/1mblib config set filterguard surfaces.signs.action cancel-and-alert
+/1mblib config set filterguard surfaces.books.action cancel-and-alert
+/1mblib config set filterguard surfaces.entity-names.action cancel-and-alert
+/1mblib config set filterguard surfaces.nicknames.enabled true
+/1mblib translations reload
 ```
 
 Beginning with build 562, FilterGuard performs this safety upgrade automatically when ContentGuard first loads an older config. Legacy `alert` defaults for all sign variants and books become `cancel-and-alert`; missing entity-name protection is added and enabled. A managed `config-version` marker makes the migration run only once. Explicit custom actions such as `log` or `cancel`, and an explicitly disabled entity-name surface, remain unchanged.

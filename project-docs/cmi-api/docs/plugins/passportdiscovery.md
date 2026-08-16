@@ -45,11 +45,11 @@ WarpPassport is retired from the active build for new installs. Its source remai
 Shared debug/config commands:
 
 ```text
-/1mbcmi debug plugin passportdiscovery
-/1mbcmi debug plugin passportdiscovery all
-/1mbcmi config passportdiscovery
-/1mbcmi config set passportdiscovery tracking.biome.enabled false
-/1mbcmi translations reload
+/1mblib debug plugin passportdiscovery
+/1mblib debug plugin passportdiscovery all
+/1mblib config passportdiscovery
+/1mblib config set passportdiscovery tracking.biome.enabled false
+/1mblib translations reload
 ```
 
 ## Examples
@@ -500,7 +500,7 @@ plugins/1MB-CMIAPI/PassportDiscovery/warps.yml
 
 ## CMI, CMILib, And Paper Usage
 
-PassportDiscovery depends on CMI and CMILib because it is part of the 1MB CMI-API plugin family and uses the shared library runtime next to CMI. It listens to CMI warp events for the `warp` type and uses CMI's warp manager only for lightweight known-warp lists in `/passport missing warp`.
+PassportDiscovery depends on CMI and CMILib because it is part of the 1MB Library plugin family and uses the shared library runtime next to CMI. It listens to CMI warp events for the `warp` type and uses CMI's warp manager only for lightweight known-warp lists in `/passport missing warp`.
 
 Paper API usage includes player movement, world change, block break/place, item pickup, crafting, held item, item consume, cake block interaction, item damage, inventory click, Material metadata, and Paper's modern registry access for biomes.
 

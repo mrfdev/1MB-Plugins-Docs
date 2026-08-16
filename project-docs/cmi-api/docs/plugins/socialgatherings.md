@@ -130,11 +130,11 @@ Aliases:
 Global library examples:
 
 ```text
-/1mbcmi debug plugin socialgatherings
-/1mbcmi debug plugin socialgatherings all
-/1mbcmi debug plugin socialgatherings commands
-/1mbcmi config socialgatherings
-/1mbcmi translations reload
+/1mblib debug plugin socialgatherings
+/1mblib debug plugin socialgatherings all
+/1mblib debug plugin socialgatherings commands
+/1mblib config socialgatherings
+/1mblib translations reload
 ```
 
 ## Example Commands
@@ -868,7 +868,7 @@ CMI:
 
 CMILib:
 
-- CMILib remains a runtime dependency through CMI and the shared 1MB CMI-API library stack.
+- CMILib remains a runtime dependency through CMI and the shared 1MB Library library stack.
 
 Paper:
 

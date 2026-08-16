@@ -65,13 +65,13 @@ Useful examples:
 Global library examples:
 
 ```text
-/1mbcmi debug plugin worthhelper
-/1mbcmi debug plugin worthhelper all
-/1mbcmi debug plugin worthhelper config
-/1mbcmi config worthhelper
-/1mbcmi config set worthhelper analysis.minimum-percent-difference 15
-/1mbcmi config set worthhelper analysis.buy-multiplier 100
-/1mbcmi translations reload
+/1mblib debug plugin worthhelper
+/1mblib debug plugin worthhelper all
+/1mblib debug plugin worthhelper config
+/1mblib config worthhelper
+/1mblib config set worthhelper analysis.minimum-percent-difference 15
+/1mblib config set worthhelper analysis.buy-multiplier 100
+/1mblib translations reload
 ```
 
 ## Permissions
@@ -115,7 +115,7 @@ CMI:
 
 CMILib:
 
-- CMILib is kept as a declared runtime dependency through the shared 1MB CMI-API plugin set, but the MVP reads Worth.yml directly so it can compare the persisted values staff would review in Git.
+- CMILib is kept as a declared runtime dependency through the shared 1MB Library plugin set, but the MVP reads Worth.yml directly so it can compare the persisted values staff would review in Git.
 
 CMI-API:
 

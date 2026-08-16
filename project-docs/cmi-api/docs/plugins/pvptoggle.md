@@ -166,9 +166,9 @@ particles.dust-size
 status.recent-pvp-combat-seconds
 ```
 
-Use `/pvp debug config` or `/1mbcmi config pvptoggle` to inspect current values.
+Use `/pvp debug config` or `/1mblib config pvptoggle` to inspect current values.
 
-Use `/pvp debug set config <path> <value>` or `/1mbcmi config set pvptoggle <path> <value>` to update supported scalar config values in-game. The shared config writer preserves existing values, re-applies comments, writes missing defaults, saves the file, and reloads the feature.
+Use `/pvp debug set config <path> <value>` or `/1mblib config set pvptoggle <path> <value>` to update supported scalar config values in-game. The shared config writer preserves existing values, re-applies comments, writes missing defaults, saves the file, and reloads the feature.
 
 ## Particle Templates
 

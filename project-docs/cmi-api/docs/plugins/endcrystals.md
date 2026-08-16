@@ -138,7 +138,7 @@ When player or projectile break protection is enabled, a player without `onembcm
 
 ## CMI / CMILib / CMI-API Usage
 
-EndCrystals is a normal 1MB-CMIAPI feature jar. It depends on CMI, CMILib, and `1MB-CMIAPI-Lib`, registers in the shared feature registry, uses the shared MiniMessage output style, uses shared config comments, participates in `/1mbcmi features`, and exposes `/1mbcmi debug plugin endcrystals all`.
+EndCrystals is a normal 1MB-CMIAPI feature jar. It depends on CMI, CMILib, and `1MB-CMIAPI-Lib`, registers in the shared feature registry, uses the shared MiniMessage output style, uses shared config comments, participates in `/1mblib features`, and exposes `/1mblib debug plugin endcrystals all`.
 
 It does not need private CMI internals. CMI and CMILib are runtime dependencies so the feature follows the same installation and support surface as the rest of the 1MB-CMIAPI plugin set.
 

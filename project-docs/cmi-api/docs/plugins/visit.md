@@ -68,11 +68,11 @@ Alias:
 Global library examples:
 
 ```text
-/1mbcmi debug plugin visit
-/1mbcmi debug plugin visit all
-/1mbcmi config visit
-/1mbcmi config set visit cmi.warp-group visits
-/1mbcmi translations reload
+/1mblib debug plugin visit
+/1mblib debug plugin visit all
+/1mblib config visit
+/1mblib config set visit cmi.warp-group visits
+/1mblib translations reload
 ```
 
 ## Permissions

@@ -1,12 +1,12 @@
-# 1MB-CMIAPI-Lib
+# 1MB Library Core
 
 ## Purpose
 
-`1MB-CMIAPI-Lib` is the shared runtime library for the 1MB CMI-API feature jars. It owns common diagnostics, feature registration, config visibility, translation health, shared GUI examples, safe action rules, command argument validation, safe player resolution, reward-delivery safety, cache cleanup, debug bundles, and PlaceholderAPI routing for global and feature placeholders.
+The compatibility-named `1MB-CMIAPI-Lib` Paper plugin is the 1MB Library Shared Library. Its release artifact is `1MB-Lib-Core-*`. It owns common diagnostics, Feature Plugin registration, config visibility, translation health, shared GUI examples, safe action rules, command argument validation, safe player resolution, reward-delivery safety, cache cleanup, debug bundles, and PlaceholderAPI routing for global and feature placeholders.
 
-It must be installed in `/plugins/` next to CMI, CMILib, and any 1MB CMI-API feature jars.
+It must be installed in `/plugins/` next to CMI, CMILib, and any 1MB Library Feature Plugin JARs.
 
-AntiFire is intentionally different from ordinary feature jars. It loads independently in Paper's `STARTUP` phase with no CMI/library dependency. If AntiFire is present, this library attaches later to its typed read-only status service for `/1mbcmi status`, doctor/support output, and `%onembcmi_antifire.*%` routing. The library cannot modify AntiFire or delay its protection startup.
+AntiFire is intentionally different from ordinary feature jars. It loads independently in Paper's `STARTUP` phase with no CMI/library dependency. If AntiFire is present, this library attaches later to its typed read-only status service for `/1mblib status`, doctor/support output, and `%onembcmi_antifire.*%` routing. The library cannot modify AntiFire or delay its protection startup.
 
 Feature jars without a custom local debug command inherit `/<plugin-command> debug` from this library. That fallback is permission locked to `onembcmi.<plugin>.admin` and prints plugin/build metadata, target PaperMC version, exact compiled Paper API, Java target, runtime Java version, server API/engine strings, required dependency/optional hook load state, and paginated commands, permissions, placeholders, and config pages.
 
@@ -18,7 +18,7 @@ The shared GUI contract includes owner-bound sessions, unpredictable nonces, exa
 
 In-game list output stays paginated so chat remains readable. Console senders receive the full list in one command for debug pages that use the shared pagination renderer, which makes support logs easier to copy and review.
 
-Feature configs are validated and repaired through the shared `FeatureSettings` loader. Missing default keys are added safely on startup or reload while existing values are preserved. Use `/<plugin-command> debug health` or `/1mbcmi debug plugin <id> health` to see expected config keys, repaired defaults from the last reload, missing keys, and validation issues.
+Feature configs are validated and repaired through the shared `FeatureSettings` loader. Missing default keys are added safely on startup or reload while existing values are preserved. Use `/<plugin-command> debug health` or `/1mblib debug plugin <id> health` to see expected config keys, repaired defaults from the last reload, missing keys, and validation issues.
 
 `FeatureInstallPolicy` controls the first-install `enabled` value for every shared feature jar. The current live allowlist starts enabled; all other and unknown feature ids start with `enabled: false`. A dormant feature still registers its descriptor and restricted lifecycle gateway, so Paper keeps the jar loaded and green, but it does not start gameplay commands, listeners, tasks, placeholders, services, hooks, or feature-specific behavior. Existing config values are never overwritten, so the beta server can keep every feature explicitly enabled while a fresh live installation remains fail closed.
 
@@ -29,78 +29,78 @@ The shared `GuiService` uses a custom holder bound to the opening player's UUID,
 ## Commands
 
 ```text
-/1mbcmi info
-/1mbcmi help
-/1mbcmi version
-/1mbcmi status
-/1mbcmi doctor
-/1mbcmi features [category]
-/1mbcmi storage
-/1mbcmi debug plugins [category]
-/1mbcmi debug cmi
-/1mbcmi debug plugin <id>
-/1mbcmi debug plugin <id> health
-/1mbcmi debug plugin <id> commands [page]
-/1mbcmi debug plugin <id> permissions
-/1mbcmi debug plugin <id> placeholders
-/1mbcmi debug plugin <id> config
-/1mbcmi debug plugin <id> all
-/1mbcmi debug bundle
-/1mbcmi debug clean cache [global|all|plugin <id>] [--dry-run]
-/1mbcmi debug clean playerdata plugin <id> [--dry-run|--confirm]
-/1mbcmi docs commands [all|id] [discord|github]
-/1mbcmi docs permissions [all|id] [discord|github]
-/1mbcmi docs all [all|id] [discord|github]
-/1mbcmi config <id>
-/1mbcmi config set <id> <path> <value>
-/1mbcmi gui test
-/1mbcmi gui examples
-/1mbcmi rules [page]
-/1mbcmi rules validate
-/1mbcmi rules test <rule>
-/1mbcmi player resolve <name|uuid>
-/1mbcmi player cached <name|uuid>
-/1mbcmi validate <material|world|duration|uuid|money|id|page|feature> <value>
-/1mbcmi translations reload
-/1mbcmi translations status
-/1mbcmi translations missing [id|all]
+/1mblib info
+/1mblib help
+/1mblib version
+/1mblib status
+/1mblib doctor
+/1mblib features [category]
+/1mblib storage
+/1mblib debug plugins [category]
+/1mblib debug cmi
+/1mblib debug plugin <id>
+/1mblib debug plugin <id> health
+/1mblib debug plugin <id> commands [page]
+/1mblib debug plugin <id> permissions
+/1mblib debug plugin <id> placeholders
+/1mblib debug plugin <id> config
+/1mblib debug plugin <id> all
+/1mblib debug bundle
+/1mblib debug clean cache [global|all|plugin <id>] [--dry-run]
+/1mblib debug clean playerdata plugin <id> [--dry-run|--confirm]
+/1mblib docs commands [all|id] [discord|github]
+/1mblib docs permissions [all|id] [discord|github]
+/1mblib docs all [all|id] [discord|github]
+/1mblib config <id>
+/1mblib config set <id> <path> <value>
+/1mblib gui test
+/1mblib gui examples
+/1mblib rules [page]
+/1mblib rules validate
+/1mblib rules test <rule>
+/1mblib player resolve <name|uuid>
+/1mblib player cached <name|uuid>
+/1mblib validate <material|world|duration|uuid|money|id|page|feature> <value>
+/1mblib translations reload
+/1mblib translations status
+/1mblib translations missing [id|all]
 ```
 
 Useful examples:
 
 ```text
-/1mbcmi status
-/1mbcmi info
-/1mbcmi version
-/1mbcmi doctor
-/1mbcmi features player-fun
-/1mbcmi storage
-/1mbcmi debug plugins staff
-/1mbcmi debug cmi
-/1mbcmi debug plugin socialgatherings all
-/1mbcmi debug plugin filterguard commands
-/1mbcmi debug clean cache plugin socialgatherings --dry-run
-/1mbcmi debug clean playerdata plugin afkshrine --dry-run
-/1mbcmi debug bundle
-/1mbcmi docs all all github
-/1mbcmi docs commands autosell discord
-/1mbcmi docs permissions permissionprobe github
-/1mbcmi config socialgatherings
-/1mbcmi config set socialgatherings feedback.default-cooldown-seconds 30
-/1mbcmi gui test
-/1mbcmi gui examples
-/1mbcmi rules
-/1mbcmi rules validate
-/1mbcmi rules test welcome-test
-/1mbcmi player resolve Floris
-/1mbcmi player cached 123e4567-e89b-12d3-a456-426614174000
-/1mbcmi validate material minecraft:oak_log
-/1mbcmi validate duration 1h30m
-/1mbcmi validate money 10000.50
-/1mbcmi validate feature autosell
-/1mbcmi translations status
-/1mbcmi translations missing all
-/1mbcmi translations reload
+/1mblib status
+/1mblib info
+/1mblib version
+/1mblib doctor
+/1mblib features player-fun
+/1mblib storage
+/1mblib debug plugins staff
+/1mblib debug cmi
+/1mblib debug plugin socialgatherings all
+/1mblib debug plugin filterguard commands
+/1mblib debug clean cache plugin socialgatherings --dry-run
+/1mblib debug clean playerdata plugin afkshrine --dry-run
+/1mblib debug bundle
+/1mblib docs all all github
+/1mblib docs commands autosell discord
+/1mblib docs permissions permissionprobe github
+/1mblib config socialgatherings
+/1mblib config set socialgatherings feedback.default-cooldown-seconds 30
+/1mblib gui test
+/1mblib gui examples
+/1mblib rules
+/1mblib rules validate
+/1mblib rules test welcome-test
+/1mblib player resolve Floris
+/1mblib player cached 123e4567-e89b-12d3-a456-426614174000
+/1mblib validate material minecraft:oak_log
+/1mblib validate duration 1h30m
+/1mblib validate money 10000.50
+/1mblib validate feature autosell
+/1mblib translations status
+/1mblib translations missing all
+/1mblib translations reload
 ```
 
 ## Permissions
@@ -149,7 +149,7 @@ Player online = Bukkit.getPlayer(targetId);
 
 The Paper/CMI directory adapter must run on the Paper server thread. It uses exact online names, `Bukkit.getOfflinePlayerIfCached` for cached names, Paper's known-player list for UUID checks, and CMI's already-loaded user map for real names and nicknames. CMI entries marked as fake accounts are excluded. The resolver never performs partial matching, calls a remote profile service, invokes a name lookup that can synthesize a player, or creates an offline-player record.
 
-The owner commands require `onembcmi.global.player`. `/1mbcmi player resolve ...` includes nickname matching; `/1mbcmi player cached ...` is the strict real-identity check.
+The owner commands require `onembcmi.global.player`. `/1mblib player resolve ...` includes nickname matching; `/1mblib player cached ...` is the strict real-identity check.
 
 ## Shared Command Argument Validators
 
@@ -183,7 +183,7 @@ if (!result.valid()) {
 Duration duration = result.value();
 ```
 
-The read-only `/1mbcmi validate ...` command exposes the default rules for owner diagnostics. It uses real Paper materials, loaded worlds, and the live feature registry, requires `onembcmi.global.validate`, and does not edit configs or player data.
+The read-only `/1mblib validate ...` command exposes the default rules for owner diagnostics. It uses real Paper materials, loaded worlds, and the live feature registry, requires `onembcmi.global.validate`, and does not edit configs or player data.
 
 ## Shared Reward Delivery Safety
 
@@ -253,9 +253,9 @@ Full terminal receipts are bounded so high-volume features such as AutoSell do n
 The library can write review snapshots from loaded runtime metadata:
 
 ```text
-/1mbcmi docs commands [all|id] [discord|github]
-/1mbcmi docs permissions [all|id] [discord|github]
-/1mbcmi docs all [all|id] [discord|github]
+/1mblib docs commands [all|id] [discord|github]
+/1mblib docs permissions [all|id] [discord|github]
+/1mblib docs all [all|id] [discord|github]
 ```
 
 The output is Markdown written under:
@@ -270,7 +270,7 @@ The command is read-only. It does not edit private docs or the public GitHub Pag
 
 ## Shared Audit Redactor
 
-Generated support artifacts use the shared audit redactor before writing to disk. `/1mbcmi debug bundle` now redacts common secrets, Discord webhook URLs, bearer tokens, JDBC connection strings, IP addresses, email-looking strings, and private-message-like fields by default. Money-like fields are configurable but off by default because economy reports often need those values.
+Generated support artifacts use the shared audit redactor before writing to disk. `/1mblib debug bundle` now redacts common secrets, Discord webhook URLs, bearer tokens, JDBC connection strings, IP addresses, email-looking strings, and private-message-like fields by default. Money-like fields are configurable but off by default because economy reports often need those values.
 
 Default config paths:
 
@@ -288,11 +288,11 @@ Feature plugins can reuse the shared redactor through the library for future exp
 
 ## Permission Diagnosis
 
-The dedicated [PermissionProbe](permissionprobe.md) feature plugin owns permission diagnosis through `/_permissions`. The old `/1mbcmi permissions ...` command is kept only as a compatibility redirect and tells admins to use `/_permissions`.
+The dedicated [PermissionProbe](permissionprobe.md) Feature Plugin owns permission diagnosis through `/_permissions`. The deprecated Library `permissions` subcommand—through either `/1mblib` or the `/1mbcmi` compatibility alias—only tells admins to use `/_permissions`.
 
 ## Shared Action Rules
 
-Action rules are a small reusable rules engine for "when this happens, do that action" feature logic. The first version is intentionally conservative: rules live in the library config, validate against known action types, and `/1mbcmi rules test <rule>` previews what would happen without dispatching console commands.
+Action rules are a small reusable rules engine for "when this happens, do that action" feature logic. The first version is intentionally conservative: rules live in the library config, validate against known action types, and `/1mblib rules test <rule>` previews what would happen without dispatching console commands.
 
 Default config path:
 
@@ -309,8 +309,8 @@ id|trigger|conditions|actions|description
 Examples:
 
 ```text
-welcome-test|manual|player|message:Welcome to a safe 1MB CMI-API rule preview.|A tiny player-only test rule.
-support-note|manual|permission:onembcmi.global.rules|note:Open /1mbcmi debug bundle when preparing support info.|A staff note rule for support workflows.
+welcome-test|manual|player|message:Welcome to a safe 1MB Library rule preview.|A tiny player-only test rule.
+support-note|manual|permission:onembcmi.global.rules|note:Open /1mblib debug bundle when preparing support info.|A staff note rule for support workflows.
 ```
 
 Supported conditions:
@@ -333,7 +333,7 @@ sound:<sound_key[:volume[:pitch]]>
 permission-note:<permission.node>
 ```
 
-`command:<command>` is validated but disabled by default through `rules.allow-console-commands: false`. Even when command actions are enabled for a future workflow, `/1mbcmi rules test <rule>` still previews them only.
+`command:<command>` is validated but disabled by default through `rules.allow-console-commands: false`. Even when command actions are enabled for a future workflow, `/1mblib rules test <rule>` still previews them only.
 
 ## Prefix Unicode Locale
 
@@ -381,7 +381,7 @@ When enabled, `{prefix}` output is composed from the shared config instead of re
 
 Use simple monochrome Unicode symbols for best Minecraft font compatibility. If a symbol renders badly for a client or resource pack, replace that config value with another symbol or leave it blank.
 
-Feature plugins should send player-facing chat through `messages().send(...)`, `featureInfo/error/header(...)`, or `renderFeaturePage(...)` in `AbstractCmiApiFeaturePlugin`. The static global `MessageStyle.info/error/header/prefix` helpers are reserved for the shared `/1mbcmi` library command; using them in a feature plugin will show the generic `1MB CMI-API` prefix instead of the feature's friendly prefix.
+Feature plugins should send player-facing chat through `messages().send(...)`, `featureInfo/error/header(...)`, or `renderFeaturePage(...)` in `AbstractCmiApiFeaturePlugin`. The static global `MessageStyle.info/error/header/prefix` helpers are reserved for the shared `/1mblib` library command; using them in a feature plugin will show the generic `1MB Library` prefix instead of the feature's friendly prefix.
 
 ## Global GUI Theme
 

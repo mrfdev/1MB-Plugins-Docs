@@ -65,12 +65,12 @@ Useful examples:
 Global library examples:
 
 ```text
-/1mbcmi debug plugin warpaudit
-/1mbcmi debug plugin warpaudit all
-/1mbcmi debug clean cache plugin warpaudit
-/1mbcmi config warpaudit
-/1mbcmi config set warpaudit scan.warn-no-permission-required true
-/1mbcmi translations reload
+/1mblib debug plugin warpaudit
+/1mblib debug plugin warpaudit all
+/1mblib debug clean cache plugin warpaudit
+/1mblib config warpaudit
+/1mblib config set warpaudit scan.warn-no-permission-required true
+/1mblib translations reload
 ```
 
 ## Permissions

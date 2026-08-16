@@ -1,6 +1,6 @@
 # Documentation Index
 
-This directory contains the long-form documentation for the 1MB CMIAPI project.
+This directory contains the long-form documentation for the 1MB Library project.
 
 ## Main Pages
 
@@ -36,9 +36,9 @@ For developers:
 
 For support/debugging:
 
-- run `/1mbcmi doctor`
-- run `/1mbcmi debug cmi`
-- run `/1mbcmi debug plugin <id> all`
+- run `/1mblib doctor`
+- run `/1mblib debug cmi`
+- run `/1mblib debug plugin <id> all`
 
 ## Plugin Pages
 
@@ -115,6 +115,6 @@ Each plugin page should explain:
 
 When code changes command behavior, permissions, placeholders, debug output, config keys, or jar names, update the docs in the same change.
 
-The shared library should remain the source of truth for global debug output. If a plugin adds commands, permissions, placeholders, or config keys, register those with the library so `/1mbcmi debug plugin <id> all` stays accurate.
+The shared library should remain the source of truth for global debug output. If a plugin adds commands, permissions, placeholders, or config keys, register those with the library so `/1mblib debug plugin <id> all` stays accurate.
 
 [Back to root README](../README.md)

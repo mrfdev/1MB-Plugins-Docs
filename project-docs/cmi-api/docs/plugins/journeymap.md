@@ -4,7 +4,7 @@
 
 JourneyMap turns playtime into a light player-facing progress map with eras, badges, milestones, and optional rewards.
 
-It does not replace CMI playtime tracking. It reads playtime from configured CMI PlaceholderAPI placeholders when PlaceholderAPI is available, falls back to Paper's playtime statistic when configured, then stores only this plugin's progress state in shared 1MB CMI-API playerdata.
+It does not replace CMI playtime tracking. It reads playtime from configured CMI PlaceholderAPI placeholders when PlaceholderAPI is available, falls back to Paper's playtime statistic when configured, then stores only this plugin's progress state in shared 1MB Library playerdata.
 
 The intended use is a friendly `/journeymap` page where players can see where they are in the server's long story:
 
@@ -23,7 +23,7 @@ The intended use is a friendly `/journeymap` page where players can see where th
 - Player commands for status, milestones, rewards, claiming, and refreshing.
 - Admin inspect command for cached/online player data.
 - Optional automatic reward claiming when rewards are enabled and `rewards.require-claim` is false.
-- Registered command, permission, placeholder, config, and debug metadata for `/1mbcmi debug plugin journeymap all`.
+- Registered command, permission, placeholder, config, and debug metadata for `/1mblib debug plugin journeymap all`.
 
 ## Commands
 
@@ -49,15 +49,15 @@ Aliases:
 Global library examples:
 
 ```text
-/1mbcmi debug plugin journeymap
-/1mbcmi debug plugin journeymap commands
-/1mbcmi debug plugin journeymap permissions
-/1mbcmi debug plugin journeymap placeholders
-/1mbcmi debug plugin journeymap config
-/1mbcmi debug plugin journeymap all
-/1mbcmi config journeymap
-/1mbcmi config set journeymap rewards.enabled true
-/1mbcmi translations reload
+/1mblib debug plugin journeymap
+/1mblib debug plugin journeymap commands
+/1mblib debug plugin journeymap permissions
+/1mblib debug plugin journeymap placeholders
+/1mblib debug plugin journeymap config
+/1mblib debug plugin journeymap all
+/1mblib config journeymap
+/1mblib config set journeymap rewards.enabled true
+/1mblib translations reload
 ```
 
 ## Example Commands
@@ -208,7 +208,7 @@ CMI:
 
 CMILib:
 
-- CMILib is a required runtime dependency through CMI and the shared 1MB CMI-API stack.
+- CMILib is a required runtime dependency through CMI and the shared 1MB Library stack.
 - This plugin does not currently need CMILib GUI APIs.
 
 PlaceholderAPI:
@@ -225,7 +225,7 @@ Paper:
 Shared Library:
 
 - Feature registration and dependency health.
-- Command help registration for `/1mbcmi debug plugin journeymap commands`.
+- Command help registration for `/1mblib debug plugin journeymap commands`.
 - Permission checks.
 - Config defaults and feature reload.
 - Translation defaults.
@@ -254,7 +254,7 @@ Shared Library:
 /journeymap claim all
 /journeymap admin inspect mrfloris
 /journeymap admin reload
-/1mbcmi debug plugin journeymap all
+/1mblib debug plugin journeymap all
 papi parse mrfloris %onembcmi_journeymap.current.era%
 ```
 
@@ -265,6 +265,6 @@ Manual things to verify:
 - Earned milestones persist after reconnect or reload.
 - Rewards stay off unless explicitly enabled.
 - Claimable rewards can only be claimed once.
-- `/1mbcmi debug plugin journeymap all` lists current command, permission, placeholder, and config metadata.
+- `/1mblib debug plugin journeymap all` lists current command, permission, placeholder, and config metadata.
 
 [Plugin index](README.md)

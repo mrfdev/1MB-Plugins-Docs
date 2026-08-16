@@ -11,7 +11,7 @@ The twist is that it is not limited to one daily streak. A player can have:
 - custom tracks that match multiple kit names, such as `events` or `builder`
 - milestone sets such as 7, 14, 21, 28, and 365 days
 
-It does not replace CMI's kit manager, cooldowns, permissions, GUI, or kit usage data. It listens to `CMIUserKitAcquireEvent` and stores only 1MB CMI-API streak metadata in shared playerdata.
+It does not replace CMI's kit manager, cooldowns, permissions, GUI, or kit usage data. It listens to `CMIUserKitAcquireEvent` and stores only 1MB Library streak metadata in shared playerdata.
 
 ## Features
 
@@ -52,15 +52,15 @@ Aliases:
 Global library examples:
 
 ```text
-/1mbcmi debug plugin kitstreaks
-/1mbcmi debug plugin kitstreaks commands
-/1mbcmi debug plugin kitstreaks permissions
-/1mbcmi debug plugin kitstreaks placeholders
-/1mbcmi debug plugin kitstreaks config
-/1mbcmi debug plugin kitstreaks all
-/1mbcmi config kitstreaks
-/1mbcmi config set kitstreaks rewards.enabled true
-/1mbcmi translations reload
+/1mblib debug plugin kitstreaks
+/1mblib debug plugin kitstreaks commands
+/1mblib debug plugin kitstreaks permissions
+/1mblib debug plugin kitstreaks placeholders
+/1mblib debug plugin kitstreaks config
+/1mblib debug plugin kitstreaks all
+/1mblib config kitstreaks
+/1mblib config set kitstreaks rewards.enabled true
+/1mblib translations reload
 ```
 
 ## Example Commands
@@ -320,7 +320,7 @@ Shared Library:
 /kitstreak top daily
 /kitstreak admin inspect mrfloris
 /kitstreak admin reload
-/1mbcmi debug plugin kitstreaks all
+/1mblib debug plugin kitstreaks all
 papi parse mrfloris %onembcmi_kitstreaks.track.daily.streak%
 ```
 
@@ -332,6 +332,6 @@ Manual things to verify:
 - Check `/kitstreak calendar daily` after several claims.
 - Add a real kit name to a custom track and confirm that track updates.
 - Enable rewards on a disposable test server and confirm a milestone reward can only be claimed once.
-- Confirm `/1mbcmi debug plugin kitstreaks all` lists current commands, permissions, placeholders, and config.
+- Confirm `/1mblib debug plugin kitstreaks all` lists current commands, permissions, placeholders, and config.
 
 [Plugin index](README.md)

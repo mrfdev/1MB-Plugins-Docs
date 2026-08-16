@@ -203,7 +203,7 @@ Manual URLs are stored under each plugin in the database and merged with detecte
 
 ## CMI / CMILib / CMI-API Usage
 
-PluginVersions is a normal 1MB-CMIAPI feature jar. It depends on CMI, CMILib, and `1MB-CMIAPI-Lib`, registers in the shared feature registry, uses the shared MiniMessage output style, uses shared config comments, and participates in `/1mbcmi features` plus `/1mbcmi debug plugin pluginversions all`.
+PluginVersions is a normal 1MB-CMIAPI feature jar. It depends on CMI, CMILib, and `1MB-CMIAPI-Lib`, registers in the shared feature registry, uses the shared MiniMessage output style, uses shared config comments, and participates in `/1mblib features` plus `/1mblib debug plugin pluginversions all`.
 
 It does not need private CMI internals. CMI and CMILib are part of the runtime context so the inventory sees their installed plugin metadata, checks them in `/pv gate`, and exports them alongside the other Paper plugins.
 

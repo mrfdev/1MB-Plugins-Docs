@@ -95,7 +95,7 @@ On the first TeamMsg start, an existing module config's old `enabled` value is i
 1. Stop the server.
 2. Remove `1MB-CMIAPI-1MBStaffMsg-*.jar` and `1MB-CMIAPI-NotableMsg-*.jar`.
 3. Keep the existing `1MBStaffMsg/`, `NotableMsg/`, shared playerdata, and translation files.
-4. Install the matching `1MB-CMIAPI-TeamMsg-*.jar` and LIB jar.
+4. Install the matching `1MB-Lib-TeamMsg-*.jar` and `1MB-Lib-Core-*.jar` artifacts.
 5. Start the server and run `/teammsg status` from console.
 
 Do not load the old standalone jars beside TeamMsg; they register the same commands and listeners.

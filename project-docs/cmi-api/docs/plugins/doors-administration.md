@@ -53,14 +53,14 @@ The focused command runs the Coconut/Ghost/Door suite. The full command applies
 the repository documentation/build gate and writes the centrally numbered host artifact:
 
 ```text
-build/libs/1MB-CMIAPI-EventHunts-v1.0.1-NNN-j25-26.2.jar
+build/libs/1MB-Lib-EventHunts-v1.0.3-NNN-j25-26.2.jar
 ```
 
 Before installing a build, verify its embedded plugin and manifest information:
 
 ```sh
-unzip -p build/libs/1MB-CMIAPI-EventHunts-v1.0.1-NNN-j25-26.2.jar plugin.yml
-unzip -p build/libs/1MB-CMIAPI-EventHunts-v1.0.1-NNN-j25-26.2.jar META-INF/MANIFEST.MF
+unzip -p build/libs/1MB-Lib-EventHunts-v1.0.3-NNN-j25-26.2.jar plugin.yml
+unzip -p build/libs/1MB-Lib-EventHunts-v1.0.3-NNN-j25-26.2.jar META-INF/MANIFEST.MF
 ```
 
 After starting Paper, `/totdoors debug build` displays the same semantic
@@ -79,8 +79,8 @@ producing API call fails the build instead of silently entering a release.
 2. Back up the Halloween world, `plugins/OneMBTrickOrTreatDoors/`, the shared Hunt data, CMI kits,
    and the old TrickOrTreatV2 data before changing anything.
 3. Remove or archive every active standalone Trick-or-Treat JAR. Exactly one combined
-   `1MB-CMIAPI-EventHunts` JAR may remain active in `plugins/`.
-4. Synchronize the combined host through `gradle syncBuiltJarsToProjectServer`; remember that this refreshes every active 1MB-CMIAPI feature JAR.
+   JAR with Paper identity `1MB-CMIAPI-EventHunts` may remain active in `plugins/`.
+4. Do not synchronize the v1.0.3 host until the project deployment workflow safely replaces both the legacy `1MB-CMIAPI-*` and new `1MB-Lib-*` artifact families.
 5. Copy the complete authoritative standalone data to `plugins/OneMBTrickOrTreatDoors/`, then run `/doors admin migrate standalone --dry-run` and `/doors admin migrate standalone --confirm` while `modules.doors.enabled` remains false.
 6. Copy `data/v3-migration/CMI/Kits/halloween.yml` to
    `plugins/CMI/Kits/halloween.yml`. Confirm the enabled kits `tot01` through
