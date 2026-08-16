@@ -194,10 +194,10 @@ Bed rest rewards are passive. When `sleep.enabled` is true, a player who stays i
 Global library examples:
 
 ```text
-/1mbcmi debug plugin afkshrine
-/1mbcmi config afkshrine
-/1mbcmi config set afkshrine messages.enter.enabled false
-/1mbcmi translations reload
+/1mblib debug plugin afkshrine
+/1mblib config afkshrine
+/1mblib config set afkshrine messages.enter.enabled false
+/1mblib translations reload
 ```
 
 ## Permissions
@@ -975,7 +975,7 @@ styles.<preset>.tier
 styles.<preset>.unlock-label
 ```
 
-`/afkshrine presets` lists every preset as a hoverable row. `/afkshrine preset` shows the player's current preset first, then the same hoverable rows. The tooltip explains the tier, unlock hint, dust-ring particle color or palette size, radius, dust size, sparkle behavior, and bossbar color without exposing permission nodes. Rows the player can use are clickable and run `/afkshrine preset <preset>` to change their persistent preference; locked rows explain the unlock hint but do not run a command. This keeps the player output useful while leaving node details in `/afkshrine debug permissions` and `/1mbcmi debug plugin afkshrine permissions`.
+`/afkshrine presets` lists every preset as a hoverable row. `/afkshrine preset` shows the player's current preset first, then the same hoverable rows. The tooltip explains the tier, unlock hint, dust-ring particle color or palette size, radius, dust size, sparkle behavior, and bossbar color without exposing permission nodes. Rows the player can use are clickable and run `/afkshrine preset <preset>` to change their persistent preference; locked rows explain the unlock hint but do not run a command. This keeps the player output useful while leaving node details in `/afkshrine debug permissions` and `/1mblib debug plugin afkshrine permissions`.
 
 Long-term preset usage is appended to:
 

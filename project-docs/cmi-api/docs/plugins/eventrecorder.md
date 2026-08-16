@@ -80,12 +80,12 @@ Useful examples:
 Global library examples:
 
 ```text
-/1mbcmi debug plugin eventrecorder
-/1mbcmi debug plugin eventrecorder all
-/1mbcmi debug clean cache plugin eventrecorder
-/1mbcmi config eventrecorder
-/1mbcmi config set eventrecorder recent.max 500
-/1mbcmi translations reload
+/1mblib debug plugin eventrecorder
+/1mblib debug plugin eventrecorder all
+/1mblib debug clean cache plugin eventrecorder
+/1mblib config eventrecorder
+/1mblib config set eventrecorder recent.max 500
+/1mblib translations reload
 ```
 
 ## Permissions

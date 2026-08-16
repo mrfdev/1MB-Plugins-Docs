@@ -2,7 +2,7 @@
 
 ## Purpose
 
-StartupDoctor is a server-management plugin that creates a support-friendly startup and runtime diagnostics report for the 1MB CMI-API stack. It is meant to answer “what versions, hooks, feature jars, folders, Paper safety controls, and runtime assumptions are actually active?” before we chase a bug in the wrong place.
+StartupDoctor is a server-management plugin that creates a support-friendly startup and runtime diagnostics report for the 1MB Library stack. It is meant to answer “what versions, hooks, feature jars, folders, Paper safety controls, and runtime assumptions are actually active?” before we chase a bug in the wrong place.
 
 StartupDoctor is read-only except for writing local report dumps to cache. It does not change CMI, CMILib, Paper, playerdata, permissions, economy, or feature plugin state.
 
@@ -13,7 +13,7 @@ StartupDoctor is read-only except for writing local report dumps to cache. It do
 - Show a compact summary for support triage.
 - Show Paper, Java, CMI, CMILib, PlaceholderAPI, LuckPerms, and Vault state.
 - Verify CMI-API classes are visible to the feature jar.
-- List registered 1MB CMIAPI features, categories, versions, and enabled state.
+- List registered 1MB Library features, categories, versions, and enabled state.
 - List feature dependencies, optional hooks, shared data folders, cache folders, cache sizes, and expected jar names.
 - Run a read-only folder doctor for missing feature folders, orphaned 1MB cache/data folders, stale or large caches, older active project jars, disabled project jars, and sensitive-looking file names.
 - Show suggested manual fixes for folder findings without deleting, moving, or editing files.
@@ -54,11 +54,11 @@ Alias:
 Global library examples:
 
 ```text
-/1mbcmi debug plugin startupdoctor
-/1mbcmi debug plugin startupdoctor all
-/1mbcmi config startupdoctor
-/1mbcmi config set startupdoctor checks.require-placeholderapi true
-/1mbcmi translations reload
+/1mblib debug plugin startupdoctor
+/1mblib debug plugin startupdoctor all
+/1mblib config startupdoctor
+/1mblib config set startupdoctor checks.require-placeholderapi true
+/1mblib translations reload
 ```
 
 ## Permissions
@@ -106,7 +106,7 @@ CMI-API:
 
 CMILib:
 
-- CMILib is checked as a required runtime dependency because the 1MB CMI-API stack expects CMI and CMILib to be present together.
+- CMILib is checked as a required runtime dependency because the 1MB Library stack expects CMI and CMILib to be present together.
 - The report includes the installed CMILib plugin version so outdated dependency issues can be spotted quickly.
 
 CMI:

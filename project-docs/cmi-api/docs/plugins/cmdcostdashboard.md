@@ -53,13 +53,13 @@ Useful examples:
 Global library examples:
 
 ```text
-/1mbcmi debug plugin cmdcostdashboard
-/1mbcmi debug plugin cmdcostdashboard all
-/1mbcmi debug clean cache plugin cmdcostdashboard --dry-run
-/1mbcmi config cmdcostdashboard
-/1mbcmi config set cmdcostdashboard analysis.too-cheap-threshold 2
-/1mbcmi config set cmdcostdashboard analysis.too-expensive-threshold 5000
-/1mbcmi translations reload
+/1mblib debug plugin cmdcostdashboard
+/1mblib debug plugin cmdcostdashboard all
+/1mblib debug clean cache plugin cmdcostdashboard --dry-run
+/1mblib config cmdcostdashboard
+/1mblib config set cmdcostdashboard analysis.too-cheap-threshold 2
+/1mblib config set cmdcostdashboard analysis.too-expensive-threshold 5000
+/1mblib translations reload
 ```
 
 ## Permissions

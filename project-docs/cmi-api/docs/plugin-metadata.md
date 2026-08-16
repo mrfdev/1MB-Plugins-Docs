@@ -2,9 +2,9 @@
 
 ## Shared Hunt runtime aliases
 
-The public `1MB-CMIAPI-EventHunts` host registers the compatibility runtime identities `CoconutHunt`, `GhostHunt`, and `DoorHunt` while their modules are active. `/hunt admin status`, `/hunt debug status`, and `/hunt admin modules` share one immutable severity model covering switches, lifecycle/effective editions, debug state, required worlds, location readiness, reward providers, and recovery work. It also supplies compact host-startup and Doors-ready summaries without chunk or player-file scans; `/1mbcmi debug plugin DoorHunt all` still reports deeper module-specific metadata. Disabling a module unregisters its runtime behavior and placeholder alias without disabling siblings; an intentionally dormant seasonal module stays healthy, while a configured module that fails to start is reported as a failure.
+The public `1MB-CMIAPI-EventHunts` host registers the compatibility runtime identities `CoconutHunt`, `GhostHunt`, and `DoorHunt` while their modules are active. `/hunt admin status`, `/hunt debug status`, and `/hunt admin modules` share one immutable severity model covering switches, lifecycle/effective editions, debug state, required worlds, location readiness, reward providers, and recovery work. It also supplies compact host-startup and Doors-ready summaries without chunk or player-file scans; `/1mblib debug plugin DoorHunt all` still reports deeper module-specific metadata. Disabling a module unregisters its runtime behavior and placeholder alias without disabling siblings; an intentionally dormant seasonal module stays healthy, while a configured module that fails to start is reported as a failure.
 
-Every 1MB CMIAPI jar should expose consistent metadata to the shared library so `/1mbcmi features` and `/1mbcmi debug plugins` can remain useful as the project grows.
+Every 1MB Library jar should expose consistent metadata to the shared library so `/1mblib features` and `/1mblib debug plugins` can remain useful as the project grows.
 
 AntiFire is the safety-critical exception to the normal runtime model. It shares Gradle version/build metadata and publishes a typed read-only status service, but starts independently and does not register through the shared feature base. The later library may observe it in status, doctor, support-bundle, and placeholder output; it may not manage AntiFire config or lifecycle.
 
@@ -18,7 +18,7 @@ TeamMsg, ContentGuard, and Placeholders each register one normal feature runtime
 - ContentGuard hosts `filterlab` and `filterguard`.
 - Placeholders hosts `provider`, `catalog`, `probe`, and `health`; their commands share the `/_placeholders` router.
 
-`/1mbcmi features` should list the parent jars. The old placeholder/debug lookup ids remain runtime aliases while their module is active. Parent status commands show configured and runtime module state, and parent lifecycle shutdown unregisters every module listener, scheduler task, service, GUI, and placeholder alias together.
+`/1mblib features` should list the parent jars. The old placeholder/debug lookup ids remain runtime aliases while their module is active. Parent status commands show configured and runtime module state, and parent lifecycle shutdown unregisters every module listener, scheduler task, service, GUI, and placeholder alias together.
 
 ## Required Metadata
 
@@ -28,12 +28,12 @@ Each plugin should register:
 id: afkshrine
 name: AFKShrine
 category: player-fun
-version: 1.0.2
-build: 570
+version: 1.0.3
+build: 571
 java-target: 25
 paper-target: 26.2
 jar-prefix: 1MB-CMIAPI
-jar-name: 1MB-CMIAPI-AFKShrine-v1.0.2-570-j25-26.2.jar
+jar-name: 1MB-Lib-AFKShrine-v1.0.3-571-j25-26.2.jar
 repo: https://github.com/mrfdev/1MB-CMIAPI
 public-docs: https://docs.1moreblock.com
 dependencies: CMI, CMILib, 1MB-CMIAPI-LIB
@@ -44,7 +44,7 @@ cache-path: plugins/1MB-CMIAPI/CMIAPILIB/cache/plugins/afkshrine/
 
 ## Debug Output
 
-`/1mbcmi debug plugins` should paginate plugins by category:
+`/1mblib debug plugins` should paginate plugins by category:
 
 ```text
 lib
@@ -54,7 +54,7 @@ server-management
 generic
 ```
 
-`/1mbcmi debug plugin <plugin>` should show:
+`/1mblib debug plugin <plugin>` should show:
 
 - plugin id, display name, category, version, build, jar name
 - Java target, runtime Java, Paper target, exact compiled Paper API, runtime API, and server engine
@@ -71,7 +71,7 @@ generic
 - cache path and cache size
 - last error or warning, if any
 
-`/1mbcmi debug plugin <plugin> <section>` supports:
+`/1mblib debug plugin <plugin> <section>` supports:
 
 - `commands`
 - `permissions`
@@ -79,7 +79,7 @@ generic
 - `config`
 - `all`
 
-`/1mbcmi debug cmi` should show support information for CMI/CMILib compatibility:
+`/1mblib debug cmi` should show support information for CMI/CMILib compatibility:
 
 - server, Bukkit API, and Minecraft version
 - CMI found/enabled state, version, plugin api-version, main class, website, authors, and load order
@@ -88,7 +88,7 @@ generic
 - CMILib class availability
 - whether the shared library considers CMI-API and CMILib usable
 
-`/1mbcmi debug bundle` should write a timestamped folder under `plugins/1MB-CMIAPI/CMIAPILIB/debug/` containing sanitized support summaries:
+`/1mblib debug bundle` should write a timestamped folder under `plugins/1MB-CMIAPI/CMIAPILIB/debug/` containing sanitized support summaries:
 
 - `environment.txt` for server, CMI, CMILib, CMI-API, hooks, Java, Paper, and storage state
 - `features.txt` for registered feature metadata, dependencies, command counts, placeholder counts, permissions, and cache sizes
@@ -96,7 +96,7 @@ generic
 - `translations.txt` for missing and extra translation key counts
 - `recent-cache-logs.txt` for recent `.log` and `.txt` cache files with IPs and secret-like key/value pairs redacted
 
-`/1mbcmi translations status` and `/1mbcmi translations missing [plugin|all]` should compare each feature's default translation keys against its configured translation file and report missing or extra keys.
+`/1mblib translations status` and `/1mblib translations missing [plugin|all]` should compare each feature's default translation keys against its configured translation file and report missing or extra keys.
 
 Paginated command output should use the shared `PagedListRenderer` helper where practical so global and feature-plugin list views use the same page math, header shape, empty-state handling, and next-page line.
 

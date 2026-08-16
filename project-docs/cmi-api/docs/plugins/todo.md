@@ -289,8 +289,8 @@ todo:
 The shared cleanup command can remove the `todo` section later if the feature is uninstalled:
 
 ```text
-/1mbcmi debug clean playerdata plugin todo --dry-run
-/1mbcmi debug clean playerdata plugin todo --confirm
+/1mblib debug clean playerdata plugin todo --dry-run
+/1mblib debug clean playerdata plugin todo --confirm
 ```
 
 ## CMI, CMILib, And Paper Usage

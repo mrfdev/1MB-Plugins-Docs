@@ -2,10 +2,10 @@
 
 This namespace is a public documentation-only copy from the source project registered as `cmi-api`.
 
-- Project: `1MB-CMIAPI`
+- Project: `1MB Library`
 - Project id: `cmi-api`
 - Source repository: `mrfdev/1MB-CMIAPI`
-- Source commit: `03f68f0d`
+- Source commit: `37e39e7f`
 - Source state: `clean`
 - Public README source: `README.md`
 - Copied files: public `README.md` and `docs/`

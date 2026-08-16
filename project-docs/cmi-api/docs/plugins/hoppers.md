@@ -120,14 +120,14 @@ Useful examples:
 Global library examples:
 
 ```text
-/1mbcmi debug plugin hoppers
-/1mbcmi debug plugin hoppers commands
-/1mbcmi debug plugin hoppers permissions
-/1mbcmi debug plugin hoppers placeholders
-/1mbcmi debug plugin hoppers config
-/1mbcmi debug plugin hoppers all
-/1mbcmi config hoppers
-/1mbcmi config set hoppers scan.max-loaded-chunks-to-scan 12000
+/1mblib debug plugin hoppers
+/1mblib debug plugin hoppers commands
+/1mblib debug plugin hoppers permissions
+/1mblib debug plugin hoppers placeholders
+/1mblib debug plugin hoppers config
+/1mblib debug plugin hoppers all
+/1mblib config hoppers
+/1mblib config set hoppers scan.max-loaded-chunks-to-scan 12000
 ```
 
 ## Permissions

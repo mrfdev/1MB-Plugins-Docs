@@ -514,7 +514,7 @@ plugins/1MB-CMIAPI/CMIAPILIB/playerdata/<uuid>.yml
 The plugin-scoped key is `coconuthunt`, with separate edition entries for production and debug events. Each first discovery stores its coconut id, event date/day, world, and timestamp; reward records keep both earned and claimed timestamps. Point-source totals, streak dates, purchase ids, completion times, and participation start/end times remain part of the same edition record. Shared cleanup remains compatible with:
 
 ```text
-/1mbcmi debug clean playerdata plugin CoconutHunt --dry-run
+/1mblib debug clean playerdata plugin CoconutHunt --dry-run
 ```
 
 ## Command Hooks
@@ -552,14 +552,14 @@ Coconut reward and shop commands retain the legacy console-delivery path. Comman
 
 `visuals.holograms.provider: AUTO` uses private Paper TextDisplay entities. This is the reliable default on Paper 26.2 and avoids the CMI transient adapter silently accepting a hologram without visibly rendering it. Set the provider to `CMI` only when deliberately testing that adapter; a CMI exception still falls back to Paper.
 
-Holograms are private to each player, show only for nearby snapshot coconuts, and use the compact prefix `☀` icon: gold is not found and green is found. They are capped by `visuals.max-holograms-per-player` (five by default) to avoid visual clutter. Green spotting particles show only on unlocked, not-yet-found coconuts. The selected provider appears in `/coconut admin status`, `%onembcmi_CoconutHunt.runtime.hologram_provider%`, and `/1mbcmi debug plugin CoconutHunt all`.
+Holograms are private to each player, show only for nearby snapshot coconuts, and use the compact prefix `☀` icon: gold is not found and green is found. They are capped by `visuals.max-holograms-per-player` (five by default) to avoid visual clutter. Green spotting particles show only on unlocked, not-yet-found coconuts. The selected provider appears in `/coconut admin status`, `%onembcmi_CoconutHunt.runtime.hologram_provider%`, and `/1mblib debug plugin CoconutHunt all`.
 
 Nearby checks use the registry's chunk index rather than scanning every registered coconut for every player. Holograms and displays are cleaned on quit, teleport/world change, chunk unload, reload, event end, and plugin disable. Spotting, discovery, already-found, and locked sound keys and pitches are independently configurable and clamped at runtime. Discovery title settings are `visuals.titles.enabled`, `fade-in-ticks`, `stay-ticks`, and `fade-out-ticks`; 20 ticks equal one second.
 
 ## Runtime Metadata
 
 ```text
-/1mbcmi debug plugin CoconutHunt all
+/1mblib debug plugin CoconutHunt all
 ```
 
 The shared report includes commands, granular permissions, placeholders, config/data/cache paths, optional hooks, runtime health, and the active hologram provider. CoconutHunt targets Java 25 and Paper 26.2 stable build 111 or newer.
@@ -569,7 +569,7 @@ The shared report includes commands, granular permissions, placeholders, config/
 The current build produces:
 
 ```text
-1MB-CMIAPI-EventHunts-v1.0.2-570-j25-26.2.jar
+1MB-Lib-EventHunts-v1.0.3-571-j25-26.2.jar
 ```
 
 CMI, CMILib, and `1MB-CMIAPI-Lib` are required runtime dependencies. Deploy CoconutHunt and `1MB-CMIAPI-Lib` from the same build. CoconutHunt verifies the shared atomic playerdata API before activating and fails closed with one actionable compatibility diagnostic instead of allowing repeated asynchronous linkage failures. CoconutHunt uses the shared library for feature registration, translated messages, hardened GUI sessions, safe player resolution, documentation metadata, PlaceholderAPI registration, and shared playerdata. It uses the installed CMI runtime for configured kit/warp/broadcast commands; private Paper TextDisplays provide the default proximity holograms. CMILib remains part of the common runtime baseline.

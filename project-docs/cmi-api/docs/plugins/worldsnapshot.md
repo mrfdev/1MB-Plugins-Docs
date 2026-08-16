@@ -67,15 +67,15 @@ Useful examples:
 Global library examples:
 
 ```text
-/1mbcmi debug plugin worldsnapshot
-/1mbcmi debug plugin worldsnapshot commands
-/1mbcmi debug plugin worldsnapshot permissions
-/1mbcmi debug plugin worldsnapshot placeholders
-/1mbcmi debug plugin worldsnapshot config
-/1mbcmi debug plugin worldsnapshot all
-/1mbcmi config worldsnapshot
-/1mbcmi config set worldsnapshot diff.include-volatile-runtime true
-/1mbcmi config set worldsnapshot snapshot.include-seed true
+/1mblib debug plugin worldsnapshot
+/1mblib debug plugin worldsnapshot commands
+/1mblib debug plugin worldsnapshot permissions
+/1mblib debug plugin worldsnapshot placeholders
+/1mblib debug plugin worldsnapshot config
+/1mblib debug plugin worldsnapshot all
+/1mblib config worldsnapshot
+/1mblib config set worldsnapshot diff.include-volatile-runtime true
+/1mblib config set worldsnapshot snapshot.include-seed true
 ```
 
 ## Permissions
@@ -242,7 +242,7 @@ The dump is plain text and contains world names, setting paths, values, and whet
 /worldsnapshot world <world>
 /worldsnapshot diff
 /worldsnapshot dump
-/1mbcmi debug plugin worldsnapshot all
+/1mblib debug plugin worldsnapshot all
 ```
 
 To test diff behavior:

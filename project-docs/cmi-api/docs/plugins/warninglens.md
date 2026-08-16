@@ -43,11 +43,11 @@ Alias:
 Global library examples:
 
 ```text
-/1mbcmi debug plugin warninglens
-/1mbcmi debug plugin warninglens all
-/1mbcmi config warninglens
-/1mbcmi config set warninglens inspect.warning-limit 15
-/1mbcmi translations reload
+/1mblib debug plugin warninglens
+/1mblib debug plugin warninglens all
+/1mblib config warninglens
+/1mblib config set warninglens inspect.warning-limit 15
+/1mblib translations reload
 ```
 
 ## Permissions

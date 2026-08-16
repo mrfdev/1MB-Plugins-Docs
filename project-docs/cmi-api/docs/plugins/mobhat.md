@@ -299,7 +299,7 @@ Permissioned staff and testers can preview a mob before wearing it:
 /mobhat preview frog
 ```
 
-The preview shows whether the mob is globally allowed, which position lists allow it, scale, baby handling, and offset safety settings. Permission nodes stay in `/mobhat debug permissions` and `/1mbcmi debug plugin mobhat permissions`.
+The preview shows whether the mob is globally allowed, which position lists allow it, scale, baby handling, and offset safety settings. Permission nodes stay in `/mobhat debug permissions` and `/1mblib debug plugin mobhat permissions`.
 
 `back`, `shoulder-left`, and `shoulder-right` also require:
 

@@ -50,14 +50,14 @@ Useful examples:
 Global library examples:
 
 ```text
-/1mbcmi debug plugin diagnostics
-/1mbcmi debug plugin diagnostics commands
-/1mbcmi debug plugin diagnostics permissions
-/1mbcmi debug plugin diagnostics placeholders
-/1mbcmi debug plugin diagnostics config
-/1mbcmi debug plugin diagnostics all
-/1mbcmi config diagnostics
-/1mbcmi config set diagnostics debug-disconnected.enabled false
+/1mblib debug plugin diagnostics
+/1mblib debug plugin diagnostics commands
+/1mblib debug plugin diagnostics permissions
+/1mblib debug plugin diagnostics placeholders
+/1mblib debug plugin diagnostics config
+/1mblib debug plugin diagnostics all
+/1mblib config diagnostics
+/1mblib config set diagnostics debug-disconnected.enabled false
 ```
 
 ## Permissions

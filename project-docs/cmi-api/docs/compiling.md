@@ -2,14 +2,14 @@
 
 ## Shared Hunt feature
 
-Door Hunt is source inside the compatibility-named `:plugins:player-fun:coconuthunt` project, not another Gradle plugin and not another JavaPlugin. Run `gradle :plugins:player-fun:coconuthunt:test` for the Coconut/Ghost/Door focused suite, then `gradle clean refreshBuildDocs build` for the repository gate. The centralized Java 25 and `paperApiVersion=26.2.build.105-stable` settings apply to all three modules; do not import the standalone build-number mutation or its Paper coordinate. The output remains one `1MB-CMIAPI-EventHunts-v<version>-<build>-j25-26.2.jar` plus the normal library dependency.
+Door Hunt is source inside the compatibility-named `:plugins:player-fun:coconuthunt` project, not another Gradle plugin and not another JavaPlugin. Run `gradle :plugins:player-fun:coconuthunt:test` for the Coconut/Ghost/Door focused suite, then `gradle clean refreshBuildDocs build` for the repository gate. The centralized Java 25 and `paperApiVersion=26.2.build.111-stable` settings apply to all three modules; do not import the standalone build-number mutation or its Paper coordinate. The output remains one `1MB-Lib-EventHunts-v<version>-<build>-j25-26.2.jar` plus the normal library dependency.
 
 The Gradle scaffold is present. The current baseline is:
 
 - Java 25 bytecode, built with JDK 25.0.4
 - Java 26.0.2 runtime compatibility smoke testing
 - Paper 26.2 stable build 111 or newer
-- Paper API `26.2.build.105-stable`
+- Paper API `26.2.build.111-stable`
 - separate jars for every feature
 - a separate shared library jar
 
@@ -53,7 +53,7 @@ The expected jar is `Paper-26.2.jar`. `verifyLocalPaperAlignment` reads PaperScr
 gradle verifyLocalPaperAlignment printProjectMetadata
 ```
 
-`/1mbcmi version`, `/1mbcmi status`, inherited feature debug pages, PluginVersions debug output, and support bundles obtain the semantic version, build, Java target, Paper target, and exact compiled Paper API from generated `BuildConstants`.
+`/1mblib version`, `/1mblib status`, inherited feature debug pages, PluginVersions debug output, and support bundles obtain the semantic version, build, Java target, Paper target, and exact compiled Paper API from generated `BuildConstants`.
 
 Stop the Paper 26.2 test server before running `syncBuiltJarsToProjectServer`. The task checks the configured world's `session.lock` and refuses to replace loaded plugin jars while Paper is running; overwriting a live jar can leave Paper's lazy plugin classloader unable to load classes that were not used before the replacement.
 
@@ -68,11 +68,11 @@ This is a read-only drift check against the public `1MB-Plugins-Docs` checkout. 
 Expected jar naming:
 
 ```text
-1MB-CMIAPI-LIB-v1.0.2-570-j25-26.2.jar
-1MB-CMIAPI-AntiFire-v1.0.2-570-j25-26.2.jar
-1MB-CMIAPI-AFKShrine-v1.0.2-570-j25-26.2.jar
-1MB-CMIAPI-StaffCenter-v1.0.2-570-j25-26.2.jar
-1MB-CMIAPI-Profile-v1.0.2-570-j25-26.2.jar
+1MB-Lib-Core-v1.0.3-571-j25-26.2.jar
+1MB-Lib-AntiFire-v1.0.3-571-j25-26.2.jar
+1MB-Lib-AFKShrine-v1.0.3-571-j25-26.2.jar
+1MB-Lib-StaffCenter-v1.0.3-571-j25-26.2.jar
+1MB-Lib-Profile-v1.0.3-571-j25-26.2.jar
 ```
 
 After a successful feature or library build, copy the output jar into:
@@ -81,14 +81,14 @@ After a successful feature or library build, copy the output jar into:
 servers/Paper-26.2/plugins/
 ```
 
-The helper task and script handle the Paper test server sync:
+The helper task and script remain blocked for v1.0.3 until the dual-prefix deployment safety work is complete. Running either now could leave active `1MB-CMIAPI-*` and `1MB-Lib-*` JARs together:
 
 ```bash
 gradle syncBuiltJarsToProjectServer
 scripts/copy-built-jars-to-local-server.sh
 ```
 
-The Gradle task copies all built 1MB-CMIAPI jars to the Paper test server, removes stale active project jars from that folder, and verifies the remaining active project jars match the current build metadata. The shell script targets one server folder at a time. GameTypes/BentoBox deployment is handled separately from this repository-local sync flow.
+Both paths must recognize the legacy and new artifact families, stage replacements recoverably, and reject duplicate Paper plugin identities before these commands are used again. Until then, build and inspect the v1.0.3 JARs without synchronizing them. GameTypes/BentoBox deployment remains separate from this repository-local sync flow.
 
 Retired server instances are stored under the Git-ignored `archive/` directory. Gradle does not build against, sync to, stage from, or test against archived instances; `servers/Paper-26.2/` is the sole active repository-local target.
 

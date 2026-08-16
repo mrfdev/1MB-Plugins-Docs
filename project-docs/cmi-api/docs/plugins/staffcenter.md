@@ -56,10 +56,10 @@ Useful examples:
 Global library examples:
 
 ```text
-/1mbcmi debug plugin staffcenter
-/1mbcmi config staffcenter
-/1mbcmi config set staffcenter summary.show-balance false
-/1mbcmi translations reload
+/1mblib debug plugin staffcenter
+/1mblib config staffcenter
+/1mblib config set staffcenter summary.show-balance false
+/1mblib translations reload
 ```
 
 ## Permissions

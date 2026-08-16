@@ -45,11 +45,11 @@ Alias:
 Global library examples:
 
 ```text
-/1mbcmi debug plugin warppassport
-/1mbcmi debug plugin warppassport all
-/1mbcmi config warppassport
-/1mbcmi config set warppassport messages.repeat-stamp.enabled true
-/1mbcmi translations reload
+/1mblib debug plugin warppassport
+/1mblib debug plugin warppassport all
+/1mblib config warppassport
+/1mblib config set warppassport messages.repeat-stamp.enabled true
+/1mblib translations reload
 ```
 
 ## Permissions

@@ -68,7 +68,7 @@ The tree is stored in `plugins/1MB-CMIAPI/VoteTokens/rewards.yml`, so future tie
 
 VoteTokens registers no command aliases; `/votetokens` is the only direct plugin command.
 
-Player-facing VoteTokens chat responses use the shared feature-prefix system with visible prefix name `Vote`, so normal success/error lines render as the Vote feature instead of the generic `1MB CMI-API` library prefix. The symbol comes from `plugins/1MB-CMIAPI/CMIAPILIB/config.yml` under `locale.prefix-unicodes.votetokens`.
+Player-facing VoteTokens chat responses use the shared feature-prefix system with visible prefix name `Vote`, so normal success/error lines render as the Vote feature instead of the generic `1MB Library` library prefix. The symbol comes from `plugins/1MB-CMIAPI/CMIAPILIB/config.yml` under `locale.prefix-unicodes.votetokens`.
 
 ## Setup
 
@@ -554,4 +554,4 @@ Recommended local tests:
 - Use `/votetokens admin certify` while holding a matching legacy reward and confirm it auto-detects the captured reward; repeat with `/votetokens admin certify <online-player>` while that player holds the item.
 - Enable only Tier 3 Layer 1 Item 1 and confirm Tier 3 Layer 1 items 2-6 show disabled, Tier 3 Layer 2/3 remain disabled, and none of those disabled entries count toward enabled progress.
 - Use `/votetokens admin grant` to migrate one old item and confirm progress changes.
-- Use `/votetokens debug all` and `/1mbcmi debug plugin votetokens all` to verify command, permission, placeholder, config, and health output.
+- Use `/votetokens debug all` and `/1mblib debug plugin votetokens all` to verify command, permission, placeholder, config, and health output.

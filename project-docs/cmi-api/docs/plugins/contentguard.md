@@ -102,7 +102,7 @@ FilterGuard also has a one-time, versioned safety migration. Existing alert-only
 1. Stop the server.
 2. Remove `1MB-CMIAPI-FilterLab-*.jar` and `1MB-CMIAPI-FilterGuard-*.jar`.
 3. Keep the existing `FilterLab/`, `FilterGuard/`, and translation files.
-4. Install the matching `1MB-CMIAPI-ContentGuard-*.jar` and LIB jar.
+4. Install the matching `1MB-Lib-ContentGuard-*.jar` and `1MB-Lib-Core-*.jar` artifacts.
 5. Start the server, activate it when appropriate with `/contentguard debug enable true`, and run `/contentguard status`.
 
 Do not load the old standalone jars beside ContentGuard; they register the same commands and listeners.

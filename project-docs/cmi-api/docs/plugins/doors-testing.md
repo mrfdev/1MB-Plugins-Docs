@@ -1,6 +1,6 @@
 # Door Hunt testing (shared Hunt module)
 
-This is the complete clean-room v3 test and release handoff, adapted for `:plugins:player-fun:coconuthunt`. Run focused tests with `gradle :plugins:player-fun:coconuthunt:test`, the full gate with `gradle clean refreshBuildDocs build`, and synchronize only through `gradle syncBuiltJarsToProjectServer`. The standalone source and its data remain rollback material; its JAR must never be active beside the combined Hunt JAR.
+This is the complete clean-room v3 test and release handoff, adapted for `:plugins:player-fun:coconuthunt`. Run focused tests with `gradle :plugins:player-fun:coconuthunt:test` and the full gate with `gradle clean refreshBuildDocs test assemble verifyBuildMetadata verifyFeatureInstallPolicyCoverage`. Do not synchronize v1.0.3 until the dual-prefix deployment workflow is complete. The standalone source and its data remain rollback material; its JAR must never be active beside the combined Hunt JAR.
 
 # Paper 26.2 and future-minor staging checklist
 
@@ -39,8 +39,8 @@ After a numbered JAR passes automated and isolated smoke checks:
 1. Confirm the full test server is stopped cleanly.
 2. Move any standalone Trick-or-Treat Doors JAR to
    `plugins-disabled/feature-builds/`; never delete either data folder.
-3. Run `gradle syncBuiltJarsToProjectServer`; it refreshes every active 1MB-CMIAPI JAR, not only Hunt.
-4. Verify that exactly one combined `1MB-CMIAPI-EventHunts` JAR is active, no standalone Doors JAR is active, and the embedded version, Paper target, and compatibility aliases match the verified artifact.
+3. After the dual-prefix deployment gate is complete, run `gradle syncBuiltJarsToProjectServer`; it refreshes every active 1MB Library artifact, not only Hunt.
+4. Verify that exactly one combined JAR with Paper identity `1MB-CMIAPI-EventHunts` is active, no standalone Doors JAR is active, and the embedded version, Paper target, and compatibility aliases match the verified artifact.
 5. Start the full stack, run `/totdoors debug health`, and complete the relevant
    connected-player checks before considering the build ready for production.
 
@@ -48,7 +48,7 @@ An isolated smoke-test instance does not replace this synchronization step.
 
 ## Server smoke test
 
-1. Start the exact stable Paper 26.2 build 105 with Java 26, the normal shared library, and the combined Hunt JAR. Confirm Java 25 bytecode and API `26.2`.
+1. Start Paper 26.2 build 112 with Java 25.0.4, the normal Shared Library, and the combined Hunt JAR. Confirm Java 25 bytecode and API `26.2`.
 2. Confirm the log reports the expected plugin version, random reward/pool
    count, door count, current season, and progression count with no stack traces
    or main-thread file-I/O warnings.

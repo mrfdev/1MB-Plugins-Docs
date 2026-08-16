@@ -53,13 +53,13 @@ Useful examples:
 Global library examples:
 
 ```text
-/1mbcmi debug plugin sellstreaks
-/1mbcmi debug plugin sellstreaks all
-/1mbcmi debug clean playerdata plugin sellstreaks --dry-run
-/1mbcmi config sellstreaks
-/1mbcmi config set sellstreaks rewards.enabled false
-/1mbcmi config set sellstreaks anti-spam.max-one-item-streak 8
-/1mbcmi translations reload
+/1mblib debug plugin sellstreaks
+/1mblib debug plugin sellstreaks all
+/1mblib debug clean playerdata plugin sellstreaks --dry-run
+/1mblib config sellstreaks
+/1mblib config set sellstreaks rewards.enabled false
+/1mblib config set sellstreaks anti-spam.max-one-item-streak 8
+/1mblib translations reload
 ```
 
 ## Permissions

@@ -122,7 +122,7 @@ const PLAYER_GUIDE_OVERRIDES = {
       'AntiFire is passive protection, not a gameplay progression system.',
       'It prevents fire spread and block burning; it does not currently prevent fire damage to players or mobs.',
       'Reload, toggle, and debug controls are restricted to explicitly trusted staff and are documented in the full reference.',
-      'The maintained jar is 1MB-CMIAPI-AntiFire; the old standalone jar must not run beside it.',
+      'The maintained artifact is 1MB-Lib-AntiFire; the old standalone jar must not run beside it.',
     ],
   },
   bedrockchatbridge: {
@@ -804,7 +804,7 @@ const FEATURE_BULLET_OVERRIDES = {
     'Hardened GUI holders, click protection, consistent navigation, and the global GUI theme.',
     'Shared permission checks, action rules, denial recording, and permission diagnosis helpers.',
     'Audit redaction, report helpers, placeholder registration, and reusable runtime counters.',
-    'The /1mbcmi feature, debug, config, translation, and cleanup command surfaces used by staff.',
+    'The /1mblib feature, debug, config, translation, and cleanup command surfaces used by staff; /1mbcmi remains a compatibility alias.',
   ],
   autosell: [
     'An opt-in AutoSell toggle with GUI controls for categories, individual materials, value filters, worlds, and notifications.',
@@ -1277,12 +1277,13 @@ function audienceInfo(plugin) {
     };
   }
   if (plugin.category === 'Shared Library') {
+    const sharedLibraryName = '1MB Library Core';
     return {
       heading: 'How The Server Uses It',
-      description: `Learn which shared services ${plugin.name} provides to the 1MoreBlock feature plugins.`,
-      pageIntro: `This page introduces ${plugin.name} as the shared runtime behind the 1MoreBlock feature plugins. It focuses on common services and the staff-facing tools that support those features.`,
-      fallbackWithCommand: `The sections below explain which services ${plugin.name} provides and which shared staff commands are available.`,
-      fallbackWithoutCommand: `Use this page as a public reference for the common services ${plugin.name} provides to the feature plugins.`,
+      description: `Learn which shared services ${sharedLibraryName} provides to the 1MoreBlock Feature Plugins.`,
+      pageIntro: `This page introduces ${sharedLibraryName} as the shared runtime behind the 1MoreBlock Feature Plugins. It focuses on common services and the staff-facing tools that support those features.`,
+      fallbackWithCommand: `The sections below explain which services ${sharedLibraryName} provides and which shared staff commands are available.`,
+      fallbackWithoutCommand: `Use this page as a public reference for the common services ${sharedLibraryName} provides to the Feature Plugins.`,
       noCommands: 'No public shared-library commands are listed yet.',
     };
   }
@@ -1366,6 +1367,7 @@ function isPlayerFacingText(value) {
     return false;
   }
   return ![
+    '/1mblib',
     '/1mbcmi',
     '/_',
     ' admin ',
@@ -1627,7 +1629,7 @@ function isLikelyPlayerCommand(command) {
   if (!value.startsWith('/')) {
     return false;
   }
-  if (value.startsWith('/1mbcmi') || value.startsWith('/_')) {
+  if (value.startsWith('/1mblib') || value.startsWith('/1mbcmi') || value.startsWith('/_')) {
     return false;
   }
   if ([
@@ -2374,7 +2376,7 @@ description: ${JSON.stringify(`Player guides for ${definition.label.toLowerCase(
 ---
 
 ${category === 'custom-server-plugin'
-    ? 'These are standalone plugins built specifically for 1MoreBlock outside the shared 1MB-CMIAPI feature-plugin project.'
+    ? 'These are standalone plugins built specifically for 1MoreBlock outside the shared 1MB Library Feature Plugin suite.'
     : 'These guides explain third-party server features as they are configured and used on 1MoreBlock, with links to official documentation where available.'}
 
 ${additionalEntryTable(categoryEntries, './')}
@@ -2528,10 +2530,10 @@ const otherServerFeatures = additionalGroups.get('other-server-feature');
 
 await writeFile(path.join(pluginGuideRoot, 'index.mdx'), `---
 title: 1MoreBlock Features
-description: Friendly public guides for features built in the 1MB-CMIAPI project.
+description: Friendly public guides for Feature Plugins built around the 1MB Library.
 ---
 
-These features are built together in the 1MB-CMIAPI project and share the 1MB Library. Each page introduces a feature in normal server language, then shows useful commands and examples you can try when you have access.
+These independently deployable Feature Plugins share the 1MB Library. Each page introduces a feature in normal server language, then shows useful commands and examples you can try when you have access.
 
 ${pluginTable(guidePlugins, pluginDetails, './')}
 `);
@@ -2550,7 +2552,7 @@ This site explains the player-facing features, commands, and server systems that
 - [Getting started](./player-guides/getting-started/) gives players a friendly overview.
 - [Common player commands](./player-guides/commands/) lists useful commands and what they are for.
 - [Feature overview](./player-guides/features/) summarizes all documented player-facing server features.
-- [1MoreBlock features](./player-guides/plugins/) cover the feature plugins built together in 1MB-CMIAPI.
+- [1MoreBlock features](./player-guides/plugins/) cover the Feature Plugins built around the shared 1MB Library.
 - [Custom server plugins](./player-guides/custom-server-plugins/) cover standalone plugins built specifically for 1MoreBlock.
 - [Other server features](./player-guides/other-server-features/) explain third-party features as they are configured on this server.
 - [Staff reference](./staff-reference/) links to the raw synced documentation for deeper staff review.
@@ -2623,7 +2625,7 @@ These are the current player-facing guides assembled from registered 1MoreBlock 
 
 ## 1MoreBlock Features
 
-These features are built together in the 1MB-CMIAPI project.
+These independently deployable Feature Plugins are built around the shared 1MB Library.
 
 ${pluginTable(playerPlugins, pluginDetails, '../plugins/')}
 
@@ -2647,7 +2649,7 @@ description: Public staff reference copied from the private project docs.
 
 This area links to public-safe technical documentation imported from each registered source project. Every source owns a separate namespace, so synchronizing one project cannot replace another project's files.
 
-## 1MB-CMIAPI
+## 1MB Library
 
 - [Project README](${publicRepoBlob}/project-docs/cmi-api/README.md)
 - [Documentation index](${publicRepoBlob}/project-docs/cmi-api/docs/README.md)

@@ -54,11 +54,11 @@ Useful examples:
 Global library examples:
 
 ```text
-/1mbcmi debug plugin consolenoiserouter
-/1mbcmi debug clean cache plugin consolenoiserouter
-/1mbcmi config consolenoiserouter
-/1mbcmi config set consolenoiserouter recent.max 250
-/1mbcmi translations reload
+/1mblib debug plugin consolenoiserouter
+/1mblib debug clean cache plugin consolenoiserouter
+/1mblib config consolenoiserouter
+/1mblib config set consolenoiserouter recent.max 250
+/1mblib translations reload
 ```
 
 ## Permissions

@@ -2,7 +2,7 @@
 
 This project uses separate jars for the shared library and every feature plugin.
 
-The Hunt exception is internal modularity, not an extra artifact: Coconut Hunt, Ghost Hunt, and Door Hunt all ship in the single `1MB-CMIAPI-EventHunts` feature JAR. The Java project/package and established CoconutHunt data namespaces remain compatibility details. Never package or activate the clean-room standalone Doors JavaPlugin beside it. Before a Hunt release, run the 60-door importer fixture tests, focused Hunt suite, full documentation/build gate, exact Paper 26.2 startup/shutdown, migration dry-run/confirm/idempotency check, module health checks, and connected-player reward/interaction matrix. Preserve the standalone data and old JAR as rollback material until that acceptance pass is complete.
+The Hunt exception is internal modularity, not an extra artifact: Coconut Hunt, Ghost Hunt, and Door Hunt all ship in `1MB-Lib-EventHunts-*`. Its Paper plugin identity remains `1MB-CMIAPI-EventHunts`; the Java project/package and established CoconutHunt data namespaces also remain compatibility details. Never package or activate the clean-room standalone Doors JavaPlugin beside it. Before a Hunt release, run the 60-door importer fixture tests, focused Hunt suite, full documentation/build gate, exact Paper 26.2 startup/shutdown, migration dry-run/confirm/idempotency check, module health checks, and connected-player reward/interaction matrix. Preserve the standalone data and old JAR as rollback material until that acceptance pass is complete.
 
 ## Activation Safety
 
@@ -31,72 +31,72 @@ Keep PaperScript on `STABLE`, retain `Paper-{version}.jar`, then align `paperApi
 All jars should follow this shape:
 
 ```text
-1MB-CMIAPI-<Feature>-v<version>-<build>-j25-26.2.jar
+1MB-Lib-<Feature>-v<version>-<build>-j25-26.2.jar
 ```
 
 Examples:
 
 ```text
-1MB-CMIAPI-LIB-v1.0.2-570-j25-26.2.jar
-1MB-CMIAPI-AntiFire-v1.0.2-570-j25-26.2.jar
-1MB-CMIAPI-AFKShrine-v1.0.2-570-j25-26.2.jar
-1MB-CMIAPI-RecordingMode-v1.0.2-570-j25-26.2.jar
-1MB-CMIAPI-SellStreaks-v1.0.2-570-j25-26.2.jar
-1MB-CMIAPI-ScheduledTips-v1.0.2-570-j25-26.2.jar
-1MB-CMIAPI-Visit-v1.0.2-570-j25-26.2.jar
-1MB-CMIAPI-PassportDiscovery-v1.0.2-570-j25-26.2.jar
-1MB-CMIAPI-SocialGatherings-v1.0.2-570-j25-26.2.jar
-1MB-CMIAPI-JourneyMap-v1.0.2-570-j25-26.2.jar
-1MB-CMIAPI-KitStreaks-v1.0.2-570-j25-26.2.jar
-1MB-CMIAPI-Nick-v1.0.2-570-j25-26.2.jar
-1MB-CMIAPI-EmoteMenu-v1.0.2-570-j25-26.2.jar
-1MB-CMIAPI-PvPToggle-v1.0.2-570-j25-26.2.jar
-1MB-CMIAPI-Boosters-v1.0.2-570-j25-26.2.jar
-1MB-CMIAPI-NameMC-v1.0.2-570-j25-26.2.jar
-1MB-CMIAPI-Exchange-v1.0.2-570-j25-26.2.jar
-1MB-CMIAPI-VoteTokens-v1.0.2-570-j25-26.2.jar
-1MB-CMIAPI-DiscordChat-v1.0.2-570-j25-26.2.jar
-1MB-CMIAPI-GameTypes-v1.0.2-570-j25-26.2.jar
-1MB-CMIAPI-BirthdayLanterns-v1.0.2-570-j25-26.2.jar
-1MB-CMIAPI-LavaBoots-v1.0.2-570-j25-26.2.jar
-1MB-CMIAPI-Spawners-v1.0.2-570-j25-26.2.jar
-1MB-CMIAPI-Collect-v1.0.2-570-j25-26.2.jar
-1MB-CMIAPI-EventHunts-v1.0.2-570-j25-26.2.jar
-1MB-CMIAPI-DropParty-v1.0.2-570-j25-26.2.jar
-1MB-CMIAPI-Appreciation-v1.0.2-570-j25-26.2.jar
-1MB-CMIAPI-Forage-v1.0.2-570-j25-26.2.jar
-1MB-CMIAPI-MobHat-v1.0.2-570-j25-26.2.jar
-1MB-CMIAPI-PlayerTodo-v1.0.2-570-j25-26.2.jar
-1MB-CMIAPI-Refer-v1.0.2-570-j25-26.2.jar
-1MB-CMIAPI-TPAuto-v1.0.2-570-j25-26.2.jar
-1MB-CMIAPI-Menu-v1.0.2-570-j25-26.2.jar
-1MB-CMIAPI-StaffCenter-v1.0.2-570-j25-26.2.jar
-1MB-CMIAPI-Profile-v1.0.2-570-j25-26.2.jar
-1MB-CMIAPI-ContentGuard-v1.0.2-570-j25-26.2.jar
-1MB-CMIAPI-WarningLens-v1.0.2-570-j25-26.2.jar
-1MB-CMIAPI-TeamMsg-v1.0.2-570-j25-26.2.jar
-1MB-CMIAPI-CmdCostDashboard-v1.0.2-570-j25-26.2.jar
-1MB-CMIAPI-CMIConfig-v1.0.2-570-j25-26.2.jar
-1MB-CMIAPI-ConsoleNoiseRouter-v1.0.2-570-j25-26.2.jar
-1MB-CMIAPI-EconomyGuardian-v1.0.2-570-j25-26.2.jar
-1MB-CMIAPI-StartupDoctor-v1.0.2-570-j25-26.2.jar
-1MB-CMIAPI-UpdateSmoke-v1.0.2-570-j25-26.2.jar
-1MB-CMIAPI-PluginVersions-v1.0.2-570-j25-26.2.jar
-1MB-CMIAPI-Placeholders-v1.0.2-570-j25-26.2.jar
-1MB-CMIAPI-Potions-v1.0.2-570-j25-26.2.jar
-1MB-CMIAPI-Upgrade-v1.0.2-570-j25-26.2.jar
-1MB-CMIAPI-EndCrystals-v1.0.2-570-j25-26.2.jar
-1MB-CMIAPI-WorldSnapshot-v1.0.2-570-j25-26.2.jar
-1MB-CMIAPI-SparkReviewer-v1.0.2-570-j25-26.2.jar
-1MB-CMIAPI-Hoppers-v1.0.2-570-j25-26.2.jar
-1MB-CMIAPI-EventRecorder-v1.0.2-570-j25-26.2.jar
-1MB-CMIAPI-BedrockChatBridge-v1.0.2-570-j25-26.2.jar
-1MB-CMIAPI-CMIProbe-v1.0.2-570-j25-26.2.jar
-1MB-CMIAPI-CMIDatabase-v1.0.2-570-j25-26.2.jar
-1MB-CMIAPI-PermissionProbe-v1.0.2-570-j25-26.2.jar
-1MB-CMIAPI-WarpAudit-v1.0.2-570-j25-26.2.jar
-1MB-CMIAPI-WorthDrift-v1.0.2-570-j25-26.2.jar
-1MB-CMIAPI-WorthHelper-v1.0.2-570-j25-26.2.jar
+1MB-Lib-Core-v1.0.3-571-j25-26.2.jar
+1MB-Lib-AntiFire-v1.0.3-571-j25-26.2.jar
+1MB-Lib-AFKShrine-v1.0.3-571-j25-26.2.jar
+1MB-Lib-RecordingMode-v1.0.3-571-j25-26.2.jar
+1MB-Lib-SellStreaks-v1.0.3-571-j25-26.2.jar
+1MB-Lib-ScheduledTips-v1.0.3-571-j25-26.2.jar
+1MB-Lib-Visit-v1.0.3-571-j25-26.2.jar
+1MB-Lib-PassportDiscovery-v1.0.3-571-j25-26.2.jar
+1MB-Lib-SocialGatherings-v1.0.3-571-j25-26.2.jar
+1MB-Lib-JourneyMap-v1.0.3-571-j25-26.2.jar
+1MB-Lib-KitStreaks-v1.0.3-571-j25-26.2.jar
+1MB-Lib-Nick-v1.0.3-571-j25-26.2.jar
+1MB-Lib-EmoteMenu-v1.0.3-571-j25-26.2.jar
+1MB-Lib-PvPToggle-v1.0.3-571-j25-26.2.jar
+1MB-Lib-Boosters-v1.0.3-571-j25-26.2.jar
+1MB-Lib-NameMC-v1.0.3-571-j25-26.2.jar
+1MB-Lib-Exchange-v1.0.3-571-j25-26.2.jar
+1MB-Lib-VoteTokens-v1.0.3-571-j25-26.2.jar
+1MB-Lib-DiscordChat-v1.0.3-571-j25-26.2.jar
+1MB-Lib-GameTypes-v1.0.3-571-j25-26.2.jar
+1MB-Lib-BirthdayLanterns-v1.0.3-571-j25-26.2.jar
+1MB-Lib-LavaBoots-v1.0.3-571-j25-26.2.jar
+1MB-Lib-Spawners-v1.0.3-571-j25-26.2.jar
+1MB-Lib-Collect-v1.0.3-571-j25-26.2.jar
+1MB-Lib-EventHunts-v1.0.3-571-j25-26.2.jar
+1MB-Lib-DropParty-v1.0.3-571-j25-26.2.jar
+1MB-Lib-Appreciation-v1.0.3-571-j25-26.2.jar
+1MB-Lib-Forage-v1.0.3-571-j25-26.2.jar
+1MB-Lib-MobHat-v1.0.3-571-j25-26.2.jar
+1MB-Lib-PlayerTodo-v1.0.3-571-j25-26.2.jar
+1MB-Lib-Refer-v1.0.3-571-j25-26.2.jar
+1MB-Lib-TPAuto-v1.0.3-571-j25-26.2.jar
+1MB-Lib-Menu-v1.0.3-571-j25-26.2.jar
+1MB-Lib-StaffCenter-v1.0.3-571-j25-26.2.jar
+1MB-Lib-Profile-v1.0.3-571-j25-26.2.jar
+1MB-Lib-ContentGuard-v1.0.3-571-j25-26.2.jar
+1MB-Lib-WarningLens-v1.0.3-571-j25-26.2.jar
+1MB-Lib-TeamMsg-v1.0.3-571-j25-26.2.jar
+1MB-Lib-CmdCostDashboard-v1.0.3-571-j25-26.2.jar
+1MB-Lib-CMIConfig-v1.0.3-571-j25-26.2.jar
+1MB-Lib-ConsoleNoiseRouter-v1.0.3-571-j25-26.2.jar
+1MB-Lib-EconomyGuardian-v1.0.3-571-j25-26.2.jar
+1MB-Lib-StartupDoctor-v1.0.3-571-j25-26.2.jar
+1MB-Lib-UpdateSmoke-v1.0.3-571-j25-26.2.jar
+1MB-Lib-PluginVersions-v1.0.3-571-j25-26.2.jar
+1MB-Lib-Placeholders-v1.0.3-571-j25-26.2.jar
+1MB-Lib-Potions-v1.0.3-571-j25-26.2.jar
+1MB-Lib-Upgrade-v1.0.3-571-j25-26.2.jar
+1MB-Lib-EndCrystals-v1.0.3-571-j25-26.2.jar
+1MB-Lib-WorldSnapshot-v1.0.3-571-j25-26.2.jar
+1MB-Lib-SparkReviewer-v1.0.3-571-j25-26.2.jar
+1MB-Lib-Hoppers-v1.0.3-571-j25-26.2.jar
+1MB-Lib-EventRecorder-v1.0.3-571-j25-26.2.jar
+1MB-Lib-BedrockChatBridge-v1.0.3-571-j25-26.2.jar
+1MB-Lib-CMIProbe-v1.0.3-571-j25-26.2.jar
+1MB-Lib-CMIDatabase-v1.0.3-571-j25-26.2.jar
+1MB-Lib-PermissionProbe-v1.0.3-571-j25-26.2.jar
+1MB-Lib-WarpAudit-v1.0.3-571-j25-26.2.jar
+1MB-Lib-WorthDrift-v1.0.3-571-j25-26.2.jar
+1MB-Lib-WorthHelper-v1.0.3-571-j25-26.2.jar
 ```
 
 ## Local Build
@@ -111,7 +111,7 @@ When a Gradle wrapper exists:
 ./gradlew clean refreshBuildDocs build
 ```
 
-`BuildConstants.java` is generated by Gradle from `gradle.properties`, so `/1mbcmi version`, `/1mbcmi status`, inherited feature debug output, PluginVersions debug output, support bundles, plugin.yml versions, jar filenames, and docs all use the same release source. The runtime views show both the exact compiled Paper API and the actual server API/engine. `gradle build` runs `verifyBuildMetadata` and fails when any documented 1MB jar example, semantic-version/build example, checklist metadata line, stable Paper requirement, or generated constant is stale. After changing release metadata, run `gradle refreshBuildDocs` before the build.
+`BuildConstants.java` is generated by Gradle from `gradle.properties`, so `/1mblib version`, `/1mblib status`, inherited feature debug output, PluginVersions debug output, support bundles, plugin.yml versions, jar filenames, and docs all use the same release source. The runtime views show both the exact compiled Paper API and the actual server API/engine. `gradle build` runs `verifyBuildMetadata` and fails when any documented 1MB jar example, semantic-version/build example, checklist metadata line, stable Paper requirement, or generated constant is stale. After changing release metadata, run `gradle refreshBuildDocs` before the build.
 
 ## Public Docs Sync Check
 
@@ -140,7 +140,7 @@ Every successful library or feature build should copy matching jars into:
 servers/Paper-26.2/plugins/
 ```
 
-Use either:
+For v1.0.3, do not use either command until the deployment workflow safely manages both legacy `1MB-CMIAPI-*` and new `1MB-Lib-*` JAR families:
 
 ```bash
 gradle syncBuiltJarsToProjectServer
@@ -152,7 +152,7 @@ or:
 scripts/copy-built-jars-to-local-server.sh
 ```
 
-The Gradle task syncs all built project jars to `servers/Paper-26.2/plugins/`, removes older active `1MB-CMIAPI-*.jar` files from that test server folder, and verifies that active project jars match the current build metadata. GameTypes/BentoBox deployment is handled outside the repository-local sync flow because the BentoBox environment is no longer a local repository test instance.
+After that dual-prefix gate is complete, the Gradle task will replace the project JAR family in `servers/Paper-26.2/plugins/` and verify that active project JARs match the current build metadata. GameTypes/BentoBox deployment is handled outside the repository-local sync flow because the BentoBox environment is no longer a local repository test instance.
 
 Retired local servers live under the Git-ignored `archive/` directory and are excluded from build, sync, staging, and test workflows. Do not point release tasks at an archived server; `servers/Paper-26.2/` is the only active repository-local test target.
 

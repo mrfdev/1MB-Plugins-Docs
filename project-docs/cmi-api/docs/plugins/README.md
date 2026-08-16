@@ -84,7 +84,7 @@ Every feature jar that does not implement a local debug command inherits `/<plug
 
 Every plugin page should cover purpose, feature behavior, commands, example commands, permissions, placeholders, config, data/cache writes, CMI-API usage, CMILib/CMI runtime usage, Paper API usage, optional hooks, and security notes.
 
-The page should be written for future server staff, not only developers. It should explain what the plugin is for, how it behaves in game, how to test it, how to operate it safely, and what a staff member should expect to see in chat, console, PlaceholderAPI, `/1mbcmi debug plugin <id> all`, and the plugin's own help/status pages.
+The page should be written for future server staff, not only developers. It should explain what the plugin is for, how it behaves in game, how to test it, how to operate it safely, and what a staff member should expect to see in chat, console, PlaceholderAPI, `/1mblib debug plugin <id> all`, and the plugin's own help/status pages.
 
 Every real plugin's generated public guide should include an `Available features include:` bullet list inside its `How Players Use It`, `How Staff Use It`, `How Testers Use It`, or `How The Server Uses It` section. Keep the list focused on capabilities that are available now. Roadmap pages describe possible future work and must not be presented as current feature guides.
 
@@ -109,73 +109,73 @@ Useful pages to check during a feature pass:
 Runtime jars use this shape:
 
 ```text
-1MB-CMIAPI-<Feature>-v<version>-<build>-j25-26.2.jar
+1MB-Lib-<Feature>-v<version>-<build>-j25-26.2.jar
 ```
 
 Examples:
 
 ```text
-1MB-CMIAPI-LIB-v1.0.2-570-j25-26.2.jar
-1MB-CMIAPI-AFKShrine-v1.0.2-570-j25-26.2.jar
-1MB-CMIAPI-RecordingMode-v1.0.2-570-j25-26.2.jar
-1MB-CMIAPI-SellStreaks-v1.0.2-570-j25-26.2.jar
-1MB-CMIAPI-ScheduledTips-v1.0.2-570-j25-26.2.jar
-1MB-CMIAPI-Visit-v1.0.2-570-j25-26.2.jar
-1MB-CMIAPI-PassportDiscovery-v1.0.2-570-j25-26.2.jar
-1MB-CMIAPI-SocialGatherings-v1.0.2-570-j25-26.2.jar
-1MB-CMIAPI-JourneyMap-v1.0.2-570-j25-26.2.jar
-1MB-CMIAPI-KitStreaks-v1.0.2-570-j25-26.2.jar
-1MB-CMIAPI-Nick-v1.0.2-570-j25-26.2.jar
-1MB-CMIAPI-EmoteMenu-v1.0.2-570-j25-26.2.jar
-1MB-CMIAPI-PvPToggle-v1.0.2-570-j25-26.2.jar
-1MB-CMIAPI-Boosters-v1.0.2-570-j25-26.2.jar
-1MB-CMIAPI-NameMC-v1.0.2-570-j25-26.2.jar
-1MB-CMIAPI-Exchange-v1.0.2-570-j25-26.2.jar
-1MB-CMIAPI-VoteTokens-v1.0.2-570-j25-26.2.jar
-1MB-CMIAPI-DiscordChat-v1.0.2-570-j25-26.2.jar
-1MB-CMIAPI-GameTypes-v1.0.2-570-j25-26.2.jar
-1MB-CMIAPI-BirthdayLanterns-v1.0.2-570-j25-26.2.jar
-1MB-CMIAPI-LavaBoots-v1.0.2-570-j25-26.2.jar
-1MB-CMIAPI-Spawners-v1.0.2-570-j25-26.2.jar
-1MB-CMIAPI-Collect-v1.0.2-570-j25-26.2.jar
-1MB-CMIAPI-EventHunts-v1.0.2-570-j25-26.2.jar
-1MB-CMIAPI-DropParty-v1.0.2-570-j25-26.2.jar
-1MB-CMIAPI-Appreciation-v1.0.2-570-j25-26.2.jar
-1MB-CMIAPI-Forage-v1.0.2-570-j25-26.2.jar
-1MB-CMIAPI-AutoSell-v1.0.2-570-j25-26.2.jar
-1MB-CMIAPI-MobHat-v1.0.2-570-j25-26.2.jar
-1MB-CMIAPI-PlayerTodo-v1.0.2-570-j25-26.2.jar
-1MB-CMIAPI-Refer-v1.0.2-570-j25-26.2.jar
-1MB-CMIAPI-TPAuto-v1.0.2-570-j25-26.2.jar
-1MB-CMIAPI-Menu-v1.0.2-570-j25-26.2.jar
-1MB-CMIAPI-StaffCenter-v1.0.2-570-j25-26.2.jar
-1MB-CMIAPI-Profile-v1.0.2-570-j25-26.2.jar
-1MB-CMIAPI-ContentGuard-v1.0.2-570-j25-26.2.jar
-1MB-CMIAPI-WarningLens-v1.0.2-570-j25-26.2.jar
-1MB-CMIAPI-TeamMsg-v1.0.2-570-j25-26.2.jar
-1MB-CMIAPI-CmdCostDashboard-v1.0.2-570-j25-26.2.jar
-1MB-CMIAPI-CMIConfig-v1.0.2-570-j25-26.2.jar
-1MB-CMIAPI-ConsoleNoiseRouter-v1.0.2-570-j25-26.2.jar
-1MB-CMIAPI-EconomyGuardian-v1.0.2-570-j25-26.2.jar
-1MB-CMIAPI-StartupDoctor-v1.0.2-570-j25-26.2.jar
-1MB-CMIAPI-UpdateSmoke-v1.0.2-570-j25-26.2.jar
-1MB-CMIAPI-PluginVersions-v1.0.2-570-j25-26.2.jar
-1MB-CMIAPI-Placeholders-v1.0.2-570-j25-26.2.jar
-1MB-CMIAPI-Potions-v1.0.2-570-j25-26.2.jar
-1MB-CMIAPI-SchedulerCheck-v1.0.2-570-j25-26.2.jar
-1MB-CMIAPI-Upgrade-v1.0.2-570-j25-26.2.jar
-1MB-CMIAPI-EndCrystals-v1.0.2-570-j25-26.2.jar
-1MB-CMIAPI-AntiFire-v1.0.2-570-j25-26.2.jar
-1MB-CMIAPI-WorldSnapshot-v1.0.2-570-j25-26.2.jar
-1MB-CMIAPI-SparkReviewer-v1.0.2-570-j25-26.2.jar
-1MB-CMIAPI-Hoppers-v1.0.2-570-j25-26.2.jar
-1MB-CMIAPI-EventRecorder-v1.0.2-570-j25-26.2.jar
-1MB-CMIAPI-PermissionProbe-v1.0.2-570-j25-26.2.jar
-1MB-CMIAPI-WarpAudit-v1.0.2-570-j25-26.2.jar
-1MB-CMIAPI-WorthDrift-v1.0.2-570-j25-26.2.jar
-1MB-CMIAPI-WorthHelper-v1.0.2-570-j25-26.2.jar
-1MB-CMIAPI-CMIProbe-v1.0.2-570-j25-26.2.jar
-1MB-CMIAPI-CMIDatabase-v1.0.2-570-j25-26.2.jar
+1MB-Lib-Core-v1.0.3-571-j25-26.2.jar
+1MB-Lib-AFKShrine-v1.0.3-571-j25-26.2.jar
+1MB-Lib-RecordingMode-v1.0.3-571-j25-26.2.jar
+1MB-Lib-SellStreaks-v1.0.3-571-j25-26.2.jar
+1MB-Lib-ScheduledTips-v1.0.3-571-j25-26.2.jar
+1MB-Lib-Visit-v1.0.3-571-j25-26.2.jar
+1MB-Lib-PassportDiscovery-v1.0.3-571-j25-26.2.jar
+1MB-Lib-SocialGatherings-v1.0.3-571-j25-26.2.jar
+1MB-Lib-JourneyMap-v1.0.3-571-j25-26.2.jar
+1MB-Lib-KitStreaks-v1.0.3-571-j25-26.2.jar
+1MB-Lib-Nick-v1.0.3-571-j25-26.2.jar
+1MB-Lib-EmoteMenu-v1.0.3-571-j25-26.2.jar
+1MB-Lib-PvPToggle-v1.0.3-571-j25-26.2.jar
+1MB-Lib-Boosters-v1.0.3-571-j25-26.2.jar
+1MB-Lib-NameMC-v1.0.3-571-j25-26.2.jar
+1MB-Lib-Exchange-v1.0.3-571-j25-26.2.jar
+1MB-Lib-VoteTokens-v1.0.3-571-j25-26.2.jar
+1MB-Lib-DiscordChat-v1.0.3-571-j25-26.2.jar
+1MB-Lib-GameTypes-v1.0.3-571-j25-26.2.jar
+1MB-Lib-BirthdayLanterns-v1.0.3-571-j25-26.2.jar
+1MB-Lib-LavaBoots-v1.0.3-571-j25-26.2.jar
+1MB-Lib-Spawners-v1.0.3-571-j25-26.2.jar
+1MB-Lib-Collect-v1.0.3-571-j25-26.2.jar
+1MB-Lib-EventHunts-v1.0.3-571-j25-26.2.jar
+1MB-Lib-DropParty-v1.0.3-571-j25-26.2.jar
+1MB-Lib-Appreciation-v1.0.3-571-j25-26.2.jar
+1MB-Lib-Forage-v1.0.3-571-j25-26.2.jar
+1MB-Lib-AutoSell-v1.0.3-571-j25-26.2.jar
+1MB-Lib-MobHat-v1.0.3-571-j25-26.2.jar
+1MB-Lib-PlayerTodo-v1.0.3-571-j25-26.2.jar
+1MB-Lib-Refer-v1.0.3-571-j25-26.2.jar
+1MB-Lib-TPAuto-v1.0.3-571-j25-26.2.jar
+1MB-Lib-Menu-v1.0.3-571-j25-26.2.jar
+1MB-Lib-StaffCenter-v1.0.3-571-j25-26.2.jar
+1MB-Lib-Profile-v1.0.3-571-j25-26.2.jar
+1MB-Lib-ContentGuard-v1.0.3-571-j25-26.2.jar
+1MB-Lib-WarningLens-v1.0.3-571-j25-26.2.jar
+1MB-Lib-TeamMsg-v1.0.3-571-j25-26.2.jar
+1MB-Lib-CmdCostDashboard-v1.0.3-571-j25-26.2.jar
+1MB-Lib-CMIConfig-v1.0.3-571-j25-26.2.jar
+1MB-Lib-ConsoleNoiseRouter-v1.0.3-571-j25-26.2.jar
+1MB-Lib-EconomyGuardian-v1.0.3-571-j25-26.2.jar
+1MB-Lib-StartupDoctor-v1.0.3-571-j25-26.2.jar
+1MB-Lib-UpdateSmoke-v1.0.3-571-j25-26.2.jar
+1MB-Lib-PluginVersions-v1.0.3-571-j25-26.2.jar
+1MB-Lib-Placeholders-v1.0.3-571-j25-26.2.jar
+1MB-Lib-Potions-v1.0.3-571-j25-26.2.jar
+1MB-Lib-SchedulerCheck-v1.0.3-571-j25-26.2.jar
+1MB-Lib-Upgrade-v1.0.3-571-j25-26.2.jar
+1MB-Lib-EndCrystals-v1.0.3-571-j25-26.2.jar
+1MB-Lib-AntiFire-v1.0.3-571-j25-26.2.jar
+1MB-Lib-WorldSnapshot-v1.0.3-571-j25-26.2.jar
+1MB-Lib-SparkReviewer-v1.0.3-571-j25-26.2.jar
+1MB-Lib-Hoppers-v1.0.3-571-j25-26.2.jar
+1MB-Lib-EventRecorder-v1.0.3-571-j25-26.2.jar
+1MB-Lib-PermissionProbe-v1.0.3-571-j25-26.2.jar
+1MB-Lib-WarpAudit-v1.0.3-571-j25-26.2.jar
+1MB-Lib-WorthDrift-v1.0.3-571-j25-26.2.jar
+1MB-Lib-WorthHelper-v1.0.3-571-j25-26.2.jar
+1MB-Lib-CMIProbe-v1.0.3-571-j25-26.2.jar
+1MB-Lib-CMIDatabase-v1.0.3-571-j25-26.2.jar
 ```
 
 [Documentation index](../README.md)

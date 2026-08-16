@@ -2,86 +2,88 @@
 
 This page documents the global command shape. Individual plugins have their own command pages under [plugins](plugins/README.md).
 
+`/1mblib` is canonical. `/1mbcmi` remains a compatibility alias with the same subcommand behavior.
+
 ## Current Global Library Commands
 
 ```text
-/1mbcmi info
-/1mbcmi status
-/1mbcmi version
-/1mbcmi doctor
-/1mbcmi features
-/1mbcmi storage
-/1mbcmi help
-/1mbcmi debug plugins
-/1mbcmi debug plugins <category>
-/1mbcmi debug cmi
-/1mbcmi debug plugin <plugin>
-/1mbcmi debug plugin <plugin> health
-/1mbcmi debug plugin <plugin> commands [page]
-/1mbcmi debug plugin <plugin> permissions
-/1mbcmi debug plugin <plugin> placeholders
-/1mbcmi debug plugin <plugin> config
-/1mbcmi debug plugin <plugin> all
-/1mbcmi debug bundle
-/1mbcmi debug clean cache [global|all|plugin <plugin>] [--dry-run]
-/1mbcmi debug clean playerdata plugin <plugin> [--dry-run|--confirm]
-/1mbcmi docs commands [all|plugin] [discord|github]
-/1mbcmi docs permissions [all|plugin] [discord|github]
-/1mbcmi docs all [all|plugin] [discord|github]
-/1mbcmi config <plugin>
-/1mbcmi config set <plugin> <path> <value>
-/1mbcmi gui test
-/1mbcmi gui examples
-/1mbcmi rules [page]
-/1mbcmi rules validate
-/1mbcmi rules test <rule>
-/1mbcmi player resolve <name|uuid>
-/1mbcmi player cached <name|uuid>
-/1mbcmi validate <material|world|duration|uuid|money|id|page|feature> <value>
-/1mbcmi translations status
-/1mbcmi translations missing [plugin|all]
-/1mbcmi translations reload
+/1mblib info
+/1mblib status
+/1mblib version
+/1mblib doctor
+/1mblib features
+/1mblib storage
+/1mblib help
+/1mblib debug plugins
+/1mblib debug plugins <category>
+/1mblib debug cmi
+/1mblib debug plugin <plugin>
+/1mblib debug plugin <plugin> health
+/1mblib debug plugin <plugin> commands [page]
+/1mblib debug plugin <plugin> permissions
+/1mblib debug plugin <plugin> placeholders
+/1mblib debug plugin <plugin> config
+/1mblib debug plugin <plugin> all
+/1mblib debug bundle
+/1mblib debug clean cache [global|all|plugin <plugin>] [--dry-run]
+/1mblib debug clean playerdata plugin <plugin> [--dry-run|--confirm]
+/1mblib docs commands [all|plugin] [discord|github]
+/1mblib docs permissions [all|plugin] [discord|github]
+/1mblib docs all [all|plugin] [discord|github]
+/1mblib config <plugin>
+/1mblib config set <plugin> <path> <value>
+/1mblib gui test
+/1mblib gui examples
+/1mblib rules [page]
+/1mblib rules validate
+/1mblib rules test <rule>
+/1mblib player resolve <name|uuid>
+/1mblib player cached <name|uuid>
+/1mblib validate <material|world|duration|uuid|money|id|page|feature> <value>
+/1mblib translations status
+/1mblib translations missing [plugin|all]
+/1mblib translations reload
 ```
 
 ## Current Global Command Reference
 
 | Command | Purpose |
 | --- | --- |
-| `/1mbcmi info` | Introduces the shared library and links to the detailed GitHub documentation. |
-| `/1mbcmi help` | Shows the shared command reference. |
-| `/1mbcmi version` | Shows concise version, build, Java, Paper, and repository metadata. |
-| `/1mbcmi status` | Shows build, Java/Paper target, hook status, CMI status, and data root. |
-| `/1mbcmi doctor` | Runs support checks for hooks, feature registration, config validation, and storage paths. |
-| `/1mbcmi features [category]` | Lists registered 1MB CMI-API features with active/config/dependency/validation health, optionally filtered by category. |
-| `/1mbcmi storage` | Shows shared data, cache, translation, debug, and playerdata storage sizes. |
-| `/1mbcmi debug plugins [category]` | Lists registered features and health states in a compact debug-friendly view. |
-| `/1mbcmi debug cmi` | Prints CMI, CMILib, CMI-API, server, and plugin metadata for support. |
-| `/1mbcmi debug plugin <plugin>` | Shows a summary for one registered feature. |
-| `/1mbcmi debug plugin <plugin> health` | Shows config default repair status, missing keys, validation issues, and metadata counts for a feature. |
-| `/1mbcmi debug plugin <plugin> commands [page]` | Lists command usage, short purpose notes, and permission hints for a feature. |
-| `/1mbcmi debug plugin <plugin> permissions` | Lists permissions declared by a feature plugin. |
-| `/1mbcmi debug plugin <plugin> placeholders` | Lists declared placeholders for a feature plugin. |
-| `/1mbcmi debug plugin <plugin> config` | Lists flattened config paths, values, types, and whether they are settable. |
-| `/1mbcmi debug plugin <plugin> all` | Prints summary, commands, permissions, placeholders, and config for a feature. |
-| `/1mbcmi debug bundle` | Writes a sanitized support bundle folder with environment, feature, config, translation, and recent cache-log summaries. |
-| `/1mbcmi debug clean cache [global|all|plugin <plugin>] [--dry-run]` | Clears selected cache data without touching playerdata. |
-| `/1mbcmi debug clean playerdata plugin <plugin> [--dry-run\|--confirm]` | Removes only that plugin's section from shared playerdata files. |
-| `/1mbcmi docs commands [all|plugin] [discord|github]` | Writes generated command Markdown from runtime command help and plugin.yml command roots. |
-| `/1mbcmi docs permissions [all|plugin] [discord|github]` | Writes generated permission Markdown from plugin.yml metadata and command-help references. |
-| `/1mbcmi docs all [all|plugin] [discord|github]` | Writes one generated command and permission Markdown snapshot for admin review. |
-| `/1mbcmi config <plugin>` | Shows the config file and top-level config keys for a feature. |
-| `/1mbcmi config set <plugin> <path> <value>` | Updates a supported config value and reloads that feature. |
-| `/1mbcmi gui test` | Opens a shared GUI framework smoke-test page. |
-| `/1mbcmi gui examples` | Opens shared GUI framework examples with pagination and confirmation demos. |
-| `/1mbcmi rules [page]` | Lists configured safe shared action rules. |
-| `/1mbcmi rules validate` | Validates shared action rule ids, triggers, conditions, and action safety. |
-| `/1mbcmi rules test <rule>` | Previews a shared action rule without dispatching unsafe command actions. |
-| `/1mbcmi player resolve <name|uuid>` | Resolves an exact real name, known UUID, or unique CMI nickname from local online/cache data. |
-| `/1mbcmi player cached <name|uuid>` | Resolves an exact real name or known UUID while intentionally ignoring nicknames. |
-| `/1mbcmi validate <material\|world\|duration\|uuid\|money\|id\|page\|feature> <value>` | Validates and canonicalizes one common command argument without changing server state. |
-| `/1mbcmi translations status` | Shows missing and extra translation key counts for each registered feature. |
-| `/1mbcmi translations missing [plugin\|all]` | Lists missing and extra translation keys for one feature or all features. |
-| `/1mbcmi translations reload` | Reloads shared and feature translation files. |
+| `/1mblib info` | Introduces the shared library and links to the detailed GitHub documentation. |
+| `/1mblib help` | Shows the shared command reference. |
+| `/1mblib version` | Shows concise version, build, Java, Paper, and repository metadata. |
+| `/1mblib status` | Shows build, Java/Paper target, hook status, CMI status, and data root. |
+| `/1mblib doctor` | Runs support checks for hooks, feature registration, config validation, and storage paths. |
+| `/1mblib features [category]` | Lists registered 1MB Library features with active/config/dependency/validation health, optionally filtered by category. |
+| `/1mblib storage` | Shows shared data, cache, translation, debug, and playerdata storage sizes. |
+| `/1mblib debug plugins [category]` | Lists registered features and health states in a compact debug-friendly view. |
+| `/1mblib debug cmi` | Prints CMI, CMILib, CMI-API, server, and plugin metadata for support. |
+| `/1mblib debug plugin <plugin>` | Shows a summary for one registered feature. |
+| `/1mblib debug plugin <plugin> health` | Shows config default repair status, missing keys, validation issues, and metadata counts for a feature. |
+| `/1mblib debug plugin <plugin> commands [page]` | Lists command usage, short purpose notes, and permission hints for a feature. |
+| `/1mblib debug plugin <plugin> permissions` | Lists permissions declared by a feature plugin. |
+| `/1mblib debug plugin <plugin> placeholders` | Lists declared placeholders for a feature plugin. |
+| `/1mblib debug plugin <plugin> config` | Lists flattened config paths, values, types, and whether they are settable. |
+| `/1mblib debug plugin <plugin> all` | Prints summary, commands, permissions, placeholders, and config for a feature. |
+| `/1mblib debug bundle` | Writes a sanitized support bundle folder with environment, feature, config, translation, and recent cache-log summaries. |
+| `/1mblib debug clean cache [global|all|plugin <plugin>] [--dry-run]` | Clears selected cache data without touching playerdata. |
+| `/1mblib debug clean playerdata plugin <plugin> [--dry-run\|--confirm]` | Removes only that plugin's section from shared playerdata files. |
+| `/1mblib docs commands [all|plugin] [discord|github]` | Writes generated command Markdown from runtime command help and plugin.yml command roots. |
+| `/1mblib docs permissions [all|plugin] [discord|github]` | Writes generated permission Markdown from plugin.yml metadata and command-help references. |
+| `/1mblib docs all [all|plugin] [discord|github]` | Writes one generated command and permission Markdown snapshot for admin review. |
+| `/1mblib config <plugin>` | Shows the config file and top-level config keys for a feature. |
+| `/1mblib config set <plugin> <path> <value>` | Updates a supported config value and reloads that feature. |
+| `/1mblib gui test` | Opens a shared GUI framework smoke-test page. |
+| `/1mblib gui examples` | Opens shared GUI framework examples with pagination and confirmation demos. |
+| `/1mblib rules [page]` | Lists configured safe shared action rules. |
+| `/1mblib rules validate` | Validates shared action rule ids, triggers, conditions, and action safety. |
+| `/1mblib rules test <rule>` | Previews a shared action rule without dispatching unsafe command actions. |
+| `/1mblib player resolve <name|uuid>` | Resolves an exact real name, known UUID, or unique CMI nickname from local online/cache data. |
+| `/1mblib player cached <name|uuid>` | Resolves an exact real name or known UUID while intentionally ignoring nicknames. |
+| `/1mblib validate <material\|world\|duration\|uuid\|money\|id\|page\|feature> <value>` | Validates and canonicalizes one common command argument without changing server state. |
+| `/1mblib translations status` | Shows missing and extra translation key counts for each registered feature. |
+| `/1mblib translations missing [plugin\|all]` | Lists missing and extra translation keys for one feature or all features. |
+| `/1mblib translations reload` | Reloads shared and feature translation files. |
 
 ## Output Style
 
@@ -94,9 +96,9 @@ Dynamic values such as player input, config values, event details, and log snipp
 The owner-only player resolver exposes the same shared lookup rules available to feature plugins:
 
 ```text
-/1mbcmi player resolve Floris
-/1mbcmi player resolve 123e4567-e89b-12d3-a456-426614174000
-/1mbcmi player cached Floris
+/1mblib player resolve Floris
+/1mblib player resolve 123e4567-e89b-12d3-a456-426614174000
+/1mblib player cached Floris
 ```
 
 `resolve` accepts exact real names, canonical or compact known UUIDs, and unique CMI nicknames. `cached` accepts only exact real names and known UUIDs, which makes it suitable for commands where a nickname must never select an offline account. Exact real names take precedence over nicknames. If one name or nickname maps to multiple UUIDs, the result is ambiguous and no account is selected.
@@ -108,14 +110,14 @@ Both modes use online players, Paper's offline cache, and CMI's already-loaded u
 The owner-only validation command uses the same reusable service exposed to feature plugins:
 
 ```text
-/1mbcmi validate material minecraft:oak_log
-/1mbcmi validate world general
-/1mbcmi validate duration 1h30m
-/1mbcmi validate uuid 123e4567-e89b-12d3-a456-426614174000
-/1mbcmi validate money 10000.50
-/1mbcmi validate id summer-event
-/1mbcmi validate page 3
-/1mbcmi validate feature autosell
+/1mblib validate material minecraft:oak_log
+/1mblib validate world general
+/1mblib validate duration 1h30m
+/1mblib validate uuid 123e4567-e89b-12d3-a456-426614174000
+/1mblib validate money 10000.50
+/1mblib validate id summer-event
+/1mblib validate page 3
+/1mblib validate feature autosell
 ```
 
 Material output is normalized to its canonical Paper key. World validation accepts currently loaded worlds. Bare durations mean seconds; compound durations use descending `w`, `d`, `h`, `m`, and `s` parts. UUIDs may be canonical or compact 32-digit values. Default money validation allows plain non-negative values with no currency symbol, comma, exponent, or more than two effective decimal places. Safe ids use `a-z`, `0-9`, underscore, and hyphen. Pages start at one, and feature ids must exist in the current feature registry.
@@ -150,7 +152,7 @@ The richer owner-only permission diagnosis surface lives in the `PermissionProbe
 
 `/_permissions` is locked behind `onembcmi.permissionprobe.use` before help, status, debug, or tab completion exposes probe data. It is read-only: it checks Bukkit effective state, registered permission metadata, command metadata, recent denied 1MB feature permission checks, live watch summaries, scoped denial reports, Markdown exports, LuckPerms cached results, cached LuckPerms source traces, player access overviews, player/group comparisons, context-tagged source nodes, expected-profile gaps, wildcard scans, orphan-node scans, and feature access summaries without granting or removing nodes.
 
-The old `/1mbcmi permissions ...` command is no longer listed as a working analyzer. If typed manually, it prints a compatibility note pointing admins to `/_permissions`.
+The deprecated `permissions` subcommand is no longer a working analyzer. Whether reached through `/1mblib permissions ...` or the `/1mbcmi` compatibility alias, it prints a note pointing admins to `/_permissions`.
 
 ## Feature Debug Fallback
 
@@ -170,20 +172,20 @@ Feature plugins inherit shared support routes from `1MB-CMIAPI-Lib`. The fallbac
 /<plugin> debug all
 ```
 
-The overview page shows the plugin name, technical introduction, category, docs URL, full `/1mbcmi debug plugin <id> all` support command, version/build, target PaperMC version, exact compiled Paper API coordinate/channel/build, Java target, runtime Java version, Bukkit/Paper runtime API string, server engine string, active/dormant behavior state, and links to the paginated subpages. The health page shows config default repair status, missing keys, validation issues, and metadata counts. In game, shared debug lists stay paginated; console senders receive all shared paginated rows in one command. `debug reload` rereads configuration and translations and invokes the feature's live runtime reload hook, even when that feature owns richer custom debug pages. Prefer the documented `admin reload` route where one exists; the debug form is the consistent safety net. These are narrow feature reloads, not Paper's global `/reload`. Changes to plugin jars, `plugin.yml` command registration, or dependency availability can still require a clean server restart.
+The overview page shows the plugin name, technical introduction, category, docs URL, full `/1mblib debug plugin <id> all` support command, version/build, target PaperMC version, exact compiled Paper API coordinate/channel/build, Java target, runtime Java version, Bukkit/Paper runtime API string, server engine string, active/dormant behavior state, and links to the paginated subpages. The health page shows config default repair status, missing keys, validation issues, and metadata counts. In game, shared debug lists stay paginated; console senders receive all shared paginated rows in one command. `debug reload` rereads configuration and translations and invokes the feature's live runtime reload hook, even when that feature owns richer custom debug pages. Prefer the documented `admin reload` route where one exists; the debug form is the consistent safety net. These are narrow feature reloads, not Paper's global `/reload`. Changes to plugin jars, `plugin.yml` command registration, or dependency availability can still require a clean server restart.
 
 `debug enable false` leaves the Bukkit plugin loaded and green but shuts down gameplay behavior; `debug enable true` starts it again without a restart. Both transitions atomically save `enabled:` in the feature config. Console, the feature admin permission, or `onembcmi.global.config.set` may change this state. While dormant, only `info`, `help`, safe shared `debug`, and this lifecycle control are available.
 
-Feature `/help` pages are intentionally player-facing: they list commands available to the sender, but do not print permission nodes. Use `/<plugin> debug permissions [page]` or `/1mbcmi debug plugin <id> permissions` when staff need the permission-oriented view.
+Feature `/help` pages are intentionally player-facing: they list commands available to the sender, but do not print permission nodes. Use `/<plugin> debug permissions [page]` or `/1mblib debug plugin <id> permissions` when staff need the permission-oriented view.
 
 ## Example Commands
 
 ```text
-/1mbcmi status
-/1mbcmi version
-/1mbcmi doctor
-/1mbcmi features
-/1mbcmi storage
+/1mblib status
+/1mblib version
+/1mblib doctor
+/1mblib features
+/1mblib storage
 /_permissions mrfloris
 /_permissions denials
 /_permissions report feature autosell
@@ -202,76 +204,76 @@ Feature `/help` pages are intentionally player-facing: they list commands availa
 /_permissions plugin autosell mrfloris
 /_permissions command mrfloris autosell gui
 /_permissions groups mrfloris
-/1mbcmi debug plugins player-fun
-/1mbcmi debug cmi
-/1mbcmi debug plugin afkshrine
-/1mbcmi debug plugin recordingmode all
-/1mbcmi debug plugin scheduledtips all
-/1mbcmi debug plugin visit all
-/1mbcmi debug plugin sellstreaks all
-/1mbcmi debug plugin passportdiscovery all
-/1mbcmi debug plugin socialgatherings all
-/1mbcmi debug plugin journeymap all
-/1mbcmi debug plugin kitstreaks all
-/1mbcmi debug plugin nick all
-/1mbcmi debug plugin emotemenu all
-/1mbcmi debug plugin pvptoggle all
-/1mbcmi debug plugin boosters all
-/1mbcmi debug plugin namemc all
-/1mbcmi debug plugin exchange all
-/1mbcmi debug plugin votetokens all
-/1mbcmi debug plugin spawners all
-/1mbcmi debug plugin mobhat all
-/1mbcmi debug plugin todo all
-/1mbcmi debug plugin staffcenter all
-/1mbcmi debug plugin profile all
-/1mbcmi debug plugin contentguard all
-/1mbcmi debug plugin warninglens all
-/1mbcmi debug plugin teammsg all
-/1mbcmi debug plugin cmdcostdashboard all
-/1mbcmi debug plugin cmiconfig all
-/1mbcmi debug plugin economyguardian all
-/1mbcmi debug plugin startupdoctor all
-/1mbcmi debug plugin updatesmoke all
-/1mbcmi debug plugin pluginversions all
+/1mblib debug plugins player-fun
+/1mblib debug cmi
+/1mblib debug plugin afkshrine
+/1mblib debug plugin recordingmode all
+/1mblib debug plugin scheduledtips all
+/1mblib debug plugin visit all
+/1mblib debug plugin sellstreaks all
+/1mblib debug plugin passportdiscovery all
+/1mblib debug plugin socialgatherings all
+/1mblib debug plugin journeymap all
+/1mblib debug plugin kitstreaks all
+/1mblib debug plugin nick all
+/1mblib debug plugin emotemenu all
+/1mblib debug plugin pvptoggle all
+/1mblib debug plugin boosters all
+/1mblib debug plugin namemc all
+/1mblib debug plugin exchange all
+/1mblib debug plugin votetokens all
+/1mblib debug plugin spawners all
+/1mblib debug plugin mobhat all
+/1mblib debug plugin todo all
+/1mblib debug plugin staffcenter all
+/1mblib debug plugin profile all
+/1mblib debug plugin contentguard all
+/1mblib debug plugin warninglens all
+/1mblib debug plugin teammsg all
+/1mblib debug plugin cmdcostdashboard all
+/1mblib debug plugin cmiconfig all
+/1mblib debug plugin economyguardian all
+/1mblib debug plugin startupdoctor all
+/1mblib debug plugin updatesmoke all
+/1mblib debug plugin pluginversions all
 /_scheduler debug all
-/1mbcmi debug plugin upgrade all
-/1mbcmi debug plugin worldsnapshot all
-/1mbcmi debug plugin sparkreviewer all
-/1mbcmi debug plugin hoppers all
-/1mbcmi debug plugin diagnostics all
-/1mbcmi debug plugin placeholders all
-/1mbcmi debug plugin warpaudit all
-/1mbcmi debug plugin worthdrift all
-/1mbcmi debug plugin worthhelper all
-/1mbcmi debug plugin cmiprobe all
-/1mbcmi debug plugin cmidb all
-/1mbcmi debug plugin afkshrine commands
-/1mbcmi debug plugin global commands 2
-/1mbcmi debug plugin afkshrine permissions
-/1mbcmi debug plugin afkshrine placeholders
-/1mbcmi debug plugin afkshrine config
-/1mbcmi debug plugin afkshrine all
-/1mbcmi debug plugin global all
-/1mbcmi debug clean cache global --dry-run
-/1mbcmi debug clean cache plugin afkshrine --dry-run
-/1mbcmi debug clean cache all --dry-run
-/1mbcmi debug clean playerdata plugin afkshrine --dry-run
-/1mbcmi debug clean playerdata plugin afkshrine --confirm
-/1mbcmi debug bundle
-/1mbcmi docs all all github
-/1mbcmi docs commands autosell discord
-/1mbcmi docs permissions permissionprobe github
-/1mbcmi config afkshrine
-/1mbcmi config set afkshrine messages.enter.enabled false
-/1mbcmi gui test
-/1mbcmi gui examples
-/1mbcmi rules
-/1mbcmi rules validate
-/1mbcmi rules test welcome-test
-/1mbcmi translations status
-/1mbcmi translations missing all
-/1mbcmi translations reload
+/1mblib debug plugin upgrade all
+/1mblib debug plugin worldsnapshot all
+/1mblib debug plugin sparkreviewer all
+/1mblib debug plugin hoppers all
+/1mblib debug plugin diagnostics all
+/1mblib debug plugin placeholders all
+/1mblib debug plugin warpaudit all
+/1mblib debug plugin worthdrift all
+/1mblib debug plugin worthhelper all
+/1mblib debug plugin cmiprobe all
+/1mblib debug plugin cmidb all
+/1mblib debug plugin afkshrine commands
+/1mblib debug plugin global commands 2
+/1mblib debug plugin afkshrine permissions
+/1mblib debug plugin afkshrine placeholders
+/1mblib debug plugin afkshrine config
+/1mblib debug plugin afkshrine all
+/1mblib debug plugin global all
+/1mblib debug clean cache global --dry-run
+/1mblib debug clean cache plugin afkshrine --dry-run
+/1mblib debug clean cache all --dry-run
+/1mblib debug clean playerdata plugin afkshrine --dry-run
+/1mblib debug clean playerdata plugin afkshrine --confirm
+/1mblib debug bundle
+/1mblib docs all all github
+/1mblib docs commands autosell discord
+/1mblib docs permissions permissionprobe github
+/1mblib config afkshrine
+/1mblib config set afkshrine messages.enter.enabled false
+/1mblib gui test
+/1mblib gui examples
+/1mblib rules
+/1mblib rules validate
+/1mblib rules test welcome-test
+/1mblib translations status
+/1mblib translations missing all
+/1mblib translations reload
 ```
 
 Placeholders Provider examples:
@@ -2070,7 +2072,7 @@ Appreciation:
 - Require explicit permissions for admin, config, debug, clean, and data commands.
 - Use `--dry-run` and `--confirm` for destructive playerdata cleanup.
 - Never splice player input into server console commands without strict validation.
-- Keep shared action rules on known action types; `/1mbcmi rules test` previews command actions and does not execute them.
+- Keep shared action rules on known action types; `/1mblib rules test` previews command actions and does not execute them.
 - Use shared library parsing and filename helpers for feature command implementations.
 - Keep broad cache cleanup separate from long-lived playerdata cleanup.
 

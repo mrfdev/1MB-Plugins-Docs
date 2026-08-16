@@ -69,16 +69,16 @@ No command aliases are registered intentionally. Use `/emotes`.
 Global library examples:
 
 ```text
-/1mbcmi debug plugin emotemenu
-/1mbcmi debug plugin emotemenu commands
-/1mbcmi debug plugin emotemenu permissions
-/1mbcmi debug plugin emotemenu placeholders
-/1mbcmi debug plugin emotemenu config
-/1mbcmi debug plugin emotemenu all
-/1mbcmi config emotemenu
-/1mbcmi config set emotemenu output.page-size 14
-/1mbcmi config set emotemenu output.list-page-size 8
-/1mbcmi translations reload
+/1mblib debug plugin emotemenu
+/1mblib debug plugin emotemenu commands
+/1mblib debug plugin emotemenu permissions
+/1mblib debug plugin emotemenu placeholders
+/1mblib debug plugin emotemenu config
+/1mblib debug plugin emotemenu all
+/1mblib config emotemenu
+/1mblib config set emotemenu output.page-size 14
+/1mblib config set emotemenu output.list-page-size 8
+/1mblib translations reload
 ```
 
 ## Example Commands
@@ -332,7 +332,7 @@ Useful admin checks:
 /emotes disable cheer
 /emotes debug aliases
 /emotes status
-/1mbcmi debug plugin emotemenu config
+/1mblib debug plugin emotemenu config
 ```
 
 The local Paper 26.2 test server currently has `1MB-emotes.yml` with many CMI alias entries. With the default config and the file present, `/emotes aliases` should show simple entries as disabled and richer entries as enabled unless they were explicitly overridden. `/emotes disabled` opens the admin GUI for hidden entries.
@@ -433,6 +433,6 @@ The target heads use each online player's Paper player profile so skins render i
 11. Enable a disabled emote from the GUI, verify it appears in `/emotes`, then disable it again with `/emotes disable <id>`.
 12. Confirm the search button opens a dialog and rejects unsafe input such as `<click:test>`.
 13. Run `/emotes debug all`.
-14. Run `/1mbcmi debug plugin emotemenu all`.
+14. Run `/1mblib debug plugin emotemenu all`.
 
 [Plugin documentation index](README.md)

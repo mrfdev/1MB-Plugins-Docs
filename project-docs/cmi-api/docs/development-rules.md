@@ -53,8 +53,8 @@ Player data should be long-lived and stored by UUID. If a plugin is removed, cle
 The global cleanup command removes both the current top-level section shape and the future nested section shape:
 
 ```text
-/1mbcmi debug clean playerdata plugin <plugin> --dry-run
-/1mbcmi debug clean playerdata plugin <plugin> --confirm
+/1mblib debug clean playerdata plugin <plugin> --dry-run
+/1mblib debug clean playerdata plugin <plugin> --confirm
 ```
 
 Suggested player data shape:
@@ -81,7 +81,7 @@ Every buildable plugin should have a docs page explaining how it uses:
 - Paper APIs
 - optional PlaceholderAPI, LuckPerms, or Vault hooks
 
-Each feature should also register command help, permissions, placeholders, and config defaults with the shared library so `/1mbcmi debug plugin <id> all` stays useful as the plugin grows. A code change that adds, removes, renames, or changes behavior for any command, permission, placeholder, config path, hook, data path, jar name, version, or build number should update all matching documentation in the same change.
+Each feature should also register command help, permissions, placeholders, and config defaults with the shared library so `/1mblib debug plugin <id> all` stays useful as the plugin grows. A code change that adds, removes, renames, or changes behavior for any command, permission, placeholder, config path, hook, data path, jar name, version, or build number should update all matching documentation in the same change.
 
 In-game and console output should match the docs:
 
@@ -94,11 +94,11 @@ In-game and console output should match the docs:
 - Every active feature must have a permission-locked live reload route that rereads its configuration and translations and applies plugin-specific runtime reload hooks. Prefer `/<plugin> admin reload` when an admin namespace exists, use a direct `/<plugin> reload` for a dedicated administrative root, and retain `/<plugin> debug reload` as the shared fallback. Existing aliases remain supported, direct console remains trusted, and reload failures must fail closed rather than require an immediate server restart.
 - `/<plugin> admin` is optional. Add it when one command root mixes a player-facing surface with several privileged mutating or management verbs; keep existing direct forms as compatibility aliases. Omit it for read-only diagnostics, dedicated staff/server-management roots (especially underscored roots), a feature with only one small maintenance verb, or a deliberately separate admin root such as `/wikiadmin`.
 - Admin/debug pages should explain current state in terms staff can act on, including category, technical introduction, docs URL, and full support debug commands where relevant.
-- Feature plugins should use `messages().send(...)`, `featureInfo/error/header(...)`, and `renderFeaturePage(...)` for chat output. The global `MessageStyle.info/error/header/prefix` helpers are reserved for the shared `/1mbcmi` library command so feature output shows the feature's friendly name and configured Unicode symbol.
-- `/1mbcmi debug plugin <id> commands` should match the plugin's command help.
-- `/1mbcmi debug plugin <id> permissions` should match `plugin.yml` and repo docs.
-- `/1mbcmi debug plugin <id> placeholders` should match PlaceholderAPI behavior and repo docs.
-- `/1mbcmi debug plugin <id> config` should match defaults and any settable config paths.
+- Feature plugins should use `messages().send(...)`, `featureInfo/error/header(...)`, and `renderFeaturePage(...)` for chat output. The global `MessageStyle.info/error/header/prefix` helpers are reserved for the shared `/1mblib` library command so feature output shows the feature's friendly name and configured Unicode symbol.
+- `/1mblib debug plugin <id> commands` should match the plugin's command help.
+- `/1mblib debug plugin <id> permissions` should match `plugin.yml` and repo docs.
+- `/1mblib debug plugin <id> placeholders` should match PlaceholderAPI behavior and repo docs.
+- `/1mblib debug plugin <id> config` should match defaults and any settable config paths.
 - Version and build output should match the jar filename, plugin metadata, release docs, and test checklist.
 
 ## Feature Documentation Checklist

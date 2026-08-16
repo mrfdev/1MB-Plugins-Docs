@@ -231,8 +231,8 @@ refer:
 The shared cleanup command can remove the `refer` section later if this feature is uninstalled:
 
 ```text
-/1mbcmi debug clean playerdata plugin refer --dry-run
-/1mbcmi debug clean playerdata plugin refer --confirm
+/1mblib debug clean playerdata plugin refer --dry-run
+/1mblib debug clean playerdata plugin refer --confirm
 ```
 
 ## CMI, CMILib, And Paper Usage
@@ -270,7 +270,7 @@ Suggested beta checks:
 /refer debug permissions
 /refer debug placeholders
 /refer debug config
-/1mbcmi debug plugin refer all
+/1mblib debug plugin refer all
 ```
 
 Also test that:

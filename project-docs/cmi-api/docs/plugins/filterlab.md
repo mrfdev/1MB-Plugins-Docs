@@ -51,14 +51,14 @@ Useful examples:
 Global library examples:
 
 ```text
-/1mbcmi debug plugin filterlab
-/1mbcmi debug plugin filterlab all
-/1mbcmi debug plugin filterlab commands
-/1mbcmi debug plugin filterlab permissions
-/1mbcmi debug plugin filterlab placeholders
-/1mbcmi config filterlab
-/1mbcmi config set filterlab test.max-message-length 300
-/1mbcmi translations reload
+/1mblib debug plugin filterlab
+/1mblib debug plugin filterlab all
+/1mblib debug plugin filterlab commands
+/1mblib debug plugin filterlab permissions
+/1mblib debug plugin filterlab placeholders
+/1mblib config filterlab
+/1mblib config set filterlab test.max-message-length 300
+/1mblib translations reload
 ```
 
 ## Permissions

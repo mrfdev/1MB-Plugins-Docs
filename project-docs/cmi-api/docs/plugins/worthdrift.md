@@ -175,13 +175,13 @@ Adds the file to `shopguiplus.exceptions.files` or the material to `shopguiplus.
 Global library examples:
 
 ```text
-/1mbcmi debug plugin worthdrift
-/1mbcmi debug plugin worthdrift all
-/1mbcmi debug clean cache plugin worthdrift --dry-run
-/1mbcmi config worthdrift
-/1mbcmi config set worthdrift analysis.drift.percent-threshold 15
-/1mbcmi config set worthdrift analysis.high-unit-value 1000
-/1mbcmi translations reload
+/1mblib debug plugin worthdrift
+/1mblib debug plugin worthdrift all
+/1mblib debug clean cache plugin worthdrift --dry-run
+/1mblib config worthdrift
+/1mblib config set worthdrift analysis.drift.percent-threshold 15
+/1mblib config set worthdrift analysis.high-unit-value 1000
+/1mblib translations reload
 ```
 
 ## Permissions

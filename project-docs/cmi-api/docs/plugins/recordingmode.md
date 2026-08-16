@@ -51,12 +51,12 @@ For private messages, RecordingMode does not rely only on CMI's `acceptingPM` op
 Global library examples:
 
 ```text
-/1mbcmi debug plugin recordingmode
-/1mbcmi debug plugin recordingmode all
-/1mbcmi config recordingmode
-/1mbcmi config set recordingmode defaults.tpa true
-/1mbcmi config set recordingmode defaults.bluemap false
-/1mbcmi translations reload
+/1mblib debug plugin recordingmode
+/1mblib debug plugin recordingmode all
+/1mblib config recordingmode
+/1mblib config set recordingmode defaults.tpa true
+/1mblib config set recordingmode defaults.bluemap false
+/1mblib translations reload
 ```
 
 ## Permissions

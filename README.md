@@ -6,7 +6,7 @@ This repository is the only builder and GitHub Pages publisher for `https://docs
 
 ## Documentation Families
 
-- **1MoreBlock Features** are feature plugins built together in `1MB-CMIAPI` and the 1MB Library. Their existing `/player-guides/plugins/<slug>/` URLs remain stable.
+- **1MoreBlock Features** are independently deployable Feature Plugins built around the shared 1MB Library. Their existing `/player-guides/plugins/<slug>/` URLs remain stable.
 - **Custom Server Plugins** are standalone 1MoreBlock projects such as Lootbox, EventFloaties, or mcMMO-More.
 - **Other Server Features** are curated guides for third-party plugins used on the server, with links to official documentation.
 
@@ -39,7 +39,7 @@ public/catalogues/<project-id>/
 
 Staff guides, child staff documents, and searchable catalogue assets are opt-in. They use the same project ID and cannot replace another project's namespace. A project with a private root README can declare a reviewed `public_readme` under its own `docs/` directory; projects without that field keep the original import behavior.
 
-## Existing CMI Workflow
+## Existing 1MB Library Workflow
 
 From this repository:
 
@@ -49,9 +49,9 @@ npm run docs:sync
 npm run build
 ```
 
-`npm run docs:sync` remains the CMI-only workflow. It imports the sibling `../CMI-API` checkout into `project-docs/cmi-api/` and regenerates the complete site without changing other namespaces.
+`npm run docs:sync` remains the compatibility-named workflow for the 1MB Library source. It imports the sibling `../CMI-API` checkout into `project-docs/cmi-api/` and regenerates the complete site without changing other namespaces.
 
-When CMI-API lives elsewhere:
+When the private 1MB Library source lives elsewhere:
 
 ```bash
 PRIVATE_DOCS_SOURCE=/path/to/CMI-API npm run docs:sync
