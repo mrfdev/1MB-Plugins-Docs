@@ -569,7 +569,7 @@ The shared report includes commands, granular permissions, placeholders, config/
 The current build produces:
 
 ```text
-1MB-Lib-EventHunts-v1.0.3-573-j25-26.2.jar
+1MB-Lib-EventHunts-v1.0.3-574-j25-26.2.jar
 ```
 
 CMI, CMILib, and `1MB-CMIAPI-Lib` are required runtime dependencies. Deploy CoconutHunt and `1MB-CMIAPI-Lib` from the same build. CoconutHunt verifies the shared atomic playerdata API before activating and fails closed with one actionable compatibility diagnostic instead of allowing repeated asynchronous linkage failures. CoconutHunt uses the shared library for feature registration, translated messages, hardened GUI sessions, safe player resolution, documentation metadata, PlaceholderAPI registration, and shared playerdata. It uses the installed CMI runtime for configured kit/warp/broadcast commands; private Paper TextDisplays provide the default proximity holograms. CMILib remains part of the common runtime baseline.

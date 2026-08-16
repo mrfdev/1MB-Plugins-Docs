@@ -36,7 +36,7 @@ test('standalone imports and curated features preserve the CMI namespace', async
 
   const cmiReadme = path.join(repoRoot, 'project-docs', 'cmi-api', 'README.md');
 
-  const cmiSource = path.join(root, 'CMI-API');
+  const cmiSource = path.join(root, '1MB-Library');
   const registry = JSON.parse(await readFile(path.join(repoRoot, 'docs-sources.json'), 'utf8'));
   const cmiProject = registry.projects.find((project) => project.id === 'cmi-api');
   await mkdir(cmiSource, { recursive: true });

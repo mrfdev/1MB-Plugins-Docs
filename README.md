@@ -49,12 +49,12 @@ npm run docs:sync
 npm run build
 ```
 
-`npm run docs:sync` remains the compatibility-named workflow for the 1MB Library source. It imports the sibling `../CMI-API` checkout into `project-docs/cmi-api/` and regenerates the complete site without changing other namespaces.
+`npm run docs:sync` remains the compatibility-named workflow for the 1MB Library source. It imports the sibling `../1MB-Library` checkout into `project-docs/cmi-api/` and regenerates the complete site without changing other namespaces.
 
 When the private 1MB Library source lives elsewhere:
 
 ```bash
-PRIVATE_DOCS_SOURCE=/path/to/CMI-API npm run docs:sync
+PRIVATE_DOCS_SOURCE=/path/to/1MB-Library npm run docs:sync
 ```
 
 ## Adding Projects
