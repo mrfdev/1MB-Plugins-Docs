@@ -12,7 +12,7 @@ Each trade is a separate YAML file, so staff can add, clone, disable, and test i
 
 ## Migration Notes
 
-- The current jar is `1MB-Lib-Exchange-v1.0.3-577-j25-26.2.jar`.
+- The current jar is `1MB-Lib-Exchange-v1.0.3-578-j25-26.2.jar`.
 - The public command is `/exchange`.
 - The old standalone command `/_trade` is not registered by this feature plugin.
 - Runtime config lives at `plugins/1MB-CMIAPI/Exchange/config.yml`.
