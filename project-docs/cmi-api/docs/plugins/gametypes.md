@@ -50,7 +50,7 @@ When a player is already inside a configured game world, `/gametype menu` can de
 
 When a player is not inside a recognized BentoBox game type world, `/gametype` and `/gametype menu` open an index GUI instead of sending an error. The index shows the six configured game types and opens the selected menu directly, so players can still create, visit, or manage islands from hub-style worlds.
 
-Game type menus use the bottom-right button as **Back to Index**, so players can quickly switch among OneBlock, ChunkBlock, SkyBlock, AcidIsland, CaveBlock, and SkyGrid. The index menu keeps the bottom-right button as **Close**.
+Game type menus use the bottom-right button as **Back to Index**, so players can quickly switch among OneBlock, ChunkBlock, SkyBlock, AcidIsland, CaveBlock, and SkyGrid. The index keeps **Close** in the bottom-right and adds **Back to /menu** beside it. Index and game-type titles use a darker teal for contrast against the inventory background.
 
 ## Menu Buttons
 

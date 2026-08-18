@@ -15,7 +15,7 @@ StartupDoctor is read-only except for writing local report dumps to cache. It do
 - Verify CMI-API classes are visible to the feature jar.
 - List registered 1MB Library features, categories, versions, and enabled state.
 - List feature dependencies, optional hooks, shared data folders, cache folders, cache sizes, and expected jar names.
-- Run a read-only folder doctor for missing feature folders, orphaned 1MB cache/data folders, stale or large caches, older active project jars, disabled project jars, and sensitive-looking file names.
+- Run a read-only folder doctor for missing feature folders, orphaned 1MB cache/data folders, stale or large caches, older active project jars, disabled project jars, and sensitive-looking file names. Loaded artifact filenames, independently owned AntiFire paths, and active compatibility-module data folders are recognized as owned even when their display names differ from their JAR names.
 - Show suggested manual fixes for folder findings without deleting, moving, or editing files.
 - Scan active `paper-global.yml`, `paper-world-defaults.yml`, and relevant explicit settings in loaded worlds' `paper-world.yml` files.
 - Classify Paper settings as `PASS`, `NOTE`, `WARN`, or `FAIL`, with a separate overall `safe`, `review`, or `unsafe` result.
@@ -193,6 +193,8 @@ folder-doctor.stale-cache-days
 ```
 
 `paper-safety.enabled` controls the read-only scanner. `paper-safety.scan-world-overrides` controls whether loaded worlds' explicit `paper-world.yml` values are inspected in addition to the global and world-default files.
+
+`checks.expected-java` is the minimum supported runtime major. The JARs compile for Java 25; Java 25 and newer runtimes, including the tested Java 26 production runtime, satisfy this check.
 
 `folder-doctor.cache-warning-bytes` controls when a feature cache folder is reported as large. `folder-doctor.stale-cache-days` controls when a non-empty feature cache folder is reported as stale because it has not been modified recently.
 

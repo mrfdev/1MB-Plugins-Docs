@@ -23,7 +23,7 @@ For private messages, RecordingMode does not rely only on CMI's `acceptingPM` op
 - Common private-message commands are guarded so CMI operator/staff bypasses do not leak messages through recording mode.
 - Active recording state reapplies on join when configured.
 - CMI staff messages are filtered with `CMIStaffMessageEvent` receiver removal while recording.
-- `/recording status` shows the recording state across multiple colored lines. Preference entries have hover text explaining what on/off means, and players with `onembcmi.recordingmode.set` can click an entry to toggle it.
+- `/recording status` is a permissionless read-only route. Players see their own recording state across multiple colored lines; the direct server console sees enabled, cached-profile, and active-profile counts without being treated as a player. Preference entries have hover text explaining what on/off means, and players with `onembcmi.recordingmode.set` can click an entry to toggle it.
 - Successful `/recording set` changes refresh the status panel again after a short delay, so click-to-toggle users immediately see the new state and can toggle it back.
 - Player-facing chat output uses the shorter `Recording` prefix while debug metadata and docs keep the technical `RecordingMode` feature name.
 - Player-facing info/help text describes quiet personal messages, TPA requests, money requests, and staff messages without exposing CMI implementation details.
@@ -70,7 +70,7 @@ onembcmi.recordingmode.admin.reset
 onembcmi.recordingmode.admin.reload
 ```
 
-`onembcmi.recordingmode.use` and `onembcmi.recordingmode.set` default to false, so the server must grant them intentionally.
+`onembcmi.recordingmode.use` and `onembcmi.recordingmode.set` default to false, so the server must grant them intentionally for toggling/help and preference changes. `/recording status` does not require either node; it never changes recording state.
 
 ## Placeholders
 

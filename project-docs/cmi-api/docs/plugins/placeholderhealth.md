@@ -13,7 +13,7 @@ It is different from PlaceholderProbe: PlaceholderProbe is for ad hoc single-pla
 - Parse configured PlaceholderAPI samples only.
 - Support server-level samples and online-player-required samples.
 - Flag unresolved placeholders, `%...%` output, errors, empty values, and slow parse times.
-- Show ok/warn/error rows in console or in game for permitted admins.
+- Show ok/warn/error rows in the trusted direct server console or in game for permitted admins.
 - Export the latest or freshly-run check as a Discord-friendly Markdown report.
 - Register build, hook, command, permission, placeholder, and config metadata through `1MB-CMIAPI-LIB`.
 - Stay passive: it never edits PlaceholderAPI, CMI, holograms, configs, or playerdata.
@@ -52,7 +52,7 @@ onembcmi.placeholderhealth.reload
 onembcmi.placeholderhealth.debug
 ```
 
-All nodes default to false. Grant `onembcmi.placeholderhealth.admin` only to owner-level staff, or grant individual read/export nodes to trusted technical staff.
+All nodes default to false. The direct server console may run the read-only `check` and `list` routes without a permission attachment. Player senders still need the corresponding node, and `export`/`reload` remain permission-gated. Grant `onembcmi.placeholderhealth.admin` only to owner-level staff, or grant individual read/export nodes to trusted technical staff.
 
 ## Placeholders
 
