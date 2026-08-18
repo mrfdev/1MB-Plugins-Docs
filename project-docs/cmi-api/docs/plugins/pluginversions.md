@@ -189,7 +189,7 @@ version-gate.expected-plugin-version-prefixes
 
 `/pv list` sorts loaded plugins alphabetically and prints the plugin name plus current plugin metadata version. Running `/pv list` with no page lists all plugins; `/pv list <page>` uses `settings.lines-per-page`.
 
-`/pv gate` is read-only. It checks the runtime Java major, Paper target string, required plugins, optional plugins, and configured version prefixes. Required plugins that are missing or disabled are issues. Optional plugins that are missing are informational. Version prefix drift is a warning so staff can decide whether a newer patch or dev build is acceptable.
+`/pv gate` is read-only. It checks that the runtime Java major meets `version-gate.expected-java-major` as a minimum, then checks the Paper target string, required plugins, optional plugins, and configured version prefixes. The JARs target Java 25 and accept newer runtimes such as Java 26. Required plugins that are missing or disabled are issues. Optional plugins that are missing are informational. Version prefix drift is a warning so staff can decide whether a newer patch or dev build is acceptable.
 
 PluginVersions updates a YAML inventory database during startup when `database.update-on-enable` is true, during `/pv reload`, during `/pv list` when `database.update-on-list` is true, during URL audit, and during exports.
 

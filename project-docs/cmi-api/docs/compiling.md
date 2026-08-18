@@ -68,11 +68,11 @@ This is a read-only drift check against the public `1MB-Plugins-Docs` checkout. 
 Expected jar naming:
 
 ```text
-1MB-Lib-Core-v1.0.3-580-j25-26.2.jar
-1MB-Lib-AntiFire-v1.0.3-580-j25-26.2.jar
-1MB-Lib-AFKShrine-v1.0.3-580-j25-26.2.jar
-1MB-Lib-StaffCenter-v1.0.3-580-j25-26.2.jar
-1MB-Lib-Profile-v1.0.3-580-j25-26.2.jar
+1MB-Lib-Core-v1.0.3-581-j25-26.2.jar
+1MB-Lib-AntiFire-v1.0.3-581-j25-26.2.jar
+1MB-Lib-AFKShrine-v1.0.3-581-j25-26.2.jar
+1MB-Lib-StaffCenter-v1.0.3-581-j25-26.2.jar
+1MB-Lib-Profile-v1.0.3-581-j25-26.2.jar
 ```
 
 After a successful feature or library build, copy the output jar into:
