@@ -16,6 +16,13 @@
 - Prefer CMI-API, CMILib, and Paper APIs before adding optional hooks.
 - Use PlaceholderAPI, LuckPerms, and Vault only where they provide a useful missing surface.
 
+## Shared GUI Presentation
+
+- A Feature Plugin GUI control that sits beside the close-menu barrier and returns to `/menu` must use `ServerMenuButtonPresentation` for its nether-star icon, glint and explicitly non-bold text, title, and both lore lines.
+- If a preserved Feature Plugin setting redirects that control to a command other than `menu`, use `itemForCommand(...)` so the presentation names the configured command without changing its dispatch behavior.
+- Internal Back, Index, Overview, and pagination controls retain their feature-specific presentation and must not be treated as server-menu controls.
+- Reusing the shared presentation must not bypass the Feature Plugin's existing availability, permission, owner/session, stale-view, close, quit, disable, or command-dispatch checks.
+
 ## Security
 
 - Treat player input as untrusted.
