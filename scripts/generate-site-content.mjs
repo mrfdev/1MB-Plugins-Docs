@@ -1131,6 +1131,13 @@ function escapeHtml(value) {
     .trim();
 }
 
+function formatCommandDescription(value) {
+  return escapeHtml(value).replaceAll(
+    'the server rules',
+    'the <a href="https://rules.1moreblock.com/">server rules</a>',
+  );
+}
+
 function formatCommand(value) {
   return escapeHtml(value)
     .replaceAll('--', '<span>-</span><span>-</span>')
@@ -2064,7 +2071,7 @@ function commandIndexTable(rows, guidePathPrefix = '../plugins/') {
     .map((row) => `    <tr>
       <td><a href="${row.guideHref ?? `${guidePathPrefix}${row.slug}/`}">${escapeHtml(row.plugin)}</a></td>
       <td><code>${formatCommand(row.command)}</code></td>
-      <td>${escapeHtml(row.curatedDescription ? row.description : friendlyText(row.description))}</td>
+      <td>${formatCommandDescription(row.curatedDescription ? row.description : friendlyText(row.description))}</td>
       <td><code>${formatCommand(row.example)}</code></td>
     </tr>`)
     .join('\n');
@@ -2148,7 +2155,7 @@ function pluginCommandTable(plugin, commandData) {
         : friendlyText(description);
       return `    <tr>
       <td><code>${formatCommand(command)}</code></td>
-      <td>${escapeHtml(renderedDescription)}</td>
+      <td>${formatCommandDescription(renderedDescription)}</td>
       <td><code>${formatCommand(commandData.tableExamples?.get(command) || commandExample(command))}</code></td>
     </tr>`;
     })
