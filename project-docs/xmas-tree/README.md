@@ -151,8 +151,10 @@ Requirements:
 
 - JDK 25
 - Gradle
-- Centralized Paper server cache at `/Users/floris/Projects/Codex/servers/cache/Paper-26.2`
+- Shared Paper server cache at `../servers/cache/Paper-26.2`
 - PlaceholderAPI build `266` in the centralized `servers/shared-plugins/` compile-support folder
+
+Set `CODEX_SHARED_SERVERS_ROOT` to use a shared servers directory somewhere other than the default sibling `../servers` directory.
 
 This repo no longer requires a local `servers/` folder for compilation. If an ignored local `servers/` folder exists here for ad-hoc Paper testing, treat it as optional local data rather than part of the project.
 

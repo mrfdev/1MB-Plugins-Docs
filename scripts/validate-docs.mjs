@@ -85,13 +85,13 @@ async function validateNamespaces(registry) {
   }
 }
 
-async function listPublishedTextFiles(root) {
+async function listPublishedFiles(root) {
   const files = [];
   for (const entry of await readdir(root, { withFileTypes: true })) {
     const absolute = path.join(root, entry.name);
     if (entry.isDirectory()) {
-      files.push(...await listPublishedTextFiles(absolute));
-    } else if (entry.isFile() && /\.(?:md|mdx|json|ya?ml|txt|csv)$/i.test(entry.name)) {
+      files.push(...await listPublishedFiles(absolute));
+    } else if (entry.isFile()) {
       files.push(absolute);
     }
   }
@@ -99,15 +99,18 @@ async function listPublishedTextFiles(root) {
 }
 
 async function validatePublishedPrivacy(registry) {
-  for (const project of registry.projects.filter(
-    (candidate) => (candidate.requiredPrivateDocs ?? []).length > 0,
-  )) {
+  for (const project of registry.projects) {
     const namespace = path.join(repoRoot, 'project-docs', project.id);
     if (!await pathIsDirectory(namespace)) {
       continue;
     }
-    for (const file of await listPublishedTextFiles(namespace)) {
-      const source = await readFile(file, 'utf8');
+    for (const file of await listPublishedFiles(namespace)) {
+      const contents = await readFile(file);
+      // Scan text regardless of extension while avoiding binary documentation assets.
+      if (contents.includes(0)) {
+        continue;
+      }
+      const source = contents.toString('utf8');
       for (const localPath of findLocalUserProfilePaths(source)) {
         problem(
           `Published documentation must not contain local user-profile path ${localPath}: ${path.relative(repoRoot, file)}`,

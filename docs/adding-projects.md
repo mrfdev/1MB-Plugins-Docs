@@ -123,6 +123,7 @@ Do not publish the upstream generic island or shortened OneBlock aliases as 1Mor
 - Verify commands, permissions, placeholders, versions, and behavior from the source project.
 - Publish player guidance and public-safe staff administration details only.
 - Never publish credentials, private endpoints, paid files, databases, exploit-sensitive values, source code, or internal incident procedures.
+- Use portable placeholders or repository-relative paths in public examples. Validation rejects macOS, Linux, and Windows user-profile paths from every registered project namespace.
 - Keep internal plans, ADRs, agent instructions, task/review records, live operational baselines, and similar engineering material in the private source. Declare every private path in the source repository's `.public-docs-excludes`, relative to `docs/`.
 - For high-risk sources, mirror the mandatory exclusions in `docs-sources.json` as `requiredPrivateDocs`. Synchronization must fail if the source removes or narrows a required exclusion, and validation must fail if a guarded path appears in `project-docs/`.
 - Treat `.gitignore` as defense in depth only. It cannot prevent a sync script or site generator from reading a file that exists in the working tree.

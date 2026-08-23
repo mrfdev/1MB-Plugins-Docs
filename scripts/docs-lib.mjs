@@ -19,8 +19,9 @@ export const CATEGORY_DEFINITIONS = Object.freeze({
 
 const PROJECT_ID_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 const LOCAL_USER_PROFILE_PATH_PATTERNS = [
-  /\/Users\/[^/\s`"'<>]+(?:\/[^\s`"'<>]*)?/g,
-  /[A-Za-z]:\\Users\\[^\\\s`"'<>]+(?:\\[^\s`"'<>]*)?/g,
+  /(?<![A-Za-z]:)\/Users\/[^/\s`"'<>]+(?:\/[^\s`"'<>]*)?/g,
+  /\/home\/[^/\s`"'<>]+(?:\/[^\s`"'<>]*)?/g,
+  /[A-Za-z]:[\\/]+Users[\\/]+[^\\/\s`"'<>]+(?:[\\/]+[^\s`"'<>]*)?/gi,
 ];
 const REQUIRED_MANIFEST_FIELDS = [
   'id',
@@ -50,7 +51,18 @@ export function findLocalUserProfilePaths(source) {
   if (typeof source !== 'string') {
     return [];
   }
-  return LOCAL_USER_PROFILE_PATH_PATTERNS.flatMap((pattern) => source.match(pattern) ?? []);
+
+  const matches = LOCAL_USER_PROFILE_PATH_PATTERNS.flatMap((pattern) => (
+    [...source.matchAll(pattern)].map((match) => ({
+      index: match.index,
+      value: match[0],
+    }))
+  ));
+
+  return matches
+    .filter((match) => !/https?:\/\/[^\s`"'<>]*$/i.test(source.slice(0, match.index)))
+    .sort((left, right) => left.index - right.index)
+    .map((match) => match.value);
 }
 
 export function assertProjectId(value, label = 'Project id') {
