@@ -55,6 +55,26 @@ test('local user-profile paths are rejected from public documentation', () => {
     findLocalUserProfilePaths('Private checkout: C:\\Users\\example\\Projects\\1MB-Library'),
     ['C:\\Users\\example\\Projects\\1MB-Library'],
   );
+  assert.deepEqual(
+    findLocalUserProfilePaths('Private checkout: C:/Users/example/Projects/1MB-Library'),
+    ['C:/Users/example/Projects/1MB-Library'],
+  );
+  assert.deepEqual(
+    findLocalUserProfilePaths('Private checkout: /home/example/Projects/1MB-Library'),
+    ['/home/example/Projects/1MB-Library'],
+  );
+  assert.deepEqual(
+    findLocalUserProfilePaths('Private checkout: c:\\users\\example\\Projects\\1MB-Library'),
+    ['c:\\users\\example\\Projects\\1MB-Library'],
+  );
+  assert.deepEqual(
+    findLocalUserProfilePaths('{"checkout":"C:\\\\Users\\\\example\\\\Projects\\\\1MB-Library"}'),
+    ['C:\\\\Users\\\\example\\\\Projects\\\\1MB-Library'],
+  );
+  assert.deepEqual(
+    findLocalUserProfilePaths('See https://example.com/Users/example/guide and https://example.com/home/example.'),
+    [],
+  );
 });
 
 test('manifest paths stay inside their project namespace', () => {

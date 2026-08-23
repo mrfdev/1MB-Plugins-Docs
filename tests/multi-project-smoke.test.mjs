@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
-import { cp, mkdtemp, mkdir, readFile, readdir, symlink, writeFile } from 'node:fs/promises';
+import { cp, mkdtemp, mkdir, readFile, readdir, symlink, unlink, writeFile } from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
 import test from 'node:test';
@@ -201,6 +201,30 @@ Train the mcMMO skills that are enabled on 1MoreBlock.
     generated,
     new RegExp(`${expectedCustomProjects} custom server plugins, and ${expectedOtherFeatures} other server features`),
   );
+
+  const importedProfileConfig = path.join(
+    repoRoot,
+    'project-docs',
+    'lootbox',
+    'docs',
+    'local.properties',
+  );
+  await writeFile(
+    importedProfileConfig,
+    'private.checkout=/Users/example/Projects/1MB-Lootbox\n',
+  );
+  const rejectedLocalProfilePath = spawnSync(
+    process.execPath,
+    [path.join(repoRoot, 'scripts', 'validate-docs.mjs')],
+    { cwd: repoRoot, encoding: 'utf8' },
+  );
+  assert.notEqual(rejectedLocalProfilePath.status, 0);
+  assert.match(
+    `${rejectedLocalProfilePath.stdout}\n${rejectedLocalProfilePath.stderr}`,
+    /Published documentation must not contain local user-profile path .*project-docs\/lootbox\/docs\/local\.properties/,
+  );
+  await unlink(importedProfileConfig);
+
   runNode(repoRoot, 'scripts/validate-docs.mjs');
 
   assert.equal(

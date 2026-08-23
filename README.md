@@ -92,7 +92,7 @@ npm run docs:validate
 npm run build
 ```
 
-Validation rejects malformed manifests, unsafe IDs and paths, duplicate IDs and canonical URLs, unregistered namespaces, stale generated pages, and generated directories without an owning manifest. The production build runs the tests and read-only generated-content drift check before Astro, so GitHub Pages cannot deploy from stale committed Starlight output.
+Validation rejects malformed manifests, unsafe IDs and paths, machine-local user-profile paths, duplicate IDs and canonical URLs, unregistered namespaces, stale generated pages, and generated directories without an owning manifest. The production build runs the tests and read-only generated-content drift check before Astro, so GitHub Pages cannot deploy from stale committed Starlight output.
 
 This repository intentionally excludes plugin source code, built jars, private server folders, databases, paid plugin files, internal task logs, credentials, and exploit-sensitive operational notes.
 

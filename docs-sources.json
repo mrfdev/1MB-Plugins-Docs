@@ -15,7 +15,10 @@
       "category": "custom-server-plugin",
       "adapter": "manifest",
       "repository": "mrfdev/XRayHunter",
-      "defaultSource": "../XRayHunter"
+      "defaultSource": "../XRayHunter",
+      "requiredPrivateDocs": [
+        "agents"
+      ]
     },
     {
       "id": "antipopup",
@@ -23,7 +26,10 @@
       "category": "custom-server-plugin",
       "adapter": "manifest",
       "repository": "mrfdev/AntiPopup",
-      "defaultSource": "../AntiPopup"
+      "defaultSource": "../1MB-AntiPopup",
+      "requiredPrivateDocs": [
+        "agents"
+      ]
     },
     {
       "id": "bookexport",
@@ -131,7 +137,10 @@
       "category": "custom-server-plugin",
       "adapter": "manifest",
       "repository": "mrfdev/XMasTree",
-      "defaultSource": "../XMasTree"
+      "defaultSource": "../XMasTree",
+      "requiredPrivateDocs": [
+        "agents"
+      ]
     },
     {
       "id": "xrayheuristics",
