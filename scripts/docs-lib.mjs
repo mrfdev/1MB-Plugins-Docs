@@ -1,6 +1,9 @@
 import { readFile, readdir, stat } from 'node:fs/promises';
 import path from 'node:path';
 import yaml from 'js-yaml';
+import {
+  validateMarketplaceSnapshotPair,
+} from '../src/lib/shopchest-marketplace-snapshot.mjs';
 
 export const CATEGORY_DEFINITIONS = Object.freeze({
   'one-more-block-feature': {
@@ -150,6 +153,22 @@ export function validateManifest(manifest, sourceLabel = 'manifest') {
     assertSafeRelativePath(manifest.catalogue_json, `${sourceLabel} catalogue_json`);
     assertSafeRelativePath(manifest.catalogue_csv, `${sourceLabel} catalogue_csv`);
   }
+  if (manifest.marketplace_snapshot_json || manifest.marketplace_snapshot_csv) {
+    if (!manifest.marketplace_snapshot_json || !manifest.marketplace_snapshot_csv) {
+      throw new Error(`${sourceLabel} must provide both marketplace_snapshot_json and marketplace_snapshot_csv.`);
+    }
+    if (manifest.id !== 'shopchest') {
+      throw new Error(`${sourceLabel} marketplace_snapshot_* fields are reserved for the ShopChest marketplace export.`);
+    }
+    assertSafeRelativePath(
+      manifest.marketplace_snapshot_json,
+      `${sourceLabel} marketplace_snapshot_json`,
+    );
+    assertSafeRelativePath(
+      manifest.marketplace_snapshot_csv,
+      `${sourceLabel} marketplace_snapshot_csv`,
+    );
+  }
   if (manifest.main_command && !String(manifest.main_command).startsWith('/')) {
     throw new Error(`${sourceLabel} main_command must start with /.`);
   }
@@ -284,6 +303,26 @@ export async function loadAdditionalEntries(repoRoot, registry = null) {
       catalogueCsvFile: manifest.catalogue_csv
         ? path.join(namespaceRoot, 'docs', assertSafeRelativePath(manifest.catalogue_csv, `${project.id} catalogue_csv`))
         : null,
+      marketplaceSnapshotJsonFile: manifest.marketplace_snapshot_json
+        ? path.join(
+          namespaceRoot,
+          'docs',
+          assertSafeRelativePath(
+            manifest.marketplace_snapshot_json,
+            `${project.id} marketplace_snapshot_json`,
+          ),
+        )
+        : null,
+      marketplaceSnapshotCsvFile: manifest.marketplace_snapshot_csv
+        ? path.join(
+          namespaceRoot,
+          'docs',
+          assertSafeRelativePath(
+            manifest.marketplace_snapshot_csv,
+            `${project.id} marketplace_snapshot_csv`,
+          ),
+        )
+        : null,
     });
   }
 
@@ -334,6 +373,35 @@ export async function loadAdditionalEntries(repoRoot, registry = null) {
     }
     if (entry.catalogueCsvFile && !await pathIsFile(entry.catalogueCsvFile)) {
       throw new Error(`Catalogue CSV is missing for ${entry.manifest.id}: ${entry.catalogueCsvFile}`);
+    }
+    if (entry.marketplaceSnapshotJsonFile && !await pathIsFile(entry.marketplaceSnapshotJsonFile)) {
+      throw new Error(
+        `Marketplace snapshot JSON is missing for ${entry.manifest.id}: ${entry.marketplaceSnapshotJsonFile}`,
+      );
+    }
+    if (entry.marketplaceSnapshotCsvFile && !await pathIsFile(entry.marketplaceSnapshotCsvFile)) {
+      throw new Error(
+        `Marketplace snapshot CSV is missing for ${entry.manifest.id}: ${entry.marketplaceSnapshotCsvFile}`,
+      );
+    }
+    if (entry.marketplaceSnapshotJsonFile && entry.marketplaceSnapshotCsvFile) {
+      let snapshotJson;
+      let snapshotCsv;
+      try {
+        snapshotJson = JSON.parse(await readFile(entry.marketplaceSnapshotJsonFile, 'utf8'));
+      } catch (error) {
+        throw new Error(`Marketplace snapshot JSON could not be read for ${entry.manifest.id}: ${error.message}`);
+      }
+      try {
+        snapshotCsv = await readFile(entry.marketplaceSnapshotCsvFile, 'utf8');
+      } catch (error) {
+        throw new Error(`Marketplace snapshot CSV could not be read for ${entry.manifest.id}: ${error.message}`);
+      }
+      try {
+        validateMarketplaceSnapshotPair(snapshotJson, snapshotCsv);
+      } catch (error) {
+        throw new Error(`Marketplace snapshot pair is invalid for ${entry.manifest.id}: ${error.message}`);
+      }
     }
     ids.add(entry.manifest.id);
     urls.add(entry.manifest.docs_url);

@@ -129,7 +129,11 @@
       "category": "custom-server-plugin",
       "adapter": "manifest",
       "repository": "mrfdev/ShopChest",
-      "defaultSource": "../ShopChest"
+      "defaultSource": "../ShopChest",
+      "requiredPrivateDocs": [
+        "adr",
+        "agents"
+      ]
     },
     {
       "id": "xmas-tree",

@@ -2300,10 +2300,15 @@ ${body || `${entry.manifest.name} documentation is being prepared.`}
 ${additionalTechnicalLinks(entry)}
 `);
 
-      if (entry.catalogueJsonFile && entry.catalogueCsvFile) {
-        const assetOutput = path.join(repoRoot, 'public', 'catalogues', entry.manifest.id);
+      const hasCatalogueAssets = (entry.catalogueJsonFile && entry.catalogueCsvFile)
+        || (entry.marketplaceSnapshotJsonFile && entry.marketplaceSnapshotCsvFile);
+      const assetOutput = path.join(repoRoot, 'public', 'catalogues', entry.manifest.id);
+      if (hasCatalogueAssets) {
         await rm(assetOutput, { recursive: true, force: true });
         await mkdir(assetOutput, { recursive: true });
+      }
+
+      if (entry.catalogueJsonFile && entry.catalogueCsvFile) {
         await cp(entry.catalogueJsonFile, path.join(assetOutput, 'price-catalogue.json'));
         await cp(entry.catalogueCsvFile, path.join(assetOutput, 'price-catalogue.csv'));
         const catalogueOutput = path.join(projectOutput, 'price-catalogue');
@@ -2320,6 +2325,33 @@ This public snapshot compares exact base CMI Worth values with the configured st
 <PriceCatalogue
   dataUrl=${JSON.stringify(`/catalogues/${entry.manifest.id}/price-catalogue.json`)}
   csvUrl=${JSON.stringify(`/catalogues/${entry.manifest.id}/price-catalogue.csv`)}
+/>
+`);
+      }
+
+      if (entry.marketplaceSnapshotJsonFile && entry.marketplaceSnapshotCsvFile) {
+        await cp(
+          entry.marketplaceSnapshotJsonFile,
+          path.join(assetOutput, 'marketplace-snapshot.json'),
+        );
+        await cp(
+          entry.marketplaceSnapshotCsvFile,
+          path.join(assetOutput, 'marketplace-snapshot.csv'),
+        );
+        const marketplaceOutput = path.join(projectOutput, 'marketplace-snapshot');
+        await mkdir(marketplaceOutput, { recursive: true });
+        await writeFile(path.join(marketplaceOutput, 'index.mdx'), `---
+title: ${JSON.stringify(`${entry.manifest.name} Marketplace Snapshot`)}
+description: ${JSON.stringify('Search a reviewed, dated snapshot of player shops by item or owner.')}
+---
+
+import ShopChestMarketplaceSnapshot from '../../../../../../components/ShopChestMarketplaceSnapshot.astro';
+
+This is a reviewed documentation snapshot of shops found at <code>/warp shops</code>, not a live stock promise. The capture time and warning below are part of the published export. Use <code>/shops search &lt;item&gt;</code> in game for a fresher check.
+
+<ShopChestMarketplaceSnapshot
+  dataUrl=${JSON.stringify(`/catalogues/${entry.manifest.id}/marketplace-snapshot.json`)}
+  csvUrl=${JSON.stringify(`/catalogues/${entry.manifest.id}/marketplace-snapshot.csv`)}
 />
 `);
       }

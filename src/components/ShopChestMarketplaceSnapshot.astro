@@ -1,0 +1,368 @@
+---
+interface Props {
+  dataUrl: string;
+  csvUrl: string;
+}
+
+const { dataUrl, csvUrl } = Astro.props;
+---
+
+<section class="marketplace-snapshot" data-snapshot-url={dataUrl}>
+  <div class="snapshot-banner" data-banner aria-live="polite">
+    Loading the reviewed marketplace snapshot…
+  </div>
+
+  <p class="snapshot-freshness" data-freshness data-stale-warning>
+    This is a dated snapshot, not live stock. Prices and stock may have changed.
+  </p>
+
+  <p class="snapshot-capture-summary" data-capture-summary aria-live="polite">
+    Loading capture totals…
+  </p>
+
+  <div class="snapshot-controls">
+    <label>
+      Search by item
+      <input
+        type="search"
+        placeholder="Stone bricks or STONE_BRICKS"
+        autocomplete="off"
+        data-item-search
+      />
+    </label>
+    <label>
+      Search by shop owner
+      <input
+        type="search"
+        placeholder="Player or storefront name"
+        autocomplete="off"
+        data-owner-search
+      />
+    </label>
+    <label>
+      Availability when captured
+      <select data-availability>
+        <option value="ALL">All captured listings</option>
+        <option value="IN_STOCK">In stock</option>
+        <option value="OUT_OF_STOCK">Out of stock</option>
+        <option value="UNCHECKED">Not checked</option>
+      </select>
+    </label>
+    <label>
+      Rows per page
+      <select data-page-size>
+        <option value="20" selected>20</option>
+        <option value="40">40</option>
+        <option value="80">80</option>
+      </select>
+    </label>
+  </div>
+
+  <div class="snapshot-actions">
+    <p data-summary aria-live="polite">Preparing listings…</p>
+    <p><a href={csvUrl} download>Download the reviewed CSV snapshot</a></p>
+  </div>
+
+  <div class="snapshot-table-wrap" tabindex="0">
+    <table>
+      <thead>
+        <tr>
+          <th>Item</th>
+          <th>Shop owner</th>
+          <th>Bundle and price</th>
+          <th>Captured availability</th>
+          <th>Finding the shop</th>
+        </tr>
+      </thead>
+      <tbody data-results></tbody>
+    </table>
+  </div>
+
+  <nav class="snapshot-pagination" aria-label="Marketplace snapshot pages">
+    <button type="button" data-previous>Previous</button>
+    <span data-page aria-live="polite"></span>
+    <button type="button" data-next>Next</button>
+  </nav>
+
+  <p class="snapshot-error" data-error hidden>
+    The marketplace snapshot could not be loaded. Try the CSV download or tell staff about this page.
+  </p>
+</section>
+
+<script>
+  import {
+    filterMarketplaceListings,
+    validateMarketplaceSnapshot,
+  } from '../lib/shopchest-marketplace-snapshot.mjs';
+
+  const numberFormatter = new Intl.NumberFormat('en-US', {
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 4,
+  });
+
+  function textCell(value) {
+    const cell = document.createElement('td');
+    cell.textContent = value;
+    return cell;
+  }
+
+  function materialLabel(material) {
+    return material
+      .toLocaleLowerCase('en-US')
+      .replaceAll('_', ' ')
+      .replace(/\b\p{L}/gu, (letter) => letter.toLocaleUpperCase('en-US'));
+  }
+
+  function decimalLabel(value) {
+    return numberFormatter.format(Number(value));
+  }
+
+  function availabilityLabel(value) {
+    return {
+      IN_STOCK: 'In stock when captured',
+      OUT_OF_STOCK: 'Out of stock when captured',
+      UNCHECKED: 'Stock was not checked',
+    }[value];
+  }
+
+  function itemLabel(listing) {
+    const detail = listing.variantSummary ? ` · ${listing.variantSummary}` : '';
+    return `${listing.itemName}${detail} · ${materialLabel(listing.material)}`;
+  }
+
+  function ownerLabel(listing) {
+    return listing.storefrontName
+      ? `${listing.storefrontName} · by ${listing.ownerName}`
+      : listing.ownerName;
+  }
+
+  function priceLabel(listing) {
+    return `${listing.bundleAmount.toLocaleString()} for ${decimalLabel(listing.customerBuyPrice)} · ${decimalLabel(listing.customerBuyUnitPrice)} each`;
+  }
+
+  function directionsLabel(listing, marketplaceLabel) {
+    return [listing.directions, listing.locationLabel, marketplaceLabel]
+      .filter(Boolean)
+      .filter((value, index, values) => values.indexOf(value) === index)
+      .join(' · ');
+  }
+
+  function captureSummaryLabel(counts) {
+    return `Capture reviewed ${counts.candidates.toLocaleString()} candidate shop row${counts.candidates === 1 ? '' : 's'}: ${counts.published.toLocaleString()} published (${counts.inStock.toLocaleString()} in stock, ${counts.outOfStock.toLocaleString()} out of stock, ${counts.unchecked.toLocaleString()} not checked); ${counts.excludedUnavailable.toLocaleString()} unavailable and ${counts.excludedInvalid.toLocaleString()} invalid row${counts.excludedInvalid === 1 ? '' : 's'} were excluded.`;
+  }
+
+  for (const root of document.querySelectorAll('.marketplace-snapshot')) {
+    const itemSearch = root.querySelector('[data-item-search]');
+    const ownerSearch = root.querySelector('[data-owner-search]');
+    const availability = root.querySelector('[data-availability]');
+    const pageSize = root.querySelector('[data-page-size]');
+    const results = root.querySelector('[data-results]');
+    const pageLabel = root.querySelector('[data-page]');
+    const previous = root.querySelector('[data-previous]');
+    const next = root.querySelector('[data-next]');
+    const banner = root.querySelector('[data-banner]');
+    const freshness = root.querySelector('[data-freshness]');
+    const captureSummary = root.querySelector('[data-capture-summary]');
+    const summary = root.querySelector('[data-summary]');
+    const error = root.querySelector('[data-error]');
+    const url = root.getAttribute('data-snapshot-url');
+    let snapshot = null;
+    let currentPage = 1;
+
+    function render() {
+      if (!snapshot) return;
+      const filtered = filterMarketplaceListings(snapshot.listings, {
+        itemQuery: itemSearch.value,
+        ownerQuery: ownerSearch.value,
+        availability: availability.value,
+      });
+      const size = Number.parseInt(pageSize.value, 10);
+      const pages = Math.max(1, Math.ceil(filtered.length / size));
+      currentPage = Math.max(1, Math.min(currentPage, pages));
+      const start = (currentPage - 1) * size;
+      results.replaceChildren();
+
+      for (const listing of filtered.slice(start, start + size)) {
+        const row = document.createElement('tr');
+        row.dataset.availability = listing.availabilityAtCapture;
+        row.append(textCell(itemLabel(listing)));
+        row.append(textCell(ownerLabel(listing)));
+        row.append(textCell(priceLabel(listing)));
+        row.append(textCell(availabilityLabel(listing.availabilityAtCapture)));
+        row.append(textCell(directionsLabel(listing, snapshot.metadata.marketplaceLabel)));
+        results.append(row);
+      }
+
+      if (!filtered.length) {
+        const row = document.createElement('tr');
+        const cell = textCell('No captured shop listings match these filters. Try another item, owner, or availability.');
+        cell.colSpan = 5;
+        row.append(cell);
+        results.append(row);
+      }
+
+      const sellerCount = new Set(filtered.map((listing) => listing.ownerName)).size;
+      summary.textContent = `${filtered.length.toLocaleString()} matching listing${filtered.length === 1 ? '' : 's'} from ${sellerCount.toLocaleString()} shop owner${sellerCount === 1 ? '' : 's'}.`;
+      pageLabel.textContent = `Page ${currentPage} of ${pages}`;
+      previous.disabled = currentPage <= 1;
+      next.disabled = currentPage >= pages;
+    }
+
+    function resetAndRender() {
+      currentPage = 1;
+      render();
+    }
+
+    itemSearch.addEventListener('input', resetAndRender);
+    ownerSearch.addEventListener('input', resetAndRender);
+    availability.addEventListener('change', resetAndRender);
+    pageSize.addEventListener('change', resetAndRender);
+    previous.addEventListener('click', () => { currentPage -= 1; render(); });
+    next.addEventListener('click', () => { currentPage += 1; render(); });
+
+    try {
+      const response = await fetch(url, { credentials: 'same-origin' });
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      snapshot = validateMarketplaceSnapshot(await response.json());
+      banner.textContent = snapshot.metadata.banner;
+
+      const captured = new Date(snapshot.metadata.capturedAt);
+      const capturedLabel = new Intl.DateTimeFormat('en-GB', {
+        dateStyle: 'long',
+        timeStyle: 'short',
+        timeZone: snapshot.metadata.displayTimezone,
+      }).format(captured);
+      freshness.textContent = `Captured ${capturedLabel} (${snapshot.metadata.displayTimezone}) from ShopChest ${snapshot.metadata.sourceVersion}. This snapshot can be stale: prices and stock may have changed. Use /shops search in game for a fresher stock check.`;
+      captureSummary.textContent = captureSummaryLabel(snapshot.counts);
+      render();
+    } catch {
+      banner.textContent = 'The reviewed marketplace snapshot is temporarily unavailable.';
+      freshness.textContent = 'This page cannot confirm current prices or stock. Use /shops search in game instead.';
+      captureSummary.textContent = 'Capture totals are unavailable.';
+      summary.textContent = 'No snapshot rows are available.';
+      error.hidden = false;
+      previous.disabled = true;
+      next.disabled = true;
+      pageLabel.textContent = '';
+    }
+  }
+</script>
+
+<style>
+  .marketplace-snapshot {
+    --snapshot-border: color-mix(in srgb, var(--sl-color-gray-5) 70%, transparent);
+  }
+
+  .snapshot-banner,
+  .snapshot-freshness,
+  .snapshot-capture-summary {
+    margin: 1rem 0;
+    padding: 0.85rem 1rem;
+    border: 1px solid var(--snapshot-border);
+    border-radius: 0.65rem;
+  }
+
+  .snapshot-banner {
+    background: color-mix(in srgb, var(--sl-color-accent-low) 45%, transparent);
+    font-weight: 650;
+  }
+
+  .snapshot-freshness {
+    background: color-mix(in srgb, var(--sl-color-orange-low, var(--sl-color-gray-6)) 35%, transparent);
+  }
+
+  .snapshot-capture-summary {
+    background: color-mix(in srgb, var(--sl-color-gray-6) 45%, transparent);
+  }
+
+  .snapshot-controls {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(12rem, 1fr));
+    gap: 0.75rem;
+    align-items: end;
+  }
+
+  .snapshot-controls label {
+    display: grid;
+    gap: 0.3rem;
+    font-weight: 600;
+  }
+
+  .snapshot-controls input,
+  .snapshot-controls select,
+  .snapshot-pagination button {
+    min-height: 2.5rem;
+    border: 1px solid var(--snapshot-border);
+    border-radius: 0.45rem;
+    padding: 0.45rem 0.65rem;
+    color: var(--sl-color-text);
+    background: var(--sl-color-bg-nav);
+  }
+
+  .snapshot-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.5rem 1rem;
+    margin: 0.85rem 0;
+  }
+
+  .snapshot-actions p {
+    margin: 0;
+  }
+
+  .snapshot-table-wrap {
+    overflow-x: auto;
+    border: 1px solid var(--snapshot-border);
+    border-radius: 0.65rem;
+  }
+
+  table {
+    width: 100%;
+    min-width: 64rem;
+    margin: 0;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+  }
+
+  th,
+  td {
+    padding: 0.6rem 0.65rem;
+    border-bottom: 1px solid var(--snapshot-border);
+    text-align: left;
+    vertical-align: top;
+  }
+
+  th {
+    position: sticky;
+    top: 0;
+    background: var(--sl-color-bg-nav);
+  }
+
+  tr[data-availability='OUT_OF_STOCK'] td,
+  tr[data-availability='UNCHECKED'] td {
+    color: var(--sl-color-gray-2);
+  }
+
+  .snapshot-pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.75rem;
+    margin-top: 1rem;
+  }
+
+  .snapshot-pagination button:disabled {
+    opacity: 0.45;
+  }
+
+  .snapshot-error {
+    color: var(--sl-color-red-high);
+  }
+
+  @media (max-width: 50rem) {
+    .snapshot-controls {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

@@ -200,6 +200,36 @@ async function validateAdditionalEntries(entries) {
         }
       }
     }
+    if (entry.marketplaceSnapshotJsonFile) {
+      const generatedMarketplaceSnapshot = path.join(
+        repoRoot,
+        'src',
+        'content',
+        'docs',
+        'player-guides',
+        definition.playerDirectory,
+        manifest.id,
+        'marketplace-snapshot',
+        'index.mdx',
+      );
+      const publicJson = path.join(repoRoot, 'public', 'catalogues', manifest.id, 'marketplace-snapshot.json');
+      const publicCsv = path.join(repoRoot, 'public', 'catalogues', manifest.id, 'marketplace-snapshot.csv');
+      for (const file of [generatedMarketplaceSnapshot, publicJson, publicCsv]) {
+        if (!await pathIsFile(file)) {
+          problem(
+            `Generated marketplace snapshot output is missing for ${manifest.id}: ${path.relative(repoRoot, file)}`,
+          );
+        }
+      }
+      if (await pathIsFile(publicJson) && await pathIsFile(publicCsv)) {
+        if (await readFile(publicJson, 'utf8') !== await readFile(entry.marketplaceSnapshotJsonFile, 'utf8')) {
+          problem(`Generated marketplace snapshot JSON is stale for ${manifest.id}. Run npm run docs:generate.`);
+        }
+        if (await readFile(publicCsv, 'utf8') !== await readFile(entry.marketplaceSnapshotCsvFile, 'utf8')) {
+          problem(`Generated marketplace snapshot CSV is stale for ${manifest.id}. Run npm run docs:generate.`);
+        }
+      }
+    }
   }
 }
 

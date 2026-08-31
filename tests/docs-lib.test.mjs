@@ -91,12 +91,49 @@ test('manifest paths stay inside their project namespace', () => {
     /both catalogue_json and catalogue_csv/,
   );
   assert.throws(
+    () => validateManifest(manifest({
+      id: 'shopchest',
+      docs_url: 'https://docs.1moreblock.com/custom-server-plugins/shopchest/',
+      marketplace_snapshot_json: 'catalogue/marketplace-snapshot.json',
+      marketplace_snapshot_csv: null,
+    })),
+    /both marketplace_snapshot_json and marketplace_snapshot_csv/,
+  );
+  assert.throws(
+    () => validateManifest(manifest({
+      id: 'shopchest',
+      docs_url: 'https://docs.1moreblock.com/custom-server-plugins/shopchest/',
+      marketplace_snapshot_json: '../private.json',
+      marketplace_snapshot_csv: 'catalogue/marketplace-snapshot.csv',
+    })),
+    /inside its project namespace/,
+  );
+  assert.throws(
     () => validateManifest(manifest({ staff_documents: { '../private': 'commands.md' } })),
     /lowercase letters/,
   );
   assert.throws(
     () => validateManifest(manifest({ staff_documents: { commands: '../PRIVATE.md' } })),
     /inside its project namespace/,
+  );
+});
+
+test('only ShopChest can declare a marketplace snapshot pair', () => {
+  const shopchest = manifest({
+    id: 'shopchest',
+    name: 'ShopChest',
+    main_command: '/shops',
+    docs_url: 'https://docs.1moreblock.com/custom-server-plugins/shopchest/',
+    marketplace_snapshot_json: 'catalogue/marketplace-snapshot.json',
+    marketplace_snapshot_csv: 'catalogue/marketplace-snapshot.csv',
+  });
+  assert.equal(validateManifest(shopchest).marketplace_snapshot_json, 'catalogue/marketplace-snapshot.json');
+  assert.throws(
+    () => validateManifest(manifest({
+      marketplace_snapshot_json: 'catalogue/marketplace-snapshot.json',
+      marketplace_snapshot_csv: 'catalogue/marketplace-snapshot.csv',
+    })),
+    /reserved for the ShopChest marketplace export/,
   );
 });
 
