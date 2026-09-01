@@ -24,7 +24,12 @@ Player-facing documentation is published at
 | Build toolchain | Gradle wrapper with a Java 25 toolchain |
 | Required plugins | Vault and a Vault-compatible economy provider |
 | Optional price advisory | CMI |
-| Plugin version | 1.15.2 |
+| Plugin version | 1.15.3-SNAPSHOT |
+| Release status | Beta snapshot, untested |
+
+`1.15.3-SNAPSHOT` is a rollback checkpoint, not a production release. Automated
+verification does not replace the live-server beta checklist and smoke tests,
+which have not yet been completed for this snapshot.
 
 The exact compile target is declared in
 [`plugin/build.gradle.kts`](plugin/build.gradle.kts). The deployable jar uses
@@ -48,6 +53,9 @@ tests, test-server startup, and focused shop testing pass.
   other item metadata
 - Complete-bundle stock checks, including an `[Out of stock]` display when a
   shop cannot supply its configured trade amount
+- Immediate stock-display updates for normal inventory actions plus a bounded
+  main-thread reconciliation sweep for plugin or command-driven changes that
+  do not emit a reliable inventory event
 - Configurable creation cost, refunds, price bounds, confirmation clicks,
   automatic amount calculation, and a default 250 ms interaction cooldown
 - Per-player shop limits and optional material-specific creation permissions
@@ -72,7 +80,10 @@ tests, test-server startup, and focused shop testing pass.
 
 ### Management and reliability
 
-- Player shop lists, stock state, locations, and compact hover details
+- Player shop lists, stock state, locations, and native item hover details for
+  enchanted books and potions in profile and search results; public profile
+  listing rows reveal their unique shop ID on hover, while owners also see IDs
+  and one-click Featured Listing controls
 - Separate public Storefront Profiles with safe plain-text name, advertisement,
   description, location hint, and up to three ordered Featured Listings
 - Exact base-material `/shops search` with in-stock-only results, four-row
@@ -109,7 +120,7 @@ inventory blocks not listed above.
 1. Paper 26.2 running on Java 25.
 2. Vault.
 3. A Vault-compatible economy plugin registered before ShopChest enables.
-4. The shaded `1MB-ShopChest-v1.15.2-<build>-j25-26.2.jar`.
+4. The shaded `1MB-ShopChest-v1.15.3-SNAPSHOT-<build>-j25-26.2.jar`.
 
 Vault alone does not provide an economy. ShopChest disables itself when Vault,
 an economy provider, or its configured database is unavailable.
@@ -223,7 +234,7 @@ requires a clean server restart.
 | `/shops profile set <name\|advertisement\|description\|location> <text>` | Sets one safe plain-text storefront field. | `shopchest.profile` |
 | `/shops profile featured <add\|remove> <shop-id>` | Manages up to three ordered Featured Listings; `featured clear` removes all. | `shopchest.profile` |
 | `/shops advertise [pass\|status\|cancel]` | Previews or manages an exact-token Advertising Pass and durable queued request. | `shopchest.advertise` |
-| `/shops inspect` | Starts a 15-second shop inspection selection. | None |
+| `/shops inspect` | Immediately inspects the shop in sight; otherwise starts a 15-second selection. Owners and staff see its unique ID. | None |
 | `/shops info shop` | Compatibility alias for `/shops inspect`. | None |
 | `/shops open` | Starts a 15-second selection to open a shop container. | `shopchest.openOther` for another player's shop |
 | `/shops remove` | Starts a 15-second shop removal selection. | Elevated nodes apply to other players' and admin shops |
@@ -452,7 +463,7 @@ java -version
 The build runs the test suite and writes the deployable shaded jar to:
 
 ```text
-plugin/build/libs/1MB-ShopChest-v1.15.2-<build>-j25-26.2.jar
+plugin/build/libs/1MB-ShopChest-v1.15.3-SNAPSHOT-<build>-j25-26.2.jar
 ```
 
 `<build>` is the shared zero-padded release build from `gradle.properties`,

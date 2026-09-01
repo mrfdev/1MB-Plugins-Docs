@@ -28,6 +28,20 @@ Create these normal test shops inside the marketplace region:
 
 Use `/shops list` to record each shop's displayed `#ID`.
 
+Look directly at one of your shops and run `/shops inspect`. Confirm its details
+appear immediately, no selection prompt appears, and the unique `#ID` matches
+`/shops list`. Look away and run it again; confirm ShopChest asks for a click and
+then inspects the selected shop. A second ordinary player should not see the ID
+for someone else's shop, while a staff account should see it.
+
+For one normal customer-buy shop, exercise each stock-update path. Empty and
+restock it with ordinary clicks, shift-clicks, an inventory drag, and a hopper,
+then confirm the hologram updates immediately after the inventory settles. Also
+change its contents with a command or test helper that bypasses inventory
+events. Without opening or touching the container afterward, verify the stale
+`[Out of stock]` state repairs itself within a few seconds. Repeat with a full
+configured bundle of an enchanted book to confirm exact metadata matching.
+
 ## 2. Profile and Moderation
 
 As an ordinary shop owner, run:
@@ -43,10 +57,17 @@ As an ordinary shop owner, run:
 ```
 
 Verify the fields, shop counts, Customer-Buy stock, Customer-Sell capacity,
-four-row page size, coordinates,
-and clickable `/warp shops` link. Confirm that the coordinates themselves do
-not teleport the ordinary player. View the same profile by player name and
-UUID from the second account.
+four-row page size, coordinates, and clickable `/warp shops` link. Hover the
+item row, price line, and coordinates and confirm each names the same unique
+shop ID. Confirm that the coordinates themselves do not teleport the ordinary
+player. View the same profile by player name and UUID from the second account.
+
+Create or locate an enchanted-book shop plus regular, splash, and lingering
+potion shops. In both profile shop pages and search results, hover each generic
+item name and verify Minecraft's item tooltip shows the exact stored
+enchantments or potion effects. In profile pages, verify the bullet, quantity,
+price, and coordinates still show the shop-ID tooltip. Confirm an ordinary item
+name in search results has no item tooltip.
 
 Run each invalid text case and confirm it is rejected without changing the
 previous value:
@@ -74,6 +95,13 @@ Feature the recorded IDs in order:
 /shops profile featured add <third-in-stock-shop-id>
 /shops profile featured add <fourth-shop-id>
 ```
+
+Before entering an ID manually, type `/shops profile featured add ` and press
+Tab. Suggestions must contain only this player's scoped, normal Customer-Buy
+shop IDs. Trigger the grey add-command prompt from `/shops advertise`, click
+it, and confirm it opens the owner's four-row shop page. Eligible rows must
+show `#ID` plus a clickable Feature action; already featured rows must offer a
+clickable Remove action; customer-sell-only rows must say they are ineligible.
 
 The first three should succeed and retain order; the fourth should be rejected.
 Confirm that another owner's ID, an admin-shop ID, and a customer-sell-only ID

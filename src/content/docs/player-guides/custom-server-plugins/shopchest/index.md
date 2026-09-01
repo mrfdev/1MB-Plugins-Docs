@@ -22,7 +22,10 @@ shop containers.
 
 When an enabled buy side cannot supply the full configured purchase amount, its
 hologram price changes to `[Out of stock]`. A separately enabled sell side
-remains visible and usable.
+remains visible and usable. Normal chest interactions update the display on the
+next server tick. Changes made by hoppers, commands, or other plugins are also
+reconciled automatically in small batches, so a stale display should correct
+itself within a few seconds without moving an item by hand.
 
 Enchanted books and other enchanted products list their enchantments and
 levels. Potions list their localized effects, amplifiers, and durations. Dense
@@ -105,6 +108,17 @@ The seller's storefront name opens their public profile. Locations are useful
 directions but do not teleport ordinary players. Use the clickable
 `/warp shops` link to visit the marketplace. Trusted staff with the shop-list
 permission receive a separately checked teleport action.
+
+Hover a shop's item row, price line, or location in a Storefront Profile to see
+its unique shop ID. An enchanted book or potion keeps its exact Minecraft item
+tooltip on the item name itself, so hover its bullet, quantity, price, or
+location when you need the shop ID.
+
+When you browse your own storefront's shop pages, each row shows its shop ID.
+Eligible Customer-Buy Offers include a clickable Feature action, while current
+Featured Listings include a Remove action. The grey
+`/shops profile featured add <shop-id>` prompt opens this picker, and pressing
+Tab after `/shops profile featured add ` suggests your eligible shop IDs.
 
 The [searchable marketplace snapshot](https://docs.1moreblock.com/player-guides/custom-server-plugins/shopchest/marketplace-snapshot/)
 can also be searched by owner or item. It clearly shows when its data was
@@ -221,7 +235,7 @@ the exact removed items before allowing another purchase attempt.
 When recorded trades changed your shop balance while you were offline, joining
 shows a compact revenue summary. Hover **View recent trades** for its action and
 click it to run `/shops recent`.
-- `/shops inspect` - Enter inspection mode, then click a shop within 15 seconds. `/shops info shop` is a compatibility alias.
+- `/shops inspect` - Inspect the shop you are looking at immediately. If none is in sight, click one within 15 seconds. Shop owners and staff can also see its unique shop ID. `/shops info shop` is a compatibility alias.
 - `/shops open` - Enter open mode, then click one of your shops within 15 seconds.
 - `/shops remove` - Enter removal mode, then click one of your shops within 15 seconds.
 
@@ -235,7 +249,7 @@ Shop creation, buying, and selling are available to everyone by default. Opening
 
 - Normal shop creation costs 5 by default. The actual charge is shown by the server's economy formatting.
 - The default limit is 5 normal shops. `/shops limits` shows the value that applies to you.
-- The click step after create, inspect, open, or remove expires after 15 seconds.
+- The fallback click step after create, inspect, open, or remove expires after 15 seconds.
 - There is no recurring shop fee or reward in ShopChest.
 - Creation refunds are disabled by default. When enabled, only the creator receives the configured current creation price after removing their own shop.
 - A second click may be required for a purchase or sale when confirmation is enabled.
