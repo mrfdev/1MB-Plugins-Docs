@@ -30,6 +30,24 @@ The goal is discoverability. Players can still learn and type the real commands 
 - Supports local status, config, config set, aliases, and debug pages without needing to leave the feature command.
 - Registers command, permission, placeholder, config, and debug metadata with `1MB-CMIAPI-LIB`.
 
+## Player FAQ
+
+### How do I find an emote?
+
+Open `/emotes`, or use `/emotes search <keyword>`. The menu helps you discover the server’s existing emotes; their direct commands still work.
+
+### Why does an emote ask me to pick a player?
+
+Some emotes require an online target. Others allow a target or a “no username” option. Follow the target picker for the emote you selected.
+
+### Why did clicking an emote put a command in my chat?
+
+Some emotes need extra text instead of a player target. The menu prepares the command so you can finish that text and send it yourself.
+
+### Why is an emote unavailable or asking me to wait?
+
+Emotes still follow their access rules and cooldowns. Disabled emotes can be hidden from the menu. Ask staff about a missing favorite rather than repeatedly clicking it.
+
 ## Commands
 
 ```text

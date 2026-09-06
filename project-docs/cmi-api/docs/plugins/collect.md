@@ -32,6 +32,28 @@ The GUI uses the shared light-blue glass border and includes:
 
 Future weeks stay hidden by default and show as mystery content until their week starts. The current-week GUI tile shows when the next hidden week unlocks, using the real event date or the active admin debug date override.
 
+## Player FAQ
+
+### How do I submit items, and which slots are checked?
+
+Use `/collect items` to review the current list, then `/collect submit`. It scans normal inventory storage, including the hotbar, for accepted vanilla items; do not drag items into the menu. Armor and offhand stay untouched.
+
+### Why are some of my items ignored?
+
+Only the current week’s configured materials count. Renamed, enchanted, damaged, or otherwise customized items are excluded. Future weeks can remain hidden until their start date.
+
+### Why is my event score higher than my item count?
+
+Event score can include configured bonuses such as Lucky Finds, streaks, scavenger rewards, or community boosts. Lucky Finds are virtual progress, so they do not necessarily appear as an item in your inventory.
+
+### When can I collect leaderboard rewards?
+
+Open `/collect rewards`. Ranking rewards normally require the relevant day, week, month, or event to finish first. Claim before the event’s displayed reward deadline, and follow any inventory or AutoSell instructions.
+
+### Can I trade away duplicate keepsakes?
+
+`/collect exchange` offers eligible duplicates from the active event. It preserves one copy per matching reward claim, so different-looking or different-claim rewards are not automatically interchangeable.
+
 ## Commands
 
 ```text

@@ -4,6 +4,20 @@ TPAuto adds a per-player toggle for automatically accepting incoming CMI telepor
 
 TPAuto does not teleport players itself. It listens for CMI's `CMIPlayerTeleportRequestEvent`, checks the target player's saved toggle and permissions, then runs a strict `cmi tpaccept {requester}` command as the target player after a short delay. CMI remains responsible for its own request storage, cooldowns, warmups, safety checks, and teleport behavior.
 
+## Player FAQ
+
+### What does TPAuto accept?
+
+When enabled and permitted, it automatically accepts supported incoming `/tpa` and `/tpahere` requests. It is not a friends-only allowlist, so only leave it on when you want incoming requests accepted.
+
+### How do I switch it on or off?
+
+Use `/tpauto on`, `/tpauto off`, and `/tpauto status`. Access is granted to selected roles; having ordinary teleport commands does not necessarily include TPAuto.
+
+### Does it skip teleport delays or world restrictions?
+
+No. It accepts the request through the normal teleport system. That system still controls warmups, cooldowns, safety checks, and whether the teleport can proceed.
+
 ## Commands
 
 ```text

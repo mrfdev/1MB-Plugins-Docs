@@ -12,6 +12,24 @@ WarpPassport is retired from the active build for new installs. Its source remai
 - Store long-lived progress under shared `playerdata/<uuid>.yml`.
 - Allow each discovery type to be enabled or disabled separately.
 
+## Player FAQ
+
+### How do I find the stamps I am missing?
+
+Use `/passport types`, then `/passport missing <type>` and `/passport info <type> <entry>`. Some stamps need repeated valid actions before they count as complete.
+
+### Why is an action not earning a stamp?
+
+Collection depends on the enabled discovery type, game mode, and activity rules. Vanish, god mode, or CMI fly can pause collection under the default settings. `/passport scan` refreshes supported discoveries around you.
+
+### Can I hide stamp messages without stopping progress?
+
+Yes. `/passport batch off` hides new-stamp batch summaries while tracking continues. `/passport progress off` hides progress messages. Use `/passport batch normal` and `/passport progress on` to show them again.
+
+### How do stamps become rewards?
+
+When stamp trades are enabled, completed passport types provide credits. `/passport stamps` shows available credits, box costs, and claim state. Use `/passport stamps trade <box>` for an affordable box; each box can be traded for once.
+
 ## Commands
 
 ```text
@@ -456,7 +474,7 @@ dump:
 
 ## Player Guide
 
-`/passport info` explains the system in-game for regular players. It describes passports as a collection log, lists how each type earns stamps, points players at useful commands, and notes that rewards are not automatic yet. That gives us a clean place later to describe completion rewards such as title unlocks, cosmetic styles, event entries, or trade-in hooks.
+`/passport info` explains the collection log, how each type earns stamps, and useful discovery commands. When stamp trades are enabled, `/passport stamps` shows credits from completed passport types, available reward boxes, and previous claims. Players spend those credits explicitly with `/passport stamps trade <box>`; completing a passport does not automatically deliver a box.
 
 Stamp collection is limited by config before any stamp is written:
 

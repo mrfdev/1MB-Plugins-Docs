@@ -17,6 +17,24 @@ input is never converted into a guessed article URL.
 Minecraft Wiki is community-maintained, is not an official Mojang Studios or
 Microsoft service, and is not affiliated with or endorsed by 1MoreBlock.
 
+## Player FAQ
+
+### How do I ask a Minecraft question?
+
+Use `/wiki <topic or question>`, for example `/wiki how do I breed frogs`. `/wiki` shows examples and `/wiki recent` shows your recent questions for this session.
+
+### Why did I get choices or a link instead of an answer?
+
+The helper uses reviewed Minecraft references. If several articles fit, select one with `/wiki choose <number>`. A link-only or search result means there is no suitable reviewed short answer; it does not invent one.
+
+### Why must I wait before asking again?
+
+Questions have a cooldown to prevent spam. Choosing an article from an existing result uses a separate shorter cooldown. Follow the wait shown in chat.
+
+### Are my questions sent to an AI chatbot?
+
+No. Wiki Assistant is a local reference helper, not an AI chatbot. Your recent-query list is temporary and clears when you disconnect.
+
 ## Player Commands
 
 ```text

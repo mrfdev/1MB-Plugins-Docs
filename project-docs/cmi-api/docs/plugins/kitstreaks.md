@@ -26,6 +26,24 @@ It does not replace CMI's kit manager, cooldowns, permissions, GUI, or kit usage
 - Provides player status, tracks, kits, calendar, rewards, top, claim, and admin inspect/reset commands.
 - Registers command, permission, placeholder, config, and debug metadata with `1MB-CMIAPI-LIB`.
 
+## Player FAQ
+
+### Which kit claims count toward my streak?
+
+Successful claims of tracked CMI kits count. Check `/kitstreak tracks` and `/kitstreak kits`; excluded kits and failed or cancelled claims do not advance a streak.
+
+### Why did claiming another kit not add a streak day?
+
+By default, each track advances at most once per calendar day. Several kits can belong to the same track, so claiming all of them that day does not create several streak days.
+
+### What happens if I miss a day?
+
+Your next qualifying claim checks the allowed gap between claim dates. A gap beyond the configured allowance restarts the current streak. Use `/kitstreak calendar` and `/kitstreak status` to review your progress.
+
+### How do I collect streak rewards?
+
+Use `/kitstreak rewards` to see the configured rewards. If manual claims are enabled, `/kitstreak claim all` collects eligible rewards. Some tracks may have no reward commands or may pay automatically.
+
 ## Commands
 
 ```text

@@ -88,6 +88,8 @@ The page should be written for future server staff, not only developers. It shou
 
 Every real plugin's generated public guide should include an `Available features include:` bullet list inside its `How Players Use It`, `How Staff Use It`, `How Testers Use It`, or `How The Server Uses It` section. Keep the list focused on capabilities that are available now. Roadmap pages describe possible future work and must not be presented as current feature guides.
 
+Every active player-facing guide should include a short `## Player FAQ` section with feature-specific questions and answers. Cover getting started, claims or purchases, progress and resets, and common blocked actions where relevant. Verify answers against the implementation, label configurable defaults, and give players a useful next command. Keep staff-only operations and roadmap ideas out of these entries. The public guide generator should preserve the FAQ on the corresponding player page.
+
 Keep docs and runtime metadata together. If a plugin change adds, removes, renames, or changes behavior for a command, permission, placeholder, config path, hook, data path, jar name, version, or build number, update the plugin page and any affected global docs in the same change.
 
 Build-number docs should be refreshed with `gradle refreshBuildDocs`; `gradle build` runs `verifyBuildMetadata` and fails when generated build constants or documented jar examples drift from `gradle.properties`.

@@ -4,6 +4,24 @@ Potions adds a locked admin-only `/_potions` forge for creating custom event pot
 
 Generated items are real Paper/Bukkit potion items with custom `PotionEffect` data stored on the item. The plugin also stamps each item with PersistentDataContainer identity so staff can inspect it later and disable the matching configured potion id if a reward needs to be retired.
 
+## Player FAQ
+
+### How do I get these custom potions?
+
+They are supplied through configured events, kits, or staff rewards. `/potions` inspects an item you already have; it is not a player potion shop.
+
+### How can I check what a potion does?
+
+Hold the marked event potion and run `/potions` or `/potions inspect`. The inspection shows its effect, duration, form, stored drink cost, and whether use is blocked.
+
+### Can drinking a potion cost money or XP?
+
+Yes. A marked potion can have a money or EXP-level cost stored when it is created. Check `/potions` before drinking it; owning the bottle does not necessarily mean it is free to use.
+
+### Why is my event potion blocked?
+
+The server can disable particular event potions. If inspection says yours is disabled or unknown, ask staff about that potion’s ID; changing its name does not enable it.
+
 ## Commands
 
 ```text

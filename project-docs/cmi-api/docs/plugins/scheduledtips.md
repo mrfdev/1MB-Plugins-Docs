@@ -24,6 +24,24 @@ It covers the current CMI scheduled-tip workflow while adding player-friendly co
 - Let staff list, preview, broadcast, reset, and reload tips.
 - Register command, permission, placeholder, and config metadata with `1MB-CMIAPI-LIB`.
 
+## Player FAQ
+
+### How do I stop seeing tips?
+
+Use `/tips off` to hide scheduled tips and `/tips on` to show them again. This changes your own preference.
+
+### Can I hide one repeated tip instead of all tips?
+
+Yes. Click its red `[x]` when available, or use `/tips dismiss <tip-id>`. The dismiss button appears after the configured number of views. `/tips list` helps you find tip IDs.
+
+### How do I bring dismissed tips back?
+
+Use `/tips reset` to reset your tip preferences and history, then `/tips on` if needed. `/tips status` shows your current visibility.
+
+### Why did a tip become a booster reminder?
+
+When the matching booster is active, an ordinary tip can be replaced by a clickable `/rate` reminder so you can see the current bonus.
+
 ## Commands
 
 ```text

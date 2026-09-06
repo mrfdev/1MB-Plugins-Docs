@@ -70,6 +70,28 @@ is rate-limited so it does not fill chat.
   those rewards.
 - A clear event window and progress count without coordinate spoilers.
 
+## Player FAQ
+
+### Why is a marked door not answering?
+
+During the active event, stand at the marked front of a closed door with an empty main hand. The bundled rules require three left-clicks within five seconds. Check `/doors info` if staff have changed the knocking rules.
+
+### Can I visit the same door again tomorrow?
+
+By default each eligible door can reward you once per Europe/Amsterdam calendar day while the event is live. The menu shows the midnight reset countdown; season discoveries and statistics are kept separately.
+
+### Where did my treat go?
+
+Treats are saved in your Treat Bag. Return to an allowed gameplay world, open `/doors rewards`, and claim them individually. If a complete reward kit does not fit, the treat stays waiting. Tricks do not add a treat.
+
+### Why is a milestone ready when I have no kit in my inventory?
+
+A milestone can unlock permission to a kit without opening it. Check `/kits` for that unlocked reward. Treat Bag claims are separate and deliver their selected kit directly.
+
+### Why does the menu open while knocking or claiming is unavailable?
+
+An event preview can remain visible while the module is dormant or its dates are closed. Check `/hunt` and `/doors info` for the current state, and read the specific action’s restriction.
+
 ## Commands
 
 | Command | What it does |

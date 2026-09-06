@@ -23,6 +23,28 @@ These are the AFKShrine features players should be able to learn about from the 
 - Tools and upgrades: when enabled, `/afkshrine tools` can let players spend captured AFKShrine special items on staff-configured upgrades. `/afkshrine books` independently exposes only lore-book exchanges through `onembcmi.afkshrine.books`, so staff can release the books while spear, shield, and other tools stay locked.
 - AFKShrine GUI: `/afkshrine gui` and `/afkshrine menu` open a player hub for stats, claiming, rewards, tools, milestones, albums, presets, leaderboards, bed rest, and help.
 
+## Player FAQ
+
+### How do I collect what I earned while AFK?
+
+Return from AFK and use `/afkshrine claim` to move pending tokens into your spendable balance. Then browse `/afkshrine rewards` and use `/afkshrine trade` to spend them. Going AFK does not automatically deliver reward kits.
+
+### Why did my AFK session earn no tokens?
+
+Sessions must meet the configured minimum time, world rules, cooldowns, and daily cap. Read your return postcard for the reason and check `/afkshrine status`; repeatedly toggling AFK does not bypass these limits.
+
+### Can I earn a milestone again?
+
+It depends on that milestone. Some are one-time; others have daily, weekly, monthly, or limited repeat windows. `/afkshrine resets` shows what is ready, used, complete, or inactive.
+
+### What does Trade All do?
+
+`/afkshrine trade all` attempts one affordable copy of each eligible reward. It uses your claimed token balance, so claim pending tokens first and review the reward costs before trading.
+
+### What should I do if a reward is blocked?
+
+Follow the message for missing tokens, access, inventory space, or AutoSell protection. If it reports an unfinished delivery needing recovery, give staff the message and reference so they can check it.
+
 ## Feature Ideas
 
 - Detect when CMI marks a player as AFK.

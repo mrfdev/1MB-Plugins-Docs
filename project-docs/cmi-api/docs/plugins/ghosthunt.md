@@ -58,6 +58,28 @@ The Haunting Chain continues when several unique Ghosts are found inside the con
 
 On capture, a private temporary marker armor stand rises above the location in dyed leather chest, leg, and boot armor, with a Ghost head and a randomized supported armor trim. The effect poofs away after its short animation and is also cleaned up on quit, world change, reload, or plugin disable. A single humanoid cannot display a leather chestplate and an elytra at the same time because both occupy the chest equipment slot, so the stable effect uses the themed chestplate and no elytra.
 
+## Player FAQ
+
+### How do I catch a Ghost or get a hint?
+
+During the event, right-click an unlocked Ghost with your main hand. It counts once for you and remains available for others. `/ghost hint` gives direction and distance guidance toward an eligible uncaught Ghost, with a cooldown.
+
+### Can I catch up on a missed day and still earn every daily kit?
+
+You can catch older unlocked Ghosts later, but daily kits need the required new finds on that specific event date. In the 2026 rules that is 20 finds per day. Missing one date does not block a later day’s kit.
+
+### What is required for the perfect-weekend reward?
+
+The 2026 edition requires all 80 Ghosts and qualifying participation on all four event dates. Finding all 80 on fewer dates does not satisfy the daily requirements. Check your reward checklist.
+
+### How do I collect earned kits?
+
+Open `/ghost rewards` and claim in a configured reward world before the edition’s claim deadline. Read any space, AutoSell, or delivery message; a reward needing staff attention is not another collection goal.
+
+### Can I reduce the effects without losing progress?
+
+Yes. `/ghost effects reduced` lowers effects and removes close-encounter Darkness. `/ghost effects off` hides the private effects entirely. Both modes retain discovery and reward eligibility.
+
 ## Default Event Configuration
 
 The generated `events.yml` includes the 2026 weekend edition:

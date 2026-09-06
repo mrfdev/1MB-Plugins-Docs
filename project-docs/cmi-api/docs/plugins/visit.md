@@ -32,6 +32,24 @@ When a player runs `/visit set`, the plugin creates or updates a hidden CMI warp
 - Let staff list, inspect, delete, reload, and resync visit records.
 - Register command, permission, placeholder, and config metadata with `1MB-CMIAPI-LIB`.
 
+## Player FAQ
+
+### How do I let other players visit my build?
+
+Stand at the arrival point and run `/visit set`. Players can then use `/visit <your-name>`. You have one Visit location; running `/visit set` again updates it.
+
+### Why is my Visit missing from the normal warp list?
+
+Visit locations are hidden from the normal warp list by design. Use `/visit <player>` or `/visit list` instead.
+
+### Can visiting someone cost money?
+
+Yes, if the server enables paid visits and the owner opts in. `/visit set status` shows your own settings. Charged visits report the payment after a successful visit.
+
+### How do I change the welcome text or remove my Visit?
+
+Use `/visit set msg <message>` to change the welcome text without moving the location. `/visit unset` removes your Visit. Extra arrival effects may require an unlocked perk.
+
 ## Commands
 
 ```text

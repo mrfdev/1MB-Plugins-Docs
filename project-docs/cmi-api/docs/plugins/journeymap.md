@@ -25,6 +25,24 @@ The intended use is a friendly `/journeymap` page where players can see where th
 - Optional automatic reward claiming when rewards are enabled and `rewards.require-claim` is false.
 - Registered command, permission, placeholder, config, and debug metadata for `/1mblib debug plugin journeymap all`.
 
+## Player FAQ
+
+### Is JourneyMap a map or minimap?
+
+No. This server feature tracks your playtime journey through eras, badges, and milestones. Open `/journeymap` to see your progress.
+
+### Why has my playtime milestone not appeared yet?
+
+Use `/journeymap status` to check the recorded playtime and `/journeymap refresh` to request an update. Progress depends on the server’s playtime source and configured milestone thresholds.
+
+### How do I collect a milestone reward?
+
+Check `/journeymap rewards`. When rewards and manual claiming are enabled, use `/journeymap claim <id>` or `/journeymap claim all`. Earning a badge does not always include a reward; staff choose which milestones pay out.
+
+### Can I claim the same milestone every day?
+
+No. Earned milestones and claimed rewards are stored as lasting progress. A playtime milestone is not a daily repeatable quest.
+
 ## Commands
 
 ```text

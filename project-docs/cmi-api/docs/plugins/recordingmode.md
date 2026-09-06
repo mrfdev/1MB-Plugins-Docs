@@ -29,6 +29,20 @@ For private messages, RecordingMode does not rely only on CMI's `acceptingPM` op
 - Player-facing info/help text describes quiet personal messages, TPA requests, money requests, and staff messages without exposing CMI implementation details.
 - Register command, permission, placeholder, and config metadata with `1MB-CMIAPI-LIB`.
 
+## Player FAQ
+
+### Does RecordingMode actually record my game?
+
+No. `/recording` reduces supported messages and requests while you record or stream using your own software.
+
+### Can I keep some messages while recording?
+
+Yes. Use `/recording status` to review your preferences, then commands such as `/recording set msg on` or `/recording set tips off`. Available channels depend on the installed features and your access.
+
+### What happens when I turn recording mode off?
+
+Run `/recording` again. The plugin restores your captured message and request settings where possible. Optional live-map hiding depends on the server having that integration enabled.
+
 ## Commands
 
 ```text

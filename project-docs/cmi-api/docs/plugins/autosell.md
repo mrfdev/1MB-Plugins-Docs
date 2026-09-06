@@ -23,7 +23,7 @@ The GUI uses the shared hardened GUI service with safe holders, cancelled clicks
 - a preview button that explains what would sell right now
 - a recent-results button for batched sale history
 - a quests button with claimable rewards, daily, weekly, monthly, and all-quest pages
-- a milestones button for the visible one-time milestone tree
+- a milestones button with direct claims, Claim Ready Milestones, and clear progress or staff-review states
 - a stats button for personal category/material totals, ranks, and server share
 - a Main Menu button beside the close button when `/menu` is installed and enabled
 - the player head with today's AutoSell total, cap, broker level, broker points, next broker-level progress, top category, top item, best single batch, milestone progress, quest progress, sell chain, streak, trigger mode, and active boost
@@ -33,6 +33,40 @@ AutoSell only runs after a short delayed batch, usually after a pickup or chunk 
 The bulk category-item control changes only the current category's non-blacklisted CMI worth items. Its lore reports the category state and a separate `Items toggled: on`, `off`, or `mixed` state. The control deliberately replaces the individual choices inside that category so `all off` really means all available items are off. The adjacent item-view button cycles forward or backward between all available items, off items, and on items while preserving that view across page navigation and individual toggles. Staff-blocked items remain absent from every player item view, other categories keep their existing choices, and players can immediately turn a small number of individual items back on or off after using the bulk action. Enabled individual item choices glint using a hidden dummy enchant on the cancelled GUI display icon; disabled entries remain plain, while the hover lore continues to show the exact item and category states. Turning the category itself off or on from the Categories page does not erase its individual item choices.
 
 When chat notifications are selected, the batched sale message is hoverable and clickable. Hover shows the batch total, trigger, top sold materials, daily cap progress, broker status, milestone progress, quest progress, sell-chain status, streak status, and any active AutoSell boost. Click opens `/autosell recent` for the detailed sale history. Actionbar, title, and bossbar notification modes remain visual-only because Minecraft clients do not support hover/click actions there.
+
+## Player FAQ
+
+### How do I collect a ready milestone?
+
+Open `/autosell milestones` and click a **ready to claim** reward or **Claim Ready Milestones**. You can also run `/autosell milestones claim all`, or claim one with `/autosell milestones claim market_sweep`. You do not need another sale. Milestones can also be awarded automatically after a successful sale.
+
+### How do I collect quest rewards?
+
+Open `/autosell quests gui`, choose **Claim Rewards**, and click a ready reward. Use `/autosell quests claim all` to collect all available quest rewards when Claim All is enabled. Milestone and quest claims have separate menus and commands.
+
+### Do I need to earn the Market Sweep amount again?
+
+No. Market Sweep remembers your best single AutoSell batch. Once that batch meets the goal, the milestone remains eligible until claimed. Market Regular uses lifetime AutoSell earnings instead. A claimed milestone pays only once.
+
+### Why did my reward leave AutoSell switched on?
+
+Money, XP, broker points, and percentage bonuses do not add items to your inventory. AutoSell's own rewards made only of those payouts, or supported messages and effects, can be collected while AutoSell stays on. The standard Market Regular and Market Sweep rewards do not give inventory items.
+
+### Will Claim All switch AutoSell off before giving items?
+
+For both `/autosell milestones claim all` and `/autosell quests claim all`, a reward that may give items asks you to turn AutoSell off first. Click **Turn off AutoSell**, then run the same claim command again. That blocked reward stays unclaimed, and rewards already collected will not be paid twice. Claim All processes individual rewards; some may already have succeeded before an item reward asks you to switch AutoSell off.
+
+### Why did AutoSell switch itself off for an automatic reward?
+
+An automatically delivered item reward pauses AutoSell first so new reward items are not immediately sold. Commands whose item-delivery behavior is unknown receive the same protection. Collect or store the reward items, then use `/autosell toggle` to turn selling back on. Manual item claims ask you to switch it off yourself instead.
+
+### Does the daily bonus stack with yesterday's bonus?
+
+No. Bonuses earned during the same server day add together up to the configured cap, but the daily bonus resets when the date changes at midnight Netherlands time (`Europe/Amsterdam`). It is not a rolling 24-hour bonus. A daily bonus from a weekly quest or a one-time milestone still lasts only for that day. Your money and unspent broker points remain, and a claimed milestone stays claimed.
+
+### Do ready or pending rewards stop me from selling?
+
+Unclaimed ready quests and milestones do not block normal AutoSell activity. `/autosell status` shows reward counts and the relevant menus. **Staff review needed** means a sale or reward could not be safely completed; open its details and share the reference with staff. More selling or repeating the goal will not resolve that state.
 
 ## Safety Model
 
@@ -57,7 +91,7 @@ AutoSell is built around anti-dupe and anti-farm guards:
 - daily money caps are permission-based and can be increased by broker progress
 - optional inventory-full mode can wait until normal inventory storage slots are nearly full
 - sell chains and streaks reward active moving gameplay, not static hopper/AFK selling
-- one-time milestone rewards are claimed automatically when configured targets are reached
+- one-time milestones auto-claim after the successful sale receipt is finalized; already-ready milestones can also be claimed directly without another sale
 - repeatable quest rewards only progress after a verified sale batch and use the same safe command allowlist model
 - temporary AutoSell boosts can appear in `/rate` while active
 - suspicious volume warnings are stored and can be exported
@@ -72,6 +106,8 @@ AutoSell participates in the shared 1MB reward-delivery safety service. This clo
 
 - A manual 1MB reward claim, trade, shop purchase, or consumable reward is blocked while that player's AutoSell is active. The check happens before points, tokens, captured items, claim markers, or consumable charges are changed. The player receives a clickable **Turn off AutoSell** action that runs `/autosell toggle`, then they can retry the original claim.
 - An automatic 1MB reward turns AutoSell off first, cancels any pending delayed sale, and saves the off state before reward commands run. If the off state cannot be saved, delivery fails closed. The player is told that AutoSell was turned off and can enable it again after checking the reward.
+- AutoSell's own milestone and quest rewards skip inventory protection only when every prepared command is a known direct CMI money, EXP, mail, message, toast, sound, or title command. These rewards keep AutoSell on. Item-giving and unknown commands retain the protection above. A blocked or duplicate reward receipt is checked before any attempt to switch AutoSell off.
+- Manual milestone and quest commands, including both `claim all` commands, do not automatically switch AutoSell off for an item reward. They leave that reward unclaimed and provide the **Turn off AutoSell** action; the player retries after switching it off. Previously successful claims remain collected.
 - Reward retry and staff recovery routes use the same automatic preparation while the player is online.
 
 This contract covers integrated reward paths in the 1MB-CMIAPI feature plugins. AutoSell cannot identify the origin of an ordinary item after an unrelated plugin, crate, direct CMI kit command, or manual staff action puts it into an inventory. Players and staff should still turn AutoSell off before claiming or giving vanilla-item rewards from systems outside the 1MB reward safety service.
@@ -89,8 +125,9 @@ This contract covers integrated reward paths in the 1MB-CMIAPI feature plugins. 
 | `/autosell recent` | player | Shows recent batched sale results. |
 | `/autosell quests` | player | Shows active daily, weekly, and monthly AutoSell quest progress in chat. |
 | `/autosell quests gui` | player | Opens the AutoSell quest hub with claimable rewards and period pages. |
-| `/autosell quests claim [all\|id]` | player | Claims ready AutoSell quest rewards when manual claiming is enabled. |
-| `/autosell milestones` | player | Opens the visible one-time milestone tree, including bulk-cleanup milestones. |
+| `/autosell quests claim [all\|id]` | player | Claims ready AutoSell quest rewards; item rewards ask players to turn AutoSell off first. |
+| `/autosell milestones` | player | Opens milestones with clickable ready rewards, Claim Ready Milestones, and next steps. |
+| `/autosell milestones claim [all\|id]` | player | Claims ready one-time milestones without another sale; item rewards require AutoSell off; no target opens the menu. |
 | `/autosell caps` | player | Opens weekly and lifetime daily cap unlocks purchased with broker points. |
 | `/autosell toggle` | player | Turns AutoSell on or off for the player. |
 | `/autosell trigger <always\|full>` | player | Chooses whether AutoSell runs normally after pickup/break batches or only when inventory storage slots are nearly full. |
@@ -141,6 +178,8 @@ Examples:
 /autosell quests gui
 /autosell quests claim
 /autosell quests claim all
+/autosell milestones claim market_sweep
+/autosell milestones claim all
 /autosell caps
 /autosell trigger full
 /autosell trigger always
@@ -198,7 +237,7 @@ AutoSell has several progress systems that can appear together in the GUI, chat 
 | Milestones | One-time achievements such as total sold items, bulk cleanup batches, broker level, streak days, or sell chains. | No, one-time per player. | Usually broker points, money, EXP, mail, or a small bonus. |
 | Streaks | Activity over consecutive qualifying days or enough qualifying days in a week. | Daily/weekly tracking changes over time. | Small temporary bonus for steady activity. |
 | Sell chains | Short active-session progress from selling in repeated batches without waiting too long. | Yes, expires after the chain window. | Small temporary batch bonus and chain-based goals. |
-| Daily bonus | A temporary payout bonus earned from broker progress, quests, milestones, streaks, or chains. | Yes, it is daily/temporary by design. | Higher AutoSell payout while the bonus is active. |
+| Daily bonus | A temporary payout bonus earned from broker progress, quests, or milestones. | Resets at midnight Netherlands time; does not carry over across days. | Higher AutoSell payout while the bonus is active. |
 | Boosters | Server-wide Happy Hour boosts started by staff and shown in `/rate`. | Yes, temporary. | Multiplies AutoSell payouts while active. |
 | Cap unlocks | Weekly or lifetime account upgrades bought with broker points. | Weekly unlocks expire; lifetime unlocks do not. | Higher AutoSell daily money cap. |
 
@@ -244,7 +283,11 @@ Default lifetime cap unlocks are:
 
 Staff can configure the unlocks under `caps.unlock-gui.options.*`. Normal cap unlocks use numeric `cap` values, while the unlimited unlock can use the readable value `cap: unlimited`. Use `type: weekly` with `duration-days` for temporary unlocks, or `type: lifetime` for permanent account unlocks.
 
-Milestone rewards are configured under `milestones.definitions.*`. They are one-time per player and can watch totals such as `total-items`, `total-earned`, `broker-level`, `streak-days`, `chain-sales`, `bulk-items`, and `bulk-earned`. The `/autosell milestones` GUI shows the visible milestone tree with claimed, ready, and in-progress states so players can see what they are working toward. Bulk milestones are separate from the lifetime ladder: they count the player's best single verified AutoSell batch by item amount or money earned. When a player reaches a milestone, AutoSell can grant broker points, add a small capped daily bonus, play a celebration, write a recent-history entry, and run strictly allowlisted direct-console commands such as CMI money, EXP, mail, message, toast, sound, or title commands.
+Milestone rewards are configured under `milestones.definitions.*`. They are one-time per player and can watch totals such as `total-items`, `total-earned`, `broker-level`, `streak-days`, `chain-sales`, `bulk-items`, and `bulk-earned`. The `/autosell milestones` GUI shows in-progress, ready-to-claim, claimed, refunded, and staff-review states. Click a ready milestone or **Claim Ready Milestones**, or use `/autosell milestones claim <id|all>`; no extra sale is required. Claims recheck the current definition, player permission, saved progress, and receipt before delivering anything. A stale click cannot grant a duplicate reward. An unfinished reward receipt takes precedence over a saved claim marker, so a reserved but undelivered reward is not shown as collected. Bulk milestones are separate from the lifetime ladder: they count the player's best single verified AutoSell batch by item amount or money earned. When a player reaches a milestone, AutoSell can grant broker points, add a small capped daily bonus, play a celebration, write a recent-history entry, and run strictly allowlisted direct-console commands such as CMI money, EXP, mail, message, toast, sound, or title commands.
+
+Normal automatic rewards run only after sale totals and quest progress are saved, the exact-item recovery payload is cleared, and the sale receipt is finalized. This releases the player's operation lock before starting milestone or automatic quest rewards. A failure at any sale-completion boundary stops follow-up rewards and retains the receipt for review.
+
+`/autosell status` shows ready milestone and quest counts plus the relevant menus. Unclaimed ready quests and milestones do not block further selling. A **staff review needed** state is different: the message identifies the unfinished sale or reward and provides its reference. Players should share that reference with staff; they do not need to repeat the goal. Staff inspect `/autosell debug transactions` and `/autosell debug transaction <uuid>` before using the existing verified recovery workflow. Do not delete receipts or reset claim markers to clear a block.
 
 Default milestone examples include:
 

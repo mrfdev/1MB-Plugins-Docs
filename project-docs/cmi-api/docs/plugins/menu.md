@@ -4,6 +4,20 @@ Menu adds a configurable `/menu` GUI for player discovery. It is meant to be the
 
 The default layout uses a light-blue glass border, a bottom-right barrier close button, a bottom-left player head with live stats, a book-and-quill server info button, and a compass smart-home button. Feature buttons are auto-spaced in a staggered 4/3/4/3 layout and paginate when there are more buttons than fit on one page. Arrow buttons change pages when another page is available.
 
+## Player FAQ
+
+### Where do I start if I do not know the commands?
+
+Run `/menu`. Hover a button to see what it does and the direct command, then left-click to open the feature. Use the page arrows for more buttons.
+
+### Why is a feature missing from my menu?
+
+Buttons depend on the server configuration, installed and enabled features, and your access. A missing button does not necessarily mean your progress was lost.
+
+### Where does the home compass take me?
+
+By default it tries your home named `home`, then `bed`, then opens `/homes`. The server can customize this order.
+
 ## Commands
 
 ```text

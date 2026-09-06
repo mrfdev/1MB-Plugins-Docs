@@ -32,6 +32,24 @@ Friendly spawners are split by configured tier. The default pages are Global, Me
 
 Shop entries use matching spawn egg icons when Paper exposes a spawn egg material for that entity type. Entries that are currently buyable for the player receive a hidden-enchant glint; locked, disabled, sold-out, or yearly-limit-reached entries stay visible without the glint.
 
+## Player FAQ
+
+### How do I buy a spawner?
+
+Open `/spawners`, choose a category, and read the entry’s price and requirements. Available entries glint. Review the purchase confirmation and leave inventory space for the spawner.
+
+### Why is a spawner visible but unavailable?
+
+It may need an unlocked tier or placement permission, be disabled, be sold out, or have reached your event purchase limit. Hover the entry for its current reason.
+
+### Can I buy the same event spawner again?
+
+Event spawners can have annual per-player limits and shared stock limits. `/spawners progress` shows your yearly event purchases; a new opportunity still depends on the event being available and stocked.
+
+### Can I sell a spawner back through this shop?
+
+Only if staff have enabled the sell section. It is disabled by default, so purchasing a spawner does not guarantee a buyback option.
+
 ## Commands
 
 ```text

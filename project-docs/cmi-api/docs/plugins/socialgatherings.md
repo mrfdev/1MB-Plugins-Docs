@@ -31,6 +31,28 @@ The jar is now a modular host. The existing area-and-requirements behavior lives
 - No Carnival world scanning. One bounded task advances only explicit active sessions; setup inspection checks at most the configured targets, refuses to load chunks, and routine profile/catalog/leaderboard file work runs away from the server thread.
 - Independent adventure gates: the monthly schedule and activity-world list control new progress/play, while the reward-world list controls Carnival prize claims without consulting the schedule.
 
+## Player FAQ
+
+### How do I find a gathering and join in?
+
+Use `/gathering types` and `/gathering info <type>` to see its location, required actions, player count, and duration. `/gathering nearby` shows gatherings matching your current area.
+
+### Why did our group not complete the gathering?
+
+Enough eligible players must meet that gathering’s requirements for the required time. Location, recent actions, cooldowns, and participation limits can all matter. Check the gathering’s info before trying again.
+
+### Can I stop participating automatically?
+
+Yes. `/gathering toggle off` opts you out; `/gathering toggle on` lets you participate again.
+
+### Can we repeat a gathering for unlimited rewards?
+
+No. Rewards are optional and limited by the gathering’s cooldowns and repeat rules. Completing a social activity does not guarantee an item or money payout.
+
+### Why is Carnival or the adventure closed?
+
+Staff must enable and open the relevant activity. `/gathering adventure` shows configured adventure openings and world rules. Activity access and prize-claim access can have different restrictions.
+
 ## Commands
 
 ```text

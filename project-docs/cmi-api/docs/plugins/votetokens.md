@@ -35,6 +35,28 @@ Default reward tree:
 
 The tree is stored in `plugins/1MB-CMIAPI/VoteTokens/rewards.yml`, so future tiers or extra layers can be added without code changes.
 
+## Player FAQ
+
+### How do I unlock the next layer or tier?
+
+Complete every enabled reward item in your current layer. Complete all enabled layers in a tier to unlock the next enabled tier. `/votetokens progress` shows what is still missing.
+
+### Can I buy an unlocked reward more than once?
+
+Yes. These trades are repeatable. The first successful purchase marks that entry complete for progression; later purchases still cost tokens.
+
+### Why is a trade blocked even though I have tokens?
+
+Check the required token type and amount, layer access, enabled state, and inventory space. Rewards require room after the cost is removed. If AutoSell protection asks you to switch it off, do that before confirming again.
+
+### What are extra tokens used for?
+
+Use `/votetokens tools` for eligible vote-item improvements and `/votetokens upgrades` for separate purchases such as Jobs slots. The preview shows the exact cost and current requirements.
+
+### Why is my vote item rejected by the tools page?
+
+Tools need an eligible, certified vote reward item. A matching name or appearance is not enough. If an older legitimate reward is not recognized, ask staff to inspect it.
+
 ## Commands
 
 ```text

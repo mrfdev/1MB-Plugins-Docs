@@ -48,6 +48,28 @@ The index shows only online recipients who currently have `onembcmi.appreciation
 
 `/thanks` is a configurable short alias for the same menu.
 
+## Player FAQ
+
+### How do I thank someone, and must I include a gift?
+
+Open `/appreciate`, choose an eligible online player and reason, then review and confirm. A free note is available; money, XP, items, and anonymous sending are optional and can have costs.
+
+### Why can I not send another appreciation?
+
+Sending has daily and weekly limits, a minimum interval, and limits for the same recipient. The recipient can also restrict new gifts. Read the menu’s remaining allowance and the reason shown.
+
+### Where do I collect received gifts?
+
+Open `/appreciate received` and claim an entry or use Claim All. Item gifts need their original world group, inventory space, and AutoSell off. A blocked item stays waiting.
+
+### Do unclaimed gifts expire?
+
+Yes, after 60 days by default. The optional gift is then returned to the sender when the return checks pass. The note stays in recent history; the anonymous-service fee is not returned.
+
+### Are shop unlocks permanent, and do thank-you reactions cost points?
+
+Purchased reasons, styles, titles, and badges are permanent unlocks within Appreciation. Each eligible received note can have one free thank-you reaction; that reaction spends no gift, money, point, or sending allowance.
+
 ## Sending Limits
 
 The production defaults use the `Europe/Amsterdam` timezone:

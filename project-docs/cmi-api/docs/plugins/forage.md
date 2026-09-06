@@ -63,6 +63,28 @@ When a chunk/source family becomes exhausted, Forage both records the event in t
 
 When daily caps or chunk exhaustion pause reward progress, the curated tool still keeps its own use count and durability state updated. XP, points, branch progress, and quests pause, but the tool does not pretend it was never used.
 
+## Player FAQ
+
+### Why does my normal tool give no Forage XP?
+
+Progress needs the matching marked Forage tool and a supported block or creature source. Start with `/forage guide` and your camp’s tool shop; an ordinary Minecraft tool does not feed Forage progression.
+
+### Why do menus tell me to return to camp?
+
+Shopping, quests, upgrades, repairs, and other camp activities need your own complete nearby camp. `/forage camp` shows missing requirements. Sneak-right-click your ready anchor to open the hub.
+
+### Why did XP stop while my tool still wore down?
+
+Daily caps, source-family caps, or local chunk exhaustion can pause reward progress while tool use and durability still count. Check `/forage limits`; switch to another uncapped family or area when the message allows it.
+
+### How do I claim quests?
+
+Return to your ready camp and open `/forage quests`, then choose Ready To Claim or the appropriate daily, weekly, or monthly page. Click an eligible quest and follow its claim requirements.
+
+### How do I repair or upgrade a Forage tool?
+
+Use your camp’s Upgrade Tool or Repair & Merge page. Review the money, point, level, and item costs; Repair & Merge consumes a matching offhand tool and treasure. Ordinary repair and enchanting routes are blocked.
+
 ## V1 Tools
 
 Default tools are:

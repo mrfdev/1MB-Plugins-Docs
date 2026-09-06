@@ -102,6 +102,11 @@ Available features include:
       <td><code>/autosell milestones</code></td>
     </tr>
     <tr>
+      <td><code>/autosell milestones claim [all|<wbr />id]</code></td>
+      <td>Player</td>
+      <td><code>/autosell milestones claim</code></td>
+    </tr>
+    <tr>
       <td><code>/autosell caps</code></td>
       <td>Player</td>
       <td><code>/autosell caps</code></td>
@@ -159,6 +164,8 @@ Available features include:
 - `/autosell quests gui`
 - `/autosell quests claim`
 - `/autosell quests claim all`
+- `/autosell milestones claim market_sweep`
+- `/autosell milestones claim all`
 - `/autosell caps`
 - `/autosell trigger full`
 - `/autosell trigger always`
@@ -167,6 +174,40 @@ Available features include:
 - `/autosell category fancy off`
 - `/autosell item cobblestone on`
 - `/autosell item diamond_block off`
+
+## Player FAQ
+
+### How do I collect a ready milestone?
+
+Open `/autosell milestones` and click a **ready to claim** reward or **Claim Ready Milestones**. You can also run `/autosell milestones claim all`, or claim one with `/autosell milestones claim market_sweep`. You do not need another sale. Milestones can also be awarded automatically after a successful sale.
+
+### How do I collect quest rewards?
+
+Open `/autosell quests gui`, choose **Claim Rewards**, and click a ready reward. Use `/autosell quests claim all` to collect all available quest rewards when Claim All is enabled. Milestone and quest claims have separate menus and commands.
+
+### Do I need to earn the Market Sweep amount again?
+
+No. Market Sweep remembers your best single AutoSell batch. Once that batch meets the goal, the milestone remains eligible until claimed. Market Regular uses lifetime AutoSell earnings instead. A claimed milestone pays only once.
+
+### Why did my reward leave AutoSell switched on?
+
+Money, XP, broker points, and percentage bonuses do not add items to your inventory. AutoSell's own rewards made only of those payouts, or supported messages and effects, can be collected while AutoSell stays on. The standard Market Regular and Market Sweep rewards do not give inventory items.
+
+### Will Claim All switch AutoSell off before giving items?
+
+For both `/autosell milestones claim all` and `/autosell quests claim all`, a reward that may give items asks you to turn AutoSell off first. Click **Turn off AutoSell**, then run the same claim command again. That blocked reward stays unclaimed, and rewards already collected will not be paid twice. Claim All processes individual rewards; some may already have succeeded before an item reward asks you to switch AutoSell off.
+
+### Why did AutoSell switch itself off for an automatic reward?
+
+An automatically delivered item reward pauses AutoSell first so new reward items are not immediately sold. Commands whose item-delivery behavior is unknown receive the same protection. Collect or store the reward items, then use `/autosell toggle` to turn selling back on. Manual item claims ask you to switch it off yourself instead.
+
+### Does the daily bonus stack with yesterday's bonus?
+
+No. Bonuses earned during the same server day add together up to the configured cap, but the daily bonus resets when the date changes at midnight Netherlands time (`Europe/Amsterdam`). It is not a rolling 24-hour bonus. A daily bonus from a weekly quest or a one-time milestone still lasts only for that day. Your money and unspent broker points remain, and a claimed milestone stays claimed.
+
+### Do ready or pending rewards stop me from selling?
+
+Unclaimed ready quests and milestones do not block normal AutoSell activity. `/autosell status` shows reward counts and the relevant menus. **Staff review needed** means a sale or reward could not be safely completed; open its details and share the reference with staff. More selling or repeating the goal will not resolve that state.
 
 ## Good To Know
 

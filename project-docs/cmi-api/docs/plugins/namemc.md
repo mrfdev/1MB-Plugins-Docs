@@ -10,6 +10,20 @@ Players can run `/namemc` to open the configured NameMC server page, click the h
 
 The default reward flow grants `onembnamemc.verified` through LuckPerms, broadcasts through CMI, plays a CMI sound, gives the CMI kit `namemc`, and sends a CMI private message.
 
+## Player FAQ
+
+### How do I claim the NameMC reward?
+
+Open `/namemc`, follow the configured server-page link, and click the heart on NameMC. Then run `/namemc verify` in game. Eligible verified players receive the configured one-time reward.
+
+### Why has my like not been verified yet?
+
+The check depends on NameMC’s response and a server-wide verification cooldown. Follow the chat message, wait if asked, and try `/namemc verify` later. `/namemc status` shows your stored status.
+
+### Can I unlike and like again for another reward?
+
+No. The reward is recorded as a one-time claim. Verifying an already rewarded account does not pay it again.
+
 ## Commands
 
 ```text

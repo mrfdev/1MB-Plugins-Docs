@@ -19,6 +19,24 @@ That keeps CMI's `/hat` behavior intact while still allowing a friendly shortcut
 - Cancels damage and targeting for MobHat entities.
 - Keeps CMI's normal `/hat` command untouched except for the optional `/hat mob` bridge.
 
+## Player FAQ
+
+### How do I wear or remove a mob hat?
+
+Use `/mobhat list` to browse supported mobs, then `/mobhat mob <type>` or `/mobhat target` while looking at an allowed mob. `/mobhat remove` takes it off.
+
+### Does using a pet as a hat take the real pet?
+
+No. The hat is a cosmetic copy. The targeted mob remains in the world unchanged.
+
+### Why did my hat disappear?
+
+Mob hats are temporary. Quitting, dying, changing worlds, dismounting, or the feature being disabled can remove them. You can apply another hat when eligible.
+
+### Why can I not select a particular mob?
+
+Only allowed mob types work, and some require extra access or an allowed world. The default safety settings also require an empty inventory slot. Check `/mobhat status` and the message shown.
+
 ## Commands
 
 ```text

@@ -15,6 +15,24 @@ cmi.kit.referred
 
 The intended CMI setup is that `cmi.kit.refer` unlocks the referrer's reward kit, while `cmi.kit.referred` unlocks or marks the referred player's separate reward. A referred player can still refer someone else later; receiving `cmi.kit.referred` does not block them from earning `cmi.kit.refer`.
 
+## Player FAQ
+
+### Who starts a referral, and who confirms it?
+
+The player who invited their friend runs `/refer <friend>` while the friend is online. The friend then runs `/refer verify` before the request expires.
+
+### Why can we not finish the referral yet?
+
+Both players must meet the configured playtime and eligibility checks. Use `/refer status` and read the message for the unmet requirement. Rewards are limited; starting more requests does not bypass a previous claim.
+
+### How do I reject or cancel a referral?
+
+Use `/refer deny` to reject a request sent to you. Use `/refer cancel` to cancel one you started.
+
+### Can I refer someone after being referred myself?
+
+Yes. Being the referred player and being the referrer are separate roles. You can later invite someone else, subject to the playtime checks and reward limits.
+
 ## Commands
 
 ```text

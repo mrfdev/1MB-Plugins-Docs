@@ -10,6 +10,24 @@ Exchange gives players a GUI where configured exchanges can trade required items
 
 Each trade is a separate YAML file, so staff can add, clone, disable, and test individual exchanges without rebuilding the jar. The plugin validates trade files on reload, tracks per-player usage, supports max-use limits, and can hide completed exchanges from normal players.
 
+## Player FAQ
+
+### How do I make an exchange?
+
+Open `/exchange`, select a trade, and read its requirements and reward. Bring all required items, money, and EXP levels, then use the trade’s confirmation flow.
+
+### Why are my items not accepted?
+
+Trades check their configured item requirements. Special tokens may need the original item identity, so an ordinary or renamed lookalike does not qualify. Use the requirement preview to check what is missing.
+
+### Can I repeat a trade?
+
+It depends on the trade’s use limit. Some are repeatable and others are one-time. Completed trades can be hidden, and seasonal trades can close when their event window ends.
+
+### What should I do if delivery needs staff attention?
+
+Keep the failure message and trade name and contact staff. An unfinished delivery can block another attempt until they review it; opening the menu again does not resolve that delivery.
+
 ## Migration Notes
 
 - The current jar is `1MB-Lib-Exchange-v1.0.3-582-j25-26.2.jar`.

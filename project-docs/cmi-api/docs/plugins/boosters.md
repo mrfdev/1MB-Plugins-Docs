@@ -13,6 +13,24 @@ The first merged version keeps parity with the old project where practical:
 - Registers legacy `%onembboosters_*%` placeholders when PlaceholderAPI is installed.
 - Accepts legacy permissions `onemb.boosters.rate`, `onemb.boosters.admin`, and `onemb.boosters.debug` for migration.
 
+## Player FAQ
+
+### How do I see which bonuses are active?
+
+Run `/rate`. It shows the supported active boosters, their rates, scope, and remaining time.
+
+### Does one booster increase every reward on the server?
+
+No. Boosters apply to the feature and scope shown in `/rate`, such as Jobs or mcMMO. A booster for one system does not automatically boost the others.
+
+### Are these bonuses permanent?
+
+Timed boosters last for their advertised window. Check `/rate` for what is active now and how much time remains.
+
+### Can I turn off booster reminders?
+
+Use `/rate reminders off`, `/rate reminders on`, or `/rate reminders status`. This changes your reminder preference; it does not end the server’s booster.
+
 ## Important Migration Notes
 
 - Remove or disable the old standalone `1MB-Boosters` jar before enabling `1MB-CMIAPI-Boosters`.

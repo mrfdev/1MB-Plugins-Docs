@@ -16,6 +16,24 @@ Players can add quick notes while playing:
 
 They can then list, search, complete, reopen, and remove entries. Completed entries can be cleared separately, while lifetime completion count remains for milestones.
 
+## Player FAQ
+
+### How do I add and finish a task?
+
+Use `/todo <text>` to add a reminder. `/todo` lists open entries; use the displayed ID with `/todo done <id>` when you finish it.
+
+### Can I undo a completed task?
+
+Yes. `/todo list completed` shows completed entries, and `/todo undo <id>` reopens one. Completing a task and deleting it are different actions.
+
+### Why has a task disappeared from my list?
+
+The default list shows open tasks only. Check `/todo list all` or `/todo search <keyword>`. `/todo clear completed` removes completed entries while keeping your lifetime completion count.
+
+### Can another player see my notes?
+
+Your list belongs to you. You can explicitly send an entry with `/todo share <player> <id>`. Authorized staff also have inspection tools, so avoid storing sensitive information in notes.
+
 ## Commands
 
 ```text

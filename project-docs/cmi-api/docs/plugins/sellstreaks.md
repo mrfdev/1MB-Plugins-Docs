@@ -23,6 +23,24 @@ Version 1 uses command output instead of a CMILib inventory GUI. The core sell-e
 - Read CMI worth values for daily goal display.
 - Register command, permission, placeholder, and config metadata with `1MB-CMIAPI-LIB`.
 
+## Player FAQ
+
+### Is this the same progress as AutoSell?
+
+No. SellStreaks listens for successful CMI item sales and maintains its own goals. Check `/sellstreak status`; do not assume an AutoSell sale also counts here.
+
+### How do I claim a SellStreaks reward?
+
+There is no separate claim command. When rewards are enabled, qualifying CMI sales trigger them automatically. `/sellstreak goals` shows what to work toward.
+
+### Why did repeated sales stop giving rewards?
+
+Daily reward caps, material exclusions, and variety requirements can limit progress. Selling the same material repeatedly is not an unlimited reward source; check your status and goals.
+
+### Do daily goals carry over to tomorrow?
+
+Daily goals and daily limits use the server’s calendar day and reset for the next day. Check `/sellstreak status` for the current day’s progress.
+
 ## Commands
 
 ```text

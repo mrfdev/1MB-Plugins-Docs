@@ -6,6 +6,24 @@ This plugin is intentionally built from scratch inside this repo. The first vers
 
 The visible chat prefix is intentionally shortened to `PvP`, while the internal feature id and jar remain `pvptoggle` / `PvPToggle` for migration compatibility.
 
+## Player FAQ
+
+### How do I choose whether to fight other players?
+
+Use `/pvp on`, `/pvp off`, or `/pvp status`. In normal worlds both players must have PvP enabled and be eligible before player damage is allowed.
+
+### Why can I not turn PvP off right now?
+
+Recent PvP combat can start a cooldown, and designated PvP worlds can force it on. Check the message and `/pvp status`; your personal toggle does not override those world rules.
+
+### Does PvP off protect me from every kind of damage?
+
+No. It controls supported player-versus-player damage. Mobs, falls, lava, and other environmental dangers are separate.
+
+### Why did my PvP setting turn off automatically?
+
+The server can disable PvP when you become ineligible, for example by entering creative mode, enabling god mode or vanish, or moving to a world where PvP is disabled.
+
 ## Important Migration Notes
 
 - Remove or disable the standalone `1MB-PvPToggle` jar before testing this feature.

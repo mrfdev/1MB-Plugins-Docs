@@ -6,6 +6,28 @@ The plugin is report-first and reward-safe: it only records DiscordSRV events, s
 
 DiscordChat's overview, rewards, confirmation, pulse, tools, and milestone GUIs use the standard 1MB light-blue frame. Every page keeps the viewing player's head in the bottom-left, navigation/help controls in the bottom center, a **Back to Server Menu** shortcut immediately left of the bottom-right close barrier, and the same owner-bound session protections. The player head opens that player's full status in chat.
 
+## Player FAQ
+
+### What chat counts toward DiscordChat progress?
+
+Link your Minecraft and Discord accounts using the instructions in `/discordchat link`. Meaningful messages through the configured server-chat bridge can count in either direction. Unlinked accounts and other channels do not earn these rewards.
+
+### Why did a message give no XP?
+
+Quality checks exclude spam, repeated messages, bot commands, low-effort lines, and link-only posts. Daily caps also apply. `/discordchat status` shows your progress; adding useful context matters more than sending many messages.
+
+### Do I need a milestone before XP becomes points?
+
+No. Complete XP units convert automatically into spendable points, with the remainder carried forward. The default is 25 XP per point. Streak milestone points are a separate bonus.
+
+### How do I spend points, and why might a reward be blocked?
+
+Open `/discordchat rewards` and review the confirmation. Rewards can have point costs, one-time ownership, player or server-wide cooldowns, or an unavailable dependency. If a previous delivery needs review, give staff its reference.
+
+### Can I hide reminders or milestone announcements?
+
+`/discordchat optout` toggles invite reminders. `/discordchat celebrations` separately controls public announcements of your own major milestones. Neither command is an account-unlink command.
+
 ## Commands
 
 | Command | Explanation | Example |

@@ -4,6 +4,20 @@ GameTypes is a player-fun feature plugin that opens one safe BentoBox menu for s
 
 The feature is intentionally config-driven. It knows the common 1MoreBlock BentoBox game types, reads simple BentoBox addon-disable lists when they exist, and only runs reviewed player commands from config. It does not create islands directly through an internal API; it closes the GUI and dispatches normal BentoBox player commands such as `/oneblock go`, `/chunkblock chunks`, `/skyblock team`, or `/cave challenges`.
 
+## Player FAQ
+
+### How do I open the menu for a different island game?
+
+Use `/gametype` for world detection or the game index. `/gametype menu <type>`, for example `/gametype menu oneblock`, opens a particular game’s menu.
+
+### Will opening a menu reset my island?
+
+No. Opening the menu only shows available actions. Read each button before using it; actions are handled through the game’s normal commands and rules.
+
+### Why is a button or game missing?
+
+Available buttons depend on installed game addons, server configuration, and your access. The menu cannot provide a feature that the underlying game does not support.
+
 ## Commands
 
 | Command | Explanation | Example |

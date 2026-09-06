@@ -2497,6 +2497,7 @@ for (const plugin of guidePlugins) {
   const guideBody = override.guide ? escapeHtml(override.guide).replaceAll('\n\n', '\n\n') : guideParagraphs(markdown, plugin, commandData);
   const quickStart = override.quickStart ?? quickStartSteps(plugin, commandData);
   const featureBullets = override.features ?? FEATURE_BULLET_OVERRIDES[slug] ?? featureBulletItems(plugin, markdown, commandData);
+  const playerFaq = extractSection(markdown, ['Player FAQ']);
   const notes = override.notes ?? goodToKnow(plugin, commandData);
   const examples = override.examples ?? commandData.playerExamples;
   const audience = audienceInfo(plugin);
@@ -2551,7 +2552,7 @@ ${commandData.playerAliases.length ? `## Aliases\n\n${commandData.playerAliases.
 
 ${examplesList(examples, commandData.playerCommands.length > 0)}
 
-## Good To Know
+${playerFaq ? `## Player FAQ\n\n${playerFaq}\n\n` : ''}## Good To Know
 
 ${markdownList(notes, Boolean(override.notes))}
 

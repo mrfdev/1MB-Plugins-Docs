@@ -20,6 +20,24 @@ Levels I, II, and III are normal Lava tiers. Levels IV and V are rare event tier
 
 If the plugin is uninstalled, the item remains as a named dyed leather boot with lore and PDC data, but the movement assist stops. Any short potion windows already applied expire naturally, so the item does not create permanent effects. While the plugin is running, LavaBoots-owned potion effects are removed shortly after leaving lava so players need another way to stay safe outside lava. Future plugin upgrades can keep reading the stored PDC schema, item id, level, theme, profile, charge, and collection data.
 
+## Player FAQ
+
+### How do I get LavaBoots?
+
+They come from configured event kits, prizes, or giveaways. There is no crafting recipe by default. `/lavaboots status` helps you inspect your boots.
+
+### Do they make me permanently immune to fire?
+
+No. Their lava assistance requires an allowed world, remaining charge, and durability. The effects are short-lived and end after leaving lava, so do not rely on them for general fire protection.
+
+### How do I recharge them?
+
+When fuel is enabled, hold magma cream or a fire charge in your offhand while using the boots in lava. Fuel is consumed when charge is low enough. Recharging does not restore leather durability.
+
+### Can I repair them or keep them after dying?
+
+The boots are designed to wear out, and common repair, enchanting, and modification routes are blocked. They are not soulbound, so they can be traded, dropped, or lost like other items.
+
 ## Commands
 
 ```text
