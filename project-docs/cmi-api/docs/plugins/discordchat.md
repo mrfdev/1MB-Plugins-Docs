@@ -10,11 +10,19 @@ DiscordChat's overview, rewards, confirmation, pulse, tools, and milestone GUIs 
 
 ### What chat counts toward DiscordChat progress?
 
-Link your Minecraft and Discord accounts using the instructions in `/discordchat link`. Meaningful messages through the configured server-chat bridge can count in either direction. Unlinked accounts and other channels do not earn these rewards.
+Link your Minecraft and Discord accounts using `/discord link`. Meaningful messages through the configured server-chat bridge can count in either direction. Unlinked accounts do not earn these rewards. Public Beta 1 uses only `#server-chat`, at the same message XP rate in both directions.
+
+Public Beta 2's additional channels and conditional in-game XP are being tested locally. They are configuration options for the next rollout, not a change to the live Beta 1 rules.
+
+### What is being tested for Public Beta 2?
+
+The local preview keeps Discord-to-Minecraft message XP at 100%. Linked in-game chat earns 80% while a meaningful linked Discord message in `#server-chat` is less than six minutes old, and 0% after that window expires. Chat still goes through when it earns no XP. One qualifying Discord participant opens the window for everyone linked in game; in-game messages cannot extend it.
+
+Staff can also configure different XP percentages for extra Discord-only channels. Their messages stay on Discord and do not open the in-game earning window. Quality checks and daily message caps remain shared across channels. These rules are still in local testing; the live public beta continues using its existing single-channel rules.
 
 ### Why did a message give no XP?
 
-Quality checks exclude spam, repeated messages, bot commands, low-effort lines, and link-only posts. Daily caps also apply. `/discordchat status` shows your progress; adding useful context matters more than sending many messages.
+Quality checks exclude spam, repeated messages, bot commands, low-effort lines, and link-only posts. Daily caps also apply. `/discordchat status` shows your progress; adding useful context matters more than sending many messages. In the Beta 2 preview it also explains when in-game XP is waiting for recent Discord chat.
 
 ### Do I need a milestone before XP becomes points?
 
@@ -102,11 +110,52 @@ DiscordChat subscribes to DiscordSRV's API when DiscordSRV is loaded:
 - Game-to-Discord messages are counted from the configured DiscordSRV game channel name, usually `global`.
 - Discord messages only count when DiscordSRV can resolve the Discord account to a linked Minecraft UUID.
 - In-game bridged messages only count when the player is linked through DiscordSRV.
+- Optional Discord-only reward channels are observed separately. They must be explicitly configured and must not be mapped to a Minecraft channel in DiscordSRV. Observing them adds no chat forwarding and changes no Discord channel permissions.
 - DiscordSRV Discord-to-game display-name rewriting is available as an optional diagnostic toggle, but is disabled by default. StaffMsg owns the linked display-name formatting for staff chat.
-- Bot messages, unlinked Discord accounts, non-target DiscordSRV channels, and command-like messages are ignored for rewards and reported by `/discordchat admin smoke`.
+- Bot/webhook messages, unlinked Discord accounts, unconfigured channels, and command-like messages do not earn rewards. Staff can inspect tracking state using `/discordchat admin smoke`.
 - Unlinked in-game players can receive a cooldown-protected reminder after normal in-game chat, but the plugin no longer prompts on join by default.
 
 The plugin stores the latest known Minecraft name, Discord id, linked state, lifetime totals, daily totals, current streak, longest streak, milestone completions, the sub-threshold EXP remainder, spendable points, claimed one-time rewards, and the bounded reward transaction ledger.
+
+### Public Beta 2 local preview
+
+The first Beta 2 slice adds configurable message rates and a shared Discord activity window. The local test configuration uses:
+
+| Source | Message XP rate | Opens or refreshes the in-game earning window? |
+| --- | --- | --- |
+| Meaningful linked Discord chat through `#server-chat` | 100% | Yes |
+| Linked in-game chat, while that Discord activity is less than six minutes old | 80% | No |
+| Linked in-game chat, after the window expires | 0% | No |
+| Explicitly configured Discord-only channels | Per-channel percentage | No |
+
+One qualifying Discord participant opens the window for all linked in-game participants. It does not require every in-game player to send a Discord message. In-game chat continues bridging when its XP rate is zero. Those messages remain visible in activity totals but cannot award XP through conversation bonuses, increment a streak, or trigger a milestone. Unlinked users, bots, webhooks, duplicate events, and messages rejected by the quality checks cannot open the window. A meaningful bridge message can still open it after that player's message XP cap is reached.
+
+Channel/source percentages multiply ordinary message XP after the length/emote adjustments and before the existing event/bonus-window multipliers and message caps. XP rounds to one decimal. For example, a two-XP message gives `1.5` XP at 75%, `1.6` at 80%, and `3` at 150%, before any event boost. All channels and both directions share the same per-player daily message cap and point balance; a channel percentage does not raise the cap. The local configuration retains the 130 message-XP cap (5.2 points from message XP), plus separately capped or periodic bonuses.
+
+For eligible messages, fixed conversation, first-Discord, streak, and milestone bonuses keep their configured values. Discord-only channels can contribute to a personal streak, conversation bonus, and first-Discord bonuses. They do not contribute to the public bridge's conversation-cluster bonus or its first-message broadcasts. Their text is omitted from the last-message preview; aggregate progress and configured milestone celebrations still apply.
+
+Existing configs retain Beta 1 behavior: both source rates default to 100%, the recent-Discord requirement defaults off, and additional channels default off. Enabling these options requires the Beta 2 JAR; they are not available in the live Beta 1 build.
+
+Example configuration for the Beta 2 build (merge these keys into the existing sections):
+
+```yaml
+xp:
+  sources:
+    discord-percent: 100
+    game-percent: 80
+    game-requires-recent-discord: true
+    recent-discord-seconds: 360
+discordsrv:
+  reward-channels:
+    enabled: true
+    rates:
+      # Replace this example ID with a Discord-only text channel the bot can read.
+      '123456789012345678': 75
+```
+
+Quote channel IDs and use numeric percentages between 0 and 1000; `0` disables earning for that source. The window accepts 1–86400 seconds. Add/remove mapping entries or edit rates, then run `/discordchat reload` or `/discordchat admin reload`. Reload retains the original activity time and applies the new threshold without pretending that a new Discord message arrived. Restarting, disabling the feature, or changing its bridge channel starts with a closed window. Invalid XP rules stop message earning and show an error in `admin smoke` until corrected and reloaded.
+
+Discord event IDs are saved alongside awards in a bounded 128-message history per player. Duplicate callbacks, including DiscordSRV attachment callbacks, are rejected before statistics, XP, or the activity window change. This recent history survives reload/restart; it is not a historical Discord backfill facility. Message storage runs on a bounded serial worker; player API access is captured on the server thread. No test or production message is posted to Discord by this feature.
 
 ## EXP, Points, And Milestones
 
@@ -307,6 +356,8 @@ discordsrv.channel-id
 discordsrv.game-channel-name
 discordsrv.count-discord-to-game
 discordsrv.count-game-to-discord
+discordsrv.reward-channels.enabled
+discordsrv.reward-channels.rates
 gui.filler-material
 calendar.zone-id
 invite-prompts.enabled
@@ -314,6 +365,10 @@ invite-prompts.on-join-enabled
 invite-prompts.after-game-chat-enabled
 invite-prompts.cooldown-hours
 xp.short-message-base
+xp.sources.discord-percent
+xp.sources.game-percent
+xp.sources.game-requires-recent-discord
+xp.sources.recent-discord-seconds
 xp.emote-only-base
 xp.long-message-word-threshold
 xp.long-message-bonus-percent
@@ -454,7 +509,7 @@ Run the focused DiscordChat suite with:
 gradle :plugins:player-fun:discordchat:test
 ```
 
-The 71-test suite covers quality metrics and every no-XP decision, repeat-window ordering, idempotent/consecutive/reset streak progression, floor EXP accrual and remainder conversion, reward transaction transitions and persisted ledgers, profile backup/quarantine/atomic-write behavior, reward command rendering and unsafe-placeholder rejection, cooldowns, immutable GUI reward bindings, fresh-install spending defaults, escrow save/load/clear/quarantine behavior, and every inventory recovery decision including rollback and the possible-duplicate alarm. Full Bukkit inventory sessions, real serialized `ItemStack` recovery, config reload races, and DiscordSRV callback concurrency remain test-server integration checks because they require a running Paper/DiscordSRV environment.
+The suite covers quality metrics and no-XP decisions, repeat-window ordering, streak progression, floor EXP conversion, reward transaction ledgers, profile backup/quarantine/atomic writes, command validation, cooldowns, GUI reward bindings, fresh-install spending defaults, and escrow recovery. Beta 2 adds exact window expiry, reloadable channel rates and snowflake precision, zero-rate bonus/streak rejection, real profile accounting across source rates and shared caps, event stacking and point conversion, duplicate concurrent callbacks, failed saves, unlinking, and stale lifecycle messages. Full Bukkit inventory sessions, real serialized `ItemStack` recovery, DiscordSRV gateway routing, and live reload concurrency still require test-server integration checks.
 
 ## Smoke Test
 
@@ -477,6 +532,8 @@ Then link a test account through DiscordSRV, type once in `#server-chat`, type o
 ```
 
 Expected result: `admin check` has no `FAIL` rows, and `admin smoke` shows DiscordSRV loaded/subscribed, the configured channel id, linked-account count, and the tracked counters increasing.
+
+For the Beta 2 preview, use a dedicated test Discord connection. Start with a closed window and verify that in-game chat still bridges but changes no XP, streak, milestone, or bonus balance. Send a meaningful linked Discord bridge message, verify 80% in-game message XP, then verify the exact expiry and that in-game messages cannot keep it open. Repeat using an extra Discord-only channel: apply its configured rate, verify no Minecraft forwarding, and verify it cannot open the window. Test an unlinked user, bot/webhook, link-only message, repeat, and duplicate callback. Edit/remove a channel, reload through both command aliases, and verify rates, the remaining activity time, existing points, claims, and cooldowns. Reconnect and restart checks must preserve recent event deduplication and begin with a closed activity window after restart.
 
 For reward confirmation/cooldown testing, grant a test account enough points, open `/discordchat rewards`, and click a reward once. Verify that no points move and the confirmation page shows the exact cost and post-purchase balance. Cancel once, reopen it, then confirm. For either booster, verify the reward becomes unavailable for one hour to a second account as well, remains unavailable after a restart, and starts no cooldown when a deliberately failed transaction is refunded.
 
@@ -512,7 +569,7 @@ Implemented first:
 Deferred or intentionally avoided:
 
 - Monthly reset seasons should not reset lifetime points or streaks by default. If added later, make it a cosmetic leaderboard season with separate `season.points` so players do not lose earned currency.
-- Discord-side stat commands are intentionally not implemented; players should return in game to check `/discordchat`.
+- Discord-side stat commands are not implemented. A read-only Discord `/discordchat` information command is a future feasibility item; players currently check progress in game.
 - AFK state is ignored for now. Chatting while AFK is neither punished nor rewarded extra.
 - DiscordSRV link repair/import is intentionally not implemented yet; DiscordSRV remains the source of truth for link ownership.
 - Staff outreach lists for unlinked players are intentionally avoided because the server has too many historical accounts for that to stay useful.
