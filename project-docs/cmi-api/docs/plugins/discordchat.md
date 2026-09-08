@@ -4,7 +4,7 @@ DiscordChat is a player-fun feature plugin for turning the DiscordSRV `#server-c
 
 The plugin is report-first and reward-safe: it only records DiscordSRV events, stores local player progress, and runs configured reward commands after a player confirms a point trade in game. It does not post to Discord, moderate Discord, or change DiscordSRV configuration.
 
-DiscordChat's overview, rewards, confirmation, pulse, tools, and milestone GUIs use the standard 1MB light-blue frame. Every page keeps the viewing player's head in the bottom-left, navigation/help controls in the bottom center, a **Back to Server Menu** shortcut immediately left of the bottom-right close barrier, and the same owner-bound session protections. The player head opens that player's full status in chat.
+DiscordChat's overview, rewards, confirmation, pulse, tools, milestone, and Top GUIs use the standard 1MB light-blue frame. Every page keeps a player-stats head in the bottom-left, navigation/help controls in the bottom center, a **Back to Server Menu** shortcut immediately left of the bottom-right close barrier, and the same owner-bound session protections. The player head opens that player's full status in chat.
 
 ## Player FAQ
 
@@ -35,6 +35,14 @@ The Public Beta 2 local preview adds **1 Day Streak** before the seven-day miles
 Existing players who have not completed day one earn it on their next qualifying message. Reloading the plugin, opening the menu, sending repeated or blocked chat, or restarting a streak does not award it again. Your completion and bonus remain in `/discordchat milestones` and `/discordchat history`. The next target skips milestones you have already completed, even after your streak resets.
 
 The later milestones remain at **7, 30, 90, 100, 180, and 365 days**. Staff can configure the starter bonus. This feature is being tested locally for Beta 2; the live Public Beta 1 milestones still start at seven days.
+
+### Where can I see the leaderboards?
+
+In the Public Beta 2 local preview, open `/discordchat` and click **Top**. Choose **Points**, **Streak**, **Messages**, **Words**, or **Emotes** to see the top ten players. Points ranks current spendable balances; Streak ranks current activity streaks. Messages, Words, and Emotes use the same tracked totals as the existing chat command.
+
+Use **Refresh** for updated results, **Back** to choose another leaderboard, or the **DiscordChat** compass to return to the main page. Browsing costs no points and can be done from any world or game mode with DiscordChat access. Empty rankings say **No rankings yet**.
+
+`/discordchat top points` and the other metric commands remain available in chat. The menu uses the same ordering and player display names. The Top submenu is being tested locally for Beta 2; it has not been added to the live Public Beta 1 server yet.
 
 ### What is Community Pulse, and does it give rewards?
 
@@ -485,6 +493,14 @@ collectible.lore
 
 Fresh installations write both `rewards.enabled: false` and `tools.enabled: false`. Chat tracking, EXP, points, milestones, and read-only reward/tool previews can therefore be configured without exposing point spending. Existing installations keep their explicitly saved values when upgrading; this default change does not turn an already enabled live setup off. Enable rewards only after `/discordchat admin check` has no `FAIL` rows and live delivery testing passes, and enable tools only after reviewing their costs and item behavior.
 
+### Beta 2 Top submenu
+
+The index **Top** button opens five choices; results show up to ten positive entries, descending by value, with case-insensitive Minecraft-name tie ordering and UUID as the final stable tie-breaker. Both menus and `/discordchat top` use the same ranking function and CMI/online display-name rendering. Points is the current balance, not lifetime earnings, and Streak is the stored current streak. The menu exposes only public ranking values and Minecraft names; it does not expose Discord IDs, linking details, or private diagnostics. No new permission is required beyond `onembcmi.discordchat.use`; claim-world and Survival restrictions do not apply to browsing.
+
+Profile reads run on a dedicated single worker with a bounded 16-request queue, separate from chat XP accounting. Results return to the server thread for name resolution and inventory rendering. Browsing does not save, create, or repair profiles. A failed profile read produces an unavailable state rather than silently publishing a partial ranking. Closing, changing menus, quitting, kicking, losing permission, disabling the feature, or reloading while a request is pending prevents stale results from being applied. Menu transitions run on the next tick after cancelled inventory events, following the [Paper 26.2 inventory event contract](https://jd.papermc.io/paper/26.2/org/bukkit/event/inventory/InventoryClickEvent.html).
+
+The shared language file now includes `gui.titles.top`, `gui.titles.top_results`, and `gui.top.*` for choices, descriptions, row values, loading, empty, error, refresh, and navigation wording. These use the existing title colour and lore width settings. Reload with either DiscordChat reload alias, then reopen the menu to review language changes. The Top button occupies index slot 40; the staff smoke shortcut moves to slot 42.
+
 ### Beta 2 one-day milestone
 
 ```yaml
@@ -516,13 +532,13 @@ rewards:
       show-when-disabled: true
 ```
 
-Merge those keys into the existing sections. `gui.title-color` is a quoted six-digit hex colour used consistently for all six inventory titles. Dark teal `#00616d` is the initial preview; navy `#203b65` and charcoal `#303030` are alternatives. Invalid values fall back to dark teal. This setting does not recolour chat or menu item headings.
+Merge those keys into the existing sections. `gui.title-color` is a quoted six-digit hex colour used consistently for all eight inventory titles. Dark teal `#00616d` is the initial preview; navy `#203b65` and charcoal `#303030` are alternatives. Invalid values fall back to dark teal. This setting does not recolour chat or menu item headings.
 
 `gui.lore-width` accepts 20–80 code points, defaulting to 46 for invalid values. Generated menu lore wraps at word boundaries and preserves colours, styles, Unicode graphemes, blank lines, and explicit line breaks. Long unbroken words wrap between graphemes; a single oversized grapheme or nonliteral component stays intact. This is a text-width guide, not an exact pixel measurement. Deposited tools, upgrade item previews, and delivered kit items retain their original lore and metadata.
 
 Reward descriptions remain scalar `rewards.definitions.<id>.description` values. A YAML literal block (`|`) can supply manual lines. Plain text, MiniMessage, and legacy colour codes are supported; use one formatting style per value. New installations receive player-friendly descriptions. Existing descriptions, reward costs, enabled flags, and cooldowns are preserved.
 
-The shared language file is `plugins/1MB-CMIAPI/CMIAPILIB/translations/discordchat.yml`. `gui.titles.*` contains plain inventory title text; `gui.reward.*` contains reward menu labels, purchase controls, balance/cooldown text, blocked-purchase messages, and Coming soon wording. Keep each template's existing placeholders, such as `{cost}`, `{points}`, `{reason}`, and `{reward}`. For example:
+The shared language file is `plugins/1MB-CMIAPI/CMIAPILIB/translations/discordchat.yml`. `gui.titles.*` contains plain inventory title text; `gui.top.*` contains leaderboard wording; `gui.reward.*` contains reward menu labels, purchase controls, balance/cooldown text, blocked-purchase messages, and Coming soon wording. Keep each template's existing placeholders, such as `{cost}`, `{points}`, `{reason}`, and `{reward}`. For example:
 
 ```yaml
 gui:
@@ -624,11 +640,15 @@ The suite covers quality metrics and no-XP decisions, repeat-window ordering, st
 
 Claim-rule tests cover all four game modes, the ten reviewed world IDs, excluded/unknown/alias lookalikes, empty/invalid/reloaded allowlists, OPs, repeated rejected purchases, changed confirmations, and console retry/refund paths. Integration tests exercise the real ledger and atomic profile store, asserting unchanged files for rejected purchases/retries, preserved reservations after partial delivery, and no duplicate charge or command on recovery. Tool event tests verify mode/world/config changes block both preview and confirmation while item return stays available.
 
+Leaderboard tests cover all five metrics, positive-value filtering, real-name tie ordering, top-ten limits, shared command/menu rendering, rich display names, read-only profile and backup bytes, unreadable/missing files, bounded background work, empty/error states, refresh/back/index navigation, and delayed results after close/quit/kick/reload/access changes. Inventory event tests cover shift-click, number keys, offhand, double-click, drop, creative and drag protection. These use detached Paper item storage and a controlled scheduler; real-client visuals still require gameplay acceptance.
+
 ## Smoke Test
+
+For Top acceptance, open `/discordchat`, choose **Top**, and review each of the five rankings against `/discordchat top <metric>` while totals are stable. Verify the first ten ranks, CMI names, wrapped lore, title colour, refresh, Back, direct DiscordChat compass and close controls. Repeat with no positive totals and a pending load interrupted by close, another page, reload, quit, or permission removal. No points, profiles, rewards, or tool items should change merely from browsing.
 
 For day-one acceptance, open `/discordchat milestones` with an uncompleted profile and verify all seven configured entries fit the first row, beginning with `1 Day Streak`. Send a qualifying linked message, then verify the fixed starter bonus, completion history and next target of seven days. Repeat activity, reload and restart: completion must remain and no second starter bonus may be granted. With an existing active profile, verify one catch-up award without rewriting later history; with a blocked/unlinked/zero-rate message, verify no award. Automated real-profile tests cover concurrent messages, resets, configuration changes, failed saves and all later thresholds. Real Discord gateway and in-game visual acceptance remain local test steps.
 
-Presentation tests exercise the screenshot descriptions, styled and Unicode wrapping, manual blank lines, all six title colours/texts, configuration and translation reloads, and opt-in catalog visibility. Real-ledger tests also cover disabled/hidden reward clicks, stale confirmations, disablement during delivery, blocked forced retries, and fully recorded delivery after removal.
+Presentation tests exercise the screenshot descriptions, styled and Unicode wrapping, manual blank lines, all eight title colours/texts, configuration and translation reloads, and opt-in catalog visibility. Real-ledger tests also cover disabled/hidden reward clicks, stale confirmations, disablement during delivery, blocked forced retries, and fully recorded delivery after removal.
 
 For the Beta 2 presentation preview, compare dark teal, navy, and charcoal inventory titles at normal GUI scale. Inspect long Bee/Allay/Cat/Passport descriptions and dependency/blocked reasons in the catalog and confirmation. Change the scalar description, width, and `gui.reward.*` translations, reload with each alias, and reopen the menus. Confirm manual blank lines, Unicode, and formatting remain readable. Show one disabled reward with `show-when-disabled: true`, verify the Coming soon card has no purchase controls, then hide it again. Disable/remove a reward while its confirmation is open and verify rejection without spending points. Automated tests cover these render and transaction paths; real-client visual acceptance remains required.
 
