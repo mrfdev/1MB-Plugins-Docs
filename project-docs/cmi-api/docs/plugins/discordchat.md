@@ -28,6 +28,14 @@ Quality checks exclude spam, repeated messages, bot commands, low-effort lines, 
 
 No. Complete XP units convert automatically into spendable points, with the remainder carried forward. The default is 25 XP per point. Streak milestone points are a separate bonus.
 
+### How does the one-day streak milestone work?
+
+The Public Beta 2 local preview adds **1 Day Streak** before the seven-day milestone. Your first qualifying linked message completes it automatically and awards a one-time **25-point starter bonus**. You do not need to click or buy anything, and this bonus is separate from normal chat XP.
+
+Existing players who have not completed day one earn it on their next qualifying message. Reloading the plugin, opening the menu, sending repeated or blocked chat, or restarting a streak does not award it again. Your completion and bonus remain in `/discordchat milestones` and `/discordchat history`. The next target skips milestones you have already completed, even after your streak resets.
+
+The later milestones remain at **7, 30, 90, 100, 180, and 365 days**. Staff can configure the starter bonus. This feature is being tested locally for Beta 2; the live Public Beta 1 milestones still start at seven days.
+
 ### What is Community Pulse, and does it give rewards?
 
 Community Pulse is an activity dashboard. Open `/discordchat pulse` to see the community's recorded activity. Clicking its cards or reaching a community message total does not award a kit, points, or a booster.
@@ -195,15 +203,17 @@ Default behavior:
 - Configurable bonus windows can add recurring XP boosts, such as weekend chat boosts. They stack with the temporary event multiplier and only affect future earned XP.
 - One message is capped at `8` EXP.
 - Daily message EXP is capped at `60`.
-- The first tracked chat activity on a new Amsterdam calendar day increments the streak and adds `10` streak EXP.
-- Milestones are `7`, `30`, `90`, `100`, `180`, and `365` days by default.
+- The first qualifying chat activity on a new Amsterdam calendar day increments the streak and adds `10` streak EXP.
+- Milestones are `1`, `7`, `30`, `90`, `100`, `180`, and `365` days by default in Beta 2. All seven fit the first milestone row. Existing custom lists are preserved.
 - Every XP award immediately converts complete units using floor conversion. At the default ratio, `24.9` EXP remains pending, `25` EXP becomes `1` point with `0` pending, and `62.7` EXP becomes `2` points with `12.7` pending.
-- On a new milestone, the player receives a separate bonus worth at least `25` points or `20%` of current points, whichever is higher. Milestone completion does not control ordinary XP conversion.
+- Day one gives a fixed one-time starter bonus of `25` points by default, independent of the player's balance. Each later milestone gives at least `25` points or `20%` of current points, whichever is higher. Milestone completion does not control ordinary XP conversion.
 - Major milestones can broadcast a friendly in-game celebration. Players can use `/discordchat celebrations` to keep their own milestone announcements private.
 
-The milestone display intentionally uses the next target style:
+The milestone display points to the first uncompleted configured target, retaining completed milestones after a streak reset:
 
 ```text
+Streak: 0 days / 1
+Streak: 1 day / 7
 Streak: 6 days / 7
 Streak: 8 days / 30
 Streak: 83 days / 90
@@ -442,6 +452,7 @@ bonus-windows.definitions.<id>.end
 bonus-windows.definitions.<id>.multiplier
 points.exp-per-point
 milestones.days
+milestones.first-day-bonus-points
 milestones.bonus-percent-of-current-points
 milestones.flat-bonus-points
 milestone-broadcast.enabled
@@ -473,6 +484,22 @@ collectible.lore
 ```
 
 Fresh installations write both `rewards.enabled: false` and `tools.enabled: false`. Chat tracking, EXP, points, milestones, and read-only reward/tool previews can therefore be configured without exposing point spending. Existing installations keep their explicitly saved values when upgrading; this default change does not turn an already enabled live setup off. Enable rewards only after `/discordchat admin check` has no `FAIL` rows and live delivery testing passes, and enable tools only after reviewing their costs and item behavior.
+
+### Beta 2 one-day milestone
+
+```yaml
+milestones:
+  days: ['1', '7', '30', '90', '100', '180', '365']
+  first-day-bonus-points: 25
+  flat-bonus-points: 25
+  bonus-percent-of-current-points: 20
+```
+
+Day one uses only `first-day-bonus-points`; the flat/percentage formula applies to later milestones. Zero records day-one completion without granting points, and negative starter values are treated as zero. The normal broadcast defaults still start at 30 days, so day one does not add a milestone-wide public announcement. Existing first-Discord-day broadcasts are separate.
+
+Fresh defaults and the empty/invalid-list fallback include day one. Explicit existing lists are preserved; add `'1'` to an older `milestones.days` list to opt in, then run `/discordchat reload` or `/discordchat admin reload`. The local Beta 2 test configuration already includes it. Day one is checked on qualifying linked activity, including a returning player's next qualifying message on a day already recorded as active. Later milestones retain their new-active-day trigger. Zero-rate in-game activity, unlinked messages and failed quality checks cannot earn the starter bonus; a daily message XP cap does not block otherwise qualifying streak participation.
+
+No history is reset or fabricated during reload or upgrade. The award, lifetime counters, completion key `1`, and timestamp/bonus/points-after history are saved in the same atomic profile replacement. Notices and audit entries follow a successful save. Saved completion prevents repeat awards after subsequent messages, restart, streak reset, or removing/re-adding day one in the configuration. The existing reward-shop `milestone_title` item is unrelated.
 
 ### Beta 2 menu presentation
 
@@ -598,6 +625,8 @@ The suite covers quality metrics and no-XP decisions, repeat-window ordering, st
 Claim-rule tests cover all four game modes, the ten reviewed world IDs, excluded/unknown/alias lookalikes, empty/invalid/reloaded allowlists, OPs, repeated rejected purchases, changed confirmations, and console retry/refund paths. Integration tests exercise the real ledger and atomic profile store, asserting unchanged files for rejected purchases/retries, preserved reservations after partial delivery, and no duplicate charge or command on recovery. Tool event tests verify mode/world/config changes block both preview and confirmation while item return stays available.
 
 ## Smoke Test
+
+For day-one acceptance, open `/discordchat milestones` with an uncompleted profile and verify all seven configured entries fit the first row, beginning with `1 Day Streak`. Send a qualifying linked message, then verify the fixed starter bonus, completion history and next target of seven days. Repeat activity, reload and restart: completion must remain and no second starter bonus may be granted. With an existing active profile, verify one catch-up award without rewriting later history; with a blocked/unlinked/zero-rate message, verify no award. Automated real-profile tests cover concurrent messages, resets, configuration changes, failed saves and all later thresholds. Real Discord gateway and in-game visual acceptance remain local test steps.
 
 Presentation tests exercise the screenshot descriptions, styled and Unicode wrapping, manual blank lines, all six title colours/texts, configuration and translation reloads, and opt-in catalog visibility. Real-ledger tests also cover disabled/hidden reward clicks, stale confirmations, disablement during delivery, blocked forced retries, and fully recorded delivery after removal.
 
