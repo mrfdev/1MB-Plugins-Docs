@@ -5,8 +5,8 @@ This namespace is a public documentation-only copy from the source project regis
 - Project: `1MB Library`
 - Project id: `cmi-api`
 - Source repository: `mrfdev/1MB-Library`
-- Source commit: `bf5dcb68`
-- Source state: `local changes present at sync time`
+- Source commit: `80595005`
+- Source state: `clean`
 - Public README source: `README.md`
 - Copied files: public `README.md` and `docs/`
 - Source-declared private docs exclusions: `docs/1mb-library-migration-plan.md`, `docs/adr`, `docs/agents`, `docs/compatibility-baselines/live-tested-working-2026-08-15.md`, `docs/economy-review`, `docs/feature-contract-reviews`, `docs/feature-contracts.md`, `docs/paper-runtime-identity-migration-plan.md`, `docs/public-documentation-url-migration-plan.md`, `docs/shared-gui-presentation-centralization-plan.md`
