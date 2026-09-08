@@ -50,6 +50,14 @@ You can browse the menus from any world. The **Where to Claim** compass lists th
 
 These restrictions are being tested locally for Beta 2; they have not been deployed to the live Public Beta 1 server yet.
 
+### What does “Coming soon” mean on a reward?
+
+The Public Beta 2 local preview lets staff show selected disabled rewards as **Coming soon**. These are possible future rewards, with no promised release date. You can read their description, but clicking cannot open a purchase or spend points. Other disabled rewards can remain hidden. An enabled reward with an unavailable dependency still has its separate **Unavailable** message.
+
+### Will the menus be easier to read?
+
+The Public Beta 2 local preview wraps long descriptions and help text into shorter lines. It also uses a darker inventory title colour, initially dark teal, with navy and charcoal available for comparison. These presentation changes are still being tested locally; the live Public Beta 1 menus have not changed.
+
 ### How do reward cooldowns work?
 
 The reward menu shows each reward's cooldown and how long you have left to wait. A personal cooldown applies to your next purchase of that same reward; other players and other rewards have their own timers. A server-wide cooldown blocks that reward for everyone until it expires. The timer starts after a successful purchase, and clicking a reward that is still on cooldown spends no points.
@@ -209,7 +217,7 @@ With default values, a highly active linked player can earn roughly `70` to `81`
 
 ## Default Rewards
 
-The default reward set is configurable and intentionally server-owned. Selecting a reward opens an owner-bound confirmation page showing its exact cost, repeatability, cooldown, current balance, and balance after purchase. Only the second click can create a persisted reservation, so a rejected command does not silently consume points or one-time eligibility.
+The default reward set is configurable and intentionally server-owned. Selecting an enabled reward opens an owner-bound confirmation page showing its exact cost, repeatability, cooldown, current balance, and balance after purchase. Coming soon cards are informational only. Only the second purchase click can create a persisted reservation, so a rejected command does not silently consume points or one-time eligibility.
 
 - Discord group: adds LuckPerms parent `1mb_discordchat` once.
 - DiscordChat kit: runs `cmi kit discordchat_bundle {player} -s`.
@@ -239,12 +247,12 @@ All commands run as console and support `{player}`, `%player%`, `{uuid}`, and `%
 Reward redemption follows this transaction flow:
 
 1. Bind each visible slot to the reward id rendered in that exact owner-bound menu session.
-2. Open a second confirmation view. If the reward definition changes during a config reload, the old confirmation is rejected and the updated details must be reviewed again.
+2. Open a second confirmation view only for an enabled reward. If the reward definition changes during a config reload, the old confirmation is rejected and the updated details must be reviewed again.
 3. Render and validate every configured command before changing playerdata.
 4. Recheck points, one-time ownership, active transactions, and player/global cooldown eligibility inside the synchronized reservation boundary.
 5. Require every Bukkit command root to exist and every referenced `cmi kit <name>` kit to exist and be enabled.
 6. Atomically create a `pending` transaction, reserve the point cost, and reserve one-time eligibility where applicable.
-7. Recheck that the recipient is online, alive, in Survival, and in an allowed world before each delivery command, including after the shared delivery guard. Dispatch each recorded command in order. After every accepted command, atomically persist the completed-command count.
+7. Recheck that the reward is enabled and listed, and that the recipient is online, alive, in Survival, and in an allowed world before each delivery command, including after the shared delivery guard. Dispatch each recorded command in order. After every accepted command, atomically persist the completed-command count.
 8. Persist `delivered` only after every command is accepted, then persist `finalized` with the successful reward timestamp to close the reservation while retaining its history.
 9. Persist a rejected or exceptional delivery as `failed`. The reservation remains held so staff can inspect the exact command progress and choose retry or refund. Failed and refunded delivery does not start a cooldown.
 10. A staff retry returns the same record to `pending`, increments its attempt counter, resumes after the persisted command count, and never deducts the cost a second time.
@@ -376,6 +384,8 @@ discordsrv.count-game-to-discord
 discordsrv.reward-channels.enabled
 discordsrv.reward-channels.rates
 gui.filler-material
+gui.title-color
+gui.lore-width
 calendar.zone-id
 invite-prompts.enabled
 invite-prompts.on-join-enabled
@@ -448,6 +458,7 @@ rewards.enabled
 rewards.ids
 rewards.transaction-history-limit
 rewards.definitions.<id>.*
+rewards.definitions.<id>.show-when-disabled
 rewards.definitions.<id>.cooldown-seconds
 rewards.definitions.<id>.cooldown-scope
 rewards.definitions.<id>.requires-plugin
@@ -462,6 +473,43 @@ collectible.lore
 ```
 
 Fresh installations write both `rewards.enabled: false` and `tools.enabled: false`. Chat tracking, EXP, points, milestones, and read-only reward/tool previews can therefore be configured without exposing point spending. Existing installations keep their explicitly saved values when upgrading; this default change does not turn an already enabled live setup off. Enable rewards only after `/discordchat admin check` has no `FAIL` rows and live delivery testing passes, and enable tools only after reviewing their costs and item behavior.
+
+### Beta 2 menu presentation
+
+After installing the Beta 2 JAR, these settings and translations can be changed with `/discordchat reload` or `/discordchat admin reload`. Close and reopen a menu to see the refreshed text. A JAR upgrade itself still needs a clean server restart.
+
+```yaml
+gui:
+  title-color: '#00616d'
+  lore-width: 46
+rewards:
+  definitions:
+    prefix_discord:
+      enabled: false
+      show-when-disabled: true
+```
+
+Merge those keys into the existing sections. `gui.title-color` is a quoted six-digit hex colour used consistently for all six inventory titles. Dark teal `#00616d` is the initial preview; navy `#203b65` and charcoal `#303030` are alternatives. Invalid values fall back to dark teal. This setting does not recolour chat or menu item headings.
+
+`gui.lore-width` accepts 20–80 code points, defaulting to 46 for invalid values. Generated menu lore wraps at word boundaries and preserves colours, styles, Unicode graphemes, blank lines, and explicit line breaks. Long unbroken words wrap between graphemes; a single oversized grapheme or nonliteral component stays intact. This is a text-width guide, not an exact pixel measurement. Deposited tools, upgrade item previews, and delivered kit items retain their original lore and metadata.
+
+Reward descriptions remain scalar `rewards.definitions.<id>.description` values. A YAML literal block (`|`) can supply manual lines. Plain text, MiniMessage, and legacy colour codes are supported; use one formatting style per value. New installations receive player-friendly descriptions. Existing descriptions, reward costs, enabled flags, and cooldowns are preserved.
+
+The shared language file is `plugins/1MB-CMIAPI/CMIAPILIB/translations/discordchat.yml`. `gui.titles.*` contains plain inventory title text; `gui.reward.*` contains reward menu labels, purchase controls, balance/cooldown text, blocked-purchase messages, and Coming soon wording. Keep each template's existing placeholders, such as `{cost}`, `{points}`, `{reason}`, and `{reward}`. For example:
+
+```yaml
+gui:
+  reward:
+    cost: 'Cost: {cost} points'
+    coming-soon: 'Coming soon'
+    coming-soon-help: 'A possible future reward. You cannot buy it yet.'
+```
+
+`show-when-disabled` defaults to `false` for each reward. An enabled reward appears normally; a disabled reward is hidden unless this flag is true. Coming soon cards show their name, description, and future-availability message without prices, cooldowns, ownership status, dependency errors, or purchase controls. The authoritative `rewards.ids` list still controls membership and order. MobHat rewards can remain hidden independently.
+
+Disabled or removed rewards are checked again at purchase, confirmation, each remaining delivery command, and console retry, including forced retries. A partially delivered transaction keeps its recorded progress and reserved points for staff retry after re-enabling, or refund. Already fully recorded delivery can still finish its accounting; no completed command is replayed just because the reward was disabled.
+
+### Claim restrictions
 
 Beta 2 adds `claims.allowed-worlds`, defaulting to an empty list that pauses reward purchases and tool upgrades until staff configure it. Survival mode is always required and there is no staff/OP bypass. The allowlist matches exact Paper world keys (`World.getKey()`), not display aliases, legacy Bukkit names, or world environments. For the reviewed 1MB world IDs, use:
 
@@ -550,6 +598,10 @@ The suite covers quality metrics and no-XP decisions, repeat-window ordering, st
 Claim-rule tests cover all four game modes, the ten reviewed world IDs, excluded/unknown/alias lookalikes, empty/invalid/reloaded allowlists, OPs, repeated rejected purchases, changed confirmations, and console retry/refund paths. Integration tests exercise the real ledger and atomic profile store, asserting unchanged files for rejected purchases/retries, preserved reservations after partial delivery, and no duplicate charge or command on recovery. Tool event tests verify mode/world/config changes block both preview and confirmation while item return stays available.
 
 ## Smoke Test
+
+Presentation tests exercise the screenshot descriptions, styled and Unicode wrapping, manual blank lines, all six title colours/texts, configuration and translation reloads, and opt-in catalog visibility. Real-ledger tests also cover disabled/hidden reward clicks, stale confirmations, disablement during delivery, blocked forced retries, and fully recorded delivery after removal.
+
+For the Beta 2 presentation preview, compare dark teal, navy, and charcoal inventory titles at normal GUI scale. Inspect long Bee/Allay/Cat/Passport descriptions and dependency/blocked reasons in the catalog and confirmation. Change the scalar description, width, and `gui.reward.*` translations, reload with each alias, and reopen the menus. Confirm manual blank lines, Unicode, and formatting remain readable. Show one disabled reward with `show-when-disabled: true`, verify the Coming soon card has no purchase controls, then hide it again. Disable/remove a reward while its confirmation is open and verify rejection without spending points. Automated tests cover these render and transaction paths; real-client visual acceptance remains required.
 
 After installing the jar and restarting the test server:
 
