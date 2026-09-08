@@ -366,3 +366,11 @@ Suggested beta checks:
 ```
 
 Confirm that `plugins/1MB-CMIAPI/PlayerTodo/config.yml` is commented after first load and that shared playerdata receives only the `todo` section for this feature.
+
+## One pinned focus goal
+
+This feature contributes goals to the Shared Library's [focus system](../focus-goals.md). Use `/next focus choose` to select one objective across the server, with shared hide/show/change/clear controls and temporary progress tracking. The guide explains this feature's supported goals and entry points.
+
+## Remembered first steps
+
+`/next guide todo` opens a short, optional checklist for this activity. Finished steps stay remembered, existing successes count, and Later, dismissal, Resume and chat controls are shared across the suite. See [First-success checklists](../first-success-checklists.md) for the three-step path and controls.

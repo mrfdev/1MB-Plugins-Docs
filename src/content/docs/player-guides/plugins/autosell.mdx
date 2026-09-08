@@ -7,17 +7,17 @@ This page introduces AutoSell from a public server-docs point of view. It focuse
 
 ## What It Does
 
-/autosell opt-in server Worth.yml inventory cleanup with hardened GUI category/material/filter/world toggles, per-category material pages, pure-vanilla item checks, hotbar/offhand/armor protection, exact-stack sell verification, Vault/server payments, daily caps, broker progress, quest hub with...
+AutoSell sells selected ordinary inventory items when you opt in. Choose categories or individual materials, check your filters and daily allowance, then preview what would be sold before enabling it.
 
 ## How Players Use It
 
-The GUI uses the shared hardened GUI service with safe holders, cancelled clicks and drags, duplicate click protection, delayed close handling, and the global light-blue filler material. The main page includes:
-
-AutoSell only runs after a short delayed batch, usually after a pickup or chunk move. The final sale runs on the main thread, snapshots exact stacks, rechecks that the inventory still matches, removes the items, pays the player, and refunds removed stacks if the economy payment fails.
+Use /autosell onlysell cobblestone to turn selling on for just cobblestone, or use the menu for a broader selection. This shortcut replaces your item selection while keeping value filters and item protections. Quest and milestone cards explain what remains, what you earn and where to claim. Shared /guidance controls let you reduce or hide optional reward reminders.
 
 Available features include:
 
 - An opt-in AutoSell toggle with GUI controls for categories, individual materials, value filters, worlds, and notifications.
+- A single-item selling shortcut through /autosell onlysell, plus corrected resource and building-item categories.
+- Clear quest and milestone cards, optional reminders, and private support status through /autosell review.
 - A top-row category control that turns all available items in the current category on with left-click or off with right-click across every material page.
 - An adjacent item view that filters the category to all available items, only off items, or only on items, with a glint on enabled choices for quick scanning.
 - Pure-vanilla item checks that protect the hotbar, offhand, armor, named items, custom items, and blocked materials.
@@ -30,10 +30,10 @@ Available features include:
 
 ## Quick Start
 
-1. Start with `/autosell` to open or view AutoSell.
-2. Use `/autosell status` to check your current progress, settings, or state.
-3. Use `/autosell info` when you want the in-game help or a short explanation.
-4. Try `/autosell help` when you are ready to use one of the feature actions.
+1. Open `/autosell` and review which items and categories are selected.
+2. Use `/autosell preview` to check eligible items and any reason selling is paused.
+3. Turn selling on in the menu, or use `/autosell onlysell cobblestone` for a single material.
+4. Use `/autosell next` for a useful next step, or `/next guide autosell` for the first-sale checklist.
 
 ## Commands
 
@@ -82,6 +82,11 @@ Available features include:
       <td><code>/autosell recent</code></td>
     </tr>
     <tr>
+      <td><code>/autosell review [reference]</code></td>
+      <td>Shows your own held request, its current status and a report you can send to staff.</td>
+      <td><code>/autosell review</code></td>
+    </tr>
+    <tr>
       <td><code>/autosell quests</code></td>
       <td>Player</td>
       <td><code>/autosell quests</code></td>
@@ -115,6 +120,11 @@ Available features include:
       <td><code>/autosell toggle</code></td>
       <td>Player</td>
       <td><code>/autosell toggle</code></td>
+    </tr>
+    <tr>
+      <td><code>/autosell onlysell &lt;material&gt;</code></td>
+      <td>Enables AutoSell for this material and replaces the previous item selection.</td>
+      <td><code>/autosell onlysell DIAMOND</code></td>
     </tr>
     <tr>
       <td><code>/autosell trigger &lt;always|<wbr />full&gt;</code></td>
@@ -158,6 +168,7 @@ Available features include:
 
 - `/autosell`
 - `/autosell toggle`
+- `/autosell onlysell cobblestone`
 - `/autosell stats`
 - `/autosell preview`
 - `/autosell quests`
@@ -177,13 +188,15 @@ Available features include:
 
 ## Player FAQ
 
+Quest and milestone cards share **State → Remaining → Benefit → Next**. Longer goals, schedules, and reward explanations live in Details. See [Action cards and tooltips](https://github.com/mrfdev/1MB-Plugins-Docs/blob/main/project-docs/cmi-api/docs/action-cards.md) for the controls, state meanings, and optional extra reward descriptions.
+
 ### How do I collect a ready milestone?
 
-Open `/autosell milestones` and click a **ready to claim** reward or **Claim Ready Milestones**. You can also run `/autosell milestones claim all`, or claim one with `/autosell milestones claim market_sweep`. You do not need another sale. Milestones can also be awarded automatically after a successful sale.
+Open `/autosell milestones`, select a **Ready to claim** card, then use **Claim reward** in its details. **Claim Ready Milestones** remains an explicit bulk action on the board. You can also run `/autosell milestones claim all`, or claim one with `/autosell milestones claim market_sweep`. You do not need another sale. Milestones can also be awarded automatically after a successful sale.
 
 ### How do I collect quest rewards?
 
-Open `/autosell quests gui`, choose **Claim Rewards**, and click a ready reward. Use `/autosell quests claim all` to collect all available quest rewards when Claim All is enabled. Milestone and quest claims have separate menus and commands.
+Open `/autosell quests gui`, choose **Claim Rewards**, select a ready card, then use **Claim reward** in its details. Use `/autosell quests claim all` to collect all available quest rewards when Claim All is enabled. Milestone and quest claims have separate menus and commands.
 
 ### Do I need to earn the Market Sweep amount again?
 
@@ -208,6 +221,16 @@ No. Bonuses earned during the same server day add together up to the configured 
 ### Do ready or pending rewards stop me from selling?
 
 Unclaimed ready quests and milestones do not block normal AutoSell activity. `/autosell status` shows reward counts and the relevant menus. **Staff review needed** means a sale or reward could not be safely completed; open its details and share the reference with staff. More selling or repeating the goal will not resolve that state.
+
+### I received a staff-review message. What should I tell staff?
+
+Click **Copy report**, then send that text to staff yourself. It includes your player name, the held sale/reward, a plain-language explanation, the complete reference, and the staff lookup command. Copying does not send a message or retry a payout. If your client cannot copy text, share your player name and the visible reference, or take a screenshot of the message.
+
+Use `/autosell review` to reopen your unfinished request, or `/autosell review <reference>` to check the current status of a specific request belonging to your account. **View status** does the same thing. The main, quest, and milestone menus also show **Staff Help Needed** while a request is held; clicking it closes the menu and displays the report in chat. Some parts of a reward may already have arrived; staff will check what remains. You do not need to repeat the goal or keep clicking Claim. If no reference could be created because payment records are unavailable, give staff your player name and ask them to check `/autosell debug transactions`.
+
+### Can I reduce quest reminders?
+
+Open `/guidance`, or choose **Helpful hints** in AutoSell's Filters menu. Choose Normal, Fewer, or Off, switch to the action bar, or hide/postpone an individual reminder. AutoSell rechecks outstanding manual quest rewards every minute and offers at most one combined topic, normally no more than once every two hours. The shared budget also includes ScheduledTips. A reminder's **Review rewards** button opens `/autosell quests gui`; it never claims automatically. Claimed, expired, disabled, or staff-review states are rechecked before display. AutoSell's own Quiet notification mode and `quests.rewards.notify-ready` are still respected. Sale results, necessary recovery messages, and reward outcomes retain their existing behavior. See [Player guidance](/player-guides/next-and-guidance/#choose-your-hints).
 
 ## Good To Know
 

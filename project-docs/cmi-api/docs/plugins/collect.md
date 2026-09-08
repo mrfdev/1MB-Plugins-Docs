@@ -24,7 +24,7 @@ The GUI uses the shared light-blue glass border and includes:
 - a Hall of Fame archive page for reviewing configured event winners after the event
 - a reward claim page for participation, streak, personal milestones, daily top 10, weekly top 10, monthly top 10, and all-event top 10 rewards
 - a Trash to Treasure exchange page for trading duplicate Collect reward items into event score
-- a community goal tile when enabled, showing server-wide score progress and the configured point booster
+- a clickable community goal tile when enabled, showing your contribution, shared score progress and the actual configured point booster
 - a scavenger hunt tile when the daily bonus item is active or waiting for enough online players
 - the player head in the bottom-left with personal event totals
 - an event guide book next to the player head, opening the configured CMI `collectevent` ctext page for that player
@@ -41,6 +41,10 @@ Use `/collect items` to review the current list, then `/collect submit`. It scan
 ### Why are some of my items ignored?
 
 Only the current week’s configured materials count. Renamed, enchanted, damaged, or otherwise customized items are excluded. Future weeks can remain hidden until their start date.
+
+### How can I see my part in a community goal?
+
+Use `/collect community` or `/collect community chat` to see the active shared goal, your saved contribution and the configured benefit. `/collect next` opens a useful community step, and `/next focus choose collect` lets you pin an available goal.
 
 ### Why is my event score higher than my item count?
 
@@ -67,6 +71,8 @@ Open `/collect rewards`. Ranking rewards normally require the relevant day, week
 /collect hall [event-id]
 /collect rewards
 /collect exchange
+/collect community [chat|retry]
+/collect next [chat]
 /collect admin reload
 /collect admin debug <true|false>
 /collect admin week <1|2|3|4|off>
@@ -528,3 +534,7 @@ CMI and CMILib are required because the feature runs inside the shared 1MB-CMIAP
 Paper/Bukkit APIs used include safe inventory reads/removal, Adventure item names/lore, PDC reward item identity, particles, sounds, titles, and the shared GUI holder/click protections.
 
 [Documentation index](../README.md)
+
+## Your community contribution
+
+Open `/collect community` for your saved contribution, shared remaining score and the actual configured benefit. Successful submission and exchange receipts explain the score they added. There is no rank requirement. The page links to accepted items and lets you pin the shared goal; `/collect community chat` provides a text view. `/collect community retry` retries failed background score loading without resetting contributions. See [Community contribution](../community-contribution.md) for availability, shared next/focus integration and recovery details.

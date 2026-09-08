@@ -1,0 +1,88 @@
+# Your next step and helpful hints
+
+Use **`/next`** to find something useful to do, and **`/guidance`** to choose how often helpful hints appear. Both work with the activities currently available to you. Permissions, events and server settings can affect which activities appear.
+
+## Find your next step
+
+Open `/next`, or choose **Your next step** in `/menu`. The menu offers three kinds of suggestion:
+
+| Choice | What you can find |
+| --- | --- |
+| **Continue** | An activity already in progress, or a useful step that helps you continue. |
+| **Ready to collect** | An earned reward you can review in its own activity. |
+| **Try something** | An available activity or introduction to explore. |
+
+Each card explains your progress, the benefit and the next action. **Something else** shows alternatives; **Refresh** checks your current situation again. Use `/next chat` for a text version.
+
+Opening a suggestion shows its details. Claiming a reward, spending tokens or turning on selling still uses the activity's normal controls. If nothing is waiting, the menu says so.
+
+## Choose your hints
+
+Open `/guidance`, `/tips settings`, or **Helpful hints** in AutoSell's Filters menu.
+
+| Setting | What it changes |
+| --- | --- |
+| **Normal / Fewer / Off** | Choose occasional hints, longer gaps, or no optional hints. |
+| **Chat / Action bar** | Choose clickable chat hints or a short message above the hotbar. |
+| **Take a break / Resume hints** | Pause hints for an hour by default, then resume when you choose. |
+| **Recent hints** | Review topics you received and hide or postpone one. |
+| **Hidden and postponed hints** | Restore individual topics, or restore all of them. |
+| **Preview a hint** | Try your chosen display style, even while hints are off or paused. |
+
+Chat hints have **Later**, **Hide** and **Settings** controls. Later postpones a topic for an hour by default. Hide keeps it hidden until you restore it. Your choices survive reconnects and server restarts.
+
+Participating activities share the spacing between optional hints. Turning hints off still allows commands, menus, action results and reward confirmations. `/tips off` controls ScheduledTips specifically. RecordingMode can temporarily quiet connected hints while preserving your saved preferences.
+
+## Pin one goal
+
+Choose **Pin as my focus** beneath a supported unfinished goal in `/next`, or run `/next focus choose`. You can follow one objective across the participating activities, including a personal PlayerTodo task.
+
+- `/next focus` shows the saved goal and its controls.
+- `/next focus hide` hides the progress bar while keeping the goal.
+- `/next focus show` enables the bar and briefly displays your progress.
+- `/next focus clear` removes the pin while preserving the activity's progress.
+
+The temporary bossbar appears when your goal advances and fades afterward. Your selection survives reconnects and restarts. Completed goals remain available to review until you choose another. Manual tasks still need you to mark them done; pinning a goal never claims its reward.
+
+## Learn an activity
+
+Open **First steps** in `/next`, or use `/next guide`. Each introduction has three steps and remembers what you have already completed.
+
+| Guide | What it helps you do |
+| --- | --- |
+| `/next guide autosell` | Check protected items, preview a sale and make your first sale. |
+| `/next guide passport` | Open your passport, find a missing stamp and collect one. |
+| `/next guide journeymap` | Review your journey, browse badges and choose a direction. |
+| `/next guide todo` | Write a task, learn its controls and finish it. |
+
+Forage also has a camp, tool and gathering introduction when that activity is enabled. Unavailable activities stay out of the choices.
+
+Earlier successes count. **Later**, **I know this already**, **Resume guide** and the chat view let you learn at your own pace. Opening a guide does not perform the activity for you.
+
+## Welcome back
+
+One optional focused welcome can point you back to your pinned goal or another activity you have started, with at most one additional ready reward. It does not open a menu automatically.
+
+Use `/guidance welcomes off` or `/guidance welcomes on` to save your preference. `/next welcome` shows a summary whenever you request it, including when optional hints are off.
+
+## See what your progress unlocks
+
+- [VoteTokens](plugins/votetokens.md): `/votetokens path` previews your current stage, the next unlock and a later reward, including requirements and costs.
+- [JourneyMap](plugins/journeymap.md): `/journeymap path` shows your saved journey and upcoming badges. Use the activity's refresh controls to check current progress.
+- [KitStreaks](plugins/kitstreaks.md): `/kitstreak guide` explains qualifying kits, claim windows, grace periods and your next milestone. Optional due reminders follow your guidance settings.
+- [Collect](plugins/collect.md): `/collect community` shows an active shared goal, your saved contribution and its configured benefit.
+
+## Clearer menus and messages
+
+Shared chat uses softer straw-colored body text, with distinct highlights for success, warnings and errors. Menu cards use readable labels alongside color to explain the state, what remains, the benefit and the next action.
+
+Connected reward messages distinguish a reward that is earned, ready to claim, received or still being processed. If an action is blocked, the explanation points to a useful next step. Keep any personal support reference when asking staff to check a missing reward.
+
+## Recent activity improvements
+
+- [AutoSell](plugins/autosell.md): `/autosell onlysell cobblestone` turns selling on for just that material. It replaces your item selection while keeping the usual value filters and item protections. Item categories, weekly reward records and overheat recovery have also been corrected.
+- [AFKShrine](plugins/afkshrine.md): returning from AFK gives a compact postcard with **Details** and an eligible **Claim** action. `/afkshrine postcard` opens the latest visit from the current login.
+- [AFKShrine](plugins/afkshrine.md): `/afkshrine trade all` previews one affordable copy of each selected eligible reward before confirmation. A shared trade cooldown applies.
+- [AFKShrine](plugins/afkshrine.md): unclaimed points expire after six calendar months. `/afkshrine claim` moves them into the claimed balance, which does not expire. Existing pending balances receive a six-month grace period from the feature's first rollout; `/afkshrine balance` shows the next expiry.
+
+Each activity's guide includes its own commands, reward rules and player FAQ.

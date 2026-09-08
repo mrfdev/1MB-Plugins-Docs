@@ -2,6 +2,14 @@
 
 Forage is a player-facing nature progression plugin for `/forage`. It is built for Paper 26.2+ and Java 25 and depends on CMI, CMILib, and `1MB-CMIAPI-Lib`.
 
+**Release status (2026-09-06): installed on live, with gameplay dormant.** Keep the live Forage config at `enabled: false` throughout 26.2 while development and gameplay testing continue on the maintained Paper 26.2 test server. Its JAR remains part of the complete suite build. Live activation is deferred until the 26.3 camp integration and release checks in the [Forage roadmap](forage-roadmap.md#release-gate-263-camp-integration) are complete.
+
+Dormant Forage is excluded from `/next` recommendations, focus choices, first-success guides, and ScheduledTips promotion even though its JAR is loaded. ScheduledTips recognizes existing Forage tip IDs, text, and embedded commands automatically; see [tip feature requirements](scheduledtips.md#feature-availability-and-dormant-forage). Debug mode does not override dormancy. Saved progress and communication preferences remain available for a future activation.
+
+The intended experience is hands-on survival gathering: explore a biome, complete a discovered Abandoned Camp, register it through `/forage camp` as one of up to three owned camps, and return with resources for small rewards and progress. Planned Camp Stations connect gathering guidance, quests, streaks, milestones, storage, deliveries, and Community Efforts to the location. See the [product direction](forage-roadmap.md#product-direction) for the broader vision and its open design decisions.
+
+The camp rules below describe the current 26.2 implementation. Vanilla structure recognition, wool stairs/slabs, explicit three-camp registration, and the station/storage loop are planned work. Current anchors are claimed on first use without a per-player camp-count limit.
+
 Version 1 focuses on a testable core rather than the full long-term design. Players use curated PDC-marked Forage tools to earn Forage XP, Forage Points, skill branch progress, tool soul progress, daily, weekly, and monthly quest progress, leaderboard ranks, camp-only tool upgrades, camp turn-ins, and small treasure rolls from configured source families. Most v1 families are natural block routes, while Tier 2 sword and mace routes can also listen for configured entity kills. Normal tools still work as Minecraft tools, but they do not feed the Forage skill.
 
 The long-term ideas, v2/v3 options, and shelved feature notes live in [forage-roadmap.md](forage-roadmap.md).
@@ -469,3 +477,23 @@ Forage is expected to grow gradually after test feedback:
 - derbies and community milestones
 - museum/herbarium systems
 - optional storage hardening if YAML becomes too small for live scale
+
+## Blocker recovery
+
+Camp requirements, tool protections, gathering allowances, local exhaustion, purchases and changed inputs provide a specific next step. Global allowances never suggest switching tools as a workaround; family alternatives are checked against current usable tools and limits. `/forage review [reference]` checks only your own saved requests, including while gameplay is dormant; `/forage review page <number>` shows further waiting requests. Copy the reference to share with staff before retrying an uncertain request. See [Blocker recovery messages](../blocker-recovery.md).
+
+## Complete reward communication
+
+[COMM-08 reward communication](../reward-communication.md) documents the shared result states, adopted flows, delivery evidence, next actions, and client acceptance. Claims retain their existing safety records. An accepted external reward command is described as a request, with a private reference for checking missing delivery.
+
+## Dynamic next steps
+
+See [Dynamic next steps and the global hub](../next-steps.md) for `/next`, the integrated feature next commands, selection rules, current coverage, and safe navigation.
+
+## One pinned focus goal
+
+This feature contributes goals to the Shared Library's [focus system](../focus-goals.md). Use `/next focus choose` to select one objective across the server, with shared hide/show/change/clear controls and temporary progress tracking. The guide explains this feature's supported goals and entry points.
+
+## Remembered first steps
+
+`/next guide forage` opens a short, optional checklist for this activity. Finished steps stay remembered, existing successes count, and Later, dismissal, Resume and chat controls are shared across the suite. See [First-success checklists](../first-success-checklists.md) for the three-step path and controls.

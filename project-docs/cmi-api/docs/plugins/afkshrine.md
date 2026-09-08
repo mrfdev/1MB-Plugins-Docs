@@ -12,10 +12,10 @@ The reward side is intentionally claim/trade based. AFK sessions can create pend
 
 These are the AFKShrine features players should be able to learn about from the public docs:
 
-- AFK shrine visuals: when CMI marks a player as AFK, AFKShrine can show a subtle personal shrine with soft particles, optional sparkles, and a private bossbar.
-- AFK postcards: when the player returns, AFKShrine can show a private return postcard with AFK time, approximate place, biome, weather or scene, damage taken, why the visit counted or did not count, newly completed milestones or quests, daily cap room, and clickable next actions such as `/afkshrine claim`.
+- AFK shrine visuals: when CMI marks a player as AFK, AFKShrine can show a subtle personal shrine with soft particles, optional sparkles, and a private bossbar. Dust and sparkles are suppressed while the player is in spectator mode or CMI vanish (including `/hide`), and resume once both are off. This also applies to previews and visibility changes during an existing AFK session.
+- AFK postcards: returning shows a compact two-line private summary with the place, away time, tokens earned, and a useful claim total or no-token hint. Click **Details** to open the latest postcard in a menu, with place, scene, damage, reward reasons, progress and navigation. **Claim** appears when pending tokens are available and the player has claim permission.
 - Dynamic bossbar progress: while the player is AFK, the bossbar can rotate through session duration, minimum-session progress, estimated session cap, pending tokens, daily cap, streak, seasonal quest progress, and community milestone progress.
-- Tokens, claim, and rewards: qualifying AFK sessions create pending AFKShrine tokens. Players use `/afkshrine claim` to move pending tokens into their spendable balance, then `/afkshrine rewards` and `/afkshrine trade` to review and claim configured rewards.
+- Tokens, claim, and rewards: qualifying AFK sessions create pending AFKShrine tokens. Players use `/afkshrine claim` to move pending tokens into their spendable balance, then `/afkshrine rewards` and `/afkshrine trade` to review individual rewards or claim one affordable copy of every eligible reward at once.
 - Milestones and quests: players can discover time, biome, safety, risk, adventure, weather, seasonal, dimension, collection, and streak goals through `/afkshrine milestones`, `/afkshrine quests`, `/afkshrine album`, and `/afkshrine resets`.
 - Presets and personalization: players can list and choose unlocked particle presets with `/afkshrine presets` and `/afkshrine preset`, including a true multi-color Rainbow dust ring, with hover details explaining each preset without exposing permission nodes.
 - Bed rest: sleeping in a bed can optionally count as a tiny AFKShrine-adjacent activity with low pending-token rewards and same-area cooldown protection.
@@ -29,9 +29,19 @@ These are the AFKShrine features players should be able to learn about from the 
 
 Return from AFK and use `/afkshrine claim` to move pending tokens into your spendable balance. Then browse `/afkshrine rewards` and use `/afkshrine trade` to spend them. Going AFK does not automatically deliver reward kits.
 
+Unclaimed points expire after **six calendar months**. `/afkshrine claim` protects the remaining points by moving them into the claimed balance, which does not expire. `/afkshrine balance` and the claim button show the next expiry date. New earnings have their own deadlines and never renew older points.
+
+When points expire, the player receives a private message such as: “100 of your oldest unclaimed AFKShrine points expired. Unclaimed points expire after six months. Use /afkshrine claim regularly to keep your points. Remaining pending: 30.” The command in this message is clickable. Offline players receive the message when they return; notification is recorded after the expiry has been saved.
+
+Existing pending balances do not contain reliable per-award dates. They receive one six-month grace period from the server's first rollout of this feature, recorded in `plugins/1MB-CMIAPI/AFKShrine/pending-expiry.yml`. Returning late or restarting the server does not reset this date. Future awards are grouped into daily expiry buckets in each player's `afkshrine.points.pending-expiry` ledger. They expire after the entire six-month anniversary day in the configured timezone, giving up to one extra day of grace and never expiring points early. Saved deadlines remain fixed if the timezone later changes.
+
+`pending-expiry.enabled` defaults to `true`. Turning it off pauses cleanup but retains the original deadlines; reenabling it checks overdue points again. Expiry is checked before claiming, for online players every minute, and in background scans at startup and daily for offline balances. File scans and expiry/notification writes run off the server thread and use the shared player store's atomic per-player update. Normal point earnings, claims, and rollback snapshots include the dated ledger. Expired points never enter the claimed balance or community contribution; existing claimed tokens, completed quests/milestones, lifetime earnings, streaks, and leaderboard totals stay intact.
+
+`/afkshrine admin audit <player>` shows the next deadline, total expired points, unnotified expired points, and last processing time. The ledger retains notification state across restarts. A crash between displaying and acknowledging a notice may repeat that notice, but does not deduct points twice. Malformed or inconsistent point ledgers fail closed, and an initialized expiry policy is never silently recreated or restored from an older backup. Staff should restore its original file and restart the feature if policy recovery is needed. Gameplay acceptance should cover a mixed old/fresh balance, claim at the deadline, offline return, and restart with an undelivered notice before live deployment.
+
 ### Why did my AFK session earn no tokens?
 
-Sessions must meet the configured minimum time, world rules, cooldowns, and daily cap. Read your return postcard for the reason and check `/afkshrine status`; repeatedly toggling AFK does not bypass these limits.
+Sessions must meet the configured minimum time, world rules, cooldowns, and daily cap. Hover **Details** for the reason, or open `/afkshrine postcard` to read the full visit; repeatedly toggling AFK does not bypass these limits.
 
 ### Can I earn a milestone again?
 
@@ -155,8 +165,10 @@ Additional ideas to consider next:
 /afkshrine rewards [page]
 /afkshrine trade
 /afkshrine trade <reward> [confirm]
+/afkshrine trade all
 /afkshrine gui
 /afkshrine menu
+/afkshrine postcard
 /afkshrine tools
 /afkshrine tools list
 /afkshrine tools claim <action> [confirm]
@@ -191,7 +203,18 @@ Additional ideas to consider next:
 /afkshrine admin reload
 ```
 
-The `[AFKShrine]` chat prefix is clickable and runs `/afkshrine menu`, giving players a quick way back to the AFKShrine GUI from feature messages. The AFK-enter message highlights `active` in green. Return summaries are AFK postcards by default: a private player-facing summary of away time, approximate location, biome, weather/scene, damage taken, why the visit counted or did not create tokens, new milestone/quest discoveries, daily cap room, and useful next actions. Important return and claim values use mint text so earned tokens, pending totals, claimed amounts, balances, and the Rested Return threshold remain distinguishable from the surrounding sentence. When the player has claimable AFKShrine tokens, only the short `Click this text to claim them now.` call to action is underlined and clickable; its hover text explains that clicking runs `/afkshrine claim`.
+The `[AFKShrine]` chat prefix is clickable and runs `/afkshrine menu`. The AFK-enter sentence and return explanations use the shared muted straw (`#E8D8A8`) body colour. Compact return postcards use two lines: the first welcomes the player back from the biome and gives their away time; the second shows earned tokens and the total ready to claim, or a short reason or hint when no tokens were earned. For example:
+
+```text
+[AFKShrine] Welcome back from the Beach! You were away for 7s.
+  No tokens this time. Stay at least 5m to earn them. [Details]
+```
+
+A rewarded visit uses a second line such as `You earned 1 token. 4 ready to claim. [Details] [Claim]`. Earned and pending numbers are mint; the surrounding prose is straw and links stay blue. Hover **Details** for the full reason and any no-token tip. Clicking it runs `/afkshrine postcard` and opens a menu with wrapped straw-coloured descriptions, so reading the postcard does not add chat rows. The menu is never opened automatically.
+
+`/afkshrine postcard` and **Latest AFK Postcard** in the main menu show the most recent return from the current login. A later return replaces it; disconnects, plugin reloads and server restarts clear it. The postcard labels historical pending totals and cap room as **on return**. Its claim button reads the current pending balance and uses the existing claim permission and settlement checks. Stats, albums and rewards remain available through menu navigation. `postcards.compact: false` restores full postcards in chat, with their explanations also in straw.
+
+Normal claim and bed-rest messages retain mint numeric highlights. Only the short claim action is underlined and clickable; clicking runs `/afkshrine claim`.
 
 While a player is actively AFK, the bossbar can rotate through progress views instead of showing one static title. The default dynamic cycle refreshes each player's bossbar snapshot every 30 seconds and changes view every 120 seconds. Supported views are session duration, minimum-session eligibility, estimated session cap progress, pending tokens, daily cap usage, streak progress, active seasonal quest progress, and community milestone or celebration progress. Preview bossbars stay static so staff can quickly inspect particle styles without mixing in live progress text.
 
@@ -199,13 +222,21 @@ While a player is actively AFK, the bossbar can rotate through progress views in
 
 Each AFKShrine GUI page is bound to the opening player's UUID, a random session nonce, and the exact server-side inventory instance. Only registered plain left-click actions are accepted. Actions execute on the next server tick and revalidate the current session and permission before navigation, claiming, previews, or chat transitions. Stale pages and delayed callbacks are rejected, and sessions are cleared on close, quit, kick, world change, reload, and plugin shutdown.
 
-`/afkshrine rewards [page]` shows a player-first trade overview. At the top it separates `Claimed tokens available to trade with` from `Pending tokens earned`, then each configured reward is marked `AVAILABLE`, `NEED <amount>`, `CLAIMED`, `DISABLED`, or `PREVIEW` from console. Each entry shows cost, one-time or repeatable claim type, already-claimed state when relevant, configured command count, missing tokens, and a safe clickable `/afkshrine trade <reward>` preview command when the player can afford it.
+`/afkshrine rewards [page]` shows a player-first trade overview. At the top it separates `Claimed tokens available to trade with` from `Pending tokens earned` and shows the player's reward-trade cooldown, then each configured reward is marked `AVAILABLE`, `COOLDOWN`, `NEED <amount>`, `CLAIMED`, `BLOCKED` when saved trade data needs staff review, `DISABLED`, or `PREVIEW` from console. Each entry shows cost, one-time or repeatable claim type, already-claimed state when relevant, configured command count, missing tokens or cooldown time, and a safe clickable `/afkshrine trade <reward>` preview command when the player can afford it and is ready to trade.
 
 `/afkshrine stats` is player-first. For players it opens personal page 1, showing `Pending tokens earned`, `Claimed tokens available to trade with`, lifetime tokens, current/last AFK session, daily cap left, streaks, milestones, quests, preset, and rested state. `/afkshrine stats personal` and `/afkshrine stats 1` show the same personal page. `/afkshrine stats server`, `/afkshrine stats global`, and `/afkshrine stats 2` show page 2 with server-wide runtime counters such as AFK enters/leaves/kicks, total observed AFK time, server pending/claimed/traded token totals, quest totals, and cache size. Console defaults to the server page.
 
 Bed rest rewards are passive. When `sleep.enabled` is true, a player who stays in bed for at least `sleep.min-session-seconds` can earn the tiny `sleep.points-per-session` pending-token reward, capped by `sleep.max-points-per-day` and the normal AFKShrine daily cap. The default is intentionally low: 1 pending token per qualifying bed rest, at most 2 per day. Reusing the same coarse bed area before `sleep.same-zone-cooldown-minutes` expires is recorded but does not award tokens. If CMI marks the player AFK while they are sleeping, AFKShrine skips the normal full AFK reward path so bed rest cannot double-dip into regular AFK milestones.
 
-`/afkshrine trade` without a reward id opens the same rewards overview so players can pick from valid rewards instead of guessing ids. `/afkshrine trade <reward>` is a read-only preview unless `confirm` is provided. The preview explains whether the reward has configured commands, whether it is a one-time trade already claimed, whether the player is missing claimed tokens, how many pending tokens are waiting to be claimed, and what command to run to complete the trade. When the trade is ready, the visible confirm command is clickable in chat and still remains typeable as a normal command. `/afkshrine trade <reward> confirm` is the only step that spends claimed tokens and dispatches the configured reward commands.
+`/afkshrine trade` without a reward id opens the same rewards overview so players can pick from valid rewards instead of guessing ids. `/afkshrine trade <reward>` is a read-only preview unless `confirm` is provided. The preview explains whether the reward has configured commands, whether it is a one-time trade already claimed, whether the player is missing claimed tokens, how many pending tokens are waiting to be claimed, whether the player-wide trade cooldown is active, and what command to run to complete the trade. When the trade is ready, the visible confirm command is clickable in chat and still remains typeable as a normal command. `/afkshrine trade <reward> confirm` is the only step that spends claimed tokens and dispatches the configured reward commands.
+
+Every rewards GUI page has an anvil in slot 51 named `Claim All Eligible Rewards`. Its lore shows the exact number of selected rewards and `Spend: X of your Y claimed token(s)`. The selection is global across all reward pages. It excludes commandless rewards and one-time rewards already claimed, includes at most one copy of each repeatable reward, and sorts by cost then reward id before using a rolling balance. This means the cheapest eligible rewards are selected first until no later reward fits; the button never drains a repeatable reward over and over.
+
+Clicking the anvil only opens a chat preview. A ready preview creates a two-minute, single-use confirmation command bound to the exact starting balance, cooldown timestamp, selected ids, display names, costs, one-time flags, and prepared delivery commands. A second preview replaces the first confirmation. A balance, claim-state, cooldown, hook, or reward-config change makes an old confirmation fail without spending and produces a fresh preview. The generated code is also scoped to that player, so another player cannot reuse it.
+
+`/afkshrine trade all` reaches the same preview from chat. A confirmed batch is one manual reward claim, one player-wide cooldown event, and one durable transaction. AFKShrine saves an exact recovery payload before mutation, then saves the aggregate charge, the one-time claim markers, and the last-trade timestamp once before dispatching any command. The recovery payload preserves the before/after balances and timestamps, prior and newly added one-time markers, ordered reward costs, exact prepared commands, and per-reward command boundaries. It prepares each selected reward's normal commands and trade hooks in selection order, fails closed above 64 total commands, above 1,000 characters in any command, or when a command contains control characters, and writes one forced, structurally complete trade audit row per delivered reward with a shared batch transaction id. Incomplete trailing audit fragments are quarantined before reconciliation and are excluded from journal totals. A staff command retry can safely resume even if a crash happened before the first delivery command, but only while the exact payload and committed profile still match. Manual delivered acknowledgement runs the same authoritative profile preflight and idempotent audit reconciliation before clearing that payload. The configured reward id `all` is reserved for this command and is rejected by readiness validation.
+
+`rewards.trade-cooldown-minutes` defaults to `5`. The cooldown is shared across every reward id for that player, uses real elapsed time, and survives reloads and restarts through the existing saved last-trade timestamp. It begins only after the claimed-token charge and any one-time marker are successfully persisted, immediately before command delivery. The confirmation path recalculates the remaining time, so an old preview cannot bypass it. Set the value to `0` to disable the gate. AFKShrine claim, tool, and lore-book exchanges are not affected.
 
 `/afkshrine admin capture token` stores the exact item in the staff member's main hand as `token` in `plugins/1MB-CMIAPI/AFKShrine/tools.yml`. Matching uses Bukkit item similarity with stack amount ignored, so custom names, lore, custom model data, and other item metadata are preserved. `/afkshrine tools` opens all permitted tool categories; `/afkshrine books` opens only lore books. The equivalent `list` command prints the same action state in chat. `/afkshrine tools claim <action>` and `/afkshrine books claim <action>` preview the cost and blockers; `confirm` is required before captured items are consumed and configured commands run. Ready previews make the visible confirm command clickable. GUI clicks only preview and close to chat, where the player can inspect the exact exchange before confirming. Permission is checked again on category open, item click, preview, and final confirmation. Normal players see generic token status; exact captured item templates and setup hints are only visible to staff with `onembcmi.afkshrine.admin` or `onembcmi.afkshrine.admin.capture`.
 
@@ -386,6 +417,7 @@ enabled
 messages.enter.enabled
 messages.leave.enabled
 postcards.enabled
+postcards.compact
 postcards.show-when-no-points
 postcards.location-mode
 postcards.round-to-blocks
@@ -578,6 +610,7 @@ hooks.progress.specific
 leaderboards.enabled
 leaderboards.limit
 rewards.per-page
+rewards.trade-cooldown-minutes
 album.per-page
 rewards.trades
 audit.session-log.enabled
@@ -609,7 +642,7 @@ community
 
 `bossbar.dynamic.update-interval-seconds` controls how often each active AFK player's bossbar title/progress is recalculated. `bossbar.dynamic.rotation-seconds` controls how long one mode remains selected before the next configured mode is shown. Keep the update interval moderate on live servers; the defaults are designed to be visible without constantly touching player state.
 
-`postcards.enabled` replaces the old terse welcome-back lines with a richer private return postcard. `postcards.location-mode` supports `rounded`, `exact`, and `hidden`; the default `rounded` uses `postcards.round-to-blocks` so players see where the AFK visit happened without turning the summary into a raw debug dump. `postcards.show-when-no-points` keeps no-token visits understandable instead of silently feeling broken, and `postcards.action-links` controls the clickable follow-up links for claim, album, rewards, and stats.
+`postcards.enabled` enables return postcards. `postcards.compact` defaults to `true`: a two-line summary with on-demand menu details; set it to `false` for the expanded chat form. `postcards.location-mode` supports `rounded`, `exact`, and `hidden`; the default `rounded` uses `postcards.round-to-blocks`. The same location and damage settings apply to the menu and expanded chat. `postcards.show-when-no-points` keeps no-token visits understandable. `postcards.action-links` controls follow-up actions; when disabled, the compact entry includes the typed `/afkshrine postcard` route.
 
 `gui.filler-material` controls the AFKShrine inventory frame and defaults to `LIGHT_BLUE_STAINED_GLASS_PANE` to match the other 1MB menus. `gui.menu-command` controls the bottom-row `Back to /menu` button and defaults to `menu`. `preview.gui-cooldown-seconds` controls only GUI preset preview clicks; typed `/afkshrine preview` still uses the normal preview permission and duration checks.
 
@@ -688,13 +721,25 @@ Suggested optional CMI kits for staff-created rewards:
 
 Keep the default AFKShrine token rewards active first, then optionally add CMI kit, money, XP, or LuckPerms preset-unlock commands through `hooks.progress.specific`. For example, a rare preset unlock can grant `onembcmi.afkshrine.style.lantern`, `onembcmi.afkshrine.style.aurora`, `onembcmi.afkshrine.style.prism`, or `onembcmi.afkshrine.style.echo` from exact progress ids such as `collection:weather-watcher`, `collection:dimension-pilgrim`, `collection:loyal-keeper-14`, or `collection:quiet-month-28`.
 
-Community milestones are server-wide claimed-point thresholds. They count points only when players run `/afkshrine claim`, not when points are merely pending. `community.milestones` rows use:
+Community progress is credited when players run `/afkshrine claim`. `community.contribution-percent` defaults to `50`: claiming 100 personal tokens contributes 50 community points, while the player receives all 100 spendable tokens. Fractional community contributions are persisted, so splitting a claim into small amounts does not change its value. Previously recorded lifetime community totals and completed celebrations remain intact; the reduced rate applies to future claims. `community.milestones` rows remain one-time lifetime celebrations and use:
 
 ```text
 id|claimed-total-threshold|Display Name|duration-minutes|style|optional console command;;second command
 ```
 
 When a threshold is crossed, AFKShrine records it in `community.yml`, starts a temporary celebration window, notifies online players with `onembcmi.afkshrine.use`, optionally runs configured milestone commands while `hooks.enabled` is true, and can override active shrine visuals with the configured preset while the celebration lasts. The visual override does not grant the preset permanently and does not affect `/afkshrine preview`.
+
+Two additional community milestones are available once per calendar month, using the configured AFKShrine timezone. With `community.tournaments.enabled: true`, the default `fishing-goal: 5000` earns a PyroFishingPro Random Catch tournament and `farming-goal: 10000` earns a PyroFarming random tournament. These are cumulative **adjusted community points within that month**, equivalent to 10,000 and 20,000 claimed personal tokens at the default rate. Monthly progress starts from new claims after this feature is installed; the historical lifetime total is never imported as new tournament credit. Each new month has fresh progress and the same two opportunities. Disabling community tournaments pauses new monthly credit and automatic starts; already earned entries remain saved.
+
+Both tournaments last 900 seconds (15 minutes). The supported commands are `fisht start RANDOM_CATCH 900` and `farmt start RANDOM 900`; AFKShrine targets their owning plugin namespaces to avoid conflicting aliases. Pyro retains responsibility for competition scoring and its configured winner/participation rewards. The integration uses the providers' `%pyrofishingpro_istournament%` and `%pyrofarming_istournament%` placeholders through PlaceholderAPI. Both statuses must resolve to `false` before starting either event. A missing plugin, unresolved placeholder, existing tournament, or fewer than six online players with verified non-AFK CMI state leaves the event queued. Vanished players and spectators do not count toward the six.
+
+The queue is checked every 20 seconds and rechecks all start conditions immediately before dispatch. Each month's goal thresholds are saved when that month is first observed by the queue; later configuration changes apply to new months and cannot award additional events from previously recorded months. Fishing precedes farming in each month's earned sequence. Earned events survive restarts and month changes, remain in chronological order, and count toward a maximum of **two actual shrine-triggered starts per calendar month**, even when they were earned in a previous month. A provider already running a scheduled or staff-started tournament is allowed to finish; AFKShrine does not stop it or start the other kind alongside it. A started shrine tournament also reserves its 15-minute window if Pyro ends early.
+
+The community GUI, its bossbar view, and `/afkshrine community` show monthly progress and queue status. `/afkshrine community <reference>` identifies an earned event. Staff with `onembcmi.afkshrine.admin.community` additionally see the start command, verification evidence, timestamps, and audit history. Queue state is stored in `community-tournaments.yml` by a serial background writer. The durable start intent is saved before command dispatch; a verified transition from inactive to active confirms delivery of the tournament-start reward. A command return value alone does not confirm delivery.
+
+An uncertain start or restart during dispatch pauses the queue for staff review. After checking Pyro and server logs, staff can use `/afkshrine admin community acknowledge <reference> confirm <review note>` to record a verified start, or `/afkshrine admin community retry <reference> confirm <review note>` **only after verifying no tournament started**. The latter returns the entitlement to the ordinary queue and all start gates still apply. Uncertain attempts reserve a monthly start slot until resolved. A corrupt or missing initialized queue fails closed; its backup is never restored automatically because an older copy could forget a start. These community event references are separate from player reward transaction receipts.
+
+Compatibility was inspected read-only against live PyroFishingPro `PyroFishingPro-4.9.32.jar` (embedded version `4.9.31`), PyroFarming `1.3.2`, and PyroLib `1.4.9`. Both installed expansions expose the boolean status placeholders, and PyroLib registers commands under the owning plugin's namespace. No dependency on obfuscated Pyro internals or the newer standalone PyroAPI is required. Before live acceptance, prove both real 15-minute tournaments and their configured prizes on a disposable test server, including the five/six-active-player boundary, CMI AFK transitions, a tournament already running, restart while queued, and an interrupted start requiring review.
 
 Optional hooks are disabled by being empty, even though `hooks.enabled` defaults to true. They are meant for feedback such as sounds, titles, toasts, fireworks, and public milestone messages. Keep real rewards in `/afkshrine claim` and `/afkshrine trade` unless staff intentionally chooses otherwise.
 
@@ -817,7 +862,7 @@ Staff can review them in-game with:
 
 Community claim audit rows are included in staff exports from `logs/community.log`. Session rows also include repeat-zone and danger-score columns so staff can review candidate changes before switching either system to active mode. Sleep rows include bed-rest seconds, awarded tokens, blocker reason, bed location, and coarse cooldown zone.
 
-`/afkshrine admin check` is read-only and console-safe. It reports dependency state, debug mode, point caps, minimum session time, bed-rest reward caps/cooldown, dynamic bossbar mode/update settings, grace recovery settings, rested/no-repeat/danger-score modes, allowed/disabled/event world overlap, seasonal quest set counts, community milestone configuration, default preset access, non-default preset permissions, invalid preset colors or palettes, reward row shape, captured tool/action readiness, configured console command counts, and whether session/sleep/trade/tools audit logs are enabled.
+`/afkshrine admin check` is read-only and console-safe. It reports dependency state, debug mode, point caps, minimum session time, bed-rest reward caps/cooldown, reward-trade cooldown, the claim-all ceiling against its 64-command and 1,000-character-per-command limits, dynamic bossbar mode/update settings, grace recovery settings, rested/no-repeat/danger-score modes, allowed/disabled/event world overlap, seasonal quest set counts, community milestone configuration, default preset access, non-default preset permissions, invalid preset colors or palettes, reward row shape, captured tool/action readiness, configured console command counts, and whether session/sleep/trade/tools audit logs are enabled.
 
 `/afkshrine admin report` writes a Markdown report into the AFKShrine cache folder. The report includes runtime counters, point/economy counters, active/preview/disabled counts, rested/no-repeat/danger/tool/sleep runtime counters, dynamic bossbar settings, seasonal/community state, the current config summary, readiness findings, repeated-zone audit rows, and recent session/sleep/trade/tools/community audit rows. It is meant for passive staff review after a live test window.
 
@@ -933,6 +978,8 @@ Community milestone state is stored in the AFKShrine feature data folder:
 
 ```yaml
 claimed-total: 0
+contribution-remainder: 0
+tournament-months: {}
 completed-milestones: []
 celebration:
   id: ""

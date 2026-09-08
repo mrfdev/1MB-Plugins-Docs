@@ -16,9 +16,10 @@ AFKShrine is meant to make being away feel clearer and a little more fun, withou
 Available features include:
 
 - AFK shrine visuals with soft particles, optional sparkles, and a private bossbar while you are AFK.
-- Private welcome-back postcards with AFK time, approximate location, biome, weather or scene, damage taken, progress, cap room, and next actions.
+- Compact private return postcards with Details and eligible Claim controls; /afkshrine postcard opens the latest visit from this login.
 - Dynamic bossbar views for session time, reward eligibility, pending tokens, daily caps, streaks, seasonal progress, and community progress.
-- Pending-token claiming and preview-first reward trades through /afkshrine claim, /afkshrine rewards, and /afkshrine trade.
+- Pending-token claiming and preview-first reward trades, including a confirmed batch of affordable rewards through /afkshrine trade all.
+- A six-month expiry for unclaimed points, with a visible next deadline; claimed balances do not expire.
 - Time, biome, safety, risk, adventure, weather, seasonal, dimension, collection, and streak milestones and quests.
 - Permission-gated particle presets that players can inspect and select.
 - A collection album and reset summary showing completed, repeatable, refreshed, and still-available goals.
@@ -100,6 +101,11 @@ Available features include:
       <td><code>/afkshrine trade daily</code></td>
     </tr>
     <tr>
+      <td><code>/afkshrine trade all</code></td>
+      <td>Previews one affordable copy of each selected eligible reward before confirmation.</td>
+      <td><code>/afkshrine trade all</code></td>
+    </tr>
+    <tr>
       <td><code>/afkshrine gui</code></td>
       <td>Opens the AFKShrine GUI hub.</td>
       <td><code>/afkshrine gui</code></td>
@@ -108,6 +114,11 @@ Available features include:
       <td><code>/afkshrine menu</code></td>
       <td>Opens the AFKShrine GUI hub.</td>
       <td><code>/afkshrine menu</code></td>
+    </tr>
+    <tr>
+      <td><code>/afkshrine postcard</code></td>
+      <td>Opens the latest return postcard from your current login.</td>
+      <td><code>/afkshrine postcard</code></td>
     </tr>
     <tr>
       <td><code>/afkshrine tools</code></td>
@@ -220,9 +231,19 @@ Available features include:
 
 Return from AFK and use `/afkshrine claim` to move pending tokens into your spendable balance. Then browse `/afkshrine rewards` and use `/afkshrine trade` to spend them. Going AFK does not automatically deliver reward kits.
 
+Unclaimed points expire after **six calendar months**. `/afkshrine claim` protects the remaining points by moving them into the claimed balance, which does not expire. `/afkshrine balance` and the claim button show the next expiry date. New earnings have their own deadlines and never renew older points.
+
+When points expire, the player receives a private message such as: “100 of your oldest unclaimed AFKShrine points expired. Unclaimed points expire after six months. Use /afkshrine claim regularly to keep your points. Remaining pending: 30.” The command in this message is clickable. Offline players receive the message when they return; notification is recorded after the expiry has been saved.
+
+Existing pending balances do not contain reliable per-award dates. They receive one six-month grace period from the server's first rollout of this feature, recorded in `plugins/1MB-CMIAPI/AFKShrine/pending-expiry.yml`. Returning late or restarting the server does not reset this date. Future awards are grouped into daily expiry buckets in each player's `afkshrine.points.pending-expiry` ledger. They expire after the entire six-month anniversary day in the configured timezone, giving up to one extra day of grace and never expiring points early. Saved deadlines remain fixed if the timezone later changes.
+
+`pending-expiry.enabled` defaults to `true`. Turning it off pauses cleanup but retains the original deadlines; reenabling it checks overdue points again. Expiry is checked before claiming, for online players every minute, and in background scans at startup and daily for offline balances. File scans and expiry/notification writes run off the server thread and use the shared player store's atomic per-player update. Normal point earnings, claims, and rollback snapshots include the dated ledger. Expired points never enter the claimed balance or community contribution; existing claimed tokens, completed quests/milestones, lifetime earnings, streaks, and leaderboard totals stay intact.
+
+`/afkshrine admin audit <player>` shows the next deadline, total expired points, unnotified expired points, and last processing time. The ledger retains notification state across restarts. A crash between displaying and acknowledging a notice may repeat that notice, but does not deduct points twice. Malformed or inconsistent point ledgers fail closed, and an initialized expiry policy is never silently recreated or restored from an older backup. Staff should restore its original file and restart the feature if policy recovery is needed. Gameplay acceptance should cover a mixed old/fresh balance, claim at the deadline, offline return, and restart with an undelivered notice before live deployment.
+
 ### Why did my AFK session earn no tokens?
 
-Sessions must meet the configured minimum time, world rules, cooldowns, and daily cap. Read your return postcard for the reason and check `/afkshrine status`; repeatedly toggling AFK does not bypass these limits.
+Sessions must meet the configured minimum time, world rules, cooldowns, and daily cap. Hover **Details** for the reason, or open `/afkshrine postcard` to read the full visit; repeatedly toggling AFK does not bypass these limits.
 
 ### Can I earn a milestone again?
 
@@ -239,7 +260,8 @@ Follow the message for missing tokens, access, inventory space, or AutoSell prot
 ## Good To Know
 
 - AFK postcards are private welcome-back summaries, not public broadcasts.
-- The pending-token explanation is plain text; only the short &quot;Click this text to claim them now.&quot; call to action runs /afkshrine claim.
+- Details opens a postcard menu; Claim appears only when you have pending tokens and permission to claim them.
+- Existing pending balances receive a six-month grace period from the feature rollout. New earnings do not extend older deadlines.
 - Pending tokens are not spendable until you claim them with /afkshrine claim.
 - Reward trades preview first; commands that spend tokens or items require confirmation.
 - Some presets, tools, upgrades, and previews may be locked by rank, event progress, beta access, or server configuration.

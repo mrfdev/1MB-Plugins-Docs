@@ -5,6 +5,11 @@
 enabled: true
 debug: false
 
+# Optional: "tip-id|feature-id[,feature-id]" for tips tied to library Feature Plugins.
+# Existing Forage IDs, mentions and embedded commands are detected automatically.
+# Dormant/missing dependencies pause their tips; debug does not bypass this.
+tip-feature-requirements: []
+
 schedule:
   initial-delay-seconds: 90
   interval-seconds: 1500

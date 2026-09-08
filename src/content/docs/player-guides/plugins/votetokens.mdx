@@ -13,6 +13,8 @@ VoteTokens gives players a safer menu for vote-token rewards. Open the menu to r
 
 Progress is completion-based, not one-time reward based. A player may trade the same unlocked item again later, but the first successful trade is what marks that item complete for unlocking the next layer.
 
+Every VoteTokens inventory is a 54-slot menu. Its right-side footer follows the same navigation contract as the other 1MB Library Feature Plugins:
+
 Available features include:
 
 - A vote-token trade index with safe menus and confirmation before a trade.
@@ -283,9 +285,19 @@ For equipment below level 10, **Unbreaking X** is step 1 and **Make Unbreakable*
       <td><code>/votetokens tools</code></td>
     </tr>
     <tr>
+      <td><code>/votetokens upgrades</code></td>
+      <td>Runs the VoteTokens upgrades action.</td>
+      <td><code>/votetokens upgrades</code></td>
+    </tr>
+    <tr>
       <td><code>/votetokens progress [player]</code></td>
       <td>Runs the VoteTokens progress action.</td>
       <td><code>/votetokens progress</code></td>
+    </tr>
+    <tr>
+      <td><code>/votetokens path [chat]</code></td>
+      <td>Runs the VoteTokens path action.</td>
+      <td><code>/votetokens path</code></td>
     </tr>
     <tr>
       <td><code>/votetokens tier &lt;tier&gt; [layer]</code></td>
@@ -303,11 +315,11 @@ For equipment below level 10, **Unbreaking X** is step 1 and **Make Unbreakable*
 
 ### How do I unlock the next layer or tier?
 
-Complete every enabled reward item in your current layer. Complete all enabled layers in a tier to unlock the next enabled tier. `/votetokens progress` shows what is still missing.
+Complete every enabled reward item in your current layer. Complete all enabled layers in a tier to unlock the next enabled tier. `/votetokens progress` gives a short chat preview. `/votetokens path` opens the visual path with **View remaining trades**, **Preview next rewards**, and **All stages**. `/votetokens path chat` is the chat alternative.
 
 ### Can I buy an unlocked reward more than once?
 
-Yes. These trades are repeatable. The first successful purchase marks that entry complete for progression; later purchases still cost tokens.
+Yes. These trades are repeatable. The first successful purchase marks that entry complete for progression; later purchases still cost tokens and give another reward without adding unlock progress. Reward tooltips and confirmation pages explain which kind of purchase you are reviewing.
 
 ### Why is a trade blocked even though I have tokens?
 

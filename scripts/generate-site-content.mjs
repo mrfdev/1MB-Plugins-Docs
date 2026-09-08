@@ -13,15 +13,31 @@ const publicRepoBlob = 'https://github.com/mrfdev/1MB-Plugins-Docs/blob/main';
 const publicRepoTree = 'https://github.com/mrfdev/1MB-Plugins-Docs/tree/main';
 
 const PLAYER_GUIDE_OVERRIDES = {
+  autosell: {
+    summary: 'Choose which ordinary inventory items to sell, preview the result, and follow quests and milestones.',
+    intro: 'AutoSell sells selected ordinary inventory items when you opt in. Choose categories or individual materials, check your filters and daily allowance, then preview what would be sold before enabling it.',
+    guide: 'Use /autosell onlysell cobblestone to turn selling on for just cobblestone, or use the menu for a broader selection. This shortcut replaces your item selection while keeping value filters and item protections. Quest and milestone cards explain what remains, what you earn and where to claim. Shared /guidance controls let you reduce or hide optional reward reminders.',
+    quickStart: [
+      'Open `/autosell` and review which items and categories are selected.',
+      'Use `/autosell preview` to check eligible items and any reason selling is paused.',
+      'Turn selling on in the menu, or use `/autosell onlysell cobblestone` for a single material.',
+      'Use `/autosell next` for a useful next step, or `/next guide autosell` for the first-sale checklist.',
+    ],
+    commandDescriptions: {
+      '/autosell onlysell <material>': 'Enables AutoSell for this material and replaces the previous item selection.',
+      '/autosell review [reference]': 'Shows your own held request, its current status and a report you can send to staff.',
+    },
+  },
   afkshrine: {
     summary: 'Turn AFK time into shrine visuals, return postcards, tokens, milestones, quests, presets, and community progress.',
     intro: 'AFKShrine turns server AFK time into a small personal shrine experience. When you become AFK, the feature can show soft particles, a private bossbar, and progress views. When you return, AFKShrine can show a private postcard summary and let you claim pending tokens, review rewards, check milestones, and personalize your shrine preset.',
     guide: 'AFKShrine is meant to make being away feel clearer and a little more fun, without automatically dumping rewards into your inventory. Your AFK sessions can create pending AFKShrine tokens, milestone progress, quest progress, and collection album entries. You return, review what happened, then claim or trade rewards when you are ready.',
     features: [
       'AFK shrine visuals with soft particles, optional sparkles, and a private bossbar while you are AFK.',
-      'Private welcome-back postcards with AFK time, approximate location, biome, weather or scene, damage taken, progress, cap room, and next actions.',
+      'Compact private return postcards with Details and eligible Claim controls; /afkshrine postcard opens the latest visit from this login.',
       'Dynamic bossbar views for session time, reward eligibility, pending tokens, daily caps, streaks, seasonal progress, and community progress.',
-      'Pending-token claiming and preview-first reward trades through /afkshrine claim, /afkshrine rewards, and /afkshrine trade.',
+      'Pending-token claiming and preview-first reward trades, including a confirmed batch of affordable rewards through /afkshrine trade all.',
+      'A six-month expiry for unclaimed points, with a visible next deadline; claimed balances do not expire.',
       'Time, biome, safety, risk, adventure, weather, seasonal, dimension, collection, and streak milestones and quests.',
       'Permission-gated particle presets that players can inspect and select.',
       'A collection album and reset summary showing completed, repeatable, refreshed, and still-available goals.',
@@ -57,6 +73,8 @@ const PLAYER_GUIDE_OVERRIDES = {
       '/afkshrine claim': 'Moves pending AFKShrine tokens into your claimed spendable balance.',
       '/afkshrine rewards [page]': 'Lists configured reward trades, costs, availability, one-time state, and whether you can afford them.',
       '/afkshrine trade': 'Opens the reward overview so you can choose a trade instead of guessing an id.',
+      '/afkshrine trade all': 'Previews one affordable copy of each selected eligible reward before confirmation.',
+      '/afkshrine postcard': 'Opens the latest return postcard from your current login.',
       '/afkshrine trade <reward> [confirm]': 'Previews a reward trade, or confirms it when you include confirm.',
       '/afkshrine gui': 'Opens the AFKShrine GUI hub.',
       '/afkshrine menu': 'Opens the AFKShrine GUI hub.',
@@ -78,7 +96,8 @@ const PLAYER_GUIDE_OVERRIDES = {
     },
     notes: [
       'AFK postcards are private welcome-back summaries, not public broadcasts.',
-      'The pending-token explanation is plain text; only the short "Click this text to claim them now." call to action runs /afkshrine claim.',
+      'Details opens a postcard menu; Claim appears only when you have pending tokens and permission to claim them.',
+      'Existing pending balances receive a six-month grace period from the feature rollout. New earnings do not extend older deadlines.',
       'Pending tokens are not spendable until you claim them with /afkshrine claim.',
       'Reward trades preview first; commands that spend tokens or items require confirmation.',
       'Some presets, tools, upgrades, and previews may be locked by rank, event progress, beta access, or server configuration.',
@@ -808,6 +827,8 @@ const FEATURE_BULLET_OVERRIDES = {
   ],
   autosell: [
     'An opt-in AutoSell toggle with GUI controls for categories, individual materials, value filters, worlds, and notifications.',
+    'A single-item selling shortcut through /autosell onlysell, plus corrected resource and building-item categories.',
+    'Clear quest and milestone cards, optional reminders, and private support status through /autosell review.',
     'A top-row category control that turns all available items in the current category on with left-click or off with right-click across every material page.',
     'An adjacent item view that filters the category to all available items, only off items, or only on items, with a glint on enabled choices for quick scanning.',
     'Pure-vanilla item checks that protect the hotbar, offhand, armor, named items, custom items, and blocked materials.',
@@ -1110,6 +1131,11 @@ const FEATURE_BULLET_OVERRIDES = {
 };
 
 const PLAYER_COMMANDS = [
+  ['/next', 'Find an activity to continue, an earned reward to review, or something new to try.'],
+  ['/guidance', 'Choose hint frequency, chat or action bar, and hide or postpone individual topics.'],
+  ['/next focus', 'Review your pinned goal, progress and display controls.'],
+  ['/next guide', 'Open short activity introductions that remember completed steps.'],
+  ['/next welcome', 'Request a compact summary of useful activities to resume.'],
   ['/menu', 'Open the main server menu and find common server features.'],
   ['/visit', 'Manage your public visit spot and visit other players when available.'],
   ['/nick', 'Pick a safer nickname style from the curated nickname picker.'],
@@ -2457,6 +2483,35 @@ function groupedLists(plugins) {
     .join('\n\n');
 }
 
+const sharedGuideRoutes = {
+  'player-navigation.md': '/player-guides/next-and-guidance/',
+  'player-guidance.md': '/player-guides/next-and-guidance/#choose-your-hints',
+  'next-steps.md': '/player-guides/next-and-guidance/#find-your-next-step',
+  'focus-goals.md': '/player-guides/next-and-guidance/#pin-one-goal',
+  'first-success-checklists.md': '/player-guides/next-and-guidance/#learn-an-activity',
+  'focused-welcome.md': '/player-guides/next-and-guidance/#welcome-back',
+  'progression-previews.md': '/player-guides/next-and-guidance/#see-what-your-progress-unlocks',
+  'streak-guidance.md': '/player-guides/next-and-guidance/#see-what-your-progress-unlocks',
+  'community-contribution.md': '/player-guides/next-and-guidance/#see-what-your-progress-unlocks',
+};
+
+function rewriteLibraryLinks(markdown, sourceFile) {
+  return markdown.replace(/(\[[^\]]+\]\()([^\s)]+)(\))/g, (match, before, href, after) => {
+    if (/^(?:[a-z][a-z0-9+.-]*:|\/|#)/i.test(href)) return match;
+    const [file, fragment] = href.split('#', 2);
+    if (!file.endsWith('.md')) return match;
+    const resolved = path.posix.normalize(path.posix.join(path.posix.dirname(sourceFile), file));
+    const anchor = fragment ? `#${fragment}` : '';
+    const plugin = guidePlugins.find((entry) => `plugins/${entry.file}` === resolved);
+    const target = sharedGuideRoutes[resolved] && !fragment
+      ? sharedGuideRoutes[resolved]
+      : plugin && !fragment
+        ? `/player-guides/plugins/${slugFromFile(plugin.file)}/`
+        : `${publicRepoBlob}/project-docs/cmi-api/docs/${resolved}${anchor}`;
+    return `${before}${target}${after}`;
+  });
+}
+
 const pluginMarkdown = await readFile(pluginReadme, 'utf8');
 const plugins = parsePlugins(pluginMarkdown);
 const guidePlugins = plugins.filter((plugin) => !plugin.file.endsWith('-roadmap.md'));
@@ -2469,6 +2524,15 @@ await mkdir(path.join(contentRoot, 'player-guides'), { recursive: true });
 await mkdir(path.join(contentRoot, 'staff-reference'), { recursive: true });
 await rm(pluginGuideRoot, { recursive: true, force: true });
 await mkdir(pluginGuideRoot, { recursive: true });
+
+const navigationMarkdown = await readFile(path.join(docsRoot, 'player-navigation.md'), 'utf8');
+await writeFile(path.join(contentRoot, 'player-guides', 'next-and-guidance.mdx'), `---
+title: Your Next Step and Helpful Hints
+description: Find activities with /next, choose /guidance settings, and follow goals at your own pace.
+---
+
+${rewriteLibraryLinks(navigationMarkdown.replace(/^# .+\n+/, '').trimEnd(), 'player-navigation.md')}
+`);
 
 for (const plugin of guidePlugins) {
   const slug = slugFromFile(plugin.file);
@@ -2497,7 +2561,7 @@ for (const plugin of guidePlugins) {
   const guideBody = override.guide ? escapeHtml(override.guide).replaceAll('\n\n', '\n\n') : guideParagraphs(markdown, plugin, commandData);
   const quickStart = override.quickStart ?? quickStartSteps(plugin, commandData);
   const featureBullets = override.features ?? FEATURE_BULLET_OVERRIDES[slug] ?? featureBulletItems(plugin, markdown, commandData);
-  const playerFaq = extractSection(markdown, ['Player FAQ']);
+  const playerFaq = rewriteLibraryLinks(extractSection(markdown, ['Player FAQ']), `plugins/${plugin.file}`);
   const notes = override.notes ?? goodToKnow(plugin, commandData);
   const examples = override.examples ?? commandData.playerExamples;
   const audience = audienceInfo(plugin);
@@ -2590,6 +2654,7 @@ This site explains the player-facing features, commands, and server systems that
 ## Start here
 
 - [Getting started](./player-guides/getting-started/) gives players a friendly overview.
+- [Your next step and helpful hints](./player-guides/next-and-guidance/) introduces \`/next\`, \`/guidance\`, pinned goals and first steps.
 - [Common player commands](./player-guides/commands/) lists useful commands and what they are for.
 - [Feature overview](./player-guides/features/) summarizes all documented player-facing server features.
 - [1MoreBlock features](./player-guides/plugins/) cover the Feature Plugins built around the shared 1MB Library.
@@ -2617,6 +2682,10 @@ These docs are here to explain what server features do in normal player language
 
 Not every command is available to every player. Some features are rewards, staff tools, event perks, or unlocks. If a command does not work for you, it may be disabled, hidden, or permission-locked for your current group.
 
+## Your next step
+
+Open \`/next\` to find something useful to do, or \`/guidance\` to choose how often hints appear. [Your next step and helpful hints](../next-and-guidance/) explains pinned goals, first-step guides and recent activity improvements.
+
 ## What you can learn here
 
 - What a feature does.
@@ -2640,6 +2709,8 @@ description: Player-friendly command overview for public server docs.
 Commands can be permission-based. This list explains what common commands are meant to do when they are available to you.
 
 ${commandTable(PLAYER_COMMANDS)}
+
+[Your next step and helpful hints](../next-and-guidance/) explains the shared activity, focus and hint controls.
 
 For fuller introductions, use [1MoreBlock features](../plugins/), [custom server plugins](../custom-server-plugins/), or [other server features](../other-server-features/). Those pages explain what each feature does before listing commands.
 

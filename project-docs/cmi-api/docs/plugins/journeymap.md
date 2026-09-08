@@ -25,11 +25,21 @@ The intended use is a friendly `/journeymap` page where players can see where th
 - Optional automatic reward claiming when rewards are enabled and `rewards.require-claim` is false.
 - Registered command, permission, placeholder, config, and debug metadata for `/1mblib debug plugin journeymap all`.
 
+## Progression previews
+
+`/journeymap path` shows your saved badge, the next badge and era, its actual configured payoff, and one later milestone. `/journeymap path chat` provides the same short path in chat; normal status replies also use it. **Check my playtime**, **All journey badges**, **Review rewards**, and **Choose a focus** lead to the existing feature actions.
+
+The preview uses saved progress from the last check. It never refreshes playtime, grants a badge, claims a reward, or changes a focus merely by opening. If the profile has not been checked in this session, it asks you to check instead of assuming zero progress. Meeting a threshold without a recorded badge asks for a fresh check; a saved earned badge stays earned if thresholds change. Reward-disabled and badge-only milestones say so. No later milestone is invented when the configured path ends. See [Progression previews](../progression-previews.md).
+
 ## Player FAQ
 
 ### Is JourneyMap a map or minimap?
 
 No. This server feature tracks your playtime journey through eras, badges, and milestones. Open `/journeymap` to see your progress.
+
+### How can I see what comes next?
+
+Open `/journeymap path` for your saved badge, the next milestone and one later goal. `/journeymap path chat` is the text version. Use **Check my playtime** to refresh progress, or **Choose a focus** to follow a badge through `/next`.
 
 ### Why has my playtime milestone not appeared yet?
 
@@ -49,6 +59,7 @@ No. Earned milestones and claimed rewards are stored as lasting progress. A play
 /journeymap
 /journeymap help
 /journeymap status
+/journeymap path [chat]
 /journeymap milestones [page]
 /journeymap rewards [page]
 /journeymap claim [id|all]
@@ -286,3 +297,19 @@ Manual things to verify:
 - `/1mblib debug plugin journeymap all` lists current command, permission, placeholder, and config metadata.
 
 [Plugin index](README.md)
+
+## Complete reward communication
+
+[COMM-08 reward communication](../reward-communication.md) documents the shared result states, adopted flows, delivery evidence, next actions, and client acceptance. Claims retain their existing safety records. An accepted external reward command is described as a request, with a private reference for checking missing delivery.
+
+## Dynamic next steps
+
+See [Dynamic next steps and the global hub](../next-steps.md) for `/next`, the integrated feature next commands, selection rules, current coverage, and safe navigation.
+
+## One pinned focus goal
+
+This feature contributes goals to the Shared Library's [focus system](../focus-goals.md). Use `/next focus choose` to select one objective across the server, with shared hide/show/change/clear controls and temporary progress tracking. The guide explains this feature's supported goals and entry points.
+
+## Remembered first steps
+
+`/next guide journeymap` opens a short, optional checklist for this activity. Finished steps stay remembered, existing successes count, and Later, dismissal, Resume and chat controls are shared across the suite. See [First-success checklists](../first-success-checklists.md) for the three-step path and controls.

@@ -4,7 +4,7 @@
 
 RecordingMode gives players a clean `/recording` toggle for video recording, streaming, screenshots, or other moments where chat interruptions should be reduced.
 
-When recording mode is enabled, the plugin applies the player's configured quiet profile to CMI options such as private messages, TPA requests, and money requests. It also filters CMI staff messages from that player when their profile disables staff messages, can hide `/n` NotableMsg chat when that feature jar is installed, can hide ScheduledTips when that feature jar is installed, and can hide the player from the live `/map` when `1MB-MapHide` is installed.
+When recording mode is enabled, the plugin applies the player's configured quiet profile to CMI options such as private messages, TPA requests, and money requests. It also filters CMI staff messages from that player when their profile disables staff messages, can hide `/n` NotableMsg chat when that feature jar is installed, can pause shared optional hints from connected features, and can hide the player from the live `/map` when `1MB-MapHide` is installed.
 
 For private messages, RecordingMode does not rely only on CMI's `acceptingPM` option. Operators or staff may inherit CMI bypass permissions, so the plugin also watches common private-message commands such as `/msg`, `/tell`, `/w`, `/pm`, `/m`, `/r`, and `/cmi msg`. When `msg` is off, it cancels outgoing private messages from the recording player and cancels incoming private-message commands targeting an active recording player.
 
@@ -12,11 +12,11 @@ For private messages, RecordingMode does not rely only on CMI's `acceptingPM` op
 
 - `/recording` toggles recording mode on or off.
 - Per-player preferences persist in shared playerdata.
-- Defaults can disable PMs, TPA requests, money requests, staff messages, NotableMsg `/n` messages, and ScheduledTips while recording.
+- Defaults can disable PMs, TPA requests, money requests, staff messages, NotableMsg `/n` messages, and shared optional hints while recording.
 - `/recording set <channel> <on|off>` controls what stays enabled while recording.
 - `/recording set staffmsgs <on|off>` controls whether `/s` staff messages stay visible while recording.
 - `/recording set notablemsgs <on|off>` is offered in tab completion when TeamMsg (or the legacy standalone NotableMsg jar) is installed and enabled.
-- `/recording set tips <on|off>` is offered in tab completion when `1MB-CMIAPI-ScheduledTips` is installed and enabled.
+- `/recording set tips <on|off>` controls shared optional hints from connected providers, including ScheduledTips and AutoSell. It remains available without the ScheduledTips jar.
 - `/recording set map <on|off>` is offered in tab completion when `1MB-MapHide` is installed and enabled.
 - Previous CMI PM/TPA/money option states are captured and restored when recording mode turns off.
 - Live `/map` visibility is set through `1MB-MapHide` from console using `/bmpc hide <player>` while recording and `/bmpc show <player>` when recording mode is disabled.
@@ -42,6 +42,10 @@ Yes. Use `/recording status` to review your preferences, then commands such as `
 ### What happens when I turn recording mode off?
 
 Run `/recording` again. The plugin restores your captured message and request settings where possible. Optional live-map hiding depends on the server having that integration enabled.
+
+### Will recording overwrite my hint choices?
+
+No. With `tips off`, RecordingMode temporarily pauses connected optional hints. Ending recording releases that pause and keeps your saved `/guidance` and `/tips` choices. `tips on` allows hints according to those choices; it does not force them on. Command replies and reward outcomes still follow their normal feature behavior. See [Player guidance](../player-guidance.md).
 
 ## Commands
 

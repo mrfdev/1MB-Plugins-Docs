@@ -26,7 +26,7 @@ Available features include:
 
 1. Start with `/tips status` to open or view ScheduledTips.
 2. Use `/tips status` to check your current progress, settings, or state.
-3. Try `/tips on` when you are ready to use one of the feature actions.
+3. Try `/tips settings` when you are ready to use one of the feature actions.
 
 ## Commands
 
@@ -43,6 +43,11 @@ Available features include:
       <td><code>/tips status</code></td>
       <td>Shows your current ScheduledTips status.</td>
       <td><code>/tips status</code></td>
+    </tr>
+    <tr>
+      <td><code>/tips settings</code></td>
+      <td>Runs the ScheduledTips settings action.</td>
+      <td><code>/tips settings</code></td>
     </tr>
     <tr>
       <td><code>/tips on</code></td>
@@ -90,19 +95,23 @@ Available features include:
 
 ### How do I stop seeing tips?
 
-Use `/tips off` to hide scheduled tips and `/tips on` to show them again. This changes your own preference.
+Use `/tips off` to hide scheduled tips. `/tips on` allows them again, following your shared guidance choices. Open `/tips settings` or `/guidance` to choose fewer hints across connected features, pause for a while, or use the action bar.
 
 ### Can I hide one repeated tip instead of all tips?
 
-Yes. Click its red `[x]` when available, or use `/tips dismiss <tip-id>`. The dismiss button appears after the configured number of views. `/tips list` helps you find tip IDs.
+Yes. Click **[Hide]** on a chat hint or open **Recent hints** in `/guidance`. You can also use `/tips dismiss <tip-id>` immediately; no minimum view count is required. `/tips list` lets you read tips and find their IDs.
 
 ### How do I bring dismissed tips back?
 
-Use `/tips reset` to reset your tip preferences and history, then `/tips on` if needed. `/tips status` shows your current visibility.
+For hints hidden through **[Hide]**, open **Hidden and postponed hints** in `/guidance` and restore one or all. `/tips reset` resets ScheduledTips' own seen counts, local dismissals from `/tips dismiss`, and visibility. It preserves your shared hidden hints, frequency, and display choice. `/tips status` links to the shared settings.
 
 ### Why did a tip become a booster reminder?
 
 When the matching booster is active, an ordinary tip can be replaced by a clickable `/rate` reminder so you can see the current bonus.
+
+### Why did a tip disappear?
+
+An activity may be paused or unavailable to you. Its tips disappear from rotation, `/tips list`, and `/tips seen` until it is available again. Your hidden choices and view counts stay saved. Older entries in `/guidance` use an unavailable title while retaining their hide/restore controls. Restoring one does not enable the activity or immediately replay a tip.
 
 ## Good To Know
 

@@ -245,3 +245,7 @@ Menu uses the shared 1MB-CMIAPI GUI service, which uses a custom Paper inventory
 Confirm the light-blue border renders, the player head shows stats, the info button runs the configured CMI ctext command, the compass picks the correct home command, buttons close safely, and disabled or permission-gated buttons are hidden.
 
 [Plugin index](README.md) | [Main docs](../README.md)
+
+## Dynamic next steps
+
+See [Dynamic next steps and the global hub](../next-steps.md) for `/next`, the integrated feature next commands, selection rules, current coverage, and safe navigation.

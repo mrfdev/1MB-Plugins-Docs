@@ -23,26 +23,32 @@ The GUI uses the shared hardened GUI service with safe holders, cancelled clicks
 - a preview button that explains what would sell right now
 - a recent-results button for batched sale history
 - a quests button with claimable rewards, daily, weekly, monthly, and all-quest pages
-- a milestones button with direct claims, Claim Ready Milestones, and clear progress or staff-review states
+- a milestones button with action cards, separate Details and Claim reward controls, and Claim Ready Milestones
 - a stats button for personal category/material totals, ranks, and server share
 - a Main Menu button beside the close button when `/menu` is installed and enabled
-- the player head with today's AutoSell total, cap, broker level, broker points, next broker-level progress, top category, top item, best single batch, milestone progress, quest progress, sell chain, streak, trigger mode, and active boost
+- a concise player-head summary of selling status and today's cap usage; click it for full statistics and selling status in chat
 
 AutoSell only runs after a short delayed batch, usually after a pickup or chunk move. The final sale runs on the main thread, snapshots exact stacks, rechecks that the inventory still matches, removes the items, pays the player, and refunds removed stacks if the economy payment fails.
 
 The bulk category-item control changes only the current category's non-blacklisted CMI worth items. Its lore reports the category state and a separate `Items toggled: on`, `off`, or `mixed` state. The control deliberately replaces the individual choices inside that category so `all off` really means all available items are off. The adjacent item-view button cycles forward or backward between all available items, off items, and on items while preserving that view across page navigation and individual toggles. Staff-blocked items remain absent from every player item view, other categories keep their existing choices, and players can immediately turn a small number of individual items back on or off after using the bulk action. Enabled individual item choices glint using a hidden dummy enchant on the cancelled GUI display icon; disabled entries remain plain, while the hover lore continues to show the exact item and category states. Turning the category itself off or on from the Categories page does not erase its individual item choices.
 
+Automatic categories follow the [AutoSell category policy](autosell-categories.md): Mining covers raw resources and their basic material forms, while Blocks covers finished construction and utility items. An item's approved category is not reversed merely because it can be mined or found in a structure. The 79 approved fixtures now place Copper Golem Statues in Fancy and the approved chests, doors/trapdoors, bars/chains, lighting, and grates in Blocks. The earlier 17 food, plant, equipment, and special-item corrections also remain in effect. The 48 deferred copper/quartz building variants retain Mining until separately reviewed.
+
+Existing `categories.overrides` entries still take precedence. Individual item switches and recorded sales remain intact; future sales use the assigned category's toggle, quest matching, and category boosts. The policy includes the exact approved and deferred lists for future reviews.
+
 When chat notifications are selected, the batched sale message is hoverable and clickable. Hover shows the batch total, trigger, top sold materials, daily cap progress, broker status, milestone progress, quest progress, sell-chain status, streak status, and any active AutoSell boost. Click opens `/autosell recent` for the detailed sale history. Actionbar, title, and bossbar notification modes remain visual-only because Minecraft clients do not support hover/click actions there.
 
 ## Player FAQ
 
+Quest and milestone cards share **State → Remaining → Benefit → Next**. Longer goals, schedules, and reward explanations live in Details. See [Action cards and tooltips](../action-cards.md) for the controls, state meanings, and optional extra reward descriptions.
+
 ### How do I collect a ready milestone?
 
-Open `/autosell milestones` and click a **ready to claim** reward or **Claim Ready Milestones**. You can also run `/autosell milestones claim all`, or claim one with `/autosell milestones claim market_sweep`. You do not need another sale. Milestones can also be awarded automatically after a successful sale.
+Open `/autosell milestones`, select a **Ready to claim** card, then use **Claim reward** in its details. **Claim Ready Milestones** remains an explicit bulk action on the board. You can also run `/autosell milestones claim all`, or claim one with `/autosell milestones claim market_sweep`. You do not need another sale. Milestones can also be awarded automatically after a successful sale.
 
 ### How do I collect quest rewards?
 
-Open `/autosell quests gui`, choose **Claim Rewards**, and click a ready reward. Use `/autosell quests claim all` to collect all available quest rewards when Claim All is enabled. Milestone and quest claims have separate menus and commands.
+Open `/autosell quests gui`, choose **Claim Rewards**, select a ready card, then use **Claim reward** in its details. Use `/autosell quests claim all` to collect all available quest rewards when Claim All is enabled. Milestone and quest claims have separate menus and commands.
 
 ### Do I need to earn the Market Sweep amount again?
 
@@ -68,6 +74,16 @@ No. Bonuses earned during the same server day add together up to the configured 
 
 Unclaimed ready quests and milestones do not block normal AutoSell activity. `/autosell status` shows reward counts and the relevant menus. **Staff review needed** means a sale or reward could not be safely completed; open its details and share the reference with staff. More selling or repeating the goal will not resolve that state.
 
+### I received a staff-review message. What should I tell staff?
+
+Click **Copy report**, then send that text to staff yourself. It includes your player name, the held sale/reward, a plain-language explanation, the complete reference, and the staff lookup command. Copying does not send a message or retry a payout. If your client cannot copy text, share your player name and the visible reference, or take a screenshot of the message.
+
+Use `/autosell review` to reopen your unfinished request, or `/autosell review <reference>` to check the current status of a specific request belonging to your account. **View status** does the same thing. The main, quest, and milestone menus also show **Staff Help Needed** while a request is held; clicking it closes the menu and displays the report in chat. Some parts of a reward may already have arrived; staff will check what remains. You do not need to repeat the goal or keep clicking Claim. If no reference could be created because payment records are unavailable, give staff your player name and ask them to check `/autosell debug transactions`.
+
+### Can I reduce quest reminders?
+
+Open `/guidance`, or choose **Helpful hints** in AutoSell's Filters menu. Choose Normal, Fewer, or Off, switch to the action bar, or hide/postpone an individual reminder. AutoSell rechecks outstanding manual quest rewards every minute and offers at most one combined topic, normally no more than once every two hours. The shared budget also includes ScheduledTips. A reminder's **Review rewards** button opens `/autosell quests gui`; it never claims automatically. Claimed, expired, disabled, or staff-review states are rechecked before display. AutoSell's own Quiet notification mode and `quests.rewards.notify-ready` are still respected. Sale results, necessary recovery messages, and reward outcomes retain their existing behavior. See [Player guidance](../player-guidance.md).
+
 ## Safety Model
 
 AutoSell is built around anti-dupe and anti-farm guards:
@@ -87,7 +103,7 @@ AutoSell is built around anti-dupe and anti-farm guards:
 - optional world toggles let players opt into worlds such as Nether and End
 - debug worlds such as `spawn` only appear while debug is enabled
 - chunk-change guard requires movement between successful sale cycles
-- overheat guard warns and pauses repeated sales from the same small area
+- overheat guard warns and pauses repeated sales from the same small area; travelling the configured distance or finishing cooldown clears both the pause and the accumulated area history
 - daily money caps are permission-based and can be increased by broker progress
 - optional inventory-full mode can wait until normal inventory storage slots are nearly full
 - sell chains and streaks reward active moving gameplay, not static hopper/AFK selling
@@ -123,13 +139,15 @@ This contract covers integrated reward paths in the 1MB-CMIAPI feature plugins. 
 | `/autosell stats` | player/console | Shows player top categories/materials, rank, server share, or the console economy report. |
 | `/autosell preview` | player | Shows what would sell from the player's normal inventory right now. |
 | `/autosell recent` | player | Shows recent batched sale results. |
+| `/autosell review [reference]` | player | Shows only your own request's current status, explanation, reference, and a report to copy and send to staff. Does not claim, retry, or change anything. |
 | `/autosell quests` | player | Shows active daily, weekly, and monthly AutoSell quest progress in chat. |
 | `/autosell quests gui` | player | Opens the AutoSell quest hub with claimable rewards and period pages. |
 | `/autosell quests claim [all\|id]` | player | Claims ready AutoSell quest rewards; item rewards ask players to turn AutoSell off first. |
-| `/autosell milestones` | player | Opens milestones with clickable ready rewards, Claim Ready Milestones, and next steps. |
+| `/autosell milestones` | player | Opens milestone action cards with Details, explicit reward claims, and next steps. |
 | `/autosell milestones claim [all\|id]` | player | Claims ready one-time milestones without another sale; item rewards require AutoSell off; no target opens the menu. |
 | `/autosell caps` | player | Opens weekly and lifetime daily cap unlocks purchased with broker points. |
 | `/autosell toggle` | player | Turns AutoSell on or off for the player. |
+| `/autosell onlysell <material>` | player | Turns AutoSell on, enables the chosen item and its category, and turns every other item and category off. |
 | `/autosell trigger <always\|full>` | player | Chooses whether AutoSell runs normally after pickup/break batches or only when inventory storage slots are nearly full. |
 | `/autosell categories` | player | Opens the category toggle GUI. |
 | `/autosell items <category>` | player | Opens per-material toggles for one category. |
@@ -165,6 +183,18 @@ This contract covers integrated reward paths in the 1MB-CMIAPI feature plugins. 
 | `/autosell admin inspect <player>` | admin/console | Shows one player's AutoSell profile and cap state. |
 | `/autosell admin stats <player>` | admin/console | Alias for player profile totals. |
 
+`/autosell onlysell cobblestone` replaces your selling selection and enables AutoSell. After saving, it confirms:
+
+```text
+Turned on AutoSell
+Turned off: everything, EXCEPT cobblestone
+Now autoselling: Cobblestone.
+```
+
+Use a vanilla material name such as `cobblestone` or `oak_log`; tab completion lists priced, permitted choices. Unknown, unpriced, staff-blocked, or unsafe items leave preferences unchanged. The selection survives restarts and keeps newly priced materials off. Existing `/autosell item`, category controls, and the item menu's bulk controls can adjust it afterward; enabling a different category also requires enabling the desired items within it. Running `onlysell` again replaces the selection. `/autosell toggle` pauses or resumes the saved selection.
+
+The shortcut keeps value filters, trigger mode, worlds, caps, and item safety rules. It starts selling on normal AutoSell triggers, rather than selling inventory immediately. Both the existing use and toggle permissions are required. Saving runs in the background and pauses queued sales until complete; success messages appear only after persistence succeeds.
+
 Direct console is treated as trusted for AutoSell status, debug, report, reload, and admin maintenance commands. Commands that need a player inventory or GUI still require an in-game player.
 
 Examples:
@@ -172,6 +202,7 @@ Examples:
 ```text
 /autosell
 /autosell toggle
+/autosell onlysell cobblestone
 /autosell stats
 /autosell preview
 /autosell quests
@@ -289,6 +320,21 @@ Normal automatic rewards run only after sale totals and quest progress are saved
 
 `/autosell status` shows ready milestone and quest counts plus the relevant menus. Unclaimed ready quests and milestones do not block further selling. A **staff review needed** state is different: the message identifies the unfinished sale or reward and provides its reference. Players should share that reference with staff; they do not need to repeat the goal. Staff inspect `/autosell debug transactions` and `/autosell debug transaction <uuid>` before using the existing verified recovery workflow. Do not delete receipts or reset claim markers to clear a block.
 
+### Staff: investigate a player's reference
+
+Run `/autosell debug transaction <reference>` using the full reference in the player's report. This remains an admin-only, read-only lookup. It shows the player, request, creation/update times, recorded failure detail, current journal availability, profile/direct-payout evidence, configured reward values, each stored command and its evidence, and the retained transaction history. A different unfinished sale, reward, or cap purchase can be the hold behind the reward the player was trying to claim.
+
+| Command evidence | What staff can conclude |
+| --- | --- |
+| Accepted by command provider | Acceptance was saved. Check the provider's logs and player state to establish whether money, XP, or items actually arrived. |
+| Completion acknowledged by staff | A staff recovery action recorded completion. This is not proof that the original command ran. |
+| Uncertain result | The command may have had an effect before it failed or its confirmation was interrupted. Verify before repeating it. |
+| Not attempted by this recorded request | This request did not reach that command. Direct profile changes or preceding rewards may already have been applied. |
+
+For milestones and quests, the saved profile stage covers the claim marker, broker points, and capped daily bonus; external command rewards are separate. Configured bonus values are fractions and may be capped when applied. The current point balance or bonus alone is not proof of a historical payout: points can be spent and daily bonuses reset. For sales, review the recorded deposit, item recovery payload, and profile progress; for cap purchases, review the point debit and cap change.
+
+Use the failure detail, timestamps, history, provider logs, and saved player data to determine what actually arrived. Complete only missing effects through the existing verified recovery workflow, or acknowledge verified delivery/refund. A safe-retry flag alone does not establish that direct changes are correct or that recovery preconditions are satisfied. Viewing a report never retries commands, unlocks a transaction, changes a claim marker, or compensates a player. Older retained receipts use the same lookup; if a completed receipt has been compacted, retain the original reference and consult staff records/backups rather than recreating a claim.
+
 Default milestone examples include:
 
 | Milestone | Default target | Reward style |
@@ -316,6 +362,8 @@ Supported milestone types:
 | `broker-level` | current broker level |
 
 Repeatable AutoSell quests are configured under `quests.definitions.*`. They reset by period and can be daily, weekly, or monthly. Quest progress only moves after a successful verified AutoSell batch, so it uses the same inventory safety, item purity, cap, and anti-farm checks as normal selling. Quests can reward broker points, a small daily bonus capped by `quests.max-daily-bonus-percent`, and direct-console commands from `quests.commands.allowed-prefixes`.
+
+Weekly quest periods retain their canonical uppercase `W` across restarts and reloads. Loading also repairs lowercase weekly periods saved by older builds in progress, pending, and claimed period maps. Already claimed rewards remain claimed and existing transaction receipts keep their original identities; staff do not need to edit player data or retry completed rewards for this repair.
 
 The `/autosell quests gui` page is a quest hub:
 
@@ -453,6 +501,10 @@ plugins/1MB-CMIAPI/AutoSell/exports/
 
 The data file stores player preferences, totals, recent sale messages, broker/streak/milestone state, category/material totals, cap snapshots, and current quest progress. Players can inspect their own category/material breakdown with `/autosell stats`, while staff can inspect one profile with `/autosell admin inspect <player>` or review the full economy picture with `/autosell admin report` and `/autosell admin export`. If AutoSell is disabled or removed, player inventories are not changed; the plugin simply stops scanning and selling.
 
+`anti-farm.overheat.travel-distance-blocks` measures straight-line distance in all three coordinates from a fixed origin for the current sale area, rather than adding up footsteps or moving the origin after every nearby sale. Reaching that distance (including within the same chunk), an accepted teleport far enough away, or changing worlds clears the overheat timer, repeated-sale count, and recent-chunk history. Cancelled movement does not count. Finishing `cooldown-seconds` gives the same fresh history, and a sale window spanning more than two distinct chunks breaks the repeated-area count. The separate `require-chunk-change` rule still applies. Configured thresholds and cooldowns are unchanged by this fix.
+
+Area origin and sale count are saved with the existing overheat deadline and recent chunks, so reloads/restarts preserve the state. Profiles from earlier builds use `last-sell-location` as their initial origin and keep their existing cooldown. Disabling `anti-farm.overheat.enabled` clears this guard's history when the player is next observed; it does not disable other AutoSell limits.
+
 The same data file also stores heatmap rows, passive tuning observation counters, and the last run keys for scheduled Happy Hour entries. These are staff review artifacts, not player inventory data.
 
 AutoSell reads CMI worth values from:
@@ -574,3 +626,23 @@ onembcmi.autosell.cap.unlimited
 ## Notes
 
 If AutoSell is removed or globally disabled, no items are changed. Existing player inventories stay normal Minecraft inventories, and the plugin simply stops scanning and selling until it is re-enabled.
+
+## Blocker recovery
+
+`/autosell preview` explains the first current blocker and keeps all items in place. It accounts for access, earlier requests, payment availability, on/off state, world and mode restrictions, containers, movement, cooldowns, remaining daily allowance, near-full mode, item filters and minimum batch value. Excluded items use readable reasons; special items remain protected. Exhausted finite daily allowances admit zero sale items. Claim failures and staff-review requests provide the next useful action, with `/autosell review [reference]` preserving the existing private support workflow. See [Blocker recovery messages](../blocker-recovery.md).
+
+## Complete reward communication
+
+[COMM-08 reward communication](../reward-communication.md) documents the shared result states, adopted flows, delivery evidence, next actions, and client acceptance. Claims retain their existing safety records. An accepted external reward command is described as a request, with a private reference for checking missing delivery.
+
+## Dynamic next steps
+
+See [Dynamic next steps and the global hub](../next-steps.md) for `/next`, the integrated feature next commands, selection rules, current coverage, and safe navigation.
+
+## One pinned focus goal
+
+This feature contributes goals to the Shared Library's [focus system](../focus-goals.md). Use `/next focus choose` to select one objective across the server, with shared hide/show/change/clear controls and temporary progress tracking. The guide explains this feature's supported goals and entry points.
+
+## Remembered first steps
+
+`/next guide autosell` opens a short, optional checklist for this activity. Finished steps stay remembered, existing successes count, and Later, dismissal, Resume and chat controls are shared across the suite. See [First-success checklists](../first-success-checklists.md) for the three-step path and controls.

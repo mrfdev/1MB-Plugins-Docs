@@ -27,7 +27,7 @@ Every feature jar that does not implement a local debug command inherits `/<plug
 | Player Fun | [Boosters](boosters.md) | `/rate` booster status and admin control for mcMMO, Jobs, and PyroWelcomesPro Points detection, replacing the old standalone Boosters plugin. |
 | Player Fun | [NameMC](namemc.md) | `/namemc` NameMC like verification, one-time CMI/LuckPerms rewards, legacy permissions, and `%onembnamemc_*%` placeholders. |
 | Player Fun | [Exchange](exchange.md) | `/exchange` GUI exchanges for item, money, and EXP hand-ins, migrated from the old standalone 1MBTrades plugin. |
-| Player Fun | [VoteTokens](votetokens.md) | `/votetokens` secure vote-token GUI exchanges with tier/layer progress, CMI kit rewards, hidden reward identity markers, extra-token item tools with shield presets, and staff migration tools for old manual exchanges. |
+| Player Fun | [VoteTokens](votetokens.md) | `/votetokens` secure vote-token GUI exchanges with tier/layer progress, CMI kit rewards, hidden reward identity markers, extra-token item tools with shield presets, two-stage Jobs 6/12 purchases under Other Upgrades, and staff migration tools for old manual exchanges. |
 | Player Fun | [DiscordChat](discordchat.md) | `/discordchat` DiscordSRV server-chat engagement tracker with quality-gated EXP, continuous floor conversion, separate streak bonuses, conversation clusters, first-Discord broadcasts, community pulse, recurring bonus windows, linked-account streaks, top lists, two-step point rewards with player/global cooldowns, safe item tools, dependency-aware reward checks, opt-out reminders, milestone celebration privacy, and staff smoke/community/economy/archive/award reports. |
 | Player Fun | [GameTypes](gametypes.md) | `/gametype` safe BentoBox menu adapter for OneBlock, ChunkBlock, SkyBlock, AcidIsland, CaveBlock, and SkyGrid, with world detection and config-driven addon buttons. |
 | Player Fun | [BirthdayLanterns](birthdaylanterns.md) | `/birthday` collectible birthday, player anniversary, and server milestone lantern rewards with PDC item identity, finite wish charges, strict birthday/guestbook input, GUI claims, presets, mail variants, and configurable CMI reward commands. |
@@ -40,9 +40,9 @@ Every feature jar that does not implement a local debug command inherits `/<plug
 | Player Fun | [Event Hunts Roadmap](event-hunts-roadmap.md) | Greenlight-required quality-of-life backlog for the shared Event Hunts host, including a read-only activation preflight, module registry, adaptive `/hunt` GUI, shared status and GUI components, theme packs, and possible player/staff improvements. |
 | Player Fun | [DropParty](dropparty.md) | `/dropparty` dormant-by-default scheduled/manual sulfur-geyser events with schedule and staff GUIs, CMI arena travel, exact approved loot, movement anti-idle checks, durable cross-world vaults, recoverable claims, stats, and non-destructive mini flares. |
 | Player Fun | [Appreciation](appreciation.md) | `/appreciate` and optional `/thanks` for limited reviewed notes, recipient preferences, free/XP/money/scope-safe item escrow, durable claims and expiry returns, thank-you reactions, shared celebrations, birthdays, anonymous sending, favorites, stats, badges, streak points, permanent unlocks, and guarded staff review/recovery. |
-| Player Fun | [Forage](forage.md) | `/forage` v1 tool-gated nature progression with curated PDC tools, CMI-backed Vault camp shop, Tier 2 pickaxe/brush/sword/mace unlocks, block and entity source families with non-overlapping default tool ownership, player XP/tool XP balance presets, global and per-family daily caps, XP/points, daily, weekly, and monthly quests, read-only top boards, camp-ready feedback, camp-only tier upgrades, diamond refinement, controlled Unbreaking/Efficiency improvements, camp-anchor turn-ins, multi-tier Forage Dust growth pulses with rare legendary treasure dust, tool soul lore, chunk exhaustion, WorldGuard global-only checks, camp validation, camp-only Repair & Merge, tips, placeholders, and safe GUI handling. |
-| Player Fun | [AutoSell](autosell.md) | `/autosell` opt-in CMI Worth.yml inventory cleanup with hardened GUI category/material/filter/world toggles, per-category material pages, pure-vanilla item checks, hotbar/offhand/armor protection, exact-stack sell verification, Vault/CMI payments, daily caps, broker progress, quest hub with claimable rewards and period pages, visible milestone tree with bulk-batch milestones, sell chains, daily/weekly streak bonuses, `/rate`-visible AutoSell happy-hour boosts, chunk-change and overheat anti-farm guards, material/world blacklists, quick blacklist actions from numbered warnings, player category/material stats, admin analytics reports, and Markdown exports. |
-| Player Fun | [Forage Roadmap](forage-roadmap.md) | Planning notes for long-term `/forage` expansion with camps, skill trees, seasonal profiles, magic growth systems, derbies, storage-hardening discussion, and staged v2/v3 rollout ideas. |
+| Player Fun | [Forage](forage.md) | Test development on 26.2; dormant on live pending 26.3 Abandoned Camp integration. `/forage` v1 tool-gated nature progression with curated PDC tools, CMI-backed Vault camp shop, Tier 2 pickaxe/brush/sword/mace unlocks, block and entity source families with non-overlapping default tool ownership, player XP/tool XP balance presets, global and per-family daily caps, XP/points, daily, weekly, and monthly quests, read-only top boards, camp-ready feedback, camp-only tier upgrades, diamond refinement, controlled Unbreaking/Efficiency improvements, camp-anchor turn-ins, multi-tier Forage Dust growth pulses with rare legendary treasure dust, tool soul lore, chunk exhaustion, WorldGuard global-only checks, camp validation, camp-only Repair & Merge, tips, placeholders, and safe GUI handling. |
+| Player Fun | [AutoSell](autosell.md) | `/autosell` opt-in CMI Worth.yml inventory cleanup with hardened GUI category/material/filter/world toggles, per-category material pages, pure-vanilla item checks, hotbar/offhand/armor protection, exact-stack sell verification, Vault/CMI payments, daily caps, broker progress, quest hub with claimable rewards and period pages, direct milestone claims and Claim Ready Milestones, clear staff-review states, item-aware reward protection, daily bonus reset guidance, a player FAQ, sell chains, daily/weekly streak bonuses, `/rate`-visible AutoSell happy-hour boosts, chunk-change and overheat anti-farm guards, material/world blacklists, quick blacklist actions from numbered warnings, player category/material stats, admin analytics reports, and Markdown exports. |
+| Player Fun | [Forage Roadmap](forage-roadmap.md) | Live release hold through 26.2 and planned 26.3 Abandoned Camp integration, plus long-term `/forage` expansion with camps, skill trees, seasonal profiles, magic growth systems, derbies, storage-hardening discussion, and staged v2/v3 rollout ideas. |
 | Player Fun | [MobHat](mobhat.md) | Cosmetic whitelisted mob hats with optional `/hat mob` alias support, world safety, scale handling, and experimental offset positions. |
 | Player Fun | [PlayerTodo](todo.md) | Small per-player todo lists stored in shared playerdata so players do not have to mail notes to themselves. |
 | Player Fun | [Refer](refer.md) | Two-step player referral rewards with playtime checks and permission reward markers. |
@@ -117,67 +117,67 @@ Runtime jars use this shape:
 Examples:
 
 ```text
-1MB-Lib-Core-v1.0.3-582-j25-26.2.jar
-1MB-Lib-AFKShrine-v1.0.3-582-j25-26.2.jar
-1MB-Lib-RecordingMode-v1.0.3-582-j25-26.2.jar
-1MB-Lib-SellStreaks-v1.0.3-582-j25-26.2.jar
-1MB-Lib-ScheduledTips-v1.0.3-582-j25-26.2.jar
-1MB-Lib-Visit-v1.0.3-582-j25-26.2.jar
-1MB-Lib-PassportDiscovery-v1.0.3-582-j25-26.2.jar
-1MB-Lib-SocialGatherings-v1.0.3-582-j25-26.2.jar
-1MB-Lib-JourneyMap-v1.0.3-582-j25-26.2.jar
-1MB-Lib-KitStreaks-v1.0.3-582-j25-26.2.jar
-1MB-Lib-Nick-v1.0.3-582-j25-26.2.jar
-1MB-Lib-EmoteMenu-v1.0.3-582-j25-26.2.jar
-1MB-Lib-PvPToggle-v1.0.3-582-j25-26.2.jar
-1MB-Lib-Boosters-v1.0.3-582-j25-26.2.jar
-1MB-Lib-NameMC-v1.0.3-582-j25-26.2.jar
-1MB-Lib-Exchange-v1.0.3-582-j25-26.2.jar
-1MB-Lib-VoteTokens-v1.0.3-582-j25-26.2.jar
-1MB-Lib-DiscordChat-v1.0.3-582-j25-26.2.jar
-1MB-Lib-GameTypes-v1.0.3-582-j25-26.2.jar
-1MB-Lib-BirthdayLanterns-v1.0.3-582-j25-26.2.jar
-1MB-Lib-LavaBoots-v1.0.3-582-j25-26.2.jar
-1MB-Lib-Spawners-v1.0.3-582-j25-26.2.jar
-1MB-Lib-Collect-v1.0.3-582-j25-26.2.jar
-1MB-Lib-EventHunts-v1.0.3-582-j25-26.2.jar
-1MB-Lib-DropParty-v1.0.3-582-j25-26.2.jar
-1MB-Lib-Appreciation-v1.0.3-582-j25-26.2.jar
-1MB-Lib-Forage-v1.0.3-582-j25-26.2.jar
-1MB-Lib-AutoSell-v1.0.3-582-j25-26.2.jar
-1MB-Lib-MobHat-v1.0.3-582-j25-26.2.jar
-1MB-Lib-PlayerTodo-v1.0.3-582-j25-26.2.jar
-1MB-Lib-Refer-v1.0.3-582-j25-26.2.jar
-1MB-Lib-TPAuto-v1.0.3-582-j25-26.2.jar
-1MB-Lib-Menu-v1.0.3-582-j25-26.2.jar
-1MB-Lib-StaffCenter-v1.0.3-582-j25-26.2.jar
-1MB-Lib-Profile-v1.0.3-582-j25-26.2.jar
-1MB-Lib-ContentGuard-v1.0.3-582-j25-26.2.jar
-1MB-Lib-WarningLens-v1.0.3-582-j25-26.2.jar
-1MB-Lib-TeamMsg-v1.0.3-582-j25-26.2.jar
-1MB-Lib-CmdCostDashboard-v1.0.3-582-j25-26.2.jar
-1MB-Lib-CMIConfig-v1.0.3-582-j25-26.2.jar
-1MB-Lib-ConsoleNoiseRouter-v1.0.3-582-j25-26.2.jar
-1MB-Lib-EconomyGuardian-v1.0.3-582-j25-26.2.jar
-1MB-Lib-StartupDoctor-v1.0.3-582-j25-26.2.jar
-1MB-Lib-UpdateSmoke-v1.0.3-582-j25-26.2.jar
-1MB-Lib-PluginVersions-v1.0.3-582-j25-26.2.jar
-1MB-Lib-Placeholders-v1.0.3-582-j25-26.2.jar
-1MB-Lib-Potions-v1.0.3-582-j25-26.2.jar
-1MB-Lib-SchedulerCheck-v1.0.3-582-j25-26.2.jar
-1MB-Lib-Upgrade-v1.0.3-582-j25-26.2.jar
-1MB-Lib-EndCrystals-v1.0.3-582-j25-26.2.jar
-1MB-Lib-AntiFire-v1.0.3-582-j25-26.2.jar
-1MB-Lib-WorldSnapshot-v1.0.3-582-j25-26.2.jar
-1MB-Lib-SparkReviewer-v1.0.3-582-j25-26.2.jar
-1MB-Lib-Hoppers-v1.0.3-582-j25-26.2.jar
-1MB-Lib-EventRecorder-v1.0.3-582-j25-26.2.jar
-1MB-Lib-PermissionProbe-v1.0.3-582-j25-26.2.jar
-1MB-Lib-WarpAudit-v1.0.3-582-j25-26.2.jar
-1MB-Lib-WorthDrift-v1.0.3-582-j25-26.2.jar
-1MB-Lib-WorthHelper-v1.0.3-582-j25-26.2.jar
-1MB-Lib-CMIProbe-v1.0.3-582-j25-26.2.jar
-1MB-Lib-CMIDatabase-v1.0.3-582-j25-26.2.jar
+1MB-Lib-Core-v1.0.3-630-j25-26.2.jar
+1MB-Lib-AFKShrine-v1.0.3-630-j25-26.2.jar
+1MB-Lib-RecordingMode-v1.0.3-630-j25-26.2.jar
+1MB-Lib-SellStreaks-v1.0.3-630-j25-26.2.jar
+1MB-Lib-ScheduledTips-v1.0.3-630-j25-26.2.jar
+1MB-Lib-Visit-v1.0.3-630-j25-26.2.jar
+1MB-Lib-PassportDiscovery-v1.0.3-630-j25-26.2.jar
+1MB-Lib-SocialGatherings-v1.0.3-630-j25-26.2.jar
+1MB-Lib-JourneyMap-v1.0.3-630-j25-26.2.jar
+1MB-Lib-KitStreaks-v1.0.3-630-j25-26.2.jar
+1MB-Lib-Nick-v1.0.3-630-j25-26.2.jar
+1MB-Lib-EmoteMenu-v1.0.3-630-j25-26.2.jar
+1MB-Lib-PvPToggle-v1.0.3-630-j25-26.2.jar
+1MB-Lib-Boosters-v1.0.3-630-j25-26.2.jar
+1MB-Lib-NameMC-v1.0.3-630-j25-26.2.jar
+1MB-Lib-Exchange-v1.0.3-630-j25-26.2.jar
+1MB-Lib-VoteTokens-v1.0.3-630-j25-26.2.jar
+1MB-Lib-DiscordChat-v1.0.3-630-j25-26.2.jar
+1MB-Lib-GameTypes-v1.0.3-630-j25-26.2.jar
+1MB-Lib-BirthdayLanterns-v1.0.3-630-j25-26.2.jar
+1MB-Lib-LavaBoots-v1.0.3-630-j25-26.2.jar
+1MB-Lib-Spawners-v1.0.3-630-j25-26.2.jar
+1MB-Lib-Collect-v1.0.3-630-j25-26.2.jar
+1MB-Lib-EventHunts-v1.0.3-630-j25-26.2.jar
+1MB-Lib-DropParty-v1.0.3-630-j25-26.2.jar
+1MB-Lib-Appreciation-v1.0.3-630-j25-26.2.jar
+1MB-Lib-Forage-v1.0.3-630-j25-26.2.jar
+1MB-Lib-AutoSell-v1.0.3-630-j25-26.2.jar
+1MB-Lib-MobHat-v1.0.3-630-j25-26.2.jar
+1MB-Lib-PlayerTodo-v1.0.3-630-j25-26.2.jar
+1MB-Lib-Refer-v1.0.3-630-j25-26.2.jar
+1MB-Lib-TPAuto-v1.0.3-630-j25-26.2.jar
+1MB-Lib-Menu-v1.0.3-630-j25-26.2.jar
+1MB-Lib-StaffCenter-v1.0.3-630-j25-26.2.jar
+1MB-Lib-Profile-v1.0.3-630-j25-26.2.jar
+1MB-Lib-ContentGuard-v1.0.3-630-j25-26.2.jar
+1MB-Lib-WarningLens-v1.0.3-630-j25-26.2.jar
+1MB-Lib-TeamMsg-v1.0.3-630-j25-26.2.jar
+1MB-Lib-CmdCostDashboard-v1.0.3-630-j25-26.2.jar
+1MB-Lib-CMIConfig-v1.0.3-630-j25-26.2.jar
+1MB-Lib-ConsoleNoiseRouter-v1.0.3-630-j25-26.2.jar
+1MB-Lib-EconomyGuardian-v1.0.3-630-j25-26.2.jar
+1MB-Lib-StartupDoctor-v1.0.3-630-j25-26.2.jar
+1MB-Lib-UpdateSmoke-v1.0.3-630-j25-26.2.jar
+1MB-Lib-PluginVersions-v1.0.3-630-j25-26.2.jar
+1MB-Lib-Placeholders-v1.0.3-630-j25-26.2.jar
+1MB-Lib-Potions-v1.0.3-630-j25-26.2.jar
+1MB-Lib-SchedulerCheck-v1.0.3-630-j25-26.2.jar
+1MB-Lib-Upgrade-v1.0.3-630-j25-26.2.jar
+1MB-Lib-EndCrystals-v1.0.3-630-j25-26.2.jar
+1MB-Lib-AntiFire-v1.0.3-630-j25-26.2.jar
+1MB-Lib-WorldSnapshot-v1.0.3-630-j25-26.2.jar
+1MB-Lib-SparkReviewer-v1.0.3-630-j25-26.2.jar
+1MB-Lib-Hoppers-v1.0.3-630-j25-26.2.jar
+1MB-Lib-EventRecorder-v1.0.3-630-j25-26.2.jar
+1MB-Lib-PermissionProbe-v1.0.3-630-j25-26.2.jar
+1MB-Lib-WarpAudit-v1.0.3-630-j25-26.2.jar
+1MB-Lib-WorthDrift-v1.0.3-630-j25-26.2.jar
+1MB-Lib-WorthHelper-v1.0.3-630-j25-26.2.jar
+1MB-Lib-CMIProbe-v1.0.3-630-j25-26.2.jar
+1MB-Lib-CMIDatabase-v1.0.3-630-j25-26.2.jar
 ```
 
 [Documentation index](../README.md)

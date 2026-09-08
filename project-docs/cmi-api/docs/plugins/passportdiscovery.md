@@ -1,5 +1,7 @@
 # PassportDiscovery
 
+Category status and collected/missing stamp lists use shared action cards: **State → Remaining → Benefit → Next**. Click a category in `/passport status`, or use `/passport status biome`. Stamp lists provide visible **Details** buttons as well as hover tooltips; the full entry information remains available through `/passport info`. See [Action cards and tooltips](../action-cards.md) for examples and state meanings.
+
 PassportDiscovery is the umbrella discovery-passport plugin for player-facing collection progress. It adds `/passport` and tracks stamps for worlds, warps, visits, biomes, blocks, items, consumables, tools, weapons, armor, kills, mounts, and sustained exploration in shared UUID playerdata.
 
 WarpPassport is retired from the active build for new installs. Its source remains in the repository for reference, but `/passport warp` is the supported path for CMI warp stamps.
@@ -531,3 +533,23 @@ Paper API usage includes player movement, world change, block break/place, item 
 - Outside those configured stamp-box reward commands, the plugin does not move money, teleport players, or modify CMI data.
 
 [Plugin index](README.md)
+
+## Blocker recovery
+
+Paused collection explains the allowed modes or the control to disable, including why landing alone may leave flight enabled. Stamp-box shortages explain how many credits are missing and how completed categories contribute them. `/passport review [reference]` checks only your saved requests without spending credits or retrying rewards, including while gameplay is dormant; `/passport review page <number>` shows further waiting requests. Share a copyable reference with staff when an outcome is uncertain. See [Blocker recovery messages](../blocker-recovery.md).
+
+## Complete reward communication
+
+[COMM-08 reward communication](../reward-communication.md) documents the shared result states, adopted flows, delivery evidence, next actions, and client acceptance. Claims retain their existing safety records. An accepted external reward command is described as a request, with a private reference for checking missing delivery.
+
+## Dynamic next steps
+
+See [Dynamic next steps and the global hub](../next-steps.md) for `/next`, the integrated feature next commands, selection rules, current coverage, and safe navigation.
+
+## One pinned focus goal
+
+This feature contributes goals to the Shared Library's [focus system](../focus-goals.md). Use `/next focus choose` to select one objective across the server, with shared hide/show/change/clear controls and temporary progress tracking. The guide explains this feature's supported goals and entry points.
+
+## Remembered first steps
+
+`/next guide passport` opens a short, optional checklist for this activity. Finished steps stay remembered, existing successes count, and Later, dismissal, Resume and chat controls are shared across the suite. See [First-success checklists](../first-success-checklists.md) for the three-step path and controls.

@@ -26,6 +26,10 @@ Console or a sender with `onembcmi.<feature-id>.admin` or `onembcmi.global.confi
 
 The shared `GuiService` uses a custom holder bound to the opening player's UUID, an unpredictable session nonce, and the exact server-side inventory instance. A stale page, mismatched owner, replaced inventory, or delayed callback cannot activate a button. Buttons accept only plain left-click by default; features must explicitly opt in to right-click or shift-click behavior. Accepted actions run on the next server tick, delayed close/actions remain bound to the originating session, terminal actions reject extra clicks, and open sessions are invalidated on close, quit, kick, world change, or plugin shutdown. The public `GuiSessionRegistry` exposes the same owner, nonce, and reference-identity checks to bespoke feature GUIs that cannot use `GuiService` directly.
 
+## Player guidance
+
+The Shared Library owns `/guidance`, a player menu for optional-hint frequency, chat/action-bar delivery, pauses, recent hints, and persistent hide/restore controls. ScheduledTips and AutoSell quest reminders share its per-player delivery budget, and RecordingMode supplies a temporary quiet preference. See [Player guidance](../player-guidance.md) for commands, defaults, data migration, and the provider contract.
+
 ## Commands
 
 ```text
@@ -36,6 +40,7 @@ The shared `GuiService` uses a custom holder bound to the opening player's UUID,
 /1mblib doctor
 /1mblib features [category]
 /1mblib storage
+/1mblib colors
 /1mblib debug plugins [category]
 /1mblib debug cmi
 /1mblib debug plugin <id>
@@ -383,6 +388,22 @@ Use simple monochrome Unicode symbols for best Minecraft font compatibility. If 
 
 Feature plugins should send player-facing chat through `messages().send(...)`, `featureInfo/error/header(...)`, or `renderFeaturePage(...)` in `AbstractCmiApiFeaturePlugin`. The static global `MessageStyle.info/error/header/prefix` helpers are reserved for the shared `/1mblib` library command; using them in a feature plugin will show the generic `1MB Library` prefix instead of the feature's friendly prefix.
 
+Informational chat uses **muted straw `#E8D8A8`**, with the familiar feature prefixes, mint highlights and blue action links. Status messages use only a bold coloured label: **Warning:** in orange `#FFB454`, **Error:** in soft red `#FF9E9E`, and **Success:** in mint green `#CAFFBF`. The remaining status message text, including amounts, is regular-weight muted straw. Underlining and chat actions are preserved.
+
+`MessageStyle.send(...)` and `MessageStyle.sendChat(sender, component)` apply the body palette at delivery. They preserve text, click actions, and hover events while mapping the former stock body colours (`#FFFFFF`, `#AAAAAA`, `#F2F5F7`, `#D8E2DC`, `#FFE08A`, and the Event Hunts body `#F5E0B7`) to muted straw. Uncoloured message roots and text hovers receive the body colour without overriding inherited accents. Other custom colours in ordinary information remain explicit overrides.
+
+Use `MessageStyle.status(sender, prefix, Status, plainText)` or `statusComponent(prefix, Status, component)` for outcomes, and `body()` / `bodyColor()` for ordinary information. The explicit status renderer preserves the separate feature prefix and interactive metadata while making the body muted straw and regular-weight. The caller establishes whether the result is a warning, error or confirmed success. `FeatureMessages.send(...)` recognises shared permission/error/reload/success keys and legacy invalid/unknown/failed message keys and stock leading severity colours in built-in templates; custom translation text and inline number colours do not establish a status. `FeatureMessages.sendStatus(...)` supplies an explicit role for other translated outcomes. Saved translation wording is rendered through these helpers without a colour migration of the saved files. `format(...)` remains literal for GUI, item and custom composition uses.
+
+The palette is applied only to feature information. Player chat relayed by BedrockChatBridge, staff/notable conversations, and literal nickname and colour previews retain their own formatting. `MessageStyle.component(...)` remains a literal parser for item/GUI presentation and previews. AntiFire mirrors the selected body colour in its independent startup renderer and does not acquire a dependency on the Shared Library.
+
+## Chat colour preview
+
+Run `/1mblib colors` in game to sample the selected **muted straw `#E8D8A8` palette with the current accents**. The command uses the same shared body and status helpers as ordinary feature messages, takes no further arguments and shows one compact sample. It requires `onembcmi.global.debug` (default: op) and sends samples only to the command sender. `/1mbcmi colors` works through the compatibility alias too.
+
+Ordinary sample text uses muted straw with the configured AFKShrine prefix icon, purple feature name, mint amounts, and a blue underlined action label. The warning, error, and success samples colour only their bold labels: **Warning:** in orange `#FFB454`, **Error:** in soft red `#FF9E9E`, and **Success:** in mint green `#CAFFBF`. Their remaining message text, including amounts, stays regular-weight muted straw. Labelled white player-chat samples provide a reference between feature messages.
+
+These are fictional samples: the claim label only shows a hover explanation, and running this command changes no balances, translations, configuration, or live message colours. Check the shared palette using the usual client font, resource pack, chat opacity, and bright/dark scenery.
+
 ## Global GUI Theme
 
 The shared library owns the default pane material for feature-plugin GUIs. This lets live menus change from hard-coded gray or black panes to one consistent visible color on restart, while still allowing a feature to opt out when a future GUI needs a special theme.
@@ -495,3 +516,27 @@ Paper:
 - Shared GUI inventories use custom inventory holders, inspect holders through Paper's direct holder API, cancel protected clicks/drags, and delay close-button closes by a few ticks so close handling does not run inside the same click event.
 
 [Plugin index](README.md)
+
+## Action-card presentation
+
+Feature Plugins can use the shared `ActionCard` for explicit state, remaining work, benefit, and next-step fields in inventory lore or chat tooltips. AutoSell and PassportDiscovery are the first consumers. Cards contain presentation snapshots; feature actions retain their own current-state validation and reward safeguards. See [Action cards and tooltips](../action-cards.md).
+
+## Blocker recovery presentation
+
+`RecoveryMessage` supplies required outcome, reason and next-step text with up to two read-only navigation or copy controls. Necessary results bypass optional hint preferences. `RecoveryFeedback` limits repeated gameplay blockers to one per player per 30 seconds across participating features. Forage and Passport opt into the shared player-owned request view; reward safety and permission checks also provide recovery instructions. See [Blocker recovery messages](../blocker-recovery.md).
+
+## Complete reward communication
+
+[COMM-08 reward communication](../reward-communication.md) documents the shared result states, adopted flows, delivery evidence, next actions, and client acceptance. Claims retain their existing safety records. An accepted external reward command is described as a request, with a private reference for checking missing delivery.
+
+## Dynamic next steps
+
+See [Dynamic next steps and the global hub](../next-steps.md) for `/next`, the integrated feature next commands, selection rules, current coverage, and safe navigation.
+
+## Shared first-success checklists
+
+`/next guide` coordinates short introductions for AutoSell, Passport, Forage, JourneyMap and PlayerTodo. The core owns remembered learning progress, shared controls and budgeted invitations. See [First-success checklists](../first-success-checklists.md) for player instructions, configuration and provider integration.
+
+## Focused welcome
+
+One shared return coordinator puts the player's pinned goal first, otherwise choosing verified ongoing progress or an earned reward. It uses saved guidance controls and repeat history, with at most one additional reward line. `/next welcome` shows the summary on demand; `/guidance welcomes on|off` controls future optional welcomes. See [Focused welcome](../focused-welcome.md).

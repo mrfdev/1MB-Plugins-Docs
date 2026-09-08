@@ -9,6 +9,7 @@ onembcmi.<plugin>.<type>.<specifics>
 Use `global` for shared library commands:
 
 ```text
+onembcmi.global.guidance
 onembcmi.global.use
 onembcmi.global.status
 onembcmi.global.doctor
@@ -27,6 +28,10 @@ onembcmi.global.translations
 onembcmi.global.clean.cache
 onembcmi.global.clean.playerdata
 ```
+
+`onembcmi.global.guidance` defaults to `true` and allows only a player's own optional-hint settings and delivery. Other global diagnostic permissions retain their existing defaults. See [Player guidance](player-guidance.md).
+
+`/1mblib colors` uses the existing `onembcmi.global.debug` permission (default: op) for a personal, read-only chat colour preview.
 
 Each feature plugin should have at least:
 
@@ -268,6 +273,7 @@ onembcmi.votetokens.admin.reload
 onembcmi.votetokens.admin.inspect
 onembcmi.votetokens.admin.migrate
 onembcmi.votetokens.admin.import
+onembcmi.votetokens.admin.create
 onembcmi.votetokens.admin.capture
 onembcmi.votetokens.admin.certify
 onembcmi.votetokens.admin.response
@@ -631,3 +637,19 @@ DropParty grants `onembcmi.dropparty.use`, `onembcmi.dropparty.join`, `onembcmi.
 Appreciation installs dormant with `enabled: false`, and its entry gate `onembcmi.appreciation.use` also defaults false for an opt-in staff, tester, or patron rollout. Only online players with that node, or the Appreciation admin parent, appear as new recipients. Both participants are rechecked before escrow funding. The supporting `onembcmi.appreciation.gift.xp`, `onembcmi.appreciation.gift.money`, `onembcmi.appreciation.gift.item`, `onembcmi.appreciation.anonymous`, `onembcmi.appreciation.claim`, and `onembcmi.appreciation.stats` nodes default true; none bypasses the entry gate for a new send. Claim remains independent so already-funded gifts stay claimable after a rollout permission is removed. All `onembcmi.appreciation.admin*` nodes default false. The parent includes `menu`, `inspect`, `recovery`, `quota`, `points`, `gifts`, `audit`, `reload`, and `debug`. `onembcmi.appreciation.admin.audit` exposes receipt-only anti-farming indicators for manual staff review; it stores no IP data and does not punish automatically. Recovery is especially sensitive: staff must inspect the receipt and independently verify the external XP, Vault, or inventory boundary before using a confirmed retry, rollback, refund, expiry-finalize, or delivery-finalize action. Operator status alone does not grant Appreciation administration.
 
 [Documentation index](README.md)
+
+## Next-step guidance
+
+`onembcmi.global.next` defaults to true and permits the global `/next` hub. Each suggestion requires its feature’s normal `.use` permission and active state. Per-feature next commands use that feature’s access independently of the global permission.
+
+Shared focus controls and bars also use `onembcmi.global.next`, together with the selected feature's active state and normal `.use` permission. No new focus permission is introduced. See [One pinned focus goal](focus-goals.md).
+
+First-success checklists use `onembcmi.global.next` plus the participating feature's normal use permission. Optional invitations additionally respect `onembcmi.global.guidance` and the shared hint preferences. Existing destination permissions are rechecked; no new first-step permission grants sales, purchases, rewards or task completion. See [First-success checklists](first-success-checklists.md).
+
+Progression previews reuse existing access: `/votetokens path [chat]` requires `onembcmi.votetokens.use` and `onembcmi.votetokens.progress`; `/journeymap path [chat]` requires `onembcmi.journeymap.use`. JourneyMap hides badge/reward navigation without the corresponding `milestones`/`rewards` permission and rechecks access at click time. Previews grant no trade or claim permission.
+
+KitStreaks guidance reuses `onembcmi.kitstreaks.use`; calendar and reward controls retain their existing permissions. Kit navigation also checks CMI kit-command and per-kit access. Optional reminders require shared guidance access and follow its preferences. No new permission node is introduced.
+
+Automatic focused welcomes require `onembcmi.global.next` and `onembcmi.global.guidance`, plus the selected feature's current access. `/next welcome` uses next-step access; `/guidance welcomes on|off` uses guidance access and changes only the player's own preference. No welcome permission grants gameplay actions. See [Focused welcome](focused-welcome.md).
+
+Collect community guidance reuses `onembcmi.collect.use` and `onembcmi.collect.stats`. The accepted-items action additionally requires `onembcmi.collect.submit` and a valid submission world/week. Shared next/focus and optional welcomes retain their global checks. No new permission grants contributions or rewards. See [Community contribution](community-contribution.md).

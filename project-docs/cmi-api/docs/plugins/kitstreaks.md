@@ -26,6 +26,12 @@ It does not replace CMI's kit manager, cooldowns, permissions, GUI, or kit usage
 - Provides player status, tracks, kits, calendar, rewards, top, claim, and admin inspect/reset commands.
 - Registers command, permission, placeholder, config, and debug metadata with `1MB-CMIAPI-LIB`.
 
+## Player guidance
+
+Open `/kitstreak guide [track|kit:<kit>] [chat]` for qualifying kits, exact calendar windows, shared Now/Next/Later previews and lasting achievements. `/kitstreak status` uses the short chat guidance; `/kitstreak next` and `/next` offer one relevant track. One accepted claim that advances several tracks gives one secured-day acknowledgement. Same-date repeats do not repeat it.
+
+An optional due reminder uses the shared `/guidance` budget and preferences. It does not send a reminder per track or announce a lost streak. See [Streak guidance](../streak-guidance.md) for boundaries, grace, milestone/reward wording and controls.
+
 ## Player FAQ
 
 ### Which kit claims count toward my streak?
@@ -49,6 +55,8 @@ Use `/kitstreak rewards` to see the configured rewards. If manual claims are ena
 ```text
 /kitstreak info
 /kitstreak status [track|kit:<kit>]
+/kitstreak guide [track|kit:<kit>] [chat]
+/kitstreak next [other|help]
 /kitstreak tracks [page]
 /kitstreak kits [page]
 /kitstreak calendar [track|kit:<kit>] [page]
@@ -184,6 +192,8 @@ tracking:
   - vote_tier_
   count-events-without-items: true
   one-streak-step-per-day: true
+guidance:
+  reminders-enabled: true
 streak:
   max-gap-days: 1
   default-track: daily
@@ -194,6 +204,7 @@ tracks:
 rewards:
   enabled: false
   require-claim: true
+  descriptions: []
   commands:
   - "daily|7|cmi money give {player} 250"
   - "daily|28|cmi toast {player} -t:goal -icon:chest 28 day kit streak"
@@ -217,6 +228,8 @@ Reward command format:
 ```text
 track|milestone-days|console command;second console command
 ```
+
+Optional player-facing descriptions use the `rewards.descriptions` list, for example `daily|7|A bonus supply bundle`. Keep descriptions aligned with reward commands. Missing descriptions use a generic reward label, never a guessed amount.
 
 Reward command placeholders:
 
@@ -248,7 +261,7 @@ Then it updates:
 
 With `tracking.one-streak-step-per-day: true`, repeated claims of the same kit or track on the same calendar day update totals and timestamps but do not increase the streak more than once.
 
-`streak.max-gap-days` controls how strict streak continuation is. The default `1` means a player must claim on consecutive calendar days. Higher values can create a softer rhythm for event kits or weekly-style tracks.
+`streak.max-gap-days` controls how strict streak continuation is. The default `1` means a player must claim on consecutive calendar days. Higher values can create a softer rhythm for event kits or weekly-style tracks. A value of `3` permits two extra missed dates; the midnight after the third date closes the continuation window. Boundaries use `time.zone`, including daylight-saving changes.
 
 VoteTokens reward kits are ignored by default through `tracking.ignored-kit-prefixes: [vote_tier_]`. These kits are CMI-kit delivery commands for GUI trades, not player `/kit` claims, so they should not advance KitStreaks even when an operator or admin has access to the kit.
 
@@ -301,7 +314,7 @@ CMILib:
 
 Paper:
 
-- Uses Paper/Bukkit listener, command, scheduler-free runtime, and player APIs.
+- Uses Paper/Bukkit listeners, commands and shared GUI/session handling. A minute-based reminder check reads cached state; new guidance profile loads use a bounded background worker.
 - Uses Adventure/MiniMessage output through shared message helpers.
 
 Shared Library:

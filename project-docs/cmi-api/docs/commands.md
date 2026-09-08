@@ -4,6 +4,23 @@ This page documents the global command shape. Individual plugins have their own 
 
 `/1mblib` is canonical. `/1mbcmi` remains a compatibility alias with the same subcommand behavior.
 
+## Player guidance controls
+
+`/guidance` opens shared optional-hint settings, also reachable through `/tips settings` and AutoSell's Filters menu. See [Player guidance](player-guidance.md) for the choices and connected features.
+
+```text
+/guidance [settings|status]
+/guidance normal|fewer|off
+/guidance chat|actionbar
+/guidance pause|resume
+/guidance welcomes [on|off]
+/guidance recent [page]
+/guidance hidden [page]
+/guidance hide|later|restore <hint-key>
+/guidance restore all
+/guidance preview|help|info|retry
+```
+
 ## Current Global Library Commands
 
 ```text
@@ -13,6 +30,7 @@ This page documents the global command shape. Individual plugins have their own 
 /1mblib doctor
 /1mblib features
 /1mblib storage
+/1mblib colors
 /1mblib help
 /1mblib debug plugins
 /1mblib debug plugins <category>
@@ -56,6 +74,7 @@ This page documents the global command shape. Individual plugins have their own 
 | `/1mblib doctor` | Runs support checks for hooks, feature registration, config validation, and storage paths. |
 | `/1mblib features [category]` | Lists registered 1MB Library features with active/config/dependency/validation health, optionally filtered by category. |
 | `/1mblib storage` | Shows shared data, cache, translation, debug, and playerdata storage sizes. |
+| `/1mblib colors` | Privately previews muted straw text with current accents and bold, coloured status labels. Requires `onembcmi.global.debug`; sample text only, with no settings or balance changes. |
 | `/1mblib debug plugins [category]` | Lists registered features and health states in a compact debug-friendly view. |
 | `/1mblib debug cmi` | Prints CMI, CMILib, CMI-API, server, and plugin metadata for support. |
 | `/1mblib debug plugin <plugin>` | Shows a summary for one registered feature. |
@@ -451,6 +470,7 @@ AFKShrine:
 /afkshrine trade afkshrine_starter confirm
 /afkshrine gui
 /afkshrine menu
+/afkshrine postcard
 /afkshrine tools
 /afkshrine tools list
 /afkshrine tools claim netherite_spear
@@ -574,6 +594,7 @@ PassportDiscovery:
 ScheduledTips:
 
 ```text
+/tips settings
 /tips status
 /tips off
 /tips on
@@ -664,6 +685,7 @@ JourneyMap:
 ```text
 /journeymap
 /journeymap status
+/journeymap path [chat]
 /journeymap milestones
 /journeymap milestones 2
 /journeymap rewards
@@ -679,6 +701,8 @@ KitStreaks:
 ```text
 /kitstreak info
 /kitstreak status
+/kitstreak guide [track|kit:<kit>] [chat]
+/kitstreak next [other|help]
 /kitstreak status daily
 /kitstreak status kit:starter
 /kitstreak tracks
@@ -953,6 +977,8 @@ VoteTokens:
 /votetokens info
 /votetokens help
 /votetokens progress
+/votetokens path [chat]
+/votetokens next [other|help]
 /votetokens progress mrfloris
 /votetokens tier 1 1
 /votetokens admin inspect mrfloris
@@ -1372,8 +1398,12 @@ AutoSell:
 /autosell quests gui
 /autosell quests claim [all|id]
 /autosell milestones
+/autosell milestones claim [all|id]
+/autosell milestones claim market_sweep
+/autosell milestones claim all
 /autosell caps
 /autosell toggle
+/autosell onlysell cobblestone
 /autosell trigger full
 /autosell trigger always
 /autosell categories
@@ -1415,7 +1445,12 @@ AutoSell:
 /autosell debug all
 ```
 
+`/autosell onlysell <material>` enables AutoSell for just that priced, permitted material and disables every other item and category. For example, `/autosell onlysell cobblestone` saves Cobblestone as the only selection, including after restarts or future worth additions. Normal safety rules, filters, triggers, worlds, and caps still apply. Players can adjust the saved selection through the existing item and category controls.
+
 `/autosell` opens an opt-in inventory cleanup GUI. Players can turn AutoSell on or off, choose categories, browse per-category material pages, toggle individual materials, use the top-row bulk control to turn every available item in one category on or off across all of its pages, or use the adjacent view control to show all available items, only off items, or only on items. Enabled material choices glint for quick scanning, disabled choices stay plain, hover lore shows the exact state, and staff-blacklisted materials do not appear in these player item views. The bulk action leaves staff-blacklisted items blocked and does not change other categories. Players can also set value filters, choose a notification style, opt into allowed worlds, choose whether AutoSell runs after pickup/break batches or only when inventory storage slots are nearly full, preview what would sell, review recent batched results, inspect their own top sold categories/materials with `/autosell stats`, use the quest hub for claimable rewards plus daily/weekly/monthly/all quest pages, view the visible `/autosell milestones` tree for one-time lifetime, bulk-batch, chain, streak, and broker goals, and spend broker points on permanent daily cap unlocks. AutoSell reads CMI `Worth.yml`, pays through the CMI-backed Vault economy provider, and only scans normal inventory storage slots after a short delayed batch. It never sells hotbar, offhand, armor, open-container, custom-name, lore, enchant, damaged, PDC, custom-model, shulker, bundle, or other modified/storage items by default. The final sale rechecks exact stack identity before removing items and refunds removed stacks if the economy payment fails. Broker progress grows from legitimate sold item volume, configurable milestone and quest rewards can grant broker points, small daily bonuses, and safe allowlisted CMI command rewards, sell chains reward active batches within a short window, daily/weekly streaks reward repeated qualifying use, and staff can start preset/manual temporary AutoSell Happy Hour boosts that appear in `/rate` while AutoSell is enabled. Scheduled Happy Hour automation exists but is disabled by default. Admin commands can reload config/data/worth, run colored readiness checks, print richer economy reports, manage a hard material blacklist, blacklist materials directly from numbered material warnings, move materials between categories, inspect player profiles, review suspicious volume warnings, review chunk revenue heatmaps, start/stop passive tuning observation sessions that only produce suggestions, list/start/stop AutoSell boosts, and export Markdown reports with server/player totals, top earners, top categories, top materials, category/material leaders, cap usage, broker growth, quest progress, heatmaps, passive tuning suggestions, and warning summaries.
+
+Ready milestones can be collected from `/autosell milestones`, its **Claim Ready Milestones** button, or `/autosell milestones claim all` without another sale. Quest rewards use `/autosell quests gui` or `/autosell quests claim all`. Known money/XP-only AutoSell rewards leave selling enabled. For manual item claims, click **Turn off AutoSell** when prompted and retry the same claim; automatic item rewards pause selling before delivery. Ready rewards do not block selling, while an unfinished receipt requires staff review using the supplied reference. Daily bonuses accumulate within the configured cap for the current server day and reset at midnight Netherlands time. See the [AutoSell player FAQ](plugins/autosell.md#player-faq) for examples.
+
 
 MobHat:
 
@@ -2077,3 +2112,31 @@ Appreciation:
 - Keep broad cache cleanup separate from long-lived playerdata cleanup.
 
 [Documentation index](README.md)
+
+## Player next steps
+
+`/next [other|chat|focus|guide|welcome|help]` opens a focused global hub. AutoSell, Passport, JourneyMap, and Forage also accept `/autosell next`, `/passport next`, `/journeymap next`, and `/forage next`, with `other` and `help` options. See [Dynamic next steps](next-steps.md).
+
+### One pinned focus goal
+
+`/next focus` opens the shared focus controls. Add `choose`, `chat`, `hide`, `show`, `clear` or `help`. An optional feature and page follow `choose` or `chat`. Integrated feature next commands also accept `focus` to open their chooser. See [One pinned focus goal](focus-goals.md) for examples and coverage.
+
+### First-success checklists
+
+`/next guide` opens the shared first-step activity list. Use `autosell`, `passport`, `forage`, `journeymap`, or `todo`, followed optionally by `chat`, `later`, `dismiss`, or `resume`. The four feature-specific next commands also accept `next guide`. See [First-success checklists](first-success-checklists.md).
+
+### Progression previews
+
+`/votetokens path [chat]` (use + progress access), `/journeymap path [chat]` (use access). Both support the visual path and chat fallback; browsing never claims rewards. VoteTokens also joins `/next` and `/votetokens next` with an on-demand reward-path suggestion. See [Progression previews](progression-previews.md).
+
+### Streak guidance
+
+`/kitstreak guide [track|kit:<kit>] [chat]` opens the streak window and milestone guide. `/kitstreak status [target]` uses the short chat view. `/kitstreak next` and `/next` offer one relevant streak path. Optional due reminders use `/guidance`, including Later, Hide and Off. See [Streak guidance](streak-guidance.md).
+
+### Focused welcome
+
+`/next welcome` shows one current return summary in chat, even with optional hints Off. `/guidance welcomes on|off` changes only automatic return welcomes; `/guidance welcomes` opens the settings menu. A requested summary cancels any automatic welcome still waiting for this login. See [Focused welcome](focused-welcome.md).
+
+### Community contribution
+
+`/collect community [chat|retry]` shows personal and shared saved score, the configured payoff, and a safe way to help. `retry` reloads a failed background score index. `/collect next`, `/next`, and `/next focus choose collect` connect the active goal to shared guidance. See [Community contribution](community-contribution.md).

@@ -1,6 +1,6 @@
 # VoteTokens
 
-VoteTokens provides a secure GUI for repeatable vote-token trades with tier/layer progression. It is intended to replace the old CMI ctext `/vote tokens` page with a real menu while leaving VotingPlugin's `/vote` command untouched.
+VoteTokens provides a secure GUI for repeatable vote-token trades with tier/layer progression, vote-reward item tools, and non-tool purchases paid with extra vote tokens. It is intended to replace the old CMI ctext `/vote tokens` page with a real menu while leaving VotingPlugin's `/vote` command untouched.
 
 The plugin command is `/votetokens`. If the live server should keep the player habit of `/vote tokens`, remove the old CMI ctext alias and make that CMI alias run `/votetokens`; do not try to register `/vote` from this plugin because VotingPlugin owns that root command.
 
@@ -8,15 +8,32 @@ The plugin command is `/votetokens`. If the live server should keep the player h
 
 - `/votetokens` opens the `Tokens Trade Index` GUI.
 - The top book closes the VoteTokens GUI and runs `/vote`, so VotingPlugin can show its normal voting flow.
-- The bottom-left player head shows the player's current tier/layer progress and opens a read-only progress tree.
+- The bottom-left player head opens a compact progression preview: your current layer, next payoff and one later goal. **View remaining trades** shows unfinished entries; **All stages** retains the full, paginated progress tree.
 - The progress tree uses dye colors: green complete, orange in progress, yellow unlocked, red locked, and gray disabled.
 - The book next to the player head sends the vote-item information link: `https://omgboards.com/vote`.
 - The tools button opens a single-input tools page for upgrading eligible vote reward items and repairing their vanilla enchant lore.
+- The separate `Other Upgrades` button opens extra-token purchases that do not modify a vote reward item. By default, its Jobs option grants the next unmet stage, `jobs.max.6` and then `jobs.max.12`; an existing effective Jobs limit skips any stage already satisfied.
+- Every VoteTokens page uses the standard footer contract described below.
 - Tier/layer pages preview configured rewards even when locked.
 - Locked trades explain what is missing; unlocked trades open a confirmation page.
 - Confirmation rechecks permission, exact token count, unlocked layer, configured reward, and one empty inventory slot after the tokens are removed.
 
 Progress is completion-based, not one-time reward based. A player may trade the same unlocked item again later, but the first successful trade is what marks that item complete for unlocking the next layer.
+
+### GUI Footer
+
+Every VoteTokens inventory is a 54-slot menu. Its right-side footer follows the same navigation contract as the other 1MB Library Feature Plugins:
+
+| Slot | Control | Behavior |
+| --- | --- | --- |
+| `48` | Previous Page Arrow | Opens the previous page when one exists. |
+| `49` | Page indicator | Shows the current page and keeps pagination centered. |
+| `50` | Next Page Arrow | Opens the next page when one exists. |
+| `51` | Context control | Shows `Other Upgrades` on the index when available; nested pages use an Arrow to return to their VoteTokens parent or index. |
+| `52` | `Back to /menu` Nether Star | Uses the shared glowing menu button. It closes VoteTokens and dispatches `/menu` when `1MB-CMIAPI-Menu` is enabled. If that feature is unavailable, VoteTokens remains open and reports the problem. |
+| `53` | `Close` Barrier | Always closes the inventory. It never performs Back navigation. |
+
+The preview uses actual enabled tiers, layers, distinct completed entries and configured reward names. Empty or unfinished layers explain that they cannot be finished yet; disabled future layers never promise that more purchases will open them. Opening a preview cannot spend tokens, complete trades, or grant rewards. Saved progress reads for the new preview run off the server thread. Closed, replaced, reloaded and inaccessible views cannot reopen from an old load. See [Progression previews](../progression-previews.md).
 
 ## Tier Rules
 
@@ -31,7 +48,7 @@ Default reward tree:
 - Completing every enabled item in a layer unlocks the next enabled layer in that tier.
 - Completing every enabled layer in a tier unlocks the next enabled tier.
 - Progress totals count only enabled tiers and enabled layers; disabled work-in-progress layers are visible as disabled entries but do not inflate completed layer totals.
-- When all enabled layers are complete and the next configured layer is disabled, the progress header points to that next layer as unlocked but disabled instead of falling back to Tier 1.
+- When enabled content is complete, the compact path preserves the completed stage and marks a disabled future layer unavailable. Legacy aggregate placeholders and the full-tree summary retain their established frontier wording.
 
 The tree is stored in `plugins/1MB-CMIAPI/VoteTokens/rewards.yml`, so future tiers or extra layers can be added without code changes.
 
@@ -39,11 +56,11 @@ The tree is stored in `plugins/1MB-CMIAPI/VoteTokens/rewards.yml`, so future tie
 
 ### How do I unlock the next layer or tier?
 
-Complete every enabled reward item in your current layer. Complete all enabled layers in a tier to unlock the next enabled tier. `/votetokens progress` shows what is still missing.
+Complete every enabled reward item in your current layer. Complete all enabled layers in a tier to unlock the next enabled tier. `/votetokens progress` gives a short chat preview. `/votetokens path` opens the visual path with **View remaining trades**, **Preview next rewards**, and **All stages**. `/votetokens path chat` is the chat alternative.
 
 ### Can I buy an unlocked reward more than once?
 
-Yes. These trades are repeatable. The first successful purchase marks that entry complete for progression; later purchases still cost tokens.
+Yes. These trades are repeatable. The first successful purchase marks that entry complete for progression; later purchases still cost tokens and give another reward without adding unlock progress. Reward tooltips and confirmation pages explain which kind of purchase you are reviewing.
 
 ### Why is a trade blocked even though I have tokens?
 
@@ -62,7 +79,9 @@ Tools need an eligible, certified vote reward item. A matching name or appearanc
 ```text
 /votetokens
 /votetokens tools
+/votetokens upgrades
 /votetokens progress [player]
+/votetokens path [chat]
 /votetokens tier <tier> [layer]
 /votetokens admin inspect <player|uuid>
 /votetokens admin grant <player|uuid> <tier> <layer> <item> [count] [note]
@@ -86,6 +105,8 @@ Tools need an eligible, certified vote reward item. A matching name or appearanc
 /votetokens debug set token-<id>
 /votetokens debug set extra-token-<id>
 /votetokens debug all
+/votetokens debug transactions [page]
+/votetokens debug transaction <uuid>
 ```
 
 VoteTokens registers no command aliases; `/votetokens` is the only direct plugin command.
@@ -105,7 +126,7 @@ Player-facing VoteTokens chat responses use the shared feature-prefix system wit
 /votetokens admin capture token netherite
 ```
 
-Capture the six extra vote token items used by the tools page. These are separate from the normal trade tokens and use the ore names players actually receive:
+Capture the six extra vote token items used by the Tools and Other Upgrades pages. These are separate from the normal trade tokens and use the ore names players actually receive:
 
 ```text
 /votetokens admin capture extra-token lapis
@@ -116,7 +137,7 @@ Capture the six extra vote token items used by the tools page. These are separat
 /votetokens admin capture extra-token copper
 ```
 
-By default, one tools upgrade costs 64 of every enabled extra token type, so the player needs six matching stacks when all six defaults are enabled.
+By default, one paid Tools action or Other Upgrades purchase costs 64 of every enabled extra token type, so the player needs six matching stacks when all six defaults are enabled.
 
 The same capture tools are also available through a small debug bridge for staff muscle memory:
 
@@ -184,6 +205,24 @@ For manual setup or staff payouts:
 ```
 
 This stamps the held setup item with the hidden reward identity. Use it after taking a kit item into your hand and before saving that item back into a CMI kit. If the held item conflicts with an existing captured preview, the command asks for `confirm`.
+
+## Other Upgrades Page
+
+`Other Upgrades` is a separate index button and can also be opened with `/votetokens upgrades`. It has no mutable item slot and never treats a player unlock as a tool transformation.
+
+With the default configuration, the Jobs upgrade is sequential:
+
+1. A player below the first stage can spend one configured extra-token cost to receive `jobs.max.6`.
+2. Once the 6-job stage is owned, the same player can spend the cost again to receive `jobs.max.12`.
+3. At 12 jobs or an unlimited Jobs maximum, the option is complete and cannot be purchased again.
+
+VoteTokens checks both Jobs' effective maximum and its own completed-purchase entitlement. An existing effective 6-job limit therefore qualifies for the 12-job stage. The local entitlement prevents a previously paid stage from being charged again if an external permission later drifts; a completed final entitlement whose Jobs permission is missing is shown as needing staff review.
+
+After a verified purchase, the highest completed stage is stored in the player's VoteTokens data file. With the defaults this is `upgrades.jobs-max: 6` or `upgrades.jobs-max: 12`; configured replacement targets are stored the same way. The configured stages must be positive and strictly increasing, and the final stage cannot exceed 1,000; an invalid configuration makes the Jobs entry unavailable without consuming tokens.
+
+Each confirmation rechecks Jobs, LuckPerms, the current stage, every enabled captured extra-token definition, and the exact inventory cost. The grant is UUID-targeted through LuckPerms, and VoteTokens then forces a fresh Jobs maximum calculation instead of treating command acceptance as proof. The lower `jobs.max.6` node may remain after `jobs.max.12` is granted because Jobs uses the highest matching maximum.
+
+The cost inventory and target permission are stored in the shared durable transaction journal before tokens are removed. VoteTokens gives LuckPerms a short bounded window to update, then verifies Jobs. A delivered transaction interrupted by a disconnect or restart resumes verification when the player joins. A delivery, verification, progress-save, or cleanup failure leaves an unresolved transaction and payload for `/votetokens debug transactions`; it does not charge a second time or claim success.
 
 ## Tools Page
 
@@ -387,7 +426,7 @@ onembcmi.votetokens.admin.certify
 onembcmi.votetokens.admin.response
 ```
 
-Players get `use`, `trade`, `progress`, and `tools` by default. Staff tools are op-only by default and should be assigned to designated admins through the permission plugin.
+Players get `use`, `trade`, `progress`, and `tools` by default. The Other Upgrades purchase flow uses the existing `trade` permission. Staff tools are op-only by default and should be assigned to designated admins through the permission plugin.
 
 ## Placeholders
 
@@ -417,7 +456,10 @@ plugins/1MB-CMIAPI/VoteTokens/import/old-votes.log
 plugins/1MB-CMIAPI/VoteTokens/players/<uuid>.yml
 plugins/1MB-CMIAPI/VoteTokens/escrow/<uuid>.yml
 plugins/1MB-CMIAPI/VoteTokens/escrow/quarantine/<uuid>-<timestamp>.yml
+plugins/1MB-CMIAPI/VoteTokens/transactions/records/<transaction-uuid>.yml
+plugins/1MB-CMIAPI/VoteTokens/transactions/payloads/records/<transaction-uuid>.yml
 plugins/1MB-CMIAPI/VoteTokens/logs/player-trades.log
+plugins/1MB-CMIAPI/VoteTokens/logs/player-upgrades.log
 plugins/1MB-CMIAPI/VoteTokens/logs/admin-actions.log
 plugins/1MB-CMIAPI/VoteTokens/logs/legacy-certifications.log
 plugins/1MB-CMIAPI/VoteTokens/logs/old-votes-import-*.md
@@ -468,6 +510,13 @@ tools:
       t2_l2_i3:
         from: DIAMOND_PICKAXE
         to: NETHERITE_PICKAXE
+other-upgrades:
+  enabled: true
+  extra-tokens-required-per-type: 64
+  jobs:
+    enabled: true
+    first-max: 6
+    final-max: 12
 gui:
   use-global-filler-material: true
   filler-material: LIGHT_BLUE_STAINED_GLASS_PANE
@@ -485,8 +534,10 @@ migration:
 - GUI clicks are cancelled and only top-inventory clicks from the owning player are processed.
 - Each GUI open has an active session id. Stale holders, wrong-owner holders, and non-player interactions are cancelled before any action can run.
 - Dragging into the GUI is blocked.
-- Every trade uses a per-player processing lock and a fresh validation at confirmation time.
-- Vote-token trades and tool transformations also use durable request-token receipts. Exact token storage before/after state, direct reward items, and tool input/output are stored in transaction payload escrow before mutation. Command progress is checkpointed, compensation clears escrow before rollback/refund, and unresolved work is inspectable through `/votetokens debug transactions`.
+- Every trade and Other Upgrades purchase uses a per-player processing lock and a fresh validation at confirmation time.
+- Vote-token trades, tool transformations, and Jobs unlocks also use durable request-token receipts. Exact token storage before/after state, direct reward items, tool input/output, and external-upgrade targets are stored in transaction payload escrow before mutation. Command progress is checkpointed, compensation clears escrow before rollback/refund, and unresolved work is inspectable through `/votetokens debug transactions`.
+- The Jobs purchase accepts only the configured sequential stage shown by the active confirmation session. It refuses missing Jobs/LuckPerms hooks, missing captures, stale stages, and insufficient exact tokens before inventory mutation.
+- LuckPerms grants target the player's UUID and, with the defaults, use `jobs.max.6` followed by `jobs.max.12`. After command delivery, VoteTokens asks Jobs to refresh and calculate its effective maximum; it finalizes only when Jobs reports the target or a higher/unlimited limit.
 - Reward setup creation uses plain text only, applies fixed VoteTokens styling, writes the hidden PDC reward marker, and stores the exact preview item in `rewards.yml`.
 - Tokens are compared with the captured item using Paper/Bukkit `ItemStack#isSimilar`, so custom names, lore, enchantments, model data, and serialized metadata must match.
 - Tokens are removed from cloned storage contents first, then applied atomically to the player's storage contents.
@@ -511,6 +562,10 @@ migration:
 ## CMI And Paper Usage
 
 VoteTokens depends on CMI, CMILib, and 1MB-CMIAPI-Lib like the rest of the feature jars. It uses CMI kit commands as the default reward transport. Enchant and Unbreakable tools use the CMILib item API directly, netherite conversion uses Paper's metadata-preserving `ItemStack#withType`, shield presets use Paper/Bukkit item metadata, and exact item capture and GUI logic use Paper/Bukkit ItemStack serialization and inventory APIs. Shield presets use Bukkit `ShieldMeta` for the design and Paper's `TOOLTIP_DISPLAY` data component to hide only `BANNER_PATTERNS` and `BASE_COLOR`, leaving the item name and VoteTokens lore visible without using deprecated tooltip flags or dispatching held-item commands from the GUI. ItemSoulBind is optional; the soulbind tool writes its standard persistent-data key directly instead of dispatching ItemSoulBind commands.
+
+Jobs and LuckPerms are optional hooks used only by the Jobs entry on Other Upgrades. VoteTokens isolates its Jobs version-sensitive maximum query behind a fail-closed adapter, forces Jobs' permission cache refresh, and grants the documented `jobs.max.<number>` node through a UUID-targeted LuckPerms command. If either hook or the expected Jobs API surface is unavailable, the menu shows an unavailable entry and consumes nothing.
+
+The glowing Nether Star is an optional integration with the `1MB-CMIAPI-Menu` Feature Plugin. VoteTokens looks it up at click time, closes its own inventory only after that feature is available, and then dispatches `/menu` as the player.
 
 The plugin does not require VotingPlugin at runtime. VotingPlugin can continue to give the six token item types; VoteTokens only verifies and consumes those token items when players trade.
 
@@ -542,6 +597,9 @@ Recommended local tests:
 
 - Capture all six token types from real token items: diamond, emerald, iron, gold, quartz, and netherite.
 - Open `/votetokens` as a normal player and verify only player commands tab-complete.
+- Confirm the index shows distinct `Vote Token Tools` and `Other Upgrades` buttons, and that `/votetokens upgrades` opens the same non-tool page.
+- On the index, layer, Tools, preview, confirmation, and Other Upgrades pages, confirm pagination stays centered in slots 48-50, slot 51 contains only the applicable Other Upgrades or Arrow context action, the glowing Nether Star in slot 52 opens `/menu`, and the Barrier in slot 53 always closes instead of navigating backward.
+- Disable `1MB-CMIAPI-Menu`, click the slot-52 Nether Star, and confirm VoteTokens remains open with an unavailable message instead of closing into an unhandled command.
 - Try a locked tier/layer and confirm it does not open a trade.
 - Try a trade with 63 matching tokens and confirm it fails with a readable need/have token count instead of a long repeated token sentence.
 - Try a trade with 70 matching tokens in one stack and a full inventory and confirm it fails without consuming tokens.
@@ -555,6 +613,11 @@ Recommended local tests:
 - On a disposable test copy, deny deletion of a readable escrow record during recovery and confirm the returned inventory item is rolled back. Also verify the server and audit log clearly flag the possible-duplicate outcome if that rollback is deliberately forced to fail.
 - Click the Tool Cost chest and confirm the read-only extra-token preview opens with the captured lapis, emerald, iron, gold, redstone, and copper items.
 - Click the Tool Cost chest while a tool item is in the input slot and confirm that item is returned before the preview opens.
+- With Jobs and LuckPerms enabled and a Jobs maximum below 6, open Other Upgrades, preview the exact extra tokens, buy the first stage, and confirm exactly one Other Upgrades cost is removed, `jobs.max.6` is effective, `upgrades.jobs-max: 6` is saved in the player file, and `logs/player-upgrades.log` records the transaction.
+- Reopen Other Upgrades after the first purchase and confirm only the 12-job stage is offered. Buy it once, confirm a second cost is removed and Jobs reports 12, then confirm the entry becomes complete and cannot be purchased a third time.
+- Give a test player an existing effective `jobs.max.6` permission without a VoteTokens entitlement and confirm the menu offers 12 rather than charging for 6. Remove an already recorded permission on a disposable test player and confirm VoteTokens does not offer the same paid stage again; a completed final entitlement with external drift should show a staff-review warning.
+- Disable Jobs or LuckPerms, use invalid 6/12 configuration, leave one extra token uncaptured, and try a stale confirmation session. Confirm every case fails before token removal.
+- Force LuckPerms command delivery or Jobs post-grant verification to fail on a disposable test server and confirm the cost/target remain in an unresolved durable transaction for staff recovery instead of reporting success or allowing a second purchase.
 - Try a tools upgrade without one of the six required extra token stacks and confirm the input item and tokens are unchanged. The chat response should use a short summary plus one readable line per missing extra token type.
 - Try each default tools upgrade with six matching extra-token stacks and confirm the item changes once, the extra tokens are removed, and `logs/player-tools.log` receives an entry.
 - Place a certified reward with Unbreaking below X in the main Tools page and confirm Make Unbreakable is a gray `Requires Unbreaking X` item. Attempt the action directly and confirm it is rejected before token checks. Buy Unbreaking X and confirm one tools cost is consumed, the enchant view changes to `Already Unbreaking X`, and Make Unbreakable becomes available after returning to the main Tools page. Buy Make Unbreakable and confirm a second tools cost is consumed, the real flag and `Forged to Unbreakable` lore are present, and both durability actions become unavailable.

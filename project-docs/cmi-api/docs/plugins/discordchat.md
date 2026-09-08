@@ -539,3 +539,7 @@ TODO reward ideas:
 - GUI actions are owner/session checked, click-throttled, and handled at high event priority. Stale menus close without running actions. All DiscordChat pages use the shared light-blue frame, player-head footer, centered back/help navigation, server-menu shortcut, and bottom-right close control.
 - The item tools GUI has one mutable input slot. The item is atomically saved to identity-validated disk escrow while present, returned on close/quit/kick/plugin disable, and kept for staff review if automatic recovery would risk a duplicate. Malformed records are quarantined rather than deleted.
 - The plugin does not require a player to have Discord; players can opt out of invite reminders.
+
+## Optional DiscordSRV loading
+
+DiscordSRV-specific events and its shaded Adventure serializer live inside the optional bridge. DiscordChat can load and expose its offline/status behavior when DiscordSRV is absent. The compile-only API JAR belongs in the test server's `compile-support` directory, outside active `plugins`, so local tests do not connect a Discord bot.

@@ -58,7 +58,7 @@ GameTypes natively routes the exact `/<configured-command> menu` form to the sha
 /cave menu -> /gametype menu cave
 ```
 
-This interception is deliberately narrow. `/chunkblock`, `/chunkblock go`, `/chunkblock phases`, `/chunkblock count`, and `/chunkblock chunks` continue to the BentoBox ChunkBlock addon. Existing CMI aliases remain compatible but are no longer required for this exact menu route. Set `commands.intercept-gametype-menu: false` to return all game-root command handling to BentoBox/CMI.
+This interception is deliberately narrow. `/chunkblock`, `/chunkblock go`, `/chunkblock phases`, `/chunkblock count`, `/chunkblock chunks`, `/chunkblock topblock`, and `/chunkblock ledger` continue to the BentoBox ChunkBlock addon. Existing CMI aliases remain compatible but are no longer required for this exact menu route. Set `commands.intercept-gametype-menu: false` to return all game-root command handling to BentoBox/CMI.
 
 When a player is already inside a configured game world, `/gametype menu` can detect the type from exact configured world names first and optional world-name fragments second.
 
@@ -111,11 +111,14 @@ topblock
 chunks
 phases
 count
+ledger
 ```
 
 `reset` is disabled by default because it is destructive. If staff enable it, clicking the reset button opens a confirmation GUI first. Players must explicitly click the red confirm button before GameTypes runs the BentoBox reset command.
 
-`topblock` remains OneBlock-only. `phases` and `count` are enabled for OneBlock and ChunkBlock. `chunks` is ChunkBlock-only and opens its unlocked-territory view. The guards keep these buttons out of unrelated SkyBlock, AcidIsland, CaveBlock, and SkyGrid menus even when older configs are present.
+`phases` and `count` are enabled for OneBlock and ChunkBlock. `topblock` is enabled for both block-progression game types. `chunks` and `ledger` are ChunkBlock-only. The three native ChunkBlock shortcuts are placed together on their own row and run `/chunkblock chunks`, `/chunkblock topblock`, and `/chunkblock ledger` as the player. The guards keep these buttons out of unrelated SkyBlock, AcidIsland, CaveBlock, and SkyGrid menus.
+
+Existing configurations receive a one-time layout migration when the old `chunks` and `topblock` settings still share slot 32. It enables the previously unavailable ChunkBlock `topblock` shortcut and separates both buttons into the ChunkBlock-only row. Custom placements are preserved, and the normal `/gametype debug set chunkblock <option> <true|false>` controls remain available afterward.
 
 `scoreboard` runs `/sb` as the player and is shown in every game type menu. This is safe in test environments even without AnimatedScoreboard installed; the live server handles the actual toggle.
 
@@ -453,7 +456,8 @@ On a BentoBox environment, test:
 
 - `/gametype menu oneblock` from a normal world.
 - `/gametype menu chunkblock` and `/chunkblock menu` from a normal world.
-- `/chunkblock go`, `/chunkblock phases`, `/chunkblock count`, and `/chunkblock chunks`, confirming these remain native BentoBox commands.
+- `/chunkblock go`, `/chunkblock phases`, `/chunkblock count`, `/chunkblock chunks`, `/chunkblock topblock`, and `/chunkblock ledger`, confirming these remain native BentoBox commands.
+- Open `/chunkblock menu` and confirm the **Unlocked Chunks**, **Top Block**, and **Chunk Ledger** buttons are all visible in distinct slots and dispatch their matching native commands.
 - `/gametype menu` from each configured game world.
 - Exact game-root menu routes such as `/oneblock menu` and `/chunkblock menu`.
 - Disabled addon detection after copying real BentoBox addon configs, especially `disabled-gamemodes` lists like Biomes.

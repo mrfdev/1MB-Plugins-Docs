@@ -62,6 +62,7 @@ export default defineConfig({
           label: 'Players',
           items: [
             { slug: 'player-guides/getting-started' },
+            { slug: 'player-guides/next-and-guidance' },
             { slug: 'player-guides/commands' },
             { slug: 'player-guides/features' },
             {

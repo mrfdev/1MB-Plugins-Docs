@@ -4,9 +4,22 @@ This directory contains the long-form documentation for the 1MB Library project.
 
 ## Main Pages
 
+- [Your next step and helpful hints](player-navigation.md): a player introduction to `/next`, `/guidance`, pinned goals, first steps and recent activity improvements.
 - [Resources](resources.md)
 - [Installation](installation.md)
 - [Compile Instructions](compiling.md)
+- [Player guidance](player-guidance.md)
+- [Action cards and tooltips](action-cards.md)
+- [Blocker recovery messages](blocker-recovery.md)
+- [Complete reward communication](reward-communication.md) describes earned, ready, received, and requested rewards with useful next actions (COMM-08).
+- [Dynamic next steps and the global hub](next-steps.md) covers `/plugin next`, `/next`, and the shared recommendation providers (COMM-01/COMM-02).
+- [One pinned focus goal](focus-goals.md) covers shared goal selection, temporary progress bars, and personal tasks (COMM-06).
+- [First-success checklists](first-success-checklists.md) covers three-step introductions, remembered progress, and optional invitations (COMM-03).
+- [Progression previews](progression-previews.md): current stage, next payoff, and one later goal in VoteTokens and JourneyMap.
+- [Streak guidance](streak-guidance.md) covers qualifying kit claims, calendar windows, retained achievements and shared optional due reminders (COMM-09).
+- [Focused welcome](focused-welcome.md) covers one useful return message across the suite, saved controls and safe Resume/Review navigation (COMM-10).
+- [Community contribution](community-contribution.md) connects personal Collect submissions to the shared event goal, its actual benefit and the next action (COMM-11).
+- [Communication coverage audit](communication-coverage.md) maps the twelve patterns across the active suite and separates acceptance work from future adoption; includes the full 64-artifact matrix.
 - [Commands](commands.md)
 - [Permissions](permissions.md)
 - [Placeholders](placeholders.md)
@@ -16,6 +29,7 @@ This directory contains the long-form documentation for the 1MB Library project.
 - [Plugin Metadata And Debug Output](plugin-metadata.md)
 - [Release Process](release.md)
 - [Paper And Java Release Update Prompt](paper-java-release-update-prompt.md)
+- [CoreProtect 25.0 RC1 Compatibility Check](compatibility-tests/coreprotect-25.0-rc1.md)
 - [Credits](credits.md)
 - [Development Rules](development-rules.md)
 
