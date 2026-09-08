@@ -48,7 +48,11 @@ The reward menu shows each reward's cooldown and how long you have left to wait.
 
 ### Do tool upgrades ask me to confirm?
 
-Currently, an eligible upgrade in `/discordchat tools` applies and spends its displayed point cost on the first click. Read the upgrade and cost before clicking; there is no separate confirmation step yet.
+Public Beta 1 on the live server applies an eligible upgrade and spends its displayed point cost on the first click. Read the upgrade and cost before clicking there.
+
+The Public Beta 2 local test build adds a confirmation. In `/discordchat tools`, place exactly one tool or weapon in the yellow slot below the chest, then choose an upgrade on the right. You see the proposed item, enchantment level, and point cost before pressing **Confirm Upgrade**. **Cancel Upgrade** or **Back** returns to the choices without spending points. Closing returns your original item; if your inventory is full, it stays stored for recovery. The yellow pane is only a guide and cannot be collected.
+
+Only confirming can apply the upgrade or spend points. Changed items, prices, settings, permissions, or an insufficient current balance invalidate the review. A configuration reload also requires a fresh review. This change is a local Beta 2 preview and has not been deployed to the public server yet.
 
 If the item cannot receive the upgrade, the tool explains why and spends no points. An enchantment already at or above the offered level is kept: selecting Unbreaking IV for an Unbreaking V item will not lower it or charge you.
 
@@ -248,6 +252,8 @@ The booster rewards depend on the 1MB Boosters feature plugin and its `/rate sta
 MobHat, JourneyMap, and PassportDiscovery rewards are dependency-aware. If the required feature plugin is missing or the configured MobHat mob is not enabled, the reward shows as unavailable and the server refuses the trade instead of spending points.
 
 Item tools use an identity-bound escrow file while the GUI is open. Escrow replacements are flushed and atomically moved into place, and each payload must decode to exactly one item for the UUID in its filename. The item is returned on close, quit, kick, plugin disable, join, or when `/discordchat tools` opens again. If a matching item is already present during restore, the plugin keeps the escrow file and asks for staff review instead of risking a duplicate. Invalid YAML, a mismatched UUID, a missing item, or an undecodable item is moved to `escrow/quarantine/` and reported instead of being treated as an empty record. If a restored item cannot be removed from escrow, the inventory change is rolled back so the live record is not duplicated silently.
+
+In the Beta 2 tool menu, a yellow pane marks empty input slot 20 beneath the instruction chest. The owner-bound holder keeps the deposited item separately from decoration and preview copies. Eligible upgrades open an in-place review with the exact original and proposed items, definition, cost, and configuration generation. Confirmation is consumed once and revalidated before the existing upgrade/point-persistence path runs. Cancel/back retain the deposited item; closing returns only that item, never a preview or marker. An unresolved recovery record blocks another deposit, and delayed join/startup recovery does not return an item still owned by an open tool session.
 
 The DiscordChat GUIs use owner-bound session ids. Reward slots carry an immutable slot-to-id snapshot, and the confirmation holder carries the exact reward definition the player reviewed. Old menus, wrong-owner menus, stale/changed confirmations, top-inventory drags, shift-clicks, number-key swaps, offhand swaps, and unsupported click types are cancelled before any reward or tool logic runs. Normal left/right clicks in the player's own inventory are allowed only while the tools menu is open so the player can pick up one item for the protected tool slot.
 
@@ -540,6 +546,8 @@ For reward confirmation/cooldown testing, grant a test account enough points, op
 For XP conversion testing, use `/discordchat admin award <player> xp <amount> <reason>` and inspect `/discordchat status`. Starting from zero, award `24` XP and verify `0` points with `24/25` progress. Award `1` more and verify `1` point with `0/25`. Award `62` and verify another `2` points with `12/25` remaining. Reaching a streak milestone should add its configured bonus independently without changing that remainder.
 
 For escrow recovery testing, place one disposable item in the tools input slot and confirm `escrow/<uuid>.yml` exists. Close the GUI with inventory space and confirm the item returns and the file clears. Repeat with a full inventory and confirm the item remains in escrow. On the test server only, corrupt a disposable escrow file before login and confirm it moves to `escrow/quarantine/`, the original bytes remain available for staff, and no replacement item is granted automatically.
+
+For Beta 2 tool confirmation testing, use a disposable named/PDC-bearing item with Unbreaking III. Click Unbreaking IV and verify the original remains in the input slot, the proposed IV item appears on the right, and no points move. Cancel/back once, then review and confirm; check exactly one charge and unchanged unrelated item metadata. Verify IV/V items, incompatible items, and insufficient balances show a reason without confirmation. Reload or change the cost/balance/permissions while reviewing and verify confirmation rejects stale state. Check repeated clicks, shift/number-key/offhand/double-click/drop/creative actions, top-slot drags, close, quit/kick, and full-inventory recovery. Try to collect the yellow marker and the proposed item; neither should leave the interface. Local automated event tests cover these decision paths with detached items and persistence ports; real-client interaction and full Paper item-component acceptance remain manual test steps.
 
 ## Feature Decisions And Ideas
 

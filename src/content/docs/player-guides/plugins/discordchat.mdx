@@ -167,7 +167,11 @@ The reward menu shows each reward's cooldown and how long you have left to wait.
 
 ### Do tool upgrades ask me to confirm?
 
-Currently, an eligible upgrade in `/discordchat tools` applies and spends its displayed point cost on the first click. Read the upgrade and cost before clicking; there is no separate confirmation step yet.
+Public Beta 1 on the live server applies an eligible upgrade and spends its displayed point cost on the first click. Read the upgrade and cost before clicking there.
+
+The Public Beta 2 local test build adds a confirmation. In `/discordchat tools`, place exactly one tool or weapon in the yellow slot below the chest, then choose an upgrade on the right. You see the proposed item, enchantment level, and point cost before pressing **Confirm Upgrade**. **Cancel Upgrade** or **Back** returns to the choices without spending points. Closing returns your original item; if your inventory is full, it stays stored for recovery. The yellow pane is only a guide and cannot be collected.
+
+Only confirming can apply the upgrade or spend points. Changed items, prices, settings, permissions, or an insufficient current balance invalidate the review. A configuration reload also requires a fresh review. This change is a local Beta 2 preview and has not been deployed to the public server yet.
 
 If the item cannot receive the upgrade, the tool explains why and spends no points. An enchantment already at or above the offered level is kept: selecting Unbreaking IV for an Unbreaking V item will not lower it or charge you.
 
