@@ -42,6 +42,14 @@ Your personal progress comes from qualifying linked chat, which earns XP and con
 
 Open `/discordchat rewards` and review the confirmation. Rewards can have point costs, one-time ownership, player or server-wide cooldowns, or an unavailable dependency. If a previous delivery needs review, give staff its reference.
 
+### Where can I claim rewards or upgrade tools?
+
+The Public Beta 2 local preview requires **Survival mode** in an allowed world for reward purchases and tool upgrades. The configured worlds are **wild, general, end, nether, acid, cave, chunkblock, skyblock, oneblock, and skygrid**. Builders, spawn, legacy, and every unlisted world are blocked. Creative, Adventure, and Spectator cannot claim, including staff and OPs.
+
+You can browse the menus from any world. The **Where to Claim** compass lists the allowed worlds. A blocked purchase or upgrade spends no points. Moving worlds or changing game mode after opening a confirmation does not bypass the checks. You can still cancel, retrieve your deposited tool, or receive a staff refund from elsewhere. Chat XP and streak points are unaffected by these claim rules.
+
+These restrictions are being tested locally for Beta 2; they have not been deployed to the live Public Beta 1 server yet.
+
 ### How do reward cooldowns work?
 
 The reward menu shows each reward's cooldown and how long you have left to wait. A personal cooldown applies to your next purchase of that same reward; other players and other rewards have their own timers. A server-wide cooldown blocks that reward for everyone until it expires. The timer starts after a successful purchase, and clicking a reward that is still on cooldown spends no points.
@@ -52,7 +60,7 @@ Public Beta 1 on the live server applies an eligible upgrade and spends its disp
 
 The Public Beta 2 local test build adds a confirmation. In `/discordchat tools`, place exactly one tool or weapon in the yellow slot below the chest, then choose an upgrade on the right. You see the proposed item, enchantment level, and point cost before pressing **Confirm Upgrade**. **Cancel Upgrade** or **Back** returns to the choices without spending points. Closing returns your original item; if your inventory is full, it stays stored for recovery. The yellow pane is only a guide and cannot be collected.
 
-Only confirming can apply the upgrade or spend points. Changed items, prices, settings, permissions, or an insufficient current balance invalidate the review. A configuration reload also requires a fresh review. This change is a local Beta 2 preview and has not been deployed to the public server yet.
+Only confirming can apply the upgrade or spend points. Changed items, prices, settings, permissions, or an insufficient current balance invalidate the review. Leaving an allowed world or leaving Survival also blocks confirmation. A configuration reload requires a fresh review. This change is a local Beta 2 preview and has not been deployed to the public server yet.
 
 If the item cannot receive the upgrade, the tool explains why and spends no points. An enchantment already at or above the offered level is kept: selecting Unbreaking IV for an Unbreaking V item will not lower it or charge you.
 
@@ -94,7 +102,7 @@ If the item cannot receive the upgrade, the tool explains why and spends no poin
 | `/discordchat admin grantpoints <player\|uuid> <amount> [reason]` | Adds spendable points with audit logging. | `/discordchat admin grantpoints mrfloris 100 event-prize` |
 | `/discordchat admin takepoints <player\|uuid> <amount> [reason]` | Removes spendable points with audit logging. | `/discordchat admin takepoints mrfloris 50 correction` |
 | `/discordchat admin transaction status <player\|uuid> [transaction-id]` | Shows the active or most recent persisted reward transaction, command progress, attempts, retry safety, and failure reason. | `/discordchat admin transaction status mrfloris` |
-| `/discordchat admin transaction retry <player\|uuid> [confirm]` | Retries the active failed transaction from its persisted command progress without charging again. Use `confirm` only when delivery progress is marked uncertain. The player must be online. | `/discordchat admin transaction retry mrfloris` |
+| `/discordchat admin transaction retry <player\|uuid> [confirm]` | Retries the active failed transaction from its persisted command progress without charging again. Use `confirm` only when delivery progress is marked uncertain. For any remaining delivery, the recipient must be online, alive, in Survival, and in an allowed world, including forced retries. | `/discordchat admin transaction retry mrfloris` |
 | `/discordchat admin transaction refund <player\|uuid> confirm` | Returns the reserved points and one-time eligibility for the active pending, delivered, or failed transaction. A second refund is refused. | `/discordchat admin transaction refund mrfloris confirm` |
 | `/discordchat admin reset <player\|uuid> confirm` | Deletes one player's live DiscordChat profile and last-known-good backup. | `/discordchat admin reset mrfloris confirm` |
 | `/discordchat admin smoke` | Shows DiscordSRV hook state, target channel, linked account count, and tracking counters. | `/discordchat admin smoke` |
@@ -236,7 +244,7 @@ Reward redemption follows this transaction flow:
 4. Recheck points, one-time ownership, active transactions, and player/global cooldown eligibility inside the synchronized reservation boundary.
 5. Require every Bukkit command root to exist and every referenced `cmi kit <name>` kit to exist and be enabled.
 6. Atomically create a `pending` transaction, reserve the point cost, and reserve one-time eligibility where applicable.
-7. Dispatch each recorded command in order. After every accepted command, atomically persist the completed-command count.
+7. Recheck that the recipient is online, alive, in Survival, and in an allowed world before each delivery command, including after the shared delivery guard. Dispatch each recorded command in order. After every accepted command, atomically persist the completed-command count.
 8. Persist `delivered` only after every command is accepted, then persist `finalized` with the successful reward timestamp to close the reservation while retaining its history.
 9. Persist a rejected or exceptional delivery as `failed`. The reservation remains held so staff can inspect the exact command progress and choose retry or refund. Failed and refunded delivery does not start a cooldown.
 10. A staff retry returns the same record to `pending`, increments its attempt counter, resumes after the persisted command count, and never deducts the cost a second time.
@@ -244,6 +252,8 @@ Reward redemption follows this transaction flow:
 12. On startup, fully recorded delivery is finalized automatically. Incomplete delivery becomes `failed`; uncertain retries require the explicit `confirm` argument. Legacy `rewards.pending` records from older builds are migrated and refunded using their previous behavior.
 
 Every record keeps its resolved commands, original command templates, progress, attempts, timestamps, retry-safety flag, failure reason, and transition history. Terminal `finalized` and `refunded` records remain available for inspection; `rewards.transaction-history-limit` retains the newest records per player and never prunes an active transaction.
+
+Eligibility is checked before the initial reservation and again after the shared manual-claim guard. A world/mode change between delivery commands pauses the transaction as `failed` at the recorded command count. Its existing reservation stays held for retry or refund; no cooldown starts. Console retries, including forced retries, must obey the recipient's current eligibility and leave an ineligible transaction unchanged. Once eligible, a retry resumes only the remaining commands without another charge. Fully recorded delivery can still finalize its accounting after a world/mode change or on restart, because that performs no new delivery. Refunds and returning an already-deposited tool remain available outside the claim rules.
 
 Transaction events are also written to `logs/reward.log` with the transaction id, reward id, state, and relevant cost or command count. Arbitrary console-command effects cannot be reversed automatically after another plugin applies them. If command two fails after command one ran, staff can retry from command two or deliberately refund after reviewing the partial delivery. Keep multi-command rewards idempotent and validate them before enabling live spending.
 
@@ -358,6 +368,7 @@ plugins/1MB-CMIAPI/DiscordChat/config.yml
 Important paths:
 
 ```text
+claims.allowed-worlds
 discordsrv.channel-id
 discordsrv.game-channel-name
 discordsrv.count-discord-to-game
@@ -452,6 +463,25 @@ collectible.lore
 
 Fresh installations write both `rewards.enabled: false` and `tools.enabled: false`. Chat tracking, EXP, points, milestones, and read-only reward/tool previews can therefore be configured without exposing point spending. Existing installations keep their explicitly saved values when upgrading; this default change does not turn an already enabled live setup off. Enable rewards only after `/discordchat admin check` has no `FAIL` rows and live delivery testing passes, and enable tools only after reviewing their costs and item behavior.
 
+Beta 2 adds `claims.allowed-worlds`, defaulting to an empty list that pauses reward purchases and tool upgrades until staff configure it. Survival mode is always required and there is no staff/OP bypass. The allowlist matches exact Paper world keys (`World.getKey()`), not display aliases, legacy Bukkit names, or world environments. For the reviewed 1MB world IDs, use:
+
+```yaml
+claims:
+  allowed-worlds:
+  - minecraft:wild
+  - minecraft:general
+  - minecraft:end
+  - minecraft:nether
+  - minecraft:acid
+  - minecraft:cave
+  - minecraft:chunkblock
+  - minecraft:skyblock
+  - minecraft:oneblock
+  - minecraft:skygrid
+```
+
+An empty or malformed list blocks all claims; wildcards and bare aliases are invalid. Unloaded or unknown keys grant no access. In this setup `spawn` is an alias for `minecraft:overworld`, which is excluded. Default `minecraft:the_end` and `minecraft:the_nether` are not substitutes for the configured `minecraft:end` and `minecraft:nether`. Edit the list and run `/discordchat reload` or `/discordchat admin reload`; no restart is needed for configuration changes after installing the Beta 2 JAR. An upgrade from Beta 1 requires this allowlist to be configured even when rewards/tools were already enabled.
+
 Every built-in reward has `cooldown-seconds` and `cooldown-scope`. A value of `0` disables its cooldown. Scope `player` tracks the last successful purchase for that player; scope `global` uses the newest successful timestamp across all profiles and blocks that reward for everyone until expiry. The built-in mcMMO and Jobs boosters default to `3600` seconds with `global` scope. Cooldowns begin only when delivery finalizes, not when the confirmation GUI opens or a transaction is reserved.
 
 `points.exp-per-point` defaults to `25`. Every XP credit uses floor conversion immediately, and `xp.pending` therefore contains only the remainder below the configured ratio. Existing profiles are converted atomically during startup and reload, so previously stranded balances are preserved as points plus their exact one-decimal remainder. Converted points accumulate under `points.lifetime-from-exp`; streak bonuses accumulate separately under `points.lifetime-milestone-bonus`. The obsolete `milestones.convert-exp-on-hit` setting is removed automatically from upgraded configuration files.
@@ -465,7 +495,7 @@ Run these commands after editing rewards or changing server plugins, kits, permi
 /discordchat admin check
 ```
 
-The report is read-only and uses the live server state. It checks the authoritative `rewards.ids` list, enabled/unused definitions, available GUI capacity, required plugins and MobHat choices, every referenced CMI kit, reward command templates and Bukkit command roots, LuckPerms permission/group targets, positive point costs, GUI materials, valid cooldown values/scopes, persistent global cooldown history, and whether `/rate start` rewards use a global cooldown of at least 15 minutes.
+The report is read-only and uses the running server state. It checks claim-rule validity and which allowed world IDs are currently loaded, the authoritative `rewards.ids` list, enabled/unused definitions, available GUI capacity, required plugins and MobHat choices, every referenced CMI kit, reward command templates and Bukkit command roots, LuckPerms permission/group targets, positive point costs, GUI materials, valid cooldown values/scopes, persistent global cooldown history, and whether `/rate start` rewards use a global cooldown of at least 15 minutes. No loaded allowed world produces a warning because nobody can claim there; an empty/invalid list produces a failure.
 
 - `OK` means the category passed.
 - `WARN` means staff must review an intentional or externally unverifiable choice, such as an enabled unused definition or a dynamically registered external permission.
@@ -517,6 +547,8 @@ gradle :plugins:player-fun:discordchat:test
 
 The suite covers quality metrics and no-XP decisions, repeat-window ordering, streak progression, floor EXP conversion, reward transaction ledgers, profile backup/quarantine/atomic writes, command validation, cooldowns, GUI reward bindings, fresh-install spending defaults, and escrow recovery. Beta 2 adds exact window expiry, reloadable channel rates and snowflake precision, zero-rate bonus/streak rejection, real profile accounting across source rates and shared caps, event stacking and point conversion, duplicate concurrent callbacks, failed saves, unlinking, and stale lifecycle messages. Full Bukkit inventory sessions, real serialized `ItemStack` recovery, DiscordSRV gateway routing, and live reload concurrency still require test-server integration checks.
 
+Claim-rule tests cover all four game modes, the ten reviewed world IDs, excluded/unknown/alias lookalikes, empty/invalid/reloaded allowlists, OPs, repeated rejected purchases, changed confirmations, and console retry/refund paths. Integration tests exercise the real ledger and atomic profile store, asserting unchanged files for rejected purchases/retries, preserved reservations after partial delivery, and no duplicate charge or command on recovery. Tool event tests verify mode/world/config changes block both preview and confirmation while item return stays available.
+
 ## Smoke Test
 
 After installing the jar and restarting the test server:
@@ -548,6 +580,8 @@ For XP conversion testing, use `/discordchat admin award <player> xp <amount> <r
 For escrow recovery testing, place one disposable item in the tools input slot and confirm `escrow/<uuid>.yml` exists. Close the GUI with inventory space and confirm the item returns and the file clears. Repeat with a full inventory and confirm the item remains in escrow. On the test server only, corrupt a disposable escrow file before login and confirm it moves to `escrow/quarantine/`, the original bytes remain available for staff, and no replacement item is granted automatically.
 
 For Beta 2 tool confirmation testing, use a disposable named/PDC-bearing item with Unbreaking III. Click Unbreaking IV and verify the original remains in the input slot, the proposed IV item appears on the right, and no points move. Cancel/back once, then review and confirm; check exactly one charge and unchanged unrelated item metadata. Verify IV/V items, incompatible items, and insufficient balances show a reason without confirmation. Reload or change the cost/balance/permissions while reviewing and verify confirmation rejects stale state. Check repeated clicks, shift/number-key/offhand/double-click/drop/creative actions, top-slot drags, close, quit/kick, and full-inventory recovery. Try to collect the yellow marker and the proposed item; neither should leave the interface. Local automated event tests cover these decision paths with detached items and persistence ports; real-client interaction and full Paper item-component acceptance remain manual test steps.
+
+For Beta 2 claim acceptance, use a disposable test account and a genuinely allowed world key. In each of Creative, Adventure, and Spectator, attempt a reward and tool upgrade; verify no points, claims, cooldowns, or items change. Repeat in builders, spawn, legacy, and an unlisted world while in Survival, including as OP. Open a review while eligible, change mode/world, then confirm. Restore eligibility and verify one successful claim/upgrade. Reconfigure the allowlist to empty and reload to check the fail-closed message, then restore it. Check console retry and refund of a disposable interrupted transaction: an ineligible retry must do nothing, an eligible retry must resume without duplicating delivered commands, and a refund must remain possible. Returning an existing tool must work in a blocked world/mode. Server startup and automated tests do not replace these real-client gameplay checks.
 
 ## Feature Decisions And Ideas
 

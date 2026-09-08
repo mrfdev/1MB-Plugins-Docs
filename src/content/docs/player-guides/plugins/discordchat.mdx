@@ -161,6 +161,14 @@ Your personal progress comes from qualifying linked chat, which earns XP and con
 
 Open `/discordchat rewards` and review the confirmation. Rewards can have point costs, one-time ownership, player or server-wide cooldowns, or an unavailable dependency. If a previous delivery needs review, give staff its reference.
 
+### Where can I claim rewards or upgrade tools?
+
+The Public Beta 2 local preview requires **Survival mode** in an allowed world for reward purchases and tool upgrades. The configured worlds are **wild, general, end, nether, acid, cave, chunkblock, skyblock, oneblock, and skygrid**. Builders, spawn, legacy, and every unlisted world are blocked. Creative, Adventure, and Spectator cannot claim, including staff and OPs.
+
+You can browse the menus from any world. The **Where to Claim** compass lists the allowed worlds. A blocked purchase or upgrade spends no points. Moving worlds or changing game mode after opening a confirmation does not bypass the checks. You can still cancel, retrieve your deposited tool, or receive a staff refund from elsewhere. Chat XP and streak points are unaffected by these claim rules.
+
+These restrictions are being tested locally for Beta 2; they have not been deployed to the live Public Beta 1 server yet.
+
 ### How do reward cooldowns work?
 
 The reward menu shows each reward's cooldown and how long you have left to wait. A personal cooldown applies to your next purchase of that same reward; other players and other rewards have their own timers. A server-wide cooldown blocks that reward for everyone until it expires. The timer starts after a successful purchase, and clicking a reward that is still on cooldown spends no points.
@@ -171,7 +179,7 @@ Public Beta 1 on the live server applies an eligible upgrade and spends its disp
 
 The Public Beta 2 local test build adds a confirmation. In `/discordchat tools`, place exactly one tool or weapon in the yellow slot below the chest, then choose an upgrade on the right. You see the proposed item, enchantment level, and point cost before pressing **Confirm Upgrade**. **Cancel Upgrade** or **Back** returns to the choices without spending points. Closing returns your original item; if your inventory is full, it stays stored for recovery. The yellow pane is only a guide and cannot be collected.
 
-Only confirming can apply the upgrade or spend points. Changed items, prices, settings, permissions, or an insufficient current balance invalidate the review. A configuration reload also requires a fresh review. This change is a local Beta 2 preview and has not been deployed to the public server yet.
+Only confirming can apply the upgrade or spend points. Changed items, prices, settings, permissions, or an insufficient current balance invalidate the review. Leaving an allowed world or leaving Survival also blocks confirmation. A configuration reload requires a fresh review. This change is a local Beta 2 preview and has not been deployed to the public server yet.
 
 If the item cannot receive the upgrade, the tool explains why and spends no points. An enchantment already at or above the offered level is kept: selecting Unbreaking IV for an Unbreaking V item will not lower it or charge you.
 

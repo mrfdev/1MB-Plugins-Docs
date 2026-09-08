@@ -71,11 +71,11 @@ This is a read-only drift check against the public `1MB-Plugins-Docs` checkout. 
 Expected jar naming:
 
 ```text
-1MB-Lib-Core-v1.0.3-632-j25-26.2.jar
-1MB-Lib-AntiFire-v1.0.3-632-j25-26.2.jar
-1MB-Lib-AFKShrine-v1.0.3-632-j25-26.2.jar
-1MB-Lib-StaffCenter-v1.0.3-632-j25-26.2.jar
-1MB-Lib-Profile-v1.0.3-632-j25-26.2.jar
+1MB-Lib-Core-v1.0.3-633-j25-26.2.jar
+1MB-Lib-AntiFire-v1.0.3-633-j25-26.2.jar
+1MB-Lib-AFKShrine-v1.0.3-633-j25-26.2.jar
+1MB-Lib-StaffCenter-v1.0.3-633-j25-26.2.jar
+1MB-Lib-Profile-v1.0.3-633-j25-26.2.jar
 ```
 
 Every new deployable build replaces the complete managed suite in:
