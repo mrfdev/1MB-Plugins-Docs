@@ -20,6 +20,16 @@ Quality checks exclude spam, repeated messages, bot commands, low-effort lines, 
 
 No. Complete XP units convert automatically into spendable points, with the remainder carried forward. The default is 25 XP per point. Streak milestone points are a separate bonus.
 
+### What is Community Pulse, and does it give rewards?
+
+Community Pulse is an activity dashboard. Open `/discordchat pulse` to see the community's recorded activity. Clicking its cards or reaching a community message total does not award a kit, points, or a booster.
+
+- **Today** and **Last 7 Days** show how many players have recorded activity, plus message, word, and emote totals.
+- **7-Day Activity** lists the most active participants.
+- **Current Boosts** shows DiscordChat XP multipliers already running through staff events or scheduled bonus periods. These increase future DiscordChat XP earnings; opening the screen does not activate them.
+
+Your personal progress comes from qualifying linked chat, which earns XP and converts into spendable points at the configured rate (25 XP per point by default). Personal streak milestones award additional points automatically. To buy a kit, an unlock, or an available Jobs or mcMMO booster, spend points through `/discordchat rewards` and confirm the purchase. The Jobs and mcMMO rewards are separate from the DiscordChat XP boosts shown in Pulse.
+
 ### How do I spend points, and why might a reward be blocked?
 
 Open `/discordchat rewards` and review the confirmation. Rewards can have point costs, one-time ownership, player or server-wide cooldowns, or an unavailable dependency. If a previous delivery needs review, give staff its reference.
