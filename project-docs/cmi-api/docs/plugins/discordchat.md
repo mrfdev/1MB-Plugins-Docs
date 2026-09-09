@@ -68,6 +68,12 @@ Purchases pause while either tournament is running or a scheduled fishing or far
 
 These rewards are being tested locally for Beta 2 and have not been enabled on the live Public Beta 1 server.
 
+### Can I request a day of extra Discord EXP?
+
+The Public Beta 2 local preview adds **Discord EXP day request** for **75 points**. Confirming it sends mrfloris an in-game CMI mail asking for a day of extra **MEE6 chat EXP on Discord**. Staff activate the day manually; buying this reward sends the request and does not immediately enable a boost. It does not award DiscordChat points or Minecraft XP.
+
+There is a **24-hour server-wide cooldown**, so one player requests the day for the community. The price and cooldown are configurable. A missing or full staff mailbox blocks the purchase without spending points. If delivery is uncertain, staff review the request before another can be bought. This reward is being tested locally for Beta 2 and is not yet enabled on the live Public Beta 1 server.
+
 ### Why does a reward say “Already unlocked”?
 
 The Public Beta 2 local preview checks whether you already have all the permissions or group access offered by a one-time unlock, even if you received them before DiscordChat. If you do, the reward shows **Already unlocked** and cannot spend your points or start a cooldown.
@@ -152,7 +158,7 @@ Staff can add a player name or UUID, for example `discordchat debug status mrflo
 | `/discordchat admin transaction status <player\|uuid> [transaction-id]` | Shows the active or most recent persisted reward transaction, command progress, attempts, retry safety, and failure reason. | `/discordchat admin transaction status mrfloris` |
 | `/discordchat admin transaction retry <player\|uuid> [confirm]` | Retries the active failed transaction from its persisted command progress without charging again. Use `confirm` only when delivery progress is marked uncertain. For any remaining delivery, the recipient must be online, alive, in Survival, and in an allowed world, including forced retries. | `/discordchat admin transaction retry mrfloris` |
 | `/discordchat admin transaction refund <player\|uuid> confirm` | Returns the reserved points and one-time eligibility for the active pending, delivered, or failed transaction. A second refund is refused. | `/discordchat admin transaction refund mrfloris confirm` |
-| `/discordchat admin transaction acknowledge <player\|uuid> <transaction-id> confirm` | Records a staff-verified Pyro tournament start and finalizes its purchase without replaying the command. Use only after checking that this exact transaction's tournament started. | `/discordchat admin transaction acknowledge mrfloris <transaction-id> confirm` |
+| `/discordchat admin transaction acknowledge <player\|uuid> <transaction-id> confirm` | Records a staff-verified Pyro tournament start or delivered EXP-day request and finalizes its purchase without replaying the command. Check the exact transaction's delivery first. | `/discordchat admin transaction acknowledge mrfloris <transaction-id> confirm` |
 | `/discordchat admin reset <player\|uuid> confirm` | Deletes one player's live DiscordChat profile and last-known-good backup. | `/discordchat admin reset mrfloris confirm` |
 | `/discordchat admin smoke` | Shows DiscordSRV hook state, target channel, linked account count, and tracking counters. | `/discordchat admin smoke` |
 | `/discordchat reload` | Reloads config, milestone values, and reward definitions. | `/discordchat reload` |
@@ -276,6 +282,7 @@ The default reward set is configurable and intentionally server-owned. Selecting
 - 15m Jobs booster: runs `rate start jobs 15m 6` for a server-wide 6x Jobs booster. Its default cooldown is one hour, server-wide.
 - 15m fishing tournament (Beta 2): starts a random PyroFishingPro tournament for 150 points, with a one-hour server-wide cooldown.
 - 15m farming tournament (Beta 2): starts a random PyroFarming tournament for 200 points, with a separate one-hour server-wide cooldown.
+- Discord EXP day request (Beta 2): mails mrfloris a request for a day of extra MEE6 chat EXP, for 75 points with a 24-hour server-wide cooldown. Staff activation is manual.
 - Allay MobHat unlock: grants MobHat use/wear plus `onembcmi.mobhat.mob.allay`.
 - JourneyMap bundle: runs `cmi kit discordchat_journeymap {player} -s`.
 - Passport bundle: runs `cmi kit discordchat_passport {player} -s`.
@@ -648,6 +655,27 @@ Command acceptance alone is insufficient: the provider must change from inactive
 
 Existing installations retain their authoritative `rewards.ids` list. Add the two new IDs to that list and reload when ready to expose them; new definitions do not silently expand an existing catalog. `/discordchat admin check` includes tournament readiness. These entries are prepared on the local 26.2 test server; this does not enable them on Public Beta 1 live servers.
 
+## MEE6 EXP-day request (Public Beta 2 local preview)
+
+Reward ID `discord_exp_day_request` uses the existing review/confirmation and transaction ledger. Defaults are `cost: 75`, `once: false`, `cooldown-seconds: 86400`, and `cooldown-scope: global`. It must have exactly one fixed-recipient `cmi mail send` command, be repeatable, and have a positive global cooldown. The default command template is:
+
+```yaml
+commands:
+  - cmi mail send mrfloris Please turn on discord-chat-exp for a day (extra MEE6 chat EXP). Requested by {player}.
+```
+
+The template may name a known CMI recipient or specify their UUID. Before reserving points, DiscordChat resolves an exact, unambiguous CMI account and saves **its UUID** as the command recipient. The dispatched console command is `cmi mail send <staff-uuid> <message>`, including for `.Bedrock` accounts. The purchaser's name appears only in the message body. A unique `[DCEXP:<transaction-uuid>]` receipt is appended automatically; do not add it to the template. The prepared command must fit the 240-character limit. Offline recipients are supported when their CMI account is already loaded.
+
+Before dispatch, DiscordChat checks the recipient mailbox and available capacity. After dispatch, it checks for the exact message and console sender in CMI's mailbox; a command returning success is not enough. CMI owns mail persistence, expiry and removal. Its save is queued independently of DiscordChat's atomic transaction save, so this is not a cross-plugin atomic database commit.
+
+A known block before dispatch refunds the reservation without starting a cooldown. An uncertain delivery keeps the transaction for staff review and blocks further EXP-day requests server-wide, including after reload/restart. Staff should inspect the saved recipient UUID and full request ID before recovery:
+
+- If the exact console mail remains in the mailbox, a confirmed transaction retry records delivery without sending it again. The saved UUID, message and request ID are reused.
+- If staff already read/removed the mail but verified its delivery, use `/discordchat admin transaction acknowledge <buyer|uuid> <transaction-id> confirm` to finish accounting without another message.
+- Only retry a missing receipt after checking that the mail was not delivered, read, expired or removed. A refund returns points but does not retract mail or turn off an EXP day.
+
+CMI 9.8.9.10 console mail syntax and UUID recipient handling were checked for this integration. Use an existing staff account that has played on the server; CMI may skip saving mail for an offline account with zero playtime. Activation remains a separate staff action; DiscordChat does not enable MEE6 boosts or grant roles. Existing installations must add `discord_exp_day_request` to `rewards.ids` before reloading to show it. `/discordchat admin check` includes its mailbox readiness.
+
 ## Reward Readiness
 
 Run these commands after editing rewards or changing server plugins, kits, permissions, or commands:
@@ -718,6 +746,8 @@ Leaderboard tests cover all five metrics, positive-value filtering, real-name ti
 Console-status tests exercise the actual shared command gateway in active and cold dormant states, debug/inspect permission separation, completion, shared diagnostics/reload, invalid arguments, existing/unknown profiles, asynchronous output, cancellation, and stale results. Read-only storage tests compare every profile and backup byte after name/UUID lookups and corrupt-file failures. Public status retains its existing self/public/staff visibility.
 
 Tournament tests cover both providers, concrete random selection including a single eligible type, missing dependencies, unreadable status, active and imminent scheduled events, cross-provider blocking, prices, global cooldowns, repeated actions, changes after reservation, exact refunds, uncertain command results, failed persistence after a start, restart/reload recovery and staff acknowledgement without replay.
+
+Mail-request tests cover exact CMI account lookup, UUID console recipients for `.Bedrock` names, one 75-point charge, the shared cooldown, missing/full mailboxes, pre-dispatch refunds, uncertain delivery, interrupted saves, preserved request IDs after buyer renames, receipt-based recovery without duplicate mail, and staff acknowledgement. A disposable local `.DCMailTest` mailbox verified console delivery by UUID and one message retained through CMI save, clean restart and console readback. The ordinary-player purchase and staff mailbox experience still need local acceptance before live rollout.
 
 ## Smoke Test
 
