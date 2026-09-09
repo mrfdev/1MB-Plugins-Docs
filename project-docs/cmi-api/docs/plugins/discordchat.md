@@ -454,9 +454,37 @@ papi parse mrfloris %onembcmi_discordchat.streak%
 papi parse mrfloris %onembcmi_discordchat.next_milestone%
 ```
 
-## Config
-
 The dot in `%onembcmi_discordchat.prefix%` and `%onembcmi_discordchat.suffix%` separates the feature from its placeholder path. Older documentation used an underscore there, which produced blank output in Public Beta 1. The local Beta 2 preview supports those sixteen older names as compatibility aliases; use the dot-separated examples above for new configuration.
+
+## Showing cosmetics in CMI chat
+
+Unlocking or selecting a cosmetic does not insert it into another plugin's chat format. In `plugins/CMI/Settings/Chat.yml`, add `%onembcmi_discordchat.prefix%` before the name and `%onembcmi_discordchat.suffix%` after it. Update `Chat.GeneralFormat` and every applicable `Chat.GroupFormat` entry: a player's group format overrides the general format. Preserve your existing rank, nameplate, nickname, hover and message settings.
+
+This minimal example keeps the rank prefix, explicitly restores the name colour after the cosmetic, and resets the message colour:
+
+```yaml
+Chat:
+  GeneralFormat: '{prefix}%onembcmi_discordchat.prefix%&f{displayName}%onembcmi_discordchat.suffix%&7: &r{message}'
+  GroupFormat:
+    '1': '{prefix}%onembcmi_discordchat.prefix%&f{displayName}%onembcmi_discordchat.suffix%&7: &r{message}'
+```
+
+Adapt the existing entries rather than replacing a server's whole format with this example. If a nameplate or display-name field already supplies these cosmetics, avoid inserting them twice. CMI's `{prefix}` and `{suffix}` refer to permission-plugin metadata; they are separate from the DiscordChat placeholders. See [CMI's placeholder reference](https://www.zrips.net/cmi/placeholders/).
+
+The text comes from `cosmetics.prefix.discord.text` and `cosmetics.suffix.chatty.text` in DiscordChat's config. For example, `'&b🗨'` and `'&d💬'` place the chosen icons around the name. `/discordchat reload` loads changes to those preset texts; `/cmi reload` loads CMI format edits. These text-only changes need no replacement JAR or server restart.
+
+Check with a player who owns the unlocks: select each cosmetic, then verify prefix only, suffix only, both, and both off in actual chat. An off selection or missing unlock permission deliberately produces empty output. For a direct check, run `papi parse <online-player> %onembcmi_discordchat.prefix%` and its suffix equivalent from console. A GUI preview checks the cosmetic text, but the actual CMI chat line is the final display check. Check Java and Bedrock glyph appearance before enabling new cosmetic rewards for those clients.
+
+Cosmetic reward grants must target the buyer's actual server UUID:
+
+```text
+lp user {uuid} permission set onembcmi.discordchat.cosmetic.prefix.discord true
+lp user {uuid} permission set onembcmi.discordchat.cosmetic.suffix.chatty true
+```
+
+These are reward command templates, not commands to paste into LuckPerms with literal braces. DiscordChat substitutes the buyer's UUID. Existing Public Beta 1 configurations should use `{uuid}` explicitly; Beta 2 also normalizes legacy name-based LuckPerms recipient templates. Editing display text or CMI formats does not change any reward's enabled setting or grant an unlock.
+
+## Config
 
 The config is written to:
 
