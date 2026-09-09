@@ -115,7 +115,7 @@ The `report` probe summarizes passive denied-check records. Reports can be scope
 
 The `export` command writes Markdown files to the PermissionProbe cache for reports, denials, feature access, traces, player overviews, player comparisons, group comparisons, context checks, expected-node checks, watch summaries, wildcard scans, and orphan scans. `-github` creates table-based Markdown for GitHub issues, PRs, and docs. `-discord` creates no-table bullet Markdown that is easier to paste into Discord. `-limit <n>` caps row count, and `-limit all` writes every matching row.
 
-The `groups` probe reports LuckPerms primary group and direct cached parent group nodes. For authoritative raw LuckPerms details, still use LuckPerms directly with `/lp user <player> info` or `/lp user <player> permission info <node>`.
+The `groups` probe reports LuckPerms primary group and direct cached parent group nodes. For authoritative raw LuckPerms details, still use LuckPerms directly with `/lp user <uuid> info` or `/lp user <uuid> permission info <node>`.
 
 The `denials` page is passive. It listens for denied 1MB feature permission checks, then aggregates sender, feature, missing node, world, command context, first seen, last seen, and count. It works for player and console senders when those record toggles are enabled.
 

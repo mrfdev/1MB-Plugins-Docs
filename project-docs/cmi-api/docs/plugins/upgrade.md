@@ -161,14 +161,14 @@ actions:
   allowed-command-prefixes:
     - lp user
     - cmi mail send
-  add-parent-command: lp user {player} parent add {to_group}
-  remove-parent-command: lp user {player} parent remove {from_group}
+  add-parent-command: lp user {uuid} parent add {to_group}
+  remove-parent-command: lp user {uuid} parent remove {from_group}
   remove-default-parent: false
   mail-command: cmi mail send {player} Thank you for playing on 1MoreBlock.com! Your activity is noticed, and we have upgraded your group from "{from_display}" to "{to_display}". More info: "/groups".
 rewards:
   cosmetic:
     enabled: true
-    permission-command: lp user {player} permission set {cosmetic_permission} true
+    permission-command: lp user {uuid} permission set {cosmetic_permission} true
     mail-command: cmi mail send {player} Your {to_display} upgrade also unlocked {cosmetic_name}. Try it from your cosmetics menu when you are ready.
 celebration:
   enabled: true
@@ -256,8 +256,8 @@ Each promotion also opens a durable player/transition idempotency receipt before
 The default apply flow uses:
 
 ```text
-lp user {player} parent add {to_group}
-lp user {player} parent remove {from_group}
+lp user {uuid} parent add {to_group}
+lp user {uuid} parent remove {from_group}
 cmi mail send {player} ...
 ```
 
@@ -348,3 +348,7 @@ This does not make apply unsafe by itself. Apply still re-checks eligibility unl
 After applying, confirm in LuckPerms that the target group was added, the previous managed group was removed only when configured, side groups were preserved, and the CMI mail was sent.
 
 [Plugin index](README.md)
+
+## LuckPerms recipient UUIDs
+
+Parent additions/removals and optional cosmetic permission grants use `{uuid}`. Existing name-based LuckPerms templates are converted before promotion begins; CMI mail still uses the player name. Unresolved recipients block the promotion. See the [suite UUID audit](../luckperms-uuid-audit.md) for local identity resolution, aliases, and recovery behavior.

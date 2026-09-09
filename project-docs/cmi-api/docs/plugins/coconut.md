@@ -591,7 +591,7 @@ The shared report includes commands, granular permissions, placeholders, config/
 The current build produces:
 
 ```text
-1MB-Lib-EventHunts-v1.0.3-640-j25-26.2.jar
+1MB-Lib-EventHunts-v1.0.3-647-j25-26.2.jar
 ```
 
 CMI, CMILib, and `1MB-CMIAPI-Lib` are required runtime dependencies. Deploy CoconutHunt and `1MB-CMIAPI-Lib` from the same build. CoconutHunt verifies the shared atomic playerdata API before activating and fails closed with one actionable compatibility diagnostic instead of allowing repeated asynchronous linkage failures. CoconutHunt uses the shared library for feature registration, translated messages, hardened GUI sessions, safe player resolution, documentation metadata, PlaceholderAPI registration, and shared playerdata. It uses the installed CMI runtime for configured kit/warp/broadcast commands; private Paper TextDisplays provide the default proximity holograms. CMILib remains part of the common runtime baseline.
@@ -618,3 +618,7 @@ Modern Paper 26.2 APIs provide player-head profile data, PDC identity, skull til
 - [ ] Create and record the immutable production snapshot before announcing the event.
 - [ ] Keep debug reward commands off and reset disposable debug profiles after testing.
 - [ ] Test all seven day/date overrides, claims, restart persistence, two-player discovery, visuals, and event end with real players.
+
+## LuckPerms recipient UUIDs
+
+Mob-hat shop permission grants use `{uuid}`, including future and disabled reward profiles. Existing name-based LuckPerms commands are converted during preflight. Shared reward retries retain their recorded recipient UUID and delivered-command count. Doors also converts legacy player placeholders before saving new commands; persisted Doors commands with an unprovable named recipient are blocked for staff review. See the [suite UUID audit](../luckperms-uuid-audit.md) for local identity resolution, aliases, and recovery behavior.

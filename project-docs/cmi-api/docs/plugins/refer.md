@@ -171,9 +171,9 @@ rewards:
   referred-permission: cmi.kit.referred
   run-console-commands: true
   referrer-commands:
-  - lp user {player} permission set {permission} true
+  - lp user {uuid} permission set {permission} true
   referred-commands:
-  - lp user {player} permission set {permission} true
+  - lp user {uuid} permission set {permission} true
 requests:
   expire-seconds: 300
   cooldown-seconds: 30
@@ -208,14 +208,14 @@ For the referrer command, `{player}` is the referrer and `{other}` is the referr
 Default commands:
 
 ```text
-lp user {player} permission set {permission} true
+lp user {uuid} permission set {permission} true
 ```
 
 That means the default successful referral grants:
 
 ```text
-lp user <referrer> permission set cmi.kit.refer true
-lp user <referred> permission set cmi.kit.referred true
+lp user <referrer-uuid> permission set cmi.kit.refer true
+lp user <referred-uuid> permission set cmi.kit.referred true
 ```
 
 ## Data Writes
@@ -298,3 +298,7 @@ Also test that:
 - a player with `cmi.kit.refer` cannot claim again when marker checks are enabled
 - a referred player with `cmi.kit.referred` cannot be referred again when single-referred mode is enabled
 - the referred player can still refer someone else later
+
+## LuckPerms recipient UUIDs
+
+Referral rewards grant `cmi.kit.refer` to the referrer UUID and `cmi.kit.referred` to the referred UUID. Both identities are stored with the transaction, so retries preserve the original recipients after a rename. See the [suite UUID audit](../luckperms-uuid-audit.md) for local identity resolution, aliases, and recovery behavior.

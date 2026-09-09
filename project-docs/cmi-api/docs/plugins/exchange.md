@@ -30,7 +30,7 @@ Keep the failure message and trade name and contact staff. An unfinished deliver
 
 ## Migration Notes
 
-- The current jar is `1MB-Lib-Exchange-v1.0.3-640-j25-26.2.jar`.
+- The current jar is `1MB-Lib-Exchange-v1.0.3-647-j25-26.2.jar`.
 - The public command is `/exchange`.
 - The old standalone command `/_trade` is not registered by this feature plugin.
 - Runtime config lives at `plugins/1MB-CMIAPI/Exchange/config.yml`.
@@ -313,7 +313,7 @@ commands:
   open: []
   info: []
   success:
-    - "console:lp user %player% permission set onembcmi.exchange.completed.summer_event true"
+    - "console:lp user %player_uuid% permission set onembcmi.exchange.completed.summer_event true"
     - "console:cmi kit summer %player%"
   fail: []
 ```
@@ -370,7 +370,7 @@ Review and dry-run before public access:
 
 ```text
 /exchange debug floatie_duck_heavy_core
-/lp user mrfloris permission set onembcmi.exchange.summer_floaties true
+/lp user <player-uuid> permission set onembcmi.exchange.summer_floaties true
 /exchange toggle floatie_duck_heavy_core true
 /exchange test floatie_duck_heavy_core mrfloris
 /exchange open floatie_duck_heavy_core
@@ -481,3 +481,7 @@ papi parse mrfloris %onembexchange_exchange.summer_event.status%
 ```
 
 [Plugin index](README.md) | [Documentation index](../README.md)
+
+## LuckPerms recipient UUIDs
+
+LuckPerms user actions use `%player_uuid%` (or `%uuid%`). Existing `%player%` and `%player_name%` targets are converted before payment, including the disabled Vote Token example. Known-recipient CMI UUID placeholders are resolved locally before PlaceholderAPI. Unknown recipients block the trade without spending items or money. See the [suite UUID audit](../luckperms-uuid-audit.md) for local identity resolution, aliases, and recovery behavior.

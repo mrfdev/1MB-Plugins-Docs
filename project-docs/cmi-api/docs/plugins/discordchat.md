@@ -2,11 +2,21 @@
 
 DiscordChat is a player-fun feature plugin for turning the DiscordSRV `#server-chat` bridge into a gentle engagement loop. Linked players earn DiscordChat EXP from meaningful chat, emotes, and daily participation. Every complete `25` EXP converts into one spendable point by default, while streak milestones award separate bonus points. Points can be traded in game through `/discordchat rewards`.
 
-The plugin is report-first and reward-safe: it only records DiscordSRV events, stores local player progress, and runs configured reward commands after a player confirms a point trade in game. It does not post to Discord, moderate Discord, or change DiscordSRV configuration.
+The plugin records DiscordSRV events, stores local player progress, and runs configured reward commands after a player confirms a point trade in game. The Beta 2 preview also includes an optional private Discord `/discordchat` information reply. It does not moderate Discord or change DiscordSRV's chat routing or channel access.
 
-DiscordChat's overview, rewards, confirmation, pulse, tools, milestone, and Top GUIs use the standard 1MB light-blue frame. Every page keeps a player-stats head in the bottom-left, navigation/help controls in the bottom center, a **Back to Server Menu** shortcut immediately left of the bottom-right close barrier, and the same owner-bound session protections. The player head opens that player's full status in chat.
+DiscordChat's overview, rewards, confirmation, pulse, tools, milestone, Top and cosmetics GUIs use the standard 1MB light-blue frame. Every page keeps a player-stats head in the bottom-left, navigation/help controls in the bottom center, a **Back to Server Menu** shortcut immediately left of the bottom-right close barrier, and owner-bound session protections. The bottom-left player head opens that player's full status in chat.
 
 ## Player FAQ
+
+### Can I check my points from Discord?
+
+The Public Beta 2 local preview adds Discord `/discordchat`. Once staff enable it, use it in **#server-chat** for a reply visible only to you. It shows your linked Minecraft account, available points, XP toward your next point, current streak and next milestone, earning guidance, in-game menu commands, and the [DiscordChat guide](https://docs.1moreblock.com/player-guides/plugins/discordchat/).
+
+You can check your saved progress while logged out of Minecraft, provided the Minecraft server and its DiscordSRV bot are running. If you are not linked, start with `/discord link` **in Minecraft**. A linked account without saved activity receives getting-started help. A temporary lookup failure does not display a made-up balance.
+
+The command only shows your own information. It cannot spend points, claim rewards or upgrade items. Checking it earns no XP or points and does not extend the recent-Discord chat window. It is limited to #server-chat, including when extra channels earn chat XP. Minecraft menu permissions and claim rules still apply when spending points in game.
+
+This command is implemented for local Beta 2 testing and is disabled by default. It has not been activated on the live Public Beta 1 bot.
 
 ### What chat counts toward DiscordChat progress?
 
@@ -58,6 +68,16 @@ Your personal progress comes from qualifying linked chat, which earns XP and con
 
 Open `/discordchat rewards` and review the confirmation. Rewards can have point costs, one-time ownership, player or server-wide cooldowns, or an unavailable dependency. If a previous delivery needs review, give staff its reference.
 
+### How do I preview or switch my chat prefix and suffix?
+
+In the local Public Beta 2 preview, use `/discordchat prefix` or `/discordchat suffix`, or choose **Chat Cosmetics** from `/discordchat`. Both commands open a menu with prefixes on the left and suffixes on the right. Hover over your head at the top centre to see your current prefix, Minecraft name and suffix together. Each choice also previews how it would look, including choices you have not unlocked.
+
+Click an unlocked choice to select it; click the selected choice again to turn it off. **Prefix Off** and **Suffix Off** independently clear each side. Switching is free and does not spend points or grant permissions. Locked choices explain the matching reward or why that position is unavailable. For example, buying Chatty as a suffix does not unlock Chatty as a prefix. Hidden, disabled unlock rewards still provide these explanations without appearing in the shop or becoming purchasable. The **Unlock Rewards** button opens the reward list, where purchases still require their usual confirmation.
+
+Existing direct commands such as `/discordchat prefix discord`, `/discordchat suffix chatty` and `/discordchat suffix off` still work, and now show the selection in the menu. Tab suggestions include only presets you can currently select in that position, plus `off`; the menu lists the other possibilities. Larger lists use **Previous Choices** and **More Choices**.
+
+The preview shows DiscordChat cosmetics around your Minecraft username. Other chat plugins may apply additional ranks, nicknames or colours. Staff can edit preset `.text` values, optional `.name` values, and `gui.cosmetics.*` translations. Reload closes old cosmetic menus; reopen to see the new text. Existing preset IDs, unlock permissions and saved selections are preserved. This GUI is being tested locally; the live Public Beta 1 commands still use chat output.
+
 ### Can I start a fishing or farming tournament with points?
 
 The Public Beta 2 local preview adds two rewards in `/discordchat rewards`: **15m fishing tournament** for **150 points**, and **15m farming tournament** for **200 points**. Each starts a random tournament for everyone and has its own **one-hour server-wide cooldown**, matching the existing mcMMO and Jobs boosters. Review the purchase and confirm it to start the event.
@@ -73,6 +93,10 @@ These rewards are being tested locally for Beta 2 and have not been enabled on t
 The Public Beta 2 local preview adds **Discord EXP day request** for **75 points**. Confirming it sends mrfloris an in-game CMI mail asking for a day of extra **MEE6 chat EXP on Discord**. Staff activate the day manually; buying this reward sends the request and does not immediately enable a boost. It does not award DiscordChat points or Minecraft XP.
 
 There is a **24-hour server-wide cooldown**, so one player requests the day for the community. The price and cooldown are configurable. A missing or full staff mailbox blocks the purchase without spending points. If delivery is uncertain, staff review the request before another can be bought. This reward is being tested locally for Beta 2 and is not yet enabled on the live Public Beta 1 server.
+
+### What does the Welcome points bundle give me?
+
+The Beta 2 bundle exchanges **300 DiscordChat points for 100 Welcome points**, once per player. Welcome points are the separate balance used in the `/points` shop. DiscordChat checks the balance increase before confirming the reward. If the points service is unavailable, the purchase is blocked. An uncertain payout needs staff review before another purchase; report it with the transaction ID rather than buying again.
 
 ### Why does a reward say “Already unlocked”?
 
@@ -130,6 +154,8 @@ Staff can add a player name or UUID, for example `discordchat debug status mrflo
 
 ## Commands
 
+The table below lists Minecraft commands. The optional **Discord-side** `/discordchat` is a separate private information command, available only in #server-chat when enabled.
+
 | Command | Explanation | Example |
 | --- | --- | --- |
 | `/discordchat` | Opens the DiscordChat overview GUI with points, streak, tracked words/emotes, reminders, rewards, and milestones. | `/discordchat` |
@@ -143,8 +169,8 @@ Staff can add a player name or UUID, for example `discordchat debug status mrflo
 | `/discordchat link` | Explains `/discord` and `/discord link` so players can join and link DiscordSRV. | `/discordchat link` |
 | `/discordchat optout` | Toggles friendly Discord invite reminders for that player. | `/discordchat optout` |
 | `/discordchat celebrations` | Toggles whether your own major DiscordChat milestone broadcasts can be announced publicly. | `/discordchat celebrations` |
-| `/discordchat prefix <preset\|off>` | Selects an unlocked DiscordChat prefix placeholder preset. | `/discordchat prefix discord` |
-| `/discordchat suffix <preset\|off>` | Selects an unlocked DiscordChat suffix placeholder preset. | `/discordchat suffix chatty` |
+| `/discordchat prefix [preset\|off]` | Opens cosmetic choices and previews; an optional argument selects an unlocked prefix or turns it off. | `/discordchat prefix` |
+| `/discordchat suffix [preset\|off]` | Opens cosmetic choices and previews; an optional argument selects an unlocked suffix or turns it off. | `/discordchat suffix` |
 | `/discordchat admin check` | Runs the read-only reward readiness report for catalog ids, dependencies, CMI kits, command templates and roots, LuckPerms targets, costs, and unused definitions. | `/discordchat admin check` |
 | `/discordchat admin inspect <player\|uuid>` | Staff view for another player's DiscordChat progress. | `/discordchat admin inspect mrfloris` |
 | `/discordchat admin export <player\|uuid>` | Writes a Markdown staff report under `plugins/1MB-CMIAPI/DiscordChat/exports/`. | `/discordchat admin export mrfloris` |
@@ -275,7 +301,7 @@ With default values, a highly active linked player can earn roughly `70` to `81`
 
 The default reward set is configurable and intentionally server-owned. Selecting an enabled reward opens an owner-bound confirmation page showing its exact cost, repeatability, cooldown, current balance, and balance after purchase. Coming soon cards are informational only. Only the second purchase click can create a persisted reservation, so a rejected command does not silently consume points or one-time eligibility.
 
-- Discord group: adds LuckPerms parent `1mb_discordchat` once.
+- Discord group: adds LuckPerms parent `1mb_discordchat` once for 250 points. The owner enabled and tested the live reward on 2026-09-09. Its live group grants the ProCosmetics Looking to Chat status, Parrot miniature, Wink emote, Speech Bubble banner, CMI personal time, and green/dark_green/dark_purple/dark_blue/aqua glow colours. These benefits are configured in LuckPerms; a fresh installation does not create these group permissions automatically.
 - DiscordChat kit: runs `cmi kit discordchat_bundle {player} -s`.
 - Particle bundle: grants the configured ProCosmetics particle permission.
 - Prefix preset: unlocks `/discordchat prefix discord`.
@@ -283,7 +309,7 @@ The default reward set is configurable and intentionally server-owned. Selecting
 - Emote unlock: grants the configured EmoteMenu chatting emote permission.
 - Player head bundle: runs `cmi kit discordchat_heads {player} -s`.
 - Fireworks bundle: runs `cmi kit discordchat_fireworks {player} -s`.
-- Welcome points bundle: runs the configured external `/points` reward command.
+- Welcome points bundle (Beta 2): spends 300 DiscordChat points once to receive 100 PyroWelcomesPro points for the `/points` shop. Delivery requires the exact points increase to be verified.
 - 15m mcMMO booster: runs `rate start mcmmo 15m 4` for a server-wide 4x mcMMO booster. Its default cooldown is one hour, server-wide.
 - 15m Jobs booster: runs `rate start jobs 15m 6` for a server-wide 6x Jobs booster. Its default cooldown is one hour, server-wide.
 - 15m fishing tournament (Beta 2): starts a random PyroFishingPro tournament for 150 points, with a one-hour server-wide cooldown.
@@ -314,7 +340,7 @@ Reward redemption follows this transaction flow:
 7. Recheck that the reward is enabled and listed, and that the recipient is online, alive, in Survival, and in an allowed world before each delivery command, including after the shared delivery guard. Dispatch each recorded command in order. After every accepted command, atomically persist the completed-command count.
 8. Persist `delivered` only after every command is accepted, then persist `finalized` with the successful reward timestamp to close the reservation while retaining its history.
 9. Persist a rejected or exceptional delivery as `failed`. The reservation remains held so staff can inspect the exact command progress and choose retry or refund. Failed and refunded delivery does not start a cooldown.
-10. A staff retry returns the same record to `pending`, increments its attempt counter, resumes after the persisted command count, and never deducts the cost a second time.
+10. A staff retry returns the same record to `pending`, increments its attempt counter, resumes after the persisted command count, and never deducts the cost a second time. Welcome points credits with uncertain progress cannot be replayed, even with `confirm`; staff must verify delivery and acknowledge it, or verify non-delivery and refund.
 11. A staff refund persists `refunded`, returns the original cost, and restores one-time eligibility exactly once.
 12. On startup, fully recorded delivery is finalized automatically. Incomplete delivery becomes `failed`; uncertain retries require the explicit `confirm` argument. Legacy `rewards.pending` records from older builds are migrated and refunded using their previous behavior.
 
@@ -402,33 +428,35 @@ onembcmi.discordchat.cosmetic.suffix.chatty
 ## Placeholders
 
 ```text
-%onembcmi_discordchat_points%
-%onembcmi_discordchat_pending_exp%
-%onembcmi_discordchat_streak%
-%onembcmi_discordchat_longest_streak%
-%onembcmi_discordchat_next_milestone%
-%onembcmi_discordchat_milestones_completed%
-%onembcmi_discordchat_words%
-%onembcmi_discordchat_emotes%
-%onembcmi_discordchat_messages%
-%onembcmi_discordchat_linked%
-%onembcmi_discordchat_opted_out%
-%onembcmi_discordchat_prefix%
-%onembcmi_discordchat_suffix%
-%onembcmi_discordchat_event_active%
-%onembcmi_discordchat_event_multiplier%
-%onembcmi_discordchat_event_timeleft%
+%onembcmi_discordchat.points%
+%onembcmi_discordchat.pending_exp%
+%onembcmi_discordchat.streak%
+%onembcmi_discordchat.longest_streak%
+%onembcmi_discordchat.next_milestone%
+%onembcmi_discordchat.milestones_completed%
+%onembcmi_discordchat.words%
+%onembcmi_discordchat.emotes%
+%onembcmi_discordchat.messages%
+%onembcmi_discordchat.linked%
+%onembcmi_discordchat.opted_out%
+%onembcmi_discordchat.prefix%
+%onembcmi_discordchat.suffix%
+%onembcmi_discordchat.event_active%
+%onembcmi_discordchat.event_multiplier%
+%onembcmi_discordchat.event_timeleft%
 ```
 
 Example checks:
 
 ```text
-papi parse mrfloris %onembcmi_discordchat_points%
-papi parse mrfloris %onembcmi_discordchat_streak%
-papi parse mrfloris %onembcmi_discordchat_next_milestone%
+papi parse mrfloris %onembcmi_discordchat.points%
+papi parse mrfloris %onembcmi_discordchat.streak%
+papi parse mrfloris %onembcmi_discordchat.next_milestone%
 ```
 
 ## Config
+
+The dot in `%onembcmi_discordchat.prefix%` and `%onembcmi_discordchat.suffix%` separates the feature from its placeholder path. Older documentation used an underscore there, which produced blank output in Public Beta 1. The local Beta 2 preview supports those sixteen older names as compatibility aliases; use the dot-separated examples above for new configuration.
 
 The config is written to:
 
@@ -538,6 +566,22 @@ collectible.lore
 
 Fresh installations write both `rewards.enabled: false` and `tools.enabled: false`. Chat tracking, EXP, points, milestones, and read-only reward/tool previews can therefore be configured without exposing point spending. Existing installations keep their explicitly saved values when upgrading; this default change does not turn an already enabled live setup off. Enable rewards only after `/discordchat admin check` has no `FAIL` rows and live delivery testing passes, and enable tools only after reviewing their costs and item behavior.
 
+### Beta 2 Discord information command
+
+`discord-command.enabled` defaults to `false`. After configuring a **separate test bot/application** and completing its Discord setup, enable this setting in `plugins/1MB-CMIAPI/DiscordChat/config.yml`, then run `/discordchat reload` or `/discordchat admin reload`. Console omits the leading slash. No restart is needed to change the switch or reply text once this build is installed.
+
+The command's guild is derived from the configured `discordsrv.channel-id` text channel, which is #server-chat. The handler requires that exact channel; DMs, other guilds, other channels and threads are rejected privately before any account/profile read. Discord's application authorization and **Use Application Commands** permissions still apply. Staff may also restrict the command picker through Discord's integration permissions. Reading one's own saved information does not require being online or holding a Minecraft menu permission; it grants no Minecraft access.
+
+Edit the `discord-command.*` keys in `plugins/1MB-CMIAPI/CMIAPILIB/translations/discordchat.yml` to customize the reply. Reload snapshots the configured earning rates, ratio, daily cap, calendar and milestones along with the text. `/discordchat debug status` reports whether the integration is disabled, waiting, ready or unavailable. An unavailable DiscordSRV/link service or unreadable profile gives a temporary error, not a zero balance or an unlinked result.
+
+The optional DiscordSRV adapter registers one guild command without parameters. It defers privately before doing background work, permits one request per Discord account every five seconds, and uses a 32-request queue and eight-second response deadline. Authoritative link lookup is repeated before a delayed response; reload/disable cancels pending replies. No profile is created, repaired or updated by this command. Its work is separate from chat accounting and cannot refresh the recent-Discord activity window.
+
+Registration checks same-application global/guild name collisions and records its owned bot/guild/command IDs in `DiscordChat/discord-command-registration.txt`. Keep this file with this installation. An unowned `/discordchat` entry or a record from another bot blocks registration for staff review. Startup, DiscordReadyEvent, enable/disable and reload are handled; text-only reloads do not re-register. Removal deletes only the recorded command ID. A disconnected/stopped bot may leave a stale command until a later connected reload can remove it.
+
+DiscordSRV 1.30.5 bulk-replaces guild commands in `updateSlashCommands()`. This adapter cancels all such writes during its own routing refresh and then upserts only its own command. Other guilds and same-application commands installed outside the provider mechanism are preserved. The exact 1.30.5/JDA empty-batch exception after every update is cancelled is narrowly handled and tested through the real API router. This compatibility path should be reviewed when changing DiscordSRV versions.
+
+Real Discord acceptance remains part of the Beta 2 pre-live checklist: use the separate test bot/private guild, verify guild registration and coexistence, #server-chat-only access, private linked/unlinked/offline replies, reload/removal/reconnect, and byte-identical profiles/XP counters. Never activate copied live bot credentials on the test server. The maintained server currently has DiscordSRV compile support only, so local startup does not prove gateway delivery.
+
 ### Beta 2 Top submenu
 
 The index **Top** button opens five choices; results show up to ten positive entries, descending by value, with case-insensitive Minecraft-name tie ordering and UUID as the final stable tie-breaker. Both menus and `/discordchat top` use the same ranking function and CMI/online display-name rendering. Points is the current balance, not lifetime earnings, and Streak is the stored current streak. The menu exposes only public ranking values and Minecraft names; it does not expose Discord IDs, linking details, or private diagnostics. No new permission is required beyond `onembcmi.discordchat.use`; claim-world and Survival restrictions do not apply to browsing.
@@ -626,13 +670,21 @@ Every built-in reward has `cooldown-seconds` and `cooldown-scope`. A value of `0
 
 One-time permission/group rewards check LuckPerms before charging, including grants that predate DiscordChat. A matching reward shows **Already unlocked** and cannot be purchased when all its permission/group benefits are already available. Ownership is checked while rendering the review, on purchase, and again immediately before reserving points. An ownership lookup failure blocks the purchase with a retry message. Blocked purchases do not spend points, dispatch delivery commands, record a claim, or start a cooldown.
 
-The automatic check recognizes complete one-time bundles of permanent, unconditional `lp user <buyer> permission set <node> [true]` and `lp user <buyer> parent add <group>` commands. `luckperms`, the `luckperms:lp`/`luckperms:luckperms` namespaced roots, player-name/UUID placeholders, and the bundled `cmi msg <buyer> ...` success notification are supported. All ten built-in LuckPerms unlock definitions are covered, including the multi-permission MobHat rewards. Every grant in a bundle must already be available; having only the shared MobHat access permissions does not block buying a missing mob unlock. A partially owned bundle retains its configured full price.
+The automatic check recognizes complete one-time bundles of permanent, unconditional `lp user <buyer-uuid> permission set <node> [true]` and `lp user <buyer-uuid> parent add <group>` commands. All Paper LuckPerms aliases (`lp`, `luckperms`, `perm`, `perms`, `permission`, `permissions`), their `luckperms:` namespaced roots, player-name/UUID placeholders, and the bundled `cmi msg <buyer> ...` success notification are supported. All ten built-in LuckPerms unlock definitions are covered, including the multi-permission MobHat rewards. Every grant in a bundle must already be available; having only the shared MobHat access permissions does not block buying a missing mob unlock. A partially owned bundle retains its configured full price.
 
 Permission checks use loaded LuckPerms data in the player's current context, including effective inherited and wildcard grants. Group checks use actual direct/indirect inheritance, not an arbitrary `group.<name>` permission. OP/platform-default access alone is not proof of a LuckPerms grant. Active temporary or contextual access can make an unlock unavailable while it applies; expiration, revocation or a context change can make it purchasable again. No external ownership result is written into DiscordChat's permanent claim history. A reward already claimed through DiscordChat remains one-time even if its permission is later removed.
 
 Repeatable rewards, mixed kit/money/other-command bundles, grants to someone other than the buyer, removals/negative grants, and temporary/contextual delivery commands do not have automatic ownership inference. Custom command effects require a separate benefit model; an owned permission must not hide other benefits in the same reward. Existing transaction retry/refund remains available after a partial grant without another charge. The check adds no user-loading, permission mutation, network or database work to the purchase path; unavailable loaded data fails closed. Its player messages are reloadable `gui.reward.owned`, `gui.reward.blocked-owned` and `gui.reward.blocked-ownership-unavailable` language entries.
 
 This behavior is implemented for local Public Beta 2 testing. It has not been deployed to the live Public Beta 1 server.
+
+### LuckPerms recipient identity
+
+LuckPerms user rewards use the actual server UUID. Built-in templates use `{uuid}`; existing `lp user {player}` templates are normalized before points are reserved. Java and Floodgate/Bedrock buyers use `Player#getUniqueId()`. Permission changes, temporary grants, parents, promotions/demotions and metadata all follow the same rule; clone commands pin both user operands. Group IDs and other providers' player-name arguments remain unchanged.
+
+Fixed real-name recipients use the shared resolver's exact, case-insensitive Paper/CMI cache lookup. A leading Bedrock `.` is preserved. Missing, conflicting or ambiguous matches stop preflight without charging. No Mojang lookup, generated name UUID, nickname substitution or name-based LuckPerms fallback is used. Recognized LuckPerms recipient tokens include `{uuid}`, `%uuid%`, `%player_uuid%`, `%cmi_user_uuid%` and `%cmi_user_uuid_<real-name>%`; DiscordChat resolves these locally rather than asking PlaceholderAPI or LuckPerms to expand them. Unknown or malformed recipient placeholders are rejected.
+
+The reservation saves pinned LuckPerms commands and retry templates, plus the owning profile UUID. Retries retain those recipients after renames and skip already-delivered steps. Legacy buyer-name commands can be migrated using the original transaction name and profile UUID; a legacy third-party name with no recorded UUID needs staff review rather than a fresh name lookup. Conflicting saved UUIDs block retry. Transaction administration accepts an exact, unambiguous current account name or full server UUID; historical names cannot select a transaction. The final dispatch boundary rejects any LuckPerms user command whose recipient is still a name or unresolved token.
 
 ## Tournament Rewards (Public Beta 2 Local Preview)
 
@@ -683,6 +735,30 @@ A known block before dispatch refunds the reservation without starting a cooldow
 - Only retry a missing receipt after checking that the mail was not delivered, read, expired or removed. A refund returns points but does not retract mail or turn off an EXP day.
 
 CMI 9.8.9.10 console mail syntax and UUID recipient handling were checked for this integration. Use an existing staff account that has played on the server; CMI may skip saving mail for an offline account with zero playtime. Activation remains a separate staff action; DiscordChat does not enable MEE6 boosts or grant roles. Existing installations must add `discord_exp_day_request` to `rewards.ids` before reloading to show it. `/discordchat admin check` includes its mailbox readiness.
+
+## Welcome points (Public Beta 2 local preview)
+
+The default one-time exchange is **300 DiscordChat points → 100 PyroWelcomesPro points**. With the intended player online, check the current balance before and after the native console credit:
+
+```text
+papi parse <exact-player-name> %PyroWelcomesPro_points%
+welcomes add <exact-player-name> 100
+papi parse <exact-player-name> %PyroWelcomesPro_points%
+```
+
+PyroWelcomesPro 0.5.1's `welcomes balance <name>` reads the saved player file, even when that player is online. It can show an older balance until Pyro saves. The player's own `/welcomes balance` (without a target name) and `%PyroWelcomesPro_points%` read the current online balance. Use PAPI to verify an online credit; a stale targeted balance is not evidence of failed delivery and must not trigger another credit. The owner confirmed a live Java-player purchase on 2026-09-09: 33 → 133 in PAPI and the player's `/points balance`, while targeted console balance still showed 33.
+
+`give` is not the native subcommand. This version does not register `set` or `remove`, and rejects UUID command arguments. Its `add` command accepts signed integers, but reward configuration permits only positive amounts and checks for integer overflow. Do not use a negative credit as an automatic rollback after uncertain delivery.
+
+The reward dispatches the namespaced `pyrowelcomespro:welcomes add {player} 100` command. It resolves the online buyer by the authoritative server UUID and verifies the exact name still belongs to that player immediately before dispatch. This preserves the leading dot for Floodgate names. PyroLib 1.4.9 limits the name argument to 16 characters; unsupported longer names are blocked before charging. No offline name lookup, external identity service or generated UUID is used by the reward.
+
+PyroWelcomesPro, PyroLib, PlaceholderAPI and `%PyroWelcomesPro_points%` must be available. The placeholder is read from the online player's loaded provider balance on the server thread, never from potentially stale player files. Missing, unresolved, malformed or overflowing balances block the purchase. After dispatch, only an exact increase by the configured amount confirms delivery. Console acceptance and translated success messages are insufficient. The verified before/after values and player UUID are retained in transaction history and the reward audit log.
+
+Existing `welcome_points` templates using `points give {player} <amount>` or `%player%` are normalized in memory when loaded; costs, amounts, visibility and enabled flags are preserved. Other reward commands are unaffected. Existing finalized records are never automatically repaid. New claims still use the normal confirmation, Survival/world checks and one-time reservation.
+
+An unavailable provider before dispatch refunds the reservation. An uncertain credit remains for staff review and cannot be replayed by `transaction retry`, including after a restart. Already-recorded progress can finalize without another command. After independently verifying a missing-progress payout, staff may use `/discordchat admin transaction acknowledge <uuid> <transaction-id> confirm`. Refund only after establishing that no payout occurred; a refund cannot remove Pyro points.
+
+Pyro owns its points persistence. Online balance verification is not a cross-plugin atomic commit: a hard process crash can interrupt Pyro's own save cycle. A clean shutdown/restart and ordinary player acceptance must be checked before rollout. Keep the reward disabled while testing an unverified Pyro version or unresolved payout.
 
 ## Reward Readiness
 
@@ -833,7 +909,7 @@ Implemented first:
 Deferred or intentionally avoided:
 
 - Monthly reset seasons should not reset lifetime points or streaks by default. If added later, make it a cosmetic leaderboard season with separate `season.points` so players do not lose earned currency.
-- Discord-side stat commands are not implemented. A read-only Discord `/discordchat` information command is a future feasibility item; players currently check progress in game.
+- The local Beta 2 preview implements an optional Discord `/discordchat` information command with private self-progress and getting-started help, restricted to #server-chat. It defaults off and awaits separate test-bot acceptance; live Beta 1 is unchanged.
 - AFK state is ignored for now. Chatting while AFK is neither punished nor rewarded extra.
 - DiscordSRV link repair/import is intentionally not implemented yet; DiscordSRV remains the source of truth for link ownership.
 - Staff outreach lists for unlinked players are intentionally avoided because the server has too many historical accounts for that to stay useful.
@@ -853,7 +929,7 @@ Implemented configurable examples:
 5. EmoteMenu chatting emote permission unlock. Suggested future emote command/permission: `/chatting <player>` guarded by `onembcmi.emotemenu.emote.chatting`.
 6. Decorative player-head bundle through `discordchat_heads`.
 7. Firework bundle through `discordchat_fireworks`.
-8. Welcome points bundle through a configurable `/points` command.
+8. Welcome points bundle through a verified native PyroWelcomesPro console payout.
 9. mcMMO and Jobs `/rate` booster rewards.
 10. MobHat Allay, Parrot, Bee, and Cat unlocks through LuckPerms, only when MobHat is installed and the mob is enabled.
 11. JourneyMap-themed reward kit.

@@ -97,14 +97,14 @@ Available features include:
       <td><code>/discordchat celebrations</code></td>
     </tr>
     <tr>
-      <td><code>/discordchat prefix &lt;preset|<wbr />off&gt;</code></td>
-      <td>Selects an unlocked DiscordChat prefix placeholder preset.</td>
-      <td><code>/discordchat prefix sparkle</code></td>
+      <td><code>/discordchat prefix [preset|<wbr />off]</code></td>
+      <td>Opens cosmetic choices and previews; an optional argument selects an unlocked prefix or turns it off.</td>
+      <td><code>/discordchat prefix</code></td>
     </tr>
     <tr>
-      <td><code>/discordchat suffix &lt;preset|<wbr />off&gt;</code></td>
-      <td>Selects an unlocked DiscordChat suffix placeholder preset.</td>
-      <td><code>/discordchat suffix sparkle</code></td>
+      <td><code>/discordchat suffix [preset|<wbr />off]</code></td>
+      <td>Opens cosmetic choices and previews; an optional argument selects an unlocked suffix or turns it off.</td>
+      <td><code>/discordchat suffix</code></td>
     </tr>
   </tbody>
 </table>
@@ -122,10 +122,20 @@ Available features include:
 - `/discordchat link`
 - `/discordchat optout`
 - `/discordchat celebrations`
-- `/discordchat prefix discord`
-- `/discordchat suffix chatty`
+- `/discordchat prefix`
+- `/discordchat suffix`
 
 ## Player FAQ
+
+### Can I check my points from Discord?
+
+The Public Beta 2 local preview adds Discord `/discordchat`. Once staff enable it, use it in **#server-chat** for a reply visible only to you. It shows your linked Minecraft account, available points, XP toward your next point, current streak and next milestone, earning guidance, in-game menu commands, and the [DiscordChat guide](https://docs.1moreblock.com/player-guides/plugins/discordchat/).
+
+You can check your saved progress while logged out of Minecraft, provided the Minecraft server and its DiscordSRV bot are running. If you are not linked, start with `/discord link` **in Minecraft**. A linked account without saved activity receives getting-started help. A temporary lookup failure does not display a made-up balance.
+
+The command only shows your own information. It cannot spend points, claim rewards or upgrade items. Checking it earns no XP or points and does not extend the recent-Discord chat window. It is limited to #server-chat, including when extra channels earn chat XP. Minecraft menu permissions and claim rules still apply when spending points in game.
+
+This command is implemented for local Beta 2 testing and is disabled by default. It has not been activated on the live Public Beta 1 bot.
 
 ### What chat counts toward DiscordChat progress?
 
@@ -177,6 +187,16 @@ Your personal progress comes from qualifying linked chat, which earns XP and con
 
 Open `/discordchat rewards` and review the confirmation. Rewards can have point costs, one-time ownership, player or server-wide cooldowns, or an unavailable dependency. If a previous delivery needs review, give staff its reference.
 
+### How do I preview or switch my chat prefix and suffix?
+
+In the local Public Beta 2 preview, use `/discordchat prefix` or `/discordchat suffix`, or choose **Chat Cosmetics** from `/discordchat`. Both commands open a menu with prefixes on the left and suffixes on the right. Hover over your head at the top centre to see your current prefix, Minecraft name and suffix together. Each choice also previews how it would look, including choices you have not unlocked.
+
+Click an unlocked choice to select it; click the selected choice again to turn it off. **Prefix Off** and **Suffix Off** independently clear each side. Switching is free and does not spend points or grant permissions. Locked choices explain the matching reward or why that position is unavailable. For example, buying Chatty as a suffix does not unlock Chatty as a prefix. Hidden, disabled unlock rewards still provide these explanations without appearing in the shop or becoming purchasable. The **Unlock Rewards** button opens the reward list, where purchases still require their usual confirmation.
+
+Existing direct commands such as `/discordchat prefix discord`, `/discordchat suffix chatty` and `/discordchat suffix off` still work, and now show the selection in the menu. Tab suggestions include only presets you can currently select in that position, plus `off`; the menu lists the other possibilities. Larger lists use **Previous Choices** and **More Choices**.
+
+The preview shows DiscordChat cosmetics around your Minecraft username. Other chat plugins may apply additional ranks, nicknames or colours. Staff can edit preset `.text` values, optional `.name` values, and `gui.cosmetics.*` translations. Reload closes old cosmetic menus; reopen to see the new text. Existing preset IDs, unlock permissions and saved selections are preserved. This GUI is being tested locally; the live Public Beta 1 commands still use chat output.
+
 ### Can I start a fishing or farming tournament with points?
 
 The Public Beta 2 local preview adds two rewards in `/discordchat rewards`: **15m fishing tournament** for **150 points**, and **15m farming tournament** for **200 points**. Each starts a random tournament for everyone and has its own **one-hour server-wide cooldown**, matching the existing mcMMO and Jobs boosters. Review the purchase and confirm it to start the event.
@@ -192,6 +212,10 @@ These rewards are being tested locally for Beta 2 and have not been enabled on t
 The Public Beta 2 local preview adds **Discord EXP day request** for **75 points**. Confirming it sends mrfloris an in-game CMI mail asking for a day of extra **MEE6 chat EXP on Discord**. Staff activate the day manually; buying this reward sends the request and does not immediately enable a boost. It does not award DiscordChat points or Minecraft XP.
 
 There is a **24-hour server-wide cooldown**, so one player requests the day for the community. The price and cooldown are configurable. A missing or full staff mailbox blocks the purchase without spending points. If delivery is uncertain, staff review the request before another can be bought. This reward is being tested locally for Beta 2 and is not yet enabled on the live Public Beta 1 server.
+
+### What does the Welcome points bundle give me?
+
+The Beta 2 bundle exchanges **300 DiscordChat points for 100 Welcome points**, once per player. Welcome points are the separate balance used in the `/points` shop. DiscordChat checks the balance increase before confirming the reward. If the points service is unavailable, the purchase is blocked. An uncertain payout needs staff review before another purchase; report it with the transaction ID rather than buying again.
 
 ### Why does a reward say “Already unlocked”?
 

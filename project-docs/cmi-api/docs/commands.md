@@ -1018,6 +1018,8 @@ DiscordChat:
 /discordchat link
 /discordchat optout
 /discordchat celebrations
+/discordchat prefix
+/discordchat suffix
 /discordchat prefix discord
 /discordchat suffix chatty
 /discordchat admin check

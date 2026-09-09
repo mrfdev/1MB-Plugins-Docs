@@ -659,31 +659,31 @@ papi parse mrfloris %onembcmi_votetokens.extra_token.lapis.count%
 DiscordChat placeholders:
 
 ```text
-%onembcmi_discordchat_points%
-%onembcmi_discordchat_pending_exp%
-%onembcmi_discordchat_streak%
-%onembcmi_discordchat_longest_streak%
-%onembcmi_discordchat_next_milestone%
-%onembcmi_discordchat_milestones_completed%
-%onembcmi_discordchat_words%
-%onembcmi_discordchat_emotes%
-%onembcmi_discordchat_messages%
-%onembcmi_discordchat_linked%
-%onembcmi_discordchat_opted_out%
-%onembcmi_discordchat_prefix%
-%onembcmi_discordchat_suffix%
-%onembcmi_discordchat_event_active%
-%onembcmi_discordchat_event_multiplier%
-%onembcmi_discordchat_event_timeleft%
+%onembcmi_discordchat.points%
+%onembcmi_discordchat.pending_exp%
+%onembcmi_discordchat.streak%
+%onembcmi_discordchat.longest_streak%
+%onembcmi_discordchat.next_milestone%
+%onembcmi_discordchat.milestones_completed%
+%onembcmi_discordchat.words%
+%onembcmi_discordchat.emotes%
+%onembcmi_discordchat.messages%
+%onembcmi_discordchat.linked%
+%onembcmi_discordchat.opted_out%
+%onembcmi_discordchat.prefix%
+%onembcmi_discordchat.suffix%
+%onembcmi_discordchat.event_active%
+%onembcmi_discordchat.event_multiplier%
+%onembcmi_discordchat.event_timeleft%
 ```
 
 Example checks:
 
 ```text
-papi parse mrfloris %onembcmi_discordchat_points%
-papi parse mrfloris %onembcmi_discordchat_streak%
-papi parse mrfloris %onembcmi_discordchat_next_milestone%
-papi parse mrfloris %onembcmi_discordchat_event_active%
+papi parse mrfloris %onembcmi_discordchat.points%
+papi parse mrfloris %onembcmi_discordchat.streak%
+papi parse mrfloris %onembcmi_discordchat.next_milestone%
+papi parse mrfloris %onembcmi_discordchat.event_active%
 ```
 
 GameTypes placeholders:

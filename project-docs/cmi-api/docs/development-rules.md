@@ -23,6 +23,15 @@
 - Internal Back, Index, Overview, and pagination controls retain their feature-specific presentation and must not be treated as server-menu controls.
 - Reusing the shared presentation must not bypass the Feature Plugin's existing availability, permission, owner/session, stale-view, close, quit, disable, or command-dispatch checks.
 
+## LuckPerms User Identity
+
+- Every LuckPerms user operand must use the real server UUID, including permissions, parents, metadata, temporary grants, and clone destinations. Group commands keep group IDs.
+- Use `Player#getUniqueId()` for current recipients. New reward templates use `{uuid}` (NameMC also supports `%uuid%`, Exchange `%player_uuid%`, and Doors `<uuid>`). Names remain suitable for messages and other plugins' command arguments.
+- Use `LuckPermsUserCommands` when preparing commands. `DurableOperationService.begin(...)` pins UUIDs before reservation/payment and persists them; delivery migrates only remaining legacy commands using the operation's captured name/UUID pairs. Never resolve an old receipt through today's owner of a name or reset its dispatched-command count.
+- Route immediate configurable command hooks through `UuidCommandDispatcher.dispatch(...)`. Its name fallback uses exact real identities from the local Paper/CMI cache only, preserving Bedrock prefixes and rejecting ambiguity. Do not add Mojang lookups, nickname matching, fabricated offline UUIDs, or username fallback to LuckPerms.
+- If a local name still lacks a UUID, block the action with an actionable error. CMI's local database may be investigated read-only, off the server thread, after verifying its schema; it is not necessary when a Player, receipt, or CMI cache already supplies the UUID. Known-recipient `%cmi_user_uuid%` and `%cmi_user_uuid_<name>%` targets are resolved locally before dispatch, without querying PlaceholderAPI for identity.
+- Cover disabled configurations/examples and existing installations as well as defaults. Test Java and `.bedrock` names, unknown/ambiguous identities, paired recipients, and interrupted delivery without replay. See [the module audit](luckperms-uuid-audit.md).
+
 ## Security
 
 - Treat player input as untrusted.

@@ -241,3 +241,7 @@ papi parse <player> %onembnamemc_verified%
 ```
 
 Also confirm the old standalone jar is disabled so command registration and PlaceholderAPI expansion registration are not fighting each other.
+
+## LuckPerms recipient UUIDs
+
+NameMC verification commands now use the player’s server UUID for LuckPerms. Existing `%player%` or `{player}` LuckPerms targets are converted during reward preparation; broadcast messages still use the player name. See the [suite UUID audit](../luckperms-uuid-audit.md) for local identity resolution, aliases, and recovery behavior.

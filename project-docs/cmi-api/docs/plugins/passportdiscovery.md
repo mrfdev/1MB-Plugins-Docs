@@ -333,7 +333,7 @@ rewards:
     cost-per-stamp: 1
     minimum-cost: 25
     permission-template: cmi.kit.stamps{type}
-    command-template: lp user {player} permission set {permission} true
+    command-template: lp user {uuid} permission set {permission} true
     costs:
       world: 0
       warp: 0
@@ -355,67 +355,67 @@ rewards:
       display-name: World Stamp Box
       permission: cmi.kit.stampsworld
       commands:
-      - lp user {player} permission set {permission} true
+      - lp user {uuid} permission set {permission} true
     warp:
       display-name: Warp Stamp Box
       permission: cmi.kit.stampswarp
       commands:
-      - lp user {player} permission set {permission} true
+      - lp user {uuid} permission set {permission} true
     visit:
       display-name: Visit Stamp Box
       permission: cmi.kit.stampsvisit
       commands:
-      - lp user {player} permission set {permission} true
+      - lp user {uuid} permission set {permission} true
     biome:
       display-name: Biome Stamp Box
       permission: cmi.kit.stampsbiome
       commands:
-      - lp user {player} permission set {permission} true
+      - lp user {uuid} permission set {permission} true
     block:
       display-name: Block Stamp Box
       permission: cmi.kit.stampsblock
       commands:
-      - lp user {player} permission set {permission} true
+      - lp user {uuid} permission set {permission} true
     item:
       display-name: Item Stamp Box
       permission: cmi.kit.stampsitem
       commands:
-      - lp user {player} permission set {permission} true
+      - lp user {uuid} permission set {permission} true
     consume:
       display-name: Consume Stamp Box
       permission: cmi.kit.stampsconsume
       commands:
-      - lp user {player} permission set {permission} true
+      - lp user {uuid} permission set {permission} true
     tool:
       display-name: Tool Stamp Box
       permission: cmi.kit.stampstool
       commands:
-      - lp user {player} permission set {permission} true
+      - lp user {uuid} permission set {permission} true
     weapon:
       display-name: Weapon Stamp Box
       permission: cmi.kit.stampsweapon
       commands:
-      - lp user {player} permission set {permission} true
+      - lp user {uuid} permission set {permission} true
     armor:
       display-name: Armor Stamp Box
       permission: cmi.kit.stampsarmor
       commands:
-      - lp user {player} permission set {permission} true
+      - lp user {uuid} permission set {permission} true
     kill:
       display-name: Kill Stamp Box
       permission: cmi.kit.stampskill
       commands:
-      - lp user {player} permission set {permission} true
+      - lp user {uuid} permission set {permission} true
     mount:
       display-name: Mount Stamp Box
       permission: cmi.kit.stampsmount
       commands:
-      - lp user {player} permission set {permission} true
+      - lp user {uuid} permission set {permission} true
     explore:
       display-name: Explore Stamp Box
       permission: cmi.kit.stampsexplore
       commands:
-      - lp user {player} permission set {permission} true
+      - lp user {uuid} permission set {permission} true
 top:
   limit: 10
   default-type: all
@@ -553,3 +553,7 @@ This feature contributes goals to the Shared Library's [focus system](../focus-g
 ## Remembered first steps
 
 `/next guide passport` opens a short, optional checklist for this activity. Finished steps stay remembered, existing successes count, and Later, dismissal, Resume and chat controls are shared across the suite. See [First-success checklists](../first-success-checklists.md) for the three-step path and controls.
+
+## LuckPerms recipient UUIDs
+
+Stamp Box permission grants use `{uuid}`. Existing name-based LuckPerms commands are converted before spending stamp credits, including type-box templates and disabled boxes. See the [suite UUID audit](../luckperms-uuid-audit.md) for local identity resolution, aliases, and recovery behavior.
