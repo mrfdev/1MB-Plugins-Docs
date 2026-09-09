@@ -211,6 +211,12 @@ If the item cannot receive the upgrade, the tool explains why and spends no poin
 
 `/discordchat optout` toggles invite reminders. `/discordchat celebrations` separately controls public announcements of your own major milestones. Neither command is an account-unlink command.
 
+### Can staff check DiscordChat from the console?
+
+The Public Beta 2 local preview adds `discordchat debug status`. It shows the build, active or dormant state, integrations, DiscordSRV hook, chat-tracking settings, and reward/tool switches. It works even when DiscordChat gameplay is disabled. The same command works in game with a leading `/` for authorized staff.
+
+Staff can add a player name or UUID, for example `discordchat debug status mrfloris`, to inspect an existing profile. This does not create profiles or change progress. An unknown player produces a clear message. Players can continue using `/discordchat status` for their own progress.
+
 ## Good To Know
 
 - Some commands may be hidden until your group, event progress, or unlocks allow them.

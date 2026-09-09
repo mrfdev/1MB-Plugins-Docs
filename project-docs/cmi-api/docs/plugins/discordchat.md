@@ -92,6 +92,12 @@ If the item cannot receive the upgrade, the tool explains why and spends no poin
 
 `/discordchat optout` toggles invite reminders. `/discordchat celebrations` separately controls public announcements of your own major milestones. Neither command is an account-unlink command.
 
+### Can staff check DiscordChat from the console?
+
+The Public Beta 2 local preview adds `discordchat debug status`. It shows the build, active or dormant state, integrations, DiscordSRV hook, chat-tracking settings, and reward/tool switches. It works even when DiscordChat gameplay is disabled. The same command works in game with a leading `/` for authorized staff.
+
+Staff can add a player name or UUID, for example `discordchat debug status mrfloris`, to inspect an existing profile. This does not create profiles or change progress. An unknown player produces a clear message. Players can continue using `/discordchat status` for their own progress.
+
 ## Commands
 
 | Command | Explanation | Example |
@@ -132,6 +138,7 @@ If the item cannot receive the upgrade, the tool explains why and spends no poin
 | `/discordchat admin smoke` | Shows DiscordSRV hook state, target channel, linked account count, and tracking counters. | `/discordchat admin smoke` |
 | `/discordchat reload` | Reloads config, milestone values, and reward definitions. | `/discordchat reload` |
 | `/discordchat debug` | Shared debug page with runtime, build, Paper, Java, category, and docs metadata. | `/discordchat debug` |
+| `/discordchat debug status [player\|uuid]` | Read-only staff overview while active or dormant; an optional target shows existing staff profile details. Console needs no leading slash. | `discordchat debug status mrfloris` |
 | `/discordchat debug economy` | Estimates earning pace and reward cost bands from current config. | `/discordchat debug economy` |
 | `/discordchat debug noxp [page]` | Shows staff totals for no-XP reasons so quality filters can be tuned. | `/discordchat debug noxp` |
 | `/discordchat debug first` | Shows first Discord message state for day, week, month, and year. | `/discordchat debug first` |
@@ -346,6 +353,8 @@ onembcmi.discordchat.admin.debug
 onembcmi.discordchat.cosmetic.prefix.<preset>
 onembcmi.discordchat.cosmetic.suffix.<preset>
 ```
+
+`debug status` requires `onembcmi.discordchat.admin.debug`. Supplying a target additionally requires `onembcmi.discordchat.admin.inspect`, even for staff checking themselves. Both permissions are checked again before an asynchronous result is shown. Shared diagnostics such as `debug`, `debug health`, and `debug reload` retain the general admin permission. Target completion only suggests online players after both checks; saved offline names and UUIDs can be entered manually.
 
 Default cosmetic unlock examples:
 
@@ -628,6 +637,8 @@ Reward transactions are stored under `rewards.transactions.<transaction-id>` in 
 
 Tool escrow uses the same fail-closed principle but is intentionally separate from profile backups. A valid active file is cleared only after the protected item is confirmed back in the player's inventory. Malformed or undecodable records are preserved in `escrow/quarantine/` for manual staff recovery; the plugin never deletes them as if no item existed.
 
+`debug status <player|uuid>` reads existing profiles on a bounded background task and returns output on the server thread. It never initializes storage, creates profiles, repairs backups, quarantines files, or updates names/points. A corrupt or missing primary with a retained backup is reported as unavailable for staff review. Reloads, lifecycle changes, lost permissions, and disconnected callers invalidate pending results.
+
 ## Automated Core Tests
 
 Run the focused DiscordChat suite with:
@@ -642,7 +653,11 @@ Claim-rule tests cover all four game modes, the ten reviewed world IDs, excluded
 
 Leaderboard tests cover all five metrics, positive-value filtering, real-name tie ordering, top-ten limits, shared command/menu rendering, rich display names, read-only profile and backup bytes, unreadable/missing files, bounded background work, empty/error states, refresh/back/index navigation, and delayed results after close/quit/kick/reload/access changes. Inventory event tests cover shift-click, number keys, offhand, double-click, drop, creative and drag protection. These use detached Paper item storage and a controlled scheduler; real-client visuals still require gameplay acceptance.
 
+Console-status tests exercise the actual shared command gateway in active and cold dormant states, debug/inspect permission separation, completion, shared diagnostics/reload, invalid arguments, existing/unknown profiles, asynchronous output, cancellation, and stale results. Read-only storage tests compare every profile and backup byte after name/UUID lookups and corrupt-file failures. Public status retains its existing self/public/staff visibility.
+
 ## Smoke Test
+
+On the local test server, run `discordchat debug status`, then add an existing name, UUID, and unknown name. Confirm build/state, hooks, tracking and reward/tool switches, detailed existing status, and a named not-found error. Repeat after `discordchat debug enable false` and after a cold dormant startup; restore the saved enabled setting afterward. Verify `discordchat debug`, `discordchat debug health`, and `discordchat debug reload` still work. Compare profile/backup bytes before and after. In game, repeat with debug-only staff, debug plus inspect, and ordinary player permissions; only the second group may inspect profiles through the new command.
 
 For Top acceptance, open `/discordchat`, choose **Top**, and review each of the five rankings against `/discordchat top <metric>` while totals are stable. Verify the first ten ranks, CMI names, wrapped lore, title colour, refresh, Back, direct DiscordChat compass and close controls. Repeat with no positive totals and a pending load interrupted by close, another page, reload, quit, or permission removal. No points, profiles, rewards, or tool items should change merely from browsing.
 
