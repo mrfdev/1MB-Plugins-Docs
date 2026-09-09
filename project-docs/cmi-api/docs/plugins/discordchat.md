@@ -58,6 +58,16 @@ Your personal progress comes from qualifying linked chat, which earns XP and con
 
 Open `/discordchat rewards` and review the confirmation. Rewards can have point costs, one-time ownership, player or server-wide cooldowns, or an unavailable dependency. If a previous delivery needs review, give staff its reference.
 
+### Can I start a fishing or farming tournament with points?
+
+The Public Beta 2 local preview adds two rewards in `/discordchat rewards`: **15m fishing tournament** for **150 points**, and **15m farming tournament** for **200 points**. Each starts a random tournament for everyone and has its own **one-hour server-wide cooldown**, matching the existing mcMMO and Jobs boosters. Review the purchase and confirm it to start the event.
+
+Both tournaments last **15 minutes**. Fishing and farming keep their usual Pyro scoring and prizes. These rewards start an event; they do not give the buyer a kit or guarantee a prize. Staff can adjust the prices, cooldowns, and eligible tournament types.
+
+Purchases pause while either tournament is running or a scheduled fishing or farming tournament is about to start within the next 15 minutes. An unavailable integration or unreadable tournament status also blocks the purchase. A blocked purchase spends no points. If a start cannot be verified after the command runs, staff review the saved transaction before another tournament purchase can proceed.
+
+These rewards are being tested locally for Beta 2 and have not been enabled on the live Public Beta 1 server.
+
 ### Why does a reward say “Already unlocked”?
 
 The Public Beta 2 local preview checks whether you already have all the permissions or group access offered by a one-time unlock, even if you received them before DiscordChat. If you do, the reward shows **Already unlocked** and cannot spend your points or start a cooldown.
@@ -142,6 +152,7 @@ Staff can add a player name or UUID, for example `discordchat debug status mrflo
 | `/discordchat admin transaction status <player\|uuid> [transaction-id]` | Shows the active or most recent persisted reward transaction, command progress, attempts, retry safety, and failure reason. | `/discordchat admin transaction status mrfloris` |
 | `/discordchat admin transaction retry <player\|uuid> [confirm]` | Retries the active failed transaction from its persisted command progress without charging again. Use `confirm` only when delivery progress is marked uncertain. For any remaining delivery, the recipient must be online, alive, in Survival, and in an allowed world, including forced retries. | `/discordchat admin transaction retry mrfloris` |
 | `/discordchat admin transaction refund <player\|uuid> confirm` | Returns the reserved points and one-time eligibility for the active pending, delivered, or failed transaction. A second refund is refused. | `/discordchat admin transaction refund mrfloris confirm` |
+| `/discordchat admin transaction acknowledge <player\|uuid> <transaction-id> confirm` | Records a staff-verified Pyro tournament start and finalizes its purchase without replaying the command. Use only after checking that this exact transaction's tournament started. | `/discordchat admin transaction acknowledge mrfloris <transaction-id> confirm` |
 | `/discordchat admin reset <player\|uuid> confirm` | Deletes one player's live DiscordChat profile and last-known-good backup. | `/discordchat admin reset mrfloris confirm` |
 | `/discordchat admin smoke` | Shows DiscordSRV hook state, target channel, linked account count, and tracking counters. | `/discordchat admin smoke` |
 | `/discordchat reload` | Reloads config, milestone values, and reward definitions. | `/discordchat reload` |
@@ -263,6 +274,8 @@ The default reward set is configurable and intentionally server-owned. Selecting
 - Welcome points bundle: runs the configured external `/points` reward command.
 - 15m mcMMO booster: runs `rate start mcmmo 15m 4` for a server-wide 4x mcMMO booster. Its default cooldown is one hour, server-wide.
 - 15m Jobs booster: runs `rate start jobs 15m 6` for a server-wide 6x Jobs booster. Its default cooldown is one hour, server-wide.
+- 15m fishing tournament (Beta 2): starts a random PyroFishingPro tournament for 150 points, with a one-hour server-wide cooldown.
+- 15m farming tournament (Beta 2): starts a random PyroFarming tournament for 200 points, with a separate one-hour server-wide cooldown.
 - Allay MobHat unlock: grants MobHat use/wear plus `onembcmi.mobhat.mob.allay`.
 - JourneyMap bundle: runs `cmi kit discordchat_journeymap {player} -s`.
 - Passport bundle: runs `cmi kit discordchat_passport {player} -s`.
@@ -606,6 +619,35 @@ Repeatable rewards, mixed kit/money/other-command bundles, grants to someone oth
 
 This behavior is implemented for local Public Beta 2 testing. It has not been deployed to the live Public Beta 1 server.
 
+## Tournament Rewards (Public Beta 2 Local Preview)
+
+The local preview adds `fishing_tournament_15m` and `farming_tournament_15m`. Both are repeatable 15-minute events, using the existing reward review and confirmation. Defaults match the booster pricing: fishing costs 150 points, farming costs 200 points, and each has its own `3600`-second `global` cooldown. There is no additional minimum-player requirement. Pyro controls tournament objectives, scoring and prizes.
+
+These integrations use the installed provider's namespaced console commands and PlaceholderAPI status, without a direct dependency on Pyro internals. The command templates are:
+
+```yaml
+# Under rewards.definitions.fishing_tournament_15m:
+commands:
+  - pyrofishingpro:fisht start RANDOM 900
+# Under rewards.definitions.farming_tournament_15m:
+commands:
+  - pyrofarming:farmt start RANDOM 900
+```
+
+Provider checks were verified with PyroFishingPro reporting version `4.9.31` (distributed here as `PyroFishingPro-4.9.32.jar`), PyroFarming `1.3.2`, PyroLib `1.4.9` and PlaceholderAPI `2.12.3` on Paper 26.2. Recheck advertised types, status/countdown placeholders and actual starts when updating either provider.
+
+`RANDOM` is a DiscordChat template marker. Before reserving points, DiscordChat picks one concrete type from the installed command's advertised tournament types and saves that exact command in the transaction. A retry uses the saved choice. The marker is never sent directly to Pyro. To restrict the pool, set `rewards.tournaments.fishing-types` or `rewards.tournaments.farming-types` to a list of advertised type IDs. An empty list allows every advertised concrete type. No eligible types blocks the purchase. Tournament rewards must contain exactly one supported 900-second start command, be repeatable, and have a valid global cooldown of at least 900 seconds.
+
+Before charging and immediately before starting, DiscordChat checks both installed providers. Neither may already have a tournament running, and the next scheduled tournament must be more than 15 minutes plus a five-second margin away. The checks use `%pyrofishingpro_istournament%`, `%pyrofishingpro_timetilltournament%` and the corresponding `pyrofarming` placeholders. Unavailable providers or placeholders and unrecognized countdown formats block purchases. The installed English `d`, `h`, `m`, `s` countdown formats are supported. The reward does not pause or edit Pyro's schedule.
+
+Command acceptance alone is insufficient: the provider must change from inactive before dispatch to active afterwards. A known rejection before dispatch returns the reserved points automatically without starting a cooldown. An uncertain start holds the transaction for staff review and blocks new tournament purchases across both providers, including after reload/restart. After inspecting the exact transaction and Pyro evidence, staff can:
+
+- Record a verified start with `/discordchat admin transaction acknowledge <player|uuid> <transaction-id> confirm`. This finalizes accounting without running a tournament command again.
+- Retry with `/discordchat admin transaction retry <player|uuid> confirm` only after verifying that the previous attempt did not start. The saved type is reused and points are not charged again.
+- Refund with `/discordchat admin transaction refund <player|uuid> confirm` after reviewing the outcome. This does not undo any tournament that already ran.
+
+Existing installations retain their authoritative `rewards.ids` list. Add the two new IDs to that list and reload when ready to expose them; new definitions do not silently expand an existing catalog. `/discordchat admin check` includes tournament readiness. These entries are prepared on the local 26.2 test server; this does not enable them on Public Beta 1 live servers.
+
 ## Reward Readiness
 
 Run these commands after editing rewards or changing server plugins, kits, permissions, or commands:
@@ -675,7 +717,11 @@ Leaderboard tests cover all five metrics, positive-value filtering, real-name ti
 
 Console-status tests exercise the actual shared command gateway in active and cold dormant states, debug/inspect permission separation, completion, shared diagnostics/reload, invalid arguments, existing/unknown profiles, asynchronous output, cancellation, and stale results. Read-only storage tests compare every profile and backup byte after name/UUID lookups and corrupt-file failures. Public status retains its existing self/public/staff visibility.
 
+Tournament tests cover both providers, concrete random selection including a single eligible type, missing dependencies, unreadable status, active and imminent scheduled events, cross-provider blocking, prices, global cooldowns, repeated actions, changes after reservation, exact refunds, uncertain command results, failed persistence after a start, restart/reload recovery and staff acknowledgement without replay.
+
 ## Smoke Test
+
+For tournament acceptance on the local server, verify both new cards and purchase reviews with an eligible ordinary player. Buy each when both providers are idle and their schedules are clear; confirm the advertised random type starts for 15 minutes and Pyro awards its usual participation/placement prizes. Try both cards during either active event and near the next scheduled event: no points or commands should be consumed. Repeat after reload/restart and with a second player to verify the separate server-wide cooldowns. Use the transaction status/recovery commands for a deliberately interrupted disposable test purchase; never blindly replay an uncertain start. Automated tests cover the ledger/failure paths, while real-player scoring and prize delivery require gameplay acceptance.
 
 On the local test server, run `discordchat debug status`, then add an existing name, UUID, and unknown name. Confirm build/state, hooks, tracking and reward/tool switches, detailed existing status, and a named not-found error. Repeat after `discordchat debug enable false` and after a cold dormant startup; restore the saved enabled setting afterward. Verify `discordchat debug`, `discordchat debug health`, and `discordchat debug reload` still work. Compare profile/backup bytes before and after. In game, repeat with debug-only staff, debug plus inspect, and ordinary player permissions; only the second group may inspect profiles through the new command.
 
