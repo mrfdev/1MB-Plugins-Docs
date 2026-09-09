@@ -22,6 +22,10 @@ This project builds companion plugins for CMI using CMI-API, CMILib, and modern 
 - CMI-API GitHub source: https://github.com/Zrips/CMI-API
 - CMI API page: https://www.zrips.net/cmi/api/
 
+## Minecraft Text and Symbols
+
+- [Minecraft Chat Symbols](https://symbols.kal.pe/): searchable, copyable Unicode symbols with a Minecraft-font preview and chat colour formatter. Useful when choosing chat prefix/suffix icons, menu labels and lore. Check chosen glyphs in the actual Java and Bedrock clients during visual acceptance.
+
 ## Project
 
 - Private project repository: https://github.com/mrfdev/1MB-Library
