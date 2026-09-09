@@ -58,6 +58,14 @@ Your personal progress comes from qualifying linked chat, which earns XP and con
 
 Open `/discordchat rewards` and review the confirmation. Rewards can have point costs, one-time ownership, player or server-wide cooldowns, or an unavailable dependency. If a previous delivery needs review, give staff its reference.
 
+### Why does a reward say “Already unlocked”?
+
+The Public Beta 2 local preview checks whether you already have all the permissions or group access offered by a one-time unlock, even if you received them before DiscordChat. If you do, the reward shows **Already unlocked** and cannot spend your points or start a cooldown.
+
+For bundles with several unlocks, having only some of them does not block a purchase. For example, already having access to the MobHat menu does not prevent buying a new mob cosmetic. If your existing access expires or is removed, an unlock you have never claimed through DiscordChat can become available again. If your access cannot be checked, the purchase pauses without spending points.
+
+This is a local Beta 2 preview; the live Public Beta 1 server has not changed.
+
 ### Where can I claim rewards or upgrade tools?
 
 The Public Beta 2 local preview requires **Survival mode** in an allowed world for reward purchases and tool upgrades. The configured worlds are **wild, general, end, nether, acid, cave, chunkblock, skyblock, oneblock, and skygrid**. Builders, spawn, legacy, and every unlisted world are blocked. Creative, Adventure, and Spectator cannot claim, including staff and OPs.
@@ -585,6 +593,18 @@ An empty or malformed list blocks all claims; wildcards and bare aliases are inv
 Every built-in reward has `cooldown-seconds` and `cooldown-scope`. A value of `0` disables its cooldown. Scope `player` tracks the last successful purchase for that player; scope `global` uses the newest successful timestamp across all profiles and blocks that reward for everyone until expiry. The built-in mcMMO and Jobs boosters default to `3600` seconds with `global` scope. Cooldowns begin only when delivery finalizes, not when the confirmation GUI opens or a transaction is reserved.
 
 `points.exp-per-point` defaults to `25`. Every XP credit uses floor conversion immediately, and `xp.pending` therefore contains only the remainder below the configured ratio. Existing profiles are converted atomically during startup and reload, so previously stranded balances are preserved as points plus their exact one-decimal remainder. Converted points accumulate under `points.lifetime-from-exp`; streak bonuses accumulate separately under `points.lifetime-milestone-bonus`. The obsolete `milestones.convert-exp-on-hit` setting is removed automatically from upgraded configuration files.
+
+## Already-Owned Unlocks (Public Beta 2 Local Preview)
+
+One-time permission/group rewards check LuckPerms before charging, including grants that predate DiscordChat. A matching reward shows **Already unlocked** and cannot be purchased when all its permission/group benefits are already available. Ownership is checked while rendering the review, on purchase, and again immediately before reserving points. An ownership lookup failure blocks the purchase with a retry message. Blocked purchases do not spend points, dispatch delivery commands, record a claim, or start a cooldown.
+
+The automatic check recognizes complete one-time bundles of permanent, unconditional `lp user <buyer> permission set <node> [true]` and `lp user <buyer> parent add <group>` commands. `luckperms`, the `luckperms:lp`/`luckperms:luckperms` namespaced roots, player-name/UUID placeholders, and the bundled `cmi msg <buyer> ...` success notification are supported. All ten built-in LuckPerms unlock definitions are covered, including the multi-permission MobHat rewards. Every grant in a bundle must already be available; having only the shared MobHat access permissions does not block buying a missing mob unlock. A partially owned bundle retains its configured full price.
+
+Permission checks use loaded LuckPerms data in the player's current context, including effective inherited and wildcard grants. Group checks use actual direct/indirect inheritance, not an arbitrary `group.<name>` permission. OP/platform-default access alone is not proof of a LuckPerms grant. Active temporary or contextual access can make an unlock unavailable while it applies; expiration, revocation or a context change can make it purchasable again. No external ownership result is written into DiscordChat's permanent claim history. A reward already claimed through DiscordChat remains one-time even if its permission is later removed.
+
+Repeatable rewards, mixed kit/money/other-command bundles, grants to someone other than the buyer, removals/negative grants, and temporary/contextual delivery commands do not have automatic ownership inference. Custom command effects require a separate benefit model; an owned permission must not hide other benefits in the same reward. Existing transaction retry/refund remains available after a partial grant without another charge. The check adds no user-loading, permission mutation, network or database work to the purchase path; unavailable loaded data fails closed. Its player messages are reloadable `gui.reward.owned`, `gui.reward.blocked-owned` and `gui.reward.blocked-ownership-unavailable` language entries.
+
+This behavior is implemented for local Public Beta 2 testing. It has not been deployed to the live Public Beta 1 server.
 
 ## Reward Readiness
 

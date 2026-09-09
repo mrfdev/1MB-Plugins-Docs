@@ -164,8 +164,8 @@ tpauto:
 Install the shared library, CMI, CMILib, and this feature jar together in `/plugins/`:
 
 ```text
-1MB-Lib-Core-v1.0.3-637-j25-26.2.jar
-1MB-Lib-TPAuto-v1.0.3-637-j25-26.2.jar
+1MB-Lib-Core-v1.0.3-638-j25-26.2.jar
+1MB-Lib-TPAuto-v1.0.3-638-j25-26.2.jar
 CMI.jar
 CMILib.jar
 ```
