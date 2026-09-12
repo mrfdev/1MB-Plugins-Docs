@@ -519,6 +519,32 @@ AFKShrine:
 /afkshrine admin recent tools
 ```
 
+Chunks:
+
+```text
+/chunks
+/chunks less [preset]
+/chunks more [preset]
+/chunks reset
+/chunks status [page]
+/chunks info [page]
+/chunks help [page]
+/chunks admin
+/chunks admin status [page]
+/chunks admin health [page]
+/chunks admin choices [page]
+/chunks admin add <less|more> <4..16>
+/chunks admin remove <less|more> <preset>
+/chunks admin default <less|more> <preset>
+/chunks admin reload
+/chunks admin inspect <player|uuid> [page]
+/chunks admin retry <online-player>
+/chunks debug [section] [page]
+/chunks debug enable true
+```
+
+Only enabled presets are accepted: defaults are Less 4/6 and More 12/16, with bare `less` selecting 4 and bare `more` selecting 12. Reset follows the current world's server default. Every CMI change explicitly uses `view`; simulation distance is never changed. Staff use `/chunks admin inspect <player|uuid> [page]` for the latest retained failure, its logged reference, original permission-conflict evidence, and a separate current snapshot when online. Inspection is read-only, rejects ambiguous names, and uses only exact online/retained names or the canonical server UUID. See [Chunks](plugins/chunks.md) for permission, retention, persistence, and recovery details.
+
 RecordingMode:
 
 ```text

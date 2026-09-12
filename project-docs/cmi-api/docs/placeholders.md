@@ -105,6 +105,21 @@ AFKShrine placeholders:
 %onembcmi_afkshrine.cache.size%
 ```
 
+Chunks placeholders:
+
+```text
+%onembcmi_chunks.preference%
+%onembcmi_chunks.view_distance%
+%onembcmi_chunks.client_view_distance%
+%onembcmi_chunks.world_default%
+%onembcmi_chunks.pending%
+%onembcmi_chunks.enabled%
+%onembcmi_chunks.choices.less%
+%onembcmi_chunks.choices.more%
+```
+
+These report the personal preference, current server/client/world view distances, pending state, enabled state, and approved preset lists. They do not change simulation distance or describe cached Bobby/Distant Horizons scenery. See [Chunks](plugins/chunks.md).
+
 RecordingMode placeholders:
 
 ```text

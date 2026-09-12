@@ -17,6 +17,7 @@ These are the first feature candidates now using the shared library scaffold:
 | Player Fun | Wiki Assistant | Deterministic local Minecraft references, reviewed concise answers, validated article links, explicit ambiguity choices, safe Wiki search fallback, and an owner-resolvable passive topic wishlist | [Wiki Assistant](plugins/wiki.md) |
 | Player Fun | AFKShrine | Visual AFK effects, permission-gated presets, highlighted return data, points, quests, separately permissioned lore-book exchanges, readiness checks, and staff reports | [AFKShrine](plugins/afkshrine.md) |
 | Player Fun | RecordingMode | Per-player recording quiet mode | [RecordingMode](plugins/recordingmode.md) |
+| Player Fun | Chunks | `/chunks` approved 4–16 server-side view presets, remembered personal preferences, reset, and staff preset controls | [Chunks](plugins/chunks.md) |
 | Player Fun | SellStreaks | CMI sell streaks and daily market goals | [SellStreaks](plugins/sellstreaks.md) |
 | Player Fun | ScheduledTips | Clickable rotating tips with per-player dismiss, visibility controls, and live booster reminders | [ScheduledTips](plugins/scheduledtips.md) |
 | Player Fun | Visit | Player-owned hidden CMI visit warps with safe arrival messages, titles, particles, and sounds | [Visit](plugins/visit.md) |

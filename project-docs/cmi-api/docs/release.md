@@ -28,7 +28,7 @@ For every new local test build, stop Paper and run:
 scripts/build-all.sh
 ```
 
-The workflow keeps PaperScript on `STABLE`, requests the latest build for the exact configured `paperTarget`, retains `Paper-{version}.jar`, aligns `paperApiVersion`, increments the one suite-wide build number, builds and tests every active artifact (currently 64), and synchronizes their complete set. It persists release metadata only after the server JAR set verifies. `gradle verifyLocalPaperAlignment` fails when the local PaperScript state, stable-channel configuration, build-number-free jar name, checksum, or compile API build differs.
+The workflow keeps PaperScript on `STABLE`, requests the latest build for the exact configured `paperTarget`, retains `Paper-{version}.jar`, aligns `paperApiVersion`, increments the one suite-wide build number, builds and tests every active artifact (currently 65), and synchronizes their complete set. It persists release metadata only after the server JAR set verifies. `gradle verifyLocalPaperAlignment` fails when the local PaperScript state, stable-channel configuration, build-number-free jar name, checksum, or compile API build differs.
 
 ## Jar Naming
 
@@ -41,66 +41,66 @@ All jars should follow this shape:
 Examples:
 
 ```text
-1MB-Lib-Core-v1.0.3-651-j25-26.2.jar
-1MB-Lib-AntiFire-v1.0.3-651-j25-26.2.jar
-1MB-Lib-AFKShrine-v1.0.3-651-j25-26.2.jar
-1MB-Lib-RecordingMode-v1.0.3-651-j25-26.2.jar
-1MB-Lib-SellStreaks-v1.0.3-651-j25-26.2.jar
-1MB-Lib-ScheduledTips-v1.0.3-651-j25-26.2.jar
-1MB-Lib-Visit-v1.0.3-651-j25-26.2.jar
-1MB-Lib-PassportDiscovery-v1.0.3-651-j25-26.2.jar
-1MB-Lib-SocialGatherings-v1.0.3-651-j25-26.2.jar
-1MB-Lib-JourneyMap-v1.0.3-651-j25-26.2.jar
-1MB-Lib-KitStreaks-v1.0.3-651-j25-26.2.jar
-1MB-Lib-Nick-v1.0.3-651-j25-26.2.jar
-1MB-Lib-EmoteMenu-v1.0.3-651-j25-26.2.jar
-1MB-Lib-PvPToggle-v1.0.3-651-j25-26.2.jar
-1MB-Lib-Boosters-v1.0.3-651-j25-26.2.jar
-1MB-Lib-NameMC-v1.0.3-651-j25-26.2.jar
-1MB-Lib-Exchange-v1.0.3-651-j25-26.2.jar
-1MB-Lib-VoteTokens-v1.0.3-651-j25-26.2.jar
-1MB-Lib-DiscordChat-v1.0.3-651-j25-26.2.jar
-1MB-Lib-GameTypes-v1.0.3-651-j25-26.2.jar
-1MB-Lib-BirthdayLanterns-v1.0.3-651-j25-26.2.jar
-1MB-Lib-LavaBoots-v1.0.3-651-j25-26.2.jar
-1MB-Lib-Spawners-v1.0.3-651-j25-26.2.jar
-1MB-Lib-Collect-v1.0.3-651-j25-26.2.jar
-1MB-Lib-EventHunts-v1.0.3-651-j25-26.2.jar
-1MB-Lib-DropParty-v1.0.3-651-j25-26.2.jar
-1MB-Lib-Appreciation-v1.0.3-651-j25-26.2.jar
-1MB-Lib-Forage-v1.0.3-651-j25-26.2.jar
-1MB-Lib-MobHat-v1.0.3-651-j25-26.2.jar
-1MB-Lib-PlayerTodo-v1.0.3-651-j25-26.2.jar
-1MB-Lib-Refer-v1.0.3-651-j25-26.2.jar
-1MB-Lib-TPAuto-v1.0.3-651-j25-26.2.jar
-1MB-Lib-Menu-v1.0.3-651-j25-26.2.jar
-1MB-Lib-StaffCenter-v1.0.3-651-j25-26.2.jar
-1MB-Lib-Profile-v1.0.3-651-j25-26.2.jar
-1MB-Lib-ContentGuard-v1.0.3-651-j25-26.2.jar
-1MB-Lib-WarningLens-v1.0.3-651-j25-26.2.jar
-1MB-Lib-TeamMsg-v1.0.3-651-j25-26.2.jar
-1MB-Lib-CmdCostDashboard-v1.0.3-651-j25-26.2.jar
-1MB-Lib-CMIConfig-v1.0.3-651-j25-26.2.jar
-1MB-Lib-ConsoleNoiseRouter-v1.0.3-651-j25-26.2.jar
-1MB-Lib-EconomyGuardian-v1.0.3-651-j25-26.2.jar
-1MB-Lib-StartupDoctor-v1.0.3-651-j25-26.2.jar
-1MB-Lib-UpdateSmoke-v1.0.3-651-j25-26.2.jar
-1MB-Lib-PluginVersions-v1.0.3-651-j25-26.2.jar
-1MB-Lib-Placeholders-v1.0.3-651-j25-26.2.jar
-1MB-Lib-Potions-v1.0.3-651-j25-26.2.jar
-1MB-Lib-Upgrade-v1.0.3-651-j25-26.2.jar
-1MB-Lib-EndCrystals-v1.0.3-651-j25-26.2.jar
-1MB-Lib-WorldSnapshot-v1.0.3-651-j25-26.2.jar
-1MB-Lib-SparkReviewer-v1.0.3-651-j25-26.2.jar
-1MB-Lib-Hoppers-v1.0.3-651-j25-26.2.jar
-1MB-Lib-EventRecorder-v1.0.3-651-j25-26.2.jar
-1MB-Lib-BedrockChatBridge-v1.0.3-651-j25-26.2.jar
-1MB-Lib-CMIProbe-v1.0.3-651-j25-26.2.jar
-1MB-Lib-CMIDatabase-v1.0.3-651-j25-26.2.jar
-1MB-Lib-PermissionProbe-v1.0.3-651-j25-26.2.jar
-1MB-Lib-WarpAudit-v1.0.3-651-j25-26.2.jar
-1MB-Lib-WorthDrift-v1.0.3-651-j25-26.2.jar
-1MB-Lib-WorthHelper-v1.0.3-651-j25-26.2.jar
+1MB-Lib-Core-v1.0.3-655-j25-26.2.jar
+1MB-Lib-AntiFire-v1.0.3-655-j25-26.2.jar
+1MB-Lib-AFKShrine-v1.0.3-655-j25-26.2.jar
+1MB-Lib-RecordingMode-v1.0.3-655-j25-26.2.jar
+1MB-Lib-SellStreaks-v1.0.3-655-j25-26.2.jar
+1MB-Lib-ScheduledTips-v1.0.3-655-j25-26.2.jar
+1MB-Lib-Visit-v1.0.3-655-j25-26.2.jar
+1MB-Lib-PassportDiscovery-v1.0.3-655-j25-26.2.jar
+1MB-Lib-SocialGatherings-v1.0.3-655-j25-26.2.jar
+1MB-Lib-JourneyMap-v1.0.3-655-j25-26.2.jar
+1MB-Lib-KitStreaks-v1.0.3-655-j25-26.2.jar
+1MB-Lib-Nick-v1.0.3-655-j25-26.2.jar
+1MB-Lib-EmoteMenu-v1.0.3-655-j25-26.2.jar
+1MB-Lib-PvPToggle-v1.0.3-655-j25-26.2.jar
+1MB-Lib-Boosters-v1.0.3-655-j25-26.2.jar
+1MB-Lib-NameMC-v1.0.3-655-j25-26.2.jar
+1MB-Lib-Exchange-v1.0.3-655-j25-26.2.jar
+1MB-Lib-VoteTokens-v1.0.3-655-j25-26.2.jar
+1MB-Lib-DiscordChat-v1.0.3-655-j25-26.2.jar
+1MB-Lib-GameTypes-v1.0.3-655-j25-26.2.jar
+1MB-Lib-BirthdayLanterns-v1.0.3-655-j25-26.2.jar
+1MB-Lib-LavaBoots-v1.0.3-655-j25-26.2.jar
+1MB-Lib-Spawners-v1.0.3-655-j25-26.2.jar
+1MB-Lib-Collect-v1.0.3-655-j25-26.2.jar
+1MB-Lib-EventHunts-v1.0.3-655-j25-26.2.jar
+1MB-Lib-DropParty-v1.0.3-655-j25-26.2.jar
+1MB-Lib-Appreciation-v1.0.3-655-j25-26.2.jar
+1MB-Lib-Forage-v1.0.3-655-j25-26.2.jar
+1MB-Lib-MobHat-v1.0.3-655-j25-26.2.jar
+1MB-Lib-PlayerTodo-v1.0.3-655-j25-26.2.jar
+1MB-Lib-Refer-v1.0.3-655-j25-26.2.jar
+1MB-Lib-TPAuto-v1.0.3-655-j25-26.2.jar
+1MB-Lib-Menu-v1.0.3-655-j25-26.2.jar
+1MB-Lib-StaffCenter-v1.0.3-655-j25-26.2.jar
+1MB-Lib-Profile-v1.0.3-655-j25-26.2.jar
+1MB-Lib-ContentGuard-v1.0.3-655-j25-26.2.jar
+1MB-Lib-WarningLens-v1.0.3-655-j25-26.2.jar
+1MB-Lib-TeamMsg-v1.0.3-655-j25-26.2.jar
+1MB-Lib-CmdCostDashboard-v1.0.3-655-j25-26.2.jar
+1MB-Lib-CMIConfig-v1.0.3-655-j25-26.2.jar
+1MB-Lib-ConsoleNoiseRouter-v1.0.3-655-j25-26.2.jar
+1MB-Lib-EconomyGuardian-v1.0.3-655-j25-26.2.jar
+1MB-Lib-StartupDoctor-v1.0.3-655-j25-26.2.jar
+1MB-Lib-UpdateSmoke-v1.0.3-655-j25-26.2.jar
+1MB-Lib-PluginVersions-v1.0.3-655-j25-26.2.jar
+1MB-Lib-Placeholders-v1.0.3-655-j25-26.2.jar
+1MB-Lib-Potions-v1.0.3-655-j25-26.2.jar
+1MB-Lib-Upgrade-v1.0.3-655-j25-26.2.jar
+1MB-Lib-EndCrystals-v1.0.3-655-j25-26.2.jar
+1MB-Lib-WorldSnapshot-v1.0.3-655-j25-26.2.jar
+1MB-Lib-SparkReviewer-v1.0.3-655-j25-26.2.jar
+1MB-Lib-Hoppers-v1.0.3-655-j25-26.2.jar
+1MB-Lib-EventRecorder-v1.0.3-655-j25-26.2.jar
+1MB-Lib-BedrockChatBridge-v1.0.3-655-j25-26.2.jar
+1MB-Lib-CMIProbe-v1.0.3-655-j25-26.2.jar
+1MB-Lib-CMIDatabase-v1.0.3-655-j25-26.2.jar
+1MB-Lib-PermissionProbe-v1.0.3-655-j25-26.2.jar
+1MB-Lib-WarpAudit-v1.0.3-655-j25-26.2.jar
+1MB-Lib-WorthDrift-v1.0.3-655-j25-26.2.jar
+1MB-Lib-WorthHelper-v1.0.3-655-j25-26.2.jar
 ```
 
 ## Local Build
@@ -140,7 +140,7 @@ Then review, commit, and push the public docs repository separately.
 
 ## Copy To Project Test Server
 
-Every successful deployable build must place the complete active managed set (currently 64 JARs) into:
+Every successful deployable build must place the complete active managed set (currently 65 JARs) into:
 
 ```text
 servers/Paper-26.2/plugins/

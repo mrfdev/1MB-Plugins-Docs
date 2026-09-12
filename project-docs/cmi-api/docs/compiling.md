@@ -19,7 +19,7 @@ The canonical command for a new deployable local test build is:
 scripts/build-all.sh
 ```
 
-This command reserves the next shared build number, updates to the latest stable Paper build for the exact configured `paperTarget`, aligns the Paper API coordinate, refreshes generated documentation, runs the complete build and test gate, and synchronizes every active JAR (currently 64) into the maintained test server. It persists the build number and Paper API coordinate only after deployment verifies successfully. If an attempt fails, correct the problem and rerun the same command; the pending transaction reuses the same proposed build number.
+This command reserves the next shared build number, updates to the latest stable Paper build for the exact configured `paperTarget`, aligns the Paper API coordinate, refreshes generated documentation, runs the complete build and test gate, and synchronizes every active JAR (currently 65) into the maintained test server. It persists the build number and Paper API coordinate only after deployment verifies successfully. If an attempt fails, correct the problem and rerun the same command; the pending transaction reuses the same proposed build number.
 
 Focused Gradle tasks are still appropriate during development. They do not create a new deployable build:
 
@@ -71,11 +71,11 @@ This is a read-only drift check against the public `1MB-Plugins-Docs` checkout. 
 Expected jar naming:
 
 ```text
-1MB-Lib-Core-v1.0.3-651-j25-26.2.jar
-1MB-Lib-AntiFire-v1.0.3-651-j25-26.2.jar
-1MB-Lib-AFKShrine-v1.0.3-651-j25-26.2.jar
-1MB-Lib-StaffCenter-v1.0.3-651-j25-26.2.jar
-1MB-Lib-Profile-v1.0.3-651-j25-26.2.jar
+1MB-Lib-Core-v1.0.3-655-j25-26.2.jar
+1MB-Lib-AntiFire-v1.0.3-655-j25-26.2.jar
+1MB-Lib-AFKShrine-v1.0.3-655-j25-26.2.jar
+1MB-Lib-StaffCenter-v1.0.3-655-j25-26.2.jar
+1MB-Lib-Profile-v1.0.3-655-j25-26.2.jar
 ```
 
 Every new deployable build replaces the complete managed suite in:

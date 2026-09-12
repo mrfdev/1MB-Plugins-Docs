@@ -61,6 +61,7 @@ For support/debugging:
 - [Wiki Assistant](plugins/wiki.md)
 - [AFKShrine](plugins/afkshrine.md)
 - [RecordingMode](plugins/recordingmode.md)
+- [Chunks](plugins/chunks.md)
 - [SellStreaks](plugins/sellstreaks.md)
 - [ScheduledTips](plugins/scheduledtips.md)
 - [Visit](plugins/visit.md)

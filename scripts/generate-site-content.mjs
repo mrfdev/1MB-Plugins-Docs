@@ -624,6 +624,66 @@ const PLAYER_GUIDE_OVERRIDES = {
       'Configurable feedback and visual effects when the state changes.',
     ],
   },
+  chunks: {
+    summary: 'Choose how much nearby chunk data the server sends you, with a small menu and remembered preferences.',
+    intro: 'Chunks changes the server-side chunk data sent around your player. Your client video settings still control how far your game renders. This feature never changes simulation distance.',
+    pageIntro: '**This changes the server-side chunks sent to your client.** Set your preferred render distance in your Minecraft client too. Bobby or Distant Horizons can still show cached scenery after you lower `/chunks`; this menu does not clear their caches.',
+    guide: 'Open /chunks and choose a displayed Less or More option, or Reset to follow the server default for your current world. The default choices are Less 4 and 6, Reset, and More 12 and 16. Wait for confirmation before making another change. The words less and more select preset groups; repeating more does not keep increasing the number.',
+    features: [
+      'A small menu with a light blue border, your player head at the bottom left, a help book at the bottom center, and a glowing Back to /menu star immediately left of the close barrier at the bottom right.',
+      'Two lower-distance choices, Reset, and two higher-distance choices by default.',
+      'Familiar /chunks less, /chunks more, and /chunks reset shortcuts.',
+      'A remembered personal preference that survives reconnects after confirmation.',
+      'A short cooldown while the server saves and confirms your choice.',
+      'Status and paginated help explaining your setting and available choices.',
+    ],
+    afterFeatures: `## Choosing a Distance
+
+Start with **4 or 6** on Bedrock devices, older Java computers, or a limited connection. Builders with a capable computer and a fast connection can try **16** for wide screenshots. Set your client render distance high enough and give terrain time to arrive.
+
+For Java players, we recommend a compatible [Fabric Loader](https://fabricmc.net/use/installer/) and [Bobby](https://modrinth.com/mod/bobby) setup to keep a low server-side distance while seeing previously visited terrain farther away. Try **32 chunks** in your client if your computer handles it comfortably, or choose a lower setting. Check your client version and the mod's dependencies before installing.
+
+[Bobby stores chunks the server has already sent](https://github.com/Johni0702/bobby), so you need to explore before that scenery can be cached. [Distant Horizons can retain distant terrain between sessions](https://modrinth.com/mod/distanthorizons). Neither makes this menu request 32 live chunks. Cached scenery can be old and does not keep distant farms, entities, or redstone active.`,
+    quickStart: [
+      'Run `/chunks` to see the current choices.',
+      'Try Less **4** or **6** for a lighter server-sent view, or More **12** or **16** for a wider view.',
+      'Wait for the change to finish, then check your client render-distance setting.',
+      'Use `/chunks reset` to follow the server default, or `/chunks status` to review your setting.',
+    ],
+    commands: [
+      '/chunks',
+      '/chunks less [preset]',
+      '/chunks more [preset]',
+      '/chunks reset',
+      '/chunks status [page]',
+      '/chunks info [page]',
+      '/chunks help [page]',
+    ],
+    examples: ['/chunks', '/chunks less', '/chunks less 6', '/chunks more 16', '/chunks reset', '/chunks status', '/chunks help 1'],
+    commandTableExamples: {
+      '/chunks less [preset]': '/chunks less 6',
+      '/chunks more [preset]': '/chunks more 16',
+      '/chunks status [page]': '/chunks status',
+      '/chunks info [page]': '/chunks info',
+      '/chunks help [page]': '/chunks help 1',
+    },
+    commandDescriptions: {
+      '/chunks': 'Opens the view-distance menu.',
+      '/chunks less [preset]': 'Selects an enabled Less preset; defaults to 4 when omitted.',
+      '/chunks more [preset]': 'Selects an enabled More preset; defaults to 12 when omitted.',
+      '/chunks reset': 'Returns to the server default for your current world.',
+      '/chunks status [page]': 'Shows your preference and current view-distance state.',
+      '/chunks info [page]': 'Explains server-sent chunks, client settings, and this guide.',
+      '/chunks help [page]': 'Lists the commands and choices available to you.',
+    },
+    notes: [
+      'Staff may change which presets are offered. Only the current choices are accepted, always within 4–16.',
+      '`/chunks 32` is not supported. Simulation distance is managed separately by the server.',
+      'Choosing Reset follows each world\'s default; it is not a promise of one fixed distance in every world.',
+      'Wait for confirmation and the short cooldown before changing again. Contact staff if an operation stays unavailable.',
+      'Staff: use the full technical reference below for installation, permissions, preset administration, placeholders, and recovery.',
+    ],
+  },
   recordingmode: {
     summary: 'Quiet selected personal messages and requests while recording or streaming.',
     intro: 'Recording mode helps players stream or record without private messages, requests, tips, or map visibility getting in the way. Turn it on before going live, then turn it off when you are done.',

@@ -42,6 +42,15 @@ onembcmi.<plugin>.admin
 
 The shared dormant lifecycle accepts console, `onembcmi.<plugin>.admin`, or `onembcmi.global.config.set` for `/<plugin-command> debug enable true|false`. Dormant jars remain green in `/plugins`, but player gameplay commands and runtime behavior stay unavailable. Grant the global config-set node only to staff who may change any feature's persisted configuration; otherwise grant the narrower feature admin node.
 
+Chunks:
+
+```text
+onembcmi.chunks.use
+onembcmi.chunks.admin
+```
+
+`onembcmi.chunks.use` defaults to false; `onembcmi.chunks.admin` defaults to op and includes `/chunks admin inspect <player|uuid> [page]`, a read-only view of the latest retained failure and its permission sources. Ordinary users do not need `cmi.command.viewdistance` or `.others`. The feature manages approved numeric `cmi.viewdistance.<number>` preferences through UUID-targeted LuckPerms API operations. See [Chunks](plugins/chunks.md).
+
 Example feature permissions:
 
 ```text
