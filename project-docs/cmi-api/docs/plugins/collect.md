@@ -12,6 +12,8 @@ Players run:
 /collect
 ```
 
+You can also choose **Collect** in [the main menu](menu.md) while this feature is active and you have access. Its nether star beside the close button returns to `/menu` by default; staff can customize `gui.menu-command`.
+
 The GUI uses the shared light-blue glass border and includes:
 
 - an index page with event state, current week, stats, leaderboards, and reward access

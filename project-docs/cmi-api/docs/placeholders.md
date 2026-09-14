@@ -699,7 +699,11 @@ papi parse mrfloris %onembcmi_discordchat.points%
 papi parse mrfloris %onembcmi_discordchat.streak%
 papi parse mrfloris %onembcmi_discordchat.next_milestone%
 papi parse mrfloris %onembcmi_discordchat.event_active%
+papi parse mrfloris %onembcmi_discordchat.prefix%
+papi parse mrfloris %onembcmi_discordchat.suffix%
 ```
+
+For CMI chat formats, use these dot-separated prefix/suffix tokens. See the [DiscordChat CMI setup](plugins/discordchat.md#showing-cosmetics-in-cmi-chat).
 
 GameTypes placeholders:
 

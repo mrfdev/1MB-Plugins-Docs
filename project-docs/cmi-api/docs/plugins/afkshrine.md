@@ -4,7 +4,7 @@
 
 AFKShrine is a player-fun plugin that turns CMI AFK state into a small visible experience. When a player becomes AFK, the plugin can show a subtle shrine effect around them with soft dust particles, optional sparkles, a private boss bar, and optional text that explains they are away.
 
-The goal is cosmetic and social, not economy-heavy. It should be safe to test because it listens to AFK state and displays effects rather than moving items, money, or teleports.
+The goal is cosmetic and social, with controlled progression through manually confirmed rewards, captured-item exchanges, and shrine equipment upgrades.
 
 The reward side is intentionally claim/trade based. AFK sessions can create pending AFKShrine tokens, milestones, quest completions, and leaderboard progress, but the plugin does not automatically pay kits, money, or commands just because someone went AFK. Players must return and use `/afkshrine claim` or `/afkshrine trade`. Bed sleeping can also create a tiny AFKShrine-adjacent pending-token reward, but it uses a separate low-cap path with a same-area cooldown and does not run normal AFK milestone rewards.
 
@@ -20,7 +20,9 @@ These are the AFKShrine features players should be able to learn about from the 
 - Presets and personalization: players can list and choose unlocked particle presets with `/afkshrine presets` and `/afkshrine preset`, including a true multi-color Rainbow dust ring, with hover details explaining each preset without exposing permission nodes.
 - Bed rest: sleeping in a bed can optionally count as a tiny AFKShrine-adjacent activity with low pending-token rewards and same-area cooldown protection.
 - Community milestones: server-wide claimed-token totals can unlock temporary celebration windows or visual shrine themes when configured.
-- Tools and upgrades: when enabled, `/afkshrine tools` can let players spend captured AFKShrine special items on staff-configured upgrades. `/afkshrine books` independently exposes only lore-book exchanges through `onembcmi.afkshrine.books`, so staff can release the books while spear, shield, and other tools stay locked.
+- Tool upgrades: `/afkshrine upgrades` or `/afkshrine tools` opens sequential spear and shield upgrades paid with physical AFKShrine Tokens. Select your authentic shrine item in your inventory, inspect its preview, and confirm the next upgrade.
+- Other upgrades and trades: `/afkshrine exchanges` or `/afkshrine notes` exchanges eight physical AFKShrine Notes for either four DiscordChat points or one physical AFKShrine Token. These currencies are separate from pending and claimed AFKShrine points.
+- Lore books: `/afkshrine books` independently exposes lore-book exchanges through `onembcmi.afkshrine.books`. Native upgrades, Note exchanges, lore books, and older configured tool actions have separate access controls.
 - AFKShrine GUI: `/afkshrine gui` and `/afkshrine menu` open a player hub for stats, claiming, rewards, tools, milestones, albums, presets, leaderboards, bed rest, and help.
 
 ## Player FAQ
@@ -50,6 +52,10 @@ It depends on that milestone. Some are one-time; others have daily, weekly, mont
 ### What does Trade All do?
 
 `/afkshrine trade all` attempts one affordable copy of each eligible reward. It uses your claimed token balance, so claim pending tokens first and review the reward costs before trading.
+
+### What can I do with AFKShrine Notes?
+
+Open `/afkshrine exchanges` to exchange **8 physical AFKShrine Notes** for either **4 DiscordChat points** or **1 physical AFKShrine Token**. Choose the output, review the trade and confirm it. These trades use authentic Note items, not your pending AFKShrine balance or ordinary paper. Available options depend on your permissions and the required integrations.
 
 ### What should I do if a reward is blocked?
 
@@ -169,7 +175,10 @@ Additional ideas to consider next:
 /afkshrine gui
 /afkshrine menu
 /afkshrine postcard
+/afkshrine upgrades
 /afkshrine tools
+/afkshrine exchanges
+/afkshrine notes
 /afkshrine tools list
 /afkshrine tools claim <action> [confirm]
 /afkshrine books
@@ -218,7 +227,7 @@ Normal claim and bed-rest messages retain mint numeric highlights. Only the shor
 
 While a player is actively AFK, the bossbar can rotate through progress views instead of showing one static title. The default dynamic cycle refreshes each player's bossbar snapshot every 30 seconds and changes view every 120 seconds. Supported views are session duration, minimum-session eligibility, estimated session cap progress, pending tokens, daily cap usage, streak progress, active seasonal quest progress, and community milestone or celebration progress. Preview bossbars stay static so staff can quickly inspect particle styles without mixing in live progress text.
 
-`/afkshrine gui` and `/afkshrine menu` open the player-facing AFKShrine hub. It uses the shared 1MB light-blue frame style, a player head in the bottom-left stats slot, pagination in the middle of the bottom row, a `Back to /menu` button beside the close button, and a barrier close button in the bottom-right. The first page is an index with deeper pages for player stats, claiming pending tokens, reward trades, permitted tools and upgrades, lore-book exchanges, milestone/album progress, streaks, seasonal quests, community milestones, presets with GUI preview cooldown, leaderboards, bed rest info, and chat command help. Players with only `onembcmi.afkshrine.books` see the lore-book button and its five book kits but do not see the tools, spear, or shield buttons. GUI lore uses the same soft pastel tooltip style as other 1MB menus, with readable `key: value` lines and highlighted click actions. Captured item template previews are staff-only and require `onembcmi.afkshrine.admin` or `onembcmi.afkshrine.admin.capture`.
+`/afkshrine gui` and `/afkshrine menu` open the player-facing AFKShrine hub. It uses the shared 1MB light-blue frame style, a player head in the bottom-left stats slot, pagination in the middle of the bottom row, a `Back to /menu` button beside the close button, and a barrier close button in the bottom-right. The index places **AFKShrine Tool Upgrades** and **Other Upgrades & Trades** beside each other, with lore-book exchanges as a separate entry. Other pages cover player stats, claiming pending tokens, reward trades, milestone/album progress, streaks, seasonal quests, community milestones, presets with GUI preview cooldown, leaderboards, bed rest info, and chat command help. Each feature checks its own permission. GUI lore uses the same soft pastel tooltip style as other 1MB menus, with readable `key: value` lines and highlighted click actions. Administrative captured-template inspection remains staff-only; players can inspect previews of their own selected equipment and its upgrade result.
 
 Each AFKShrine GUI page is bound to the opening player's UUID, a random session nonce, and the exact server-side inventory instance. Only registered plain left-click actions are accepted. Actions execute on the next server tick and revalidate the current session and permission before navigation, claiming, previews, or chat transitions. Stale pages and delayed callbacks are rejected, and sessions are cleared on close, quit, kick, world change, reload, and plugin shutdown.
 
@@ -238,7 +247,9 @@ Clicking the anvil only opens a chat preview. A ready preview creates a two-minu
 
 `rewards.trade-cooldown-minutes` defaults to `5`. The cooldown is shared across every reward id for that player, uses real elapsed time, and survives reloads and restarts through the existing saved last-trade timestamp. It begins only after the claimed-token charge and any one-time marker are successfully persisted, immediately before command delivery. The confirmation path recalculates the remaining time, so an old preview cannot bypass it. Set the value to `0` to disable the gate. AFKShrine claim, tool, and lore-book exchanges are not affected.
 
-`/afkshrine admin capture token` stores the exact item in the staff member's main hand as `token` in `plugins/1MB-CMIAPI/AFKShrine/tools.yml`. Matching uses Bukkit item similarity with stack amount ignored, so custom names, lore, custom model data, and other item metadata are preserved. `/afkshrine tools` opens all permitted tool categories; `/afkshrine books` opens only lore books. The equivalent `list` command prints the same action state in chat. `/afkshrine tools claim <action>` and `/afkshrine books claim <action>` preview the cost and blockers; `confirm` is required before captured items are consumed and configured commands run. Ready previews make the visible confirm command clickable. GUI clicks only preview and close to chat, where the player can inspect the exact exchange before confirming. Permission is checked again on category open, item click, preview, and final confirmation. Normal players see generic token status; exact captured item templates and setup hints are only visible to staff with `onembcmi.afkshrine.admin` or `onembcmi.afkshrine.admin.capture`.
+`/afkshrine admin capture token` stores the exact item in the staff member's main hand as `token` in `plugins/1MB-CMIAPI/AFKShrine/tools.yml`. Capture IDs include `token`, `note`, `spear`, and `shield`. Existing live captures remain usable; capture again only when a required template is missing or staff deliberately changes the issued item. Template stack amounts are normalized, so staff does not need a particular stack size when capturing.
+
+`/afkshrine tools` without arguments opens the native equipment upgrades, as does `/afkshrine upgrades`. The older `tools list` and `tools claim <action> [confirm]` commands continue to serve configured action rows. `/afkshrine books` opens lore-book exchanges, with corresponding `list` and `claim <action> [confirm]` routes. Those configured actions retain their chat preview and clickable confirmation. The native equipment and Note menus use their own preview and confirmation controls. Permission and authoritative inventory state are checked again before payment.
 
 `/afkshrine quests` includes completed seasonal quest counts and currently active seasonal sets. `/afkshrine album` is the richer collection view: it shows configured and saved-history milestone entries as `done` or `open`, with counts such as `1/1 once`, `0/1 weekly (3 total)`, `3/10 weekly (14 total)`, or `12 total, unlimited`. Category filters are `time`, `biomes`, `safety`, `risk`, `events`, `quests`, `seasonal`, and `streaks`. `/afkshrine community` shows the server-wide claimed-point total, completed community milestones, the next threshold, and the active temporary celebration if one is running.
 
@@ -260,6 +271,8 @@ onembcmi.afkshrine.use
 onembcmi.afkshrine.claim
 onembcmi.afkshrine.rewards
 onembcmi.afkshrine.trade
+onembcmi.afkshrine.upgrades
+onembcmi.afkshrine.exchanges
 onembcmi.afkshrine.tools
 onembcmi.afkshrine.books
 onembcmi.afkshrine.top
@@ -309,6 +322,8 @@ onembcmi.afkshrine.admin.reload
 ```
 
 `onembcmi.afkshrine.preview` defaults to false. Players without it do not see preview in help, first-level tab completion, preview argument tab completion, or `/afkshrine presets` preview links.
+
+`onembcmi.afkshrine.upgrades` and `onembcmi.afkshrine.exchanges` default to true and independently grant the native equipment and Note menus. They also require the base `onembcmi.afkshrine.use` permission and the corresponding `upgrades.enabled` or `exchanges.enabled` setting, both defaulting to true. Denying the older `onembcmi.afkshrine.tools` node does not deny either new menu. To keep either native feature private, explicitly deny its own node or disable its own setting. Lore-book access continues to use `onembcmi.afkshrine.books`.
 
 Only the default preset is open without an extra style permission. Non-default preset nodes such as `onembcmi.afkshrine.style.mint`, `onembcmi.afkshrine.style.aurora`, `onembcmi.afkshrine.style.prism`, `onembcmi.afkshrine.style.sunrise`, and `onembcmi.afkshrine.style.storm` default to false, so staff can use them as rank, milestone, seasonal, or manual unlocks. Grant `onembcmi.afkshrine.style.*` only when a player or group should access every configured preset.
 
@@ -600,6 +615,8 @@ streaks.repeat.reset
 tools.enabled
 tools.gui.enabled
 tools.actions
+upgrades.enabled
+exchanges.enabled
 progress.overrides
 hooks.enabled
 hooks.session-earned.commands
@@ -743,7 +760,51 @@ Compatibility was inspected read-only against live PyroFishingPro `PyroFishingPr
 
 Optional hooks are disabled by being empty, even though `hooks.enabled` defaults to true. They are meant for feedback such as sounds, titles, toasts, fireworks, and public milestone messages. Keep real rewards in `/afkshrine claim` and `/afkshrine trade` unless staff intentionally chooses otherwise.
 
-AFKShrine tools are a separate captured-item layer. Staff captures exact special items with:
+### Native Equipment Upgrades
+
+The native upgrades and Note exchanges are live in build **1.0.3-660**, with successful staff and player gameplay testing confirmed by the owner on 14 September 2026.
+
+The **AFKShrine Tool Upgrades** button opens `/afkshrine upgrades`; `/afkshrine tools` without arguments is an alias. Left-click the exact shrine item in your own inventory to select it. A cloned preview appears in the yellow-marked slot below the chest icon. The actual item stays in its original inventory slot until confirmation. Closing the menu before confirming leaves it and the player's Tokens untouched.
+
+Each upgrade requires the previous step on the same authentic shrine item and consumes the listed number of physical, captured AFKShrine Tokens:
+
+| Item | Step | Cost | Result |
+| --- | --- | --- | --- |
+| Shrine spear | 1 | 6 Tokens | Iron spear becomes diamond; adds Lunge II and Sharpness II. |
+| Shrine spear | 2 | 4 Tokens | Upgraded diamond spear becomes netherite; adds Lunge IV and Sharpness IV. |
+| Shrine spear | 3 | 2 Tokens | Upgraded netherite spear becomes unbreakable. |
+| Shrine shield | 1 | 6 Tokens | Adds Mending and Fire Aspect II. |
+| Shrine shield | 2 | 4 Tokens | Applies the **Quiet Lantern** banner design. |
+| Shrine shield | 3 | 2 Tokens | Soulbinds the upgraded shield to the player through ItemSoulBind. |
+
+Each complete path costs 12 Tokens. Steps cannot be skipped or purchased twice. The shield path never makes a shield unbreakable. Fire Aspect II is an item enchantment; AFKShrine adds no custom block-ignition mechanic. Quiet Lantern is a distinct AFKShrine design, separate from the VoteTokens shield designs.
+
+The Quiet Lantern design button displays a shield carrying the actual banner pattern, including while its purchase requirements are blocked. Players can see the design before clicking; the confirmation page also shows their exact upgraded shield before payment.
+
+Older reward items are authenticated against their full captured template, allowing ordinary durability wear and exact captured-owner personalization in the name/lore to be normalized for comparison. Matching is not based on a display name alone. The first successful upgrade adds namespaced identity, instance, and stage PDC; subsequent steps validate that identity and the required material/stage. Material conversion preserves unknown PDC, explicit component overrides and removals, third-party metadata, and current wear. Existing higher enchantment levels are retained; incompatible changes fail before payment.
+
+The final shield step requires ItemSoulBind to be enabled and stores the authoritative server UUID, including for Floodgate/Bedrock players. An existing foreign, malformed, or group soulbind is refused for staff review, and an already self-bound shield cannot buy binding again. The integration preserves the installed ItemSoulBind ownership contract; it does not resolve player identities through an external service.
+
+### AFKShrine Note Exchanges
+
+The adjacent **Other Upgrades & Trades** button opens `/afkshrine exchanges`; `/afkshrine notes` is an alias. Choose a reward, inspect the eight-Note cost and output, then confirm:
+
+| Cost | Reward | Availability |
+| --- | --- | --- |
+| 8 physical AFKShrine Notes | 4 spendable DiscordChat points | Requires DiscordChat's native point-credit service. |
+| 8 physical AFKShrine Notes | 1 physical AFKShrine Token | Requires the captured `token` template and room for the result. |
+
+Payment uses the exact captured `note` item, with stack amount ignored for matching and the required total rechecked at confirmation. The Token reward is a clone of the captured `token` template with amount one. Pending/claimed AFKShrine points, ordinary paper, and renamed lookalikes cannot pay these exchanges. Money and Pyro Welcome point exchanges are proposals only and are not enabled by this feature.
+
+DiscordChat delivery credits points directly through an optional shared service, with the original player UUID and transaction UUID retained for retries. Its balance update and delivery receipt are saved atomically off the server thread. A duplicate request acknowledges the existing credit without awarding again, even if those points have since been spent. An unavailable provider blocks the points exchange; an ambiguous save retains the transaction for recovery instead of assuming that delivery failed.
+
+The native menus journal the exact affected inventory slots and each player's receipt before applying an upgrade or exchange. Journal I/O runs on a serial background worker; inventory changes run on the server thread. On join, recovery reconciles the retained transaction only when the saved receipt and affected slots provide an exact, supported recovery path. Missing/corrupt data, unexpected item changes, or uncertain provider state fail closed for staff review. A completed plugin transaction alone is not evidence that Paper persisted the player's inventory, so its recovery record is retained. Staff should verify interrupted upgrades, reconnects and restarts with disposable items before changing this setup.
+
+Staff can inspect the last five native receipts with `/afkshrine admin item-exchange <server-player-uuid>`. Reconnecting retries eligible pending work under its original identity. Preserve the journal when reconciling mismatched slots; deleting it is not a refund procedure.
+
+### Captured Templates and Configured Actions
+
+AFKShrine's physical items are a separate layer from its earned point balance. Staff captures exact special items when their templates are missing:
 
 ```text
 /afkshrine admin capture token
@@ -755,7 +816,7 @@ Captured templates are stored in:
 plugins/1MB-CMIAPI/AFKShrine/tools.yml
 ```
 
-Tool action rows live in `tools.actions` and use:
+The older command-based action rows live in `tools.actions`. These are separate from the native six-step equipment paths and two Note exchanges above:
 
 ```text
 id|Display Name|icon material|enabled|captured-item costs|console command;;second command
@@ -772,7 +833,7 @@ Each lore kit contains the two books listed under that kit in `docs/plugins/afks
 
 The default rows remain disabled so a missing or misspelled CMI kit cannot consume live player items. When upgrading an older config, the exact legacy `story_books`/`afkshrine_story_books` row is automatically replaced by these five rows while preserving its previous enabled state and cost; customized rows are left alone.
 
-To release only lore books to the normal LuckPerms group while keeping the other tools locked:
+To release lore books to the normal LuckPerms group while keeping older command-based tool actions locked:
 
 ```text
 lp group default permission set onembcmi.afkshrine.tools false
@@ -786,6 +847,8 @@ Then complete the reward setup:
 3. Change only the five `books_*` rows from `false` to `true` under `tools.actions` in `plugins/1MB-CMIAPI/AFKShrine/config.yml`. Leave the spear and shield rows false.
 4. Run `/afkshrine admin reload`, followed by `/afkshrine admin check`.
 5. Test with an account that has `.books=true` and `.tools=false`: open `/afkshrine gui`, click `Lore Book Exchanges`, click a kit to preview its two-token price, then click the chat confirmation. `/afkshrine books` provides the same direct route.
+
+The new `.upgrades` and `.exchanges` permissions are independent of this older books/tools split. Explicitly deny those nodes as well when a test group should receive only lore books.
 
 For a live staff test, `onembcmi.afkshrine.admin.debug` allows two bounded and audited grants:
 
@@ -870,7 +933,9 @@ Community claim audit rows are included in staff exports from `logs/community.lo
 
 Reward trades and optional hooks are still owner-configured console commands. The readiness check/report call this out for manual review, but they do not block or rewrite commands.
 
-AFK session settlement, bed-rest settlement, pending-token claims, reward trades, community claims, and tool/book exchanges use durable idempotent receipts. Exact captured item costs and before/after inventory slots are held in payload escrow until profile state and command delivery are finalized. A restart or uncertain command leaves an unresolved receipt instead of awarding or charging twice. Staff can inspect and reconcile these through `/afkshrine debug transactions` and `/afkshrine debug transaction <uuid>`.
+AFK session settlement, bed-rest settlement, pending-token claims, reward trades, community claims, and configured tool/book actions use the shared durable transaction receipts. Their captured-item payment payloads retain before/after inventory state until profile state and command delivery are finalized. Staff can inspect these shared transactions through `/afkshrine debug transactions` and `/afkshrine debug transaction <uuid>`.
+
+Native equipment upgrades and Note exchanges use their separate retained inventory journal and per-player receipt, described above. Their menu previews never take custody of the selected item. After a restart, only an exact supported inventory/receipt match is recovered automatically; other states remain blocked for staff review. DiscordChat's independent credit receipt supplies delivery evidence for the four-point exchange.
 
 ## Data
 

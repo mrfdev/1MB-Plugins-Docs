@@ -29,6 +29,8 @@ The intended use is a friendly `/journeymap` page where players can see where th
 
 `/journeymap path` shows your saved badge, the next badge and era, its actual configured payoff, and one later milestone. `/journeymap path chat` provides the same short path in chat; normal status replies also use it. **Check my playtime**, **All journey badges**, **Review rewards**, and **Choose a focus** lead to the existing feature actions.
 
+Choose **Your Journey** in [the main menu](menu.md) to open `/journeymap path` while this feature is active and you have access. The path's nether star beside the close button returns to `/menu` when available.
+
 The preview uses saved progress from the last check. It never refreshes playtime, grants a badge, claims a reward, or changes a focus merely by opening. If the profile has not been checked in this session, it asks you to check instead of assuming zero progress. Meeting a threshold without a recorded badge asks for a fresh check; a saved earned badge stays earned if thresholds change. Reward-disabled and badge-only milestones say so. No later milestone is invented when the configured path ends. See [Progression previews](../progression-previews.md).
 
 ## Player FAQ

@@ -48,6 +48,8 @@ The index shows only online recipients who currently have `onembcmi.appreciation
 
 `/thanks` is a configurable short alias for the same menu.
 
+You can also choose **Appreciation** in [the main menu](menu.md) while this feature is active and you have access. Its nether star beside the close button returns to `/menu` by default; staff can customize `gui.menu-command`.
+
 ## Player FAQ
 
 ### How do I thank someone, and must I include a gift?
@@ -360,7 +362,7 @@ Build target: Paper 26.2 stable, Java 25, project version `1.0.1`.
 Current test jar:
 
 ```text
-1MB-Lib-Appreciation-v1.0.3-656-j25-26.2.jar
+1MB-Lib-Appreciation-v1.0.3-660-j25-26.2.jar
 ```
 
 [Documentation index](README.md)

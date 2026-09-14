@@ -129,41 +129,49 @@ Available features include:
 
 ### Can I check my points from Discord?
 
-The Public Beta 2 local preview adds Discord `/discordchat`. Once staff enable it, use it in **#server-chat** for a reply visible only to you. It shows your linked Minecraft account, available points, XP toward your next point, current streak and next milestone, earning guidance, in-game menu commands, and the [DiscordChat guide](https://docs.1moreblock.com/player-guides/plugins/discordchat/).
+DiscordChat supports an optional Discord `/discordchat` command. Once staff enable it, use it in **#server-chat** for a reply visible only to you. It shows your linked Minecraft account, available points, XP toward your next point, current streak and next milestone, earning guidance, in-game menu commands, and the [DiscordChat guide](https://docs.1moreblock.com/player-guides/plugins/discordchat/).
 
 You can check your saved progress while logged out of Minecraft, provided the Minecraft server and its DiscordSRV bot are running. If you are not linked, start with `/discord link` **in Minecraft**. A linked account without saved activity receives getting-started help. A temporary lookup failure does not display a made-up balance.
 
 The command only shows your own information. It cannot spend points, claim rewards or upgrade items. Checking it earns no XP or points and does not extend the recent-Discord chat window. It is limited to #server-chat, including when extra channels earn chat XP. Minecraft menu permissions and claim rules still apply when spending points in game.
 
-This command is implemented for local Beta 2 testing and is disabled by default. It has not been activated on the live Public Beta 1 bot.
+This command is disabled by default and requires separate staff activation. Installing a newer JAR does not enable it. If it is unavailable in Discord, ask staff whether it has been enabled.
 
 ### What chat counts toward DiscordChat progress?
 
-Link your Minecraft and Discord accounts using `/discord link`. Meaningful messages through the configured server-chat bridge can count in either direction. Unlinked accounts do not earn these rewards. Public Beta 1 uses only `#server-chat`, at the same message XP rate in both directions.
+Link your Minecraft and Discord accounts using `/discord link`. Meaningful messages through the configured server-chat bridge can count in either direction. Unlinked accounts do not earn these rewards. Source rates and the recent-Discord activity requirement follow the server configuration.
 
-Public Beta 2's additional channels and conditional in-game XP are being tested locally. They are configuration options for the next rollout, not a change to the live Beta 1 rules.
+Staff can also enable earning in selected Discord-only channels without forwarding their messages to Minecraft. Only `#server-chat` remains the two-way chat bridge.
 
-### What is being tested for Public Beta 2?
+### How can Discord activity affect in-game XP?
 
-The local preview keeps Discord-to-Minecraft message XP at 100%. Linked in-game chat earns 80% while a meaningful linked Discord message in `#server-chat` is less than six minutes old, and 0% after that window expires. Chat still goes through when it earns no XP. One qualifying Discord participant opens the window for everyone linked in game; in-game messages cannot extend it.
+The Beta 2 example configuration keeps Discord-to-Minecraft message XP at 100%. With these settings, linked in-game chat earns 80% while a meaningful linked Discord message in `#server-chat` is less than six minutes old, and 0% after that window expires. Chat still goes through when it earns no XP. One qualifying Discord participant opens the window for everyone linked in game; in-game messages cannot extend it.
 
-Staff can also configure different XP percentages for extra Discord-only channels. Their messages stay on Discord and do not open the in-game earning window. Quality checks and daily message caps remain shared across channels. These rules are still in local testing; the live public beta continues using its existing single-channel rules.
+Staff can also configure different XP percentages for extra Discord-only channels. Their messages stay on Discord and do not open the in-game earning window. Quality checks and daily message caps remain shared across channels. These rates and the time window are configurable; `/discordchat status` and the optional Discord information command describe the active earning rules.
 
 ### Why did a message give no XP?
 
-Quality checks exclude spam, repeated messages, bot commands, low-effort lines, and link-only posts. Daily caps also apply. `/discordchat status` shows your progress; adding useful context matters more than sending many messages. In the Beta 2 preview it also explains when in-game XP is waiting for recent Discord chat.
+Quality checks exclude spam, repeated messages, bot commands, low-effort lines, and link-only posts. Daily caps also apply. `/discordchat status` shows your progress; adding useful context matters more than sending many messages. It also explains when in-game XP is waiting for recent Discord chat.
+
+### How many points can I earn from chat each day?
+
+The configured 1MB daily message cap is **130 XP**, equivalent to **5.2 points** at 25 XP per point. Complete points convert automatically and the remainder carries forward. Streak XP, conversation bonuses, first-Discord bonuses and milestone points have their own rules, so message XP is not your entire daily total. Switching channels does not give you another daily message cap. Staff can tune the cap and earning rates.
 
 ### Do I need a milestone before XP becomes points?
 
 No. Complete XP units convert automatically into spendable points, with the remainder carried forward. The default is 25 XP per point. Streak milestone points are a separate bonus.
 
+### Can I exchange AFKShrine Notes for DiscordChat points?
+
+Yes. When available to you, `/afkshrine exchanges` offers **4 DiscordChat points for 8 physical AFKShrine Notes**. Review the trade and confirm it there. It uses authentic Note items, not your pending AFKShrine balance or ordinary paper. See the [AFKShrine Note exchange guide](https://docs.1moreblock.com/player-guides/plugins/afkshrine/#what-can-i-do-with-afkshrine-notes) for details.
+
 ### How does the one-day streak milestone work?
 
-The Public Beta 2 local preview adds **1 Day Streak** before the seven-day milestone. Your first qualifying linked message completes it automatically and awards a one-time **25-point starter bonus**. You do not need to click or buy anything, and this bonus is separate from normal chat XP.
+The default milestone list starts with **1 Day Streak**, before the seven-day milestone. With this milestone enabled, your first qualifying linked message completes it automatically and awards a one-time **25-point starter bonus** by default. You do not need to click or buy anything, and this bonus is separate from normal chat XP.
 
 Existing players who have not completed day one earn it on their next qualifying message. Reloading the plugin, opening the menu, sending repeated or blocked chat, or restarting a streak does not award it again. Your completion and bonus remain in `/discordchat milestones` and `/discordchat history`. The next target skips milestones you have already completed, even after your streak resets.
 
-The later milestones remain at **7, 30, 90, 100, 180, and 365 days**. Staff can configure the starter bonus. This feature is being tested locally for Beta 2; the live Public Beta 1 milestones still start at seven days.
+The later milestones remain at **7, 30, 90, 100, 180, and 365 days**. Staff can configure the milestone list and starter bonus. Existing custom lists are preserved, so check `/discordchat milestones` for the milestones available on your server.
 
 ### Where can I see the leaderboards?
 
@@ -221,49 +229,51 @@ There is a **24-hour server-wide cooldown**, so one player requests the day for 
 
 The Beta 2 bundle exchanges **300 DiscordChat points for 100 Welcome points**, once per player. Welcome points are the separate balance used in the `/points` shop. DiscordChat checks the balance increase before confirming the reward. If the points service is unavailable, the purchase is blocked. An uncertain payout needs staff review before another purchase; report it with the transaction ID rather than buying again.
 
+### What does the money bundle give me?
+
+The configured 1MB bundle exchanges **500 DiscordChat points for 50,000 in-game money**. Check `/bal` before and after purchasing to see the increase. It has a **six-hour personal cooldown**, so buying it does not block other players from buying their own. Review the current price and payout in the confirmation before spending points.
+
 ### Why does a reward say “Already unlocked”?
 
-The Public Beta 2 local preview checks whether you already have all the permissions or group access offered by a one-time unlock, even if you received them before DiscordChat. If you do, the reward shows **Already unlocked** and cannot spend your points or start a cooldown.
+DiscordChat checks whether you already have all the permissions or group access offered by a one-time unlock, even if you received them before DiscordChat. If you do, the reward shows **Already unlocked** and cannot spend your points or start a cooldown.
 
 For bundles with several unlocks, having only some of them does not block a purchase. For example, already having access to the MobHat menu does not prevent buying a new mob cosmetic. If your existing access expires or is removed, an unlock you have never claimed through DiscordChat can become available again. If your access cannot be checked, the purchase pauses without spending points.
 
-This is a local Beta 2 preview; the live Public Beta 1 server has not changed.
-
 ### Where can I claim rewards or upgrade tools?
 
-The Public Beta 2 local preview requires **Survival mode** in an allowed world for reward purchases and tool upgrades. The configured worlds are **wild, general, end, nether, acid, cave, chunkblock, skyblock, oneblock, and skygrid**. Builders, spawn, legacy, and every unlisted world are blocked. Creative, Adventure, and Spectator cannot claim, including staff and OPs.
+Reward purchases and tool upgrades require **Survival mode** in an allowed world. The configured worlds are **wild, general, end, nether, acid, cave, chunkblock, skyblock, oneblock, and skygrid**. Builders, spawn, legacy, and every unlisted world are blocked. Creative, Adventure, and Spectator cannot claim, including staff and OPs.
 
 You can browse the menus from any world. The **Where to Claim** compass lists the allowed worlds. A blocked purchase or upgrade spends no points. Moving worlds or changing game mode after opening a confirmation does not bypass the checks. You can still cancel, retrieve your deposited tool, or receive a staff refund from elsewhere. Chat XP and streak points are unaffected by these claim rules.
 
-These restrictions are being tested locally for Beta 2; they have not been deployed to the live Public Beta 1 server yet.
+If the menu says **Claims are paused: staff must check the allowed-world list**, staff need to configure that list and reload. This blocks claims everywhere, even if rewards and tools were previously enabled.
 
 ### What does “Coming soon” mean on a reward?
 
-The Public Beta 2 local preview lets staff show selected disabled rewards as **Coming soon**. These are possible future rewards, with no promised release date. You can read their description, but clicking cannot open a purchase or spend points. Other disabled rewards can remain hidden. An enabled reward with an unavailable dependency still has its separate **Unavailable** message.
+Staff can show selected disabled rewards as **Coming soon**. These are possible future rewards, with no promised release date. You can read their description, but clicking cannot open a purchase or spend points. Other disabled rewards can remain hidden. An enabled reward with an unavailable dependency still has its separate **Unavailable** message.
 
-### Will the menus be easier to read?
+### Can staff adjust menu colours and long descriptions?
 
-The Public Beta 2 local preview wraps long descriptions and help text into shorter lines. It also uses a darker inventory title colour, initially dark teal, with navy and charcoal available for comparison. These presentation changes are still being tested locally; the live Public Beta 1 menus have not changed.
+Long descriptions and help text wrap into shorter lines. Inventory titles default to dark teal. Staff can adjust the title colour, wrapping width and translated text, then reload and reopen the menus to check the result.
 
 ### How do reward cooldowns work?
 
-The reward menu shows each reward's cooldown and how long you have left to wait. A personal cooldown applies to your next purchase of that same reward; other players and other rewards have their own timers. A server-wide cooldown blocks that reward for everyone until it expires. The timer starts after a successful purchase, and clicking a reward that is still on cooldown spends no points.
+The reward menu shows each reward's cooldown and how long you have left to wait. A personal cooldown applies to your next purchase of that same reward; other players and other rewards have their own timers. A server-wide cooldown blocks that reward for everyone until it expires. The timer starts after a successful purchase, and clicking a reward that is still on cooldown spends no points. The repeatable 1MB item and money bundles use **six-hour personal cooldowns**. The Jobs, mcMMO, fishing and farming rewards each have their own **one-hour server-wide cooldown**; the EXP-day mail request uses **24 hours server-wide**. Staff can change these values.
+
+Fishing and farming also share an active-event check: either running tournament temporarily blocks both choices. This is intentional and separate from their individual cooldowns.
 
 ### Do tool upgrades ask me to confirm?
 
-Public Beta 1 on the live server applies an eligible upgrade and spends its displayed point cost on the first click. Read the upgrade and cost before clicking there.
+Yes. Choosing an eligible upgrade opens a confirmation before applying it. In `/discordchat tools`, place exactly one tool or weapon in the yellow slot below the chest, then choose an upgrade on the right. You see the proposed item, enchantment level, and point cost before pressing **Confirm Upgrade**. **Cancel Upgrade** or **Back** returns to the choices without spending points. Closing returns your original item; if your inventory is full, it stays stored for recovery. The yellow pane is only a guide and cannot be collected.
 
-The Public Beta 2 local test build adds a confirmation. In `/discordchat tools`, place exactly one tool or weapon in the yellow slot below the chest, then choose an upgrade on the right. You see the proposed item, enchantment level, and point cost before pressing **Confirm Upgrade**. **Cancel Upgrade** or **Back** returns to the choices without spending points. Closing returns your original item; if your inventory is full, it stays stored for recovery. The yellow pane is only a guide and cannot be collected.
-
-Only confirming can apply the upgrade or spend points. Changed items, prices, settings, permissions, or an insufficient current balance invalidate the review. Leaving an allowed world or leaving Survival also blocks confirmation. A configuration reload requires a fresh review. This change is a local Beta 2 preview and has not been deployed to the public server yet.
+Only confirming can apply the upgrade or spend points. Changed items, prices, settings, permissions, or an insufficient current balance invalidate the review. Leaving an allowed world or leaving Survival also blocks confirmation. A configuration reload requires a fresh review.
 
 If the item cannot receive the upgrade, the tool explains why and spends no points. An enchantment already at or above the offered level is kept: selecting Unbreaking IV for an Unbreaking V item will not lower it or charge you.
 
 ### How do I move an item into or out of the tool slot?
 
-In the local Beta 2 preview, pick up exactly one item with a normal inventory click, then click the yellow marker below the chest. To return the deposited item to your inventory, click it with an empty cursor. Wait for that move to finish before clicking again. Shift-click, dragging across the menu, number keys, offhand swaps and creative copying are blocked.
+Pick up exactly one item with a normal inventory click, then click the yellow marker below the chest. To return the deposited item to your inventory, click it with an empty cursor. Wait for that move to finish before clicking again. Shift-click, dragging across the menu, number keys, offhand swaps and creative copying are blocked.
 
-Closing the menu returns the deposited item, including an upgrade you confirmed. If your inventory is full, the item stays stored: make space and reopen `/discordchat tools` or rejoin. If you die with an item deposited, it remains stored for recovery after respawning. A cancelled kick leaves the menu alone. If recovery finds a matching item in your inventory or on your cursor, staff must review the safety record before another copy can be returned. These transfer improvements are part of the local Beta 2 test build, not a change to the live Beta 1 server.
+Closing the menu returns the deposited item, including an upgrade you confirmed. If your inventory is full, the item stays stored: make space and reopen `/discordchat tools` or rejoin. If you die with an item deposited, it remains stored for recovery after respawning. A cancelled kick leaves the menu alone. If recovery finds a matching item in your inventory or on your cursor, staff must review the safety record before another copy can be returned.
 
 ### Can I hide reminders or milestone announcements?
 
@@ -271,7 +281,7 @@ Closing the menu returns the deposited item, including an upgrade you confirmed.
 
 ### Can staff check DiscordChat from the console?
 
-The Public Beta 2 local preview adds `discordchat debug status`. It shows the build, active or dormant state, integrations, DiscordSRV hook, chat-tracking settings, and reward/tool switches. It works even when DiscordChat gameplay is disabled. The same command works in game with a leading `/` for authorized staff.
+Staff can use `discordchat debug status` from console. It shows the build, active or dormant state, integrations, DiscordSRV hook, chat-tracking settings, and reward/tool switches. It works even when DiscordChat gameplay is disabled. The same command works in game with a leading `/` for authorized staff.
 
 Staff can add a player name or UUID, for example `discordchat debug status mrfloris`, to inspect an existing profile. This does not create profiles or change progress. An unknown player produces a clear message. Players can continue using `/discordchat status` for their own progress.
 

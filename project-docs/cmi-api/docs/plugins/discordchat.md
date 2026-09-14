@@ -2,49 +2,59 @@
 
 DiscordChat is a player-fun feature plugin for turning the DiscordSRV `#server-chat` bridge into a gentle engagement loop. Linked players earn DiscordChat EXP from meaningful chat, emotes, and daily participation. Every complete `25` EXP converts into one spendable point by default, while streak milestones award separate bonus points. Points can be traded in game through `/discordchat rewards`.
 
-The plugin records DiscordSRV events, stores local player progress, and runs configured reward commands after a player confirms a point trade in game. The Beta 2 preview also includes an optional private Discord `/discordchat` information reply. It does not moderate Discord or change DiscordSRV's chat routing or channel access.
+The plugin records DiscordSRV events, stores local player progress, and runs configured reward commands after a player confirms a point trade in game. Beta 2 also includes an optional private Discord `/discordchat` information reply. It does not moderate Discord or change DiscordSRV's chat routing or channel access.
 
 DiscordChat's overview, rewards, confirmation, pulse, tools, milestone, Top and cosmetics GUIs use the standard 1MB light-blue frame. Every page keeps a player-stats head in the bottom-left, navigation/help controls in the bottom center, a **Back to Server Menu** shortcut immediately left of the bottom-right close barrier, and owner-bound session protections. The bottom-left player head opens that player's full status in chat.
+
+This guide describes the Beta 2 feature set. Reward availability, milestone lists, XP rates and the optional Discord command follow the server configuration; updating a JAR does not enable every optional feature. The menus and status output show the options currently available.
 
 ## Player FAQ
 
 ### Can I check my points from Discord?
 
-The Public Beta 2 local preview adds Discord `/discordchat`. Once staff enable it, use it in **#server-chat** for a reply visible only to you. It shows your linked Minecraft account, available points, XP toward your next point, current streak and next milestone, earning guidance, in-game menu commands, and the [DiscordChat guide](https://docs.1moreblock.com/player-guides/plugins/discordchat/).
+DiscordChat supports an optional Discord `/discordchat` command. Once staff enable it, use it in **#server-chat** for a reply visible only to you. It shows your linked Minecraft account, available points, XP toward your next point, current streak and next milestone, earning guidance, in-game menu commands, and the [DiscordChat guide](https://docs.1moreblock.com/player-guides/plugins/discordchat/).
 
 You can check your saved progress while logged out of Minecraft, provided the Minecraft server and its DiscordSRV bot are running. If you are not linked, start with `/discord link` **in Minecraft**. A linked account without saved activity receives getting-started help. A temporary lookup failure does not display a made-up balance.
 
 The command only shows your own information. It cannot spend points, claim rewards or upgrade items. Checking it earns no XP or points and does not extend the recent-Discord chat window. It is limited to #server-chat, including when extra channels earn chat XP. Minecraft menu permissions and claim rules still apply when spending points in game.
 
-This command is implemented for local Beta 2 testing and is disabled by default. It has not been activated on the live Public Beta 1 bot.
+This command is disabled by default and requires separate staff activation. Installing a newer JAR does not enable it. If it is unavailable in Discord, ask staff whether it has been enabled.
 
 ### What chat counts toward DiscordChat progress?
 
-Link your Minecraft and Discord accounts using `/discord link`. Meaningful messages through the configured server-chat bridge can count in either direction. Unlinked accounts do not earn these rewards. Public Beta 1 uses only `#server-chat`, at the same message XP rate in both directions.
+Link your Minecraft and Discord accounts using `/discord link`. Meaningful messages through the configured server-chat bridge can count in either direction. Unlinked accounts do not earn these rewards. Source rates and the recent-Discord activity requirement follow the server configuration.
 
-Public Beta 2's additional channels and conditional in-game XP are being tested locally. They are configuration options for the next rollout, not a change to the live Beta 1 rules.
+Staff can also enable earning in selected Discord-only channels without forwarding their messages to Minecraft. Only `#server-chat` remains the two-way chat bridge.
 
-### What is being tested for Public Beta 2?
+### How can Discord activity affect in-game XP?
 
-The local preview keeps Discord-to-Minecraft message XP at 100%. Linked in-game chat earns 80% while a meaningful linked Discord message in `#server-chat` is less than six minutes old, and 0% after that window expires. Chat still goes through when it earns no XP. One qualifying Discord participant opens the window for everyone linked in game; in-game messages cannot extend it.
+The Beta 2 example configuration keeps Discord-to-Minecraft message XP at 100%. With these settings, linked in-game chat earns 80% while a meaningful linked Discord message in `#server-chat` is less than six minutes old, and 0% after that window expires. Chat still goes through when it earns no XP. One qualifying Discord participant opens the window for everyone linked in game; in-game messages cannot extend it.
 
-Staff can also configure different XP percentages for extra Discord-only channels. Their messages stay on Discord and do not open the in-game earning window. Quality checks and daily message caps remain shared across channels. These rules are still in local testing; the live public beta continues using its existing single-channel rules.
+Staff can also configure different XP percentages for extra Discord-only channels. Their messages stay on Discord and do not open the in-game earning window. Quality checks and daily message caps remain shared across channels. These rates and the time window are configurable; `/discordchat status` and the optional Discord information command describe the active earning rules.
 
 ### Why did a message give no XP?
 
-Quality checks exclude spam, repeated messages, bot commands, low-effort lines, and link-only posts. Daily caps also apply. `/discordchat status` shows your progress; adding useful context matters more than sending many messages. In the Beta 2 preview it also explains when in-game XP is waiting for recent Discord chat.
+Quality checks exclude spam, repeated messages, bot commands, low-effort lines, and link-only posts. Daily caps also apply. `/discordchat status` shows your progress; adding useful context matters more than sending many messages. It also explains when in-game XP is waiting for recent Discord chat.
+
+### How many points can I earn from chat each day?
+
+The configured 1MB daily message cap is **130 XP**, equivalent to **5.2 points** at 25 XP per point. Complete points convert automatically and the remainder carries forward. Streak XP, conversation bonuses, first-Discord bonuses and milestone points have their own rules, so message XP is not your entire daily total. Switching channels does not give you another daily message cap. Staff can tune the cap and earning rates.
 
 ### Do I need a milestone before XP becomes points?
 
 No. Complete XP units convert automatically into spendable points, with the remainder carried forward. The default is 25 XP per point. Streak milestone points are a separate bonus.
 
+### Can I exchange AFKShrine Notes for DiscordChat points?
+
+Yes. When available to you, `/afkshrine exchanges` offers **4 DiscordChat points for 8 physical AFKShrine Notes**. Review the trade and confirm it there. It uses authentic Note items, not your pending AFKShrine balance or ordinary paper. See the [AFKShrine Note exchange guide](https://docs.1moreblock.com/player-guides/plugins/afkshrine/#what-can-i-do-with-afkshrine-notes) for details.
+
 ### How does the one-day streak milestone work?
 
-The Public Beta 2 local preview adds **1 Day Streak** before the seven-day milestone. Your first qualifying linked message completes it automatically and awards a one-time **25-point starter bonus**. You do not need to click or buy anything, and this bonus is separate from normal chat XP.
+The default milestone list starts with **1 Day Streak**, before the seven-day milestone. With this milestone enabled, your first qualifying linked message completes it automatically and awards a one-time **25-point starter bonus** by default. You do not need to click or buy anything, and this bonus is separate from normal chat XP.
 
 Existing players who have not completed day one earn it on their next qualifying message. Reloading the plugin, opening the menu, sending repeated or blocked chat, or restarting a streak does not award it again. Your completion and bonus remain in `/discordchat milestones` and `/discordchat history`. The next target skips milestones you have already completed, even after your streak resets.
 
-The later milestones remain at **7, 30, 90, 100, 180, and 365 days**. Staff can configure the starter bonus. This feature is being tested locally for Beta 2; the live Public Beta 1 milestones still start at seven days.
+The later milestones remain at **7, 30, 90, 100, 180, and 365 days**. Staff can configure the milestone list and starter bonus. Existing custom lists are preserved, so check `/discordchat milestones` for the milestones available on your server.
 
 ### Where can I see the leaderboards?
 
@@ -102,49 +112,51 @@ There is a **24-hour server-wide cooldown**, so one player requests the day for 
 
 The Beta 2 bundle exchanges **300 DiscordChat points for 100 Welcome points**, once per player. Welcome points are the separate balance used in the `/points` shop. DiscordChat checks the balance increase before confirming the reward. If the points service is unavailable, the purchase is blocked. An uncertain payout needs staff review before another purchase; report it with the transaction ID rather than buying again.
 
+### What does the money bundle give me?
+
+The configured 1MB bundle exchanges **500 DiscordChat points for 50,000 in-game money**. Check `/bal` before and after purchasing to see the increase. It has a **six-hour personal cooldown**, so buying it does not block other players from buying their own. Review the current price and payout in the confirmation before spending points.
+
 ### Why does a reward say “Already unlocked”?
 
-The Public Beta 2 local preview checks whether you already have all the permissions or group access offered by a one-time unlock, even if you received them before DiscordChat. If you do, the reward shows **Already unlocked** and cannot spend your points or start a cooldown.
+DiscordChat checks whether you already have all the permissions or group access offered by a one-time unlock, even if you received them before DiscordChat. If you do, the reward shows **Already unlocked** and cannot spend your points or start a cooldown.
 
 For bundles with several unlocks, having only some of them does not block a purchase. For example, already having access to the MobHat menu does not prevent buying a new mob cosmetic. If your existing access expires or is removed, an unlock you have never claimed through DiscordChat can become available again. If your access cannot be checked, the purchase pauses without spending points.
 
-This is a local Beta 2 preview; the live Public Beta 1 server has not changed.
-
 ### Where can I claim rewards or upgrade tools?
 
-The Public Beta 2 local preview requires **Survival mode** in an allowed world for reward purchases and tool upgrades. The configured worlds are **wild, general, end, nether, acid, cave, chunkblock, skyblock, oneblock, and skygrid**. Builders, spawn, legacy, and every unlisted world are blocked. Creative, Adventure, and Spectator cannot claim, including staff and OPs.
+Reward purchases and tool upgrades require **Survival mode** in an allowed world. The configured worlds are **wild, general, end, nether, acid, cave, chunkblock, skyblock, oneblock, and skygrid**. Builders, spawn, legacy, and every unlisted world are blocked. Creative, Adventure, and Spectator cannot claim, including staff and OPs.
 
 You can browse the menus from any world. The **Where to Claim** compass lists the allowed worlds. A blocked purchase or upgrade spends no points. Moving worlds or changing game mode after opening a confirmation does not bypass the checks. You can still cancel, retrieve your deposited tool, or receive a staff refund from elsewhere. Chat XP and streak points are unaffected by these claim rules.
 
-These restrictions are being tested locally for Beta 2; they have not been deployed to the live Public Beta 1 server yet.
+If the menu says **Claims are paused: staff must check the allowed-world list**, staff need to configure that list and reload. This blocks claims everywhere, even if rewards and tools were previously enabled.
 
 ### What does “Coming soon” mean on a reward?
 
-The Public Beta 2 local preview lets staff show selected disabled rewards as **Coming soon**. These are possible future rewards, with no promised release date. You can read their description, but clicking cannot open a purchase or spend points. Other disabled rewards can remain hidden. An enabled reward with an unavailable dependency still has its separate **Unavailable** message.
+Staff can show selected disabled rewards as **Coming soon**. These are possible future rewards, with no promised release date. You can read their description, but clicking cannot open a purchase or spend points. Other disabled rewards can remain hidden. An enabled reward with an unavailable dependency still has its separate **Unavailable** message.
 
-### Will the menus be easier to read?
+### Can staff adjust menu colours and long descriptions?
 
-The Public Beta 2 local preview wraps long descriptions and help text into shorter lines. It also uses a darker inventory title colour, initially dark teal, with navy and charcoal available for comparison. These presentation changes are still being tested locally; the live Public Beta 1 menus have not changed.
+Long descriptions and help text wrap into shorter lines. Inventory titles default to dark teal. Staff can adjust the title colour, wrapping width and translated text, then reload and reopen the menus to check the result.
 
 ### How do reward cooldowns work?
 
-The reward menu shows each reward's cooldown and how long you have left to wait. A personal cooldown applies to your next purchase of that same reward; other players and other rewards have their own timers. A server-wide cooldown blocks that reward for everyone until it expires. The timer starts after a successful purchase, and clicking a reward that is still on cooldown spends no points.
+The reward menu shows each reward's cooldown and how long you have left to wait. A personal cooldown applies to your next purchase of that same reward; other players and other rewards have their own timers. A server-wide cooldown blocks that reward for everyone until it expires. The timer starts after a successful purchase, and clicking a reward that is still on cooldown spends no points. The repeatable 1MB item and money bundles use **six-hour personal cooldowns**. The Jobs, mcMMO, fishing and farming rewards each have their own **one-hour server-wide cooldown**; the EXP-day mail request uses **24 hours server-wide**. Staff can change these values.
+
+Fishing and farming also share an active-event check: either running tournament temporarily blocks both choices. This is intentional and separate from their individual cooldowns.
 
 ### Do tool upgrades ask me to confirm?
 
-Public Beta 1 on the live server applies an eligible upgrade and spends its displayed point cost on the first click. Read the upgrade and cost before clicking there.
+Yes. Choosing an eligible upgrade opens a confirmation before applying it. In `/discordchat tools`, place exactly one tool or weapon in the yellow slot below the chest, then choose an upgrade on the right. You see the proposed item, enchantment level, and point cost before pressing **Confirm Upgrade**. **Cancel Upgrade** or **Back** returns to the choices without spending points. Closing returns your original item; if your inventory is full, it stays stored for recovery. The yellow pane is only a guide and cannot be collected.
 
-The Public Beta 2 local test build adds a confirmation. In `/discordchat tools`, place exactly one tool or weapon in the yellow slot below the chest, then choose an upgrade on the right. You see the proposed item, enchantment level, and point cost before pressing **Confirm Upgrade**. **Cancel Upgrade** or **Back** returns to the choices without spending points. Closing returns your original item; if your inventory is full, it stays stored for recovery. The yellow pane is only a guide and cannot be collected.
-
-Only confirming can apply the upgrade or spend points. Changed items, prices, settings, permissions, or an insufficient current balance invalidate the review. Leaving an allowed world or leaving Survival also blocks confirmation. A configuration reload requires a fresh review. This change is a local Beta 2 preview and has not been deployed to the public server yet.
+Only confirming can apply the upgrade or spend points. Changed items, prices, settings, permissions, or an insufficient current balance invalidate the review. Leaving an allowed world or leaving Survival also blocks confirmation. A configuration reload requires a fresh review.
 
 If the item cannot receive the upgrade, the tool explains why and spends no points. An enchantment already at or above the offered level is kept: selecting Unbreaking IV for an Unbreaking V item will not lower it or charge you.
 
 ### How do I move an item into or out of the tool slot?
 
-In the local Beta 2 preview, pick up exactly one item with a normal inventory click, then click the yellow marker below the chest. To return the deposited item to your inventory, click it with an empty cursor. Wait for that move to finish before clicking again. Shift-click, dragging across the menu, number keys, offhand swaps and creative copying are blocked.
+Pick up exactly one item with a normal inventory click, then click the yellow marker below the chest. To return the deposited item to your inventory, click it with an empty cursor. Wait for that move to finish before clicking again. Shift-click, dragging across the menu, number keys, offhand swaps and creative copying are blocked.
 
-Closing the menu returns the deposited item, including an upgrade you confirmed. If your inventory is full, the item stays stored: make space and reopen `/discordchat tools` or rejoin. If you die with an item deposited, it remains stored for recovery after respawning. A cancelled kick leaves the menu alone. If recovery finds a matching item in your inventory or on your cursor, staff must review the safety record before another copy can be returned. These transfer improvements are part of the local Beta 2 test build, not a change to the live Beta 1 server.
+Closing the menu returns the deposited item, including an upgrade you confirmed. If your inventory is full, the item stays stored: make space and reopen `/discordchat tools` or rejoin. If you die with an item deposited, it remains stored for recovery after respawning. A cancelled kick leaves the menu alone. If recovery finds a matching item in your inventory or on your cursor, staff must review the safety record before another copy can be returned.
 
 ### Can I hide reminders or milestone announcements?
 
@@ -152,7 +164,7 @@ Closing the menu returns the deposited item, including an upgrade you confirmed.
 
 ### Can staff check DiscordChat from the console?
 
-The Public Beta 2 local preview adds `discordchat debug status`. It shows the build, active or dormant state, integrations, DiscordSRV hook, chat-tracking settings, and reward/tool switches. It works even when DiscordChat gameplay is disabled. The same command works in game with a leading `/` for authorized staff.
+Staff can use `discordchat debug status` from console. It shows the build, active or dormant state, integrations, DiscordSRV hook, chat-tracking settings, and reward/tool switches. It works even when DiscordChat gameplay is disabled. The same command works in game with a leading `/` for authorized staff.
 
 Staff can add a player name or UUID, for example `discordchat debug status mrfloris`, to inspect an existing profile. This does not create profiles or change progress. An unknown player produces a clear message. Players can continue using `/discordchat status` for their own progress.
 
@@ -194,8 +206,8 @@ The table below lists Minecraft commands. The optional **Discord-side** `/discor
 | `/discordchat admin transaction status <player\|uuid> [transaction-id]` | Shows the active or most recent persisted reward transaction, command progress, attempts, retry safety, and failure reason. | `/discordchat admin transaction status mrfloris` |
 | `/discordchat admin transaction retry <player\|uuid> [confirm]` | Retries the active failed transaction from its persisted command progress without charging again. Use `confirm` only when delivery progress is marked uncertain. For any remaining delivery, the recipient must be online, alive, in Survival, and in an allowed world, including forced retries. | `/discordchat admin transaction retry mrfloris` |
 | `/discordchat admin transaction refund <player\|uuid> confirm` | Returns the reserved points and one-time eligibility for the active pending, delivered, or failed transaction. A second refund is refused. | `/discordchat admin transaction refund mrfloris confirm` |
-| `/discordchat admin transaction acknowledge <player\|uuid> <transaction-id> confirm` | Records a staff-verified Pyro tournament start or delivered EXP-day request and finalizes its purchase without replaying the command. Check the exact transaction's delivery first. | `/discordchat admin transaction acknowledge mrfloris <transaction-id> confirm` |
-| `/discordchat admin reset <player\|uuid> confirm` | Deletes one player's live DiscordChat profile and last-known-good backup. | `/discordchat admin reset mrfloris confirm` |
+| `/discordchat admin transaction acknowledge <player\|uuid> <transaction-id> confirm` | Records a staff-verified Pyro tournament start, delivered EXP-day request or Welcome points payout and finalizes its purchase without replaying the command. Check the exact transaction's delivery first. | `/discordchat admin transaction acknowledge mrfloris <transaction-id> confirm` |
+| `/discordchat admin reset <player\|uuid> confirm` | Resets player progress, retaining any external-credit receipts that prevent duplicate payouts. | `/discordchat admin reset mrfloris confirm` |
 | `/discordchat admin smoke` | Shows DiscordSRV hook state, target channel, linked account count, and tracking counters. | `/discordchat admin smoke` |
 | `/discordchat reload` | Reloads config, milestone values, and reward definitions. | `/discordchat reload` |
 | `/discordchat debug` | Shared debug page with runtime, build, Paper, Java, category, and docs metadata. | `/discordchat debug` |
@@ -221,9 +233,9 @@ DiscordChat subscribes to DiscordSRV's API when DiscordSRV is loaded:
 
 The plugin stores the latest known Minecraft name, Discord id, linked state, lifetime totals, daily totals, current streak, longest streak, milestone completions, the sub-threshold EXP remainder, spendable points, claimed one-time rewards, and the bounded reward transaction ledger.
 
-### Public Beta 2 local preview
+### Configurable channel rates and recent Discord activity
 
-The first Beta 2 slice adds configurable message rates and a shared Discord activity window. The local test configuration uses:
+Beta 2 supports configurable message rates and a shared Discord activity window. The local test configuration below is an example, not evidence that these options are enabled on another server:
 
 | Source | Message XP rate | Opens or refreshes the in-game earning window? |
 | --- | --- | --- |
@@ -238,7 +250,7 @@ Channel/source percentages multiply ordinary message XP after the length/emote a
 
 For eligible messages, fixed conversation, first-Discord, streak, and milestone bonuses keep their configured values. Discord-only channels can contribute to a personal streak, conversation bonus, and first-Discord bonuses. They do not contribute to the public bridge's conversation-cluster bonus or its first-message broadcasts. Their text is omitted from the last-message preview; aggregate progress and configured milestone celebrations still apply.
 
-Existing configs retain Beta 1 behavior: both source rates default to 100%, the recent-Discord requirement defaults off, and additional channels default off. Enabling these options requires the Beta 2 JAR; they are not available in the live Beta 1 build.
+Existing configurations retain their earning rules unless staff change them: both source rates default to 100%, the recent-Discord requirement defaults off, and additional channels default off. These options require a Beta 2-capable JAR. Check the running build and settings with `discordchat debug status` and `/discordchat admin smoke` before enabling them.
 
 Example configuration for the Beta 2 build (merge these keys into the existing sections):
 
@@ -295,7 +307,7 @@ Streak: 8 days / 30
 Streak: 83 days / 90
 ```
 
-Offline Discord chat can still count as long as DiscordSRV can resolve the Discord user to a linked Minecraft UUID. That keeps the feature focused on Discord engagement while still requiring players to return in game to view stats and spend rewards. AFK state is not rewarded extra by default; if added later, it should be a small in-game presence bonus rather than an AFK bonus, so the system does not accidentally reward not playing.
+Offline Discord chat can still count as long as DiscordSRV can resolve the Discord user to a linked Minecraft UUID. That keeps the feature focused on Discord engagement while still requiring players to return in game to spend rewards. Saved progress is also available through the optional Discord information command when enabled. AFK state is not rewarded extra by default; if added later, it should be a small in-game presence bonus rather than an AFK bonus, so the system does not accidentally reward not playing.
 
 Links and screenshots are handled conservatively: a link-only message earns no XP, but a link with useful context can pass the normal quality checks. Question marks and exclamation marks are not secret bonus triggers; the current model stays transparent and rewards the same quality rules everyone can understand.
 
@@ -326,7 +338,7 @@ The default reward set is configurable and intentionally server-owned. Selecting
 - Food head bundle: runs `cmi kit discordchat_heads_food {player} -s`.
 - Design head bundle: runs `cmi kit discordchat_heads_design {player} -s`.
 - DiscordChat collectible: runs `cmi kit discordchat_collectible {player} -s`.
-- Money bundle: runs the configured CMI money command.
+- Money bundle: exchanges 500 DiscordChat points for 50,000 in-game money through the configured CMI money command.
 - Vote tokens bundle: runs `cmi kit discordchat_votetokens {player} -s`.
 - Milestone title permission: grants `onembcmi.discordchat.title`.
 - Item tools: `/discordchat tools` lets players spend points on safe GUI upgrades for Unbreaking IV, Fortune IV, and Looting IV.
@@ -458,7 +470,7 @@ papi parse mrfloris %onembcmi_discordchat.streak%
 papi parse mrfloris %onembcmi_discordchat.next_milestone%
 ```
 
-The dot in `%onembcmi_discordchat.prefix%` and `%onembcmi_discordchat.suffix%` separates the feature from its placeholder path. Older documentation used an underscore there, which produced blank output in Public Beta 1. The local Beta 2 preview supports those sixteen older names as compatibility aliases; use the dot-separated examples above for new configuration.
+The dot in `%onembcmi_discordchat.prefix%` and `%onembcmi_discordchat.suffix%` separates the feature from its placeholder path. Older documentation used an underscore there, which produced blank output in Public Beta 1. Current builds also support those sixteen older names as compatibility aliases; use the dot-separated examples above for new configuration.
 
 ## Showing cosmetics in CMI chat
 
@@ -477,7 +489,7 @@ Adapt the existing entries rather than replacing a server's whole format with th
 
 The text comes from `cosmetics.prefix.discord.text` and `cosmetics.suffix.chatty.text` in DiscordChat's config. For example, `'&b🗨'` and `'&d💬'` place the chosen icons around the name. `/discordchat reload` loads changes to those preset texts; `/cmi reload` loads CMI format edits. These text-only changes need no replacement JAR or server restart.
 
-Check with a player who owns the unlocks: select each cosmetic, then verify prefix only, suffix only, both, and both off in actual chat. An off selection or missing unlock permission deliberately produces empty output. For a direct check, run `papi parse <online-player> %onembcmi_discordchat.prefix%` and its suffix equivalent from console. A GUI preview checks the cosmetic text, but the actual CMI chat line is the final display check. Check Java and Bedrock glyph appearance before enabling new cosmetic rewards for those clients.
+Check with a player who owns the unlocks: select each cosmetic, then verify prefix only, suffix only, both, and both off in actual chat. An off selection deliberately produces empty output. Unlock permission is required to select a cosmetic. For a direct check, run `papi parse <online-player> %onembcmi_discordchat.prefix%` and its suffix equivalent from console. A GUI preview checks the cosmetic text, but the actual CMI chat line is the final display check. Check Java and Bedrock glyph appearance before enabling new cosmetic rewards for those clients.
 
 Cosmetic reward grants must target the buyer's actual server UUID:
 
@@ -653,7 +665,7 @@ rewards:
       show-when-disabled: true
 ```
 
-Merge those keys into the existing sections. `gui.title-color` is a quoted six-digit hex colour used consistently for all eight inventory titles. Dark teal `#00616d` is the initial preview; navy `#203b65` and charcoal `#303030` are alternatives. Invalid values fall back to dark teal. This setting does not recolour chat or menu item headings.
+Merge those keys into the existing sections. `gui.title-color` is a quoted six-digit hex colour used consistently for all inventory titles. Dark teal `#00616d` is the initial preview; navy `#203b65` and charcoal `#303030` are alternatives. Invalid values fall back to dark teal. This setting does not recolour chat or menu item headings.
 
 `gui.lore-width` accepts 20–80 code points, defaulting to 46 for invalid values. Generated menu lore wraps at word boundaries and preserves colours, styles, Unicode graphemes, blank lines, and explicit line breaks. Long unbroken words wrap between graphemes; a single oversized grapheme or nonliteral component stays intact. This is a text-width guide, not an exact pixel measurement. Deposited tools, upgrade item previews, and delivered kit items retain their original lore and metadata.
 
@@ -698,7 +710,7 @@ Every built-in reward has `cooldown-seconds` and `cooldown-scope`. A value of `0
 
 `points.exp-per-point` defaults to `25`. Every XP credit uses floor conversion immediately, and `xp.pending` therefore contains only the remainder below the configured ratio. Existing profiles are converted atomically during startup and reload, so previously stranded balances are preserved as points plus their exact one-decimal remainder. Converted points accumulate under `points.lifetime-from-exp`; streak bonuses accumulate separately under `points.lifetime-milestone-bonus`. The obsolete `milestones.convert-exp-on-hit` setting is removed automatically from upgraded configuration files.
 
-## Already-Owned Unlocks (Public Beta 2 Local Preview)
+## Already-Owned Unlocks
 
 One-time permission/group rewards check LuckPerms before charging, including grants that predate DiscordChat. A matching reward shows **Already unlocked** and cannot be purchased when all its permission/group benefits are already available. Ownership is checked while rendering the review, on purchase, and again immediately before reserving points. An ownership lookup failure blocks the purchase with a retry message. Blocked purchases do not spend points, dispatch delivery commands, record a claim, or start a cooldown.
 
@@ -707,8 +719,6 @@ The automatic check recognizes complete one-time bundles of permanent, unconditi
 Permission checks use loaded LuckPerms data in the player's current context, including effective inherited and wildcard grants. Group checks use actual direct/indirect inheritance, not an arbitrary `group.<name>` permission. OP/platform-default access alone is not proof of a LuckPerms grant. Active temporary or contextual access can make an unlock unavailable while it applies; expiration, revocation or a context change can make it purchasable again. No external ownership result is written into DiscordChat's permanent claim history. A reward already claimed through DiscordChat remains one-time even if its permission is later removed.
 
 Repeatable rewards, mixed kit/money/other-command bundles, grants to someone other than the buyer, removals/negative grants, and temporary/contextual delivery commands do not have automatic ownership inference. Custom command effects require a separate benefit model; an owned permission must not hide other benefits in the same reward. Existing transaction retry/refund remains available after a partial grant without another charge. The check adds no user-loading, permission mutation, network or database work to the purchase path; unavailable loaded data fails closed. Its player messages are reloadable `gui.reward.owned`, `gui.reward.blocked-owned` and `gui.reward.blocked-ownership-unavailable` language entries.
-
-This behavior is implemented for local Public Beta 2 testing. It has not been deployed to the live Public Beta 1 server.
 
 ### LuckPerms recipient identity
 
@@ -722,7 +732,7 @@ The reservation saves pinned LuckPerms commands and retry templates, plus the ow
 
 Public Beta 2 adds `fishing_tournament_15m` and `farming_tournament_15m`. Both are repeatable 15-minute events, using the existing reward review and confirmation. Defaults match the booster pricing: fishing costs 150 points, farming costs 200 points, and each has its own `3600`-second `global` cooldown. There is no additional minimum-player requirement. Pyro controls tournament objectives, scoring and prizes.
 
-These integrations use the installed provider's namespaced console commands and PlaceholderAPI status, without a direct dependency on Pyro internals. The command templates are:
+These integrations use the installed provider's namespaced console commands and PlaceholderAPI status, plus the version-gated loaded-configuration adapter described below. The command templates are:
 
 ```yaml
 # Under rewards.definitions.fishing_tournament_15m:
@@ -751,7 +761,7 @@ Command acceptance alone is insufficient: the provider must change from inactive
 
 Existing installations retain their authoritative `rewards.ids` list. Add the two new IDs to that list and reload when ready to expose them; new definitions do not silently expand an existing catalog. `/discordchat admin check` includes tournament readiness. Being listed and enabled does not bypass a failed readiness check. The manual-scheduling compatibility fix requires build 650 or later; reloading build 648 cannot apply a code fix.
 
-## MEE6 EXP-day request (Public Beta 2 local preview)
+## MEE6 EXP-day request
 
 Reward ID `discord_exp_day_request` uses the existing review/confirmation and transaction ledger. Defaults are `cost: 75`, `once: false`, `cooldown-seconds: 86400`, and `cooldown-scope: global`. It must have exactly one fixed-recipient `cmi mail send` command, be repeatable, and have a positive global cooldown. The default command template is:
 
@@ -772,7 +782,7 @@ A known block before dispatch refunds the reservation without starting a cooldow
 
 CMI 9.8.9.10 console mail syntax and UUID recipient handling were checked for this integration. Use an existing staff account that has played on the server; CMI may skip saving mail for an offline account with zero playtime. Activation remains a separate staff action; DiscordChat does not enable MEE6 boosts or grant roles. Existing installations must add `discord_exp_day_request` to `rewards.ids` before reloading to show it. `/discordchat admin check` includes its mailbox readiness.
 
-## Welcome points (Public Beta 2 local preview)
+## Welcome points
 
 The default one-time exchange is **300 DiscordChat points → 100 PyroWelcomesPro points**. With the intended player online, check the current balance before and after the native console credit:
 
@@ -811,13 +821,20 @@ The report is read-only and uses the running server state. It checks claim-rule 
 - `WARN` means staff must review an intentional or externally unverifiable choice, such as an enabled unused definition or a dynamically registered external permission.
 - `FAIL` blocks launch readiness and identifies a missing or unsafe dependency or value.
 
+An **Active rewards** warning can simply list intentionally disabled rewards. An **Unused definitions** warning means a definition is absent from the authoritative `rewards.ids` list: setting its `enabled` flag alone does not add it to the shop. Add the intended ID once to that list without removing the existing entries, then reload and rerun the check. The tournament IDs are `fishing_tournament_15m` and `farming_tournament_15m`; the mail request ID is `discord_exp_day_request`.
+
 A report with zero failures is a static/runtime preflight, not proof that another plugin's reward command produced the intended item or effect. Complete one live purchase plus the documented transaction retry/refund smoke test before granting player access.
+
+## External Point Credits
+
+AFKShrine Note exchanges use DiscordChat's optional native point-credit service. The original server UUID, transaction UUID and amount identify the credit. The balance and `points.external-credit-receipts` entry are saved together; repeating the same verified credit acknowledges it without adding points again, even after those points have been spent. Mismatched or uncertain deliveries require review. These credits do not simulate chat, grant XP or advance a streak. Progress resets preserve the receipts so another plugin cannot replay an already delivered exchange.
 
 ## Data And Logs
 
 ```text
 plugins/1MB-CMIAPI/DiscordChat/players/<uuid>.yml
 plugins/1MB-CMIAPI/DiscordChat/players/backups/<uuid>.yml
+plugins/1MB-CMIAPI/DiscordChat/players/external-credit-guards/<uuid>.guard
 plugins/1MB-CMIAPI/DiscordChat/players/quarantine/<uuid>-<timestamp>.yml
 plugins/1MB-CMIAPI/DiscordChat/community.yml
 plugins/1MB-CMIAPI/DiscordChat/logs/reward.log
@@ -841,7 +858,7 @@ plugins/1MB-CMIAPI/DiscordChat/exports/discordchat-daily-archive-<mode>-<days>d-
 
 The data files are intentionally local to this feature because they are engagement stats, not global identity data. Player profiles use fail-closed storage: every replacement is written to a same-directory temporary file, flushed, and atomically moved into place. Before an existing live profile is replaced, its validated contents become the last-known-good backup. A new profile receives both a live copy and an initial backup.
 
-Every stored profile must be valid YAML and its `identity.uuid` must match the UUID in its filename. If the live copy is missing or unreadable but the backup validates, DiscordChat restores the backup automatically. An unreadable live copy is preserved in `players/quarantine/` before restoration. If neither copy is trustworthy, DiscordChat refuses that profile read or mutation, leaves the evidence untouched, reports the storage problem to staff, and tells an affected in-game command/GUI user that nothing was changed. `/discordchat admin reset <player|uuid> confirm` removes both the live profile and its backup; quarantined evidence is intentionally retained for staff review.
+Every stored profile must be valid YAML and its `identity.uuid` must match the UUID in its filename. For profiles without an external-credit guard, a validated backup can restore a missing or unreadable live copy. Guarded profiles require staff recovery even when a backup validates, to prevent replaying previously delivered credits. An unreadable live copy is preserved in `players/quarantine/` before restoration. If neither copy is trustworthy, DiscordChat refuses that profile read or mutation, leaves the evidence untouched, reports the storage problem to staff, and tells an affected in-game command/GUI user that nothing was changed. `/discordchat admin reset <player|uuid> confirm` resets progress. If external point-credit receipts exist, the reset saves a zero-balance identity record with those receipts preserved; otherwise it removes the profile and backup. Quarantined evidence remains available for staff review. Never delete external-credit guards or receipts to retry a payout.
 
 Reward transactions are stored under `rewards.transactions.<transaction-id>` in the player's profile. `rewards.active-transaction` points to the unresolved record, while `rewards.last-transaction` keeps terminal records easy to inspect. Valid statuses are `pending`, `delivered`, `finalized`, `failed`, and `refunded`. Successful reward timestamps are stored under `rewards.cooldowns.<reward-id>.last-success-at-millis`; global cooldown state is rebuilt from those atomically stored profile values during startup/reload. Do not edit these paths while the server is running; use the transaction status, retry, and refund commands instead.
 
@@ -881,7 +898,7 @@ For Top acceptance, open `/discordchat`, choose **Top**, and review each of the 
 
 For day-one acceptance, open `/discordchat milestones` with an uncompleted profile and verify all seven configured entries fit the first row, beginning with `1 Day Streak`. Send a qualifying linked message, then verify the fixed starter bonus, completion history and next target of seven days. Repeat activity, reload and restart: completion must remain and no second starter bonus may be granted. With an existing active profile, verify one catch-up award without rewriting later history; with a blocked/unlinked/zero-rate message, verify no award. Automated real-profile tests cover concurrent messages, resets, configuration changes, failed saves and all later thresholds. Real Discord gateway and in-game visual acceptance remain local test steps.
 
-Presentation tests exercise the screenshot descriptions, styled and Unicode wrapping, manual blank lines, all eight title colours/texts, configuration and translation reloads, and opt-in catalog visibility. Real-ledger tests also cover disabled/hidden reward clicks, stale confirmations, disablement during delivery, blocked forced retries, and fully recorded delivery after removal.
+Presentation tests exercise the screenshot descriptions, styled and Unicode wrapping, manual blank lines, inventory title colours/texts, configuration and translation reloads, and opt-in catalog visibility. Real-ledger tests also cover disabled/hidden reward clicks, stale confirmations, disablement during delivery, blocked forced retries, and fully recorded delivery after removal.
 
 For the Beta 2 presentation preview, compare dark teal, navy, and charcoal inventory titles at normal GUI scale. Inspect long Bee/Allay/Cat/Passport descriptions and dependency/blocked reasons in the catalog and confirmation. Change the scalar description, width, and `gui.reward.*` translations, reload with each alias, and reopen the menus. Confirm manual blank lines, Unicode, and formatting remain readable. Show one disabled reward with `show-when-disabled: true`, verify the Coming soon card has no purchase controls, then hide it again. Disable/remove a reward while its confirmation is open and verify rejection without spending points. Automated tests cover these render and transaction paths; real-client visual acceptance remains required.
 
@@ -945,7 +962,7 @@ Implemented first:
 Deferred or intentionally avoided:
 
 - Monthly reset seasons should not reset lifetime points or streaks by default. If added later, make it a cosmetic leaderboard season with separate `season.points` so players do not lose earned currency.
-- The local Beta 2 preview implements an optional Discord `/discordchat` information command with private self-progress and getting-started help, restricted to #server-chat. It defaults off and awaits separate test-bot acceptance; live Beta 1 is unchanged.
+- The optional Discord `/discordchat` information command provides private self-progress and getting-started help in #server-chat. It defaults off; verify it with a dedicated test bot before activation.
 - AFK state is ignored for now. Chatting while AFK is neither punished nor rewarded extra.
 - DiscordSRV link repair/import is intentionally not implemented yet; DiscordSRV remains the source of truth for link ownership.
 - Staff outreach lists for unlinked players are intentionally avoided because the server has too many historical accounts for that to stay useful.

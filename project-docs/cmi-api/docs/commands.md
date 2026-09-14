@@ -1067,11 +1067,14 @@ DiscordChat:
 /discordchat admin transaction retry mrfloris
 /discordchat admin transaction retry mrfloris confirm
 /discordchat admin transaction refund mrfloris confirm
+/discordchat admin transaction acknowledge mrfloris <transaction-id> confirm
 /discordchat admin reset mrfloris confirm
 /discordchat admin smoke
 /discordchat admin reload
 /discordchat reload
 /discordchat debug
+/discordchat debug status
+/discordchat debug status mrfloris
 /discordchat debug hooks
 /discordchat debug commands
 /discordchat debug permissions

@@ -30,6 +30,8 @@ It does not replace CMI's kit manager, cooldowns, permissions, GUI, or kit usage
 
 Open `/kitstreak guide [track|kit:<kit>] [chat]` for qualifying kits, exact calendar windows, shared Now/Next/Later previews and lasting achievements. `/kitstreak status` uses the short chat guidance; `/kitstreak next` and `/next` offer one relevant track. One accepted claim that advances several tracks gives one secured-day acknowledgement. Same-date repeats do not repeat it.
 
+Choose **Kit Streaks** in [the main menu](menu.md) to open `/kitstreak guide` while this feature is active and you have access. The guide's nether star beside the close button returns to `/menu` when available.
+
 An optional due reminder uses the shared `/guidance` budget and preferences. It does not send a reminder per track or announce a lost streak. See [Streak guidance](../streak-guidance.md) for boundaries, grace, milestone/reward wording and controls.
 
 ## Player FAQ

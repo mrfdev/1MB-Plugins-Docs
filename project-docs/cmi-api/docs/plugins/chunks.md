@@ -18,6 +18,8 @@ Player guide: [Chunks on docs.1moreblock.com](https://docs.1moreblock.com/player
 
 Open `/chunks`, choose one of the displayed distances, and wait for the change to finish. The default choices are Less **4**, Less **6**, **Reset**, More **12**, and More **16**. Reset removes your personal preference and follows the current world's server default, which may differ between worlds.
 
+You can also select the **Chunks** spyglass in [the main menu](menu.md), on `/menu 2` with the default layout and all buttons visible. Custom layouts or hidden buttons can change its page, and the shortcut appears only while Chunks is available to you. The glowing nether star in Chunks returns to `/menu`.
+
 Available features include:
 
 - A compact menu with the shared light blue glass border, your player head at the bottom left, a help book at the bottom center, and a glowing **Back to /menu** nether star immediately left of the close barrier at the bottom right.
