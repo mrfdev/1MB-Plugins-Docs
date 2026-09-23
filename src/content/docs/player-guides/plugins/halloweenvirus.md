@@ -181,6 +181,8 @@ Access is granted by staff for the testing period and then to the intended playe
 
 ## If something is unclear
 
+**Can I complete my collection with sherds that have another player's name?** Yes! Trade your duplicates or give them to friends, then submit the received sherds through `/hv` → **Collect Sherds**. The finder's name and world in the lore are informational; they do not lock the sherd to that player. Authentic, unused sherds from the current event count toward **your** collection, even if someone else found them all. Submitting consumes one of each missing type and leaves extra copies in your inventory. No renaming or re-stamping is needed. Sharing and teamwork are welcome!
+
 **Why is my fragment still in my inventory?** You may already have that type recorded, the event may be dormant, or the item may not have authentic identity for this edition. `/hv` shows which types are still missing. Staff can inspect older kit samples when necessary.
 
 **Why did a mob not drop a fragment?** Only eligible infected kills can roll a fragment. The drop chance is below 100%; ordinary mobs and cleanup do not award event fragments.
