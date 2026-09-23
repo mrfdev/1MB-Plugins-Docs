@@ -25,7 +25,7 @@ The initial event id is `halloween_virus_2026`. On a fresh installation or an up
 
 The migration records `event.calendar-version: 1`. Once recorded, a later `/hv admin stop` stays stopped across reloads and restarts; the upgrade does not rearm it. This metadata is managed by the plugin, separate from the configuration and ledger schema versions.
 
-**`modules.hv.enabled: false` remains the master off switch.** The calendar migration never changes it. Fresh installations retain that default, and an existing deliberate host disable stays off even when `event.mode` is `auto` and the dates are in season. Existing Coconut, Ghost, and Doors switches and data are unaffected.
+**`modules.hv.enabled: false` keeps the HV module off.** The calendar migration never changes it. Fresh installations retain that default, and an existing deliberate module disable stays off even when `event.mode` is `auto` and the dates are in season. Existing Coconut, Ghost, and Doors switches and data are unaffected. The Event Hunts host also has its own `enabled` switch; see the host prerequisite under [Safe rollout and acceptance](#safe-rollout-and-acceptance).
 
 After reviewing the worlds, kits, reward, and participant permissions, arm the saved dates once:
 
@@ -568,6 +568,10 @@ Configured outfit gear is unbreakable for the encounter's lifetime, including he
 
 Protection checks fail closed. WorldGuard 7 allows only locations without a named region, with `mob-spawning` and `mob-damage` permitted; virtual/error results deny. Without WorldGuard, a world requires the explicit reviewed-unprotected-world allowlist. Other installed unsupported claim providers still block encounters. Status output identifies these providers; do not disable a provider or remove its safety check to make testing pass.
 
+PlotSquared is checked per world through its public 7.6 API. A world containing any PlotSquared plot area is excluded completely, including roads and unclaimed plots. If PlotSquared manages only `builders`, its installation does not block `wild`, `end`, `nether` or the other event worlds. Those worlds still undergo the normal WorldGuard or explicit unprotected-world checks and other encounter gates. No exception list or hard-coded world name is needed. Scope is queried afresh, so adding a plot area takes effect without an HV reload. A disabled, unavailable or failing PlotSquared API denies encounters until it can be checked; an unprotected-world entry does not override that failure or allow encounters in plot worlds.
+
+`PROTECTION: Not checked` is the initial status, not an approval. `/hv admin validate` reports the most recent encounter-location result; it does not test every location in every world. After starting, an eligible `/hv admin spawn ZOMBIE boss` test in `wild` exercises the location checks and reports a specific refusal when blocked. A successful check with PlotSquared installed identifies the non-plot world before the normal protection result.
+
 HV has no BentoBox dependency and makes no BentoBox API calls. BentoBox's presence does not blanket-block island worlds. Automatic infection considers new vanilla `NATURAL` spawns permitted by the installed plugins, then applies the configured HV chance and encounter gates. Cancelled spawn and combat-damage events remain cancelled. HV-initiated targeting also dispatches the standard cancellable target event before assigning a player; cancellation and final target changes are rechecked, and friendly packs keep their original player UUID. Dedicated BentoBox/island-policy integration is deferred optional work, not a launch prerequisite.
 
 Test the actual island setup as part of gameplay acceptance: confirm permitted natural spawns can become infected, denied spawns are not converted, cancelled damage stays blocked, and the configured world pools make all 23 sherds obtainable. Plain matching-name test worlds do not establish those outcomes for the live plugin setup. This event-based behavior does not certify every BentoBox flag or addon policy through a dedicated API adapter. Explicit `/hv admin spawn` encounters use Bukkit's `CUSTOM` reason and remain subject to installed spawn-event rules.
@@ -737,6 +741,17 @@ Above-maximum enchantment rewards are blocked until all applicable modification 
 Do not interpret a Bukkit inventory guard as proof that every plugin's direct `ItemStack` mutation is covered. CMI direct/plugin-dispatched modification, mcMMO repair/salvage, Pyro upgrades/augments, and other bypass routes require independent verification before special high-level gear can be issued. Preserve the guard and its data after event shutdown. Before removing the Event Hunts jar, migrate or remove infected items and replace its ongoing protections deliberately.
 
 ## Safe rollout and acceptance
+
+**First check the Event Hunts host.** If `/hv admin stop` returns `[Hunts] Dormant` help and `/hv debug config` shows `CoconutHunt/config.yml`, the entire host is disabled. Its command surface must be enabled before HV administration is available. Review the saved module switches first: enabling the host initializes every enabled module. For an HV-only opening with Coconut and Doors already disabled, this console sequence also keeps Ghost dormant:
+
+```text
+1mblib config set CoconutHunt modules.ghost.enabled false
+hunt debug enable true
+hv admin stop
+hv debug config
+```
+
+Wait for each confirmation. The last command now shows HV settings from `CoconutHunt/HalloweenVirus/config.yml`. The host can be active while HV remains dormant for setup. An initial host-startup report can precede HV's asynchronous ledger/configuration loading; use fresh `/hv admin status` and `/hv admin validate` output after initialization. `/hv admin start` and `auto` enable the HV module themselves; neither can activate an entirely disabled host through its dormant command gateway.
 
 For a new installation, this example maps and enables only the End region. Replace the world id with the value shown by your server, and review protection and mob settings before repeating for other regions:
 
