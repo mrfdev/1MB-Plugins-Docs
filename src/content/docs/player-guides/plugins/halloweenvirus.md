@@ -76,6 +76,10 @@ Use `/hv hints` for a chat overview, or `/hv hints wild` for the Wilderness's mi
 
 Check each world's status before travelling. Disabled or unloaded worlds, dormant hunts, and paused spawning are labelled. Local protection rules still apply even where encounters are configured. If every configured region is complete but your total is below 23, ask staff about unassigned fragments or trade for existing copies.
 
+### Infected mobs per world
+
+Look for the **infected versions** of the mobs below, including their regional boss variants. The [sherd table](#sherds-and-their-infected-mobs) also lists the mobs beside every collectible. These are the starting world settings; `/hv worlds` and `/hv hints` show any staff changes.
+
 | Region | Infected mobs in the starting configuration | Regional boss name | Boss outline |
 | --- | --- | --- | --- |
 | The End | Endermen | Void Herald | Black |
@@ -97,31 +101,35 @@ The outline identifies boss variants; ordinary infected do not gain it. It uses 
 
 The world guide also displays regions that are not enabled yet; check the encounter status on each card. Encounters become available only when staff enables and validates that region. Natural encounters favor mobs that can spawn again; structure-only mobs do not magically repopulate cleared structures. Look for the infected versions, not every ordinary mob of these types.
 
-| Region | Pottery sherd | Collectible title |
-| --- | --- | --- |
-| The End | Explorer | Fragment of the Lost Expedition |
-| The End | Prize | Reclaimed Jewel of the Void |
-| General World | Archer | Oath of the Twilight Hunter |
-| The Nether | Burn | Ember of the Fading Flame |
-| The Nether | Skull | Remnant of the Withered King |
-| The Nether | Blade | Shard of the Fallen Champion |
-| The Wilderness | Howl | Echo of the Final Howl |
-| The Wilderness | Snort | Relic of the Restless Beast |
-| The Wilderness | Angler | Token of the Cleansed Waters |
-| Cave World | Miner | Legacy of the Haunted Mine |
-| Cave World | Mourner | Echo of the Silenced Deep |
-| Acid World | Brewer | Vial of the First Cure |
-| Acid World | Danger | Mark of the Broken Curse |
-| Acid World | Heartbreak | Heart of the Fading Blight |
-| Skyblock | Guster | Whisper of the Hollow Sky |
-| Skyblock | Sheaf | The Reclaimed Harvest |
-| Oneblock | Heart | Heart of the Mended World |
-| Oneblock | Plenty | Promise of Renewal |
-| Oneblock | Friend | Companion of the Last Stand |
-| Chunkblock | Shelter | Refuge from the Long Night |
-| Chunkblock | Scrape | The Untainted Fragment |
-| Skygrid | Flow | Thread Beyond the Shadows |
-| Skygrid | Arms Up | Reach Beyond the Blight |
+### Sherds and their infected mobs
+
+**Any eligible infected mob listed for a region can drop any sherd in that region's pool.** For example, infected zombies, husks and drowned in the Wilderness can each drop `hv06`, `hv07` or `hv08`. No one mob type is required for a particular sherd within that pool. Ordinary, uninfected mobs do not drop event sherds, and an eligible kill still has to win the drop roll.
+
+| Region | Infected mobs to hunt | Pottery sherd (ID) | Collectible title |
+| --- | --- | --- | --- |
+| The End | Endermen | Explorer (`hv01`) | Fragment of the Lost Expedition |
+| The End | Endermen | Prize (`hv02`) | Reclaimed Jewel of the Void |
+| General World | Bogged | Archer (`hv21`) | Oath of the Twilight Hunter |
+| The Nether | Wither skeletons and piglins | Burn (`hv03`) | Ember of the Fading Flame |
+| The Nether | Wither skeletons and piglins | Skull (`hv04`) | Remnant of the Withered King |
+| The Nether | Wither skeletons and piglins | Blade (`hv05`) | Shard of the Fallen Champion |
+| The Wilderness | Zombies, husks and drowned | Howl (`hv06`) | Echo of the Final Howl |
+| The Wilderness | Zombies, husks and drowned | Snort (`hv07`) | Relic of the Restless Beast |
+| The Wilderness | Zombies, husks and drowned | Angler (`hv08`) | Token of the Cleansed Waters |
+| Cave World | Skeletons and spiders | Miner (`hv09`) | Legacy of the Haunted Mine |
+| Cave World | Skeletons and spiders | Mourner (`hv10`) | Echo of the Silenced Deep |
+| Acid World | Drowned and zombies | Brewer (`hv11`) | Vial of the First Cure |
+| Acid World | Drowned and zombies | Danger (`hv12`) | Mark of the Broken Curse |
+| Acid World | Drowned and zombies | Heartbreak (`hv23`) | Heart of the Fading Blight |
+| Skyblock | Skeletons and zombies | Guster (`hv13`) | Whisper of the Hollow Sky |
+| Skyblock | Skeletons and zombies | Sheaf (`hv14`) | The Reclaimed Harvest |
+| Oneblock | Spiders and zombies | Heart (`hv15`) | Heart of the Mended World |
+| Oneblock | Spiders and zombies | Plenty (`hv16`) | Promise of Renewal |
+| Oneblock | Spiders and zombies | Friend (`hv22`) | Companion of the Last Stand |
+| Chunkblock | Zombies and spiders | Shelter (`hv17`) | Refuge from the Long Night |
+| Chunkblock | Zombies and spiders | Scrape (`hv18`) | The Untainted Fragment |
+| Skygrid | Skeletons and spiders | Flow (`hv19`) | Thread Beyond the Shadows |
+| Skygrid | Skeletons and spiders | Arms Up (`hv20`) | Reach Beyond the Blight |
 
 The starting pools give the End two types (`hv01` and `hv02`), General World one (`hv21`, Archer), and the Wilderness its existing three (`hv06`, `hv07` and `hv08`). Your in-game guide shows any staff customizations. If you already recorded `hv21`, it still counts. Unused authentic copies found in the End before this move also remain valid and tradable. The 23 IDs and completion requirement have not changed.
 
