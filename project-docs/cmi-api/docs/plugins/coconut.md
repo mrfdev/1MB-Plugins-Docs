@@ -2,11 +2,11 @@
 
 CoconutHunt adds a reusable seven-day `/coconut` event for the Summer Beach. The preserved, provisional Summer 2027 edition uses 70 special coconut heads, with 10 unlocking on each of seven cumulative days. Players return as new waves unlock, find each coconut once for themselves, build a daily participation streak, help community goals, claim milestone rewards, earn Coconut Points, and redeem those points for configured cosmetics and event rewards.
 
-Event Hunts is the public host player-fun plugin, while Coconut Hunt remains the mature collectible-head module and compatibility namespace. The same `1MB-CMIAPI-EventHunts` jar serves Summer through `/coconut`, Halloween heads through `/ghost` (`/ghosthunt` remains an alias), and the isolated Trick-or-Treat Doors module through `/doors`. Keeping the established CoconutHunt files, PDC marker, permissions, placeholders, registry entries, snapshots, and player records avoids a risky data move. See [Halloween Ghost Hunt](ghosthunt.md) and [Door Hunt](doors.md). The canonical host switch `modules.coconut.enabled` defaults to `false` until the 2027 Summer event is reviewed and deliberately enabled; its older `hunts.coconut.enabled` content gate remains readable for compatibility.
+Event Hunts is the public host player-fun plugin, while Coconut Hunt remains the mature collectible-head module and compatibility namespace. The same `1MB-CMIAPI-EventHunts` jar serves Summer through `/coconut`, Halloween heads through `/ghost` (`/ghosthunt` remains an alias), the isolated Trick-or-Treat Doors module through `/doors`, and [Halloween Virus](halloweenvirus.md) through `/hv`. Keeping the established CoconutHunt files, PDC marker, permissions, placeholders, registry entries, snapshots, and player records avoids a risky data move. See [Halloween Ghost Hunt](ghosthunt.md) and [Door Hunt](doors.md). The canonical host switch `modules.coconut.enabled` defaults to `false` until the 2027 Summer event is reviewed and deliberately enabled; its older `hunts.coconut.enabled` content gate remains readable for compatibility.
 
 Implemented and proposed shared-host improvements are tracked in the [Event Hunts quality-of-life roadmap](event-hunts-roadmap.md); every remaining proposal still requires a separate greenlight.
 
-`/hunt` is the graphical seasonal-event index. Its inventory is always the standard maximum 54 slots/six rows, while its registry-driven contents automatically order public live events, staff test events, upcoming events, claim periods, modules needing attention, ended events, and dormant seasons. It shows Coconut's public dates beside Ghost and Doors; clicking Coconut opens its normal GUI or a read-only landing preview while the 2027 module is dormant. Each card includes a private summary for the player viewing it: Coconut and Ghost show daily/total finds and claimable rewards, while Doors shows today's doors, season discoveries, Treat Bag claims, and streak. These summaries use only already-loaded current-player state and never read or mutate playerdata while `/hunt` opens. Module tooltips are capped at 12 lines for smaller displays. Authorized Hunt status staff see only compact readiness totals plus the exact module-status command there; complete location, reward-provider, claim, and actionable diagnostics remain in `/hunt admin status` and preflight. Preview subpages and every gameplay action remain protected by the real module/event gates. `/hunt coconut ...` routes only to `/coconut ...`. `/hunt admin modules` shows the configured/runtime state of Coconut, Ghost, and Doors, while `/hunt admin module coconut <on|off>` controls this module without disabling the shared jar or either Halloween module.
+`/hunt` is the graphical seasonal-event index. Its inventory is always the standard maximum 54 slots/six rows, while its registry-driven contents automatically order public live events, staff test events, upcoming events, claim periods, modules needing attention, ended events, and dormant seasons. It shows Coconut's public dates beside Ghost and Doors; clicking Coconut opens its normal GUI or a read-only landing preview while the 2027 module is dormant. Each card includes a private summary for the player viewing it: Coconut and Ghost show daily/total finds and claimable rewards, while Doors shows today's doors, season discoveries, Treat Bag claims, and streak. These summaries use only already-loaded current-player state and never read or mutate playerdata while `/hunt` opens. Module tooltips are capped at 12 lines for smaller displays. Authorized Hunt status staff see only compact readiness totals plus the exact module-status command there; complete location, reward-provider, claim, and actionable diagnostics remain in `/hunt admin status` and preflight. Preview subpages and every gameplay action remain protected by the real module/event gates. `/hunt coconut ...` routes only to `/coconut ...`. `/hunt admin modules` shows the configured/runtime state of Coconut, Ghost, Doors, and Halloween Virus, while `/hunt admin module coconut <on|off>` controls this module without disabling the shared jar or the other event modules.
 
 ## Available Features
 
@@ -584,14 +584,14 @@ Nearby checks use the registry's chunk index rather than scanning every register
 /1mblib debug plugin CoconutHunt all
 ```
 
-The shared report includes commands, granular permissions, placeholders, config/data/cache paths, optional hooks, runtime health, and the active hologram provider. CoconutHunt targets Java 25 and Paper 26.2 stable build 123 or newer.
+The shared report includes commands, granular permissions, placeholders, config/data/cache paths, optional hooks, runtime health, and the active hologram provider. CoconutHunt targets Java 25 and Paper 26.2 stable build 128 or newer.
 
 ## Build And Integrations
 
 The current build produces:
 
 ```text
-1MB-Lib-EventHunts-v1.0.3-660-j25-26.2.jar
+1MB-Lib-EventHunts-v1.0.3-697-j25-26.2.jar
 ```
 
 CMI, CMILib, and `1MB-CMIAPI-Lib` are required runtime dependencies. Deploy CoconutHunt and `1MB-CMIAPI-Lib` from the same build. CoconutHunt verifies the shared atomic playerdata API before activating and fails closed with one actionable compatibility diagnostic instead of allowing repeated asynchronous linkage failures. CoconutHunt uses the shared library for feature registration, translated messages, hardened GUI sessions, safe player resolution, documentation metadata, PlaceholderAPI registration, and shared playerdata. It uses the installed CMI runtime for configured kit/warp/broadcast commands; private Paper TextDisplays provide the default proximity holograms. CMILib remains part of the common runtime baseline.
@@ -601,7 +601,7 @@ Modern Paper 26.2 APIs provide player-head profile data, PDC identity, skull til
 ## Launch Preflight
 
 - [ ] Approve or replace the provisional July 25 through July 31 schedule and August 5 claim deadline (`Europe/Amsterdam`).
-- [ ] Confirm Paper 26.2 stable build 123 or newer, Java 25, CMI, CMILib, and 1MB-CMIAPI-Lib are enabled.
+- [ ] Confirm Paper 26.2 stable build 128 or newer, Java 25, CMI, CMILib, and 1MB-CMIAPI-Lib are enabled.
 - [ ] Confirm the production world is exactly `summer` and optional cuboids match the beach.
 - [ ] Confirm reward worlds include every game mode where delivery is intended.
 - [ ] Review every command allowlist, hook, reward command, visit command, and shop permission.

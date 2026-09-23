@@ -2,14 +2,14 @@
 
 ## Shared Hunt feature
 
-Door Hunt is source inside the compatibility-named `:plugins:player-fun:coconuthunt` project, not another Gradle plugin and not another JavaPlugin. Run `gradle :plugins:player-fun:coconuthunt:test` for the Coconut/Ghost/Door focused suite, then use `scripts/build-all.sh` for the suite-wide local test build. The centralized Java 25 and `paperApiVersion=26.2.build.123-stable` settings apply to all three modules; do not import the standalone build-number mutation or its Paper coordinate. The output remains one `1MB-Lib-EventHunts-v<version>-<build>-j25-26.2.jar` plus the normal library dependency.
+Door Hunt is source inside the compatibility-named `:plugins:player-fun:coconuthunt` project, not another Gradle plugin and not another JavaPlugin. Run `gradle :plugins:player-fun:coconuthunt:test` for the Coconut/Ghost/Door focused suite, then use `scripts/build-all.sh` for the suite-wide local test build. The centralized Java 25 and `paperApiVersion=26.2.build.128-stable` settings apply to all three modules; do not import the standalone build-number mutation or its Paper coordinate. The output remains one `1MB-Lib-EventHunts-v<version>-<build>-j25-26.2.jar` plus the normal library dependency.
 
 The Gradle scaffold is present. The current baseline is:
 
-- Java 25 bytecode, built with JDK 25.0.4
-- Java 26.0.2 runtime compatibility smoke testing
-- Paper 26.2 stable build 123 or newer
-- Paper API `26.2.build.123-stable`
+- Java 25 bytecode, built and tested with JDK 25.0.4.1
+- Java 26 on the live server; local runtime compatibility smoke testing uses JDK 26.0.2.1
+- Paper 26.2 stable build 128 or newer
+- Paper API `26.2.build.128-stable`
 - separate jars for every feature
 - a separate shared library jar
 
@@ -30,15 +30,17 @@ gradle :plugins:player-fun:<feature>:jar
 
 Direct `gradle build` is also a verification command, not a release-to-test handoff. `refreshBuildDocs` updates every documented 1MB jar name, semantic-version/build example, checklist metadata line, and Paper stable-build requirement from `gradle.properties`. `build` runs `verifyBuildMetadata`, which fails if docs or generated debug metadata are stale.
 
-Build releases explicitly with JDK 25.0.4 even when the shell's default Java is newer:
+Build and test explicitly with JDK 25.0.4.1 even when the shell's default Java is newer. Older Java 25 installations have been removed. Run Gradle and the canonical build command with this environment:
 
 ```bash
-JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk-25.0.4.jdk/Contents/Home \
-PATH="$JAVA_HOME/bin:$PATH" \
-scripts/build-all.sh
+(
+  export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk-25.0.4.1.jdk/Contents/Home
+  export PATH="$JAVA_HOME/bin:$PATH"
+  scripts/build-all.sh
+)
 ```
 
-The Gradle Java toolchain and `--release 25`-compatible compiler target keep the jars runnable on Java 25. A separate Paper startup using JDK 26.0.2 verifies forward runtime compatibility; it does not change the bytecode target.
+The Gradle Java toolchain and Java 25 compiler target keep the jars runnable on Java 25. A separate Paper startup using JDK 26.0.2.1 verifies compatibility with the live server's Java 26 runtime. Keep `javaTarget=25`.
 
 ## Paper Stable Alignment
 
@@ -50,7 +52,7 @@ cd servers/Paper-26.2
 ./paperscript.sh status
 ```
 
-The expected jar is `Paper-26.2.jar`. `verifyLocalPaperAlignment` reads PaperScript's saved state and configuration, checks the jar checksum, confirms `STABLE` channel selection and `Paper-{version}.jar` naming, and requires the installed Paper build to match `paperApiVersion`.
+The expected runtime is the staged `Paper-{version}-{build}.jar`, matching the maintained launcher's highest numbered JAR for that version. `verifyLocalPaperAlignment` and `scripts/build-all.sh` share a read-only validator for PaperScript identity, exact target/build, checksum, stable channel, and launcher selection. Complete `staged_*` state takes precedence over old `current_*` records; partial or invalid staged state is rejected. Legacy `Paper-{version}.jar` state remains supported only when no staged fields exist, and any numbered launcher selection must agree. The selected Paper build must match `paperApiVersion`.
 
 ```bash
 gradle verifyLocalPaperAlignment printProjectMetadata
@@ -71,11 +73,11 @@ This is a read-only drift check against the public `1MB-Plugins-Docs` checkout. 
 Expected jar naming:
 
 ```text
-1MB-Lib-Core-v1.0.3-660-j25-26.2.jar
-1MB-Lib-AntiFire-v1.0.3-660-j25-26.2.jar
-1MB-Lib-AFKShrine-v1.0.3-660-j25-26.2.jar
-1MB-Lib-StaffCenter-v1.0.3-660-j25-26.2.jar
-1MB-Lib-Profile-v1.0.3-660-j25-26.2.jar
+1MB-Lib-Core-v1.0.3-697-j25-26.2.jar
+1MB-Lib-AntiFire-v1.0.3-697-j25-26.2.jar
+1MB-Lib-AFKShrine-v1.0.3-697-j25-26.2.jar
+1MB-Lib-StaffCenter-v1.0.3-697-j25-26.2.jar
+1MB-Lib-Profile-v1.0.3-697-j25-26.2.jar
 ```
 
 Every new deployable build replaces the complete managed suite in:
@@ -95,11 +97,14 @@ All paths recognize legacy `1MB-CMIAPI-*` and current `1MB-Lib-*` artifacts as o
 
 Retired server instances are stored under the Git-ignored `archive/` directory. Gradle does not build against, sync to, stage from, or test against archived instances; `servers/Paper-26.2/` is the sole active repository-local target.
 
-The project-local launch script defaults to JDK 25.0.4. Override it for the Java 26 compatibility smoke without editing the script:
+The project-local launch script requires Java 26 and discovers `java` through `PATH`. Run it with the installed JDK 26.0.2.1 for runtime compatibility smoke testing:
 
 ```bash
-JAVA_BIN=/Library/Java/JavaVirtualMachines/jdk-26.0.2.jdk/Contents/Home/bin/java \
-./servers/Paper-26.2/1MB-minecraft.sh
+(
+  export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk-26.0.2.1.jdk/Contents/Home
+  export PATH="$JAVA_HOME/bin:$PATH"
+  ./servers/Paper-26.2/1MB-minecraft.sh
+)
 ```
 
 After the Paper test server has been used for live testing, stage exactly those tested jars for a manual live deployment:

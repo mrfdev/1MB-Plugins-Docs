@@ -1,15 +1,16 @@
 # Event Hunts Quality-of-Life Roadmap
 
-This page preserves possible quality-of-life and architecture work for the shared `1MB-CMIAPI-EventHunts` feature plugin. It is primarily a planning backlog, not a statement that every listed behavior exists today. The read-only preflight, presentation-first event module registry, shared status/debug model, status-aware `/hunt` GUI, private player summaries, first shared GUI footer foundation, shared reward presentation, and restrained daily-reset guidance were greenlit and implemented on 2026-08-07; all remaining items still require explicit owner review and greenlight.
+This page preserves possible quality-of-life and architecture work for the shared `1MB-CMIAPI-EventHunts` feature plugin. It is primarily a planning backlog, not a statement that every listed behavior exists today. The read-only preflight, presentation-first event module registry, shared status/debug model, status-aware `/hunt` GUI, private player summaries, first shared GUI footer foundation, shared reward presentation, and restrained daily-reset guidance were greenlit and implemented on 2026-08-07. The Halloween Virus additions below were separately approved on 2026-09-22; other unimplemented items still require explicit owner review and greenlight.
 
-The current player and staff references remain [Coconut Hunt](coconut.md), [Halloween Ghost Hunt](ghosthunt.md), [Door Hunt](doors.md), [Door Hunt administration](doors-administration.md), and [Door Hunt testing](doors-testing.md).
+The current player and staff references remain [Coconut Hunt](coconut.md), [Halloween Ghost Hunt](ghosthunt.md), [Door Hunt](doors.md), [Door Hunt administration](doors-administration.md), [Door Hunt testing](doors-testing.md), [Halloween Virus](halloweenvirus.md), and [Halloween Virus administration](halloweenvirus-administration.md).
 
 ## Direction And Boundaries
 
-Event Hunts should present `/hunt` as the public umbrella for independently switchable seasonal modules such as `/coconut`, `/ghost`, and `/doors`. Shared presentation, navigation, diagnostics, configuration conventions, and safety utilities are good consolidation targets. The actual gameplay models should stay appropriately separate:
+Event Hunts should present `/hunt` as the public umbrella for independently switchable seasonal modules such as `/coconut`, `/ghost`, `/doors`, and `/hv`. Shared presentation, navigation, diagnostics, configuration conventions, and safety utilities are good consolidation targets. The actual gameplay models should stay appropriately separate:
 
 - Coconut and Ghost are collectible-location hunts and can share most of their collection engine.
 - Doors uses door interactions, daily resets, random outcomes, and delayed Treat Bag claims; it should remain its own gameplay module.
+- Halloween Virus uses world-specific infected mobs and individually authenticated, tradable sherds; its collection and completion-reward ledger remain separate from location hunts.
 - Coconut and Ghost milestone rewards should not be forced into the Doors Treat Bag model.
 - Modules can share claim-safety and transaction utilities without being forced into one reward behavior.
 - The internal `CoconutHunt` data namespace, PDC identities, permissions, placeholders, and existing player records should remain in place unless a future migration provides a concrete benefit worth the risk.
@@ -36,7 +37,7 @@ One authoritative registry now describes every installed event module. Each desc
 - existing player-command handler route
 - read-only status contribution used by the index and aggregate host status
 
-The `/hunt` index, text help, tab completion, host status, and `/hunt <module>` routing now read this registry instead of manually switching over the three known module IDs. A future event such as an Easter Egg Hunt must implement its own guarded gameplay and register a valid descriptor before it can participate in these shared surfaces.
+The `/hunt` index, text help, tab completion, host status, and `/hunt <module>` routing now read this registry instead of manually switching over a fixed set of module IDs. A future event such as an Easter Egg Hunt must implement its own guarded gameplay and register a valid descriptor before it can participate in these shared surfaces.
 
 Registry construction fails closed if descriptors are missing, duplicated, malformed, use duplicate commands, or do not exactly match the managed runtime modules. A runtime status-provider failure leaves the card visible as unavailable but prevents the registry route from opening. Direct module handlers remain authoritative for permissions, runtime state, gameplay, and rewards.
 
@@ -171,6 +172,31 @@ Move common seasonal presentation into reviewed theme definitions where it reduc
 - capture animation settings
 
 This could allow the collectible engine to support Easter eggs, presents, flowers, treasure heads, or other future hunts without cloning Ghost Hunt. Theme configuration must not be allowed to redefine trusted PDC identity or bypass gameplay and reward validation.
+
+## Halloween Virus Additions Approved On 2026-09-22
+
+Four selected additions are implemented specifically for `/hv`. They preserve the 23-shard collection, existing trade routes, spent-item identity, reward transactions and October/November claim dates. See the [player guide](halloweenvirus.md) and [staff controls](halloweenvirus-administration.md) for the current commands and defaults. Runtime and gameplay acceptance belong to the current build report and Halloween Virus checklist, rather than this planning record.
+
+| Approved addition | Implemented behavior |
+| --- | --- |
+| Regional boss signature moves (proposal 2) | Conservative default-enabled rush, guard and pulse moves with readable warnings, bounded cooldowns and live `/hv admin signatures` controls. Sky/island regions default to guard. Normal infected and animal packs do not use signatures. |
+| Encounter field notes (proposal 3) | `/hv notes` records ten optional regional observations, including General World, through confirmed eligible combat with infected mobs. No boss kill or separate exploration requirement; traded sherds still complete the collection. |
+| Rebuild the Seal (proposal 4) | `/hv seal` uses clues in the 5/10/20 collection chapters and requires all 23 recorded types for an optional ending. Wrong answers can be retried; no items, extra rewards or claim gates. |
+| Temporary regional outbreaks (proposal 6) | Staff can start/cancel a timed regional infection multiplier or enable a weekly rotation. Rotation starts off, with 18:00, 120-minute, 2× defaults in the claim calendar's time zone. Absolute expiry, hunt dates, pauses, caps and protections bound its effect. |
+
+Trade comparison (proposal 1) and nearby expedition/group signals (proposal 5) were explicitly rejected. They are not part of the implementation or an approved future queue. The existing `/trade` and auction-house routes remain available for normal item transfers.
+
+Before launch, verify actual world/client gameplay, item-modification protection and representative load, and follow the retained schedule/rollout checklist. Finalize and validate the placeholder reward before claims open on 25 October. The player and staff guides are being published for advance reading on 23 September 2026 at the owner's request. Live JAR handoff, permissions and event activation remain separate launch actions.
+
+### Follow-ups approved on 23 September 2026
+
+| Approved addition | Implemented behavior |
+| --- | --- |
+| Staff balance report (follow-up 1, build 695) | `/hv admin report [1-168] [all\|world-key]` shows bounded hourly spawn, eligible-kill, sherd-drop and collection-completion totals. Natural and staff test encounters are separate; diagnostic storage never authorizes rewards. |
+| Reward keepsake (follow-up 6, build 696) | `/hv admin rewardtrophy [online-player\|uuid]` gives reusable 2026 trophy and general story-book templates for the owner to include in the final reward kit. It does not change the kit or award an event claim. |
+| Reward-claim reminder (follow-up 4, build 697) | One private reminder per completed, unclaimed player and edition when claims are actually available, including 2–4 November. A saved receipt prevents normal relog/restart repeats; the existing player opt-out covers both reminder types. |
+
+Permanent regional baseline spawn rates remain undecided. Check the existing CMI combat boss bar before proposing another. A community cure meter remains an idea for later consideration, without implementation approval. The optional BentoBox adapter stays shelved.
 
 ## Player Quality-of-Life Candidates
 

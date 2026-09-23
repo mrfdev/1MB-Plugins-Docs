@@ -51,7 +51,9 @@ onembcmi.chunks.admin
 
 `onembcmi.chunks.use` defaults to false; `onembcmi.chunks.admin` defaults to op and includes `/chunks admin inspect <player|uuid> [page]`, a read-only view of the latest retained failure and its permission sources. Ordinary users do not need `cmi.command.viewdistance` or `.others`. The feature manages approved numeric `cmi.viewdistance.<number>` preferences through UUID-targeted LuckPerms API operations. See [Chunks](plugins/chunks.md).
 
-Example feature permissions:
+Halloween Virus is an Event Hunts module with its own permission prefix. `onembcmi.HalloweenVirus.use` grants player participation; `onembcmi.HalloweenVirus.admin` grants its staff controls. Both and all granular admin children default to false. Grant player access deliberately, and delegate narrower staff permissions using the [Halloween Virus permission table](plugins/halloweenvirus-administration.md#permissions). `/hv debug permissions` shows the running catalog. Individual LuckPerms grants must target the authoritative server UUID; group grants use the intended group id.
+
+Other feature permission examples:
 
 ```text
 onembcmi.afkshrine.use

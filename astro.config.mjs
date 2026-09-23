@@ -87,6 +87,7 @@ export default defineConfig({
           items: [
             { slug: 'staff-reference' },
             { slug: 'staff-reference/plugins' },
+            { slug: 'staff-reference/plugins/halloweenvirus' },
             {
               label: 'Custom Server Plugins',
               collapsed: true,

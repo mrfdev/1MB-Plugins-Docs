@@ -1,0 +1,15 @@
+id: halloweenvirus
+name: Halloween Virus
+category: custom-server-plugin
+summary: Fight regional infected bosses, follow temporary outbreaks, explore ten regional fragment pools including General World’s Bogged, record 23 pottery fragments, uncover field notes and an optional Seal ending, and claim a seasonal completion reward.
+main_command: /hv
+docs_url: https://docs.1moreblock.com/player-guides/plugins/halloweenvirus/
+player_guide: halloweenvirus.md
+technical_readme: halloweenvirus-administration.md
+java_target: 25
+paper_target: "26.2"
+official_project: true
+repository: mrfdev/1MB-Library
+module: HalloweenVirus
+host_plugin: 1MB-CMIAPI-EventHunts
+data_folder: plugins/1MB-CMIAPI/CoconutHunt/HalloweenVirus/

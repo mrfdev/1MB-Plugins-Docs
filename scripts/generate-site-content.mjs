@@ -13,6 +13,10 @@ const publicRepoBlob = 'https://github.com/mrfdev/1MB-Plugins-Docs/blob/main';
 const publicRepoTree = 'https://github.com/mrfdev/1MB-Plugins-Docs/tree/main';
 
 const PLAYER_GUIDE_OVERRIDES = {
+  halloweenvirus: {
+    fullSourceGuide: true,
+    staffDocument: 'halloweenvirus-administration.md',
+  },
   autosell: {
     summary: 'Choose which ordinary inventory items to sell, preview the result, and follow quests and milestones.',
     intro: 'AutoSell sells selected ordinary inventory items when you opt in. Choose categories or individual materials, check your filters and daily allowance, then preview what would be sold before enabling it.',
@@ -2534,8 +2538,13 @@ function groupedLists(plugins) {
     .map(([category, values]) => {
       const rows = values
         .map((plugin) => {
-          const url = `${publicRepoBlob}/project-docs/cmi-api/docs/plugins/${plugin.file}`;
-          return `- [${plugin.name}](${url}) - ${plugin.purpose}`;
+          const slug = slugFromFile(plugin.file);
+          const hasStaffPage = Boolean(PLAYER_GUIDE_OVERRIDES[slug]?.staffDocument);
+          const url = hasStaffPage
+            ? `/staff-reference/plugins/${slug}/`
+            : `${publicRepoBlob}/project-docs/cmi-api/docs/plugins/${plugin.file}`;
+          const purpose = hasStaffPage ? rewriteLibraryLinks(plugin.purpose, 'plugins/README.md') : plugin.purpose;
+          return `- [${plugin.name}](${url}) - ${purpose}`;
         })
         .join('\n');
       return `## ${category}\n\n${rows}`;
@@ -2563,7 +2572,12 @@ function rewriteLibraryLinks(markdown, sourceFile) {
     const resolved = path.posix.normalize(path.posix.join(path.posix.dirname(sourceFile), file));
     const anchor = fragment ? `#${fragment}` : '';
     const plugin = guidePlugins.find((entry) => `plugins/${entry.file}` === resolved);
-    const target = sharedGuideRoutes[resolved] && !fragment
+    const staffGuide = Object.entries(PLAYER_GUIDE_OVERRIDES).find(
+      ([, override]) => override.staffDocument && `plugins/${override.staffDocument}` === resolved,
+    );
+    const target = staffGuide
+      ? `/staff-reference/plugins/${staffGuide[0]}/${anchor}`
+      : sharedGuideRoutes[resolved] && !fragment
       ? sharedGuideRoutes[resolved]
       : plugin && !fragment
         ? `/player-guides/plugins/${slugFromFile(plugin.file)}/`
@@ -2645,7 +2659,13 @@ for (const plugin of guidePlugins) {
     });
   }
 
-  await writeFile(path.join(pluginGuideRoot, `${slug}.mdx`), `---
+  await writeFile(path.join(pluginGuideRoot, `${slug}.${override.fullSourceGuide ? 'md' : 'mdx'}`), override.fullSourceGuide ? `---
+title: ${JSON.stringify(`${plugin.name} Guide`)}
+description: ${JSON.stringify(pageDescription)}
+---
+
+${rewriteLibraryLinks(stripDocumentPreamble(markdown), `plugins/${plugin.file}`)}
+` : `---
 title: ${plugin.name} Guide
 description: ${pageDescription}
 ---
@@ -2684,6 +2704,19 @@ ${markdownList(notes, Boolean(override.notes))}
 
 The [full synced ${plugin.name} reference](${publicRepoBlob}/project-docs/cmi-api/docs/plugins/${plugin.file}) is available for exact technical details.
 `);
+
+  if (override.staffDocument) {
+    const staffMarkdown = await readFile(path.join(docsRoot, 'plugins', override.staffDocument), 'utf8');
+    const staffDirectory = path.join(contentRoot, 'staff-reference', 'plugins');
+    await mkdir(staffDirectory, { recursive: true });
+    await writeFile(path.join(staffDirectory, `${slug}.md`), `---
+title: ${JSON.stringify(`${plugin.name} Administration`)}
+description: ${JSON.stringify(`Setup, permissions, recovery, and operation of ${plugin.name}.`)}
+---
+
+${rewriteLibraryLinks(stripDocumentPreamble(staffMarkdown), `plugins/${override.staffDocument}`)}
+`);
+  }
 }
 
 const registry = await loadRegistry(repoRoot);

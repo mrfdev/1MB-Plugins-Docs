@@ -79,6 +79,8 @@ For support/debugging:
 - [DiscordChat](plugins/discordchat.md)
 - [GameTypes](plugins/gametypes.md)
 - [BirthdayLanterns](plugins/birthdaylanterns.md)
+- [Halloween Virus](plugins/halloweenvirus.md)
+- [Halloween Virus administration](plugins/halloweenvirus-administration.md)
 - [LavaBoots](plugins/lavaboots.md)
 - [Spawners](plugins/spawners.md)
 - [MobHat](plugins/mobhat.md)

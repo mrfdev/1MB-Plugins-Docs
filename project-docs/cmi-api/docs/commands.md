@@ -23,6 +23,8 @@ This page documents the global command shape. Individual plugins have their own 
 
 ## Current Global Library Commands
 
+Feature commands remain separate from these library controls. For the fall event, `/hv` opens Halloween Virus, and `/hunt hv` routes to the same module. See the [player commands](plugins/halloweenvirus.md#commands) and [full staff command reference](plugins/halloweenvirus-administration.md#staff-commands), including live spawning controls, regional outbreaks, particle/glow tuning, player resets, balance reports and reward-kit keepsake templates. `/hv debug commands`, `/hv debug permissions` and `/hv debug placeholders` show the running module's catalogs to authorized staff.
+
 ```text
 /1mblib info
 /1mblib status
@@ -523,10 +525,19 @@ Chunks:
 
 ```text
 /chunks
+/chunks choose
+/chunks options
+/chunks mode <always|session>
+/chunks save
+/chunks restore
+/chunks screenshot
+/chunks screenshot stop
 /chunks less [preset]
 /chunks more [preset]
 /chunks reset
 /chunks status [page]
+/chunks explain
+/chunks advice [page]
 /chunks info [page]
 /chunks help [page]
 /chunks admin
@@ -535,15 +546,41 @@ Chunks:
 /chunks admin choices [page]
 /chunks admin add <less|more> <4..16>
 /chunks admin remove <less|more> <preset>
+/chunks admin preview <less|more> <preset> [page]
 /chunks admin default <less|more> <preset>
 /chunks admin reload
 /chunks admin inspect <player|uuid> [page]
+/chunks admin history <player|uuid> [page]
+/chunks admin incident <reference> [page]
 /chunks admin retry <online-player>
 /chunks debug [section] [page]
 /chunks debug enable true
+/chunks debug set config prototype.distance-explanation-enabled true
+/chunks debug set config prototype.distance-explanation-enabled false
+/chunks debug set config connection-advice.enabled true
+/chunks debug set config connection-advice.enabled false
+/chunks debug set config connection-advice.ping-threshold-ms <100..2000>
+/chunks debug set config screenshot-mode.enabled <true|false>
+/chunks debug set config screenshot-mode.duration-seconds <30..1800>
 ```
 
 Only enabled presets are accepted: defaults are Less 4/6 and More 12/16, with bare `less` selecting 4 and bare `more` selecting 12. Reset follows the current world's server default. Every CMI change explicitly uses `view`; simulation distance is never changed. Staff use `/chunks admin inspect <player|uuid> [page]` for the latest retained failure, its logged reference, original permission-conflict evidence, and a separate current snapshot when online. Inspection is read-only, rejects ambiguous names, and uses only exact online/retained names or the canonical server UUID. See [Chunks](plugins/chunks.md) for permission, retention, persistence, and recovery details.
+
+`/chunks options` opens **Always / This session**, **Save this choice**, and **Use my saved preference** with the existing use permission. Always remains the default; session mode requires a saved baseline, applies to legacy preset commands too, and ends on logout/restart/reload/preset edits/disable. Mode selection alone changes no distance. Save and restore require confirmation, current allowed presets, and the normal cooldown. See [preference/session behavior](plugins/chunks.md#preference-and-session-controls).
+
+`/chunks screenshot` starts five minutes at the highest enabled 12–16 preset above your confirmed current distance; `/chunks screenshot stop` returns early. The options page has the same controls and countdown. An allowed saved baseline, confirmation, use permission and cooldown are required. Expiry returns to the previous saved or session choice without changing the saved baseline; it never restores retired values. Ordinary accepted preset/save/restore actions cancel the timer. Staff can disable the option or change its duration with the commands above. See [temporary screenshot mode](plugins/chunks.md#temporary-screenshot-mode).
+
+`/chunks choose` opens **Help me choose**, also reached through the main menu's writable book, with the existing `onembcmi.chunks.use` permission. Three cards explain lower distances, Reset, and wider screenshots using the current offered values. Clicking returns to the ordinary preset menu with a reminder; it never saves a preference. Empty ranges and unsafe Reset defaults are unavailable. Preset tooltips and `/chunks info [page]` provide the same brief, qualified guidance. No extra arguments, settings, or permissions are needed. See [Help me choose](plugins/chunks.md#help-me-choose).
+
+`/chunks status [page]` includes client-limit advice alongside the saved preference and support reference. Preset hover text and the live status/head also compare the client's reported request with server choices. A lower request points to **Video Settings > Render Distance**; choices stay available. Paper's initial `2` is labelled as ambiguous, and Bedrock/mod/cache limits are explained. This needs only the existing use permission and works while optional connection advice is off. See [client-limit advice](plugins/chunks.md#client-limit-advice).
+
+The optional `/chunks explain` prototype is disabled by default. Staff can toggle `prototype.distance-explanation-enabled` with the commands above; players need only `onembcmi.chunks.use`. Its centre-player terrain sketch compares enabled presets and the current world's Reset default without changing a preference or loading terrain. The sketch is not to scale; it makes no rendering or performance promises. The owner must still decide whether to keep or remove the trial.
+
+Optional connection advice also defaults off. Staff with `onembcmi.chunks.admin` control its global switch and estimated-ping threshold; players use `/chunks advice [page]` or its main-menu item with `onembcmi.chunks.use`. After a warmup, repeated elevated server estimates can suggest a currently offered lower preset. Reading advice never changes a preference or sends unsolicited chat. It cannot measure FPS/bandwidth or diagnose lag, and explicitly acknowledges Bedrock/proxy uncertainty. See the [timing, selection rules, and limits](plugins/chunks.md#optional-connection-advice).
+
+Before removing a preset, `/chunks admin preview more 16` shows affected online saved preferences, exact UUIDs, current-world reset targets, blocked defaults, uncertain pending/unreadable state, and shortcut changes. It requires `onembcmi.chunks.admin`, accepts an optional page, and changes no presets or player state. Offline impact is explicitly unknown; actual removal remains a separate command with fresh validation.
+
+Failed changes show players a support reference, also retrievable in `/chunks status`. Staff open it with `/chunks admin incident <reference> [page]` or browse `/chunks admin history <player|uuid> [page]`, using `onembcmi.chunks.admin`. History retains up to five failures per UUID, 128 players, and 256 incidents across restarts, with asynchronous atomic persistence and console-log fallback. Reports distinguish historical failure from current state and perform no preference changes. A support reference is an incident UUID, separate from the player's server UUID.
 
 RecordingMode:
 

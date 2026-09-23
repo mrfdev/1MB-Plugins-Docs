@@ -34,6 +34,32 @@ The shared library registers the expansion when PlaceholderAPI is loaded. Use `g
 %onembcmi_global.playerdata.size%
 ```
 
+Halloween Virus placeholders:
+
+```text
+%onembcmi_HalloweenVirus.state%
+%onembcmi_HalloweenVirus.live%
+%onembcmi_HalloweenVirus.event%
+%onembcmi_HalloweenVirus.end%
+%onembcmi_HalloweenVirus.collected%
+%onembcmi_HalloweenVirus.remaining%
+%onembcmi_HalloweenVirus.claimable%
+%onembcmi_HalloweenVirus.reward%
+%onembcmi_HalloweenVirus.effects%
+%onembcmi_HalloweenVirus.journal_unlocked%
+%onembcmi_HalloweenVirus.journal_total%
+%onembcmi_HalloweenVirus.claim_window%
+%onembcmi_HalloweenVirus.claims_open%
+%onembcmi_HalloweenVirus.spawning_paused%
+%onembcmi_HalloweenVirus.spawn_rate%
+%onembcmi_HalloweenVirus.field_notes%
+%onembcmi_HalloweenVirus.seal_solved%
+%onembcmi_HalloweenVirus.outbreak_world%
+%onembcmi_HalloweenVirus.outbreak_ends%
+```
+
+These read cached event and UUID progress snapshots. See the [Halloween Virus placeholder reference](plugins/halloweenvirus-administration.md#placeholderapi) for values, defaults without player context, and the distinction between a complete collection and a currently claimable reward. `/hv debug placeholders` lists the running module's catalog.
+
 AFKShrine placeholders:
 
 ```text
@@ -109,6 +135,10 @@ Chunks placeholders:
 
 ```text
 %onembcmi_chunks.preference%
+%onembcmi_chunks.mode%
+%onembcmi_chunks.session_preference%
+%onembcmi_chunks.screenshot%
+%onembcmi_chunks.screenshot_seconds%
 %onembcmi_chunks.view_distance%
 %onembcmi_chunks.client_view_distance%
 %onembcmi_chunks.world_default%
@@ -118,7 +148,7 @@ Chunks placeholders:
 %onembcmi_chunks.choices.more%
 ```
 
-These report the personal preference, current server/client/world view distances, pending state, enabled state, and approved preset lists. They do not change simulation distance or describe cached Bobby/Distant Horizons scenery. See [Chunks](plugins/chunks.md).
+These report the saved personal preference, next-choice mode (`always`/`session`), temporary choice (`none`/`default`/number), current server/client/world view distances, pending state, enabled state, and approved preset lists. Screenshot phase is `off`/`starting`/`active`/`returning`; remaining seconds round up and are zero outside the active countdown. The saved preference keeps its original meaning; a session value is intent, not proof of runtime confirmation. They do not change simulation distance or describe cached Bobby/Distant Horizons scenery. See [Chunks](plugins/chunks.md).
 
 RecordingMode placeholders:
 

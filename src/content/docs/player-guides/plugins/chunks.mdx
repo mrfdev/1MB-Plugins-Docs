@@ -102,13 +102,29 @@ For Java players, we recommend a compatible [Fabric Loader](https://fabricmc.net
 
 Run `/chunks`. Try **4** or **6** for Bedrock devices, slower computers, or a limited connection. Try **12** or **16** for a wider view on a capable computer and connection. Use **Reset** whenever you want the server's normal choice for your current world.
 
+For help, click **Help me choose** (the writable book above the bottom information book), or run `/chunks choose`. Hover over **Lower distances**, **Server defaults**, or **Wider views and screenshots**. The cards list only currently enabled values. Clicking a card returns to the normal preset menu with a short reminder; it does **not** save a preference. Click the actual preset button there and wait for confirmation. You can also keep using `/chunks less`, `/chunks more`, and `/chunks reset` directly.
+
+Lower values send less terrain data and may ease loading on Bedrock or slower clients. Higher values can be useful for building and screenshots when your client and connection can handle more. Neither is a promise of smoother play, higher FPS, or lower ping. Your client render setting and cached scenery still matter. Saved choices keep their normal relog behavior, and simulation distance is unchanged.
+
+### Why is a Help me choose card unavailable?
+
+Staff controls the offered presets. If no enabled numbers fit a card, it is grey and cannot be selected. Reset is also grey if this world's default falls outside the allowed 4–16 range; ask staff to check that world. The guide never adds a missing preset or substitutes a different default. Use **Back to /chunks** to see all available choices. `/chunks info [page]` gives text guidance using the current preset list if you prefer commands.
+
 ### Why can I still see far away after choosing fewer chunks?
 
 Bobby can show chunks saved on your computer, and Distant Horizons can show saved distant terrain. `/chunks` changes new chunk data sent by the server; it does not clear those client caches. Lower your client render distance or the mod's own distance setting as well if you want less scenery rendered.
 
 ### Why did choosing 16 not make me see farther?
 
-Your Minecraft client must also have a high enough render-distance setting. The server, your client, and your connection all affect what you can see. Check your video settings, wait for terrain to arrive, and use `/chunks status` to check the server-side setting.
+Check **Video Settings > Render Distance** in your Minecraft client. For example, a confirmed server choice of **16** with a reported client request of **6** now shows **Client request is below your 16-chunk choice** in the status item and your player-head hover text. The preset itself also notes the mismatch before you select it. Use `/chunks status [page]` for the explanation in chat.
+
+This is advice, not an error or a reason to block the preset. Keep a lower client setting if it suits your device; raising it is optional. Changing `/chunks` cannot raise your client setting for you, and matching numbers does not prove that terrain has arrived or rendered.
+
+### Why does the reported client distance differ from my slider?
+
+Bedrock bridges, proxies and mods may report a different request than the setting you see. The plugin reads what Paper reports; it does not inspect your screen or detect your device. Paper can also return **2** before receiving the client setting. Chunks marks that value as a possible initial default and asks you to check your settings instead of asserting a mismatch. Unavailable values are labelled unavailable.
+
+Your **saved server preference**, **reported client request**, and **cached scenery** are separate. Bobby and Distant Horizons can display previously saved scenery beyond the live distance. Chunks cannot measure or clear those caches.
 
 ### Does this change simulation distance or keep distant farms running?
 
@@ -116,11 +132,41 @@ No. This menu changes view distance only. Simulation distance is controlled sepa
 
 ### Will my choice survive leaving the server?
 
-Yes, a successfully confirmed personal preference is remembered across reconnects. **Reset** returns to server defaults. Staff can change which presets are offered, so a retired preset may no longer be available when you return.
+In **Always** mode, a successfully saved preference is remembered across reconnects. This is the default, including after every login. **This session** lets you try another offered value while keeping your saved preference for your next login. A temporary choice also ends on restart, Chunks reload, preset update, or feature disable. Changing worlds keeps it for the same session; a temporary Reset follows that world's default.
+
+### How do I try another distance without losing my usual preference?
+
+Open **Preference options** (the repeater in `/chunks`), or run `/chunks options`. First save a preset or Reset in **Always** mode if you have never used Chunks. Then select **This session**, return to `/chunks`, pick an offered preset and wait for confirmation. The regular `less`, `more`, and `reset` commands also follow the mode you selected. The mode button glows; the status and options page show the session choice and what applies after relogging.
+
+For example, save your usual **6**, select **This session**, then choose **16** for screenshots if staff offers it. Your next login returns to **6**. Use **Use my saved preference** or `/chunks restore` to return sooner. To keep **16** for future logins, wait for confirmation and cooldown, then use **Save this choice** or `/chunks save`. This explicitly replaces the saved **6**. It does not change the mode for subsequent choices.
+
+Changing **Always / This session** only controls the next choices. It does not save or restore the current choice by itself. The saved-preference shortcut returns to your saved baseline, not an unlimited history of previous clicks. Staff can retire a preset; a retired value is never offered or restored. Choose an available preset or Reset if the saved one is no longer offered.
+
+All these controls use the existing `onembcmi.chunks.use` permission on Java and Bedrock. No extra permission is needed. Closing the menu leaves an accepted choice in progress and does not end session mode.
+
+### Can I briefly use more chunks for a screenshot?
+
+Yes. Open `/chunks options` and click **Temporary screenshot mode**, or run `/chunks screenshot`. It uses the highest currently enabled preset between **12 and 16** that is higher than your confirmed current distance. First choose a normal preset or Reset and wait for confirmation and cooldown. If you already use 16, or staff offers no higher screenshot preset, there is nothing to increase and the button is unavailable.
+
+The five-minute countdown starts **after the wider view is confirmed**. You can close the menu and take screenshots normally. The option changes only the server's view distance; it does not take or save an image for you. Keep your client Render Distance high enough for the wider live view. Bedrock/proxy reports, your device and connection, and Bobby/Distant Horizons caches still affect what you see; this mode cannot promise that all terrain has arrived or rendered.
+
+The menu and `/chunks status [page]` show the countdown and return choice. Click **End screenshot mode** or use `/chunks screenshot stop` to return early. Your saved preference is unchanged. For example, saved 6 → screenshot 16 → return 6. If you were temporarily using 4 with saved 6, the timer returns to that temporary 4 during the same login; relogging still uses saved 6. **Always / This session** continues to control your next ordinary preset choice and is not changed by screenshot mode.
+
+Repeated starts do not extend the timer. Choosing another valid preset, **Save this choice**, or **Use my saved preference** ends it. Save explicitly makes the confirmed screenshot choice your saved preference; Restore goes directly to your saved baseline. Invalid input and cooldown rejections do not cancel the timer. Manual stopping respects cooldown; automatic expiry does not wait for it.
+
+Logout, restart, Chunks reload, preset updates, feature disable, or disabling screenshot mode ends temporary choices and returns to the saved preference. A normal world change keeps the countdown; a previous Reset returns to the default of the world you are now in. If permissions changed, a return value was retired, or that world's default is unsafe, Chunks removes its temporary override, attempts a safe recovery, and gives you a support reference if it cannot confirm the return. It never restores an unlisted or out-of-range value. Staff can disable the option or change its duration. The existing `onembcmi.chunks.use` permission is sufficient on Java and Bedrock.
 
 ### Why does the menu ask me to wait before changing again?
 
 The server must save and confirm one preference before accepting the next. Wait for that operation and its short cooldown, then choose another option. Repeated clicks do not make the change faster. If it remains unavailable, give staff the message shown and use `/chunks status`.
+
+The live status item and your player head show the current stage. A slow save keeps showing **Saving...** even if the usual cooldown duration has elapsed. The cooldown starts after the operation finishes; it never unlocks an unfinished save. Closing the menu does not cancel an accepted preference change.
+
+### What should I give staff when a change fails?
+
+Share the **Support reference** printed with the failure message, along with what you tried. The reference identifies that exact attempt; it is different from your player UUID. You can also find your last retained reference with `/chunks status [page]`. Plain text remains usable on Java and Bedrock without a clickable chat feature; copying the full reference or sharing a screenshot is enough.
+
+Staff can look up the original failure even if your old preference was restored or a later choice worked. An old reference in Status is labelled as a previous failed attempt, so it does not mean your current setting is broken. Normal cooldowns, invalid preset input, and an unfinished slow save do not create a new failure reference.
 
 ### Can I use 7, 32, or another custom number?
 
@@ -129,6 +175,20 @@ Only the current menu choices are allowed. `/chunks 32` is not supported, and th
 ### Can I keep `/chunks less` but see 32 chunks with Bobby?
 
 On Java, yes: a compatible Fabric and Bobby setup can show previously visited chunks beyond the server's live view distance. Try a client setting of 32 if your computer can handle it, and lower it if performance suffers. You still need to explore to receive and cache terrain. This does not increase the server-side `/chunks` limit.
+
+### What does the distance illustration do?
+
+If staff has enabled the trial, click **Distance explained** (the spyglass beside the status item) in `/chunks`, or run `/chunks explain`. Your head sits at the centre of a small terrain sketch. Use the smaller/larger arrows to compare enabled presets, and the compass to illustrate **Reset** using this world's default. The arrows change only the picture. Return with **Back to /chunks** to actually choose and save a preference.
+
+Grass represents the growing terrain area; grey tiles mark the rest of the sketch. This is a compressed illustration, **not a map, a count of loaded chunks, or an exact outline of what the server sends**. One tile is not one chunk, and nearby values can look the same. Your client settings and cached scenery still affect what you see. It makes no FPS, bandwidth, or rendering guarantees. A Reset default outside 4–16 is labelled unavailable and shows no terrain instead of pretending to apply a safe value. Simulation distance is unchanged.
+
+### What is Connection advice, and should I follow it?
+
+When staff enables it, `/chunks advice [page]` and the **Connection advice** item in `/chunks` explain recent server ping estimates. Allow about a minute after joining, changing worlds, or a reload before checking. If estimates stay elevated and chunk loading feels slow, it may suggest trying a lower **currently offered** preset, usually 6 or 4. You choose whether to run the displayed command or use a preset button. Opening advice never changes your preference.
+
+Sending less terrain data may help chunk loading, but it does **not promise lower ping, higher FPS, or smoother play**. High ping can occur on a usable connection; a low or unavailable estimate does not rule out problems. The plugin cannot measure your available bandwidth, measure your FPS, or diagnose the cause of lag. Bedrock and proxy connections can make the server's estimate less representative. Keep your current choice if it works well for you. Simulation distance is unchanged.
+
+There are no automatic advice messages in chat. If staff has disabled this optional feature, use `/chunks info` for general guidance. Players need only the existing `onembcmi.chunks.use` permission; there is no extra advice permission or client mod requirement.
 
 ## Good To Know
 

@@ -26,11 +26,11 @@ Preserve all current source work and unrelated local changes. Inspect the reposi
 - Do not use NMS, reflection, or internals unless the project already requires them and no supported API exists.
 
 3. Java and build tooling
-- Build and target Java 25 bytecode using `/Library/Java/JavaVirtualMachines/jdk-25.0.4.jdk/Contents/Home`.
-- Verify runtime compatibility on `/Library/Java/JavaVirtualMachines/jdk-26.0.2.jdk/Contents/Home`.
+- Build and target Java 25 bytecode using `/Library/Java/JavaVirtualMachines/jdk-25.0.4.1.jdk/Contents/Home`. Select this JDK through `JAVA_HOME` and `PATH` for Gradle; older Java 25 installations have been removed.
+- The live server runs Java 26. Verify runtime compatibility on `/Library/Java/JavaVirtualMachines/jdk-26.0.2.1.jdk/Contents/Home`.
 - Do not raise the bytecode/toolchain target to Java 26.
 - Inspect the Gradle wrapper or installed Gradle version and update only when needed for Java 25/26 and the project conventions.
-- Replace stale hardcoded JDK 25.0.2 or JDK 26.0.1 paths in maintained scripts/configuration. Prefer an environment override such as `JAVA_BIN` or `JAVA_HOME` so both runtime smoke tests are repeatable.
+- Replace stale hardcoded JDK paths in maintained scripts/configuration. Check which overrides the launcher actually supports; use `JAVA_HOME` and `PATH` for Java discovery rather than assuming it honors `JAVA_BIN`.
 
 4. Release metadata and automation
 - Increment the semantic patch version by one, for example `1.0.0` to `1.0.1`.
@@ -42,10 +42,10 @@ Preserve all current source work and unrelated local changes. Inspect the reposi
 
 5. Verification
 - Run focused tests for changed compatibility/release code.
-- Run the complete clean build and all unit/integration tests with JDK 25.0.4.
+- Run the complete clean build and all unit/integration tests with JDK 25.0.4.1.
 - Install only the newly built jars into the maintained Paper 26.2 test server, removing stale active copies of the same project jars without touching unrelated plugins or data.
-- Start the latest stable Paper 26.2 server with JDK 25.0.4, wait for a clean ready state, inspect startup errors/warnings and plugin enable status, then stop it cleanly.
-- Repeat the same server startup and clean shutdown with JDK 26.0.2.
+- Start the latest stable Paper 26.2 server with JDK 25.0.4.1, wait for a clean ready state, inspect startup errors/warnings and plugin enable status, then stop it cleanly. If the maintained launcher requires Java 26, use an isolated test instance for the Java 25 smoke test.
+- Repeat the same server startup and clean shutdown with JDK 26.0.2.1.
 - Confirm the jars remain Java 25-compatible and that both runtime logs show the intended Java and Paper versions.
 - Run documentation generation, drift validation, and any public-docs/Starlight checks used by this project.
 
@@ -58,7 +58,7 @@ Preserve all current source work and unrelated local changes. Inspect the reposi
 Report:
 - semantic version and build number
 - Java compile target and the exact JDK used to build
-- Java 25.0.4 and Java 26.0.2 smoke-test results
+- Java 25.0.4.1 and Java 26.0.2.1 smoke-test results
 - Paper version, stable build, API coordinate, jar filename, and checksum verification
 - compiler deprecations or compatibility changes found
 - full test/build results
