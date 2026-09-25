@@ -439,6 +439,10 @@ The registry is schema 3; state and player records are schema 2; events and them
 
 Player preferences are stored by theme, while progress is stored by effective event id. Changing Ghost effects therefore persists across Halloween editions, but finds, points, claims, and chains do not cross editions.
 
+The EventHunts host snapshots cached player profiles on its normal 600-tick flush interval and writes only changed profiles on one bounded background worker. Quit saves use that worker too; pending profiles remain cached until saved so immediate reconnects retain their latest progress. Snapshots are detached from live player state, repeated pending saves for one UUID are coalesced, and shared-file updates preserve other plugins' sections. Hint/close-encounter writes share the worker; reset generations and merge rules prevent stale queued work from restoring reset progress or overwriting newer encounter metadata.
+
+Failed writes and queue saturation retain unsaved profiles for a later flush and log the failure. Clean disable drains work and retries retained data, reporting any timeout or unsaved profiles. Existing discovery, claim, purchase and reset commits still require durable acknowledgement. This needs no schema change or migration; the file paths and backup guarantees above remain in effect.
+
 ## Reward Safety
 
 The Halloween reward profile lives at `profiles.halloween_weekend_2026` in `rewards.yml`. Its four independent calendar-day reward commands are:
@@ -473,10 +477,10 @@ Paper TextDisplays are private, transient, non-persistent, and invisible by defa
 The shared jar is:
 
 ```text
-1MB-Lib-EventHunts-v1.0.3-699-j25-26.2.jar
+1MB-Lib-EventHunts-v1.0.4-701-j25-26.3.jar
 ```
 
-It targets Java 25 and Paper 26.2 stable build 129 or newer. CMI, CMILib, and `1MB-CMIAPI-Lib` are required. Deploy the CoconutHunt and shared-library jars from the same build; startup fails closed with one compatibility diagnostic if the shared library lacks the atomic playerdata API. PlaceholderAPI, LuckPerms, Vault, and MobHat are optional. The Halloween profile defines only its five launch rewards by default and does not require a Ghost shop offer.
+The current 1.0.4 suite targets Paper 26.3 ALPHA with Java 25 bytecode and is tested on Java 27. Build 699 remains the separate Paper 26.2 rollback. CMI, CMILib, and `1MB-CMIAPI-Lib` are required. Deploy the complete matching suite; startup fails closed with one compatibility diagnostic if the shared library lacks the atomic playerdata API. PlaceholderAPI, LuckPerms, Vault, and MobHat are optional. The Halloween profile defines only its five launch rewards by default and does not require a Ghost shop offer.
 
 - [ ] Confirm October 30 through November 2, 2026 and the inclusive November 9 claim deadline.
 - [ ] Confirm the production world is named `halloween`, any cuboid is correct, and the CMI warp named `halloween` exists and lands safely there.

@@ -3,7 +3,7 @@
 ## Runtime Baseline
 
 - Java 25+
-- Paper 26.2+
+- Paper 26.3 (explicit ALPHA channel during the experimental release)
 - CMI installed
 - CMILib installed
 - CMI-API used at compile time

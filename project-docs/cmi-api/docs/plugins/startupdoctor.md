@@ -127,7 +127,7 @@ Paper:
 
 Severity meanings:
 
-- `PASS`: the setting matches the Paper 26.2 public-server safety baseline.
+- `PASS`: the setting matches the Paper 26.3 public-server safety baseline.
 - `NOTE`: the value is not an active exploit by itself, but it represents an intentional gameplay or compatibility choice.
 - `WARN`: the value can weaken compatibility, identity handling, packet/item safety, or economy controls and needs review.
 - `FAIL`: an explicit exploit is enabled, a required guard is disabled, or the YAML cannot be evaluated safely.
@@ -194,7 +194,7 @@ folder-doctor.stale-cache-days
 
 `paper-safety.enabled` controls the read-only scanner. `paper-safety.scan-world-overrides` controls whether loaded worlds' explicit `paper-world.yml` values are inspected in addition to the global and world-default files.
 
-`checks.expected-java` is the minimum supported runtime major. The JARs compile for Java 25; Java 25 and newer runtimes, including the tested Java 26 production runtime, satisfy this check.
+`checks.expected-java` is the minimum supported runtime major. The JARs compile for Java 25; Java 25 and newer runtimes, including the tested Java 27 production runtime, satisfy this check.
 
 `folder-doctor.cache-warning-bytes` controls when a feature cache folder is reported as large. `folder-doctor.stale-cache-days` controls when a non-empty feature cache folder is reported as stale because it has not been modified recently.
 

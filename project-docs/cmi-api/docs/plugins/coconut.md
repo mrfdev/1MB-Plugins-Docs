@@ -539,6 +539,10 @@ The plugin-scoped key is `coconuthunt`, with separate edition entries for produc
 /1mblib debug clean playerdata plugin CoconutHunt --dry-run
 ```
 
+Routine player saves use detached snapshots and one bounded background worker. The host's `persistence.flush-interval-ticks` still defaults to `600` (30 seconds at 20 TPS), but unchanged profiles produce no file writes. Changed snapshots for the same UUID are coalesced; YAML serialization, backups, atomic replacement and disk synchronization happen off the server thread. Quit saves use the same path and retain the latest cached profile until persistence succeeds, including through a quick reconnect. Shared-file updates preserve other plugins' sections.
+
+Queue saturation or a failed write leaves the unsaved profile cached for retry at the next flush; warnings identify storage trouble. Clean disable drains accepted work and retries retained snapshots. A shutdown timeout or persistent failure is reported explicitly; do not force a reload while an old writer is still draining. Reward/discovery/purchase commits and administrative resets still wait for durable confirmation before their existing side effects, so this optimization does not remove those transaction safeguards. No schema change, file move, player reset or interval adjustment is required.
+
 ## Command Hooks
 
 Every hook is a list of zero or more commands:
@@ -591,7 +595,7 @@ The shared report includes commands, granular permissions, placeholders, config/
 The current build produces:
 
 ```text
-1MB-Lib-EventHunts-v1.0.3-699-j25-26.2.jar
+1MB-Lib-EventHunts-v1.0.4-701-j25-26.3.jar
 ```
 
 CMI, CMILib, and `1MB-CMIAPI-Lib` are required runtime dependencies. Deploy CoconutHunt and `1MB-CMIAPI-Lib` from the same build. CoconutHunt verifies the shared atomic playerdata API before activating and fails closed with one actionable compatibility diagnostic instead of allowing repeated asynchronous linkage failures. CoconutHunt uses the shared library for feature registration, translated messages, hardened GUI sessions, safe player resolution, documentation metadata, PlaceholderAPI registration, and shared playerdata. It uses the installed CMI runtime for configured kit/warp/broadcast commands; private Paper TextDisplays provide the default proximity holograms. CMILib remains part of the common runtime baseline.

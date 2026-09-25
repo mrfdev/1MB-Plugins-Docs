@@ -2,14 +2,14 @@
 
 ## Shared Hunt feature
 
-Door Hunt is source inside the compatibility-named `:plugins:player-fun:coconuthunt` project, not another Gradle plugin and not another JavaPlugin. Run `gradle :plugins:player-fun:coconuthunt:test` for the Coconut/Ghost/Door focused suite, then use `scripts/build-all.sh` for the suite-wide local test build. The centralized Java 25 and `paperApiVersion=26.2.build.129-stable` settings apply to all three modules; do not import the standalone build-number mutation or its Paper coordinate. The output remains one `1MB-Lib-EventHunts-v<version>-<build>-j25-26.2.jar` plus the normal library dependency.
+Door Hunt is source inside the compatibility-named `:plugins:player-fun:coconuthunt` project, not another Gradle plugin and not another JavaPlugin. Run `gradle :plugins:player-fun:coconuthunt:test` for the Coconut/Ghost/Door focused suite, then use `scripts/build-all.sh` for the suite-wide local test build. The centralized Java 25 and `paperApiVersion=26.3.build.41-alpha` settings apply to all three modules; do not import the standalone build-number mutation or its Paper coordinate. The output remains one `1MB-Lib-EventHunts-v<version>-<build>-j25-26.3.jar` plus the normal library dependency.
 
 The Gradle scaffold is present. The current baseline is:
 
 - Java 25 bytecode, built and tested with JDK 25.0.4.1
-- Java 26 on the live server; local runtime compatibility smoke testing uses JDK 26.0.2.1
-- Paper 26.2 stable build 129 or newer
-- Paper API `26.2.build.129-stable`
+- Java 27 on the live server; local runtime compatibility smoke testing uses JDK 27
+- Paper 26.3 alpha build 41 or newer
+- Paper API `26.3.build.41-alpha`
 - separate jars for every feature
 - a separate shared library jar
 
@@ -19,7 +19,7 @@ The canonical command for a new deployable local test build is:
 scripts/build-all.sh
 ```
 
-This command reserves the next shared build number, updates to the latest stable Paper build for the exact configured `paperTarget`, aligns the Paper API coordinate, refreshes generated documentation, runs the complete build and test gate, and synchronizes every active JAR (currently 65) into the maintained test server. It persists the build number and Paper API coordinate only after deployment verifies successfully. If an attempt fails, correct the problem and rerun the same command; the pending transaction reuses the same proposed build number.
+This command reserves the next shared build number, updates to the latest Paper build for the exact configured `paperTarget` and `paperChannel`, aligns the Paper API coordinate, refreshes generated documentation, runs the complete build and test gate, and synchronizes every active JAR (currently 65) into the maintained test server. It persists the build number and Paper API coordinate only after deployment verifies successfully. If an attempt fails, correct the problem and rerun the same command; the pending transaction reuses the same proposed build number.
 
 Focused Gradle tasks are still appropriate during development. They do not create a new deployable build:
 
@@ -28,7 +28,7 @@ gradle :plugins:player-fun:<feature>:test
 gradle :plugins:player-fun:<feature>:jar
 ```
 
-Direct `gradle build` is also a verification command, not a release-to-test handoff. `refreshBuildDocs` updates every documented 1MB jar name, semantic-version/build example, checklist metadata line, and Paper stable-build requirement from `gradle.properties`. `build` runs `verifyBuildMetadata`, which fails if docs or generated debug metadata are stale.
+Direct `gradle build` is also a verification command, not a release-to-test handoff. `refreshBuildDocs` updates every documented 1MB jar name, semantic-version/build example, checklist metadata line, and Paper build requirement from `gradle.properties`. `build` runs `verifyBuildMetadata`, which fails if docs or generated debug metadata are stale.
 
 Build and test explicitly with JDK 25.0.4.1 even when the shell's default Java is newer. Older Java 25 installations have been removed. Run Gradle and the canonical build command with this environment:
 
@@ -40,19 +40,21 @@ Build and test explicitly with JDK 25.0.4.1 even when the shell's default Java i
 )
 ```
 
-The Gradle Java toolchain and Java 25 compiler target keep the jars runnable on Java 25. A separate Paper startup using JDK 26.0.2.1 verifies compatibility with the live server's Java 26 runtime. Keep `javaTarget=25`.
+The Gradle Java toolchain and Java 25 compiler target keep the jars runnable on Java 25. A separate Paper startup using JDK 27 verifies compatibility with the live server's Java 27 runtime. Keep `javaTarget=25`.
 
-## Paper Stable Alignment
+## Paper Channel Alignment
 
-The canonical build command performs this check and update automatically without crossing the configured Paper version. For manual repair, request the latest stable build for the exact target:
+`gradle.properties` explicitly selects `paperTarget=26.3` and `paperChannel=ALPHA`. The default remains STABLE when the channel property is absent; experimental builds are never an automatic fallback. A later beta or stable transition requires changing the channel, matching API coordinate, and both PaperScript channel settings together.
+
+The canonical build command performs this check and update automatically without crossing the configured Paper version. For manual repair, request the latest alpha build for the explicitly approved 26.3 target:
 
 ```bash
-cd servers/Paper-26.2
-./paperscript.sh --yes download --version 26.2 --channel STABLE
+cd servers/Paper-26.3
+./paperscript.sh --yes download --version 26.3 --channel ALPHA
 ./paperscript.sh status
 ```
 
-The expected runtime is the staged `Paper-{version}-{build}.jar`, matching the maintained launcher's highest numbered JAR for that version. `verifyLocalPaperAlignment` and `scripts/build-all.sh` share a read-only validator for PaperScript identity, exact target/build, checksum, stable channel, and launcher selection. Complete `staged_*` state takes precedence over old `current_*` records; partial or invalid staged state is rejected. Legacy `Paper-{version}.jar` state remains supported only when no staged fields exist, and any numbered launcher selection must agree. The selected Paper build must match `paperApiVersion`.
+The expected runtime is the staged `Paper-{version}-{build}.jar`, matching the maintained launcher's highest numbered JAR for that version. `verifyLocalPaperAlignment` and `scripts/build-all.sh` share a read-only validator for PaperScript identity, exact target/build, checksum, configured channel, and launcher selection. Complete `staged_*` state takes precedence over old `current_*` records; partial or invalid staged state is rejected. Legacy `Paper-{version}.jar` state remains supported only when no staged fields exist, and any numbered launcher selection must agree. The selected Paper build must match `paperApiVersion`.
 
 ```bash
 gradle verifyLocalPaperAlignment printProjectMetadata
@@ -60,7 +62,7 @@ gradle verifyLocalPaperAlignment printProjectMetadata
 
 `/1mblib version`, `/1mblib status`, inherited feature debug pages, PluginVersions debug output, and support bundles obtain the semantic version, build, Java target, Paper target, and exact compiled Paper API from generated `BuildConstants`.
 
-Stop the Paper 26.2 test server before running `syncBuiltJarsToProjectServer`. The task checks the configured world's `session.lock` and refuses to replace loaded plugin jars while Paper is running; overwriting a live jar can leave Paper's lazy plugin classloader unable to load classes that were not used before the replacement. Run `gradle planProjectJarSync` first for the same complete-set and manifest preflight without server mutation.
+Stop the Paper 26.3 test server before running `syncBuiltJarsToProjectServer`. The task checks the configured world's `session.lock` and refuses to replace loaded plugin jars while Paper is running; overwriting a live jar can leave Paper's lazy plugin classloader unable to load classes that were not used before the replacement. Run `gradle planProjectJarSync` first for the same complete-set and manifest preflight without server mutation.
 
 To check whether the public Starlight docs mirror is current, run:
 
@@ -73,17 +75,17 @@ This is a read-only drift check against the public `1MB-Plugins-Docs` checkout. 
 Expected jar naming:
 
 ```text
-1MB-Lib-Core-v1.0.3-699-j25-26.2.jar
-1MB-Lib-AntiFire-v1.0.3-699-j25-26.2.jar
-1MB-Lib-AFKShrine-v1.0.3-699-j25-26.2.jar
-1MB-Lib-StaffCenter-v1.0.3-699-j25-26.2.jar
-1MB-Lib-Profile-v1.0.3-699-j25-26.2.jar
+1MB-Lib-Core-v1.0.4-701-j25-26.3.jar
+1MB-Lib-AntiFire-v1.0.4-701-j25-26.3.jar
+1MB-Lib-AFKShrine-v1.0.4-701-j25-26.3.jar
+1MB-Lib-StaffCenter-v1.0.4-701-j25-26.3.jar
+1MB-Lib-Profile-v1.0.4-701-j25-26.3.jar
 ```
 
 Every new deployable build replaces the complete managed suite in:
 
 ```text
-servers/Paper-26.2/plugins/
+servers/Paper-26.3/plugins/
 ```
 
 `scripts/build-all.sh` is the normal entry point because it increments the suite build and updates Paper first. The Gradle task and retained copy helper are repair/redeployment paths for the already-persisted build:
@@ -95,15 +97,15 @@ scripts/copy-built-jars-to-local-server.sh
 
 All paths recognize legacy `1MB-CMIAPI-*` and current `1MB-Lib-*` artifacts as one managed family. Synchronization depends on the complete project build gate and happens only after every active project build succeeds. Preflight requires the exact current count and suffix, Core, the expected source-project Paper identity set, and unique primary/provided identities. Candidates and prior active JARs are staged under `plugins-disabled/1mb-library-sync/transactions`; successful activation verifies names, manifests, identities, and bytes before removing the transaction. A normal activation or verification failure restores the exact prior active set. If the process is interrupted, later plan/sync attempts fail closed while the transaction remains: inspect its `rollback/`, `candidates/`, and active server set before recovery, and never delete that transaction blindly. GameTypes/BentoBox deployment remains separate from this repository-local sync flow.
 
-Retired server instances are stored under the Git-ignored `archive/` directory. Gradle does not build against, sync to, stage from, or test against archived instances; `servers/Paper-26.2/` is the sole active repository-local target.
+The previous `servers/Paper-26.2/` instance remains in place as the 1.0.3 build-699 rollback snapshot. Other retired server instances are stored under the Git-ignored `archive/` directory. Gradle does not build against, sync to, stage from, or test against archived instances; `servers/Paper-26.3/` is the sole active repository-local target.
 
-The project-local launch script requires Java 26 and discovers `java` through `PATH`. Run it with the installed JDK 26.0.2.1 for runtime compatibility smoke testing:
+The project-local launch script requires Java 27 and discovers `java` through `PATH`. Run it with the installed JDK 27 for runtime compatibility smoke testing:
 
 ```bash
 (
-  export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk-26.0.2.1.jdk/Contents/Home
+  export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk-27.jdk/Contents/Home
   export PATH="$JAVA_HOME/bin:$PATH"
-  ./servers/Paper-26.2/1MB-minecraft.sh
+  ./servers/Paper-26.3/1MB-minecraft.sh
 )
 ```
 
@@ -123,10 +125,10 @@ them. For example, the TeamMsg modules compile against DiscordSRV's API
 from:
 
 ```text
-servers/Paper-26.2/compile-support/DiscordSRV-Build-1.30.5.jar
+servers/Paper-26.3/compile-support/DiscordSRV-Build-1.30.5.jar
 ```
 
-Keep DiscordSRV disabled or absent from `servers/Paper-26.2/plugins/` during
+Keep DiscordSRV disabled or absent from `servers/Paper-26.3/plugins/` during
 normal local CMI-API testing so server start/stop events do not post to live
 Discord channels. Inspect actual JAR manifests, including Git-ignored files, before
 starting Paper. DiscordChat isolates its DiscordSRV-specific types in its optional
