@@ -477,7 +477,7 @@ Paper TextDisplays are private, transient, non-persistent, and invisible by defa
 The shared jar is:
 
 ```text
-1MB-Lib-EventHunts-v1.0.4-701-j25-26.3.jar
+1MB-Lib-EventHunts-v1.0.4-702-j25-26.3.jar
 ```
 
 The current 1.0.4 suite targets Paper 26.3 ALPHA with Java 25 bytecode and is tested on Java 27. Build 699 remains the separate Paper 26.2 rollback. CMI, CMILib, and `1MB-CMIAPI-Lib` are required. Deploy the complete matching suite; startup fails closed with one compatibility diagnostic if the shared library lacks the atomic playerdata API. PlaceholderAPI, LuckPerms, Vault, and MobHat are optional. The Halloween profile defines only its five launch rewards by default and does not require a Ghost shop offer.

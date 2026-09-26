@@ -135,6 +135,7 @@ Chat has no client acknowledgement. If the server crashes between sending and sa
 | `/hv admin spawning pause` | Stop new natural infections and staff test spawns; leave existing encounters and the collection open. |
 | `/hv admin spawning resume` | Resume spawning under the configured schedule, rules, caps, and cooldowns. |
 | `/hv admin spawning rate <percent>` | Set the natural conversion chance from 0 to 100 percent, including decimals, without ending existing encounters. |
+| `/hv admin drops <status\|strict\|credited>` | Inspect or change the saved drop eligibility rule live. `strict` requires a player finishing blow and is the default; `credited` restores the previous recent-hit rule. |
 | `/hv admin signatures <status\|on\|off>` | Inspect or toggle telegraphed regional boss moves live. |
 | `/hv admin signatures move <world-key> <none\|rush\|guard\|pulse>` | Set the move for one logical region; existing bosses use updated settings. |
 | `/hv admin signatures cooldown <seconds>` | Set the delay between boss moves to a whole 10–120 seconds. |
@@ -169,7 +170,7 @@ Chat has no client acknowledgement. If the server crashes between sending and sa
 | `/hv debug pdc hand` | Inspect the exact held copy and state whether it has HV modification protection. |
 | `/hv debug pdc stamp` | Explicitly authenticate matching legacy kit sherd samples in the staff player's inventory. |
 
-Read the current command and permission catalog before delegating staff access. The staff test-spawn and PDC inventory commands require an in-game player. Scheduling and `auto`, spawning, signature moves, regional outbreaks, particle and boss outline controls, cleanup, claim-window controls, and player resets also work from console without the leading `/`. Administrative player identities use authoritative server UUIDs; no Mojang lookup or generated name UUID is a fallback.
+Read the current command and permission catalog before delegating staff access. The staff test-spawn and PDC inventory commands require an in-game player. Scheduling and `auto`, spawning, drop eligibility, signature moves, regional outbreaks, particle and boss outline controls, cleanup, claim-window controls, and player resets also work from console without the leading `/`. Administrative player identities use authoritative server UUIDs; no Mojang lookup or generated name UUID is a fallback.
 
 ## Preparing the trophy and story book
 
@@ -187,7 +188,7 @@ Run `/hv admin validate` after completing the whole kit. These two safe template
 
 Use `/hv admin report` for the latest 24 hourly buckets, `/hv admin report 1 wild` for the current hour in Wilderness, or `/hv admin report 168 all` for the retained week. Console and players with `onembcmi.HalloweenVirus.admin.inspect` can use it, including while the event is dormant. The existing `onembcmi.HalloweenVirus.admin` umbrella also grants access. Help, debug command descriptions and tab completion include the route.
 
-Each row shows **spawns / eligible kills / sherds placed**, separately for natural infections and `/hv admin spawn` encounters. Spawns count successful conversions, including infected animal packs. Kills count confirmed, uncancelled deaths with an eligible recent player contribution and the normal protection checks. Cleanup, expiry, environmental deaths and cancelled deaths do not inflate eligible kills. Sherds count actual valid item entities placed after issuance, not random-roll successes, pickups or player submissions. A kill near an hour boundary can have its eventual drop in the following bucket. Do not interpret a small sample as a guaranteed 75% ratio or divide kills by spawns as a success rate for the same cohort.
+Each row shows **spawns / eligible kills / sherds placed**, separately for natural infections and `/hv admin spawn` encounters. Spawns count successful conversions, including infected animal packs. Kills count confirmed, uncancelled deaths satisfying the configured drop eligibility rule and normal protection checks. In default strict mode this includes a player finishing blow, so environmental finishes do not count. The optional credited mode also counts environmental finishes with valid recent player kill credit. Cleanup, expiry and cancelled deaths never inflate eligible kills. Sherds count actual valid item entities placed after issuance, not random-roll successes, pickups or player submissions. A kill near an hour boundary can have its eventual drop in the following bucket. Do not interpret a small sample as a guaranteed 75% ratio or divide kills by spawns as a success rate for the same cohort.
 
 **Completions** count successful normal deposits that reach 23/23, attributed to the world where the final submission began. They include another completion after a staff reset and exclude staff reconciliation. They are not unique participants, regional collection completion or proof of where items were earned: trading and submissions in spawn are valid. The all-world total includes unmapped submission worlds, summarized separately. Configured world keys resolve to their current actual world IDs; changing a mapping leaves old-world totals in the other/unmapped summary.
 
@@ -203,7 +204,7 @@ Statistics begin on installation of this feature, without inventing earlier hist
 | --- | --- |
 | `onembcmi.HalloweenVirus.use` | Player GUI, information, journals/notes/Seal, outbreak status, collection, claim, and preferences. |
 | `onembcmi.HalloweenVirus.admin` | Parent for Halloween Virus administration. |
-| `onembcmi.HalloweenVirus.admin.event` | Start, stop, automatic arming, status, validation, reload, configuration, scheduling, spawning, regional outbreaks, boss signatures, particles, boss outlines and friendly-animal controls, appearance diagnostics, cleanup, and reward claim dates/pause. |
+| `onembcmi.HalloweenVirus.admin.event` | Start, stop, automatic arming, status, validation, reload, configuration, scheduling, spawning, drop eligibility, regional outbreaks, boss signatures, particles, boss outlines and friendly-animal controls, appearance diagnostics, cleanup, and reward claim dates/pause. |
 | `onembcmi.HalloweenVirus.admin.announce` | Announce the outbreak to permitted players. |
 | `onembcmi.HalloweenVirus.admin.spawn` | Spawn bounded staff test encounters. |
 | `onembcmi.HalloweenVirus.admin.inspect` | Inspect player progress, unresolved operations and the staff balance report. |
@@ -308,7 +309,23 @@ Intensity accepts finite values from `0.25` to `4`. It multiplies the distance-b
 
 Upgrades fill missing aura settings automatically, retain an existing `encounters.particles: false`, and preserve already configured aura values. No new permission or placeholder is needed; `/hv help`, `/hv debug commands`, `/hv debug config` and tab completion expose the controls.
 
-The initial conversion chance is 1.5% of eligible natural spawns, with infected/boss weights 9:1. Spawners, eggs, breeding, other plugin spawns, named mobs, pets, and existing herds are excluded. Passive animals are eligible only through the separately enabled friendly-animal settings. The eligible Survival player must be both the tracked last direct attacker and Bukkit's credited killer, with a hit in the previous 30 seconds and no more than 64 blocks separation. This excludes automated or environmental reward harvesting.
+The initial conversion chance is 1.5% of eligible natural spawns, with infected/boss weights 9:1. Spawners, eggs, breeding, other plugin spawns, named mobs, pets, and existing herds are excluded. Passive animals are eligible only through the separately enabled friendly-animal settings. The eligible Survival player must be both the tracked last attacker (directly or through their projectile) and Bukkit's credited killer, with a positive, uncancelled hit in the previous 30 seconds and no more than 64 blocks separation. The default strict rule additionally requires that player's attack or projectile to deliver the finishing blow.
+
+### Player finishing blows and automated farms
+
+```text
+/hv admin drops status
+/hv admin drops strict
+/hv admin drops credited
+```
+
+These commands work live in game and console with `onembcmi.HalloweenVirus.admin.event` (or the admin umbrella). Omit `/` in console. They save `encounters.require-player-finishing-blow` asynchronously and apply to existing and new encounters without clearing mobs, pausing spawning, closing menus, resetting collections or interrupting reward claims. A failed save retains the previous rule; status shows the published rule while a save is pending. Help, debug command/config listings, tab completion and the main admin status expose this control.
+
+`strict` sets the value to `true`, the default for both fresh and upgraded configurations. The lethal `EntityDeathEvent` damage source must identify the credited player as attacker and either that same player as the direct attacker (ordinary/sweeping melee, mace smash or spear) or a projectile shot by that player. It rejects lava, falling, cramming, drowning and other environmental finishes even when Paper still credits a recent player hit. Burning after Fire Aspect/Flame, passive Thorns damage, pets, golems, TNT and lingering potion clouds are not qualifying finishing attacks. A projectile impact, including a thrown trident or splash potion's immediate damage, may qualify; a later burning or poison tick does not.
+
+`credited` explicitly sets the value to `false` and restores the previous recent-hit/kill-credit behavior, including environmental finishing damage with valid recent player credit. Both modes retain existing Survival/access, contributor, range, world, protection, cancellation and once-only issuance checks, followed by the unchanged configured drop chance. An existing explicit `false` survives later upgrades. Malformed non-boolean configuration values are rejected. A death awaiting its next-tick confirmation must satisfy strict mode if it was enabled at death or at confirmation; switching modes cannot retroactively relax that pending death.
+
+This prevents fully automatic finishing from qualifying under strict mode; it does not detect farms or autoclickers. A player who manually finishes a weakened mob still qualifies. The extra check reads the existing death event's entity references and compares UUIDs/types once per owned death. It adds no polling task, damage history, entity scan or disk operation. Player names and sherd trading remain unrelated to combat eligibility.
 
 Default limits are 48 owned mobs globally, 12 per world, and three near a player. New encounters use a 90-second player cooldown and pause when measured MSPT exceeds 45. Mobs expire after 600 seconds and disengage after 60 seconds. Event tasks inspect the bounded owned set instead of globally scanning every entity every tick.
 

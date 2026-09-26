@@ -383,7 +383,7 @@ No NMS or reflective server internals are used.
 ## Build And Target
 
 ```text
-jar: 1MB-Lib-DropParty-v1.0.4-701-j25-26.3.jar
+jar: 1MB-Lib-DropParty-v1.0.4-702-j25-26.3.jar
 Java target: 25
 Paper target: 26.2 stable build 84 or newer
 ```

@@ -22,7 +22,7 @@ The Paper 26.2-focused 1.0.3 build-699 snapshot is tagged `v1.0.3-paper-26.2`. I
 
 The owner confirmed on 14 September 2026 that the current suite build **1.0.3-660** is deployed and tested on the live server. AFKShrine's tool upgrades and Note exchanges passed gameplay testing for staff and player accounts. The canonical build produced all 65 matching JARs and passed the full suite (1,681 test cases, zero failures/errors, one skipped case).
 
-New builds use JDK 25.0.4.1 and retain Java 25 bytecode. The live and maintained test servers run Java 27. Beginning with 1.0.4, the target is Paper 26.3 alpha build 41 or newer within the explicitly approved ALPHA channel, and Gradle compiles against `paper-api:26.3.build.41-alpha`. Select the build JDK using the environment shown in the [compile instructions](compiling.md).
+New builds use JDK 25.0.4.1 and retain Java 25 bytecode. The live and maintained test servers run Java 27. Beginning with 1.0.4, the target is Paper 26.3 alpha build 46 or newer within the explicitly approved ALPHA channel, and Gradle compiles against `paper-api:26.3.build.46-alpha`. Select the build JDK using the environment shown in the [compile instructions](compiling.md).
 
 The current source rollback point is recorded in [Live-Tested Working Baseline: 2026-08-15](compatibility-baselines/live-tested-working-2026-08-15.md). The exact pre-CMI-9.8.9.6 rollback combination is recorded in [Live-Tested Baseline: 2026-08-02](compatibility-baselines/live-tested-2026-08-02.md). The isolated replacement boot and remaining player test matrix are recorded in [CMI 9.8.9.6 Chat Compatibility Pass](compatibility-tests/cmi-9.8.9.6-chat.md).
 
@@ -45,66 +45,66 @@ All jars should follow this shape:
 Examples:
 
 ```text
-1MB-Lib-Core-v1.0.4-701-j25-26.3.jar
-1MB-Lib-AntiFire-v1.0.4-701-j25-26.3.jar
-1MB-Lib-AFKShrine-v1.0.4-701-j25-26.3.jar
-1MB-Lib-RecordingMode-v1.0.4-701-j25-26.3.jar
-1MB-Lib-SellStreaks-v1.0.4-701-j25-26.3.jar
-1MB-Lib-ScheduledTips-v1.0.4-701-j25-26.3.jar
-1MB-Lib-Visit-v1.0.4-701-j25-26.3.jar
-1MB-Lib-PassportDiscovery-v1.0.4-701-j25-26.3.jar
-1MB-Lib-SocialGatherings-v1.0.4-701-j25-26.3.jar
-1MB-Lib-JourneyMap-v1.0.4-701-j25-26.3.jar
-1MB-Lib-KitStreaks-v1.0.4-701-j25-26.3.jar
-1MB-Lib-Nick-v1.0.4-701-j25-26.3.jar
-1MB-Lib-EmoteMenu-v1.0.4-701-j25-26.3.jar
-1MB-Lib-PvPToggle-v1.0.4-701-j25-26.3.jar
-1MB-Lib-Boosters-v1.0.4-701-j25-26.3.jar
-1MB-Lib-NameMC-v1.0.4-701-j25-26.3.jar
-1MB-Lib-Exchange-v1.0.4-701-j25-26.3.jar
-1MB-Lib-VoteTokens-v1.0.4-701-j25-26.3.jar
-1MB-Lib-DiscordChat-v1.0.4-701-j25-26.3.jar
-1MB-Lib-GameTypes-v1.0.4-701-j25-26.3.jar
-1MB-Lib-BirthdayLanterns-v1.0.4-701-j25-26.3.jar
-1MB-Lib-LavaBoots-v1.0.4-701-j25-26.3.jar
-1MB-Lib-Spawners-v1.0.4-701-j25-26.3.jar
-1MB-Lib-Collect-v1.0.4-701-j25-26.3.jar
-1MB-Lib-EventHunts-v1.0.4-701-j25-26.3.jar
-1MB-Lib-DropParty-v1.0.4-701-j25-26.3.jar
-1MB-Lib-Appreciation-v1.0.4-701-j25-26.3.jar
-1MB-Lib-Forage-v1.0.4-701-j25-26.3.jar
-1MB-Lib-MobHat-v1.0.4-701-j25-26.3.jar
-1MB-Lib-PlayerTodo-v1.0.4-701-j25-26.3.jar
-1MB-Lib-Refer-v1.0.4-701-j25-26.3.jar
-1MB-Lib-TPAuto-v1.0.4-701-j25-26.3.jar
-1MB-Lib-Menu-v1.0.4-701-j25-26.3.jar
-1MB-Lib-StaffCenter-v1.0.4-701-j25-26.3.jar
-1MB-Lib-Profile-v1.0.4-701-j25-26.3.jar
-1MB-Lib-ContentGuard-v1.0.4-701-j25-26.3.jar
-1MB-Lib-WarningLens-v1.0.4-701-j25-26.3.jar
-1MB-Lib-TeamMsg-v1.0.4-701-j25-26.3.jar
-1MB-Lib-CmdCostDashboard-v1.0.4-701-j25-26.3.jar
-1MB-Lib-CMIConfig-v1.0.4-701-j25-26.3.jar
-1MB-Lib-ConsoleNoiseRouter-v1.0.4-701-j25-26.3.jar
-1MB-Lib-EconomyGuardian-v1.0.4-701-j25-26.3.jar
-1MB-Lib-StartupDoctor-v1.0.4-701-j25-26.3.jar
-1MB-Lib-UpdateSmoke-v1.0.4-701-j25-26.3.jar
-1MB-Lib-PluginVersions-v1.0.4-701-j25-26.3.jar
-1MB-Lib-Placeholders-v1.0.4-701-j25-26.3.jar
-1MB-Lib-Potions-v1.0.4-701-j25-26.3.jar
-1MB-Lib-Upgrade-v1.0.4-701-j25-26.3.jar
-1MB-Lib-EndCrystals-v1.0.4-701-j25-26.3.jar
-1MB-Lib-WorldSnapshot-v1.0.4-701-j25-26.3.jar
-1MB-Lib-SparkReviewer-v1.0.4-701-j25-26.3.jar
-1MB-Lib-Hoppers-v1.0.4-701-j25-26.3.jar
-1MB-Lib-EventRecorder-v1.0.4-701-j25-26.3.jar
-1MB-Lib-BedrockChatBridge-v1.0.4-701-j25-26.3.jar
-1MB-Lib-CMIProbe-v1.0.4-701-j25-26.3.jar
-1MB-Lib-CMIDatabase-v1.0.4-701-j25-26.3.jar
-1MB-Lib-PermissionProbe-v1.0.4-701-j25-26.3.jar
-1MB-Lib-WarpAudit-v1.0.4-701-j25-26.3.jar
-1MB-Lib-WorthDrift-v1.0.4-701-j25-26.3.jar
-1MB-Lib-WorthHelper-v1.0.4-701-j25-26.3.jar
+1MB-Lib-Core-v1.0.4-702-j25-26.3.jar
+1MB-Lib-AntiFire-v1.0.4-702-j25-26.3.jar
+1MB-Lib-AFKShrine-v1.0.4-702-j25-26.3.jar
+1MB-Lib-RecordingMode-v1.0.4-702-j25-26.3.jar
+1MB-Lib-SellStreaks-v1.0.4-702-j25-26.3.jar
+1MB-Lib-ScheduledTips-v1.0.4-702-j25-26.3.jar
+1MB-Lib-Visit-v1.0.4-702-j25-26.3.jar
+1MB-Lib-PassportDiscovery-v1.0.4-702-j25-26.3.jar
+1MB-Lib-SocialGatherings-v1.0.4-702-j25-26.3.jar
+1MB-Lib-JourneyMap-v1.0.4-702-j25-26.3.jar
+1MB-Lib-KitStreaks-v1.0.4-702-j25-26.3.jar
+1MB-Lib-Nick-v1.0.4-702-j25-26.3.jar
+1MB-Lib-EmoteMenu-v1.0.4-702-j25-26.3.jar
+1MB-Lib-PvPToggle-v1.0.4-702-j25-26.3.jar
+1MB-Lib-Boosters-v1.0.4-702-j25-26.3.jar
+1MB-Lib-NameMC-v1.0.4-702-j25-26.3.jar
+1MB-Lib-Exchange-v1.0.4-702-j25-26.3.jar
+1MB-Lib-VoteTokens-v1.0.4-702-j25-26.3.jar
+1MB-Lib-DiscordChat-v1.0.4-702-j25-26.3.jar
+1MB-Lib-GameTypes-v1.0.4-702-j25-26.3.jar
+1MB-Lib-BirthdayLanterns-v1.0.4-702-j25-26.3.jar
+1MB-Lib-LavaBoots-v1.0.4-702-j25-26.3.jar
+1MB-Lib-Spawners-v1.0.4-702-j25-26.3.jar
+1MB-Lib-Collect-v1.0.4-702-j25-26.3.jar
+1MB-Lib-EventHunts-v1.0.4-702-j25-26.3.jar
+1MB-Lib-DropParty-v1.0.4-702-j25-26.3.jar
+1MB-Lib-Appreciation-v1.0.4-702-j25-26.3.jar
+1MB-Lib-Forage-v1.0.4-702-j25-26.3.jar
+1MB-Lib-MobHat-v1.0.4-702-j25-26.3.jar
+1MB-Lib-PlayerTodo-v1.0.4-702-j25-26.3.jar
+1MB-Lib-Refer-v1.0.4-702-j25-26.3.jar
+1MB-Lib-TPAuto-v1.0.4-702-j25-26.3.jar
+1MB-Lib-Menu-v1.0.4-702-j25-26.3.jar
+1MB-Lib-StaffCenter-v1.0.4-702-j25-26.3.jar
+1MB-Lib-Profile-v1.0.4-702-j25-26.3.jar
+1MB-Lib-ContentGuard-v1.0.4-702-j25-26.3.jar
+1MB-Lib-WarningLens-v1.0.4-702-j25-26.3.jar
+1MB-Lib-TeamMsg-v1.0.4-702-j25-26.3.jar
+1MB-Lib-CmdCostDashboard-v1.0.4-702-j25-26.3.jar
+1MB-Lib-CMIConfig-v1.0.4-702-j25-26.3.jar
+1MB-Lib-ConsoleNoiseRouter-v1.0.4-702-j25-26.3.jar
+1MB-Lib-EconomyGuardian-v1.0.4-702-j25-26.3.jar
+1MB-Lib-StartupDoctor-v1.0.4-702-j25-26.3.jar
+1MB-Lib-UpdateSmoke-v1.0.4-702-j25-26.3.jar
+1MB-Lib-PluginVersions-v1.0.4-702-j25-26.3.jar
+1MB-Lib-Placeholders-v1.0.4-702-j25-26.3.jar
+1MB-Lib-Potions-v1.0.4-702-j25-26.3.jar
+1MB-Lib-Upgrade-v1.0.4-702-j25-26.3.jar
+1MB-Lib-EndCrystals-v1.0.4-702-j25-26.3.jar
+1MB-Lib-WorldSnapshot-v1.0.4-702-j25-26.3.jar
+1MB-Lib-SparkReviewer-v1.0.4-702-j25-26.3.jar
+1MB-Lib-Hoppers-v1.0.4-702-j25-26.3.jar
+1MB-Lib-EventRecorder-v1.0.4-702-j25-26.3.jar
+1MB-Lib-BedrockChatBridge-v1.0.4-702-j25-26.3.jar
+1MB-Lib-CMIProbe-v1.0.4-702-j25-26.3.jar
+1MB-Lib-CMIDatabase-v1.0.4-702-j25-26.3.jar
+1MB-Lib-PermissionProbe-v1.0.4-702-j25-26.3.jar
+1MB-Lib-WarpAudit-v1.0.4-702-j25-26.3.jar
+1MB-Lib-WorthDrift-v1.0.4-702-j25-26.3.jar
+1MB-Lib-WorthHelper-v1.0.4-702-j25-26.3.jar
 ```
 
 ## Local Build

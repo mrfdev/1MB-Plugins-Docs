@@ -2,14 +2,14 @@
 
 ## Shared Hunt feature
 
-Door Hunt is source inside the compatibility-named `:plugins:player-fun:coconuthunt` project, not another Gradle plugin and not another JavaPlugin. Run `gradle :plugins:player-fun:coconuthunt:test` for the Coconut/Ghost/Door focused suite, then use `scripts/build-all.sh` for the suite-wide local test build. The centralized Java 25 and `paperApiVersion=26.3.build.41-alpha` settings apply to all three modules; do not import the standalone build-number mutation or its Paper coordinate. The output remains one `1MB-Lib-EventHunts-v<version>-<build>-j25-26.3.jar` plus the normal library dependency.
+Door Hunt is source inside the compatibility-named `:plugins:player-fun:coconuthunt` project, not another Gradle plugin and not another JavaPlugin. Run `gradle :plugins:player-fun:coconuthunt:test` for the Coconut/Ghost/Door focused suite, then use `scripts/build-all.sh` for the suite-wide local test build. The centralized Java 25 and `paperApiVersion=26.3.build.46-alpha` settings apply to all three modules; do not import the standalone build-number mutation or its Paper coordinate. The output remains one `1MB-Lib-EventHunts-v<version>-<build>-j25-26.3.jar` plus the normal library dependency.
 
 The Gradle scaffold is present. The current baseline is:
 
 - Java 25 bytecode, built and tested with JDK 25.0.4.1
 - Java 27 on the live server; local runtime compatibility smoke testing uses JDK 27
-- Paper 26.3 alpha build 41 or newer
-- Paper API `26.3.build.41-alpha`
+- Paper 26.3 alpha build 46 or newer
+- Paper API `26.3.build.46-alpha`
 - separate jars for every feature
 - a separate shared library jar
 
@@ -75,11 +75,11 @@ This is a read-only drift check against the public `1MB-Plugins-Docs` checkout. 
 Expected jar naming:
 
 ```text
-1MB-Lib-Core-v1.0.4-701-j25-26.3.jar
-1MB-Lib-AntiFire-v1.0.4-701-j25-26.3.jar
-1MB-Lib-AFKShrine-v1.0.4-701-j25-26.3.jar
-1MB-Lib-StaffCenter-v1.0.4-701-j25-26.3.jar
-1MB-Lib-Profile-v1.0.4-701-j25-26.3.jar
+1MB-Lib-Core-v1.0.4-702-j25-26.3.jar
+1MB-Lib-AntiFire-v1.0.4-702-j25-26.3.jar
+1MB-Lib-AFKShrine-v1.0.4-702-j25-26.3.jar
+1MB-Lib-StaffCenter-v1.0.4-702-j25-26.3.jar
+1MB-Lib-Profile-v1.0.4-702-j25-26.3.jar
 ```
 
 Every new deployable build replaces the complete managed suite in:

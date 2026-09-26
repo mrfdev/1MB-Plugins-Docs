@@ -29,11 +29,11 @@ id: afkshrine
 name: AFKShrine
 category: player-fun
 version: 1.0.4
-build: 701
+build: 702
 java-target: 25
 paper-target: 26.3
 jar-prefix: 1MB-CMIAPI
-jar-name: 1MB-Lib-AFKShrine-v1.0.4-701-j25-26.3.jar
+jar-name: 1MB-Lib-AFKShrine-v1.0.4-702-j25-26.3.jar
 repo: https://github.com/mrfdev/1MB-Library
 public-docs: https://docs.1moreblock.com
 dependencies: CMI, CMILib, 1MB-CMIAPI-LIB

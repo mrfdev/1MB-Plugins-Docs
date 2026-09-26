@@ -362,7 +362,7 @@ Build target: Paper 26.2 stable, Java 25, project version `1.0.1`.
 Current test jar:
 
 ```text
-1MB-Lib-Appreciation-v1.0.4-701-j25-26.3.jar
+1MB-Lib-Appreciation-v1.0.4-702-j25-26.3.jar
 ```
 
 [Documentation index](README.md)
