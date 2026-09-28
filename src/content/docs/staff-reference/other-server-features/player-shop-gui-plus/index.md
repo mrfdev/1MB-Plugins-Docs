@@ -5,7 +5,7 @@ description: "Public-safe commands, permissions, configuration, integrations, an
 
 This is the public technical and operations guide for 1MoreBlock's maintained PlayerShopGUIPlus fork. For player instructions, use the [player guide](/player-guides/other-server-features/player-shop-gui-plus/). The plugin name and data directory remain `PlayerShopGUIPlus`.
 
-**Release status, reviewed 28 September 2026:** `001` is the last confirmed live build. `010` is tested on the local server and awaits live deployment. The main reference below describes `010`; [older live commands](#older-live-build-001) are recorded separately. Confirm the installed version before using a command or planning an update. This documentation does not announce a live plugin deployment.
+**Release status, reviewed 28 September 2026:** `001` is the last confirmed live build. `011` is tested on the local server and awaits live deployment. The main reference below describes `011`; [older live commands](#older-live-build-001) are recorded separately. Confirm the installed version before using a command or planning an update. This documentation does not announce a live plugin deployment.
 
 <a id="commands-in-build-007"></a>
 
@@ -13,7 +13,7 @@ This is the public technical and operations guide for 1MoreBlock's maintained Pl
 
 <a id="commands-in-build-009"></a>
 
-## Commands in build 010
+## Commands in build 011
 
 `/market` is the main command; `/ah` is its native alias, using the same handler, arguments, and permissions. Root aliases `/playershop`, `/pshop`, `/playershops`, and `/pshops` are no longer registered. Existing CMI/server aliases are separate configuration and can still override native commands.
 
@@ -111,7 +111,7 @@ Its sell syntax is quantity-first. With smart selling GUI enabled, omitted argum
 | `playershopguiplus.unclaimedlimit.<name>` | Selects a cancelled/expired-item limit from `unclaimedLimits`. |
 | `playershopguiplus.*` | Grants the admin and debug umbrellas plus the descriptor's inherited reload, sell, player-shop browsing, bypass, edit-name, cancel-others, and tax-exemption children. |
 
-No separate buying, claiming, searching, or ordinary self-cancellation permission is checked by this build. Help/info in `010` are public.
+No separate buying, claiming, searching, or ordinary self-cancellation permission is checked by this build. Help/info in `011` are public.
 
 The wildcard's declared children do not include main-menu access, refund permission, or dynamic limits. Grant required nodes explicitly. Configured limit tiers are sorted by numeric value descending, and the first granted tier wins; the `default` value is the fallback. Limits count listing entries, not individual items within a stack. Restrict bypass and cancellation permissions to the intended staff roles.
 
@@ -225,14 +225,14 @@ The inherited `TIME.LESSTHAN` message contains `%time%`, but no active renderer 
 | Paper 26.3 | Current supported Minecraft/Paper target. Later releases require explicit verification; forward compatibility is a goal, not a guarantee. |
 | Java 25 | Compile toolchain and target bytecode. The maintained local Paper test server runs Java 27. |
 | Vault | Required server plugin, including when another economy type is configured. |
-| Economy service | `economy.type: VAULT` requires a registered Vault economy provider. Purchases and nonzero direct-command fees in `010` require confirmed transaction support, implemented by the Vault adapter. |
+| Economy service | `economy.type: VAULT` requires a registered Vault economy provider. Purchases and nonzero direct-command fees in `011` require confirmed transaction support, implemented by the Vault adapter. |
 | Vault permission service | Used for configured tax-refund eligibility checks. |
 
 A CMI economy bridge can supply the Vault service. CMI, 1MB Library, ShopGUIPlus, and PlaceholderAPI are not direct requirements. There is no direct ShopGUIPlus `/buy` or sell-value lookup. Gson and NBT-API are included in the maintained jar; do not install separate copies just for this plugin.
 
 | Optional integration | Purpose and limits |
 | --- | --- |
-| GemsEconomy (`GEMS_ECONOMY`), Gringotts (`GRINGOTTS`), PlayerPoints (`PLAYER_POINTS`), TokenEnchant (`TOKEN_ENCHANT`) | Retained alternate economies. In `010`, purchases and nonzero direct-command fees are unavailable through these adapters until confirmed-transaction support is implemented. |
+| GemsEconomy (`GEMS_ECONOMY`), Gringotts (`GRINGOTTS`), PlayerPoints (`PLAYER_POINTS`), TokenEnchant (`TOKEN_ENCHANT`) | Retained alternate economies. In `011`, purchases and nonzero direct-command fees are unavailable through these adapters until confirmed-transaction support is implemented. |
 | DeluxeChat, TownyChat | Search and rename chat-input hooks. |
 | LangUtils | Item-name localization. |
 | HeadDatabase, MMOItems, CrackShot, Oraxen, CustomItems, Brewery, ItemsAdder, Slimefun | Optional item providers. |
@@ -262,7 +262,7 @@ Default `clickActions` are left-click to buy, right-click to cancel your own lis
 
 `tax.tax` enables a listing fee; `tax.taxAmount` is the fraction of the total listing price, so `0.2` means 20%. Refund policy uses `tax.refund.purchase`, `tax.refund.cancelled`, and `tax.refund.expired`, with `tax.refundAmount` controlling the returned fraction and the relevant permissions controlling eligibility.
 
-Build `010` does not support combining a nonzero direct-command listing fee with any enabled deferred-refund flag. Keep those flags disabled for nonrefundable fees; do not enable them later for existing listings without a maintainer-reviewed storage and reconciliation plan. Verify the wizard and provider behavior separately before changing fee policy. This release does not certify every historical refund path.
+Build `011` does not support combining a nonzero direct-command listing fee with any enabled deferred-refund flag. Keep those flags disabled for nonrefundable fees; do not enable them later for existing listings without a maintainer-reviewed storage and reconciliation plan. Verify the wizard and provider behavior separately before changing fee policy. This release does not certify every historical refund path.
 
 Treat any message requesting payment or delivery review as an operational stop for that trade. Ask a maintainer to reconcile the economy, item, and listing records privately before any retry, compensation, or restart. A restart is not a recovery procedure, and a success receipt alone does not certify every provider limit or crash scenario.
 
@@ -361,7 +361,7 @@ These labels cover successive powers of 1000, from one thousand (10³) through o
 
 ### Applying changes
 
-A full, clean server restart reliably applies all settings above. The in-game reload command (`/playershop reload` on live `001`, `/market admin reload` in candidate `010`) refreshes item-name capitalization, the cancellation word, number-format settings, and language labels for subsequent formatting and input; reopen existing menus to see refreshed text. External spawner selection happens during startup and requires a restart. The 007 reload cancels outstanding market prompts; players should reopen the relevant menu afterward.
+A full, clean server restart reliably applies all settings above. The in-game reload command (`/playershop reload` on live `001`, `/market admin reload` in candidate `011`) refreshes item-name capitalization, the cancellation word, number-format settings, and language labels for subsequent formatting and input; reopen existing menus to see refreshed text. External spawner selection happens during startup and requires a restart. The 007 reload cancels outstanding market prompts; players should reopen the relevant menu afterward.
 
 ## Persistent maintenance mode (007)
 
@@ -413,7 +413,7 @@ export JAVA_HOME="$(/usr/libexec/java_home -v 25)"
 ./gradlew clean build
 ```
 
-On other systems, set `JAVA_HOME` to the installed JDK 25 directory; on Windows use `gradlew.bat clean build`. The installable result is `build/libs/1MB-PlayerShopGuiPlus-v<version>.jar`; the tested update is `1MB-PlayerShopGuiPlus-v1.42.0-010-j25-26.3.jar`. Use the maintainer's recorded checksum to verify the supplied artifact. Test probes, compile stubs, old NMS handlers, and source archives are not server plugins to install.
+On other systems, set `JAVA_HOME` to the installed JDK 25 directory; on Windows use `gradlew.bat clean build`. The installable result is `build/libs/1MB-PlayerShopGuiPlus-v<version>.jar`; the tested update is `1MB-PlayerShopGuiPlus-v1.42.0-011-j25-26.3.jar`. Use the maintainer's recorded checksum to verify the supplied artifact. Test probes, compile stubs, old NMS handlers, and source archives are not server plugins to install.
 
 ### Fresh installation
 
@@ -427,11 +427,11 @@ On other systems, set `JAVA_HOME` to the installed JDK 25 directory; on Windows 
 1. Verify the intended artifact and release behavior on a fresh test copy, including existing listings and unclaimed items.
 2. Stop the target server normally. Back up the installed jar together with the complete `plugins/PlayerShopGUIPlus` directory, configured database, and the related economy state using the site's established backup procedure.
 3. Replace the old jar with exactly one maintained jar. Preserve the `PlayerShopGUIPlus` folder, backend, table names, owner identities, configuration, and permission grants. Do not delete the database to make an empty market start.
-4. For `010`, update scripts/menu links using former roots to `/market` or `/ah`. Review CMI and server command overrides and retire the quantity-inserting `/ah` shortcut when native `/ah` takes over. Verify both roots with real player permissions.
+4. For `011`, update scripts/menu links using former roots to `/market` or `/ah`. Review CMI and server command overrides and retire the quantity-inserting `/ah` shortcut when native `/ah` takes over. Verify both roots with real player permissions.
 5. Start normally and check successful plugin enablement and complete market loading. Compare existing listings and unclaimed items with the pre-upgrade state before admitting trades.
 6. Check representative selling, whole/partial buying, cancellation, expiry/claim, permissions, fees, balances, and metadata on the test copy. Include full inventories and a clean restart. Passing startup alone does not verify transactions.
 
-The current Paper adaptation and `010` commands keep the storage schema and item field format; this update requires no shop-data migration. Back up the added `market-state.yml` preference and the separate `statistics.db` analytics file with the rest of the plugin data. SQLite and MySQL remain available. Fully sold or claimed entries leave the shop store. Build 010 records new activity in a separate analytics file from its displayed start date; it cannot reconstruct earlier sales.
+The current Paper adaptation and `011` commands keep the storage schema and item field format; this update requires no shop-data migration. Back up the added `market-state.yml` preference and the separate `statistics.db` analytics file with the rest of the plugin data. SQLite and MySQL remain available. Fully sold or claimed entries leave the shop store. Build 010 records new activity in a separate analytics file from its displayed start date; it cannot reconstruct earlier sales.
 
 For rollback, preserve the then-current jar and data first and follow the maintainer's verified rollback record. An older jar is not automatically safer, and newer Paper item data may not load on an older server. Restoring an old database can erase trades made since that backup; do not restore one just to change command names. Future storage changes require a tested migration and recovery plan.
 
@@ -440,12 +440,12 @@ For rollback, preserve the then-current jar and data first and follow the mainta
 | Symptom | Check and next step |
 | --- | --- |
 | The market reports a maintenance pause | Check `/market admin status`. Correct any reported fault and use `/market admin enable` when ready. |
-| `/market` is unknown | Verify the installed build and command registration. `001` uses `/playershop`; `010` includes the maintained roots introduced in 003. |
+| `/market` is unknown | Verify the installed build and command registration. `001` uses `/playershop`; `011` includes the maintained roots introduced in 003. |
 | `/ah` behaves differently from `/market` | Inspect CMI/server aliases and plugin command ownership. The native alias uses the same handler; an external override can intercept it. |
 | Help/info works but the menu does not | Check the base-menu permission, loaded shops/player data, and world/game-mode restrictions. Guidance is intentionally available before gameplay readiness. |
 | No access or an unexpected listing limit | Inspect effective permission nodes and configured tier values. The wildcard does not explicitly include every node. Limits count retained entries, including unclaimed ones. |
 | Shops are unavailable after startup | Investigate the recorded load error and configured storage/provider before changing data. Keep the database and saved items for diagnosis. |
-| A seller is displayed as `none` | The local name cache may not know the stored UUID. In `010`, that name is presentation only; do not change listing ownership or invent a player identity to repair the label. |
+| A seller is displayed as a UUID or `none` | In `011`, names use local UUID records; a valid but unresolved seller displays their full UUID. `none` is reserved for a missing owner UUID, or older builds. Check the installed version and local record; never alter ownership to repair a label. See [seller names](#seller-names-011). |
 | A listing cannot be bought from an old menu | Close and reopen the menu. It may have sold, expired, or changed. Check a reported payment failure privately before retrying. |
 | An item is absent from active listings | Check cancelled/expired unclaimed entries and relevant transaction records before replacing anything. |
 | A custom item looks wrong | Check provider startup and version compatibility, then compare representative metadata on a test copy. |
@@ -465,6 +465,18 @@ The hidden-options section above is self-contained. Upstream pages provide attri
 - [brc general hidden options](https://docs.brcdev.net/#/hidden-options)
 - [Original brc plugin](https://www.spigotmc.org/resources/playershopguiplus.37707/)
 
+
+## Seller names (011)
+
+The GUI resolves the existing owner UUID against real usernames observed during the current plugin session, then Paper's existing UUID cache, then PlayerShopGUIPlus's configured player table. A valid UUID with no usable local name displays the full UUID. An absent owner UUID retains the configured missing-seller text and is invalid for purchasing. Labels are presentation only; payments and ownership still use the original UUID.
+
+Player names preserve case and Bedrock prefixes. Database UUID text must be canonical. Names accept letters, digits, underscores and periods, from 1 to 40 characters; malformed rows and conflicting names for one UUID are excluded. Case-only duplicates are accepted. Current connected names and exact Paper UUID records take precedence over older database records. No nickname matching, name-derived UUID or Mojang lookup is used. CMI's API/database is not required for this feature.
+
+Names load on the database worker, and Paper's existing cache is copied in small main-thread batches before shops become available. Menu rendering reads memory only. A returning player's current real username updates the existing player row asynchronously, retaining the UUID and registration date; new players use the existing registration table. A delayed startup snapshot cannot overwrite a newer join. If the name table cannot be read, a warning is logged and Paper/session names or UUID labels remain available. If saving a renamed username fails, its current-session label remains available but may revert after restart. Manual edits to offline player rows need a clean restart to reload the GUI name snapshot; normal config reload does not reread this table.
+
+Seller heads use UUID-keyed templates with complete, usable local textures. Missing textures produce a generic head, and chest placeholders keep working. Name-based menu buttons use only cached templates and reject ambiguous matches. Displaying a name never triggers skin/profile completion. This replaces the old name-based skull lookup, so an offline seller can have a correct name and a generic head.
+
+There is no new command, permission, placeholder, plugin dependency, item-format change or shop-data migration. `%owner%` uses the resolved name or UUID. Back up the current jar and plugin/economy data before replacing the jar; verify representative offline, renamed and Bedrock sellers after restart. Rolling back to `010` restores its old name fallback but does not require restoring stale shop data. Preserve current trades and statistics. These focused checks do not complete the broader GUI/security or financial recovery work.
 
 ## Market statistics (010)
 
@@ -514,9 +526,9 @@ Clean shutdown queues a final flush and closes the worker without blocking the s
 
 ### Upgrade and rollback
 
-Back up the jar and complete plugin/economy data while stopped, including `statistics.db`, `market-state.yml` and `lang.yml`. Start 010 normally; current listings appear immediately, and history begins recording new activity. Reload does not reset history. There is no stats-delete/reset command.
+Back up the jar and complete plugin/economy data while stopped, including `statistics.db`, `market-state.yml` and `lang.yml`. Start 011 normally; current listings appear immediately, and history begins recording new activity. Reload does not reset history. There is no stats-delete/reset command.
 
-Older jars ignore `statistics.db`. Preserve it during rollback, but record any interval spent on an older jar because that interval cannot be counted; the file cannot detect trades made by a build that does not record statistics. Returning to 010 keeps existing totals. Do not restore stale shop/economy data just to restore analytics. Builds before 009 also require reviewing/restoring the prior language file because they do not support MiniMessage.
+Older jars ignore `statistics.db`. Preserve it during rollback, but record any interval spent on an older jar because that interval cannot be counted; the file cannot detect trades made by a build that does not record statistics. Returning to 010 or newer keeps existing totals. Do not restore stale shop/economy data just to restore analytics. Builds before 009 also require reviewing/restoring the prior language file because they do not support MiniMessage.
 
 ## Reference Links
 
