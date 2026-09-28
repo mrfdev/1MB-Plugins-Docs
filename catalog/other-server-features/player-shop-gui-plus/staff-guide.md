@@ -2,7 +2,7 @@
 
 This is the public technical and operations guide for 1MoreBlock's maintained PlayerShopGUIPlus fork. For player instructions, use the [player guide](/player-guides/other-server-features/player-shop-gui-plus/). The plugin name and data directory remain `PlayerShopGUIPlus`.
 
-**Release status, reviewed 28 September 2026:** `001` is the last confirmed live build. `014` is tested on the local server and awaits live deployment. The main reference below describes `014`; [older live commands](#older-live-build-001) are recorded separately. Confirm the installed version before using a command or planning an update. This documentation does not announce a live plugin deployment.
+**Release status, reviewed 28 September 2026:** `001` is the last confirmed live build. `015` is verified in isolated local Paper tests and awaits live deployment. The main reference below describes `015`; [older live commands](#older-live-build-001) are recorded separately. Confirm the installed version before using a command or planning an update. This documentation does not announce a live plugin deployment.
 
 <a id="commands-in-build-007"></a>
 
@@ -12,7 +12,9 @@ This is the public technical and operations guide for 1MoreBlock's maintained Pl
 
 <a id="commands-in-build-013"></a>
 
-## Commands in build 014
+<a id="commands-in-build-014"></a>
+
+## Commands in build 015
 
 `/market` is the main command; `/ah` is its native alias, using the same handler, arguments, and permissions. Root aliases `/playershop`, `/pshop`, `/playershops`, and `/pshops` are no longer registered. Existing CMI/server aliases are separate configuration and can still override native commands.
 
@@ -234,9 +236,9 @@ A CMI economy bridge can supply the Vault service. CMI, 1MB Library, ShopGUIPlus
 | Optional integration | Purpose and limits |
 | --- | --- |
 | GemsEconomy (`GEMS_ECONOMY`), Gringotts (`GRINGOTTS`), PlayerPoints (`PLAYER_POINTS`), TokenEnchant (`TOKEN_ENCHANT`) | Retained alternate economies. In `012`, purchases and nonzero direct-command fees are unavailable through these adapters until confirmed-transaction support is implemented. |
-| DeluxeChat, TownyChat | Search and rename chat-input hooks. |
+| DeluxeChat | Search and rename chat-input hooks. |
 | LangUtils | Item-name localization. |
-| HeadDatabase, MMOItems, CrackShot, Oraxen, CustomItems, Brewery, ItemsAdder, Slimefun | Optional item providers. |
+| HeadDatabase, CrackShot, Oraxen, CustomItems, Brewery, Slimefun | Optional item providers. |
 | ExecutableItems with SCore | Item provider enabled when both plugins are present. |
 | Registered spawner providers | External spawner handling; selection is documented under hidden options. |
 
@@ -250,7 +252,7 @@ Install each provider's own required dependencies and verify its exact version w
 | `plugins/PlayerShopGUIPlus/menu.yml` | Menu rows, slots, titles, buttons, and lore. |
 | `plugins/PlayerShopGUIPlus/categories.yml` | Item categories and category buttons. |
 | `plugins/PlayerShopGUIPlus/lang.yml` | Messages, chat prompts, number labels, and help/info text. Missing language defaults are generated on load. |
-| `plugins/PlayerShopGUIPlus/database.db` | Default SQLite data. MySQL is also retained when selected by `database.type`. |
+| `plugins/PlayerShopGUIPlus/database.db` | Existing authoritative SQLite data. Build 015 requires `database.type: sqlite`; MySQL is removed. |
 | `plugins/PlayerShopGUIPlus/shops.log` | Optional text transaction log, enabled through `log.toFile`. Keep logs private. |
 
 Bundled defaults are examples from the source, not a statement of the live configuration: SQLite storage, Vault economy, no listing fee (`tax.tax: false`), three-day expiry (`shopItemDuration: 4320` minutes), 10 retained and 20 unclaimed entries for the default tier, and automatic menu refresh disabled. Adventure, creative, and spectator modes are blocked by default; `disableInWorlds` starts empty. Preserve established server settings when upgrading.
@@ -290,7 +292,7 @@ The default is `true`, including when absent from an older config. CMI and its r
 
 The bridge reads the loaded UUID map and calls `getName(false)`, never CMI’s broader player lookup, its database or an online identity service. It does not fetch skins. Menus read memory only; CMI checks run on the server thread in batches of at most 20 UUIDs every 10 ticks, with a 2 ms budget. The queue holds 1,024 UUIDs. Misses become eligible again after five minutes when viewed; saved names become eligible for rechecking after 24 hours when requested. Startup queues unresolved shop owners up to that bound, then later menu/history views gradually fill remaining gaps. A first view may still show a UUID; reopen it after resolution. Unknown identities remain UUIDs.
 
-The separate `plugins/PlayerShopGUIPlus/player-names.db` file keeps verified UUID/name/source/time records across restarts, up to 100,000 rows, for either shop backend. All cache I/O is asynchronous, with a bounded write queue and a three-second SQLite busy timeout. Loaded rows reject malformed/noncanonical UUIDs, invalid names, unknown sources and invalid/future verification times. Previously learned names remain usable without CMI. Explicitly rejected refreshed CMI records remove their saved fallback. Names observed on join take precedence over late cached/CMI data.
+The separate `plugins/PlayerShopGUIPlus/player-names.db` file keeps verified UUID/name/source/time records across restarts, up to 100,000 rows, separately from the SQLite shop store. All cache I/O is asynchronous, with a bounded write queue and a three-second SQLite busy timeout. Loaded rows reject malformed/noncanonical UUIDs, invalid names, unknown sources and invalid/future verification times. Previously learned names remain usable without CMI. Explicitly rejected refreshed CMI records remove their saved fallback. Names observed on join take precedence over late cached/CMI data.
 
 Check `/market debug hooks` for readiness and cache health. An unreadable/corrupt/unsupported cache logs a warning and preserves its file; current in-memory resolution continues but new names may not survive restart. Correct the cause while stopped and restart to restore persistence. A crash before a queued cache write commits can lose that display update. Keep the cache private and back it up with the plugin data. Rollback to 012 ignores it; retain current trades and data rather than restoring an older market database for this cosmetic change.
 
@@ -309,9 +311,25 @@ Supported configuration forms remain available:
 
 New built-in spawners have a `playershopguiplus:spawner_type` PDC marker and retain the previous `ShopGui/EntityId` tag. Old tagged spawners remain readable without being rewritten. Invalid/conflicting identity data fails closed; placement respects cancellation and build permission. External spawner plugins retain their own item formats. The marker identifies the format; it is not an anti-forgery signature.
 
-The plugin no longer directly reflects into Authlib/CraftBukkit or selects an NMS implementation. The bundled NBT library still uses internals for configured custom-data interoperability and old spawner tags, and needs verification on future Paper versions. Optional public-plugin API checks and JDBC driver initialization remain. MySQL now uses the modern `com.mysql.cj.jdbc.Driver` class, but this release's storage tests use SQLite; optional provider/database removal is separate future work.
+The plugin no longer directly reflects into Authlib/CraftBukkit or selects an NMS implementation. The bundled NBT library still uses internals for configured custom-data interoperability and old spawner tags, and needs verification on future Paper versions. Optional public-plugin API checks and JDBC driver initialization remain. Build 015 removes the MySQL backend and confirmed-unused ItemsAdder/MMOItems/TownyChat hooks. Other optional integrations remain pending their own usage and compatibility reviews.
 
 Gradle is the only maintained build, and runtime Java deprecation/removal warnings now fail compilation. Old source and rollback artifacts are retained privately. Before replacing a live jar, follow the backup/test/restart procedure below and check existing listing/unclaimed counts and representative metadata. A rollback must retain trades made since the backup. These changes do not complete the wider GUI security, performance or durable transaction-recovery work.
+
+## Storage and dependency cleanup (015)
+
+1MB's owner confirmed that the server does not use MySQL, uses HeadDatabase and CMI chat, and does not use ItemsAdder, MMOItems or TownyChat. The copied market configuration selects SQLite. Verify the actual live selector again before deployment; this record is not a new live-server inspection.
+
+Build 015 removes the MySQL backend and the ItemsAdder/MMOItems/TownyChat adapters, listeners and compile stubs. It retains Vault/CMI payments, local CMI name resolution, HeadDatabase, the existing external registration/spawner APIs, and the other optional integrations listed above pending individual review. No command, permission, placeholder, price or ownership change is introduced. Serialized third-party items are not deleted or converted; the removed providers' custom creation/comparison hooks are no longer available.
+
+**Storage preflight:** set and retain `database.type: sqlite` (case insensitive). Missing/unknown/MySQL values stop startup before the market database is opened; there is no empty SQLite fallback. Reload rejects unsupported selectors and preserves the running configuration. Keep `database.db`, existing `database.tableNames.players`/`shops`, statistics, local names, market state and configuration. Defaults remain `players` and `shops`. Old `database.mySQL*` keys in an existing SQLite configuration are ignored and can be removed manually; the plugin does not rewrite files to delete them. No schema migration is needed for the existing SQLite store. Do not turn a MySQL installation into SQLite just by changing this value: it needs a separately reviewed consistent export, ID/UUID/item preservation, count/state checks, copied-server tests and rollback plan.
+
+**HeadDatabase readiness:** the old hook could miss a load event that fired before the market enabled, then immediately discard the provider. Build 015 checks the public API for already-loaded heads, retains pending hooks, handles late load events and polls once per second for up to 60 server seconds. API/ItemStack work stays on the server thread, including events delivered from a worker. The hook does not enumerate the whole head database or introduce a remote player lookup. HeadDatabase retains responsibility for its own downloads/cache.
+
+Without configured `headDatabase` items, the market can start while the optional hook waits; inspect `/market debug hooks` and `/market debug health`. If bans, category items/icons or menus require heads, startup waits for readiness and validates every configured ID before opening the store. Missing provider, timeout, unusable API or invalid ID stops startup. Unavailable or invalid heads never silently become a generic material even when that definition also includes `material`. New reload definitions are checked before application. Removed `itemsAdder` or `mmoItems` definitions in those same locations also reject startup/reload. Retain quoted IDs, for example `headDatabase: "7129"`, and verify that the ID exists in the installed provider's database. Menus still require a clean server restart to apply changes.
+
+Install the real HeadDatabase plugin with its own requirements. The official HeadDatabase API 1.3.2 is compile-only, is not bundled, and is not a plugin to install. The isolated readiness tests use a synthetic public API boundary on actual Paper, not the paid HeadDatabase binary. **The installed HeadDatabase 4.24.0 build still needs a copied-server check before live staging**, including actual heads, restrictions, listing/buying/claiming, metadata and restart. Never install `hdb-smoke.jar` or other test probes on the gameplay/live server. Use clean restarts for provider upgrades; hot jar replacement is not certified.
+
+For rollback, use the preserved earlier jar with current market/economy data. Do not restore a stale database over subsequent trades. This cleanup leaves SQL failure propagation, durable payment recovery, broader GUI hardening and the remaining provider audit as separate work.
 
 ## Hidden configuration options
 
@@ -348,7 +366,7 @@ Our defaults differ from the upstream general-page example in three places: `min
 | Key | Type and default | Behavior |
 | --- | --- | --- |
 | `capitalizeItemNames` | Boolean, `true` | Capitalizes the first letter of words in generated item names, including names returned by the configured language provider. Existing custom item display names are returned unchanged. With `false`, material names remain in their generated lowercase form, and localized names retain the provider's casing. This changes displayed text, not the stored item's name or metadata. |
-| `cancelWord` | String, `"cancel"` | The word players type in chat to abandon a shop search, item search, or shop-name edit. Matching ignores case; it is chat input, not a slash command or listing-cancellation command. The core chat listener and the DeluxeChat/TownyChat hooks use this value. |
+| `cancelWord` | String, `"cancel"` | The word players type in chat to abandon a shop search, item search, or shop-name edit. Matching ignores case; it is chat input, not a slash command or listing-cancellation command. The core chat listener and the DeluxeChat hooks use this value. |
 | `spawnerProvider` | String, `""` (empty) | Selects a registered external spawner provider by its registration name, ignoring case, **only when more than one provider is registered**. Use a name from the startup log, not an assumed plugin filename. One registered provider is selected automatically, regardless of this setting; no registered providers use built-in support. With multiple providers, an empty or unrecognized value leaves built-in support active and logs the available names. This setting does not install or register a provider. |
 
 For example, `capitalizeItemNames: false` changes a generated `Diamond Sword` label to `diamond sword` without renaming a custom item. To use `stop` for chat cancellation, set `cancelWord: "stop"`. Keep `%cancel%` in the relevant `lang.yml` input prompts so the instructions match the configured word; update any prompts that hardcode the old word.
@@ -400,7 +418,7 @@ These labels cover successive powers of 1000, from one thousand (10³) through o
 
 ### Applying changes
 
-A full, clean server restart reliably applies all settings above. The in-game reload command (`/playershop reload` on live `001`, `/market admin reload` in candidate `014`) refreshes item-name capitalization, the cancellation word, number-format settings, and language labels for subsequent formatting and input; reopen existing menus to see refreshed text. External spawner selection happens during startup and requires a restart. The 007 reload cancels outstanding market prompts; players should reopen the relevant menu afterward.
+A full, clean server restart reliably applies all settings above. The in-game reload command (`/playershop reload` on live `001`, `/market admin reload` in candidate `015`) refreshes item-name capitalization, the cancellation word, number-format settings, and language labels for subsequent formatting and input; reopen existing menus to see refreshed text. External spawner selection happens during startup and requires a restart. The 007 reload cancels outstanding market prompts; players should reopen the relevant menu afterward.
 
 ## Persistent maintenance mode (007)
 
@@ -452,7 +470,7 @@ export JAVA_HOME="$(/usr/libexec/java_home -v 25)"
 ./gradlew clean build
 ```
 
-On other systems, set `JAVA_HOME` to the installed JDK 25 directory; on Windows use `gradlew.bat clean build`. The installable result is `build/libs/1MB-PlayerShopGuiPlus-v<version>.jar`; the tested update is `1MB-PlayerShopGuiPlus-v1.42.0-014-j25-26.3.jar`. Use the maintainer's recorded checksum to verify the supplied artifact. Test probes, compile stubs, old NMS handlers, and source archives are not server plugins to install.
+On other systems, set `JAVA_HOME` to the installed JDK 25 directory; on Windows use `gradlew.bat clean build`. The installable result is `build/libs/1MB-PlayerShopGuiPlus-v<version>.jar`; the tested update is `1MB-PlayerShopGuiPlus-v1.42.0-015-j25-26.3.jar`. Use the maintainer's recorded checksum to verify the supplied artifact. Test probes, compile stubs, old NMS handlers, and source archives are not server plugins to install.
 
 ### Fresh installation
 
@@ -466,11 +484,11 @@ On other systems, set `JAVA_HOME` to the installed JDK 25 directory; on Windows 
 1. Verify the intended artifact and release behavior on a fresh test copy, including existing listings and unclaimed items.
 2. Stop the target server normally. Back up the installed jar together with the complete `plugins/PlayerShopGUIPlus` directory, configured database, and the related economy state using the site's established backup procedure.
 3. Replace the old jar with exactly one maintained jar. Preserve the `PlayerShopGUIPlus` folder, backend, table names, owner identities, configuration, and permission grants. Do not delete the database to make an empty market start.
-4. For `014`, update scripts/menu links using former roots to `/market` or `/ah`. Review CMI and server command overrides and retire the quantity-inserting `/ah` shortcut when native `/ah` takes over. Verify both roots with real player permissions.
+4. For `015`, update scripts/menu links using former roots to `/market` or `/ah`. Review CMI and server command overrides and retire the quantity-inserting `/ah` shortcut when native `/ah` takes over. Verify both roots with real player permissions.
 5. Start normally and check successful plugin enablement and complete market loading. Compare existing listings and unclaimed items with the pre-upgrade state before admitting trades.
 6. Check representative selling, whole/partial buying, cancellation, expiry/claim, permissions, fees, balances, and metadata on the test copy. Include full inventories and a clean restart. Passing startup alone does not verify transactions.
 
-The current Paper adaptation and `012` commands keep the storage schema and item field format; this update requires no shop-data migration. Back up the added `market-state.yml` preference, separate `statistics.db` analytics file and build-013 `player-names.db` cache with the rest of the plugin data. SQLite and MySQL remain available. Fully sold or claimed entries leave the shop store. Build 010 records new activity in a separate analytics file from its displayed start date; it cannot reconstruct earlier sales.
+The current Paper adaptation and `012` commands keep the storage schema and item field format; this update requires no shop-data migration. Back up the added `market-state.yml` preference, separate `statistics.db` analytics file and build-013 `player-names.db` cache with the rest of the plugin data. Build 015 supports SQLite only. Existing SQLite data needs no migration; a MySQL installation must retain its previous jar until a separate offline migration is designed and verified. Fully sold or claimed entries leave the shop store. Build 010 records new activity in a separate analytics file from its displayed start date; it cannot reconstruct earlier sales.
 
 For rollback, preserve the then-current jar and data first and follow the maintainer's verified rollback record. An older jar is not automatically safer, and newer Paper item data may not load on an older server. Restoring an old database can erase trades made since that backup; do not restore one just to change command names. Future storage changes require a tested migration and recovery plan.
 
@@ -553,7 +571,7 @@ Sellers remain keyed by their stored server UUID. Presentation names come only f
 
 ### Storage, performance and coverage
 
-`plugins/PlayerShopGUIPlus/statistics.db` is a separate local SQLite analytics file, including when the marketplace uses MySQL. Paper already supplies its driver; no extra plugin or dependency is required. Existing `database.db`/MySQL shop tables, item serialization, ownership and financial state transitions are unchanged. This is a single-server statistics store; multiple servers are not aggregated.
+`plugins/PlayerShopGUIPlus/statistics.db` is a separate local SQLite analytics file, separate from the authoritative shop store. Paper already supplies its driver; no extra plugin or dependency is required. Existing SQLite shop tables, item serialization, ownership and financial state transitions are unchanged. This is a single-server statistics store; multiple servers are not aggregated.
 
 The file stores compact event IDs, kind, UUIDs, timestamp, material, quantity, amount and provider identity, plus per-seller aggregates. It stores no item payloads or credentials. Events and aggregates commit in one SQLite transaction, and duplicate event IDs do not increment totals twice. Decimal arithmetic avoids accumulating binary rounding error in aggregate totals. These are analytics records, not a payment ledger or crash-recovery mechanism for trading.
 
