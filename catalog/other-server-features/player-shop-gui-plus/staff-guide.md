@@ -2,11 +2,13 @@
 
 This is the public technical and operations guide for 1MoreBlock's maintained PlayerShopGUIPlus fork. For player instructions, use the [player guide](/player-guides/other-server-features/player-shop-gui-plus/). The plugin name and data directory remain `PlayerShopGUIPlus`.
 
-**Release status, reviewed 28 September 2026:** `001` is the last confirmed live build. `008` is tested on the local server and awaits live deployment. The main reference below describes `008`; [older live commands](#older-live-build-001) are recorded separately. Confirm the installed version before using a command or planning an update. This documentation does not announce a live plugin deployment.
+**Release status, reviewed 28 September 2026:** `001` is the last confirmed live build. `009` is tested on the local server and awaits live deployment. The main reference below describes `009`; [older live commands](#older-live-build-001) are recorded separately. Confirm the installed version before using a command or planning an update. This documentation does not announce a live plugin deployment.
 
 <a id="commands-in-build-007"></a>
 
-## Commands in build 008
+<a id="commands-in-build-008"></a>
+
+## Commands in build 009
 
 `/market` is the main command; `/ah` is its native alias, using the same handler, arguments, and permissions. Root aliases `/playershop`, `/pshop`, `/playershops`, and `/pshops` are no longer registered. Existing CMI/server aliases are separate configuration and can still override native commands.
 
@@ -43,7 +45,7 @@ Buying, cancelling, claiming, and searching use menus. `buy`, `cancel`, `cancelo
 
 ### Help and info text
 
-The `GUIDE` section in `lang.yml` contains `INTRO`, `HELP`, `INFO`, `BROWSE`, `SELL`, `WIZARD`, `QUANTITY`, `PLAYER`, `RELOAD`, `ALIAS`, and `CONSOLE`. Build 007 also adds `GUIDE.ADMIN.STATUS`, `GUIDE.ADMIN.ENABLE`, `GUIDE.ADMIN.DISABLE`, `MSG.MARKET.PAUSED` and the `MSG.ADMIN.*` operation messages. Build 008 adds `GUIDE.DEBUG` and `MSG.DEBUG.CHECKING`; diagnostic row labels are fixed English. Missing defaults are added during startup without replacing customized values. For example, merge this key into the existing section:
+The `GUIDE` section in `lang.yml` contains `INTRO`, `HELP`, `INFO`, `BROWSE`, `SELL`, `WIZARD`, `QUANTITY`, `PLAYER`, `RELOAD`, `ALIAS`, and `CONSOLE`. Build 007 also adds `GUIDE.ADMIN.STATUS`, `GUIDE.ADMIN.ENABLE`, `GUIDE.ADMIN.DISABLE`, `MSG.MARKET.PAUSED` and the `MSG.ADMIN.*` operation messages. Build 008 adds `GUIDE.DEBUG` and `MSG.DEBUG.CHECKING`; diagnostic row content is fixed English; build 009 makes its layout and pagination MiniMessage templates. Missing defaults are added during startup without replacing customized values. For example, merge this key into the existing section:
 
 ```yaml
 GUIDE:
@@ -102,13 +104,86 @@ Its sell syntax is quantity-first. With smart selling GUI enabled, omitted argum
 | `playershopguiplus.unclaimedlimit.<name>` | Selects a cancelled/expired-item limit from `unclaimedLimits`. |
 | `playershopguiplus.*` | Grants the admin and debug umbrellas plus the descriptor's inherited reload, sell, player-shop browsing, bypass, edit-name, cancel-others, and tax-exemption children. |
 
-No separate buying, claiming, searching, or ordinary self-cancellation permission is checked by this build. Help/info in `008` are public.
+No separate buying, claiming, searching, or ordinary self-cancellation permission is checked by this build. Help/info in `009` are public.
 
 The wildcard's declared children do not include main-menu access, refund permission, or dynamic limits. Grant required nodes explicitly. Configured limit tiers are sorted by numeric value descending, and the first granted tier wins; the `default` value is the fallback. Limits count listing entries, not individual items within a stack. Restrict bypass and cancellation permissions to the intended staff roles.
 
 The bundled tiers are `limits.default: 10`, `limits.donator: 50`, `unclaimedLimits.default: 20`, and `unclaimedLimits.donator: 40`. Their concrete nodes are `playershopguiplus.limit.default`, `playershopguiplus.limit.donator`, `playershopguiplus.unclaimedlimit.default`, and `playershopguiplus.unclaimedlimit.donator`. Keep the `default` entries when customizing tiers.
 
 The five admin nodes and seven debug nodes explicitly default to operators. Debug and admin are separate umbrellas; explicit child denials are respected. Debug grants do not add trading or administration access. Inherited nodes retain their previous unspecified defaults. Configure grants deliberately and check effective permissions with the installed permission manager. A normal player who should browse and sell needs the base menu node and sell node; player-name lookup is a separate grant. Do not grant the staff wildcard as a substitute. For a LuckPerms user-specific change, use the player's verified server UUID, including Bedrock identities; group grants target the intended group ID.
+
+## MiniMessage and pastel chat (009)
+
+`lang.yml` supports MiniMessage for in-game messages, help/info, staff administration and diagnostics. Chat uses Paper's native Adventure components, preserving RGB colours, gradients, decorations, configured hover text and click actions. No extra plugin or bundled Adventure library is required. Native `/market` and `/ah` have identical styling and behavior.
+
+### Palette
+
+These names match the colours used by `1MB-Library`'s shared `MessageStyle`:
+
+| Tag | Hex | Purpose |
+| --- | --- | --- |
+| `<body>` | `#e8d8a8` | Warm cream body text |
+| `<muted>` | `#7d8790` | Quiet punctuation and separators |
+| `<label>` | `#e3c7ff` | Lilac labels and market name |
+| `<title>` | `#ffc8dd` | Soft pink headings |
+| `<accent>` | `#bde0fe` | Pastel-blue commands and links |
+| `<success>` | `#caffbf` | Soft green confirmation |
+| `<warning>` | `#ffb454` | Amber warning emphasis |
+| `<error>` | `#ff9e9e` | Soft red error emphasis |
+
+Tags can close normally, for example `<accent>text</accent>`. Standard MiniMessage tags also work: `<#cba6f7>`, `<bold>`, `<italic>`, `<gradient:#ffc8dd:#bde0fe>`, `<newline>`, `<hover:show_text:'...'>` and `<click:open_url:'https://...'>`. The palette aliases are formatting tags, not new player-data placeholders or PlaceholderAPI expansions.
+
+### Configuration examples
+
+Merge these keys into the existing sections of `plugins/PlayerShopGUIPlus/lang.yml`; do not create duplicate YAML sections:
+
+```yaml
+PREFIX: '<muted>[<label>Market</label>]</muted> <body>'
+
+GUIDE:
+  INTRO: '<body>Buy from other players and offer your own items on <accent>1MoreBlock.com</accent>.'
+
+MSG:
+  NOACCESS: '<error>You do not have access to this command.</error>'
+  ADMIN:
+    ENABLED: '<success>Market enabled.</success> <body>Players can trade again when the market is ready.'
+  PLAYERSHOP:
+    SELL:
+      CREATED: '<success>Listed</success> <accent>%quantity% x %item%</accent> <body>for <accent>%price%</accent> total.'
+
+STYLE:
+  HEADER: '<muted>[<label>Market</label>]</muted> <title>%title%</title>'
+  DETAIL: '  <label>%label%:</label> <body>%value%</body>'
+  COMMAND: '<accent>%command%</accent>'
+  BULLET: '<muted>-</muted> %value%'
+  PAGE: '<body>Page %page%/%pages%</body>'
+  PREVIOUS: '<accent>  [Previous]</accent>'
+  NEXT: '<accent>  [Next]</accent>'
+```
+
+Apply edits with `/market admin reload` (or `/ah admin reload`). The existing reload permission and failure behavior apply. It briefly closes market sessions and preserves the saved enabled/dormant preference. Commands, permissions and the server's existing trading checks are unchanged. The language defaults are saved at startup; reload prepares missing/default values in memory using the existing administration workflow.
+
+`STYLE.HEADER`, `DETAIL`, `COMMAND` and `BULLET` style help/info/admin/debug layouts. The last three keys style diagnostic page numbers and navigation labels. Built-in command, docs, hover and Previous/Next actions remain attached. Diagnostic row labels/content remain fixed English; their surrounding layout is configurable. `GUIDE.*`, `MSG.*`, `TAX.*` and chat fallbacks from `NOTIFICATION.*` accept MiniMessage.
+
+### Placeholders and safe data
+
+Existing `%quantity%`, `%item%`, `%price%`, `%owner%` and other documented tokens retain their existing contexts. Layout tokens are `%title%` in HEADER, `%label%` and `%value%` in DETAIL, `%command%` in COMMAND, `%value%` in BULLET and `%page%`/`%pages%` in PAGE. No token is automatically valid in every message.
+
+Runtime values become self-contained Adventure components while the trusted template is parsed. A player's item/shop name containing `<red>` or a click tag displays that text literally; it cannot introduce formatting, new click actions or a second round of placeholder expansion. Legacy section colours already present in item/currency presentation are preserved without parsing MiniMessage in those values. Gradients in the trusted template can include inserted values.
+
+Tokens are expanded in the message body, not inside MiniMessage tag arguments such as URL, command or hover arguments. Keep those arguments static. For example, `%player%` inside `<click:run_command:'/something %player%'>` remains literal; this feature is not a configurable command dispatcher. Static hover text can use nested MiniMessage. Use MiniMessage syntax inside tag arguments rather than legacy section codes.
+
+Ordinary player chat and chat deferred during a market search retain their existing handling. They are never passed through this MiniMessage renderer. Menu/item configuration outside `lang.yml` keeps its existing legacy formatter; this is not a migration of custom item data or `menu.yml`. Language text used by the legacy GUI title/lore APIs receives legacy RGB strings; click/hover interactions have no effect there.
+
+### Existing configuration and fallback
+
+Customized language values are retained, including `&a`, `§a`, bare `#RRGGBB`, `&#RRGGBB`, `§#RRGGBB` and repeated `&x`/`§x` RGB forms. Legacy colour codes reset legacy decorations; `&r` resets to the chat's default style. Legacy codes can be mixed with MiniMessage in normal template text. Existing `\n` and MiniMessage `<newline>` both create line breaks. Escape a literal MiniMessage tag with a backslash, such as `\<red>`.
+
+Only exact matches for stock defaults are modernized automatically: the vendor prefix becomes the 1MB Market prefix, stock grey/white text uses `<body>`, stock green/red text uses `<success>`/`<error>`, and stock bold uses `<bold>`. Text and placeholder meanings stay the same. Missing STYLE keys are added. A custom prefix is not overwritten; use the example above to opt into the full 1MB appearance. Backups retain the previous language file for rollback to a pre-MiniMessage jar.
+
+MiniMessage's lenient parser leaves invalid/unknown tags as text. If parsing raises a runtime exception, the renderer sends a literal component fallback with safe substitutions so a cosmetic error does not abort a transaction or recovery response. Static template caching is bounded to 512 entries; messages containing runtime values are not cached.
+
+Official syntax: [MiniMessage format](https://docs.papermc.io/adventure/minimessage/format/). The pinned Paper 26.3 API/runtime supplies Adventure 5.2.0. No additional MiniMessage plugin or 1MB-library dependency is required.
 
 ## Placeholders
 
@@ -143,14 +218,14 @@ The inherited `TIME.LESSTHAN` message contains `%time%`, but no active renderer 
 | Paper 26.3 | Current supported Minecraft/Paper target. Later releases require explicit verification; forward compatibility is a goal, not a guarantee. |
 | Java 25 | Compile toolchain and target bytecode. The maintained local Paper test server runs Java 27. |
 | Vault | Required server plugin, including when another economy type is configured. |
-| Economy service | `economy.type: VAULT` requires a registered Vault economy provider. Purchases and nonzero direct-command fees in `008` require confirmed transaction support, implemented by the Vault adapter. |
+| Economy service | `economy.type: VAULT` requires a registered Vault economy provider. Purchases and nonzero direct-command fees in `009` require confirmed transaction support, implemented by the Vault adapter. |
 | Vault permission service | Used for configured tax-refund eligibility checks. |
 
 A CMI economy bridge can supply the Vault service. CMI, 1MB Library, ShopGUIPlus, and PlaceholderAPI are not direct requirements. There is no direct ShopGUIPlus `/buy` or sell-value lookup. Gson and NBT-API are included in the maintained jar; do not install separate copies just for this plugin.
 
 | Optional integration | Purpose and limits |
 | --- | --- |
-| GemsEconomy (`GEMS_ECONOMY`), Gringotts (`GRINGOTTS`), PlayerPoints (`PLAYER_POINTS`), TokenEnchant (`TOKEN_ENCHANT`) | Retained alternate economies. In `008`, purchases and nonzero direct-command fees are unavailable through these adapters until confirmed-transaction support is implemented. |
+| GemsEconomy (`GEMS_ECONOMY`), Gringotts (`GRINGOTTS`), PlayerPoints (`PLAYER_POINTS`), TokenEnchant (`TOKEN_ENCHANT`) | Retained alternate economies. In `009`, purchases and nonzero direct-command fees are unavailable through these adapters until confirmed-transaction support is implemented. |
 | DeluxeChat, TownyChat | Search and rename chat-input hooks. |
 | LangUtils | Item-name localization. |
 | HeadDatabase, MMOItems, CrackShot, Oraxen, CustomItems, Brewery, ItemsAdder, Slimefun | Optional item providers. |
@@ -180,7 +255,7 @@ Default `clickActions` are left-click to buy, right-click to cancel your own lis
 
 `tax.tax` enables a listing fee; `tax.taxAmount` is the fraction of the total listing price, so `0.2` means 20%. Refund policy uses `tax.refund.purchase`, `tax.refund.cancelled`, and `tax.refund.expired`, with `tax.refundAmount` controlling the returned fraction and the relevant permissions controlling eligibility.
 
-Build `008` does not support combining a nonzero direct-command listing fee with any enabled deferred-refund flag. Keep those flags disabled for nonrefundable fees; do not enable them later for existing listings without a maintainer-reviewed storage and reconciliation plan. Verify the wizard and provider behavior separately before changing fee policy. This release does not certify every historical refund path.
+Build `009` does not support combining a nonzero direct-command listing fee with any enabled deferred-refund flag. Keep those flags disabled for nonrefundable fees; do not enable them later for existing listings without a maintainer-reviewed storage and reconciliation plan. Verify the wizard and provider behavior separately before changing fee policy. This release does not certify every historical refund path.
 
 Treat any message requesting payment or delivery review as an operational stop for that trade. Ask a maintainer to reconcile the economy, item, and listing records privately before any retry, compensation, or restart. A restart is not a recovery procedure, and a success receipt alone does not certify every provider limit or crash scenario.
 
@@ -279,7 +354,7 @@ These labels cover successive powers of 1000, from one thousand (10³) through o
 
 ### Applying changes
 
-A full, clean server restart reliably applies all settings above. The in-game reload command (`/playershop reload` on live `001`, `/market admin reload` in candidate `008`) refreshes item-name capitalization, the cancellation word, number-format settings, and language labels for subsequent formatting and input; reopen existing menus to see refreshed text. External spawner selection happens during startup and requires a restart. The 007 reload cancels outstanding market prompts; players should reopen the relevant menu afterward.
+A full, clean server restart reliably applies all settings above. The in-game reload command (`/playershop reload` on live `001`, `/market admin reload` in candidate `009`) refreshes item-name capitalization, the cancellation word, number-format settings, and language labels for subsequent formatting and input; reopen existing menus to see refreshed text. External spawner selection happens during startup and requires a restart. The 007 reload cancels outstanding market prompts; players should reopen the relevant menu afterward.
 
 ## Persistent maintenance mode (007)
 
@@ -316,7 +391,7 @@ Examples:
 
 `hooks` separates actual selected adapters/listeners from installed plugin presence/version. CMI may supply economy through Vault; no direct CMI-API or 1MB-library integration is added. An installed optional plugin is not proof that its hook is selected or compatible. `commands` checks native Bukkit registration for market/ah and their namespaced forms; external CMI aliases or chat interceptors must be inspected separately.
 
-`permissions` includes declared nodes, current configured limit tiers and effective grants for the sender. It explains missing descriptor coverage and inherited wildcard limits. `placeholders` lists plugin-local formatting tokens and contexts; there is no PlaceholderAPI expansion, arbitrary template evaluator or new placeholder scope.
+`permissions` includes declared nodes, current configured limit tiers and effective grants for the sender. It explains missing descriptor coverage and inherited wildcard limits. `placeholders` lists plugin-local formatting tokens and contexts, including the STYLE layout tokens added in 009; there is no PlaceholderAPI expansion, arbitrary template evaluator or new placeholder scope.
 
 Diagnostics do not print player records, UUID lists, balances, item payloads, full configuration, credentials, SQL exception text or private file paths. They never clear review guards or enable the market. A successful database ping and ready providers do not establish safe financial transactions, healthy database contents or compatibility with all optional providers. Follow the normal recovery process for warnings; record the relevant topic/page when asking a maintainer for help.
 
@@ -331,7 +406,7 @@ export JAVA_HOME="$(/usr/libexec/java_home -v 25)"
 ./gradlew clean build
 ```
 
-On other systems, set `JAVA_HOME` to the installed JDK 25 directory; on Windows use `gradlew.bat clean build`. The installable result is `build/libs/1MB-PlayerShopGuiPlus-v<version>.jar`; the tested update is `1MB-PlayerShopGuiPlus-v1.42.0-008-j25-26.3.jar`. Use the maintainer's recorded checksum to verify the supplied artifact. Test probes, compile stubs, old NMS handlers, and source archives are not server plugins to install.
+On other systems, set `JAVA_HOME` to the installed JDK 25 directory; on Windows use `gradlew.bat clean build`. The installable result is `build/libs/1MB-PlayerShopGuiPlus-v<version>.jar`; the tested update is `1MB-PlayerShopGuiPlus-v1.42.0-009-j25-26.3.jar`. Use the maintainer's recorded checksum to verify the supplied artifact. Test probes, compile stubs, old NMS handlers, and source archives are not server plugins to install.
 
 ### Fresh installation
 
@@ -345,11 +420,11 @@ On other systems, set `JAVA_HOME` to the installed JDK 25 directory; on Windows 
 1. Verify the intended artifact and release behavior on a fresh test copy, including existing listings and unclaimed items.
 2. Stop the target server normally. Back up the installed jar together with the complete `plugins/PlayerShopGUIPlus` directory, configured database, and the related economy state using the site's established backup procedure.
 3. Replace the old jar with exactly one maintained jar. Preserve the `PlayerShopGUIPlus` folder, backend, table names, owner identities, configuration, and permission grants. Do not delete the database to make an empty market start.
-4. For `008`, update scripts/menu links using former roots to `/market` or `/ah`. Review CMI and server command overrides and retire the quantity-inserting `/ah` shortcut when native `/ah` takes over. Verify both roots with real player permissions.
+4. For `009`, update scripts/menu links using former roots to `/market` or `/ah`. Review CMI and server command overrides and retire the quantity-inserting `/ah` shortcut when native `/ah` takes over. Verify both roots with real player permissions.
 5. Start normally and check successful plugin enablement and complete market loading. Compare existing listings and unclaimed items with the pre-upgrade state before admitting trades.
 6. Check representative selling, whole/partial buying, cancellation, expiry/claim, permissions, fees, balances, and metadata on the test copy. Include full inventories and a clean restart. Passing startup alone does not verify transactions.
 
-The current Paper adaptation and `008` commands keep the storage schema and item field format; this update requires no shop-data migration. Back up the added market-state.yml preference with the rest of the plugin data. SQLite and MySQL remain available. Fully sold or claimed entries leave the shop store, so it is not a sales-history database.
+The current Paper adaptation and `009` commands keep the storage schema and item field format; this update requires no shop-data migration. Back up the added market-state.yml preference with the rest of the plugin data. SQLite and MySQL remain available. Fully sold or claimed entries leave the shop store, so it is not a sales-history database.
 
 For rollback, preserve the then-current jar and data first and follow the maintainer's verified rollback record. An older jar is not automatically safer, and newer Paper item data may not load on an older server. Restoring an old database can erase trades made since that backup; do not restore one just to change command names. Future storage changes require a tested migration and recovery plan.
 
@@ -358,12 +433,12 @@ For rollback, preserve the then-current jar and data first and follow the mainta
 | Symptom | Check and next step |
 | --- | --- |
 | The market reports a maintenance pause | Check `/market admin status`. Correct any reported fault and use `/market admin enable` when ready. |
-| `/market` is unknown | Verify the installed build and command registration. `001` uses `/playershop`; `008` includes the maintained roots introduced in 003. |
+| `/market` is unknown | Verify the installed build and command registration. `001` uses `/playershop`; `009` includes the maintained roots introduced in 003. |
 | `/ah` behaves differently from `/market` | Inspect CMI/server aliases and plugin command ownership. The native alias uses the same handler; an external override can intercept it. |
 | Help/info works but the menu does not | Check the base-menu permission, loaded shops/player data, and world/game-mode restrictions. Guidance is intentionally available before gameplay readiness. |
 | No access or an unexpected listing limit | Inspect effective permission nodes and configured tier values. The wildcard does not explicitly include every node. Limits count retained entries, including unclaimed ones. |
 | Shops are unavailable after startup | Investigate the recorded load error and configured storage/provider before changing data. Keep the database and saved items for diagnosis. |
-| A seller is displayed as `none` | The local name cache may not know the stored UUID. In `008`, that name is presentation only; do not change listing ownership or invent a player identity to repair the label. |
+| A seller is displayed as `none` | The local name cache may not know the stored UUID. In `009`, that name is presentation only; do not change listing ownership or invent a player identity to repair the label. |
 | A listing cannot be bought from an old menu | Close and reopen the menu. It may have sold, expired, or changed. Check a reported payment failure privately before retrying. |
 | An item is absent from active listings | Check cancelled/expired unclaimed entries and relevant transaction records before replacing anything. |
 | A custom item looks wrong | Check provider startup and version compatibility, then compare representative metadata on a test copy. |
