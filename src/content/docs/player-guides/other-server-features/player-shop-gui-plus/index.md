@@ -5,7 +5,7 @@ description: "Let players list items in a shared marketplace and buy listings fr
 
 The player market lets you buy items from other players and offer your own items for sale on 1MoreBlock. It is separate from the server's ShopGUIPlus shop. 1MoreBlock maintains a custom version of brc's PlayerShopGUIPlus for Paper 26.3.
 
-**Which commands can I use?** The last confirmed live version is build `001`. Start with the live instructions below. The tested `015` update uses `/market` and `/ah` and adds help/info plus a staff-controlled maintenance pause; [its commands are explained below](#the-market-update-build-015). Build 014 updates the internals for Paper 26.3 and newer while retaining existing listings and item metadata. Build 015 keeps the existing SQLite listings and fixes HeadDatabase startup handling. The commands and permissions below are unchanged by these cleanups. The update includes recent-sales chat, staff diagnostics, market statistics and soft 1MB chat colours. Seller names now use trusted local player records, including Bedrock prefixes. A seller whose name is still unknown is shown by their unique player ID. Detailed market statistics are staff-only and do not change listing prices or player permissions. Players do not need extra permissions or a new command to see the styling. Wait for staff to announce that update before relying on those native commands. The existing live `/ah` shortcut is configured separately by the server.
+**Which commands can I use?** The last confirmed live version is build `001`. Start with the live instructions below. The tested `016` update uses `/market` and `/ah` and adds help/info plus a staff-controlled maintenance pause; [its commands are explained below](#the-market-update-build-016). Build 014 updates the internals for Paper 26.3 and newer while retaining existing listings and item metadata. Build 015 keeps the existing SQLite listings and fixes HeadDatabase startup handling. Build 016 improves development tooling and keeps the same game behavior. The commands and permissions below are unchanged by these cleanups. The update includes recent-sales chat, staff diagnostics, market statistics and soft 1MB chat colours. Seller names now use trusted local player records, including Bedrock prefixes. A seller whose name is still unknown is shown by their unique player ID. Detailed market statistics are staff-only and do not change listing prices or player permissions. Players do not need extra permissions or a new command to see the styling. Wait for staff to announce that update before relying on those native commands. The existing live `/ah` shortcut is configured separately by the server.
 
 ## Getting started
 
@@ -49,7 +49,9 @@ The built-in aliases are `/pshop`, `/playershops`, and `/pshops`. These commands
 
 <a id="the-market-update-build-014"></a>
 
-## The market update: build 015
+<a id="the-market-update-build-015"></a>
+
+## The market update: build 016
 
 This section describes the tested update awaiting live deployment. Its main command is `/market`, with `/ah` as a true alias: both run the same commands with the same permissions. The old `/playershop`, `/pshop`, `/playershops`, and `/pshops` roots are removed in this update.
 

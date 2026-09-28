@@ -5,7 +5,7 @@ description: "Public-safe commands, permissions, configuration, integrations, an
 
 This is the public technical and operations guide for 1MoreBlock's maintained PlayerShopGUIPlus fork. For player instructions, use the [player guide](/player-guides/other-server-features/player-shop-gui-plus/). The plugin name and data directory remain `PlayerShopGUIPlus`.
 
-**Release status, reviewed 28 September 2026:** `001` is the last confirmed live build. `015` is verified in isolated local Paper tests and awaits live deployment. The main reference below describes `015`; [older live commands](#older-live-build-001) are recorded separately. Confirm the installed version before using a command or planning an update. This documentation does not announce a live plugin deployment.
+**Release status, reviewed 28 September 2026:** `001` is the last confirmed live build. `016` is verified in isolated local Paper tests and awaits live deployment. The main reference below describes `016`; [older live commands](#older-live-build-001) are recorded separately. Confirm the installed version before using a command or planning an update. Build 016 changes development tooling and artifact version labels only; every runtime class matches 015, which remains on the normal gameplay test clone. This documentation does not announce a live plugin deployment.
 
 <a id="commands-in-build-007"></a>
 
@@ -17,7 +17,9 @@ This is the public technical and operations guide for 1MoreBlock's maintained Pl
 
 <a id="commands-in-build-014"></a>
 
-## Commands in build 015
+<a id="commands-in-build-015"></a>
+
+## Commands in build 016
 
 `/market` is the main command; `/ah` is its native alias, using the same handler, arguments, and permissions. Root aliases `/playershop`, `/pshop`, `/playershops`, and `/pshops` are no longer registered. Existing CMI/server aliases are separate configuration and can still override native commands.
 
@@ -466,14 +468,20 @@ Diagnostics do not print player records, UUID lists, balances, item payloads, fu
 
 ### Compile the maintained build
 
-Use the authorized private source checkout and the intended release tag. Source and jars remain private. Set `JAVA_HOME` to JDK 25 before launching the Gradle wrapper; the current wrapper cannot run on Java 27. On macOS:
+Use the authorized private source checkout and the intended release tag. Source and jars remain private. Build 016 uses Gradle 9.8.0. Set `JAVA_HOME` to JDK 25 or 27 to launch the wrapper; an installed JDK 25 remains required for compilation, with `JAVA25_HOME` available for explicit discovery. Install Python 3.11+ for tooling checks. Dependency versions are locked, and dependency jars/POM/module metadata plus the wrapper distribution use SHA-256 verification. The wrapper launcher checksum is checked before execution. On macOS:
 
 ```sh
 export JAVA_HOME="$(/usr/libexec/java_home -v 25)"
-./gradlew clean build
+python3 scripts/check-tooling.py
+./gradlew --dependency-verification strict --warning-mode fail clean build smokeJars
+python3 scripts/check-tooling.py --artifact
 ```
 
-On other systems, set `JAVA_HOME` to the installed JDK 25 directory; on Windows use `gradlew.bat clean build`. The installable result is `build/libs/1MB-PlayerShopGuiPlus-v<version>.jar`; the tested update is `1MB-PlayerShopGuiPlus-v1.42.0-015-j25-26.3.jar`. Use the maintainer's recorded checksum to verify the supplied artifact. Test probes, compile stubs, old NMS handlers, and source archives are not server plugins to install.
+On other systems, set `JAVA_HOME` to the installed JDK 25 directory; on Windows use `gradlew.bat --dependency-verification strict --warning-mode fail clean build smokeJars` and `python` for the check scripts. The installable result is `build/libs/1MB-PlayerShopGuiPlus-v<version>.jar`; the tested update is `1MB-PlayerShopGuiPlus-v1.42.0-016-j25-26.3.jar`. Use the maintainer's recorded checksum to verify the supplied artifact. Test probes, compile stubs, old NMS handlers, and source archives are not server plugins to install.
+
+For portable harness checks, run `python3 -m unittest discover -s scripts/tests -v`. After a successful strict build, `python3 scripts/test-dependency-guards.py` proves that tampered checksums, missing locks and incompatible upgrades fail, using offline disposable copies. Linux/macOS/Windows CI runs these tooling/build checks without private player data. Real Paper regression tests still require local Java 27, a prepared matching Paper bootstrap/cache, an already accepted EULA and approved provider jars; real-server coverage is currently macOS only. Tests select free loopback ports and unique directories, default to packaged configuration, accept explicit Java/server/config/provider/probe/output paths, reject stale results and stop timed-out test processes. They never use a gameplay server as their output directory. The four probes, including synthetic HeadDatabase, remain separate from the runtime jar.
+
+Maintainers must follow the private repository's `docs/DEVELOPMENT-TOOLING.md` before changing Gradle/dependencies. Do not disable checksum checks or automatically accept new hashes to fix a build. The initial dependency checksum set is a recorded trust baseline, not a PGP signature check or security audit; all seven archived direct dependencies and all 22 project resolution graphs match 015. Wrapper/distribution checksums came from official Gradle metadata. Paper 26.3 build 133 and compile API 49 are unchanged. No market-data migration or gameplay restart is required for tooling work.
 
 ### Fresh installation
 
