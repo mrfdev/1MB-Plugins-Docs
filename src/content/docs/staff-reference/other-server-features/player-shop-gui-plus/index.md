@@ -5,7 +5,7 @@ description: "Public-safe commands, permissions, configuration, integrations, an
 
 This is the public technical and operations guide for 1MoreBlock's maintained PlayerShopGUIPlus fork. For player instructions, use the [player guide](/player-guides/other-server-features/player-shop-gui-plus/). The plugin name and data directory remain `PlayerShopGUIPlus`.
 
-**Release status, reviewed 28 September 2026:** `001` is the last confirmed live build. `012` is tested on the local server and awaits live deployment. The main reference below describes `012`; [older live commands](#older-live-build-001) are recorded separately. Confirm the installed version before using a command or planning an update. This documentation does not announce a live plugin deployment.
+**Release status, reviewed 28 September 2026:** `001` is the last confirmed live build. `013` is tested on the local server and awaits live deployment. The main reference below describes `013`; [older live commands](#older-live-build-001) are recorded separately. Confirm the installed version before using a command or planning an update. This documentation does not announce a live plugin deployment.
 
 <a id="commands-in-build-007"></a>
 
@@ -13,7 +13,7 @@ This is the public technical and operations guide for 1MoreBlock's maintained Pl
 
 <a id="commands-in-build-009"></a>
 
-## Commands in build 012
+## Commands in build 013
 
 `/market` is the main command; `/ah` is its native alias, using the same handler, arguments, and permissions. Root aliases `/playershop`, `/pshop`, `/playershops`, and `/pshops` are no longer registered. Existing CMI/server aliases are separate configuration and can still override native commands.
 
@@ -276,6 +276,25 @@ It does **not** rebuild `menu.yml`, reconnect storage, reinitialize providers, o
 
 Use a clean stop/start for jar replacements, menu layout changes, database/economy/provider changes, spawner selection, and lifecycle settings. Reopen menus after text/format updates. Do not use a server-wide reload or hot-loader as an installation or migration procedure.
 
+## Optional CMI name cache (013)
+
+When a GUI seller or recent-sale participant has no session, Paper-cache or plugin-table name, the market can check CMI’s already-loaded local record for that exact UUID. It retains the real username and Bedrock prefix, rejecting fake accounts, mismatched UUIDs, malformed names and names CMI marks as duplicates. Current-session names take priority. This is display-only: ownership and Vault payments still use the original server UUID. Staff statistics retain their separate plugin-table name snapshot.
+
+Merge this optional setting into `plugins/PlayerShopGUIPlus/config.yml`:
+
+```yaml
+playerNames:
+  cmiFallback: true
+```
+
+The default is `true`, including when absent from an older config. CMI and its required CMILib are optional; new lookups need both installed and CMI fully loaded. Tested with CMI 9.8.10.1 and CMILib 1.6.0.0. The CMI API used to compile the plugin is not a server jar to install. Economy continues through Vault. Set `false` and run `/market admin reload` to disable both this lookup and its saved fallback names; session/Paper/plugin-table names still work. Reopen menus after changes. No new command, permission or placeholder is needed. `%owner%` and recent-sale participant labels use the shared resolver.
+
+The bridge reads the loaded UUID map and calls `getName(false)`, never CMI’s broader player lookup, its database or an online identity service. It does not fetch skins. Menus read memory only; CMI checks run on the server thread in batches of at most 20 UUIDs every 10 ticks, with a 2 ms budget. The queue holds 1,024 UUIDs. Misses become eligible again after five minutes when viewed; saved names become eligible for rechecking after 24 hours when requested. Startup queues unresolved shop owners up to that bound, then later menu/history views gradually fill remaining gaps. A first view may still show a UUID; reopen it after resolution. Unknown identities remain UUIDs.
+
+The separate `plugins/PlayerShopGUIPlus/player-names.db` file keeps verified UUID/name/source/time records across restarts, up to 100,000 rows, for either shop backend. All cache I/O is asynchronous, with a bounded write queue and a three-second SQLite busy timeout. Loaded rows reject malformed/noncanonical UUIDs, invalid names, unknown sources and invalid/future verification times. Previously learned names remain usable without CMI. Explicitly rejected refreshed CMI records remove their saved fallback. Names observed on join take precedence over late cached/CMI data.
+
+Check `/market debug hooks` for readiness and cache health. An unreadable/corrupt/unsupported cache logs a warning and preserves its file; current in-memory resolution continues but new names may not survive restart. Correct the cause while stopped and restart to restore persistence. A crash before a queued cache write commits can lose that display update. Keep the cache private and back it up with the plugin data. Rollback to 012 ignores it; retain current trades and data rather than restoring an older market database for this cosmetic change.
+
 ## Hidden configuration options
 
 This self-contained reference covers the PlayerShopGUIPlus-specific options and the shared number-format options from brc's hidden-options documentation, checked against our maintained fork on 28 September 2026. The upstream links below are attribution; you do not need the brc website to configure these settings.
@@ -363,7 +382,7 @@ These labels cover successive powers of 1000, from one thousand (10³) through o
 
 ### Applying changes
 
-A full, clean server restart reliably applies all settings above. The in-game reload command (`/playershop reload` on live `001`, `/market admin reload` in candidate `012`) refreshes item-name capitalization, the cancellation word, number-format settings, and language labels for subsequent formatting and input; reopen existing menus to see refreshed text. External spawner selection happens during startup and requires a restart. The 007 reload cancels outstanding market prompts; players should reopen the relevant menu afterward.
+A full, clean server restart reliably applies all settings above. The in-game reload command (`/playershop reload` on live `001`, `/market admin reload` in candidate `013`) refreshes item-name capitalization, the cancellation word, number-format settings, and language labels for subsequent formatting and input; reopen existing menus to see refreshed text. External spawner selection happens during startup and requires a restart. The 007 reload cancels outstanding market prompts; players should reopen the relevant menu afterward.
 
 ## Persistent maintenance mode (007)
 
@@ -398,7 +417,7 @@ Examples:
 
 `status` shows mode, saved preference, plugin/server/Java versions, loaded shop/listing counts and scheduler state. `health` reports readiness, selected economy receipt support, item readiness and in-memory transaction-review counts. Its only database operation is `SELECT 1` on the existing storage worker and connection. Results are cached for five seconds and simultaneous requests share one probe. A four-second response deadline includes queue time; a busy or stalled query returns a warning. A timed-out pending probe is not duplicated, and a queued probe skips SQL if it has already timed out. Driver query timeout is requested at three seconds; the response deadline does not forcibly stop a driver. No reconnect, repair, schema scan, economy payment or recovery operation runs.
 
-`hooks` separates actual selected adapters/listeners from installed plugin presence/version. CMI may supply economy through Vault; no direct CMI-API or 1MB-library integration is added. An installed optional plugin is not proof that its hook is selected or compatible. `commands` checks native Bukkit registration for market/ah and their namespaced forms; external CMI aliases or chat interceptors must be inspected separately.
+`hooks` separates actual selected adapters/listeners from installed plugin presence/version. CMI may supply economy through Vault; build 013 adds a separate optional CMI API hook for local display names. Its status row reports CMI readiness/absence, cached and pending counts, configuration disablement and persistence failure. No 1MB-library integration is added. An installed optional plugin is not proof that its hook is selected or compatible. `commands` checks native Bukkit registration for market/ah and their namespaced forms; external CMI aliases or chat interceptors must be inspected separately.
 
 `permissions` includes declared nodes, current configured limit tiers and effective grants for the sender. It explains missing descriptor coverage and inherited wildcard limits. `placeholders` lists plugin-local formatting tokens and contexts, including the STYLE layout tokens added in 009; there is no PlaceholderAPI expansion, arbitrary template evaluator or new placeholder scope.
 
@@ -415,7 +434,7 @@ export JAVA_HOME="$(/usr/libexec/java_home -v 25)"
 ./gradlew clean build
 ```
 
-On other systems, set `JAVA_HOME` to the installed JDK 25 directory; on Windows use `gradlew.bat clean build`. The installable result is `build/libs/1MB-PlayerShopGuiPlus-v<version>.jar`; the tested update is `1MB-PlayerShopGuiPlus-v1.42.0-012-j25-26.3.jar`. Use the maintainer's recorded checksum to verify the supplied artifact. Test probes, compile stubs, old NMS handlers, and source archives are not server plugins to install.
+On other systems, set `JAVA_HOME` to the installed JDK 25 directory; on Windows use `gradlew.bat clean build`. The installable result is `build/libs/1MB-PlayerShopGuiPlus-v<version>.jar`; the tested update is `1MB-PlayerShopGuiPlus-v1.42.0-013-j25-26.3.jar`. Use the maintainer's recorded checksum to verify the supplied artifact. Test probes, compile stubs, old NMS handlers, and source archives are not server plugins to install.
 
 ### Fresh installation
 
@@ -429,11 +448,11 @@ On other systems, set `JAVA_HOME` to the installed JDK 25 directory; on Windows 
 1. Verify the intended artifact and release behavior on a fresh test copy, including existing listings and unclaimed items.
 2. Stop the target server normally. Back up the installed jar together with the complete `plugins/PlayerShopGUIPlus` directory, configured database, and the related economy state using the site's established backup procedure.
 3. Replace the old jar with exactly one maintained jar. Preserve the `PlayerShopGUIPlus` folder, backend, table names, owner identities, configuration, and permission grants. Do not delete the database to make an empty market start.
-4. For `012`, update scripts/menu links using former roots to `/market` or `/ah`. Review CMI and server command overrides and retire the quantity-inserting `/ah` shortcut when native `/ah` takes over. Verify both roots with real player permissions.
+4. For `013`, update scripts/menu links using former roots to `/market` or `/ah`. Review CMI and server command overrides and retire the quantity-inserting `/ah` shortcut when native `/ah` takes over. Verify both roots with real player permissions.
 5. Start normally and check successful plugin enablement and complete market loading. Compare existing listings and unclaimed items with the pre-upgrade state before admitting trades.
 6. Check representative selling, whole/partial buying, cancellation, expiry/claim, permissions, fees, balances, and metadata on the test copy. Include full inventories and a clean restart. Passing startup alone does not verify transactions.
 
-The current Paper adaptation and `012` commands keep the storage schema and item field format; this update requires no shop-data migration. Back up the added `market-state.yml` preference and the separate `statistics.db` analytics file with the rest of the plugin data. SQLite and MySQL remain available. Fully sold or claimed entries leave the shop store. Build 010 records new activity in a separate analytics file from its displayed start date; it cannot reconstruct earlier sales.
+The current Paper adaptation and `012` commands keep the storage schema and item field format; this update requires no shop-data migration. Back up the added `market-state.yml` preference, separate `statistics.db` analytics file and build-013 `player-names.db` cache with the rest of the plugin data. SQLite and MySQL remain available. Fully sold or claimed entries leave the shop store. Build 010 records new activity in a separate analytics file from its displayed start date; it cannot reconstruct earlier sales.
 
 For rollback, preserve the then-current jar and data first and follow the maintainer's verified rollback record. An older jar is not automatically safer, and newer Paper item data may not load on an older server. Restoring an old database can erase trades made since that backup; do not restore one just to change command names. Future storage changes require a tested migration and recovery plan.
 
@@ -470,7 +489,7 @@ The hidden-options section above is self-contained. Upstream pages provide attri
 
 ## Seller names (011)
 
-The GUI resolves the existing owner UUID against real usernames observed during the current plugin session, then Paper's existing UUID cache, then PlayerShopGUIPlus's configured player table. A valid UUID with no usable local name displays the full UUID. An absent owner UUID retains the configured missing-seller text and is invalid for purchasing. Labels are presentation only; payments and ownership still use the original UUID.
+The GUI resolves the existing owner UUID against real usernames observed during the current plugin session, then Paper's existing UUID cache, then PlayerShopGUIPlus's configured player table. Build 013 adds the [optional persistent CMI name fallback](#optional-cmi-name-cache-013) after those sources. A valid UUID with no usable local name displays the full UUID. An absent owner UUID retains the configured missing-seller text and is invalid for purchasing. Labels are presentation only; payments and ownership still use the original UUID.
 
 Player names preserve case and Bedrock prefixes. Database UUID text must be canonical. Names accept letters, digits, underscores and periods, from 1 to 40 characters; malformed rows and conflicting names for one UUID are excluded. Case-only duplicates are accepted. Current connected names and exact Paper UUID records take precedence over older database records. No nickname matching, name-derived UUID or Mojang lookup is used. CMI's API/database is not required for this feature.
 
