@@ -5,7 +5,7 @@ description: "Public-safe commands, permissions, configuration, integrations, an
 
 This is the public technical and operations guide for 1MoreBlock's maintained PlayerShopGUIPlus fork. For player instructions, use the [player guide](/player-guides/other-server-features/player-shop-gui-plus/). The plugin name and data directory remain `PlayerShopGUIPlus`.
 
-**Release status, reviewed 28 September 2026:** `001` is the last confirmed live build. `016` is verified in isolated local Paper tests and awaits live deployment. The main reference below describes `016`; [older live commands](#older-live-build-001) are recorded separately. Confirm the installed version before using a command or planning an update. Build 016 changes development tooling and artifact version labels only; every runtime class matches 015, which remains on the normal gameplay test clone. This documentation does not announce a live plugin deployment.
+**Release status, reviewed 28 September 2026:** `001` is the last confirmed live build. `017` is verified in isolated local Paper tests and awaits live deployment. The main reference below describes `017`; [older live commands](#older-live-build-001) are recorded separately. Confirm the installed version before using a command or planning an update. Build 017 adds menu-session and inventory-event hardening. Its isolated tests use synthetic players/inventories and a Vault boundary; connected-client and actual-provider acceptance remains required. This documentation does not announce a live plugin deployment.
 
 <a id="commands-in-build-007"></a>
 
@@ -19,7 +19,9 @@ This is the public technical and operations guide for 1MoreBlock's maintained Pl
 
 <a id="commands-in-build-015"></a>
 
-## Commands in build 016
+<a id="commands-in-build-016"></a>
+
+## Commands in build 017
 
 `/market` is the main command; `/ah` is its native alias, using the same handler, arguments, and permissions. Root aliases `/playershop`, `/pshop`, `/playershops`, and `/pshops` are no longer registered. Existing CMI/server aliases are separate configuration and can still override native commands.
 
@@ -55,6 +57,16 @@ Help/info are read-only and available to players and console, including before s
 Admin actions and reload/r are case-insensitive and work from console or for permitted staff before gameplay gates, including while dormant. Extra arguments show usage. Sell retains lowercase matching. Trading, menus and player lookup require an active market, an in-game player, loaded shop/player data, and an allowed world/game mode unless bypassed. Unknown first arguments are player names except reserved help, info, admin and debug.
 
 Buying, cancelling, claiming, and searching use menus. `buy`, `cancel`, `cancelothers`, `claim`, `search`, and `player` are not subcommands. `/market recent [page]` and `/ah recent [page]` are the same read-only chat command; see [recent sales](#recent-sales-012).
+
+### GUI safety in build 017
+
+Menus bind once to an exact player/data/view/request/world/market session. Admission and next-tick execution recheck that session and permissions. Fixed 200ms monotonic click/open cooldowns survive menu changes during a login; only one action/open can be pending. Extra inputs are silent. Open admission happens before scanning/rendering, and cancelled/replaced opens cannot activate. Rendering and player/inventory operations now run on the server thread. Database/name-cache I/O retains its existing background workers.
+
+Ordinary left/right clicks operate buttons. `clickActions` still maps listing gestures, restricted to left/right/shift-left/shift-right/middle; other configured types cannot bypass the allowlist. Creative events never activate buttons. Click/drag handlers cancel movement throughout top and bottom inventories, including events already cancelled elsewhere; a previously cancelled click never triggers an action. Inventory move/pickup, player drop and offhand events are protected too. Close/open replacement, quit/kick/reconnect, death, world/game-mode change, reload, dormancy and shutdown invalidate sessions. Auto-refresh skips pending actions. Old close events cannot clear a newer menu.
+
+Purchase confirmation rejects a changed item/quantity/price. Cancellation rechecks listing membership, expiry, owner and staff permission. Claims require an authoritative expired/cancelled item owned by the player and use actual component stack limits. Unexpected leftovers restore the inventory and retain the listing. Uncertain partial delivery blocks that listing in memory for reconciliation. Wizard confirmation now uses the guarded command-sale path and exact original hand slot/stack, including its restriction on positive fees combined with deferred refunds.
+
+There are no new settings, permissions, placeholders or dependencies, and no schema/item migration. The requested visual menu redesign is separate. Reconcile uncertain inventory/payment outcomes before retry or restart: review guards remain in memory, and this release does not provide crash-atomic economy/inventory/SQLite recovery. The private `docs/GUI-HARDENING.md` and 017 change record document test scope and remaining two-client/provider/crash checks. Use the isolated `buy-smoke.py --case gui` suite after building the probes; never install probe jars on gameplay servers.
 
 ### Help and info text
 
@@ -477,7 +489,7 @@ python3 scripts/check-tooling.py
 python3 scripts/check-tooling.py --artifact
 ```
 
-On other systems, set `JAVA_HOME` to the installed JDK 25 directory; on Windows use `gradlew.bat --dependency-verification strict --warning-mode fail clean build smokeJars` and `python` for the check scripts. The installable result is `build/libs/1MB-PlayerShopGuiPlus-v<version>.jar`; the tested update is `1MB-PlayerShopGuiPlus-v1.42.0-016-j25-26.3.jar`. Use the maintainer's recorded checksum to verify the supplied artifact. Test probes, compile stubs, old NMS handlers, and source archives are not server plugins to install.
+On other systems, set `JAVA_HOME` to the installed JDK 25 directory; on Windows use `gradlew.bat --dependency-verification strict --warning-mode fail clean build smokeJars` and `python` for the check scripts. The installable result is `build/libs/1MB-PlayerShopGuiPlus-v<version>.jar`; the tested update is `1MB-PlayerShopGuiPlus-v1.42.0-017-j25-26.3.jar`. Use the maintainer's recorded checksum to verify the supplied artifact. Test probes, compile stubs, old NMS handlers, and source archives are not server plugins to install.
 
 For portable harness checks, run `python3 -m unittest discover -s scripts/tests -v`. After a successful strict build, `python3 scripts/test-dependency-guards.py` proves that tampered checksums, missing locks and incompatible upgrades fail, using offline disposable copies. Linux/macOS/Windows CI runs these tooling/build checks without private player data. Real Paper regression tests still require local Java 27, a prepared matching Paper bootstrap/cache, an already accepted EULA and approved provider jars; real-server coverage is currently macOS only. Tests select free loopback ports and unique directories, default to packaged configuration, accept explicit Java/server/config/provider/probe/output paths, reject stale results and stop timed-out test processes. They never use a gameplay server as their output directory. The four probes, including synthetic HeadDatabase, remain separate from the runtime jar.
 

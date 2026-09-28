@@ -2,7 +2,7 @@
 
 The player market lets you buy items from other players and offer your own items for sale on 1MoreBlock. It is separate from the server's ShopGUIPlus shop. 1MoreBlock maintains a custom version of brc's PlayerShopGUIPlus for Paper 26.3.
 
-**Which commands can I use?** The last confirmed live version is build `001`. Start with the live instructions below. The tested `016` update uses `/market` and `/ah` and adds help/info plus a staff-controlled maintenance pause; [its commands are explained below](#the-market-update-build-016). Build 014 updates the internals for Paper 26.3 and newer while retaining existing listings and item metadata. Build 015 keeps the existing SQLite listings and fixes HeadDatabase startup handling. Build 016 improves development tooling and keeps the same game behavior. The commands and permissions below are unchanged by these cleanups. The update includes recent-sales chat, staff diagnostics, market statistics and soft 1MB chat colours. Seller names now use trusted local player records, including Bedrock prefixes. A seller whose name is still unknown is shown by their unique player ID. Detailed market statistics are staff-only and do not change listing prices or player permissions. Players do not need extra permissions or a new command to see the styling. Wait for staff to announce that update before relying on those native commands. The existing live `/ah` shortcut is configured separately by the server.
+**Which commands can I use?** The last confirmed live version is build `001`. Start with the live instructions below. The tested `017` update uses `/market` and `/ah` and adds help/info plus a staff-controlled maintenance pause; [its commands are explained below](#the-market-update-build-017). Build 014 updates the internals for Paper 26.3 and newer while retaining existing listings and item metadata. Build 015 keeps the existing SQLite listings and fixes HeadDatabase startup handling. Build 016 improves development tooling and keeps the same game behavior. The commands and permissions below are unchanged by these cleanups. The update includes recent-sales chat, staff diagnostics, market statistics and soft 1MB chat colours. Seller names now use trusted local player records, including Bedrock prefixes. A seller whose name is still unknown is shown by their unique player ID. Detailed market statistics are staff-only and do not change listing prices or player permissions. Players do not need extra permissions or a new command to see the styling. Wait for staff to announce that update before relying on those native commands. The existing live `/ah` shortcut is configured separately by the server.
 
 ## Getting started
 
@@ -48,9 +48,17 @@ The built-in aliases are `/pshop`, `/playershops`, and `/pshops`. These commands
 
 <a id="the-market-update-build-015"></a>
 
-## The market update: build 016
+<a id="the-market-update-build-016"></a>
+
+## The market update: build 017
 
 This section describes the tested update awaiting live deployment. Its main command is `/market`, with `/ah` as a true alias: both run the same commands with the same permissions. The old `/playershop`, `/pshop`, `/playershops`, and `/pshops` roots are removed in this update.
+
+### Menu controls and safety
+
+Build 017 ignores extra clicks within 200 milliseconds and processes one action at a time. Use ordinary left/right clicks on navigation, quantity and confirmation buttons. Moving items around your own inventory, dragging, double-click collection, number keys, offhand swaps, dropping and creative item changes are blocked while a market menu is open. Configured listing gestures still work; staff shift-right/middle cancellation still requires staff permission.
+
+A menu closes or becomes invalid after you close it, open another inventory, change world/game mode, die, disconnect, or staff reload/pause the market. Type `/market` or `/ah` to start again. If someone buys part of a listing or its price/contents change while you are confirming, reopen the listing to see the new details. The selling wizard checks that you still hold the original item in the same slot before listing it. Cancelled/expired items can only be claimed by their owner, with enough space for the item's actual stack limit.
 
 ### Seller names
 
