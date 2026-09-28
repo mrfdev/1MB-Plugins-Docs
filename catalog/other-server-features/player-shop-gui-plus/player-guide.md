@@ -2,7 +2,7 @@
 
 The player market lets you buy items from other players and offer your own items for sale on 1MoreBlock. It is separate from the server's ShopGUIPlus shop. 1MoreBlock maintains a custom version of brc's PlayerShopGUIPlus for Paper 26.3.
 
-**Which commands can I use?** The last confirmed live version is build `001`. Start with the live instructions below. The tested `007` update uses `/market` and `/ah` and adds help/info plus a staff-controlled maintenance pause; [its commands are explained below](#the-market-update-build-007). Wait for staff to announce that update before relying on those native commands. The existing live `/ah` shortcut is configured separately by the server.
+**Which commands can I use?** The last confirmed live version is build `001`. Start with the live instructions below. The tested `008` update uses `/market` and `/ah` and adds help/info plus a staff-controlled maintenance pause; [its commands are explained below](#the-market-update-build-008). Build 008 also adds staff diagnostics, which players do not need for trading. Wait for staff to announce that update before relying on those native commands. The existing live `/ah` shortcut is configured separately by the server.
 
 ## Getting started
 
@@ -30,7 +30,9 @@ The built-in aliases are `/pshop`, `/playershops`, and `/pshops`. These commands
 
 <a id="the-market-update-build-006"></a>
 
-## The market update: build 007
+<a id="the-market-update-build-007"></a>
+
+## The market update: build 008
 
 This section describes the tested update awaiting live deployment. Its main command is `/market`, with `/ah` as a true alias: both run the same commands with the same permissions. The old `/playershop`, `/pshop`, `/playershops`, and `/pshops` roots are removed in this update.
 
@@ -87,7 +89,7 @@ Staff can change generated item-name capitalization, the chat cancellation word,
 - **No access:** ask staff to check market or sell permissions and world/game-mode restrictions. In the update, `/market help` and `/market info` remain available without market access.
 - **A listing expired or disappeared:** close and reopen the menu to refresh it. Another player may have bought it, or it may have expired. Check your own unclaimed items where relevant.
 - **Seller shown as `none`:** the server may lack a cached name for the saved seller identity. The tested update retains that identity for payments; the label alone does not mean the item has no owner. Ask staff if you are unsure.
-- **The market is temporarily paused (007):** staff have paused market access, buying, selling and claims. Your listings and unclaimed items are kept. Try again after staff reopen it; help/info remain available. Listing deadlines are unchanged, so overdue listings move to Unclaimed after reopening.
+- **The market is temporarily paused (007 and later):** staff have paused market access, buying, selling and claims. Your listings and unclaimed items are kept. Try again after staff reopen it; help/info remain available. Listing deadlines are unchanged, so overdue listings move to Unclaimed after reopening.
 - **A payment, delivery, or refund failed:** stop and contact staff before retrying or requesting replacement items. Give the time, item, quantity, displayed price, and message privately so staff can check the trade.
 
 ## More help
