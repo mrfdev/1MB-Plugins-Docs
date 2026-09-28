@@ -5,7 +5,7 @@ description: "Public-safe commands, permissions, configuration, integrations, an
 
 This is the public technical and operations guide for 1MoreBlock's maintained PlayerShopGUIPlus fork. For player instructions, use the [player guide](/player-guides/other-server-features/player-shop-gui-plus/). The plugin name and data directory remain `PlayerShopGUIPlus`.
 
-**Release status, reviewed 28 September 2026:** `001` is the last confirmed live build. `013` is tested on the local server and awaits live deployment. The main reference below describes `013`; [older live commands](#older-live-build-001) are recorded separately. Confirm the installed version before using a command or planning an update. This documentation does not announce a live plugin deployment.
+**Release status, reviewed 28 September 2026:** `001` is the last confirmed live build. `014` is tested on the local server and awaits live deployment. The main reference below describes `014`; [older live commands](#older-live-build-001) are recorded separately. Confirm the installed version before using a command or planning an update. This documentation does not announce a live plugin deployment.
 
 <a id="commands-in-build-007"></a>
 
@@ -13,7 +13,9 @@ This is the public technical and operations guide for 1MoreBlock's maintained Pl
 
 <a id="commands-in-build-009"></a>
 
-## Commands in build 013
+<a id="commands-in-build-013"></a>
+
+## Commands in build 014
 
 `/market` is the main command; `/ah` is its native alias, using the same handler, arguments, and permissions. Root aliases `/playershop`, `/pshop`, `/playershops`, and `/pshops` are no longer registered. Existing CMI/server aliases are separate configuration and can still override native commands.
 
@@ -295,6 +297,25 @@ The separate `plugins/PlayerShopGUIPlus/player-names.db` file keeps verified UUI
 
 Check `/market debug hooks` for readiness and cache health. An unreadable/corrupt/unsupported cache logs a warning and preserves its file; current in-memory resolution continues but new names may not survive restart. Correct the cause while stopped and restart to restore persistence. A crash before a queued cache write commits can lose that display update. Keep the cache private and back it up with the plugin data. Rollback to 012 ignores it; retain current trades and data rather than restoring an older market database for this cosmetic change.
 
+## Paper 26.3+ maintenance (014)
+
+Paper 26.3 is the minimum version. Build 014 removes all older Minecraft adapters, Maven modules and version-specific default resources. Java 25 remains the plugin compilation target; the local test server runs Java 27. The tested server is Paper 26.3 build 133 ALPHA. Newer Paper releases use the same public API implementation and must be validated before deployment; this is not a compatibility guarantee for every future release. Bukkit-only, Spigot and Folia are not supported targets.
+
+The market schema, serialized item field, ownership UUIDs, quantities, prices and listing states are unchanged. Keep existing plugin data and configuration. Default templates now have plain `config.yml`, `menu.yml` and `categories.yml` paths inside the jar; existing server files are preserved. Commands, permissions and placeholders are unchanged. GUI titles, item names/lore and chat prompts use current Paper/Adventure APIs. Menu decoration preserves existing item components and foreign PDC. Already-cancelled chat is ignored; chat deferred during a market prompt retains per-viewer formatting and returns when input finishes. No remote player/profile lookup is introduced.
+
+Supported configuration forms remain available:
+
+- Use modern materials such as `RED_WOOL` and `ZOMBIE_SPAWN_EGG`; old numeric material variants and `monsterEggMob` are removed. `damage` now means damage on an item that supports durability. Simple material strings can use `minecraft:diamond_sword:37` where that format is accepted.
+- Enchantments accept existing aliases such as `DAMAGE_ALL:5` and namespaced forms such as `minecraft:sharpness:5`. Banner patterns and horn instruments use registry names such as `minecraft:cross` and `minecraft:sing_goat_horn`. Existing sound names such as `ENTITY_EXPERIENCE_ORB_PICKUP` remain valid alongside `minecraft:entity.experience_orb.pickup`.
+- `potion.type` accepts modern types, including `minecraft:long_swiftness`. Existing `SPEED`, `JUMP`, `INSTANT_HEAL` and `INSTANT_DAMAGE` aliases remain readable. `potion.extended: true` selects a long variant; `potion.level: 2` selects a strong variant. Choose an explicit variant or these flags, not both. Conflicting or impossible variants are rejected. Potion colour remains supported.
+- `model: 123` sets the custom-model float value; other component lists are preserved. `skin` texture properties and locally cached `skullOwner` names remain supported. Missing local textures do not initiate a profile lookup. Existing typed `nbt` configuration still supports nested custom data; it is not silently replaced by PDC.
+
+New built-in spawners have a `playershopguiplus:spawner_type` PDC marker and retain the previous `ShopGui/EntityId` tag. Old tagged spawners remain readable without being rewritten. Invalid/conflicting identity data fails closed; placement respects cancellation and build permission. External spawner plugins retain their own item formats. The marker identifies the format; it is not an anti-forgery signature.
+
+The plugin no longer directly reflects into Authlib/CraftBukkit or selects an NMS implementation. The bundled NBT library still uses internals for configured custom-data interoperability and old spawner tags, and needs verification on future Paper versions. Optional public-plugin API checks and JDBC driver initialization remain. MySQL now uses the modern `com.mysql.cj.jdbc.Driver` class, but this release's storage tests use SQLite; optional provider/database removal is separate future work.
+
+Gradle is the only maintained build, and runtime Java deprecation/removal warnings now fail compilation. Old source and rollback artifacts are retained privately. Before replacing a live jar, follow the backup/test/restart procedure below and check existing listing/unclaimed counts and representative metadata. A rollback must retain trades made since the backup. These changes do not complete the wider GUI security, performance or durable transaction-recovery work.
+
 ## Hidden configuration options
 
 This self-contained reference covers the PlayerShopGUIPlus-specific options and the shared number-format options from brc's hidden-options documentation, checked against our maintained fork on 28 September 2026. The upstream links below are attribution; you do not need the brc website to configure these settings.
@@ -382,7 +403,7 @@ These labels cover successive powers of 1000, from one thousand (10³) through o
 
 ### Applying changes
 
-A full, clean server restart reliably applies all settings above. The in-game reload command (`/playershop reload` on live `001`, `/market admin reload` in candidate `013`) refreshes item-name capitalization, the cancellation word, number-format settings, and language labels for subsequent formatting and input; reopen existing menus to see refreshed text. External spawner selection happens during startup and requires a restart. The 007 reload cancels outstanding market prompts; players should reopen the relevant menu afterward.
+A full, clean server restart reliably applies all settings above. The in-game reload command (`/playershop reload` on live `001`, `/market admin reload` in candidate `014`) refreshes item-name capitalization, the cancellation word, number-format settings, and language labels for subsequent formatting and input; reopen existing menus to see refreshed text. External spawner selection happens during startup and requires a restart. The 007 reload cancels outstanding market prompts; players should reopen the relevant menu afterward.
 
 ## Persistent maintenance mode (007)
 
@@ -434,7 +455,7 @@ export JAVA_HOME="$(/usr/libexec/java_home -v 25)"
 ./gradlew clean build
 ```
 
-On other systems, set `JAVA_HOME` to the installed JDK 25 directory; on Windows use `gradlew.bat clean build`. The installable result is `build/libs/1MB-PlayerShopGuiPlus-v<version>.jar`; the tested update is `1MB-PlayerShopGuiPlus-v1.42.0-013-j25-26.3.jar`. Use the maintainer's recorded checksum to verify the supplied artifact. Test probes, compile stubs, old NMS handlers, and source archives are not server plugins to install.
+On other systems, set `JAVA_HOME` to the installed JDK 25 directory; on Windows use `gradlew.bat clean build`. The installable result is `build/libs/1MB-PlayerShopGuiPlus-v<version>.jar`; the tested update is `1MB-PlayerShopGuiPlus-v1.42.0-014-j25-26.3.jar`. Use the maintainer's recorded checksum to verify the supplied artifact. Test probes, compile stubs, old NMS handlers, and source archives are not server plugins to install.
 
 ### Fresh installation
 
@@ -448,7 +469,7 @@ On other systems, set `JAVA_HOME` to the installed JDK 25 directory; on Windows 
 1. Verify the intended artifact and release behavior on a fresh test copy, including existing listings and unclaimed items.
 2. Stop the target server normally. Back up the installed jar together with the complete `plugins/PlayerShopGUIPlus` directory, configured database, and the related economy state using the site's established backup procedure.
 3. Replace the old jar with exactly one maintained jar. Preserve the `PlayerShopGUIPlus` folder, backend, table names, owner identities, configuration, and permission grants. Do not delete the database to make an empty market start.
-4. For `013`, update scripts/menu links using former roots to `/market` or `/ah`. Review CMI and server command overrides and retire the quantity-inserting `/ah` shortcut when native `/ah` takes over. Verify both roots with real player permissions.
+4. For `014`, update scripts/menu links using former roots to `/market` or `/ah`. Review CMI and server command overrides and retire the quantity-inserting `/ah` shortcut when native `/ah` takes over. Verify both roots with real player permissions.
 5. Start normally and check successful plugin enablement and complete market loading. Compare existing listings and unclaimed items with the pre-upgrade state before admitting trades.
 6. Check representative selling, whole/partial buying, cancellation, expiry/claim, permissions, fees, balances, and metadata on the test copy. Include full inventories and a clean restart. Passing startup alone does not verify transactions.
 
