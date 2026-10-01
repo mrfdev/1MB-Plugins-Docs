@@ -2,7 +2,7 @@
 
 This is the public technical and operations guide for 1MoreBlock's maintained PlayerShopGUIPlus fork. For player instructions, use the [player guide](/player-guides/other-server-features/player-shop-gui-plus/). The plugin name and data directory remain `PlayerShopGUIPlus`.
 
-**Release status, reviewed 1 October 2026:** `001` is the last confirmed live build. `036` adds durable transaction IDs, acknowledged market writes, persistent review holds and the optional 1MB-Library AutoSell purchase guard. It retains 035, which applies the same border and footer to all 19 market menus, including a read-only personal head on each page. It preserves 034’s permission-aware unknown-command guidance and exact local player-shop lookup. Optional explicitly allowed PlaceholderAPI text remains limited to the main-menu head’s title/lore. It preserves 032’s structured transaction audit logs, buyer/spending/sold-material/daily reports and historical time windows. It preserves 031’s owner-only Cancel listing shortcut beside OK in the own-item warning; 030’s Collect all and durable claim escrow remain. It extends 029’s light blue outer borders and clear interiors to every market menu. It preserves 028’s navigation through shops, categories and search results. It retains 027’s HeadDatabase removal, native item support and local player/CMI skin caches. It awaits live deployment. The main reference below describes `036`; [older live commands](#older-live-build-001) are recorded separately. Confirm the installed version before using a command or planning an update. Build 018 makes recent history personal by UUID and adds a separate staff market-wide view. Build 017 adds menu-session and inventory-event hardening. Its isolated tests use synthetic players/inventories and a Vault boundary; connected-client and actual-provider acceptance remains required. This documentation does not announce a live plugin deployment.
+**Release status, reviewed 1 October 2026:** `001` is the last confirmed live build. `037` adds bounded chat buffering, SQL queues and cache cleanup, with faster category rendering. It retains 036’s durable transaction IDs, acknowledged market writes, persistent review holds and the optional 1MB-Library AutoSell purchase guard. It retains 035, which applies the same border and footer to all 19 market menus, including a read-only personal head on each page. It preserves 034’s permission-aware unknown-command guidance and exact local player-shop lookup. Optional explicitly allowed PlaceholderAPI text remains limited to the main-menu head’s title/lore. It preserves 032’s structured transaction audit logs, buyer/spending/sold-material/daily reports and historical time windows. It preserves 031’s owner-only Cancel listing shortcut beside OK in the own-item warning; 030’s Collect all and durable claim escrow remain. It extends 029’s light blue outer borders and clear interiors to every market menu. It preserves 028’s navigation through shops, categories and search results. It retains 027’s HeadDatabase removal, native item support and local player/CMI skin caches. It awaits live deployment. The main reference below describes `037`; [older live commands](#older-live-build-001) are recorded separately. Confirm the installed version before using a command or planning an update. Build 018 makes recent history personal by UUID and adds a separate staff market-wide view. Build 017 adds menu-session and inventory-event hardening. Its isolated tests use synthetic players/inventories and a Vault boundary; connected-client and actual-provider acceptance remains required. This documentation does not announce a live plugin deployment.
 
 <a id="commands-in-build-007"></a>
 
@@ -53,6 +53,16 @@ This is the public technical and operations guide for 1MoreBlock's maintained Pl
 <span id="commands-in-build-034"></span>
 
 
+## Performance and lifecycle safeguards, build 037
+
+Market chat prompts expire after two minutes. Pending chat rendering and rendered backlog each keep at most 100 messages per player; one drain processes up to 20 messages or two milliseconds per tick. Overflow gives a visible notice. Leaving the server releases the prompt, menu route and queued message references. These are fixed safeguards, with no new permissions or settings. `MSG.CHAT.BACKLOG` and `MSG.CHAT.TIMEOUT` in `lang.yml` customize the notices.
+
+Storage opens on its SQL worker; commands wait for complete market readiness. Ordinary SQL work has 256 admission slots and transaction stages have a separate 64. Saturation rejects new work without running SQL on the server thread; transaction uncertainty retains the existing review hold. A clean stop drains accepted work before closing SQLite. Never use a forced stop to bypass a hold.
+
+The optional `shops.log` writer runs in the background with a 1,024-record queue and reports overflow. It remains best-effort text, separate from durable transaction evidence. Local observed/Paper display-name caches are capped at 100,000 entries each; the local SQL name snapshot rejects more than 100,000 rows without changing those rows. Skin/head/provider cache limits and the local-only lookup policy remain in place. Clean disable releases session and presentation caches.
+
+Category counts are computed from current listings for each render, avoiding stale stored counts. The maintainer profiled a private copied 1MB market and tested saturation, disconnect/disable and restart boundaries. This does not certify live TPS, a long-running heap, or every optional provider. Startup YAML I/O and trusted third-party callback costs remain areas for further profiling. Keep profiles and heap dumps private; they can contain player data. Windows Paper testing is out of scope; Linux runtime testing awaits an actual deployment request.
+
 ## Durable transactions and AutoSell, build 036
 
 Listing, purchase, cancellation, expiry and individual collection require an acknowledged SQLite intent before execution. The final shop state and receipt commit together. PREPARED requests interrupted before execution safely become FAILED; EXECUTING requests become REVIEW_REQUIRED. Actor and shop-owner holds are restored before trading opens. Confirmed immediate compensation is recorded as REFUNDED. No ambiguous payment or delivery is automatically replayed.
@@ -71,7 +81,7 @@ New MiniMessage keys are `MSG.TRANSACTION.UNAVAILABLE`, `BUSY`, `CHANGED`, `REVI
 
 <span id="commands-in-build-035"></span>
 
-## Commands in build 036
+## Commands in build 037
 
 `/market` is the main command; `/ah` is its native alias, using the same handler, arguments, and permissions. Root aliases `/playershop`, `/pshop`, `/playershops`, and `/pshops` are no longer registered. Existing CMI/server aliases are separate configuration and can still override native commands.
 

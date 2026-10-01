@@ -5,7 +5,7 @@ description: "Let players list items in a shared marketplace and buy listings fr
 
 The player market lets you buy items from other players and offer your own items for sale on 1MoreBlock. It is separate from the server's ShopGUIPlus shop. 1MoreBlock maintains a custom version of brc's PlayerShopGUIPlus for Paper 26.3.
 
-**Which commands can I use?** The last confirmed live version is build `001`. Start with the live instructions below. The `036` update uses `/market` and `/ah` and adds help/info plus a staff-controlled maintenance pause; [its commands are explained below](#the-market-update-build-036). Build 014 updates the internals for Paper 26.3 and newer while retaining existing listings and item metadata. Build 015 keeps the existing SQLite listings. Build 027 removes the optional HeadDatabase integration; existing decorative heads and player-head icons remain ordinary supported items. Build 016 improves development tooling and keeps the same game behavior. The commands and permissions below are unchanged by these cleanups. The update includes recent-sales chat, staff diagnostics, market statistics and soft 1MB chat colours. Seller names now use trusted local player records, including Bedrock prefixes. A seller whose name is still unknown is shown by their unique player ID. Detailed market statistics are staff-only and do not change listing prices or player permissions. Players do not need extra permissions or a new command to see the styling. Wait for staff to announce that update before relying on those native commands. The existing live `/ah` shortcut is configured separately by the server.
+**Which commands can I use?** The last confirmed live version is build `001`. Start with the live instructions below. The `037` update uses `/market` and `/ah` and adds help/info plus a staff-controlled maintenance pause; [its commands are explained below](#the-market-update-build-037). Build 014 updates the internals for Paper 26.3 and newer while retaining existing listings and item metadata. Build 015 keeps the existing SQLite listings. Build 027 removes the optional HeadDatabase integration; existing decorative heads and player-head icons remain ordinary supported items. Build 016 improves development tooling and keeps the same game behavior. The commands and permissions below are unchanged by these cleanups. The update includes recent-sales chat, staff diagnostics, market statistics and soft 1MB chat colours. Seller names now use trusted local player records, including Bedrock prefixes. A seller whose name is still unknown is shown by their unique player ID. Detailed market statistics are staff-only and do not change listing prices or player permissions. Players do not need extra permissions or a new command to see the styling. Wait for staff to announce that update before relying on those native commands. The existing live `/ah` shortcut is configured separately by the server.
 
 ## Getting started
 
@@ -91,7 +91,7 @@ The built-in aliases are `/pshop`, `/playershops`, and `/pshops`. These commands
 
 <span id="the-market-update-build-035"></span>
 
-## The market update: build 036
+## The market update: build 037
 
 If **AutoSell is on**, turn it off with `/autosell` before buying from the market. A blocked purchase does not give you the item, and the market does not change your AutoSell preference. Try buying again after turning it off. If the safety check is unavailable, contact staff.
 
@@ -151,6 +151,8 @@ Build 020 adds material search directly from chat:
 Use one word with underscores, as suggested by Tab. Searches ignore capitalization; `minecraft:blue_wool` also works. Paging, sorting and refresh keep your material selection and update the current listings. A valid material with no listings gives an empty results menu that you can refresh later. Starting a command search also ends any pending market chat prompt.
 
 The GUI's **Search items** chat prompt still accepts custom names. For example, entering `box` there can find a renamed stick called `magic box`. Direct material search ignores custom names: that stick appears under `search stick`. Type a narrower material keyword if the suggestion list is long.
+
+Build 037 closes an unanswered market chat prompt after two minutes and restores normal chat. During a busy prompt it keeps a bounded recent chat backlog; if older messages were omitted, it tells you when the backlog is shown. Type `cancel` to leave sooner, or reopen `/market` to start again.
 
 Build 019 removes italics from market menu item titles and tooltip lore, including buttons, listing previews and confirmation screens. Colours and bold emphasis remain. The styling applies to menu previews; the items you list, buy or reclaim retain their original metadata. No new command, permission or setting is needed.
 
