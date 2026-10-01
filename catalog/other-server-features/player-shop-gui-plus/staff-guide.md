@@ -29,7 +29,7 @@ This is the public technical and operations guide for 1MoreBlock's maintained Pl
 | `/market info` | None | Introduction, next action, help, and clickable player-guide link. |
 | `/market help` | None | Available commands, descriptions, examples, and clickable suggestions. |
 | `/market` | `playershopguiplus.playershop` | Open the marketplace. |
-| `/market recent [sales|purchases] [page]` | `playershopguiplus.recent` | Your sales/purchases by server UUID; five entries per section/page, including empty roles. |
+| `/market recent [sales\|purchases] [page]` | `playershopguiplus.recent` | Your sales/purchases by server UUID; five entries per section/page, including empty roles. |
 | `/market admin recent [page]` | `playershopguiplus.admin.recent` | Whole-market completed sales, with buyers, sellers and paid totals. |
 | `/market sell <price>` | `playershopguiplus.playershop.sell` | Immediately list the exact main-hand stack for this total price. |
 | `/market sell` | `playershopguiplus.playershop.sell` | Open the selling wizard when enabled; otherwise show usage. |

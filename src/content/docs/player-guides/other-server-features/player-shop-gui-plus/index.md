@@ -102,7 +102,7 @@ Use a decimal point for decimal prices, for example `/market sell 12.50`. Do not
 | Update command | What it does | Example |
 | --- | --- | --- |
 | `/market` | Opens the marketplace. | `/ah` |
-| `/market recent [sales|purchases] [page]` | Your own sales/purchases, quantities, paid totals and counterparties. | `/ah recent purchases 2` |
+| `/market recent [sales\|purchases] [page]` | Your own sales/purchases, quantities, paid totals and counterparties. | `/ah recent purchases 2` |
 | `/market info` | Introduction, next command, help, and docs. | `/ah info` |
 | `/market help` | Lists commands available to you. | `/ah help` |
 | `/market sell <price>` | Immediately lists your entire main-hand stack for this total price. | `/ah sell 500` |
