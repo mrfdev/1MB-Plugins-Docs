@@ -2,7 +2,7 @@
 
 This is the public technical and operations guide for 1MoreBlock's maintained PlayerShopGUIPlus fork. For player instructions, use the [player guide](/player-guides/other-server-features/player-shop-gui-plus/). The plugin name and data directory remain `PlayerShopGUIPlus`.
 
-**Release status, reviewed 1 October 2026:** `001` is the last confirmed live build. `031` adds an owner-only Cancel listing shortcut beside OK in the own-item warning; 030’s Collect all and durable claim escrow remain. It retains 029’s light blue outer borders with empty interiors in the main menu and Search & Browse submenu. It preserves 028’s navigation through shops, categories and search results. It retains 027’s HeadDatabase removal, native item support and local player/CMI skin caches. It awaits live deployment. The main reference below describes `031`; [older live commands](#older-live-build-001) are recorded separately. Confirm the installed version before using a command or planning an update. Build 018 makes recent history personal by UUID and adds a separate staff market-wide view. Build 017 adds menu-session and inventory-event hardening. Its isolated tests use synthetic players/inventories and a Vault boundary; connected-client and actual-provider acceptance remains required. This documentation does not announce a live plugin deployment.
+**Release status, reviewed 1 October 2026:** `001` is the last confirmed live build. `032` adds structured transaction audit logs, buyer/spending/sold-material/daily reports and historical time windows. It preserves 031’s owner-only Cancel listing shortcut beside OK in the own-item warning; 030’s Collect all and durable claim escrow remain. It retains 029’s light blue outer borders with empty interiors in the main menu and Search & Browse submenu. It preserves 028’s navigation through shops, categories and search results. It retains 027’s HeadDatabase removal, native item support and local player/CMI skin caches. It awaits live deployment. The main reference below describes `032`; [older live commands](#older-live-build-001) are recorded separately. Confirm the installed version before using a command or planning an update. Build 018 makes recent history personal by UUID and adds a separate staff market-wide view. Build 017 adds menu-session and inventory-event hardening. Its isolated tests use synthetic players/inventories and a Vault boundary; connected-client and actual-provider acceptance remains required. This documentation does not announce a live plugin deployment.
 
 <a id="commands-in-build-007"></a>
 
@@ -44,7 +44,9 @@ This is the public technical and operations guide for 1MoreBlock's maintained Pl
 
 <a id="commands-in-build-030"></a>
 
-## Commands in build 031
+<a id="commands-in-build-031"></a>
+
+## Commands in build 032
 
 `/market` is the main command; `/ah` is its native alias, using the same handler, arguments, and permissions. Root aliases `/playershop`, `/pshop`, `/playershops`, and `/pshops` are no longer registered. Existing CMI/server aliases are separate configuration and can still override native commands.
 
@@ -55,12 +57,13 @@ This is the public technical and operations guide for 1MoreBlock's maintained Pl
 | `/market` | `playershopguiplus.playershop` | Open the marketplace. |
 | `/market search <material or keyword>` | `playershopguiplus.playershop` | Exact vanilla item ID, otherwise substring keyword. Tab uses API materials only; in-game and active market required. |
 | `/market recent [sales\|purchases] [page]` | `playershopguiplus.recent` | Your sales/purchases by server UUID; five entries per section/page, including empty roles. |
+| `/market admin log [filter] [page]` | `playershopguiplus.admin.log` | Structured activity stages, with `transaction <uuid> [page]` detail. [Audit guide](#transaction-audit-032). |
 | `/market admin recent [page]` | `playershopguiplus.admin.recent` | Whole-market completed sales, with buyers, sellers and paid totals. |
 | `/market sell <price>` | `playershopguiplus.playershop.sell` | Immediately list the exact main-hand stack for this total price. |
 | `/market sell` | `playershopguiplus.playershop.sell` | Open the selling wizard when enabled; otherwise show usage. |
 | `/market sell <quantity> <price>` | `playershopguiplus.playershop.sell` | Offer an explicit quantity from the main hand, using the configured direct/wizard behavior. |
 | `/market <name>` | `playershopguiplus.playershop.player` | Open a locally known player's shop. Use the real username, retaining any Bedrock prefix. |
-| `/market admin stats [topic] [page]` | `playershopguiplus.admin.stats` | Current counts/prices, sellers and recorded sales; see [statistics](#market-statistics-010). |
+| `/market admin stats [topic] [period] [page]` | `playershopguiplus.admin.stats` | Current counts/prices, sellers and recorded sales; see [statistics](#market-statistics-010). |
 | `/market admin status` | `playershopguiplus.admin.status` | Show runtime mode, saved preference, readiness, build, storage/economy type and listing counts. |
 | `/market admin reload` | `playershopguiplus.admin.reload` or `playershopguiplus.playershop.reload` | Reload supported settings, language, categories and sounds. |
 | `/market admin disable` | `playershopguiplus.admin.disable` | Pause market access and trading, persisting through restarts. |
@@ -152,7 +155,8 @@ Its sell syntax is quantity-first. With smart selling GUI enabled, omitted argum
 | `playershopguiplus.debug.commands` | Native command registration, syntax, permissions and routing limits. Default op. |
 | `playershopguiplus.debug.permissions` | Declared nodes, configured limit tiers and your effective grants. Default op. |
 | `playershopguiplus.debug.placeholders` | Plugin-local formatting tokens and their supported contexts. Default op. |
-| `playershopguiplus.admin` | Grants all six admin actions; default op. |
+| `playershopguiplus.admin` | Grants all seven admin actions; default op. |
+| `playershopguiplus.admin.log` | Read transaction audit records; default op, included in the admin umbrella. |
 | `playershopguiplus.admin.stats` | Read paginated current-market and seller/sales statistics; default op. |
 | `playershopguiplus.admin.recent` | View all market sales; default op, included in the admin umbrella. |
 | `playershopguiplus.admin.status` | Read status; default op. |
@@ -416,7 +420,7 @@ Bundled defaults are examples from the source, not a statement of the live confi
 
 Review `minSettings`/`maxSettings` bounds, `limits`/`unclaimedLimits`, `bannedItems`, `disableInWorlds`, `disableInGamemodes`, and `shopItemDuration` before opening the market. Retained-listing capacity includes active, cancelled, and expired entries. One entry may contain a full stack.
 
-Default `clickActions` are left-click to buy, right-click to cancel your own listing, and shift-right or middle-click to cancel another listing with permission. Publish player controls that match the configured menus. The requested new 1MB menu layout is future work; this guide does not promise new blue borders or navigation buttons.
+Default `clickActions` are left-click to buy, right-click to cancel your own listing, and shift-right or middle-click to cancel another listing with permission. Publish player controls that match the configured menus. The main and Search & Browse menus use light blue outer borders with empty interiors; further menu layout work remains planned.
 
 ### Listing fees and refunds
 
@@ -704,11 +708,13 @@ There is no new command, permission, placeholder, plugin dependency, item-format
 
 ## Market statistics (010)
 
+Updated through build 032.
+
 Use `/market admin stats` for the current-market overview, or `/market admin stats help` for the report list. `/ah admin stats` is the same native command. These staff commands work from console and while the market is dormant. Permission: `playershopguiplus.admin.stats`, default op and included in `playershopguiplus.admin`. A stats-only grant does not grant trading, reload or enable/disable access; an explicit child denial is respected.
 
 ### Commands and examples
 
-All topics accept an optional positive page number. Reports have six rows per page, with clickable Previous/Next links and the existing configurable MiniMessage STYLE layouts. Completion suggests topics and the first page without querying storage. Use the displayed navigation/range for further pages.
+All topics accept an optional positive page number. Historical topics also accept `all`, `24h`, `7d` or `30d` before the page; omitting the period retains all recorded history. Periods are rolling windows ending at the snapshot timestamp, including both boundaries. Current listing/price/seller/material reports do not accept a period. Reports have six rows per page, with clickable Previous/Next links and the existing configurable MiniMessage STYLE layouts. Completion suggests topics and the first page without querying storage. Use the displayed navigation/range for further pages.
 
 | Command | Meaning |
 | --- | --- |
@@ -716,13 +722,17 @@ All topics accept an optional positive page number. Reports have six rows per pa
 | `/market admin stats prices [page]` | Minimum/maximum, arithmetic mean and median **listing totals**; min/max unit price and quantity-weighted mean unit price. |
 | `/market admin stats sellers [page]` | Sellers ranked by current eligible listing count, with their item quantities and total asking value. |
 | `/market admin stats items [page]` | Materials ranked by individual item quantity, with listing count and asking value. Metadata variants share a material row. |
-| `/market admin stats history [page]` | Tracking start/coverage, new listings and purchases, sold units, gross revenue, mean and min/max purchase value. |
-| `/market admin stats listings [page]` | Sellers ranked by newly created listings **since tracking began**. |
-| `/market admin stats sales [page]` | Sellers ranked by completed purchase count since tracking began. |
-| `/market admin stats revenue [page]` | Sellers ranked by gross proceeds since tracking began. |
+| `/market admin stats history [period] [page]` | Tracking start/coverage, new listings and purchases, sold units, gross revenue, mean and min/max purchase value. |
+| `/market admin stats listings [period] [page]` | Sellers ranked by newly created listings within the selected period. |
+| `/market admin stats sales [period] [page]` | Sellers ranked by completed purchase count within the selected period. |
+| `/market admin stats revenue [period] [page]` | Sellers ranked by gross proceeds within the selected period. |
+| `/market admin stats buyers [period] [page]` | Buyers ranked by completed purchase count, with quantities and gross spending. |
+| `/market admin stats spending [period] [page]` | Buyers ranked by gross spending. |
+| `/market admin stats tradeditems [period] [page]` | Materials ranked by sold units, with purchase count, gross value and actual unit min/max/weighted mean prices. |
+| `/market admin stats activity [period] [page]` | Completed purchases, units and gross value per UTC calendar day, newest day first. |
 | `/market admin stats help [page]` | Topic descriptions. |
 
-Examples: `/ah admin stats`, `/market admin stats prices`, `/ah admin stats sellers 2`, `/market admin stats sales`, `/market admin stats revenue`, `/market admin stats history 2`. Console omits the leading slash. Invalid syntax/pages show usage or the available page range.
+Examples: `/ah admin stats`, `/market admin stats prices`, `/ah admin stats sellers 2`, `/market admin stats sales`, `/market admin stats revenue`, `/market admin stats history 2`. Try `/ah admin stats buyers 7d`, `/market admin stats spending 30d`, `/ah admin stats tradeditems 24h` and `/market admin stats activity 7d 2`. `sales 2` still means page two of all recorded seller sales. Console omits the leading slash. Invalid syntax/pages show usage or the available page range.
 
 ### Interpreting the figures
 
@@ -734,27 +744,30 @@ Each successful partial purchase counts as one purchase and its actual purchased
 
 Historical figures are grouped by the selected economy type and provider name. Events for other providers/currencies are excluded, with their count shown in `history`; there is no currency conversion. Renaming a provider creates a separate group. Changing the meaning of a currency while retaining its provider identity cannot be detected automatically. Review that history with a maintainer rather than combining incomparable values.
 
-Sellers remain keyed by their stored server UUID. Presentation names come only from this plugin's local player table, cached for up to 60 seconds; a missing, invalid or conflicting name displays the UUID. Bedrock prefixes remain intact. Names are literal components and cannot inject MiniMessage or click actions. No Mojang lookup, UUID generation, permission edit or balance query is performed.
+Buyers and sellers remain keyed by their stored server UUID. Presentation names come only from this plugin's local player table, cached for up to 60 seconds; a missing, invalid or conflicting name displays the UUID. Bedrock prefixes remain intact. Names are literal components and cannot inject MiniMessage or click actions. No Mojang lookup, UUID generation, permission edit or balance query is performed.
 
 ### Storage, performance and coverage
 
-`plugins/PlayerShopGUIPlus/statistics.db` is a separate local SQLite analytics file, separate from the authoritative shop store. Paper already supplies its driver; no extra plugin or dependency is required. Existing SQLite shop tables, item serialization, ownership and financial state transitions are unchanged. This is a single-server statistics store; multiple servers are not aggregated.
+`plugins/PlayerShopGUIPlus/statistics.db` is a separate local SQLite analytics file. Build 015 removed MySQL support; marketplace storage is SQLite-only. Paper already supplies its driver; no extra plugin or dependency is required. Existing `database.db` shop tables, item serialization, ownership and financial state transitions are unchanged. This is a single-server statistics store; multiple servers are not aggregated.
 
-The file stores compact event IDs, kind, UUIDs, timestamp, material, quantity, amount and provider identity, plus per-seller aggregates. It stores no item payloads or credentials. Events and aggregates commit in one SQLite transaction, and duplicate event IDs do not increment totals twice. Decimal arithmetic avoids accumulating binary rounding error in aggregate totals. These are analytics records, not a payment ledger or crash-recovery mechanism for trading.
+The file stores compact event IDs, kind, UUIDs, timestamp, material, quantity, amount and provider identity, plus per-seller aggregates. Build 012 adds optional bounded plain-text item names in `stats_sale_details` and the `stats_events_recent` index, retaining the v1 event layout. Names commit with the event/aggregate and duplicate IDs do not replace them. Build 032 adds [structured audit stages](#transaction-audit-032) in `stats_audit` and its coverage start in `stats_audit_meta`, plus an event-time index. It stores no item payloads or credentials. Events and aggregates commit in one SQLite transaction, and duplicate event IDs do not increment totals twice. Decimal arithmetic avoids accumulating binary rounding error in aggregate totals. These are analytics records, not a payment ledger or crash-recovery mechanism for trading.
 
-All statistics I/O, sorting and aggregation use a dedicated worker. Only primitive listing snapshots are captured on the server thread; replies return to that thread and recheck permissions/connection. Reports share a five-second cache and a pending computation. Requests have a four-second reply deadline, one pending reply per player, and a global reply bound. Recording is queued with a 1,024-operation bound. A saturated/failed writer logs the problem and reports unavailable/incomplete history; it never reverses or interrupts trading. Correct the cause and cleanly restart to reopen the writer.
+All statistics I/O, sorting and aggregation use a dedicated worker. Historical windows stream the existing events with exact decimal arithmetic, at most 500,000 events or 2.5 seconds of aggregation per read, plus a three-second SQL timeout. If a range exceeds the bound or a read fails, history is labelled unavailable with shorter-window guidance; it is never silently truncated. Current listing snapshots remain available when history storage fails. Read/scan failures do not disable the recorder. Daily totals include only the selected part of a day, and materials combine all metadata variants, so their prices are observed trades, not item valuations or worth suggestions. Only primitive listing snapshots are captured on the server thread; replies return to that thread and recheck permissions/connection. Reports share a five-second cache and a pending computation. Requests have a four-second reply deadline, one pending reply per player, and a global reply bound. Recording is queued with a 1,024-operation bound. A saturated/failed writer logs the problem and reports unavailable/incomplete history; it never reverses or interrupts trading. Correct the cause and cleanly restart to reopen the writer.
 
-Tracking begins with this file's creation date. The old shop store removes sold entries, and optional customizable text logs cannot establish reliable UUID-based history, so earlier sales are **not imported or reported as zero lifetime sales**. No automatic pruning/reset is performed; include this growing file in backup and storage monitoring. Build 018 exposes the latest 100 sales and 100 purchases per requester UUID through `/market recent`; staff use `/market admin recent` for whole-market sales. Time windows and retention/export remain future work.
+Tracking begins with this file's creation date. The old shop store removes sold entries, and optional customizable text logs cannot establish reliable UUID-based history, so earlier sales are **not imported or reported as zero lifetime sales**. No automatic pruning/reset is performed; include this growing file in backup and storage monitoring. Build 018 exposes the newest 100 recorded sales/purchases per requester UUID through [personal history](#recent-history-018), including older 010/011 events. Staff use `/market admin recent` for the latest 100 whole-market sales. The seller/buyer indexes added in 018 preserve the original v1 event columns. Build 032 adds time windows, buyer/spending/material rankings and daily activity using existing `stats_events`; no backfill or reconstruction is required. Retention/export remain future work.
 
 Clean shutdown queues a final flush and closes the worker without blocking the server thread. An unclean prior shutdown or detected recording error marks historical coverage incomplete, retaining that warning across restart. A crash/forced process exit may lose queued events, and cross-system payment/inventory/database atomicity is not claimed. Do not use these operational totals as financial reconciliation evidence.
 
 ### Upgrade and rollback
 
-Back up the jar and complete plugin/economy data while stopped, including `statistics.db`, `market-state.yml` and `lang.yml`. Start 012 normally; current listings appear immediately, and history begins recording new activity. Reload does not reset history. There is no stats-delete/reset command.
+Back up the jar and complete plugin/economy data while stopped, including `statistics.db`, `market-state.yml` and `lang.yml`. Start the current candidate normally; current listings appear immediately, and history begins recording new activity. Reload does not reset history. There is no stats-delete/reset command.
 
-Builds before 010 ignore `statistics.db`. Builds 010/011 can still read/write the original v1 event and totals tables, ignoring the additive details/indexes. Builds 012–017 expose whole-market history through the player recent permission; deny that node to normal players before rollback if personal-only visibility must be preserved. Preserve it during rollback, but record any interval spent on an older jar because that interval cannot be counted; the file cannot detect trades made by a build that does not record statistics. Returning to 010 or newer keeps existing totals. Do not restore stale shop/economy data just to restore analytics. Builds before 009 also require reviewing/restoring the prior language file because they do not support MiniMessage.
+Builds before 010 ignore `statistics.db`; builds 010/011 keep reading and writing the original event and totals tables while ignoring later additive details, audit tables and indexes. Preserve it during rollback, but record any interval spent on an older jar because that interval cannot be counted; the file cannot detect trades made by a build that does not record statistics. Returning to the current build keeps existing totals; custom names for sales recorded by 010/011 are unavailable and use material fallback. Do not restore stale shop/economy data just to restore analytics. Builds before 009 also require reviewing/restoring the prior language file because they do not support MiniMessage.
 
-<a id="recent-sales-012"></a>
+Build 032 keeps personal history personal and adds the separate staff [transaction log](#transaction-audit-032).
+
+
+Builds 012–017 expose whole-market history through the player recent permission; deny that node to ordinary players before such a rollback if personal-only visibility must be preserved.
 
 ## Recent history (018)
 
@@ -788,7 +801,7 @@ Sales tracking began in build 010 with `plugins/PlayerShopGUIPlus/statistics.db`
 
 All recorded currencies/providers appear. Current-provider amounts use the configured currency prefix/suffix and full decimal amounts, without K/M abbreviations. Other provider amounts retain an explicit provider/currency label; no conversion is attempted. Changing a currency's meaning while retaining the same provider identity cannot be detected automatically.
 
-Build 012 added `stats_sale_details(id, item_name)` and an index on `stats_events(kind, at DESC, id DESC)`. Build 018 adds `stats_events_seller_recent(kind, seller, at DESC, id DESC)` and `stats_events_buyer_recent(kind, buyer, at DESC, id DESC)` as indexes on the same events table. Startup creates missing indexes on the statistics worker; existing rows are retained. The original nine-column events table, totals, tracking start, and `user_version=1` remain unchanged. A new event, aggregate and optional item name commit together; a duplicate transaction ID changes none of them. No marketplace table or item-format migration occurs. No automatic deletion, reset or pruning occurs: the latest-100 limit is a **display window**, not a retention policy. Back up and monitor the growing analytics file.
+Build 012 added `stats_sale_details(id, item_name)` and an index on `stats_events(kind, at DESC, id DESC)`. Build 018 adds `stats_events_seller_recent(kind, seller, at DESC, id DESC)` and `stats_events_buyer_recent(kind, buyer, at DESC, id DESC)` as indexes on the same events table. Startup creates missing indexes on the statistics worker; existing rows are retained. The original nine-column events table, totals, tracking start, and `user_version=1` remain unchanged. A new event, aggregate, optional item name and, from 032, its audit outcome commit together; a duplicate transaction ID changes none of them. No marketplace table or item-format migration occurs. No automatic deletion, reset or pruning occurs: the latest-100 limit is a **display window**, not a retention policy. Back up and monitor the growing analytics file.
 
 Reads run on the existing statistics worker with bound UUID parameters, an indexed `LIMIT 100` for each role and immutable results. A personal request reads both roles in one queued operation. The five-second personal cache holds at most 128 UUIDs, shares pending work only for the same UUID, and expires completed entries before admitting more; a full cache fails explicitly. Staff history has a separate shared cache. Snapshot provenance is checked before rendering. The existing 1,024-operation worker bound still applies. Personal and staff commands together allow one pending reply per player UUID (128 globally), a four-second reply timeout, and reject invalid or excessive page numbers before querying. Completion never queries storage. Replies return to the main server thread and recheck permission and the original player's connection. A timeout does not cancel the underlying shared read; quit, permission loss and shutdown discard stale results. Storage failure is reported as unavailable, never as an empty history.
 
@@ -827,3 +840,67 @@ With GUI notifications enabled, clicking Buy on your own listing shows the exist
 The new `menu.yml` section is `notifications.ownListing`, with `rows` and `buttons.message`, `buttons.confirm`, `buttons.cancel`. Button item/slot definitions and lore are configurable. Existing own-item language keys provide the title/barrier text and `NOTIFICATION.CONFIRM` supplies OK. Missing sections use bundled defaults in memory without overwriting saved YAML. To customize, copy the bundled section and cleanly restart. With GUI notifications disabled, the existing chat warning remains.
 
 Cancellation checks the authoritative listing and owner UUID, state/expiry, transaction locks, current market mode, permissions and menu session at action time. Repeated/stale actions cannot cancel again. It moves the selected listing into Unclaimed items without inventory delivery, so full inventories are safe. No new permission, schema, provider or item format is introduced. This reuses the existing cancellation and optional refund behavior, including its previously documented persistence/refund limitations; it does not add crash-atomic financial guarantees. Human-client acceptance is separate from the isolated synthetic-player Paper tests.
+
+
+## Transaction audit (032)
+
+Staff can inspect market activity through `/market admin log`. `/ah admin log` is the same native command. This records listing creation, accepted purchase attempts and their observed outcomes, cancellation, expiry and claims in the existing private `statistics.db`. It complements personal `/market recent` and whole-market `/market admin recent`.
+
+Permission: **`playershopguiplus.admin.log`**, default op and included in `playershopguiplus.admin`. It works from console and while dormant. Granting only this node does not grant trading, statistics, reload or enable/disable access. Explicit child denials win over an umbrella grant.
+
+### Commands
+
+| Example | Result |
+| --- | --- |
+| `/ah admin log` | Latest 100 audit records, newest first, four records per page. |
+| `/market admin log sales 2` | Page two of observed completed purchases. |
+| `/market admin log listings` | Newly created listings. |
+| `/market admin log cancelled` | Cancelled listings, including owner and cancelling actor. |
+| `/market admin log expired` | Expired listings waiting in Unclaimed items. |
+| `/market admin log claims` | Single-item claims and collect-all stages. |
+| `/market admin log failed` | Declined withdrawals and confirmed purchase compensation. |
+| `/market admin log review` | Unknown purchase/claim outcomes requiring investigation. |
+| `/market admin log transaction <uuid> [page]` | Recorded stages of one exact transaction or collect-all batch. Click the short ID on a record to run this. Hover shows the full command/UUID. |
+| `/market admin log help` | Syntax, filters and interpretation. |
+
+Use `all` to specify a page without a filter, for example `/ah admin log all 3`. Pages are positive integers up to 25; the displayed range may be smaller. Previous/Next links retain the filter or transaction UUID. Filtering happens before the 100-record limit, so unrelated activity cannot hide the latest matching results. Tab completion offers fixed filters and page 1; it never reads item names, player records or transaction IDs.
+
+### What the stages mean
+
+| Stage | Meaning |
+| --- | --- |
+| `LISTED` | Listing accepted and market save queued. Value is the asking total. |
+| `PURCHASE_STARTED` | Final preflight passed and a withdrawal will be attempted. This is not payment or delivery proof. |
+| `SOLD` | Payment responses and inventory delivery confirmed by the existing purchase path; market save queued. Value is the actual purchase total, including a partial purchase's actual quantity. |
+| `PURCHASE_FAILED` | Withdrawal declined; this path did not deliver items. |
+| `PURCHASE_REFUNDED` | Failed purchase compensated with a confirmed buyer refund and seller-credit reversal where applicable. Excluded from completed-sale statistics. |
+| `PURCHASE_REVIEW` | Payment, delivery, save submission or compensation has an unknown/unresolved outcome. Read the detail and server log; do not replay it. |
+| `CANCELLED` / `EXPIRED` | Listing moved to Unclaimed items; this records its asking value, not proof of a tax refund. |
+| `CLAIMED` | Single-item delivery completed and market save queued. No money movement is implied. |
+| `CLAIM_REVIEW` | Single-claim delivery or save outcome is uncertain. |
+| `BATCH_STARTED` | Collect all requested; its UUID matches the durable claim journal. It is not proof of reservation or delivery. |
+| `BATCH_CLAIMED` | Inventory delivery verified and claim journal finalized. |
+| `BATCH_RETURNED` | Delivery was not attempted; reserved items returned to Unclaimed items. |
+| `BATCH_REVIEW` | Unknown collect-all outcome; inspect the durable journal before recovery. |
+
+Purchase stages share a transaction UUID. Collect-all stages use `one_mb_claim_batches.id`; the batch shows total quantity and listing count rather than every item payload. Listing creation, cancellation, expiry and single claims have individual event UUIDs. Owner UUID, material and original listing timestamp provide context, not a guaranteed unique permanent listing identifier. Names use trusted local records and optional existing CMI records; UUIDs remain authoritative and visible on hover. No online identity lookup runs.
+
+Insufficient funds, full inventories, invalid quantities, denied permissions and cancelled preflight events are rejected before `PURCHASE_STARTED` and are not logged as new attempts. This avoids a stream of redundant records from rejected clicks. Listing-fee failure paths, optional tax refunds, inventory snapshots and full item components are not new audit coverage. The [existing financial limitations](#storage-performance-and-coverage) and [claim recovery rules](#collect-all-unclaimed-items-030) still apply.
+
+### Existing logs and data
+
+The inherited `log.toConsole` and `log.toFile` options remain. Their customizable successful listing/purchase/cancellation messages use names/text and, for file output, append to `shops.log`. They are useful supporting context but lack the structured UUID/stage history needed by the new command. Build 032 does not add another duplicate text log or alter those legacy settings.
+
+The new additive `stats_audit` table stores transaction UUID, stage, UTC timestamp, owner/buyer/actor UUIDs, vanilla material, quantity, decimal value/provider where applicable, listing timestamp, remaining quantity, bounded plain item name and outcome detail. Names/details are limited to 80 Unicode code points, with hidden/control characters removed. Rendering treats values as literal components, never MiniMessage commands. No credentials, full item payloads or player inventories are stored here. `stats_audit_meta` records when this installation started audit coverage.
+
+`(transaction_id, phase)` is unique. A repeated recorded stage does not replace or duplicate the original. A completed sale/new-listing event, seller aggregate, optional sale name and audit outcome commit together in one SQLite transaction. An audit write failure rolls back that analytics transaction and marks a recording gap; it cannot reverse or block the already completed gameplay action. Standalone stages use the same bounded asynchronous worker as existing statistics. The original statistics v1 tables and market database/item formats stay intact.
+
+Audit history starts with 032. Earlier recorded sales remain available in recent/statistics, but no old attempts, cancellations, expiry or claims are invented. No automatic deletion, retention cutoff, reset, export or recovery command is added. Back up and monitor the growing `statistics.db`. Latest-100 is a display/query limit, not deletion of older records.
+
+### Limits and recovery
+
+This is an **observational audit**, not a durable financial recovery ledger. Writes are queued off the server thread; a crash, saturated queue or disk error may lose records. `SOLD` includes confirmed provider responses and observed delivery, not an atomic commit across Vault, Minecraft player data and marketplace storage. A `STARTED` record without a later outcome may represent interruption or missing audit data; it never authorizes a refund or retry. Existing uncertain-purchase guards remain in memory and do not survive restart. Investigate both balances, item inventories, listings and logs before restarting or replaying anything. The durable [collect-all journal](#collect-all-unclaimed-items-030) remains the authority for batch recovery.
+
+Reads have a three-second SQL timeout and commands a four-second reply deadline. A five-second cache shares pending reads, with at most 128 cached filter/transaction queries and bounded pending replies. Replies return to the main thread and recheck the sender's permission and connection. Logging uses the existing 1,024-operation queue and fault reporting; a failed writer needs its cause corrected and a clean restart. Read failures do not poison the recorder.
+
+Use a stopped, coordinated jar/market/economy/player-data backup for deployment. Older jars ignore the additive audit tables; keep the file on downgrade and record the audit coverage gap for time spent on an older jar. Never restore stale market/economy data just to restore analytics. The pre-030 collect-all downgrade precautions still apply.
