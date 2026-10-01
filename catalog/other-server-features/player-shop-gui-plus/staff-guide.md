@@ -2,7 +2,7 @@
 
 This is the public technical and operations guide for 1MoreBlock's maintained PlayerShopGUIPlus fork. For player instructions, use the [player guide](/player-guides/other-server-features/player-shop-gui-plus/). The plugin name and data directory remain `PlayerShopGUIPlus`.
 
-**Release status, reviewed 1 October 2026:** `001` is the last confirmed live build. `025` adds Storage & Containers and Collectibles, refreshes existing category materials and retains the earlier local skin cache and menu improvements. It awaits live deployment. The main reference below describes `025`; [older live commands](#older-live-build-001) are recorded separately. Confirm the installed version before using a command or planning an update. Build 018 makes recent history personal by UUID and adds a separate staff market-wide view. Build 017 adds menu-session and inventory-event hardening. Its isolated tests use synthetic players/inventories and a Vault boundary; connected-client and actual-provider acceptance remains required. This documentation does not announce a live plugin deployment.
+**Release status, reviewed 1 October 2026:** `001` is the last confirmed live build. `026` clarifies the Unclaimed items tooltip. It retains the refreshed categories, local skin cache and earlier menu improvements. It awaits live deployment. The main reference below describes `026`; [older live commands](#older-live-build-001) are recorded separately. Confirm the installed version before using a command or planning an update. Build 018 makes recent history personal by UUID and adds a separate staff market-wide view. Build 017 adds menu-session and inventory-event hardening. Its isolated tests use synthetic players/inventories and a Vault boundary; connected-client and actual-provider acceptance remains required. This documentation does not announce a live plugin deployment.
 
 <a id="commands-in-build-007"></a>
 
@@ -34,7 +34,9 @@ This is the public technical and operations guide for 1MoreBlock's maintained Pl
 
 <a id="commands-in-build-024"></a>
 
-## Commands in build 025
+<a id="commands-in-build-025"></a>
+
+## Commands in build 026
 
 `/market` is the main command; `/ah` is its native alias, using the same handler, arguments, and permissions. Root aliases `/playershop`, `/pshop`, `/playershops`, and `/pshops` are no longer registered. Existing CMI/server aliases are separate configuration and can still override native commands.
 
@@ -154,6 +156,23 @@ The wildcard's declared children do not include main-menu access, refund permiss
 The bundled tiers are `limits.default: 10`, `limits.donator: 50`, `unclaimedLimits.default: 20`, and `unclaimedLimits.donator: 40`. Their concrete nodes are `playershopguiplus.limit.default`, `playershopguiplus.limit.donator`, `playershopguiplus.unclaimedlimit.default`, and `playershopguiplus.unclaimedlimit.donator`. Keep the `default` entries when customizing tiers.
 
 The base-menu node, recent node, seven admin nodes and seven debug nodes explicitly default to operators. Debug and admin are separate umbrellas; explicit child denials are respected. Debug grants do not add trading or administration access. Inherited nodes retain their previous unspecified defaults. Configure grants deliberately and check effective permissions with the installed permission manager. A normal player who should browse and sell needs the base menu node and sell node; player-name lookup is a separate grant. Do not grant the staff wildcard as a substitute. For a LuckPerms user-specific change, use the player's verified server UUID, including Bedrock identities; group grants target the intended group ID.
+
+## Unclaimed-items tooltip (026)
+
+The main-menu ender chest explains that unlisted items from cancelled or expired listings are ready to collect. Its count remains the viewer's cancelled/expired listing entries, not the sum of stack quantities. Players open it and select entries to return items to their inventory. This wording does not add bulk collection or change retention, limits, permissions or item storage. Menu text remains non-italic.
+
+For an existing installation, back up `plugins/PlayerShopGUIPlus/menu.yml` and change only `menu.main.buttons.unclaimed.item.lore` to:
+
+```yaml
+- "&7Unlisted items from cancelled"
+- "&7or expired listings."
+- ""
+- "&7Ready to collect: &f%number%"
+- "&7Open, then select items to"
+- "&7return to your inventory."
+```
+
+Keep the existing button name, icon, slot and other menu settings. A jar upgrade preserves saved menus; apply this change deliberately and restart cleanly, since `/market admin reload` does not read `menu.yml`. The local test menu has this wording. Restore the previous lore and restart to undo the cosmetic change.
 
 ## Category refresh (025)
 
