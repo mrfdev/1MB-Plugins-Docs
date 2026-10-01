@@ -2,7 +2,7 @@
 
 This is the public technical and operations guide for 1MoreBlock's maintained PlayerShopGUIPlus fork. For player instructions, use the [player guide](/player-guides/other-server-features/player-shop-gui-plus/). The plugin name and data directory remain `PlayerShopGUIPlus`.
 
-**Release status, reviewed 1 October 2026:** `001` is the last confirmed live build. `032` adds structured transaction audit logs, buyer/spending/sold-material/daily reports and historical time windows. It preserves 031’s owner-only Cancel listing shortcut beside OK in the own-item warning; 030’s Collect all and durable claim escrow remain. It retains 029’s light blue outer borders with empty interiors in the main menu and Search & Browse submenu. It preserves 028’s navigation through shops, categories and search results. It retains 027’s HeadDatabase removal, native item support and local player/CMI skin caches. It awaits live deployment. The main reference below describes `032`; [older live commands](#older-live-build-001) are recorded separately. Confirm the installed version before using a command or planning an update. Build 018 makes recent history personal by UUID and adds a separate staff market-wide view. Build 017 adds menu-session and inventory-event hardening. Its isolated tests use synthetic players/inventories and a Vault boundary; connected-client and actual-provider acceptance remains required. This documentation does not announce a live plugin deployment.
+**Release status, reviewed 1 October 2026:** `001` is the last confirmed live build. `033` adds a read-only Your market player head with personal counts and limits, plus optional explicitly allowed PlaceholderAPI text only in its title/lore. It preserves 032’s structured transaction audit logs, buyer/spending/sold-material/daily reports and historical time windows. It preserves 031’s owner-only Cancel listing shortcut beside OK in the own-item warning; 030’s Collect all and durable claim escrow remain. It retains 029’s light blue outer borders with empty interiors in the main menu and Search & Browse submenu. It preserves 028’s navigation through shops, categories and search results. It retains 027’s HeadDatabase removal, native item support and local player/CMI skin caches. It awaits live deployment. The main reference below describes `033`; [older live commands](#older-live-build-001) are recorded separately. Confirm the installed version before using a command or planning an update. Build 018 makes recent history personal by UUID and adds a separate staff market-wide view. Build 017 adds menu-session and inventory-event hardening. Its isolated tests use synthetic players/inventories and a Vault boundary; connected-client and actual-provider acceptance remains required. This documentation does not announce a live plugin deployment.
 
 <a id="commands-in-build-007"></a>
 
@@ -46,7 +46,9 @@ This is the public technical and operations guide for 1MoreBlock's maintained Pl
 
 <a id="commands-in-build-031"></a>
 
-## Commands in build 032
+<span id="commands-in-build-032"></span>
+
+## Commands in build 033
 
 `/market` is the main command; `/ah` is its native alias, using the same handler, arguments, and permissions. Root aliases `/playershop`, `/pshop`, `/playershops`, and `/pshops` are no longer registered. Existing CMI/server aliases are separate configuration and can still override native commands.
 
@@ -358,7 +360,7 @@ Official syntax: [MiniMessage format](https://docs.papermc.io/adventure/minimess
 
 ## Placeholders
 
-These are plugin-local message and menu replacements, not PlaceholderAPI expansion identifiers. This source registers no PlaceholderAPI expansion. Tokens are case-sensitive and work only in the relevant formatting context. Installing PlaceholderAPI does not expand arbitrary placeholders in these templates.
+These are plugin-local message and menu replacements, not PlaceholderAPI expansion identifiers. This source registers no PlaceholderAPI expansion. Tokens are case-sensitive and work only in the relevant formatting context. Build 033 optionally consumes selected external tokens only in the [player-details head](#player-details-and-placeholderapi-033); installing PlaceholderAPI alone does not enable expansion. Other templates retain their local scopes.
 
 | Context | Supported tokens |
 | --- | --- |
@@ -620,7 +622,7 @@ Examples:
 
 `hooks` separates actual selected adapters/listeners from installed plugin presence/version. CMI may supply economy through Vault; build 013 adds a separate optional CMI API hook for local display names. Its status row reports CMI readiness/absence, cached and pending counts, configuration disablement and persistence failure. No 1MB-library integration is added. An installed optional plugin is not proof that its hook is selected or compatible. `commands` checks native Bukkit registration for market/ah and their namespaced forms; external CMI aliases or chat interceptors must be inspected separately.
 
-`permissions` includes declared nodes, current configured limit tiers and effective grants for the sender. It explains missing descriptor coverage and inherited wildcard limits. `placeholders` lists plugin-local formatting tokens and contexts, including the STYLE layout tokens added in 009; there is no PlaceholderAPI expansion, arbitrary template evaluator or new placeholder scope.
+`permissions` includes declared nodes, current configured limit tiers and effective grants for the sender. It explains missing descriptor coverage and inherited wildcard limits. `placeholders` lists plugin-local formatting tokens and contexts, including the STYLE layout tokens added in 009; there is no exported PlaceholderAPI expansion. Build 033 adds six local player-details tokens and optional allowlisted external text only in that head.
 
 Diagnostics do not print player records, UUID lists, balances, item payloads, full configuration, credentials, SQL exception text or private file paths. They never clear review guards or enable the market. A successful database ping and ready providers do not establish safe financial transactions, healthy database contents or compatibility with all optional providers. Follow the normal recovery process for warnings; record the relevant topic/page when asking a maintainer for help.
 
@@ -904,3 +906,81 @@ This is an **observational audit**, not a durable financial recovery ledger. Wri
 Reads have a three-second SQL timeout and commands a four-second reply deadline. A five-second cache shares pending reads, with at most 128 cached filter/transaction queries and bounded pending replies. Replies return to the main thread and recheck the sender's permission and connection. Logging uses the existing 1,024-operation queue and fault reporting; a failed writer needs its cause corrected and a clean restart. Read failures do not poison the recorder.
 
 Use a stopped, coordinated jar/market/economy/player-data backup for deployment. Older jars ignore the additive audit tables; keep the file on downgrade and record the audit coverage gap for time spent on an older jar. Never restore stale market/economy data just to restore analytics. The pre-030 collect-all downgrade precautions still apply.
+
+
+## Player details and PlaceholderAPI (033)
+
+The main menu now has a pastel, non-italic **Your market** player head in the bottom-left corner. Hover to see your name, active listings, entries ready to collect, occupied listing slots and your permission-based limits. It is a read-only information item; clicking it does not run a command or move anything. Your shop and Unclaimed items keep their existing buttons. Personal history remains `/market recent` (or `/ah recent`).
+
+Counts are **listing entries**, not individual stack quantities. The general listing limit counts all retained entries, including cancelled and expired listings. The unclaimed limit blocks new listings when reached; it does not delete overflow or older items. Collecting unlisted items frees their slots. These details describe capacity, not a guarantee that a new listing will pass the other selling checks.
+
+The viewer's actual server UUID selects their listings, cached skin and external placeholder context, including Floodgate/Bedrock players. The existing local player/CMI skin cache supplies complete textures; a missing skin remains a plain head. Rendering makes no database, balance or remote identity request. No new commands, permissions, exported placeholders or storage migration are introduced. The existing `playershopguiplus.playershop` menu permission still applies.
+
+## Menu configuration
+
+`menu.yml`, `menu.main.buttons.playerDetails`:
+
+```yaml
+playerDetails:
+  enabled: true
+  slot: 36
+  item:
+    material: PLAYER_HEAD
+    quantity: 1
+    name: "<accent><bold>Your market"
+    lore:
+      - "<label>%player%"
+      - "<body>Active listings: <accent>%active%"
+      - "<body>Ready to collect: <accent>%unclaimed%"
+      - "<body>Listing slots used: <accent>%used% / %limit%"
+      - "<muted>Includes cancelled and expired listings."
+      - "<body>Unclaimed listing limit: <accent>%unclaimedlimit%"
+      - "<muted>Your history: /market recent"
+```
+
+Slots are zero-based; 36 is bottom-left in the default five-row menu. If this section is absent, the renderer uses built-in text and the bottom-left slot for the configured menu size, without rewriting saved YAML. An out-of-range slot, a slot occupied by another configured button, or a non-player-head material hides the information item rather than covering a control. `enabled: false` hides it deliberately. Keep `material: PLAYER_HEAD`.
+
+This title and lore accept MiniMessage, the existing 1MB palette and legacy colours. Italics are forcibly removed. Templates are bounded to 512 codepoints each and the first 16 lore lines. Menu file changes require a normal restart, as with other menu layouts; `/market admin reload` does not reload `menu.yml`.
+
+| Local token | Value in this head only |
+| --- | --- |
+| `%player%` | Viewing player's current real name |
+| `%active%` | Their active listing entries |
+| `%unclaimed%` | Their cancelled and expired entries |
+| `%used%` | All their retained listing entries |
+| `%limit%` | Effective general listing limit from existing permission tiers |
+| `%unclaimedlimit%` | Effective unclaimed limit from existing permission tiers |
+
+Local counts and limits are refreshed each time the menu is rendered. They work with no PlaceholderAPI installation or expansion.
+
+## Optional PlaceholderAPI consumption
+
+The first version deliberately supports **only this head's visible title and lore**. No other menu, listing name/lore, chat message, inventory title, command, price, identity decision or permission template receives general PlaceholderAPI expansion. This plugin does not register a PlaceholderAPI expansion or export `%market_*%` tokens.
+
+The optional dependency is PlaceholderAPI; build 033 compiles against its official **2.12.3** API and tests that version. It is compile-only and is not bundled. A matching installed expansion/provider is also required for each selected token. Neither the plugin nor the test deployment downloads or installs expansions.
+
+In `config.yml`:
+
+```yaml
+playerDetails:
+  placeholderAPI:
+    enabled: false
+    allowed: []
+    fallback: "Unavailable"
+```
+
+To opt in, choose reviewed fast, local/cached placeholders, set `enabled: true`, and list each exact token in `allowed`. Then put the same token in the head's name or lore. Apply the `config.yml` settings with `/market admin reload`; restart after editing `menu.yml`.
+
+For example, with the PlaceholderAPI **Player expansion** already installed, allow `['%player_name%']` and add a lore line `<body>Player: <accent>%player_name%`. This illustrates external substitution; the built-in `%player%` is sufficient for names. Other providers, including CMI, require their own installed expansion and individually verified token. Their arbitrary tokens are not certified by testing the generic bridge.
+
+Only full tokens matching `%[a-z0-9]+_[A-Za-z0-9_]{1,100}%` are eligible. At most 16 unique valid entries are accepted in configured order; relational `%rel_*%`, bracketed/nested arguments and malformed entries are excluded. Tokens not in the allowlist are never sent to PlaceholderAPI. Missing, disabled, unresolved, blank or failing values use the configured fallback. Unsupported token syntax stays literal. Fallback text is also bounded and literal.
+
+Each unique eligible token is resolved once per viewing UUID and cached for **five seconds**, with at most **256 viewers** retained in memory. Reopening does not extend the expiry. A configuration reload clears the cache; provider disable or replacement invalidates it before reuse. There is no persistent external-value cache or periodic polling. Built-in details remain current independently of the external cache.
+
+Results are inserted once as plain Adventure components. Returned MiniMessage, URLs, command tags and nested placeholders remain literal text. Legacy colours and control characters are removed; each result is capped at 128 codepoints. Staff control colour in the trusted template, and even explicit italics there are removed from the tooltip. Tokens inside MiniMessage click/hover arguments are not evaluated.
+
+Expansion callbacks run on the server thread because arbitrary expansions may access Bukkit state. **Choose only trusted expansions that use already loaded data.** This bridge cannot make a third-party blocking/network lookup safe or preempt its first call. If callbacks throw or the callback batch exceeds 25ms, external resolution pauses for 60 seconds, logs a bounded warning and uses fallbacks. No returned value is used for money movement, ownership or access checks.
+
+`/market debug hooks` reports the configured allowlist count, activation/pause state and cache size without printing player values. `/market debug placeholders` documents the six local head tokens and limited external scope.
+
+The integration was tested on macOS Paper 26.3-133 / Java 27 with PlaceholderAPI 2.12.3 and synthetic players/expansions. Individual third-party expansions and human-client appearance still require acceptance. No player data schema changes. The candidate remains separate from the live 001 deployment.
