@@ -2,7 +2,7 @@
 
 The player market lets you buy items from other players and offer your own items for sale on 1MoreBlock. It is separate from the server's ShopGUIPlus shop. 1MoreBlock maintains a custom version of brc's PlayerShopGUIPlus for Paper 26.3.
 
-**Which commands can I use?** The last confirmed live version is build `001`. Start with the live instructions below. The `029` update uses `/market` and `/ah` and adds help/info plus a staff-controlled maintenance pause; [its commands are explained below](#the-market-update-build-029). Build 014 updates the internals for Paper 26.3 and newer while retaining existing listings and item metadata. Build 015 keeps the existing SQLite listings. Build 027 removes the optional HeadDatabase integration; existing decorative heads and player-head icons remain ordinary supported items. Build 016 improves development tooling and keeps the same game behavior. The commands and permissions below are unchanged by these cleanups. The update includes recent-sales chat, staff diagnostics, market statistics and soft 1MB chat colours. Seller names now use trusted local player records, including Bedrock prefixes. A seller whose name is still unknown is shown by their unique player ID. Detailed market statistics are staff-only and do not change listing prices or player permissions. Players do not need extra permissions or a new command to see the styling. Wait for staff to announce that update before relying on those native commands. The existing live `/ah` shortcut is configured separately by the server.
+**Which commands can I use?** The last confirmed live version is build `001`. Start with the live instructions below. The `030` update uses `/market` and `/ah` and adds help/info plus a staff-controlled maintenance pause; [its commands are explained below](#the-market-update-build-030). Build 014 updates the internals for Paper 26.3 and newer while retaining existing listings and item metadata. Build 015 keeps the existing SQLite listings. Build 027 removes the optional HeadDatabase integration; existing decorative heads and player-head icons remain ordinary supported items. Build 016 improves development tooling and keeps the same game behavior. The commands and permissions below are unchanged by these cleanups. The update includes recent-sales chat, staff diagnostics, market statistics and soft 1MB chat colours. Seller names now use trusted local player records, including Bedrock prefixes. A seller whose name is still unknown is shown by their unique player ID. Detailed market statistics are staff-only and do not change listing prices or player permissions. Players do not need extra permissions or a new command to see the styling. Wait for staff to announce that update before relying on those native commands. The existing live `/ah` shortcut is configured separately by the server.
 
 ## Getting started
 
@@ -74,7 +74,13 @@ The built-in aliases are `/pshop`, `/playershops`, and `/pshops`. These commands
 
 <a id="the-market-update-build-028"></a>
 
-## The market update: build 029
+<a id="the-market-update-build-029"></a>
+
+## The market update: build 030
+
+Build 030 adds a **Collect all** hopper inside **Unclaimed items**. It returns cancelled and expired listings from every page to your inventory. A listing is collected in full or left here; anything that does not fit stays available. Smaller listings may still fit after a larger one is skipped. It follows your newest/oldest preference and tells you how many items and listings were collected. Make room and use it again, or collect individual entries as before. It uses your normal market access permission.
+
+If a collection is interrupted before delivery, the items return to Unclaimed. If the plugin asks for staff review, contact staff: it keeps a recovery record and will not automatically repeat an uncertain delivery.
 
 Build 029 uses **light blue glass panes around the outer edge only** of the main menu and Search & Browse. The interior is empty apart from the action buttons.
 
@@ -178,7 +184,7 @@ For player names, use the real username, including a Bedrock prefix where applic
 | --- | --- |
 | Buy an item | Open its buying menu, choose the quantity, check the displayed cost, and confirm. A partial purchase costs the corresponding proportion of the listing total. |
 | Cancel my listing | Use its cancellation action and confirmation menu. Right-click is the default for your own listing; follow the current menu if configured differently. |
-| Collect a cancelled or expired item | Open **Unclaimed items** and claim it with enough free inventory space. Cancellation does not immediately put it back in your inventory. |
+| Collect a cancelled or expired item | Open **Unclaimed items** and select an entry, or use **Collect all** (030). Complete listings that do not fit stay available. Cancellation does not immediately put it back in your inventory. |
 | Find an item or shop | Use the menu's search button and answer the chat prompt. |
 | Leave a search or shop-name prompt | Type `cancel` in chat, without `/`, unless the prompt gives a different word. Matching ignores case. This does not cancel an item listing. |
 

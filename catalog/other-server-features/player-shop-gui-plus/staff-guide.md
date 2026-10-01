@@ -2,7 +2,7 @@
 
 This is the public technical and operations guide for 1MoreBlock's maintained PlayerShopGUIPlus fork. For player instructions, use the [player guide](/player-guides/other-server-features/player-shop-gui-plus/). The plugin name and data directory remain `PlayerShopGUIPlus`.
 
-**Release status, reviewed 1 October 2026:** `001` is the last confirmed live build. `029` uses light blue outer borders with empty interiors in the main menu and Search & Browse submenu. It preserves 028’s navigation through shops, categories and search results. It retains 027’s HeadDatabase removal, native item support and local player/CMI skin caches. It awaits live deployment. The main reference below describes `029`; [older live commands](#older-live-build-001) are recorded separately. Confirm the installed version before using a command or planning an update. Build 018 makes recent history personal by UUID and adds a separate staff market-wide view. Build 017 adds menu-session and inventory-event hardening. Its isolated tests use synthetic players/inventories and a Vault boundary; connected-client and actual-provider acceptance remains required. This documentation does not announce a live plugin deployment.
+**Release status, reviewed 1 October 2026:** `001` is the last confirmed live build. `030` adds Collect all with durable claim escrow. It retains 029’s light blue outer borders with empty interiors in the main menu and Search & Browse submenu. It preserves 028’s navigation through shops, categories and search results. It retains 027’s HeadDatabase removal, native item support and local player/CMI skin caches. It awaits live deployment. The main reference below describes `030`; [older live commands](#older-live-build-001) are recorded separately. Confirm the installed version before using a command or planning an update. Build 018 makes recent history personal by UUID and adds a separate staff market-wide view. Build 017 adds menu-session and inventory-event hardening. Its isolated tests use synthetic players/inventories and a Vault boundary; connected-client and actual-provider acceptance remains required. This documentation does not announce a live plugin deployment.
 
 <a id="commands-in-build-007"></a>
 
@@ -42,7 +42,7 @@ This is the public technical and operations guide for 1MoreBlock's maintained Pl
 
 <a id="commands-in-build-028"></a>
 
-## Commands in build 029
+## Commands in build 030
 
 `/market` is the main command; `/ah` is its native alias, using the same handler, arguments, and permissions. Root aliases `/playershop`, `/pshop`, `/playershops`, and `/pshops` are no longer registered. Existing CMI/server aliases are separate configuration and can still override native commands.
 
@@ -174,6 +174,24 @@ The wildcard's declared children do not include main-menu access, refund permiss
 The bundled tiers are `limits.default: 10`, `limits.donator: 50`, `unclaimedLimits.default: 20`, and `unclaimedLimits.donator: 40`. Their concrete nodes are `playershopguiplus.limit.default`, `playershopguiplus.limit.donator`, `playershopguiplus.unclaimedlimit.default`, and `playershopguiplus.unclaimedlimit.donator`. Keep the `default` entries when customizing tiers.
 
 The base-menu node, recent node, seven admin nodes and seven debug nodes explicitly default to operators. Debug and admin are separate umbrellas; explicit child denials are respected. Debug grants do not add trading or administration access. Inherited nodes retain their previous unspecified defaults. Configure grants deliberately and check effective permissions with the installed permission manager. A normal player who should browse and sell needs the base menu node and sell node; player-name lookup is a separate grant. Do not grant the staff wildcard as a substitute. For a LuckPerms user-specific change, use the player's verified server UUID, including Bedrock identities; group grants target the intended group ID.
+
+## Collect all unclaimed items (030)
+
+The **Collect all** hopper collects the viewing player's cancelled/expired listings across every page, using their chosen ordering. It collects whole listings, skips those that do not fit, respects custom stack limits and leaves armor/offhand untouched. Item metadata and container contents remain intact. The existing `playershopguiplus.playershop` permission applies; no command or permission is added.
+
+`menu.unclaimed.buttons.collectAll` defaults to a HOPPER in slot 51, with non-italic pastel name/lore. A saved menu without this section gets an in-memory button in a free slot outside item/control slots, preferring 51. A fully occupied layout produces a warning instead of replacing a control. Restart after changing menu.yml. `MSG.CLAIM.ALL.*` language keys support MiniMessage; the DONE message exposes `%quantity%`, `%listings%` and `%remaining%`.
+
+030 adds `one_mb_claim_batches` inside the existing `database.db`. Original shop/player rows and item encoding remain compatible. The new table retains full selected item payloads, a transaction UUID and before/after inventory evidence. SQL/encoding run on the database worker; inventory mutation runs on the main thread. The owner's changes are locked during collection, and queued shop saves use snapshots. Repeated/stale GUI clicks cannot replay a reserved batch.
+
+A SQLite transaction removes selected listings into RESERVED escrow before delivery. After revalidation, a durable DELIVERING marker precedes the inventory update; FINALIZED acknowledges completion. Changed inventory/session, quit, revoked access, reload or dormancy before delivery return items atomically as RETURNED. Startup safely returns RESERVED records. It never replays DELIVERING records: ambiguous items remain held for reconciliation, with a logged batch/owner UUID and a count in `/market debug health`. Reload does not clear these guards. Failed journal recovery leaves the market unavailable.
+
+SQLite and Minecraft inventory are separate persistence systems. A crash after FINALIZED but before player data saves may require recovery from the retained receipt. This is not a claim of crash-atomic delivery or certification of other plugins' inventory behavior. Existing one-at-a-time claims and financial transactions have separate durability limitations.
+
+For recovery, pause the market and preserve consistent market, economy, player-data, jar and log evidence. Use the private repository's read-only `scripts/claim-audit.py <database-backup>` to list unresolved batches, or add `--batch <uuid> --export <new-private-json>` for full evidence. Compare original/expected inventory, current player data and subsequent activity. Do not reset a batch to RESERVED or replay it without establishing the delivered quantity. Resolve a verified completed delivery as FINALIZED, or atomically return only verified undelivered items and record RETURNED through a reviewed repair. There is no automatic staff replay button. Restart after repair and verify totals before reopening.
+
+Keep receipts and exports private and include the whole database in backups. Completed receipts currently have no automatic retention purge. Before downgrading to 029 or earlier, resolve all pending escrow or restore a coordinated rollback pair while accounting for later gameplay; older jars ignore this journal. Never roll back only shop data while leaving newer player inventories in place.
+
+macOS Paper tests cover capacity, whole-listing skips, repeat/stale clicks, changed sessions/permissions/inventory, SQL failures, exact custom/container items, and forced JVM crashes before and during delivery. Player/inventory boundaries are synthetic; human-client and actual-provider acceptance remain separate. This candidate documentation does not announce a live plugin update.
 
 ## Unclaimed-items tooltip (026)
 
