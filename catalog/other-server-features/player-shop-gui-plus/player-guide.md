@@ -2,7 +2,7 @@
 
 The player market lets you buy items from other players and offer your own items for sale on 1MoreBlock. It is separate from the server's ShopGUIPlus shop. 1MoreBlock maintains a custom version of brc's PlayerShopGUIPlus for Paper 26.3.
 
-**Which commands can I use?** The last confirmed live version is build `001`. Start with the live instructions below. The `028` update uses `/market` and `/ah` and adds help/info plus a staff-controlled maintenance pause; [its commands are explained below](#the-market-update-build-028). Build 014 updates the internals for Paper 26.3 and newer while retaining existing listings and item metadata. Build 015 keeps the existing SQLite listings. Build 027 removes the optional HeadDatabase integration; existing decorative heads and player-head icons remain ordinary supported items. Build 016 improves development tooling and keeps the same game behavior. The commands and permissions below are unchanged by these cleanups. The update includes recent-sales chat, staff diagnostics, market statistics and soft 1MB chat colours. Seller names now use trusted local player records, including Bedrock prefixes. A seller whose name is still unknown is shown by their unique player ID. Detailed market statistics are staff-only and do not change listing prices or player permissions. Players do not need extra permissions or a new command to see the styling. Wait for staff to announce that update before relying on those native commands. The existing live `/ah` shortcut is configured separately by the server.
+**Which commands can I use?** The last confirmed live version is build `001`. Start with the live instructions below. The `029` update uses `/market` and `/ah` and adds help/info plus a staff-controlled maintenance pause; [its commands are explained below](#the-market-update-build-029). Build 014 updates the internals for Paper 26.3 and newer while retaining existing listings and item metadata. Build 015 keeps the existing SQLite listings. Build 027 removes the optional HeadDatabase integration; existing decorative heads and player-head icons remain ordinary supported items. Build 016 improves development tooling and keeps the same game behavior. The commands and permissions below are unchanged by these cleanups. The update includes recent-sales chat, staff diagnostics, market statistics and soft 1MB chat colours. Seller names now use trusted local player records, including Bedrock prefixes. A seller whose name is still unknown is shown by their unique player ID. Detailed market statistics are staff-only and do not change listing prices or player permissions. Players do not need extra permissions or a new command to see the styling. Wait for staff to announce that update before relying on those native commands. The existing live `/ah` shortcut is configured separately by the server.
 
 ## Getting started
 
@@ -72,7 +72,11 @@ The built-in aliases are `/pshop`, `/playershops`, and `/pshops`. These commands
 
 <a id="the-market-update-build-027"></a>
 
-## The market update: build 028
+<a id="the-market-update-build-028"></a>
+
+## The market update: build 029
+
+Build 029 uses **light blue glass panes around the outer edge only** of the main menu and Search & Browse. The interior is empty apart from the action buttons.
 
 Build 028 groups finding and browsing into **Search & Browse**, marked by a **spyglass**. The main menu keeps **Browse all items**, **Your shop** and **Unclaimed items** directly accessible.
 
@@ -85,7 +89,7 @@ Open the spyglass to choose:
 | Browse player shops | Green copper chest | Browse the player-shop list. |
 | Browse categories | Chest | Find items by category, including Storage & Containers and Collectibles. |
 
-The submenu has blue glass borders and soft pastel, non-italic text. The **arrow** goes back and the **barrier** closes it. Shop and category pages return through the menu you came from, and cancelling a purchase returns to your previous page or search results. Type the displayed cancellation word during a search prompt to return to Search & Browse. `/ah search blue` and its vanilla-material Tab suggestions still work directly.
+The main menu and submenu have light blue outer glass borders and soft pastel, non-italic text. The **arrow** goes back and the **barrier** closes it. Shop and category pages return through the menu you came from, and cancelling a purchase returns to your previous page or search results. Type the displayed cancellation word during a search prompt to return to Search & Browse. `/ah search blue` and its vanilla-material Tab suggestions still work directly.
 
 Build 027 removes an unused HeadDatabase connection. Existing listed decorative heads retain their textures and item details; player-shop heads still use the local skin cache. Your commands and permissions stay the same.
 
