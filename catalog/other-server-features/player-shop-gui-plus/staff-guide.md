@@ -2,7 +2,7 @@
 
 This is the public technical and operations guide for 1MoreBlock's maintained PlayerShopGUIPlus fork. For player instructions, use the [player guide](/player-guides/other-server-features/player-shop-gui-plus/). The plugin name and data directory remain `PlayerShopGUIPlus`.
 
-**Release status, reviewed 1 October 2026:** `001` is the last confirmed live build. `030` adds Collect all with durable claim escrow. It retains 029’s light blue outer borders with empty interiors in the main menu and Search & Browse submenu. It preserves 028’s navigation through shops, categories and search results. It retains 027’s HeadDatabase removal, native item support and local player/CMI skin caches. It awaits live deployment. The main reference below describes `030`; [older live commands](#older-live-build-001) are recorded separately. Confirm the installed version before using a command or planning an update. Build 018 makes recent history personal by UUID and adds a separate staff market-wide view. Build 017 adds menu-session and inventory-event hardening. Its isolated tests use synthetic players/inventories and a Vault boundary; connected-client and actual-provider acceptance remains required. This documentation does not announce a live plugin deployment.
+**Release status, reviewed 1 October 2026:** `001` is the last confirmed live build. `031` adds an owner-only Cancel listing shortcut beside OK in the own-item warning; 030’s Collect all and durable claim escrow remain. It retains 029’s light blue outer borders with empty interiors in the main menu and Search & Browse submenu. It preserves 028’s navigation through shops, categories and search results. It retains 027’s HeadDatabase removal, native item support and local player/CMI skin caches. It awaits live deployment. The main reference below describes `031`; [older live commands](#older-live-build-001) are recorded separately. Confirm the installed version before using a command or planning an update. Build 018 makes recent history personal by UUID and adds a separate staff market-wide view. Build 017 adds menu-session and inventory-event hardening. Its isolated tests use synthetic players/inventories and a Vault boundary; connected-client and actual-provider acceptance remains required. This documentation does not announce a live plugin deployment.
 
 <a id="commands-in-build-007"></a>
 
@@ -42,7 +42,9 @@ This is the public technical and operations guide for 1MoreBlock's maintained Pl
 
 <a id="commands-in-build-028"></a>
 
-## Commands in build 030
+<a id="commands-in-build-030"></a>
+
+## Commands in build 031
 
 `/market` is the main command; `/ah` is its native alias, using the same handler, arguments, and permissions. Root aliases `/playershop`, `/pshop`, `/playershops`, and `/pshops` are no longer registered. Existing CMI/server aliases are separate configuration and can still override native commands.
 
@@ -817,3 +819,11 @@ RECENT:
 ```
 
 These are plugin-local tokens, not PlaceholderAPI placeholders. The fixed personal/staff headings use `STYLE.HEADER`; section titles have the keys above.
+
+## Own-listing warning controls (031)
+
+With GUI notifications enabled, clicking Buy on your own listing shows the existing barrier explanation with green **OK** at slot 39, an empty slot at 40, and orange **Cancel listing** at 41. OK keeps the offer active; its lore explains returning to listings. Cancel explains later collection through Unclaimed items. Both use non-italic tooltips, and navigation preserves the originating list/page/filter. Other notifications retain their existing layouts.
+
+The new `menu.yml` section is `notifications.ownListing`, with `rows` and `buttons.message`, `buttons.confirm`, `buttons.cancel`. Button item/slot definitions and lore are configurable. Existing own-item language keys provide the title/barrier text and `NOTIFICATION.CONFIRM` supplies OK. Missing sections use bundled defaults in memory without overwriting saved YAML. To customize, copy the bundled section and cleanly restart. With GUI notifications disabled, the existing chat warning remains.
+
+Cancellation checks the authoritative listing and owner UUID, state/expiry, transaction locks, current market mode, permissions and menu session at action time. Repeated/stale actions cannot cancel again. It moves the selected listing into Unclaimed items without inventory delivery, so full inventories are safe. No new permission, schema, provider or item format is introduced. This reuses the existing cancellation and optional refund behavior, including its previously documented persistence/refund limitations; it does not add crash-atomic financial guarantees. Human-client acceptance is separate from the isolated synthetic-player Paper tests.

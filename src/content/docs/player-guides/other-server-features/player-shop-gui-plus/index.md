@@ -5,7 +5,7 @@ description: "Let players list items in a shared marketplace and buy listings fr
 
 The player market lets you buy items from other players and offer your own items for sale on 1MoreBlock. It is separate from the server's ShopGUIPlus shop. 1MoreBlock maintains a custom version of brc's PlayerShopGUIPlus for Paper 26.3.
 
-**Which commands can I use?** The last confirmed live version is build `001`. Start with the live instructions below. The `030` update uses `/market` and `/ah` and adds help/info plus a staff-controlled maintenance pause; [its commands are explained below](#the-market-update-build-030). Build 014 updates the internals for Paper 26.3 and newer while retaining existing listings and item metadata. Build 015 keeps the existing SQLite listings. Build 027 removes the optional HeadDatabase integration; existing decorative heads and player-head icons remain ordinary supported items. Build 016 improves development tooling and keeps the same game behavior. The commands and permissions below are unchanged by these cleanups. The update includes recent-sales chat, staff diagnostics, market statistics and soft 1MB chat colours. Seller names now use trusted local player records, including Bedrock prefixes. A seller whose name is still unknown is shown by their unique player ID. Detailed market statistics are staff-only and do not change listing prices or player permissions. Players do not need extra permissions or a new command to see the styling. Wait for staff to announce that update before relying on those native commands. The existing live `/ah` shortcut is configured separately by the server.
+**Which commands can I use?** The last confirmed live version is build `001`. Start with the live instructions below. The `031` update uses `/market` and `/ah` and adds help/info plus a staff-controlled maintenance pause; [its commands are explained below](#the-market-update-build-031). Build 014 updates the internals for Paper 26.3 and newer while retaining existing listings and item metadata. Build 015 keeps the existing SQLite listings. Build 027 removes the optional HeadDatabase integration; existing decorative heads and player-head icons remain ordinary supported items. Build 016 improves development tooling and keeps the same game behavior. The commands and permissions below are unchanged by these cleanups. The update includes recent-sales chat, staff diagnostics, market statistics and soft 1MB chat colours. Seller names now use trusted local player records, including Bedrock prefixes. A seller whose name is still unknown is shown by their unique player ID. Detailed market statistics are staff-only and do not change listing prices or player permissions. Players do not need extra permissions or a new command to see the styling. Wait for staff to announce that update before relying on those native commands. The existing live `/ah` shortcut is configured separately by the server.
 
 ## Getting started
 
@@ -79,7 +79,9 @@ The built-in aliases are `/pshop`, `/playershops`, and `/pshops`. These commands
 
 <a id="the-market-update-build-029"></a>
 
-## The market update: build 030
+<a id="the-market-update-build-030"></a>
+
+## The market update: build 031
 
 Build 030 adds a **Collect all** hopper inside **Unclaimed items**. It returns cancelled and expired listings from every page to your inventory. A listing is collected in full or left here; anything that does not fit stays available. Smaller listings may still fit after a larger one is skipped. It follows your newest/oldest preference and tells you how many items and listings were collected. Make room and use it again, or collect individual entries as before. It uses your normal market access permission.
 
@@ -214,6 +216,10 @@ Staff can change generated item-name capitalization, the chat cancellation word,
 Read the [staff and technical reference](/staff-reference/other-server-features/player-shop-gui-plus/) for setup, permissions, integrations, configuration, and troubleshooting.
 
 The [original brc plugin](https://www.spigotmc.org/resources/playershopguiplus.37707/) and [upstream command reference](https://docs.brcdev.net/#/playershopgui/commands-permissions) describe the vendor version. This guide explains the 1MoreBlock version and its release status.
+
+### Clicked your own listing?
+
+In build **031**, the own-item message gives you two choices. Green **OK** keeps the item listed and returns to the list you were browsing. Orange **Cancel listing** removes that offer from sale. You can collect it later through **Unclaimed items**, alongside expired listings. Cancellation works even when your inventory is full; make space before collecting. The buttons have an empty slot between them.
 
 ## Reference Links
 
