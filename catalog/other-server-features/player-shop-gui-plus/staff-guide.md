@@ -2,7 +2,7 @@
 
 This is the public technical and operations guide for 1MoreBlock's maintained PlayerShopGUIPlus fork. For player instructions, use the [player guide](/player-guides/other-server-features/player-shop-gui-plus/). The plugin name and data directory remain `PlayerShopGUIPlus`.
 
-**Release status, reviewed 1 October 2026:** `001` is the last confirmed live build. `018` is verified in isolated local Paper tests and awaits live deployment. The main reference below describes `018`; [older live commands](#older-live-build-001) are recorded separately. Confirm the installed version before using a command or planning an update. Build 018 makes recent history personal by UUID and adds a separate staff market-wide view. Build 017 adds menu-session and inventory-event hardening. Its isolated tests use synthetic players/inventories and a Vault boundary; connected-client and actual-provider acceptance remains required. This documentation does not announce a live plugin deployment.
+**Release status, reviewed 1 October 2026:** `001` is the last confirmed live build. `019` is verified in isolated local Paper tests and awaits live deployment. The main reference below describes `019`; [older live commands](#older-live-build-001) are recorded separately. Confirm the installed version before using a command or planning an update. Build 018 makes recent history personal by UUID and adds a separate staff market-wide view. Build 017 adds menu-session and inventory-event hardening. Its isolated tests use synthetic players/inventories and a Vault boundary; connected-client and actual-provider acceptance remains required. This documentation does not announce a live plugin deployment.
 
 <a id="commands-in-build-007"></a>
 
@@ -20,7 +20,9 @@ This is the public technical and operations guide for 1MoreBlock's maintained Pl
 
 <a id="commands-in-build-017"></a>
 
-## Commands in build 018
+<span id="commands-in-build-018"></span>
+
+## Commands in build 019
 
 `/market` is the main command; `/ah` is its native alias, using the same handler, arguments, and permissions. Root aliases `/playershop`, `/pshop`, `/playershops`, and `/pshops` are no longer registered. Existing CMI/server aliases are separate configuration and can still override native commands.
 
@@ -140,6 +142,12 @@ The wildcard's declared children do not include main-menu access, refund permiss
 The bundled tiers are `limits.default: 10`, `limits.donator: 50`, `unclaimedLimits.default: 20`, and `unclaimedLimits.donator: 40`. Their concrete nodes are `playershopguiplus.limit.default`, `playershopguiplus.limit.donator`, `playershopguiplus.unclaimedlimit.default`, and `playershopguiplus.unclaimedlimit.donator`. Keep the `default` entries when customizing tiers.
 
 The base-menu node, recent node, seven admin nodes and seven debug nodes explicitly default to operators. Debug and admin are separate umbrellas; explicit child denials are respected. Debug grants do not add trading or administration access. Inherited nodes retain their previous unspecified defaults. Configure grants deliberately and check effective permissions with the installed permission manager. A normal player who should browse and sell needs the base menu node and sell node; player-name lookup is a separate grant. Do not grant the staff wildcard as a substitute. For a LuckPerms user-specific change, use the player's verified server UUID, including Bedrock identities; group grants target the intended group ID.
+
+## Non-italic menu tooltips (019)
+
+All market GUI item titles and lore explicitly disable italics, including inherited client defaults and explicit italic segments in menu previews. This covers configured buttons, player/provider item names and lore, listing pages, and buy/cancel/sell confirmations after quantity or price updates. Colours, bold text and other metadata remain. No configuration rewrite or permission change is required. Italic codes in GUI text cannot override this presentation rule. Chat keeps its existing MiniMessage handling.
+
+The renderer changes detached menu copies only: stored, held, purchased and reclaimed player items retain their complete original metadata, including intentional formatting from another plugin. Newly created internal spawner labels also use non-italic text. Existing spawners are not rewritten. Build 019 changes no market or history schema. Rolling back to 018 restores its tooltip formatting; keep current databases and inventories together rather than restoring only an older market database. Real-client visual acceptance remains separate from the automated Paper component/event checks.
 
 ## MiniMessage and pastel chat (009)
 
