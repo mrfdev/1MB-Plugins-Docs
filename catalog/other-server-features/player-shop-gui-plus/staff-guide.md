@@ -2,7 +2,7 @@
 
 This is the public technical and operations guide for 1MoreBlock's maintained PlayerShopGUIPlus fork. For player instructions, use the [player guide](/player-guides/other-server-features/player-shop-gui-plus/). The plugin name and data directory remain `PlayerShopGUIPlus`.
 
-**Release status, reviewed 1 October 2026:** `001` is the last confirmed live build. `024` persists locally observed shop-owner skins and optionally reuses CMI’s loaded UUID skin cache without remote lookups. It retains the earlier copper chest and arrow menu icons and awaits live deployment. The main reference below describes `024`; [older live commands](#older-live-build-001) are recorded separately. Confirm the installed version before using a command or planning an update. Build 018 makes recent history personal by UUID and adds a separate staff market-wide view. Build 017 adds menu-session and inventory-event hardening. Its isolated tests use synthetic players/inventories and a Vault boundary; connected-client and actual-provider acceptance remains required. This documentation does not announce a live plugin deployment.
+**Release status, reviewed 1 October 2026:** `001` is the last confirmed live build. `025` adds Storage & Containers and Collectibles, refreshes existing category materials and retains the earlier local skin cache and menu improvements. It awaits live deployment. The main reference below describes `025`; [older live commands](#older-live-build-001) are recorded separately. Confirm the installed version before using a command or planning an update. Build 018 makes recent history personal by UUID and adds a separate staff market-wide view. Build 017 adds menu-session and inventory-event hardening. Its isolated tests use synthetic players/inventories and a Vault boundary; connected-client and actual-provider acceptance remains required. This documentation does not announce a live plugin deployment.
 
 <a id="commands-in-build-007"></a>
 
@@ -32,7 +32,9 @@ This is the public technical and operations guide for 1MoreBlock's maintained Pl
 
 <a id="commands-in-build-023"></a>
 
-## Commands in build 024
+<a id="commands-in-build-024"></a>
+
+## Commands in build 025
 
 `/market` is the main command; `/ah` is its native alias, using the same handler, arguments, and permissions. Root aliases `/playershop`, `/pshop`, `/playershops`, and `/pshops` are no longer registered. Existing CMI/server aliases are separate configuration and can still override native commands.
 
@@ -152,6 +154,16 @@ The wildcard's declared children do not include main-menu access, refund permiss
 The bundled tiers are `limits.default: 10`, `limits.donator: 50`, `unclaimedLimits.default: 20`, and `unclaimedLimits.donator: 40`. Their concrete nodes are `playershopguiplus.limit.default`, `playershopguiplus.limit.donator`, `playershopguiplus.unclaimedlimit.default`, and `playershopguiplus.unclaimedlimit.donator`. Keep the `default` entries when customizing tiers.
 
 The base-menu node, recent node, seven admin nodes and seven debug nodes explicitly default to operators. Debug and admin are separate umbrellas; explicit child denials are respected. Debug grants do not add trading or administration access. Inherited nodes retain their previous unspecified defaults. Configure grants deliberately and check effective permissions with the installed permission manager. A normal player who should browse and sell needs the base menu node and sell node; player-name lookup is a separate grant. Do not grant the staff wildcard as a substitute. For a LuckPerms user-specific change, use the player's verified server UUID, including Bedrock identities; group grants target the intended group ID.
+
+## Category refresh (025)
+
+There are 15 categories. Existing category IDs 1–13 and their labels/slots remain. ID 14, **Storage & Containers**, uses a waxed oxidized copper chest at zero-based slot 24 (the old gap); ID 15, **Collectibles**, uses a decorated pot at slot 31. Storage includes all coloured bundles and shulker boxes, normal/copper chests, barrels, shelves and bookshelves. Collectibles includes discs/fragments, pottery, armour trims, banner patterns, decorative heads, horns and selected rare finds. Chest boats/minecarts stay in Transportation; netherite upgrade templates stay in Materials. Enchanted books stay in Miscellaneous; a separate book category is deferred.
+
+The refreshed defaults explicitly list 1,645 item materials verified against Paper 26.3 build 133. Other remains a catch-all for unmatched items, including 12 deliberately unlisted operator/technical materials. New Paper materials require another review; they are not assigned automatically. Broad categories match the underlying material, so renamed/custom items usually follow their vanilla material. Exact custom matching rules can still send a variant to Other; the inherited explicit APPLE metadata rule is retained.
+
+The category-entry option `matchMaterialOnly: true` groups all variants of that material, ignoring the comparison flags for that entry only. Its default is false, retaining existing matching semantics. The refreshed player-head, potion, spawner and goat-horn entries enable it so textured heads, actual potion variants and configured spawners appear. A goat-horn entry still needs valid `musicInstrument` metadata when loaded, such as `minecraft:ponder_goat_horn`. Do not enable material-only matching for a category intended to distinguish specific provider items or metadata. Purchase comparison, item contents, ownership and payment validation are unchanged; no remote profile lookup is added.
+
+A jar upgrade preserves existing `categories.yml`. Back it up and merge the packaged categories deliberately, retaining custom entries, provider IDs, comparisons, labels and slots. Do not delete the file or replace unrelated menu/configuration files to get new defaults. Adopt this option only with 025 or newer. Install the jar with a clean restart; later category-only edits can use `/market admin reload`, then reopen the menu. The 1MB test clone has the reviewed refreshed lists. Roll back the jar and its previous category file together; no market database migration is needed. New views filter existing listings without rewriting them.
 
 ## Local shop-owner skin cache (024)
 
