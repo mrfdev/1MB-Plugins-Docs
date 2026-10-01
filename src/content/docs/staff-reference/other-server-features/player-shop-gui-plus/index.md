@@ -5,7 +5,7 @@ description: "Public-safe commands, permissions, configuration, integrations, an
 
 This is the public technical and operations guide for 1MoreBlock's maintained PlayerShopGUIPlus fork. For player instructions, use the [player guide](/player-guides/other-server-features/player-shop-gui-plus/). The plugin name and data directory remain `PlayerShopGUIPlus`.
 
-**Release status, reviewed 1 October 2026:** `001` is the last confirmed live build. `027` removes HeadDatabase integration while preserving stored native heads and local player/CMI skin caches. It retains the refreshed categories, local skin cache and earlier menu improvements. It awaits live deployment. The main reference below describes `027`; [older live commands](#older-live-build-001) are recorded separately. Confirm the installed version before using a command or planning an update. Build 018 makes recent history personal by UUID and adds a separate staff market-wide view. Build 017 adds menu-session and inventory-event hardening. Its isolated tests use synthetic players/inventories and a Vault boundary; connected-client and actual-provider acceptance remains required. This documentation does not announce a live plugin deployment.
+**Release status, reviewed 1 October 2026:** `001` is the last confirmed live build. `028` adds the Search & Browse submenu and preserves navigation through shops, categories and search results. It retains 027’s HeadDatabase removal, native item support and local player/CMI skin caches. It awaits live deployment. The main reference below describes `028`; [older live commands](#older-live-build-001) are recorded separately. Confirm the installed version before using a command or planning an update. Build 018 makes recent history personal by UUID and adds a separate staff market-wide view. Build 017 adds menu-session and inventory-event hardening. Its isolated tests use synthetic players/inventories and a Vault boundary; connected-client and actual-provider acceptance remains required. This documentation does not announce a live plugin deployment.
 
 <a id="commands-in-build-007"></a>
 
@@ -41,7 +41,9 @@ This is the public technical and operations guide for 1MoreBlock's maintained Pl
 
 <a id="commands-in-build-026"></a>
 
-## Commands in build 027
+<a id="commands-in-build-027"></a>
+
+## Commands in build 028
 
 `/market` is the main command; `/ah` is its native alias, using the same handler, arguments, and permissions. Root aliases `/playershop`, `/pshop`, `/playershops`, and `/pshops` are no longer registered. Existing CMI/server aliases are separate configuration and can still override native commands.
 
@@ -80,6 +82,18 @@ Admin actions and reload/r are case-insensitive and work from console or for per
 
 Buying, cancelling and claiming use menus. `buy`, `cancel`, `cancelothers`, `claim` and `player` are not subcommands. `/market search <material or keyword>` opens material-filtered results; the GUI chat prompt also supports custom item names. `/market recent [sales|purchases] [page]` and its `/ah` alias are the same personal read-only chat command; see [recent sales](#recent-sales-012).
 
+### Search & Browse menus in build 028
+
+The main menu now has four actions: **Browse all items**, **Search & Browse** (spyglass), **Your shop** and **Unclaimed items**, plus Close. The three-row submenu offers **Search items**, **Search player shops**, **Browse player shops** (green copper chest) and **Browse categories**. It has blue glass around its perimeter, pastel non-italic text, an arrow at bottom-right-minus-one and a barrier at bottom right. All four routes use `playershopguiplus.playershop`; no new permission, command, dependency or database migration is introduced.
+
+Back retains the route and page through shop/category lists, individual shops/categories, search results and buy/cancel confirmations. Refresh and sorting retain that route. Chat item search still accepts custom names; cancelling the prompt returns to the submenu. Material command search remains available through `/market search` and `/ah search`, using only vanilla material suggestions. Closed inventories are not reused: returning creates a fresh checked GUI session. Existing cooldown, movement, permission and stale-session protections apply.
+
+Configuration is in `menu.yml`: `menu.main.buttons.browse` is the spyglass; `menu.searchBrowse` defines the four choices (`searchItems`, `searchShops`, `shops`, `categories`) and `back`/`close`. The submenu’s `fill.item` fills only the perimeter. The main layout uses five rows with `items`, `browse`, `own`, `unclaimed` at zero-based slots 11, 15, 29, 33, and `close` at 44. The submenu uses slots 10, 12, 14, 16, with Back at 25 and Close at 26. `%number%` in its shops button counts shops with active listings; its categories button counts categories. Labels on list-page back buttons are rendered as **Back** to avoid an incorrect old “main menu” label.
+
+For a saved menu without `menu.main.buttons.browse`, startup supplies the new main layout in memory, preserving the configured item definitions on the three surviving actions. It also supplies a missing `menu.searchBrowse` section. This does not write or erase the saved YAML. Review custom layouts before deployment. To save the new layout explicitly, back up `menu.yml`, merge the packaged `menu.main` and `menu.searchBrowse` sections while retaining intended customizations, and restart cleanly. The test clone receives only those two sections; all other saved menu sections remain unchanged. `/market admin reload` does not reload `menu.yml`.
+
+Rollback to 027 requires restoring the matching previous menu sections as well as the prior jar: that version expects the four old buttons on the main menu. Keep current market, economy and player data when reverting a visual update; do not restore an old database over later trades. The live server remains last-confirmed 001. Isolated macOS Paper tests use synthetic players and economy boundaries; connected-client acceptance of this layout is still pending.
+
 ### GUI safety in build 017
 
 Menus bind once to an exact player/data/view/request/world/market session. Admission and next-tick execution recheck that session and permissions. Fixed 200ms monotonic click/open cooldowns survive menu changes during a login; only one action/open can be pending. Extra inputs are silent. Open admission happens before scanning/rendering, and cancelled/replaced opens cannot activate. Rendering and player/inventory operations now run on the server thread. Database/name-cache I/O retains its existing background workers.
@@ -88,7 +102,7 @@ Ordinary left/right clicks operate buttons. `clickActions` still maps listing ge
 
 Purchase confirmation rejects a changed item/quantity/price. Cancellation rechecks listing membership, expiry, owner and staff permission. Claims require an authoritative expired/cancelled item owned by the player and use actual component stack limits. Unexpected leftovers restore the inventory and retain the listing. Uncertain partial delivery blocks that listing in memory for reconciliation. Wizard confirmation now uses the guarded command-sale path and exact original hand slot/stack, including its restriction on positive fees combined with deferred refunds.
 
-There are no new settings, permissions, placeholders or dependencies, and no schema/item migration. The requested visual menu redesign is separate. Reconcile uncertain inventory/payment outcomes before retry or restart: review guards remain in memory, and this release does not provide crash-atomic economy/inventory/SQLite recovery. The private `docs/GUI-HARDENING.md` and 017 change record document test scope and remaining two-client/provider/crash checks. Use the isolated `buy-smoke.py --case gui` suite after building the probes; never install probe jars on gameplay servers.
+There are no new settings, permissions, placeholders or dependencies, and no schema/item migration. Build 028 implements the main Search & Browse cleanup; applying the full visual layout to every other menu remains separate. Reconcile uncertain inventory/payment outcomes before retry or restart: review guards remain in memory, and this release does not provide crash-atomic economy/inventory/SQLite recovery. The private `docs/GUI-HARDENING.md` and 017 change record document test scope and remaining two-client/provider/crash checks. Use the isolated `buy-smoke.py --case gui` suite after building the probes; never install probe jars on gameplay servers.
 
 ### Help and info text
 

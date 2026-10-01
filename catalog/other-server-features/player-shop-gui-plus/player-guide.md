@@ -2,7 +2,7 @@
 
 The player market lets you buy items from other players and offer your own items for sale on 1MoreBlock. It is separate from the server's ShopGUIPlus shop. 1MoreBlock maintains a custom version of brc's PlayerShopGUIPlus for Paper 26.3.
 
-**Which commands can I use?** The last confirmed live version is build `001`. Start with the live instructions below. The `027` update uses `/market` and `/ah` and adds help/info plus a staff-controlled maintenance pause; [its commands are explained below](#the-market-update-build-027). Build 014 updates the internals for Paper 26.3 and newer while retaining existing listings and item metadata. Build 015 keeps the existing SQLite listings. Build 027 removes the optional HeadDatabase integration; existing decorative heads and player-head icons remain ordinary supported items. Build 016 improves development tooling and keeps the same game behavior. The commands and permissions below are unchanged by these cleanups. The update includes recent-sales chat, staff diagnostics, market statistics and soft 1MB chat colours. Seller names now use trusted local player records, including Bedrock prefixes. A seller whose name is still unknown is shown by their unique player ID. Detailed market statistics are staff-only and do not change listing prices or player permissions. Players do not need extra permissions or a new command to see the styling. Wait for staff to announce that update before relying on those native commands. The existing live `/ah` shortcut is configured separately by the server.
+**Which commands can I use?** The last confirmed live version is build `001`. Start with the live instructions below. The `028` update uses `/market` and `/ah` and adds help/info plus a staff-controlled maintenance pause; [its commands are explained below](#the-market-update-build-028). Build 014 updates the internals for Paper 26.3 and newer while retaining existing listings and item metadata. Build 015 keeps the existing SQLite listings. Build 027 removes the optional HeadDatabase integration; existing decorative heads and player-head icons remain ordinary supported items. Build 016 improves development tooling and keeps the same game behavior. The commands and permissions below are unchanged by these cleanups. The update includes recent-sales chat, staff diagnostics, market statistics and soft 1MB chat colours. Seller names now use trusted local player records, including Bedrock prefixes. A seller whose name is still unknown is shown by their unique player ID. Detailed market statistics are staff-only and do not change listing prices or player permissions. Players do not need extra permissions or a new command to see the styling. Wait for staff to announce that update before relying on those native commands. The existing live `/ah` shortcut is configured separately by the server.
 
 ## Getting started
 
@@ -70,17 +70,32 @@ The built-in aliases are `/pshop`, `/playershops`, and `/pshops`. These commands
 
 <a id="the-market-update-build-026"></a>
 
-## The market update: build 027
+<a id="the-market-update-build-027"></a>
+
+## The market update: build 028
+
+Build 028 groups finding and browsing into **Search & Browse**, marked by a **spyglass**. The main menu keeps **Browse all items**, **Your shop** and **Unclaimed items** directly accessible.
+
+Open the spyglass to choose:
+
+| Choice | Icon | What it does |
+| --- | --- | --- |
+| Search items | Paper | Type any keyword in chat, including a custom item name such as `magic box`. |
+| Search player shops | Player head | Type a player or shop name in chat. |
+| Browse player shops | Green copper chest | Browse the player-shop list. |
+| Browse categories | Chest | Find items by category, including Storage & Containers and Collectibles. |
+
+The submenu has blue glass borders and soft pastel, non-italic text. The **arrow** goes back and the **barrier** closes it. Shop and category pages return through the menu you came from, and cancelling a purchase returns to your previous page or search results. Type the displayed cancellation word during a search prompt to return to Search & Browse. `/ah search blue` and its vanilla-material Tab suggestions still work directly.
 
 Build 027 removes an unused HeadDatabase connection. Existing listed decorative heads retain their textures and item details; player-shop heads still use the local skin cache. Your commands and permissions stay the same.
 
 Build 026 makes **Unclaimed items** clearer: these are unlisted items from cancelled or expired listings, ready to return to your inventory. **Ready to collect** counts listing entries, which can each hold several items. Open the menu, then select an entry to collect it; leave enough inventory space first.
 
-Build 025 adds **Storage & Containers** for chests, barrels, coloured shulker boxes, bundles and shelves, plus **Collectibles** for music discs, pottery, armour trims, decorative heads and similar finds. The existing categories also include newer woods, equipment, transport items and spawn eggs. Open **Browse categories** from the market menu to use them. Enchanted books remain in **Miscellaneous** for now. **Other** catches items that do not match a configured category. No extra permission is needed, and sorting does not change item contents or ownership.
+Build 025 adds **Storage & Containers** for chests, barrels, coloured shulker boxes, bundles and shelves, plus **Collectibles** for music discs, pottery, armour trims, decorative heads and similar finds. The existing categories also include newer woods, equipment, transport items and spawn eggs. Open **Search & Browse → Browse categories** to use them. Enchanted books remain in **Miscellaneous** for now. **Other** catches items that do not match a configured category. No extra permission is needed, and sorting does not change item contents or ownership.
 
-Build 023 shows **Browse shops** as a green waxed oxidized copper chest. Click it to browse player shops.
+Build 023 introduced the green waxed oxidized copper chest for browsing player shops; in 028 it is inside Search & Browse.
 
-Build 022 uses an **arrow** for **Return to main menu**, **Return to shops** and **Return to categories**. The label tells you where the button goes. Staff apply the icon update when upgrading an existing menu configuration.
+Build 022 uses an **arrow** for **Return to main menu**, **Return to shops** and **Return to categories**. Build 028 uses the shorter **Back** label for list pages and remembers the route through the submenu. Staff apply icon updates when upgrading custom menu configurations.
 
 Build 021 shows the newest listings first by default, with the newest item at the top left of the listing area. Use **Change Item Order** to switch to oldest first or back again. Your choice is remembered across menu visits, reconnects and normal server restarts, and applies to item lists in shops, categories, search and unclaimed items. Each player has their own preference. Newest means when the item was listed, regardless of its expiry time. No extra permission or command is needed.
 
