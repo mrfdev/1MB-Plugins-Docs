@@ -1,3 +1,4 @@
+# Canonical public copy: maintain in 1MB-PlayerShopGuiPlus/docs/public/, then publish through the scoped docs workflow.
 id: player-shop-gui-plus
 name: "PlayerShopGUIPlus"
 category: other-server-feature

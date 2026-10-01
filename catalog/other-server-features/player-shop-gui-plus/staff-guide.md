@@ -2,7 +2,19 @@
 
 This is the public technical and operations guide for 1MoreBlock's maintained PlayerShopGUIPlus fork. For player instructions, use the [player guide](/player-guides/other-server-features/player-shop-gui-plus/). The plugin name and data directory remain `PlayerShopGUIPlus`.
 
-**Release status, reviewed 1 October 2026:** `001` is the last confirmed live build. `037` adds bounded chat buffering, SQL queues and cache cleanup, with faster category rendering. It retains 036’s durable transaction IDs, acknowledged market writes, persistent review holds and the optional 1MB-Library AutoSell purchase guard. It retains 035, which applies the same border and footer to all 19 market menus, including a read-only personal head on each page. It preserves 034’s permission-aware unknown-command guidance and exact local player-shop lookup. Optional explicitly allowed PlaceholderAPI text remains limited to the main-menu head’s title/lore. It preserves 032’s structured transaction audit logs, buyer/spending/sold-material/daily reports and historical time windows. It preserves 031’s owner-only Cancel listing shortcut beside OK in the own-item warning; 030’s Collect all and durable claim escrow remain. It extends 029’s light blue outer borders and clear interiors to every market menu. It preserves 028’s navigation through shops, categories and search results. It retains 027’s HeadDatabase removal, native item support and local player/CMI skin caches. It awaits live deployment. The main reference below describes `037`; [older live commands](#older-live-build-001) are recorded separately. Confirm the installed version before using a command or planning an update. Build 018 makes recent history personal by UUID and adds a separate staff market-wide view. Build 017 adds menu-session and inventory-event hardening. Its isolated tests use synthetic players/inventories and a Vault boundary; connected-client and actual-provider acceptance remains required. This documentation does not announce a live plugin deployment.
+**Release status, reviewed 1 October 2026:** the tested candidate is build `037`; `001` remains the last confirmed live build. The candidate runs on the development test server. This guide describes 037 unless a section explicitly describes older behavior. Publishing documentation does not deploy a plugin update.
+
+| Release fact | Reviewed value |
+| --- | --- |
+| Maintained artifact | `1MB-PlayerShopGuiPlus-v1.42.0-037-j25-26.3.jar` |
+| Artifact SHA-256 | `abe4b5123be3c8680b959b87200d8dafb6528a8eeab25c34331572532a54f2bc` |
+| Tested runtime | macOS, Paper 26.3-133, Java 27 |
+| Build | Gradle 9.8.0, Java 25 bytecode, Paper API 26.3.build.49-alpha |
+| Last confirmed live | `001`; [older commands](#older-live-build-001) |
+
+The current build includes durable transaction holds and the optional 1MB-Library AutoSell guard, personal history, staff logs/statistics, consistent menus and bounded background work. The 037 checks passed 37 isolated Paper scenarios and 793 saved-item round trips. Player/inventory/payment boundaries are controlled test fixtures; these results do not certify every connected client, provider, machine-crash boundary or live performance characteristic.
+
+Start with [commands](#commands-in-build-037), [permissions](#permissions), [installation](#build-install-and-preserve-existing-listings), [hidden settings](#hidden-configuration-options), [placeholders](#placeholders) or [transaction recovery](#durable-transactions-and-autosell-build-036).
 
 <a id="commands-in-build-007"></a>
 
@@ -69,7 +81,7 @@ Listing, purchase, cancellation, expiry and individual collection require an ack
 
 `/market admin status` and `/market debug health` show pending/review counts with their existing staff permissions. Preserve the transaction UUID shown in chat/logs. The maintainer's private read-only transaction report can inspect/export an exact ID from a consistent stopped backup. Pause the market, preserve market/economy/player data together, reconcile actual balances and inventory, then review the specific repair. Restart or downgrade must never be used to clear a hold. Older jars do not enforce the new journal.
 
-The optional **1MB-CMIAPI-AutoSell** feature uses the public reward-delivery guard from **1MB-CMIAPI-Lib**. Actual suite 1.0.4-708 was tested. AutoSell on blocks purchases before payment and is checked again before delivery. If enabled during payment, confirmed payment legs are reversed; uncertain compensation stays held. No AutoSell preference is changed. Absent AutoSell requires no new dependency; an installed but disabled/incompatible guard blocks buying with staff guidance. Install matching actual Core/AutoSell binaries and their CMI/CMILib requirements, never compile-time API contracts. This is separate from CMI AutoSell.
+The optional **1MB-CMIAPI-AutoSell** feature uses the public reward-delivery guard from **1MB-CMIAPI-Lib**. Actual suite 1.0.4-708 was tested. AutoSell on blocks purchases before payment and is checked again before delivery. Players should turn it off with `/autosell`, then try buying again. If enabled during payment, confirmed payment legs are reversed; uncertain compensation stays held. No AutoSell preference is changed. Absent AutoSell requires no new dependency; an installed but disabled/incompatible guard blocks buying with staff guidance. Install matching actual Core/AutoSell binaries and their CMI/CMILib requirements, never compile-time API contracts. This is separate from CMI AutoSell.
 
 Keep `tax.refund.purchase`, `tax.refund.cancelled` and `tax.refund.expired` **false**. Any true flag rejects startup/reload because the legacy item format does not persist a paid-fee entitlement. Nonrefundable fees and confirmed immediate compensation remain supported; the old tax-refund permission does not override this restriction.
 
@@ -80,6 +92,8 @@ SQLite, the economy provider and Minecraft player files have no shared atomic co
 New MiniMessage keys are `MSG.TRANSACTION.UNAVAILABLE`, `BUSY`, `CHANGED`, `REVIEW` (with `%id%`), plus `MSG.BUY.AUTOSELL.ACTIVE` and `UNAVAILABLE`. Missing defaults are added without replacing custom language text.
 
 <span id="commands-in-build-035"></span>
+
+<a id="commands-in-build-036"></a>
 
 ## Commands in build 037
 
@@ -254,7 +268,7 @@ The wildcard's declared children do not include main-menu access, refund permiss
 
 The bundled tiers are `limits.default: 10`, `limits.donator: 50`, `unclaimedLimits.default: 20`, and `unclaimedLimits.donator: 40`. Their concrete nodes are `playershopguiplus.limit.default`, `playershopguiplus.limit.donator`, `playershopguiplus.unclaimedlimit.default`, and `playershopguiplus.unclaimedlimit.donator`. Keep the `default` entries when customizing tiers.
 
-The base-menu node, recent node, seven admin nodes and seven debug nodes explicitly default to operators. Debug and admin are separate umbrellas; explicit child denials are respected. Debug grants do not add trading or administration access. Inherited nodes retain their previous unspecified defaults. Configure grants deliberately and check effective permissions with the installed permission manager. A normal player who should browse and sell needs the base menu node and sell node; player-name lookup is a separate grant. Do not grant the staff wildcard as a substitute. For a LuckPerms user-specific change, use the player's verified server UUID, including Bedrock identities; group grants target the intended group ID.
+The base-menu node, recent node, eight admin nodes (umbrella plus seven actions) and seven debug nodes explicitly default to operators. Debug and admin are separate umbrellas; explicit child denials are respected. Debug grants do not add trading or administration access. Inherited nodes retain their previous unspecified defaults. Configure grants deliberately and check effective permissions with the installed permission manager. A normal player who should browse and sell needs the base menu node and sell node; player-name lookup is a separate grant. Do not grant the staff wildcard as a substitute. For a LuckPerms user-specific change, use the player's verified server UUID, including Bedrock identities; group grants target the intended group ID.
 
 ## Collect all unclaimed items (030)
 
@@ -266,17 +280,17 @@ The **Collect all** hopper collects the viewing player's cancelled/expired listi
 
 A SQLite transaction removes selected listings into RESERVED escrow before delivery. After revalidation, a durable DELIVERING marker precedes the inventory update; FINALIZED acknowledges completion. Changed inventory/session, quit, revoked access, reload or dormancy before delivery return items atomically as RETURNED. Startup safely returns RESERVED records. It never replays DELIVERING records: ambiguous items remain held for reconciliation, with a logged batch/owner UUID and a count in `/market debug health`. Reload does not clear these guards. Failed journal recovery leaves the market unavailable.
 
-SQLite and Minecraft inventory are separate persistence systems. A crash after FINALIZED but before player data saves may require recovery from the retained receipt. This is not a claim of crash-atomic delivery or certification of other plugins' inventory behavior. Existing one-at-a-time claims and financial transactions have separate durability limitations.
+SQLite and Minecraft inventory are separate persistence systems. A crash after FINALIZED but before player data saves may require recovery from the retained receipt. This is not a claim of crash-atomic delivery or certification of other plugins' inventory behavior. Build 036 adds a separate durable journal for individual claims and financial transactions. Both journal types still have the cross-store persistence limits described above.
 
 For recovery, pause the market and preserve consistent market, economy, player-data, jar and log evidence. Use the private repository's read-only `scripts/claim-audit.py <database-backup>` to list unresolved batches, or add `--batch <uuid> --export <new-private-json>` for full evidence. Compare original/expected inventory, current player data and subsequent activity. Do not reset a batch to RESERVED or replay it without establishing the delivered quantity. Resolve a verified completed delivery as FINALIZED, or atomically return only verified undelivered items and record RETURNED through a reviewed repair. There is no automatic staff replay button. Restart after repair and verify totals before reopening.
 
-Keep receipts and exports private and include the whole database in backups. Completed receipts currently have no automatic retention purge. Before downgrading to 029 or earlier, resolve all pending escrow or restore a coordinated rollback pair while accounting for later gameplay; older jars ignore this journal. Never roll back only shop data while leaving newer player inventories in place.
+Keep receipts and exports private and include the whole database in backups. Build 036 compacts safely RETURNED bulk-claim payloads; empty no-effect FAILED and RETURNED receipts older than seven days may be pruned during admission. Successful and unresolved evidence remains retained. Journal payload/admission budgets do not authorize deleting unresolved holds. Before downgrading to 029 or earlier, resolve all pending escrow or restore a coordinated rollback pair while accounting for later gameplay; older jars ignore this journal. Never roll back only shop data while leaving newer player inventories in place.
 
 macOS Paper tests cover capacity, whole-listing skips, repeat/stale clicks, changed sessions/permissions/inventory, SQL failures, exact custom/container items, and forced JVM crashes before and during delivery. Player/inventory boundaries are synthetic; human-client and actual-provider acceptance remain separate. This candidate documentation does not announce a live plugin update.
 
 ## Unclaimed-items tooltip (026)
 
-The main-menu ender chest explains that unlisted items from cancelled or expired listings are ready to collect. Its count remains the viewer's cancelled/expired listing entries, not the sum of stack quantities. Players open it and select entries to return items to their inventory. This wording does not add bulk collection or change retention, limits, permissions or item storage. Menu text remains non-italic.
+The main-menu ender chest explains that unlisted items from cancelled or expired listings are ready to collect. Its count remains the viewer's cancelled/expired listing entries, not the sum of stack quantities. Players open it and select entries to return items to their inventory. This wording does not change retention, limits, permissions or item storage. Build 030 separately adds the Collect all hopper described above. Menu text remains non-italic.
 
 For an existing installation, back up `plugins/PlayerShopGUIPlus/menu.yml` and change only `menu.main.buttons.unclaimed.item.lore` to:
 
@@ -322,7 +336,7 @@ Isolated Paper 26.3 checks use real CMI 9.8.10.1/CMILib 1.6.0.0 API maps with sy
 
 ## Browse-shops copper chest (023)
 
-The **Browse shops** button uses `WAXED_OXIDIZED_COPPER_CHEST`, the green copper chest, while keeping its label, lore, slot and action. Existing menu files are preserved: back up `plugins/PlayerShopGUIPlus/menu.yml`, set `menu.main.buttons.shops.item.material` to `WAXED_OXIDIZED_COPPER_CHEST`, then restart the server cleanly. New installations receive the packaged default. Restore the previous material and restart to undo it. There is no market-data migration.
+The **Browse shops** button uses `WAXED_OXIDIZED_COPPER_CHEST`, the green copper chest, while keeping its label, lore, slot and action. Existing menu files are preserved: back up `plugins/PlayerShopGUIPlus/menu.yml`, set `menu.searchBrowse.buttons.shops.item.material` to `WAXED_OXIDIZED_COPPER_CHEST` (the pre-028 path was `menu.main.buttons.shops.item.material`), then restart the server cleanly. New installations receive the packaged default. Restore the previous material and restart to undo it. There is no market-data migration.
 
 Correction to earlier menu-update guidance: `/market admin reload` applies supported config/language/category changes but does not load `menu.yml`. Both the arrow and copper-chest changes require a clean restart when editing an existing menu.
 
@@ -464,14 +478,14 @@ The inherited `TIME.LESSTHAN` message contains `%time%`, but no active renderer 
 | Paper 26.3 | Current supported Minecraft/Paper target. Later releases require explicit verification; forward compatibility is a goal, not a guarantee. |
 | Java 25 | Compile toolchain and target bytecode. The maintained local Paper test server runs Java 27. |
 | Vault | Required server plugin, including when another economy type is configured. |
-| Economy service | `economy.type: VAULT` requires a registered Vault economy provider. Purchases and nonzero direct-command fees in `012` require confirmed transaction support, implemented by the Vault adapter. |
-| Vault permission service | Used for configured tax-refund eligibility checks. |
+| Economy service | `economy.type: VAULT` requires a registered Vault economy provider. Purchases and nonzero direct-command fees require confirmed transaction support, implemented by the Vault adapter. |
+| Vault permission service | Existing registration is retained; deferred tax-refund queries/payments are disabled. |
 
-A CMI economy bridge can supply the Vault service. CMI, 1MB Library, ShopGUIPlus, and PlaceholderAPI are not direct requirements. There is no direct ShopGUIPlus `/buy` or sell-value lookup. Gson and NBT-API are included in the maintained jar; do not install separate copies just for this plugin.
+A CMI economy bridge can supply the Vault service. CMI, 1MB Library, ShopGUIPlus, and PlaceholderAPI are not direct requirements. The optional 1MB-Library Core/AutoSell guard is described above; CMI local names/skins and narrowly scoped PlaceholderAPI text are optional. There is no direct ShopGUIPlus `/buy` or sell-value lookup. Gson and NBT-API are included in the maintained jar; do not install separate copies just for this plugin.
 
 | Optional integration | Purpose and limits |
 | --- | --- |
-| GemsEconomy (`GEMS_ECONOMY`), Gringotts (`GRINGOTTS`), PlayerPoints (`PLAYER_POINTS`), TokenEnchant (`TOKEN_ENCHANT`) | Retained alternate economies. In `012`, purchases and nonzero direct-command fees are unavailable through these adapters until confirmed-transaction support is implemented. |
+| GemsEconomy (`GEMS_ECONOMY`), Gringotts (`GRINGOTTS`), PlayerPoints (`PLAYER_POINTS`), TokenEnchant (`TOKEN_ENCHANT`) | Retained alternate economies. Purchases and nonzero direct-command fees are unavailable through these adapters until confirmed-transaction support is implemented. |
 | DeluxeChat | Search and rename chat-input hooks. |
 | LangUtils | Item-name localization. |
 | CrackShot, Oraxen, CustomItems, Brewery, Slimefun | Optional item providers. |
@@ -499,9 +513,9 @@ Default `clickActions` are left-click to buy, right-click to cancel your own lis
 
 ### Listing fees and refunds
 
-`tax.tax` enables a listing fee; `tax.taxAmount` is the fraction of the total listing price, so `0.2` means 20%. Refund policy uses `tax.refund.purchase`, `tax.refund.cancelled`, and `tax.refund.expired`, with `tax.refundAmount` controlling the returned fraction and the relevant permissions controlling eligibility.
+`tax.tax` enables a listing fee; `tax.taxAmount` is the fraction of the total listing price, so `0.2` means 20%. All three deferred-refund flags, `tax.refund.purchase`, `tax.refund.cancelled` and `tax.refund.expired`, must be **false**. Build 036 and newer reject startup/reload if any is true, even when tax is disabled or the fee is zero. The legacy `tax.refundAmount` setting and refund permission cannot re-enable refunds: the item format does not persist a paid-fee entitlement.
 
-Build `012` does not support combining a nonzero direct-command listing fee with any enabled deferred-refund flag. Keep those flags disabled for nonrefundable fees; do not enable them later for existing listings without a maintainer-reviewed storage and reconciliation plan. Verify the wizard and provider behavior separately before changing fee policy. This release does not certify every historical refund path.
+Confirmed immediate compensation for a failed trade is separate from deferred listing-tax refunds. Enabling deferred refunds requires a deliberately designed entitlement migration; there is no supported configuration-only opt-in.
 
 Treat any message requesting payment or delivery review as an operational stop for that trade. Ask a maintainer to reconcile the economy, item, and listing records privately before any retry, compensation, or restart. A restart is not a recovery procedure, and a success receipt alone does not certify every provider limit or crash scenario.
 
@@ -569,7 +583,7 @@ Replace wanted configuration heads deliberately with native `material: PLAYER_HE
 
 Player-head icons, persisted local skins and CMI's loaded UUID skin-cache reuse work independently and remain supported. No new remote lookup is introduced. Never install test probes on gameplay or live servers.
 
-For rollback, use the preserved earlier jar with current market/economy data. Do not restore a stale database over subsequent trades. This cleanup leaves SQL failure propagation, durable payment recovery, broader GUI hardening and the remaining provider audit as separate work.
+For rollback, use the preserved earlier jar with current market/economy data. Do not restore a stale database over subsequent trades. The original 027 cleanup did not implement transaction recovery. Builds 036/037 now add durable admission/review and bounded SQL lifecycle handling; connected-client/provider acceptance, cross-store crash boundaries and startup YAML I/O remain explicit follow-up work.
 
 ## Hidden configuration options
 
@@ -693,7 +707,7 @@ Examples:
 
 `status` shows mode, saved preference, plugin/server/Java versions, loaded shop/listing counts and scheduler state. `health` reports readiness, selected economy receipt support, item readiness, durable pending/review counts and separately labelled current-process payment details. Its only database operation is `SELECT 1` on the existing storage worker and connection. Results are cached for five seconds and simultaneous requests share one probe. A four-second response deadline includes queue time; a busy or stalled query returns a warning. A timed-out pending probe is not duplicated, and a queued probe skips SQL if it has already timed out. Driver query timeout is requested at three seconds; the response deadline does not forcibly stop a driver. No reconnect, repair, schema scan, economy payment or recovery operation runs.
 
-`hooks` separates actual selected adapters/listeners from installed plugin presence/version. CMI may supply economy through Vault; build 013 adds a separate optional CMI API hook for local display names. Its status row reports CMI readiness/absence, cached and pending counts, configuration disablement and persistence failure. No 1MB-library integration is added. An installed optional plugin is not proof that its hook is selected or compatible. `commands` checks native Bukkit registration for market/ah and their namespaced forms; external CMI aliases or chat interceptors must be inspected separately.
+`hooks` separates actual selected adapters/listeners from installed plugin presence/version. CMI may supply economy through Vault; build 013 adds a separate optional CMI API hook for local display names. Its status row reports CMI readiness/absence, cached and pending counts, configuration disablement and persistence failure. Build 036 adds the optional 1MB-Library AutoSell purchase guard, reported separately in hooks. An installed optional plugin is not proof that its hook is selected or compatible. `commands` checks native Bukkit registration for market/ah and their namespaced forms; external CMI aliases or chat interceptors must be inspected separately.
 
 `permissions` includes declared nodes, current configured limit tiers and effective grants for the sender. It explains missing descriptor coverage and inherited wildcard limits. `placeholders` lists plugin-local formatting tokens and contexts, including the STYLE layout tokens added in 009; there is no exported PlaceholderAPI expansion. Build 033 adds six local player-details tokens and optional allowlisted external text only in the main-menu head.
 
@@ -712,7 +726,7 @@ python3 scripts/check-tooling.py
 python3 scripts/check-tooling.py --artifact
 ```
 
-On other systems, set `JAVA_HOME` to the installed JDK 25 directory; on Windows use `gradlew.bat --dependency-verification strict --warning-mode fail clean build smokeJars` and `python` for the check scripts. The installable result is `build/libs/1MB-PlayerShopGuiPlus-v<version>.jar`; the candidate update is `1MB-PlayerShopGuiPlus-v1.42.0-035-j25-26.3.jar`. Use the maintainer's recorded checksum to verify the supplied artifact. Test probes, compile stubs, old NMS handlers, and source archives are not server plugins to install.
+On other systems, set `JAVA_HOME` to the installed JDK 25 directory; on Windows use `gradlew.bat --dependency-verification strict --warning-mode fail clean build smokeJars` and `python` for the check scripts. The installable result is `build/libs/1MB-PlayerShopGuiPlus-v<version>.jar`; the candidate update is `1MB-PlayerShopGuiPlus-v1.42.0-037-j25-26.3.jar`. Use the maintainer's recorded checksum to verify the supplied artifact. Test probes, compile stubs, old NMS handlers, and source archives are not server plugins to install.
 
 For portable harness checks, run `python3 -m unittest discover -s scripts/tests -v`. After a successful strict build, `python3 scripts/test-dependency-guards.py` proves that tampered checksums, missing locks and incompatible upgrades fail, using offline disposable copies. Linux/macOS/Windows CI runs these tooling/build checks without private player data. Real Paper regression tests still require local Java 27, a prepared matching Paper bootstrap/cache, an already accepted EULA and approved provider jars; real-server coverage is currently macOS only. Tests select free loopback ports and unique directories, default to packaged configuration, accept explicit Java/server/config/provider/probe/output paths, reject stale results and stop timed-out test processes. They never use a gameplay server as their output directory. The three codec/sell/buy probes remain separate from the runtime jar. The obsolete HeadDatabase probe/task and `hdb-*` scenarios were removed in 027; `removed-headdatabase` verifies rejected legacy configuration without a provider jar.
 
@@ -728,13 +742,13 @@ Maintainers must follow the private repository's `docs/DEVELOPMENT-TOOLING.md` b
 ### Upgrade an existing market
 
 1. Verify the intended artifact and release behavior on a fresh test copy, including existing listings and unclaimed items.
-2. Stop the target server normally. Back up the installed jar together with the complete `plugins/PlayerShopGUIPlus` directory, configured database, and the related economy state using the site's established backup procedure.
+2. Stop the target server normally. Back up the installed jar together with the complete `plugins/PlayerShopGUIPlus` directory, configured database, Paper player data (including inventories and market sorting preferences), and the related economy state using the site's established backup procedure.
 3. Replace the old jar with exactly one maintained jar. Preserve the `PlayerShopGUIPlus` folder, backend, table names, owner identities, configuration, and permission grants. Do not delete the database to make an empty market start.
-4. For `015`, update scripts/menu links using former roots to `/market` or `/ah`. Review CMI and server command overrides and retire the quantity-inserting `/ah` shortcut when native `/ah` takes over. Verify both roots with real player permissions.
+4. When upgrading from 001, update scripts/menu links using former roots to `/market` or `/ah`. Review CMI and server command overrides and retire the quantity-inserting `/ah` shortcut when native `/ah` takes over. Verify both roots with real player permissions.
 5. Start normally and check successful plugin enablement and complete market loading. Compare existing listings and unclaimed items with the pre-upgrade state before admitting trades.
 6. Check representative selling, whole/partial buying, cancellation, expiry/claim, permissions, fees, balances, and metadata on the test copy. Include full inventories and a clean restart. Passing startup alone does not verify transactions.
 
-The current Paper adaptation and `012` commands keep the storage schema and item field format; this update requires no shop-data migration. Back up the added `market-state.yml` preference, separate `statistics.db` analytics file and build-013 `player-names.db` cache with the rest of the plugin data. Build 015 supports SQLite only. Existing SQLite data needs no migration; a MySQL installation must retain its previous jar until a separate offline migration is designed and verified. Fully sold or claimed entries leave the shop store. Build 010 records new activity in a separate analytics file from its displayed start date; it cannot reconstruct earlier sales.
+The original shop/player schema and item field format remain compatible. Builds 030 and 036 add recovery journals inside `database.db`; preserve those tables and their holds. No conversion of existing listing payloads is required. Back up the added `market-state.yml` preference, separate `statistics.db` analytics file, `player-names.db` and `player-skins.db` caches with the rest of the plugin data. Build 015 supports SQLite only. Existing SQLite data needs no migration; a MySQL installation must retain its previous jar until a separate offline migration is designed and verified. Fully sold or claimed entries leave the shop store. Build 010 records new activity in a separate analytics file from its displayed start date; it cannot reconstruct earlier sales.
 
 For rollback, preserve the then-current jar and data first and follow the maintainer's verified rollback record. An older jar is not automatically safer, and newer Paper item data may not load on an older server. Restoring an old database can erase trades made since that backup; do not restore one just to change command names. Future storage changes require a tested migration and recovery plan.
 
@@ -844,6 +858,8 @@ Build 032 keeps personal history personal and adds the separate staff [transacti
 
 Builds 012–017 expose whole-market history through the player recent permission; deny that node to ordinary players before such a rollback if personal-only visibility must be preserved.
 
+<a id="recent-sales-012"></a>
+
 ## Recent history (018)
 
 `/market` and `/ah` are the same command. Personal history always uses the requesting player's actual server UUID, including for operators and staff. It never accepts another player's name or UUID.
@@ -914,7 +930,7 @@ With GUI notifications enabled, clicking Buy on your own listing shows the exist
 
 The new `menu.yml` section is `notifications.ownListing`, with `rows` and `buttons.message`, `buttons.confirm`, `buttons.cancel`. Button item/slot definitions and lore are configurable. Existing own-item language keys provide the title/barrier text and `NOTIFICATION.CONFIRM` supplies OK. Missing sections use bundled defaults in memory without overwriting saved YAML. To customize, copy the bundled section and cleanly restart. With GUI notifications disabled, the existing chat warning remains.
 
-Cancellation checks the authoritative listing and owner UUID, state/expiry, transaction locks, current market mode, permissions and menu session at action time. Repeated/stale actions cannot cancel again. It moves the selected listing into Unclaimed items without inventory delivery, so full inventories are safe. No new permission, schema, provider or item format is introduced. This reuses the existing cancellation and optional refund behavior, including its previously documented persistence/refund limitations; it does not add crash-atomic financial guarantees. Human-client acceptance is separate from the isolated synthetic-player Paper tests.
+Cancellation checks the authoritative listing and owner UUID, state/expiry, transaction locks, current market mode, permissions and menu session at action time. Repeated/stale actions cannot cancel again. It moves the selected listing into Unclaimed items without inventory delivery, so full inventories are safe. No new permission, schema, provider or item format is introduced. The shortcut uses the durable cancellation path in 036 and newer. Deferred-refund flags must remain false. Market completion is acknowledged before success, but this is not a shared atomic commit with economy and player files. Human-client acceptance is separate from the isolated synthetic-player Paper tests.
 
 
 ## Transaction audit (032)
@@ -944,21 +960,21 @@ Use `all` to specify a page without a filter, for example `/ah admin log all 3`.
 
 | Stage | Meaning |
 | --- | --- |
-| `LISTED` | Listing accepted and market save queued. Value is the asking total. |
+| `LISTED` | Listing and terminal market receipt committed; analytics recording follows. Value is the asking total. |
 | `PURCHASE_STARTED` | Final preflight passed and a withdrawal will be attempted. This is not payment or delivery proof. |
-| `SOLD` | Payment responses and inventory delivery confirmed by the existing purchase path; market save queued. Value is the actual purchase total, including a partial purchase's actual quantity. |
+| `SOLD` | Payment responses and inventory delivery confirmed, with the terminal market receipt committed before analytics recording. Value is the actual purchase total, including a partial purchase's actual quantity. |
 | `PURCHASE_FAILED` | Withdrawal declined; this path did not deliver items. |
 | `PURCHASE_REFUNDED` | Failed purchase compensated with a confirmed buyer refund and seller-credit reversal where applicable. Excluded from completed-sale statistics. |
 | `PURCHASE_REVIEW` | Payment, delivery, save submission or compensation has an unknown/unresolved outcome. Read the detail and server log; do not replay it. |
 | `CANCELLED` / `EXPIRED` | Listing moved to Unclaimed items; this records its asking value, not proof of a tax refund. |
-| `CLAIMED` | Single-item delivery completed and market save queued. No money movement is implied. |
+| `CLAIMED` | Single-item delivery verified and terminal market receipt committed before analytics recording. No money movement is implied. |
 | `CLAIM_REVIEW` | Single-claim delivery or save outcome is uncertain. |
 | `BATCH_STARTED` | Collect all requested; its UUID matches the durable claim journal. It is not proof of reservation or delivery. |
 | `BATCH_CLAIMED` | Inventory delivery verified and claim journal finalized. |
 | `BATCH_RETURNED` | Delivery was not attempted; reserved items returned to Unclaimed items. |
 | `BATCH_REVIEW` | Unknown collect-all outcome; inspect the durable journal before recovery. |
 
-Purchase stages share a transaction UUID. Collect-all stages use `one_mb_claim_batches.id`; the batch shows total quantity and listing count rather than every item payload. Listing creation, cancellation, expiry and single claims have individual event UUIDs. Owner UUID, material and original listing timestamp provide context, not a guaranteed unique permanent listing identifier. Names use trusted local records and optional existing CMI records; UUIDs remain authoritative and visible on hover. No online identity lookup runs.
+Purchase stages share a transaction UUID. Collect-all stages use `one_mb_claim_batches.id`; the batch shows total quantity and listing count rather than every item payload. Since 036, listing creation, cancellation, expiry and single claims use their durable transaction UUID for audit correlation. Older 032–035 events retain their original observational IDs. Owner UUID, material and original listing timestamp provide context, not a guaranteed unique permanent listing identifier. Names use trusted local records and optional existing CMI records; UUIDs remain authoritative and visible on hover. No online identity lookup runs.
 
 Insufficient funds, full inventories, invalid quantities, denied permissions and cancelled preflight events are rejected before `PURCHASE_STARTED` and are not logged as new attempts. This avoids a stream of redundant records from rejected clicks. Listing-fee failure paths, optional tax refunds, inventory snapshots and full item components are not new audit coverage. The [existing financial limitations](#storage-performance-and-coverage) and [claim recovery rules](#collect-all-unclaimed-items-030) still apply.
 
