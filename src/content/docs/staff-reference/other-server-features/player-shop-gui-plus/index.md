@@ -5,7 +5,7 @@ description: "Public-safe commands, permissions, configuration, integrations, an
 
 This is the public technical and operations guide for 1MoreBlock's maintained PlayerShopGUIPlus fork. For player instructions, use the [player guide](/player-guides/other-server-features/player-shop-gui-plus/). The plugin name and data directory remain `PlayerShopGUIPlus`.
 
-**Release status, reviewed 28 September 2026:** `001` is the last confirmed live build. `017` is verified in isolated local Paper tests and awaits live deployment. The main reference below describes `017`; [older live commands](#older-live-build-001) are recorded separately. Confirm the installed version before using a command or planning an update. Build 017 adds menu-session and inventory-event hardening. Its isolated tests use synthetic players/inventories and a Vault boundary; connected-client and actual-provider acceptance remains required. This documentation does not announce a live plugin deployment.
+**Release status, reviewed 1 October 2026:** `001` is the last confirmed live build. `018` is verified in isolated local Paper tests and awaits live deployment. The main reference below describes `018`; [older live commands](#older-live-build-001) are recorded separately. Confirm the installed version before using a command or planning an update. Build 018 makes recent history personal by UUID and adds a separate staff market-wide view. Build 017 adds menu-session and inventory-event hardening. Its isolated tests use synthetic players/inventories and a Vault boundary; connected-client and actual-provider acceptance remains required. This documentation does not announce a live plugin deployment.
 
 <a id="commands-in-build-007"></a>
 
@@ -21,7 +21,9 @@ This is the public technical and operations guide for 1MoreBlock's maintained Pl
 
 <a id="commands-in-build-016"></a>
 
-## Commands in build 017
+<a id="commands-in-build-017"></a>
+
+## Commands in build 018
 
 `/market` is the main command; `/ah` is its native alias, using the same handler, arguments, and permissions. Root aliases `/playershop`, `/pshop`, `/playershops`, and `/pshops` are no longer registered. Existing CMI/server aliases are separate configuration and can still override native commands.
 
@@ -30,13 +32,15 @@ This is the public technical and operations guide for 1MoreBlock's maintained Pl
 | `/market info` | None | Introduction, next action, help, and clickable player-guide link. |
 | `/market help` | None | Available commands, descriptions, examples, and clickable suggestions. |
 | `/market` | `playershopguiplus.playershop` | Open the marketplace. |
-| `/market recent [page]` | `playershopguiplus.recent` | Recent item, quantity, total paid, buyer, seller and UTC time; five purchases per page. |
+| `/market recent [sales|purchases] [page]` | `playershopguiplus.recent` | Your sales/purchases by server UUID; five entries per section/page, including empty roles. |
+| `/market admin recent [page]` | `playershopguiplus.admin.recent` | Whole-market completed sales, with buyers, sellers and paid totals. |
 | `/market sell <price>` | `playershopguiplus.playershop.sell` | Immediately list the exact main-hand stack for this total price. |
 | `/market sell` | `playershopguiplus.playershop.sell` | Open the selling wizard when enabled; otherwise show usage. |
 | `/market sell <quantity> <price>` | `playershopguiplus.playershop.sell` | Offer an explicit quantity from the main hand, using the configured direct/wizard behavior. |
 | `/market <name>` | `playershopguiplus.playershop.player` | Open a locally known player's shop. Use the real username, retaining any Bedrock prefix. |
 | `/market admin stats [topic] [page]` | `playershopguiplus.admin.stats` | Current counts/prices, sellers and recorded sales; see [statistics](#market-statistics-010). |
-| `/market admin status` | `playershopguiplus.admin.status` | Show runtime mode, saved preference, readiness, build, storage/economy type and listing counts. |
+| `/market admin status` | `playershopguiplus.admin.recent` | View all market sales; default op, included in the admin umbrella. |
+| `playershopguiplus.admin.status` | Show runtime mode, saved preference, readiness, build, storage/economy type and listing counts. |
 | `/market admin reload` | `playershopguiplus.admin.reload` or `playershopguiplus.playershop.reload` | Reload supported settings, language, categories and sounds. |
 | `/market admin disable` | `playershopguiplus.admin.disable` | Pause market access and trading, persisting through restarts. |
 | `/market admin enable` | `playershopguiplus.admin.enable` | Save enabled mode and resume when shops/economy are ready. |
@@ -56,7 +60,7 @@ Help/info are read-only and available to players and console, including before s
 
 Admin actions and reload/r are case-insensitive and work from console or for permitted staff before gameplay gates, including while dormant. Extra arguments show usage. Sell retains lowercase matching. Trading, menus and player lookup require an active market, an in-game player, loaded shop/player data, and an allowed world/game mode unless bypassed. Unknown first arguments are player names except reserved help, info, admin and debug.
 
-Buying, cancelling, claiming, and searching use menus. `buy`, `cancel`, `cancelothers`, `claim`, `search`, and `player` are not subcommands. `/market recent [page]` and `/ah recent [page]` are the same read-only chat command; see [recent sales](#recent-sales-012).
+Buying, cancelling, claiming, and searching use menus. `buy`, `cancel`, `cancelothers`, `claim`, `search`, and `player` are not subcommands. `/market recent [sales|purchases] [page]` and its `/ah` alias are the same personal read-only chat command; see [recent sales](#recent-sales-012).
 
 ### GUI safety in build 017
 
@@ -104,7 +108,7 @@ Its sell syntax is quantity-first. With smart selling GUI enabled, omitted argum
 | Permission | Purpose |
 | --- | --- |
 | `playershopguiplus.playershop` | Opens the main marketplace and inherits recent history. Declared with default op in 012, retaining prior effective default. |
-| `playershopguiplus.recent` | View completed sales including buyer/seller; default op, inherited by market access and wildcard. Explicit denial wins. |
+| `playershopguiplus.recent` | View only your own sales/purchases including counterparties; default op, inherited by market access and wildcard. Explicit denial wins. |
 | `playershopguiplus.playershop.sell` | Creates listings. |
 | `playershopguiplus.playershop.player` | Opens another player's shop by name. |
 | `playershopguiplus.playershop.reload` | Legacy grant for admin reload, reload and r. |
@@ -115,8 +119,9 @@ Its sell syntax is quantity-first. With smart selling GUI enabled, omitted argum
 | `playershopguiplus.debug.commands` | Native command registration, syntax, permissions and routing limits. Default op. |
 | `playershopguiplus.debug.permissions` | Declared nodes, configured limit tiers and your effective grants. Default op. |
 | `playershopguiplus.debug.placeholders` | Plugin-local formatting tokens and their supported contexts. Default op. |
-| `playershopguiplus.admin` | Grants all five admin actions; default op. |
+| `playershopguiplus.admin` | Grants all six admin actions; default op. |
 | `playershopguiplus.admin.stats` | Read paginated current-market and seller/sales statistics; default op. |
+| `playershopguiplus.admin.recent` | View all market sales; default op, included in the admin umbrella. |
 | `playershopguiplus.admin.status` | Read status; default op. |
 | `playershopguiplus.admin.reload` | Reload supported settings; default op. |
 | `playershopguiplus.admin.disable` | Persistently pause the market; default op. |
@@ -137,7 +142,7 @@ The wildcard's declared children do not include main-menu access, refund permiss
 
 The bundled tiers are `limits.default: 10`, `limits.donator: 50`, `unclaimedLimits.default: 20`, and `unclaimedLimits.donator: 40`. Their concrete nodes are `playershopguiplus.limit.default`, `playershopguiplus.limit.donator`, `playershopguiplus.unclaimedlimit.default`, and `playershopguiplus.unclaimedlimit.donator`. Keep the `default` entries when customizing tiers.
 
-The base-menu node, recent node, six admin nodes and seven debug nodes explicitly default to operators. Debug and admin are separate umbrellas; explicit child denials are respected. Debug grants do not add trading or administration access. Inherited nodes retain their previous unspecified defaults. Configure grants deliberately and check effective permissions with the installed permission manager. A normal player who should browse and sell needs the base menu node and sell node; player-name lookup is a separate grant. Do not grant the staff wildcard as a substitute. For a LuckPerms user-specific change, use the player's verified server UUID, including Bedrock identities; group grants target the intended group ID.
+The base-menu node, recent node, seven admin nodes and seven debug nodes explicitly default to operators. Debug and admin are separate umbrellas; explicit child denials are respected. Debug grants do not add trading or administration access. Inherited nodes retain their previous unspecified defaults. Configure grants deliberately and check effective permissions with the installed permission manager. A normal player who should browse and sell needs the base menu node and sell node; player-name lookup is a separate grant. Do not grant the staff wildcard as a substitute. For a LuckPerms user-specific change, use the player's verified server UUID, including Bedrock identities; group grants target the intended group ID.
 
 ## MiniMessage and pastel chat (009)
 
@@ -489,7 +494,7 @@ python3 scripts/check-tooling.py
 python3 scripts/check-tooling.py --artifact
 ```
 
-On other systems, set `JAVA_HOME` to the installed JDK 25 directory; on Windows use `gradlew.bat --dependency-verification strict --warning-mode fail clean build smokeJars` and `python` for the check scripts. The installable result is `build/libs/1MB-PlayerShopGuiPlus-v<version>.jar`; the tested update is `1MB-PlayerShopGuiPlus-v1.42.0-017-j25-26.3.jar`. Use the maintainer's recorded checksum to verify the supplied artifact. Test probes, compile stubs, old NMS handlers, and source archives are not server plugins to install.
+On other systems, set `JAVA_HOME` to the installed JDK 25 directory; on Windows use `gradlew.bat --dependency-verification strict --warning-mode fail clean build smokeJars` and `python` for the check scripts. The installable result is `build/libs/1MB-PlayerShopGuiPlus-v<version>.jar`; the tested update is `1MB-PlayerShopGuiPlus-v1.42.0-018-j25-26.3.jar`. Use the maintainer's recorded checksum to verify the supplied artifact. Test probes, compile stubs, old NMS handlers, and source archives are not server plugins to install.
 
 For portable harness checks, run `python3 -m unittest discover -s scripts/tests -v`. After a successful strict build, `python3 scripts/test-dependency-guards.py` proves that tampered checksums, missing locks and incompatible upgrades fail, using offline disposable copies. Linux/macOS/Windows CI runs these tooling/build checks without private player data. Real Paper regression tests still require local Java 27, a prepared matching Paper bootstrap/cache, an already accepted EULA and approved provider jars; real-server coverage is currently macOS only. Tests select free loopback ports and unique directories, default to packaged configuration, accept explicit Java/server/config/provider/probe/output paths, reject stale results and stop timed-out test processes. They never use a gameplay server as their output directory. The four probes, including synthetic HeadDatabase, remain separate from the runtime jar.
 
@@ -530,7 +535,7 @@ For rollback, preserve the then-current jar and data first and follow the mainta
 | An item is absent from active listings | Check cancelled/expired unclaimed entries and relevant transaction records before replacing anything. |
 | A custom item looks wrong | Check provider startup and version compatibility, then compare representative metadata on a test copy. |
 | Price text looks wrong | Review number formatting and the separator caveats in the hidden-options section. Enter command prices with a decimal point; display text is not a transaction receipt. |
-| `/market recent` or `/ah recent` fails | Requires 012 and `playershopguiplus.recent` (inherited from base market access). Check external aliases, page syntax and storage errors. A storage error is not an empty history. |
+| `/market recent` or `/ah recent` fails | Requires 012 and `playershopguiplus.recent` (inherited from base market access). Check external aliases, page syntax and storage errors. A storage error is not an empty history. Since 018, this is personal; staff use `/market admin recent` with its separate grant. |
 | A charge, delivery, or refund needs review | Stop attempts on the affected trade and involve a maintainer. Privately collect time, authoritative player UUIDs, item/quantity, price, messages, and relevant records. |
 
 Keep raw logs, databases, player records, credentials, and incident recovery instructions out of public reports. Staff should follow the private recovery record for actual reconciliation. Do not use a display name alone as proof of an account's identity.
@@ -600,7 +605,7 @@ The file stores compact event IDs, kind, UUIDs, timestamp, material, quantity, a
 
 All statistics I/O, sorting and aggregation use a dedicated worker. Only primitive listing snapshots are captured on the server thread; replies return to that thread and recheck permissions/connection. Reports share a five-second cache and a pending computation. Requests have a four-second reply deadline, one pending reply per player, and a global reply bound. Recording is queued with a 1,024-operation bound. A saturated/failed writer logs the problem and reports unavailable/incomplete history; it never reverses or interrupts trading. Correct the cause and cleanly restart to reopen the writer.
 
-Tracking begins with this file's creation date. The old shop store removes sold entries, and optional customizable text logs cannot establish reliable UUID-based history, so earlier sales are **not imported or reported as zero lifetime sales**. No automatic pruning/reset is performed; include this growing file in backup and storage monitoring. Build 012 exposes the newest 100 recorded purchases through `/market recent`. Time windows and retention/export remain future work.
+Tracking begins with this file's creation date. The old shop store removes sold entries, and optional customizable text logs cannot establish reliable UUID-based history, so earlier sales are **not imported or reported as zero lifetime sales**. No automatic pruning/reset is performed; include this growing file in backup and storage monitoring. Build 018 exposes the latest 100 sales and 100 purchases per requester UUID through `/market recent`; staff use `/market admin recent` for whole-market sales. Time windows and retention/export remain future work.
 
 Clean shutdown queues a final flush and closes the worker without blocking the server thread. An unclean prior shutdown or detected recording error marks historical coverage incomplete, retaining that warning across restart. A crash/forced process exit may lose queued events, and cross-system payment/inventory/database atomicity is not claimed. Do not use these operational totals as financial reconciliation evidence.
 
@@ -608,21 +613,35 @@ Clean shutdown queues a final flush and closes the worker without blocking the s
 
 Back up the jar and complete plugin/economy data while stopped, including `statistics.db`, `market-state.yml` and `lang.yml`. Start 012 normally; current listings appear immediately, and history begins recording new activity. Reload does not reset history. There is no stats-delete/reset command.
 
-Builds before 010 ignore `statistics.db`. Builds 010/011 can still read/write the original v1 event and totals tables, ignoring the additive 012 details/index. Preserve it during rollback, but record any interval spent on an older jar because that interval cannot be counted; the file cannot detect trades made by a build that does not record statistics. Returning to 010 or newer keeps existing totals. Do not restore stale shop/economy data just to restore analytics. Builds before 009 also require reviewing/restoring the prior language file because they do not support MiniMessage.
+Builds before 010 ignore `statistics.db`. Builds 010/011 can still read/write the original v1 event and totals tables, ignoring the additive details/indexes. Builds 012–017 expose whole-market history through the player recent permission; deny that node to normal players before rollback if personal-only visibility must be preserved. Preserve it during rollback, but record any interval spent on an older jar because that interval cannot be counted; the file cannot detect trades made by a build that does not record statistics. Returning to 010 or newer keeps existing totals. Do not restore stale shop/economy data just to restore analytics. Builds before 009 also require reviewing/restoring the prior language file because they do not support MiniMessage.
 
-## Recent sales (012)
+<a id="recent-sales-012"></a>
 
-`/market recent [page]` and `/ah recent [page]` show the same paginated chat list of completed purchases. Omit the page for the newest sales, or type `/ah recent 2`. Click Previous/Next to move between pages. Five purchases appear per page, from the latest **100 recorded purchases** across the market. Times are explicitly UTC. New sales can take up to five seconds to appear, and newly recorded purchases can shift page boundaries when the shared snapshot refreshes.
+## Recent history (018)
+
+`/market` and `/ah` are the same command. Personal history always uses the requesting player's actual server UUID, including for operators and staff. It never accepts another player's name or UUID.
+
+| Command | Result |
+| --- | --- |
+| `/ah recent` | Your recent sales and purchases in separate sections, with an explicit empty message for either role. |
+| `/ah recent sales [page]` | Items you listed that other players bought. |
+| `/ah recent purchases [page]` | Items you bought from other players. |
+| `/ah recent [page]` | Compatibility shorthand: that page of both personal sections. A shorter section says there are no more entries instead of showing an invalid page. |
+| `/ah admin recent [page]` | Staff-only completed sales across the whole market. |
+
+Each section shows five entries per page, newest first. Personal history retains a display window of **100 sales and 100 purchases per UUID**, selected in SQL before the limit; unrelated market activity cannot push your records out of that window. Staff history shows the latest 100 sales across the market. Previous/Next links retain the sales, purchases or admin scope. Times are UTC. New activity can take five seconds to appear and can shift page boundaries when the snapshot refreshes.
+
+For example, a player who has only bought items sees no recorded sales and their own purchase list. A player with no recorded transactions sees two empty sections. Empty means no matching **recorded** activity, not proof of no lifetime trading.
 
 Each entry shows the item, quantity actually purchased, **total paid for that quantity**, buyer and seller. A partial purchase is a separate entry from a later purchase of the remaining stack. New sales retain a plain-text custom name (or item-name component), capped at 80 code points, beside the material name. Older events use the material name. Formatting, clicks, lore, enchantments, container contents, PDC and full item payloads are not stored in this presentation history. Viewing history never restores, buys or claims an item.
 
-Buyer and seller identities remain their stored server UUIDs. Names use the same trusted local resolver as seller labels: current-session usernames, existing Paper UUID cache, then validated plugin player records. Bedrock prefixes are retained; unknown names show the full UUID. Hovering a name shows the UUID. Names can change as local records are refreshed; they are not a claim about the username at the time of sale. No external identity lookup is performed.
+Buyer and seller identities remain their stored server UUIDs. Names use the same trusted local resolver as seller labels: current-session usernames, existing Paper UUID cache, then validated plugin player records, followed in build `013` by the optional saved/CMI local-name fallback. Missing names are filled in small batches; reopen the view after resolution. Bedrock prefixes are retained; unknown names show the full UUID. Hovering a name shows the UUID. Names can change as local records are refreshed; they are not a claim about the username at the time of sale. No external identity lookup is performed.
 
 ### Access and visibility
 
 The permission is **`playershopguiplus.recent`**, default op. Build 012 declares the existing base node `playershopguiplus.playershop` with its prior effective op default and makes recent a child, so existing explicit market grants inherit history. `playershopguiplus.*` also includes recent. An explicit recent denial overrides the parent. A recent-only grant does not grant market trading, selling or administration.
 
-History is visible to every authorized viewer, including **other players' buyer/seller identities and paid prices**. There is no private-sale mode or player-only filter. Console can use `market recent 2` without `/`. As a read-only command, recent works while the market is dormant or restricted by world/game mode. Denying recent hides it from help/completion and prevents storage access. This reserves `recent` as a command word, so `/market recent` no longer looks for a player with that name.
+Build 018 changes the existing recent permission to **personal history only**. Each participant can see the counterparties and paid totals for their own transactions. A separate **`playershopguiplus.admin.recent`** node, default op and inherited from `playershopguiplus.admin`/`playershopguiplus.*`, allows whole-market history. A personal/base-market grant never adds staff history; explicit denials apply independently. Console must use `market admin recent [page]`; personal requests explain that route without querying storage. Even staff's `/market recent` stays personal. As a read-only command, recent works while the market is dormant or restricted by world/game mode. Denying recent hides it from help/completion and prevents storage access. This reserves `recent` as a command word, so `/market recent` no longer looks for a player with that name.
 
 ### Coverage and storage
 
@@ -630,32 +649,37 @@ Sales tracking began in build 010 with `plugins/PlayerShopGUIPlus/statistics.db`
 
 All recorded currencies/providers appear. Current-provider amounts use the configured currency prefix/suffix and full decimal amounts, without K/M abbreviations. Other provider amounts retain an explicit provider/currency label; no conversion is attempted. Changing a currency's meaning while retaining the same provider identity cannot be detected automatically.
 
-The database upgrade adds `stats_sale_details(id, item_name)` and an index on `stats_events(kind, at DESC, id DESC)`. The original nine-column events table, totals, tracking start, and `user_version=1` remain unchanged. A new event, aggregate and optional item name commit together; a duplicate transaction ID changes none of them. No marketplace table or item-format migration occurs. No automatic deletion, reset or pruning occurs: the latest-100 limit is a **display window**, not a retention policy. Back up and monitor the growing analytics file.
+Build 012 added `stats_sale_details(id, item_name)` and an index on `stats_events(kind, at DESC, id DESC)`. Build 018 adds `stats_events_seller_recent(kind, seller, at DESC, id DESC)` and `stats_events_buyer_recent(kind, buyer, at DESC, id DESC)` as indexes on the same events table. Startup creates missing indexes on the statistics worker; existing rows are retained. The original nine-column events table, totals, tracking start, and `user_version=1` remain unchanged. A new event, aggregate and optional item name commit together; a duplicate transaction ID changes none of them. No marketplace table or item-format migration occurs. No automatic deletion, reset or pruning occurs: the latest-100 limit is a **display window**, not a retention policy. Back up and monitor the growing analytics file.
 
-Reads run on the existing statistics worker with an indexed `LIMIT 100`, immutable results, a shared five-second cache and shared in-flight work. The existing 1,024-operation worker bound still applies. Commands allow one pending reply per player UUID (128 globally), a four-second reply timeout, and reject invalid or excessive page numbers before querying. Completion never queries storage. Replies return to the main server thread and recheck permission and the original player's connection. A timeout does not cancel the underlying shared read; quit, permission loss and shutdown discard stale results. Storage failure is reported as unavailable, never as an empty history.
+Reads run on the existing statistics worker with bound UUID parameters, an indexed `LIMIT 100` for each role and immutable results. A personal request reads both roles in one queued operation. The five-second personal cache holds at most 128 UUIDs, shares pending work only for the same UUID, and expires completed entries before admitting more; a full cache fails explicitly. Staff history has a separate shared cache. Snapshot provenance is checked before rendering. The existing 1,024-operation worker bound still applies. Personal and staff commands together allow one pending reply per player UUID (128 globally), a four-second reply timeout, and reject invalid or excessive page numbers before querying. Completion never queries storage. Replies return to the main server thread and recheck permission and the original player's connection. A timeout does not cancel the underlying shared read; quit, permission loss and shutdown discard stale results. Storage failure is reported as unavailable, never as an empty history.
 
 ### Language and placeholders
 
-Existing MiniMessage support and 1MB palette apply. Merge keys into existing YAML sections, then `/market admin reload`; missing keys receive defaults. All dynamic values are literal components, so player/item text cannot supply markup or click actions.
+Existing MiniMessage support and 1MB palette apply. Merge keys into existing YAML sections, then `/market admin reload`; missing keys receive defaults. Exact stock pre-018 help/loading/error/page text adopts the new wording at startup; customized values remain unchanged and should be reviewed for outdated whole-market wording. All dynamic values are literal components, so player/item text cannot supply markup or click actions.
 
 | Language key | Tokens / meaning |
 | --- | --- |
-| `GUIDE.RECENT` | Help description; no tokens |
+| `GUIDE.RECENT`, `GUIDE.ADMIN.RECENT` | Personal and staff help descriptions; no tokens |
 | `MSG.RECENT.CHECKING`, `PENDING`, `FAILED` | Loading, duplicate request and unavailable messages; no tokens |
-| `MSG.RECENT.PAGE` | `%pages%`: valid page maximum |
-| `RECENT.SCOPE` | `%limit%`: 100; `%since%`: tracking start in UTC |
-| `RECENT.GAPS`, `EMPTY` | Incomplete coverage and empty history; no tokens |
-| `RECENT.SALE` | `%quantity%`: purchased units; `%item%`: name/material; `%price%`: actual total paid |
+| `MSG.RECENT.PAGE` | `%pages%`: valid page maximum; `%command%`: canonical command for the selected view |
+| `MSG.RECENT.CONSOLE` | Explains personal in-game use and the staff console route; no tokens |
+| `RECENT.SCOPE`, `RECENT.PERSONALSCOPE` | `%limit%`: 100; `%since%`: tracking start in UTC |
+| `RECENT.GAPS`, `EMPTY` | Incomplete coverage and empty staff history; no tokens |
+| `RECENT.SALESTITLE`, `PURCHASESTITLE` | Personal section labels; no tokens |
+| `RECENT.EMPTYSALES`, `EMPTYPURCHASES` | Empty personal roles; no tokens |
+| `RECENT.END` | `%command%`: suggestion to reopen that shorter section from page one |
+| `RECENT.SALE`, `RECENT.PURCHASE` | `%quantity%`: purchased units; `%item%`: name/material; `%price%`: actual total paid |
 | `RECENT.PARTIES` | `%seller%`, `%buyer%`: locally resolved names/UUIDs; `%time%`: sale time in UTC |
 | `STYLE.PAGE`, `PREVIOUS`, `NEXT` | Shared pagination; `%page%` and `%pages%` in `PAGE` |
 
 ```yaml
 RECENT:
   SALE: '<muted>-</muted> <accent>%quantity% x %item%</accent> <body>sold for</body> <success>%price%</success>'
+  PURCHASE: '<muted>-</muted> <accent>%quantity% x %item%</accent> <body>bought for</body> <success>%price%</success>'
   PARTIES: '  <label>Seller:</label> <body>%seller%</body> <label>Buyer:</label> <body>%buyer%</body> <muted>%time%</muted>'
 ```
 
-These are plugin-local tokens, not PlaceholderAPI placeholders. The fixed “Recent sales” heading uses `STYLE.HEADER`.
+These are plugin-local tokens, not PlaceholderAPI placeholders. The fixed personal/staff headings use `STYLE.HEADER`; section titles have the keys above.
 
 ## Reference Links
 

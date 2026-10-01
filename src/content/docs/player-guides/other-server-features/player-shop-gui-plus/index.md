@@ -5,7 +5,7 @@ description: "Let players list items in a shared marketplace and buy listings fr
 
 The player market lets you buy items from other players and offer your own items for sale on 1MoreBlock. It is separate from the server's ShopGUIPlus shop. 1MoreBlock maintains a custom version of brc's PlayerShopGUIPlus for Paper 26.3.
 
-**Which commands can I use?** The last confirmed live version is build `001`. Start with the live instructions below. The tested `017` update uses `/market` and `/ah` and adds help/info plus a staff-controlled maintenance pause; [its commands are explained below](#the-market-update-build-017). Build 014 updates the internals for Paper 26.3 and newer while retaining existing listings and item metadata. Build 015 keeps the existing SQLite listings and fixes HeadDatabase startup handling. Build 016 improves development tooling and keeps the same game behavior. The commands and permissions below are unchanged by these cleanups. The update includes recent-sales chat, staff diagnostics, market statistics and soft 1MB chat colours. Seller names now use trusted local player records, including Bedrock prefixes. A seller whose name is still unknown is shown by their unique player ID. Detailed market statistics are staff-only and do not change listing prices or player permissions. Players do not need extra permissions or a new command to see the styling. Wait for staff to announce that update before relying on those native commands. The existing live `/ah` shortcut is configured separately by the server.
+**Which commands can I use?** The last confirmed live version is build `001`. Start with the live instructions below. The tested `018` update uses `/market` and `/ah` and adds help/info plus a staff-controlled maintenance pause; [its commands are explained below](#the-market-update-build-018). Build 014 updates the internals for Paper 26.3 and newer while retaining existing listings and item metadata. Build 015 keeps the existing SQLite listings and fixes HeadDatabase startup handling. Build 016 improves development tooling and keeps the same game behavior. The commands and permissions below are unchanged by these cleanups. The update includes recent-sales chat, staff diagnostics, market statistics and soft 1MB chat colours. Seller names now use trusted local player records, including Bedrock prefixes. A seller whose name is still unknown is shown by their unique player ID. Detailed market statistics are staff-only and do not change listing prices or player permissions. Players do not need extra permissions or a new command to see the styling. Wait for staff to announce that update before relying on those native commands. The existing live `/ah` shortcut is configured separately by the server.
 
 ## Getting started
 
@@ -53,7 +53,9 @@ The built-in aliases are `/pshop`, `/playershops`, and `/pshops`. These commands
 
 <a id="the-market-update-build-016"></a>
 
-## The market update: build 017
+<a id="the-market-update-build-017"></a>
+
+## The market update: build 018
 
 This section describes the tested update awaiting live deployment. Its main command is `/market`, with `/ah` as a true alias: both run the same commands with the same permissions. The old `/playershop`, `/pshop`, `/playershops`, and `/pshops` roots are removed in this update.
 
@@ -73,13 +75,19 @@ Listing and shop labels use locally known real usernames. A player who changes t
 - `/market help` shows the commands your permissions allow, with explanations and sell examples. Click a command suggestion to put it in chat, then review it before sending.
 - `/ah info` and `/ah help` provide the same guidance. Neither help nor info needs an additional permission.
 
-### See recently sold items
+### See your recent sales and purchases
 
-Type `/market recent` or `/ah recent` to see the latest recorded purchases. Each entry shows the item, quantity bought, total paid, seller, buyer and time (UTC). Use `/ah recent 2` or click Previous/Next to browse five purchases per page, up to the latest 100. New sales may take five seconds to appear. A partial purchase appears separately from a later purchase of the remainder.
+Type `/ah recent` or `/market recent` to see **your own** completed sales and purchases in separate sections. If you have only bought items, the sales section says there are no recorded sales and the purchases section shows what you bought. Staff using this player command also see only their own activity.
 
-New sales include custom item names; older records show the material. Names use locally known usernames or the full player ID when unknown. This list is visible to players with recent-history access, including who bought from whom and what they paid. Your usual market access includes it unless staff explicitly deny it. The history can still be read while trading is paused.
+- `/ah recent sales`: items you listed that other players bought.
+- `/ah recent purchases`: items you bought from other players.
+- `/ah recent purchases 2`: the second page of your purchases.
 
-History starts when sales tracking began with build 010. Older sales cannot be recovered, and interrupted recording may leave gaps; the command warns when gaps are known. This is a history list and does not let you buy, recover or claim a sold item.
+Click Previous/Next to browse five entries per section/page, up to your latest 100 sales and 100 purchases. Other players' activity does not push your history out of that window. `/ah recent 2` still works as page two of both personal sections; a shorter section says when it has no more entries. New activity can take five seconds to appear.
+
+Each entry shows the item, quantity, total paid, buyer, seller and UTC time. A partial purchase is recorded separately. New sales include custom item names; older records show the material. Names use locally known usernames or the full player ID when unknown. Your usual market access includes personal history unless staff explicitly deny it. It can still be read while trading is paused. Whole-market history is a separate staff command, `/ah admin recent`.
+
+History starts when tracking began with build 010. Earlier sales cannot be recovered and interrupted recording may leave gaps; the command warns when gaps are known. An empty section means no matching recorded activity. This list does not let you buy, recover or claim a sold item.
 
 ### Sell the stack you are holding
 
@@ -94,7 +102,7 @@ Use a decimal point for decimal prices, for example `/market sell 12.50`. Do not
 | Update command | What it does | Example |
 | --- | --- | --- |
 | `/market` | Opens the marketplace. | `/ah` |
-| `/market recent [page]` | Recently sold items, quantities, total prices, buyers and sellers. | `/ah recent 2` |
+| `/market recent [sales|purchases] [page]` | Your own sales/purchases, quantities, paid totals and counterparties. | `/ah recent purchases 2` |
 | `/market info` | Introduction, next command, help, and docs. | `/ah info` |
 | `/market help` | Lists commands available to you. | `/ah help` |
 | `/market sell <price>` | Immediately lists your entire main-hand stack for this total price. | `/ah sell 500` |
@@ -114,7 +122,7 @@ For player names, use the real username, including a Bedrock prefix where applic
 | Find an item or shop | Use the menu's search button and answer the chat prompt. |
 | Leave a search or shop-name prompt | Type `cancel` in chat, without `/`, unless the prompt gives a different word. Matching ignores case. This does not cancel an item listing. |
 
-There are no separate `buy`, `cancel`, `claim`, `search`, or `player` subcommands. Open Steve's shop with `/playershop Steve` on the older live build, or `/market Steve` after the update; `/market player Steve` is not valid syntax. Recent sales are available through `/market recent` or `/ah recent` after the 012 update.
+There are no separate `buy`, `cancel`, `claim`, `search`, or `player` subcommands. Open Steve's shop with `/playershop Steve` on the older live build, or `/market Steve` after the update; `/market player Steve` is not valid syntax. Build 018 makes `/market recent` and `/ah recent` personal, with separate sales/purchases filters.
 
 ## Limits, fees, and display settings
 
