@@ -2,7 +2,7 @@
 
 This is the public technical and operations guide for 1MoreBlock's maintained PlayerShopGUIPlus fork. For player instructions, use the [player guide](/player-guides/other-server-features/player-shop-gui-plus/). The plugin name and data directory remain `PlayerShopGUIPlus`.
 
-**Release status, reviewed 1 October 2026:** `001` is the last confirmed live build. `023` changes the packaged Browse shops icon to a waxed oxidized copper chest; runtime classes remain identical to `022` and tested build `021`. It awaits live deployment. The main reference below describes `023`; [older live commands](#older-live-build-001) are recorded separately. Confirm the installed version before using a command or planning an update. Build 018 makes recent history personal by UUID and adds a separate staff market-wide view. Build 017 adds menu-session and inventory-event hardening. Its isolated tests use synthetic players/inventories and a Vault boundary; connected-client and actual-provider acceptance remains required. This documentation does not announce a live plugin deployment.
+**Release status, reviewed 1 October 2026:** `001` is the last confirmed live build. `024` persists locally observed shop-owner skins and optionally reuses CMI’s loaded UUID skin cache without remote lookups. It retains the earlier copper chest and arrow menu icons and awaits live deployment. The main reference below describes `024`; [older live commands](#older-live-build-001) are recorded separately. Confirm the installed version before using a command or planning an update. Build 018 makes recent history personal by UUID and adds a separate staff market-wide view. Build 017 adds menu-session and inventory-event hardening. Its isolated tests use synthetic players/inventories and a Vault boundary; connected-client and actual-provider acceptance remains required. This documentation does not announce a live plugin deployment.
 
 <a id="commands-in-build-007"></a>
 
@@ -30,7 +30,9 @@ This is the public technical and operations guide for 1MoreBlock's maintained Pl
 
 <a id="commands-in-build-022"></a>
 
-## Commands in build 023
+<a id="commands-in-build-023"></a>
+
+## Commands in build 024
 
 `/market` is the main command; `/ah` is its native alias, using the same handler, arguments, and permissions. Root aliases `/playershop`, `/pshop`, `/playershops`, and `/pshops` are no longer registered. Existing CMI/server aliases are separate configuration and can still override native commands.
 
@@ -150,6 +152,25 @@ The wildcard's declared children do not include main-menu access, refund permiss
 The bundled tiers are `limits.default: 10`, `limits.donator: 50`, `unclaimedLimits.default: 20`, and `unclaimedLimits.donator: 40`. Their concrete nodes are `playershopguiplus.limit.default`, `playershopguiplus.limit.donator`, `playershopguiplus.unclaimedlimit.default`, and `playershopguiplus.unclaimedlimit.donator`. Keep the `default` entries when customizing tiers.
 
 The base-menu node, recent node, seven admin nodes and seven debug nodes explicitly default to operators. Debug and admin are separate umbrellas; explicit child denials are respected. Debug grants do not add trading or administration access. Inherited nodes retain their previous unspecified defaults. Configure grants deliberately and check effective permissions with the installed permission manager. A normal player who should browse and sell needs the base menu node and sell node; player-name lookup is a separate grant. Do not grant the staff wildcard as a substitute. For a LuckPerms user-specific change, use the player's verified server UUID, including Bedrock identities; group grants target the intended group ID.
+
+## Local shop-owner skin cache (024)
+
+Shop heads now remember locally observed skin textures across restarts. A complete connected-player profile refreshes its UUID's cached skin. When a shop head has no saved texture, the market can reuse a valid entry from CMI's already-loaded UUID skin map. A player who has never supplied a local skin can still appear as a generic head; the cache gradually fills as players return. Reopen a menu after learning a skin. Cached skins can remain old until a newer complete player profile is observed.
+
+```yaml
+playerSkins:
+  cmiCache: true
+```
+
+This defaults to `true`, including when absent. Set it to `false` and use `/market admin reload` to stop new CMI imports; already saved skins remain usable. Ordinary local profile observations continue. This setting is separate from `playerNames.cmiFallback`. CMI and CMILib remain optional for these presentation features; no extra API jar, command, permission or placeholder is required.
+
+The bridge reads only `getSkinManager().skinCacheByUUID.get(uuid)` after CMI is ready. It validates the entry UUID, any payload `profileId`, bounded texture data, Minecraft texture URL and skin model. It does not resolve identities from the skin's name, use CMI's broader `getSkin(...)` helper, read CMI files, or request an online profile. Missing/rejected entries have a five-minute cooldown with up to 4,096 remembered misses. Observed skins take precedence. CMI's own cache maintenance and normal client texture downloads remain independent.
+
+The private `plugins/PlayerShopGUIPlus/player-skins.db` stores up to 10,000 UUID/name/URL/model/time records. It is a separate cosmetic SQLite cache, not market item or economy storage. Native head templates remain capped at 500; returned items are clones. Disk work stays on a dedicated background worker with a 512-write bound; startup publishes at most 100 records or two milliseconds per tick. Paper head construction and CMI map access stay on the server thread. No remote skin queue or bulk lookup is used.
+
+`/market debug hooks [page]` reports skin load state, counts, persistence, CMI reuse and the disabled remote-lookup policy, without player records. Corrupt/unavailable/unsupported caches and failed writes retain the file, log a warning and leave in-memory rendering available. Repair the underlying problem while stopped and restart; newly learned skins may not persist after a warning or a crash before commit. Include the cache and any SQLite sidecars in stopped-server plugin backups. Build 023 ignores the added cache, so a cosmetic jar rollback can keep current market data; never restore old trades just to roll back heads.
+
+Isolated Paper 26.3 checks use real CMI 9.8.10.1/CMILib 1.6.0.0 API maps with synthetic profiles. They cover malformed/conflicting entries, disabled reuse, missing-entry cooldowns and restart with CMI removed. Separate tests cover observed skin changes, clone isolation, persistence and a corrupt cache. These assert server metadata; connected-client visual acceptance and other CMI versions still need verification.
 
 ## Browse-shops copper chest (023)
 
@@ -604,7 +625,7 @@ Player names preserve case and Bedrock prefixes. Database UUID text must be cano
 
 Names load on the database worker, and Paper's existing cache is copied in small main-thread batches before shops become available. Menu rendering reads memory only. A returning player's current real username updates the existing player row asynchronously, retaining the UUID and registration date; new players use the existing registration table. A delayed startup snapshot cannot overwrite a newer join. If the name table cannot be read, a warning is logged and Paper/session names or UUID labels remain available. If saving a renamed username fails, its current-session label remains available but may revert after restart. Manual edits to offline player rows need a clean restart to reload the GUI name snapshot; normal config reload does not reread this table.
 
-Seller heads use UUID-keyed templates with complete, usable local textures. Missing textures produce a generic head, and chest placeholders keep working. Name-based menu buttons use only cached templates and reject ambiguous matches. Displaying a name never triggers skin/profile completion. This replaces the old name-based skull lookup, so an offline seller can have a correct name and a generic head.
+Seller heads use UUID-keyed templates with complete, usable local textures. Build 024 persists those skins and optionally reuses CMI’s loaded UUID skin map; see [local skin caching](#local-shop-owner-skin-cache-024). Missing textures still produce a generic head, and chest placeholders work. Name-based menu buttons use only the local cache and reject ambiguous matches. Displaying a name never triggers online profile completion.
 
 There is no new command, permission, placeholder, plugin dependency, item-format change or shop-data migration. `%owner%` uses the resolved name or UUID. Back up the current jar and plugin/economy data before replacing the jar; verify representative offline, renamed and Bedrock sellers after restart. Rolling back to `010` restores its old name fallback but does not require restoring stale shop data. Preserve current trades and statistics. These focused checks do not complete the broader GUI/security or financial recovery work.
 
