@@ -5,7 +5,7 @@ description: "Public-safe commands, permissions, configuration, integrations, an
 
 This is the public technical and operations guide for 1MoreBlock's maintained PlayerShopGUIPlus fork. For player instructions, use the [player guide](/player-guides/other-server-features/player-shop-gui-plus/). The plugin name and data directory remain `PlayerShopGUIPlus`.
 
-**Release status, reviewed 1 October 2026:** `001` is the last confirmed live build. `020` is verified in isolated local Paper tests and awaits live deployment. The main reference below describes `020`; [older live commands](#older-live-build-001) are recorded separately. Confirm the installed version before using a command or planning an update. Build 018 makes recent history personal by UUID and adds a separate staff market-wide view. Build 017 adds menu-session and inventory-event hardening. Its isolated tests use synthetic players/inventories and a Vault boundary; connected-client and actual-provider acceptance remains required. This documentation does not announce a live plugin deployment.
+**Release status, reviewed 1 October 2026:** `001` is the last confirmed live build. `021` is verified in isolated local Paper tests and awaits live deployment. The main reference below describes `021`; [older live commands](#older-live-build-001) are recorded separately. Confirm the installed version before using a command or planning an update. Build 018 makes recent history personal by UUID and adds a separate staff market-wide view. Build 017 adds menu-session and inventory-event hardening. Its isolated tests use synthetic players/inventories and a Vault boundary; connected-client and actual-provider acceptance remains required. This documentation does not announce a live plugin deployment.
 
 <a id="commands-in-build-007"></a>
 
@@ -27,7 +27,9 @@ This is the public technical and operations guide for 1MoreBlock's maintained Pl
 
 <span id="commands-in-build-019"></span>
 
-## Commands in build 020
+<span id="commands-in-build-020"></span>
+
+## Commands in build 021
 
 `/market` is the main command; `/ah` is its native alias, using the same handler, arguments, and permissions. Root aliases `/playershop`, `/pshop`, `/playershops`, and `/pshops` are no longer registered. Existing CMI/server aliases are separate configuration and can still override native commands.
 
@@ -147,6 +149,14 @@ The wildcard's declared children do not include main-menu access, refund permiss
 The bundled tiers are `limits.default: 10`, `limits.donator: 50`, `unclaimedLimits.default: 20`, and `unclaimedLimits.donator: 40`. Their concrete nodes are `playershopguiplus.limit.default`, `playershopguiplus.limit.donator`, `playershopguiplus.unclaimedlimit.default`, and `playershopguiplus.unclaimedlimit.donator`. Keep the `default` entries when customizing tiers.
 
 The base-menu node, recent node, seven admin nodes and seven debug nodes explicitly default to operators. Debug and admin are separate umbrellas; explicit child denials are respected. Debug grants do not add trading or administration access. Inherited nodes retain their previous unspecified defaults. Configure grants deliberately and check effective permissions with the installed permission manager. A normal player who should browse and sell needs the base menu node and sell node; player-name lookup is a separate grant. Do not grant the staff wildcard as a substitute. For a LuckPerms user-specific change, use the player's verified server UUID, including Bedrock identities; group grants target the intended group ID.
+
+## Item ordering and player preferences (021)
+
+Item listing menus default to newest first. The top-left listing is the one with the latest creation timestamp; different expiry durations and no-expiry listings cannot change that meaning. **Change Item Order** toggles oldest/newest for that player, shared across all items, own/other shops, categories, search results and unclaimed items. This does not change the shop-list ordering or what `/ah` opens.
+
+Paper stores the choice in the player's persistent data under `playershopguiplus:item_order_oldest_first`: byte `1` means oldest first, `0` newest first. Missing, wrong-type or other values default to newest. A valid click records either explicit choice; merely opening a menu does not write a default. Paper saves it through its normal player-data lifecycle, retaining it across reconnects and clean restarts. This is per authoritative player UUID and works independently of names and Java/Bedrock prefixes. It is not an immediate forced disk flush or a guarantee against losing the latest unsaved choice after a crash.
+
+Back up/copy Paper's player data when moving the server; copying only the market plugin folder does not carry these preferences. On this Paper 26.3 clone the files live under the primary world's `players/data/`; inspect the actual layout on another server. No market database, saved item, ownership, quantity, price or economy migration occurs. The plugin updates only its namespaced preference key and preserves foreign player PDC and item metadata. No new permission, config or language key is added. Older jars ignore the preference; returning to 021 can restore it from retained player data.
 
 ## Direct material search (020)
 
