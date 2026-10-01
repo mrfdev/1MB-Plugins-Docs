@@ -2,7 +2,7 @@
 
 The player market lets you buy items from other players and offer your own items for sale on 1MoreBlock. It is separate from the server's ShopGUIPlus shop. 1MoreBlock maintains a custom version of brc's PlayerShopGUIPlus for Paper 26.3.
 
-**Which commands can I use?** The last confirmed live version is build `001`. Start with the live instructions below. The `034` update uses `/market` and `/ah` and adds help/info plus a staff-controlled maintenance pause; [its commands are explained below](#the-market-update-build-034). Build 014 updates the internals for Paper 26.3 and newer while retaining existing listings and item metadata. Build 015 keeps the existing SQLite listings. Build 027 removes the optional HeadDatabase integration; existing decorative heads and player-head icons remain ordinary supported items. Build 016 improves development tooling and keeps the same game behavior. The commands and permissions below are unchanged by these cleanups. The update includes recent-sales chat, staff diagnostics, market statistics and soft 1MB chat colours. Seller names now use trusted local player records, including Bedrock prefixes. A seller whose name is still unknown is shown by their unique player ID. Detailed market statistics are staff-only and do not change listing prices or player permissions. Players do not need extra permissions or a new command to see the styling. Wait for staff to announce that update before relying on those native commands. The existing live `/ah` shortcut is configured separately by the server.
+**Which commands can I use?** The last confirmed live version is build `001`. Start with the live instructions below. The `035` update uses `/market` and `/ah` and adds help/info plus a staff-controlled maintenance pause; [its commands are explained below](#the-market-update-build-035). Build 014 updates the internals for Paper 26.3 and newer while retaining existing listings and item metadata. Build 015 keeps the existing SQLite listings. Build 027 removes the optional HeadDatabase integration; existing decorative heads and player-head icons remain ordinary supported items. Build 016 improves development tooling and keeps the same game behavior. The commands and permissions below are unchanged by these cleanups. The update includes recent-sales chat, staff diagnostics, market statistics and soft 1MB chat colours. Seller names now use trusted local player records, including Bedrock prefixes. A seller whose name is still unknown is shown by their unique player ID. Detailed market statistics are staff-only and do not change listing prices or player permissions. Players do not need extra permissions or a new command to see the styling. Wait for staff to announce that update before relying on those native commands. The existing live `/ah` shortcut is configured separately by the server.
 
 ## Getting started
 
@@ -84,11 +84,19 @@ The built-in aliases are `/pshop`, `/playershops`, and `/pshops`. These commands
 
 <span id="the-market-update-build-033"></span>
 
-## The market update: build 034
+<span id="the-market-update-build-034"></span>
+
+## The market update: build 035
+
+Build 035 gives every market menu the same light blue outer border, with no glass filling the middle. The **Your market** head stays at the bottom-left; **Back** is the arrow beside **Close**, the barrier at the bottom-right. The main menu has no Back button. Your head shows your own details even while you browse someone else's shop.
+
+Lists use the space inside the border, normally showing up to 28 entries per page. Use the bottom-row Previous and Next arrows to see the rest; fewer entries on one page does not mean anything has disappeared. Refresh, sorting, editing your shop name and Collect all keep their own bottom-row positions when relevant.
+
+Back and Close only navigate or leave the menu. They do not buy, sell, cancel a listing or collect items. In the selling wizard, Back from the price screen returns to your quantity selection with your choices intact; leaving the wizard discards the unfinished setup. Buying, cancelling and collecting still require their own labelled actions.
 
 Build 034 gives clearer guidance when a command does not match. It links to help and may suggest a nearby command you can use. Suggestions only fill in chat: review and send them yourself. Full, locally known player names still open that player's shop.
 
-Build 033 adds **Your market**, a player head at the bottom-left of the main menu. Hover over it to see your name, active listings, items ready to collect and listing limits. These counts are listing entries, not the number of items in each stack. Cancelled and expired listings use capacity until collected. The head is informational; Your shop and Unclaimed items remain separate buttons. No new permission is needed. Staff may add selected extra details through PlaceholderAPI.
+Build 033 introduced **Your market** on the main menu; build 035 repeats its read-only personal summary on other market menus. Hover over it to see your name, active listings, items ready to collect and listing limits. These counts are listing entries, not the number of items in each stack. Cancelled and expired listings use capacity until collected. The head is informational; Your shop and Unclaimed items remain separate buttons. No new permission is needed. Staff may add selected extra details through PlaceholderAPI on the main-menu head only.
 
 Build 032 adds staff transaction logs and richer market statistics. Your `/market recent` remains personal: it shows your own sales and purchases. No extra player permission or change to listing prices is introduced.
 
@@ -96,7 +104,7 @@ Build 030 adds a **Collect all** hopper inside **Unclaimed items**. It returns c
 
 If a collection is interrupted before delivery, the items return to Unclaimed. If the plugin asks for staff review, contact staff: it keeps a recovery record and will not automatically repeat an uncertain delivery.
 
-Build 029 uses **light blue glass panes around the outer edge only** of the main menu and Search & Browse. The interior is empty apart from the action buttons.
+Build 029 introduced light blue outer borders for the main menu and Search & Browse; build 035 extends this style to all market menus. The interior remains clear apart from content and controls.
 
 Build 028 groups finding and browsing into **Search & Browse**, marked by a **spyglass**. The main menu keeps **Browse all items**, **Your shop** and **Unclaimed items** directly accessible.
 
@@ -109,7 +117,7 @@ Open the spyglass to choose:
 | Browse player shops | Green copper chest | Browse the player-shop list. |
 | Browse categories | Chest | Find items by category, including Storage & Containers and Collectibles. |
 
-The main menu and submenu have light blue outer glass borders and soft pastel, non-italic text. The **arrow** goes back and the **barrier** closes it. Shop and category pages return through the menu you came from, and cancelling a purchase returns to your previous page or search results. Type the displayed cancellation word during a search prompt to return to Search & Browse. `/ah search blue` and its vanilla-material Tab suggestions still work directly.
+All market menus have light blue outer glass borders and non-italic titles and lore; the navigation uses the soft 1MB palette. The **arrow** goes back and the **barrier** closes it. Shop and category pages return through the menu you came from, and cancelling a purchase returns to your previous page or search results. Type the displayed cancellation word during a search prompt to return to Search & Browse. `/ah search blue` and its vanilla-material Tab suggestions still work directly.
 
 Build 027 removes an unused HeadDatabase connection. Existing listed decorative heads retain their textures and item details; player-shop heads still use the local skin cache. Your commands and permissions stay the same.
 

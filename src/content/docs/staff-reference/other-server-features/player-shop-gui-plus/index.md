@@ -5,7 +5,7 @@ description: "Public-safe commands, permissions, configuration, integrations, an
 
 This is the public technical and operations guide for 1MoreBlock's maintained PlayerShopGUIPlus fork. For player instructions, use the [player guide](/player-guides/other-server-features/player-shop-gui-plus/). The plugin name and data directory remain `PlayerShopGUIPlus`.
 
-**Release status, reviewed 1 October 2026:** `001` is the last confirmed live build. `034` adds permission-aware unknown-command guidance while preserving exact local player-shop lookup. It retains 033’s read-only Your market player head with personal counts and limits, plus optional explicitly allowed PlaceholderAPI text only in its title/lore. It preserves 032’s structured transaction audit logs, buyer/spending/sold-material/daily reports and historical time windows. It preserves 031’s owner-only Cancel listing shortcut beside OK in the own-item warning; 030’s Collect all and durable claim escrow remain. It retains 029’s light blue outer borders with empty interiors in the main menu and Search & Browse submenu. It preserves 028’s navigation through shops, categories and search results. It retains 027’s HeadDatabase removal, native item support and local player/CMI skin caches. It awaits live deployment. The main reference below describes `034`; [older live commands](#older-live-build-001) are recorded separately. Confirm the installed version before using a command or planning an update. Build 018 makes recent history personal by UUID and adds a separate staff market-wide view. Build 017 adds menu-session and inventory-event hardening. Its isolated tests use synthetic players/inventories and a Vault boundary; connected-client and actual-provider acceptance remains required. This documentation does not announce a live plugin deployment.
+**Release status, reviewed 1 October 2026:** `001` is the last confirmed live build. `035` applies the same border and footer to all 19 market menus, including a read-only personal head on each page. It preserves 034’s permission-aware unknown-command guidance and exact local player-shop lookup. Optional explicitly allowed PlaceholderAPI text remains limited to the main-menu head’s title/lore. It preserves 032’s structured transaction audit logs, buyer/spending/sold-material/daily reports and historical time windows. It preserves 031’s owner-only Cancel listing shortcut beside OK in the own-item warning; 030’s Collect all and durable claim escrow remain. It extends 029’s light blue outer borders and clear interiors to every market menu. It preserves 028’s navigation through shops, categories and search results. It retains 027’s HeadDatabase removal, native item support and local player/CMI skin caches. It awaits live deployment. The main reference below describes `035`; [older live commands](#older-live-build-001) are recorded separately. Confirm the installed version before using a command or planning an update. Build 018 makes recent history personal by UUID and adds a separate staff market-wide view. Build 017 adds menu-session and inventory-event hardening. Its isolated tests use synthetic players/inventories and a Vault boundary; connected-client and actual-provider acceptance remains required. This documentation does not announce a live plugin deployment.
 
 <a id="commands-in-build-007"></a>
 
@@ -53,7 +53,9 @@ This is the public technical and operations guide for 1MoreBlock's maintained Pl
 
 <span id="commands-in-build-033"></span>
 
-## Commands in build 034
+<span id="commands-in-build-034"></span>
+
+## Commands in build 035
 
 `/market` is the main command; `/ah` is its native alias, using the same handler, arguments, and permissions. Root aliases `/playershop`, `/pshop`, `/playershops`, and `/pshops` are no longer registered. Existing CMI/server aliases are separate configuration and can still override native commands.
 
@@ -93,13 +95,39 @@ Sell/start/s, admin actions and reload/r are case-insensitive. Admin actions and
 
 Buying, cancelling and claiming use menus. `buy`, `cancel`, `cancelothers`, `claim` and `player` are not subcommands. `/market search <material or keyword>` opens material-filtered results; the GUI chat prompt also supports custom item names. `/market recent [sales|purchases] [page]` and its `/ah` alias are the same personal read-only chat command; see [recent sales](#recent-sales-012).
 
+### Consistent menu layout (035)
+
+All 19 menu definitions use a light blue glass-pane outer border, with no filler in the interior. Item names and tooltip lore remain non-italic; styling changes affect presentation copies, never stored or delivered player items. A fixed footer keeps the same action in the same column, rendering controls only when that menu and current page support them:
+
+| Bottom-row column, zero-based | Control |
+| --- | --- |
+| 0 | Your market, the viewing player's read-only head |
+| 1 | Previous page |
+| 2 | Refresh |
+| 3 | Change item order |
+| 4 | Edit shop name |
+| 5 | Collect all, in Unclaimed items only |
+| 6 | Next page |
+| 7 | Back, using an arrow; absent on the main menu |
+| 8 | Close, using a barrier |
+
+The standard list menus use six rows and 28 interior content slots. Entries continue on later pages instead of being hidden behind border or footer controls. Custom interior controls can reduce available content space; navigation uses the effective content slots. Category icons are checked and conflicting or out-of-bounds positions are relocated into free content slots, with further entries paginated.
+
+At startup, layout normalization runs in memory and preserves saved `menu.yml` and `categories.yml`. The border colour, footer positions and navigation materials are enforced. Valid, non-conflicting interior control positions, labels, lore and action values are retained; controls on an edge, outside the inventory or colliding with another control are moved to a free interior slot. A small menu can grow within three to six rows to fit its controls. An impossible layout fails with a configuration error instead of silently hiding controls. Review customized layouts after upgrading, then restart normally after any saved menu edits; `/market admin reload` still does not read `menu.yml`.
+
+Each menu's `buttons.playerDetails.enabled` defaults to `true`; an explicit `false` hides that menu's personal head. This applies under `menu.<section>` and the corresponding `notifications.<section>`. Its position is always the bottom-left footer slot, regardless of a saved `slot` value. Every head uses the viewing player's actual server UUID and the existing local skin cache. Other menus show built-in local details only: custom player-detail templates and optional PlaceholderAPI expansion remain limited to the main-menu head.
+
+Generic Back and Close never confirm a purchase, cancel a listing or collect an item. Confirmation and notification screens use their existing return route when going back. Back from the price wizard returns to quantity while preserving its current setup; leaving the wizard clears that unfinished setup. Existing explicit transaction buttons, ownership checks, permissions, cooldowns and session validation remain in force. No new command, permission, dependency, item format or database migration is introduced.
+
+For deployment, preserve the previous jar and saved configuration and perform a clean stop/start. The saved YAML remains usable for a cosmetic rollback; keep current market/economy/player data rather than restoring old trades to undo a layout. Human-client appearance and real-provider acceptance remain separate from isolated Paper tests. This describes candidate 035, not a live plugin update.
+
 ### Search & Browse menus in build 028
 
-The main menu now has four actions: **Browse all items**, **Search & Browse** (spyglass), **Your shop** and **Unclaimed items**, plus Close. The three-row submenu offers **Search items**, **Search player shops**, **Browse player shops** (green copper chest) and **Browse categories**. From build 029, both the main menu and submenu have light blue glass only around their perimeter, with empty interior slots apart from controls, pastel non-italic text, an arrow at bottom-right-minus-one and a barrier at bottom right. All four routes use `playershopguiplus.playershop`; no new permission, command, dependency or database migration is introduced.
+The main menu keeps four actions: **Browse all items**, **Search & Browse** (spyglass), **Your shop** and **Unclaimed items**, plus its personal head and Close. The three-row submenu offers **Search items**, **Search player shops**, **Browse player shops** (green copper chest) and **Browse categories**. From build 029, both the main menu and submenu have light blue glass only around their perimeter, with empty interior slots apart from controls, pastel non-italic text, an arrow at bottom-right-minus-one and a barrier at bottom right. All four routes use `playershopguiplus.playershop`; no new permission, command, dependency or database migration is introduced.
 
 Back retains the route and page through shop/category lists, individual shops/categories, search results and buy/cancel confirmations. Refresh and sorting retain that route. Chat item search still accepts custom names; cancelling the prompt returns to the submenu. Material command search remains available through `/market search` and `/ah search`, using only vanilla material suggestions. Closed inventories are not reused: returning creates a fresh checked GUI session. Existing cooldown, movement, permission and stale-session protections apply.
 
-Configuration is in `menu.yml`: `menu.main.buttons.browse` is the spyglass; `menu.searchBrowse` defines the four choices (`searchItems`, `searchShops`, `shops`, `categories`) and `back`/`close`. For both `menu.main` and `menu.searchBrowse`, `fill.item` now fills only the perimeter. Set their `fill.item.material` values to `LIGHT_BLUE_STAINED_GLASS_PANE` to adopt the colour in an existing saved menu. Other buttons and values are retained; back up the file and restart cleanly. The test clone receives just those two material edits for 029. The main layout uses five rows with `items`, `browse`, `own`, `unclaimed` at zero-based slots 11, 15, 29, 33, and `close` at 44. The submenu uses slots 10, 12, 14, 16, with Back at 25 and Close at 26. `%number%` in its shops button counts shops with active listings; its categories button counts categories. Labels on list-page back buttons are rendered as **Back** to avoid an incorrect old “main menu” label.
+Configuration is in `menu.yml`: `menu.main.buttons.browse` is the spyglass; `menu.searchBrowse` defines the four choices (`searchItems`, `searchShops`, `shops`, `categories`) and `back`/`close`. Build 035 enforces the light blue perimeter and common footer in memory for these and all other menus, including saved configurations. Earlier build 029 required setting `fill.item.material` to `LIGHT_BLUE_STAINED_GLASS_PANE` in those two saved sections. Back up custom files before editing and restart cleanly. The main layout uses five rows with `items`, `browse`, `own`, `unclaimed` at zero-based slots 11, 15, 29, 33, and `close` at 44. The submenu uses slots 10, 12, 14, 16, with Back at 25 and Close at 26. `%number%` in its shops button counts shops with active listings; its categories button counts categories. Labels on list-page back buttons are rendered as **Back** to avoid an incorrect old “main menu” label.
 
 For a saved menu without `menu.main.buttons.browse`, startup supplies the new main layout in memory, preserving the configured item definitions on the three surviving actions. It also supplies a missing `menu.searchBrowse` section. This does not write or erase the saved YAML. Review custom layouts before deployment. To save the new layout explicitly, back up `menu.yml`, merge the packaged `menu.main` and `menu.searchBrowse` sections while retaining intended customizations, and restart cleanly. The test clone receives only those two sections; all other saved menu sections remain unchanged. `/market admin reload` does not reload `menu.yml`.
 
@@ -113,7 +141,7 @@ Ordinary left/right clicks operate buttons. `clickActions` still maps listing ge
 
 Purchase confirmation rejects a changed item/quantity/price. Cancellation rechecks listing membership, expiry, owner and staff permission. Claims require an authoritative expired/cancelled item owned by the player and use actual component stack limits. Unexpected leftovers restore the inventory and retain the listing. Uncertain partial delivery blocks that listing in memory for reconciliation. Wizard confirmation now uses the guarded command-sale path and exact original hand slot/stack, including its restriction on positive fees combined with deferred refunds.
 
-There are no new settings, permissions, placeholders or dependencies, and no schema/item migration. Build 028 implements the main Search & Browse cleanup; applying the full visual layout to every other menu remains separate. Reconcile uncertain inventory/payment outcomes before retry or restart: review guards remain in memory, and this release does not provide crash-atomic economy/inventory/SQLite recovery. The private `docs/GUI-HARDENING.md` and 017 change record document test scope and remaining two-client/provider/crash checks. Use the isolated `buy-smoke.py --case gui` suite after building the probes; never install probe jars on gameplay servers.
+There are no new settings, permissions, placeholders or dependencies, and no schema/item migration. Build 028 implements the main Search & Browse cleanup; build 035 applies the common visual layout to every menu. Reconcile uncertain inventory/payment outcomes before retry or restart: review guards remain in memory, and this release does not provide crash-atomic economy/inventory/SQLite recovery. The private `docs/GUI-HARDENING.md` and 017 change record document test scope and remaining two-client/provider/crash checks. Use the isolated `buy-smoke.py --case gui` suite after building the probes; never install probe jars on gameplay servers.
 
 ### Unknown-command guidance (034)
 
@@ -206,7 +234,7 @@ The base-menu node, recent node, seven admin nodes and seven debug nodes explici
 
 The **Collect all** hopper collects the viewing player's cancelled/expired listings across every page, using their chosen ordering. It collects whole listings, skips those that do not fit, respects custom stack limits and leaves armor/offhand untouched. Item metadata and container contents remain intact. The existing `playershopguiplus.playershop` permission applies; no command or permission is added.
 
-`menu.unclaimed.buttons.collectAll` defaults to a HOPPER in slot 51, with non-italic pastel name/lore. A saved menu without this section gets an in-memory button in a free slot outside item/control slots, preferring 51. A fully occupied layout produces a warning instead of replacing a control. Restart after changing menu.yml. `MSG.CLAIM.ALL.*` language keys support MiniMessage; the DONE message exposes `%quantity%`, `%listings%` and `%remaining%`.
+`menu.unclaimed.buttons.collectAll` uses a HOPPER with non-italic pastel name/lore. From build 035 it occupies bottom-row column 5, zero-based slot 50 in the standard six-row menu. A saved menu without this section receives the button in memory; existing saved slot values are normalized to the common footer without rewriting YAML. Restart after changing menu.yml. `MSG.CLAIM.ALL.*` language keys support MiniMessage; the DONE message exposes `%quantity%`, `%listings%` and `%remaining%`.
 
 030 adds `one_mb_claim_batches` inside the existing `database.db`. Original shop/player rows and item encoding remain compatible. The new table retains full selected item payloads, a transaction UUID and before/after inventory evidence. SQL/encoding run on the database worker; inventory mutation runs on the main thread. The owner's changes are locked during collection, and queued shop saves use snapshots. Repeated/stale GUI clicks cannot replay a reserved batch.
 
@@ -239,7 +267,7 @@ Keep the existing button name, icon, slot and other menu settings. A jar upgrade
 
 ## Category refresh (025)
 
-There are 15 categories. Existing category IDs 1–13 and their labels/slots remain. ID 14, **Storage & Containers**, uses a waxed oxidized copper chest at zero-based slot 24 (the old gap); ID 15, **Collectibles**, uses a decorated pot at slot 31. Storage includes all coloured bundles and shulker boxes, normal/copper chests, barrels, shelves and bookshelves. Collectibles includes discs/fragments, pottery, armour trims, banner patterns, decorative heads, horns and selected rare finds. Chest boats/minecarts stay in Transportation; netherite upgrade templates stay in Materials. Enchanted books stay in Miscellaneous; a separate book category is deferred.
+There are 15 categories. Existing category IDs 1–13 and their labels remain. Build 035 retains valid content slots and repairs conflicting or out-of-bounds icon positions in memory. ID 14, **Storage & Containers**, uses a waxed oxidized copper chest at zero-based slot 24 (the old gap); ID 15, **Collectibles**, uses a decorated pot at slot 31. Storage includes all coloured bundles and shulker boxes, normal/copper chests, barrels, shelves and bookshelves. Collectibles includes discs/fragments, pottery, armour trims, banner patterns, decorative heads, horns and selected rare finds. Chest boats/minecarts stay in Transportation; netherite upgrade templates stay in Materials. Enchanted books stay in Miscellaneous; a separate book category is deferred.
 
 The refreshed defaults explicitly list 1,645 item materials verified against Paper 26.3 build 133. Other remains a catch-all for unmatched items, including 12 deliberately unlisted operator/technical materials. New Paper materials require another review; they are not assigned automatically. Broad categories match the underlying material, so renamed/custom items usually follow their vanilla material. Exact custom matching rules can still send a variant to Other; the inherited explicit APPLE metadata rule is retained.
 
@@ -274,9 +302,9 @@ Correction to earlier menu-update guidance: `/market admin reload` applies suppo
 
 ## Back-navigation arrows (022)
 
-Build 022 defaults all nine back-navigation buttons to `ARROW`, keeping their labels, positions and destinations. **Return to main menu**, **Return to shops** and **Return to categories** use the same navigation symbol. The earlier proposed nether-star back icon is superseded; the wider border/player-head/close-button layout remains planned.
+Build 022 defaults all nine back-navigation buttons to `ARROW`, keeping their labels, positions and destinations. **Return to main menu**, **Return to shops** and **Return to categories** use the same navigation symbol. The earlier proposed nether-star back icon is superseded. Build 035 completes the shared border, player-head, Back and Close layout across all menus.
 
-A jar upgrade preserves existing `plugins/PlayerShopGUIPlus/menu.yml`. Back up that file, then set `menu.<section>.buttons.back.item.material` to `ARROW` for `shops`, `items`, `categories`, `own`, `shop`, `category`, `searchShops`, `searchItems` and `unclaimed`. Preserve other controls and custom labels/slots. Restart the server cleanly and reopen the menu. `/market admin reload` does not read `menu.yml`. Restore those nine values from the backup and restart to undo this cosmetic change. No market/player-data migration is needed.
+Build 035 normalizes Back to an arrow in the common footer, without rewriting `plugins/PlayerShopGUIPlus/menu.yml`. For earlier candidates, the 022 upgrade required setting `menu.<section>.buttons.back.item.material` to `ARROW` for `shops`, `items`, `categories`, `own`, `shop`, `category`, `searchShops`, `searchItems` and `unclaimed`. Keep backups of intended custom text and settings. Restart cleanly after menu edits; `/market admin reload` does not read `menu.yml`. No market/player-data migration is needed.
 
 ## Item ordering and player preferences (021)
 
@@ -441,7 +469,7 @@ Bundled defaults are examples from the source, not a statement of the live confi
 
 Review `minSettings`/`maxSettings` bounds, `limits`/`unclaimedLimits`, `bannedItems`, `disableInWorlds`, `disableInGamemodes`, and `shopItemDuration` before opening the market. Retained-listing capacity includes active, cancelled, and expired entries. One entry may contain a full stack.
 
-Default `clickActions` are left-click to buy, right-click to cancel your own listing, and shift-right or middle-click to cancel another listing with permission. Publish player controls that match the configured menus. The main and Search & Browse menus use light blue outer borders with empty interiors; further menu layout work remains planned.
+Default `clickActions` are left-click to buy, right-click to cancel your own listing, and shift-right or middle-click to cancel another listing with permission. Publish player controls that match the configured menus. All menus use the common light blue border and fixed footer described above, with no interior filler.
 
 ### Listing fees and refunds
 
@@ -641,7 +669,7 @@ Examples:
 
 `hooks` separates actual selected adapters/listeners from installed plugin presence/version. CMI may supply economy through Vault; build 013 adds a separate optional CMI API hook for local display names. Its status row reports CMI readiness/absence, cached and pending counts, configuration disablement and persistence failure. No 1MB-library integration is added. An installed optional plugin is not proof that its hook is selected or compatible. `commands` checks native Bukkit registration for market/ah and their namespaced forms; external CMI aliases or chat interceptors must be inspected separately.
 
-`permissions` includes declared nodes, current configured limit tiers and effective grants for the sender. It explains missing descriptor coverage and inherited wildcard limits. `placeholders` lists plugin-local formatting tokens and contexts, including the STYLE layout tokens added in 009; there is no exported PlaceholderAPI expansion. Build 033 adds six local player-details tokens and optional allowlisted external text only in that head.
+`permissions` includes declared nodes, current configured limit tiers and effective grants for the sender. It explains missing descriptor coverage and inherited wildcard limits. `placeholders` lists plugin-local formatting tokens and contexts, including the STYLE layout tokens added in 009; there is no exported PlaceholderAPI expansion. Build 033 adds six local player-details tokens and optional allowlisted external text only in the main-menu head.
 
 Diagnostics do not print player records, UUID lists, balances, item payloads, full configuration, credentials, SQL exception text or private file paths. They never clear review guards or enable the market. A successful database ping and ready providers do not establish safe financial transactions, healthy database contents or compatibility with all optional providers. Follow the normal recovery process for warnings; record the relevant topic/page when asking a maintainer for help.
 
@@ -658,7 +686,7 @@ python3 scripts/check-tooling.py
 python3 scripts/check-tooling.py --artifact
 ```
 
-On other systems, set `JAVA_HOME` to the installed JDK 25 directory; on Windows use `gradlew.bat --dependency-verification strict --warning-mode fail clean build smokeJars` and `python` for the check scripts. The installable result is `build/libs/1MB-PlayerShopGuiPlus-v<version>.jar`; the candidate update is `1MB-PlayerShopGuiPlus-v1.42.0-034-j25-26.3.jar`. Use the maintainer's recorded checksum to verify the supplied artifact. Test probes, compile stubs, old NMS handlers, and source archives are not server plugins to install.
+On other systems, set `JAVA_HOME` to the installed JDK 25 directory; on Windows use `gradlew.bat --dependency-verification strict --warning-mode fail clean build smokeJars` and `python` for the check scripts. The installable result is `build/libs/1MB-PlayerShopGuiPlus-v<version>.jar`; the candidate update is `1MB-PlayerShopGuiPlus-v1.42.0-035-j25-26.3.jar`. Use the maintainer's recorded checksum to verify the supplied artifact. Test probes, compile stubs, old NMS handlers, and source archives are not server plugins to install.
 
 For portable harness checks, run `python3 -m unittest discover -s scripts/tests -v`. After a successful strict build, `python3 scripts/test-dependency-guards.py` proves that tampered checksums, missing locks and incompatible upgrades fail, using offline disposable copies. Linux/macOS/Windows CI runs these tooling/build checks without private player data. Real Paper regression tests still require local Java 27, a prepared matching Paper bootstrap/cache, an already accepted EULA and approved provider jars; real-server coverage is currently macOS only. Tests select free loopback ports and unique directories, default to packaged configuration, accept explicit Java/server/config/provider/probe/output paths, reject stale results and stop timed-out test processes. They never use a gameplay server as their output directory. The three codec/sell/buy probes remain separate from the runtime jar. The obsolete HeadDatabase probe/task and `hdb-*` scenarios were removed in 027; `removed-headdatabase` verifies rejected legacy configuration without a provider jar.
 
@@ -856,7 +884,7 @@ These are plugin-local tokens, not PlaceholderAPI placeholders. The fixed person
 
 ## Own-listing warning controls (031)
 
-With GUI notifications enabled, clicking Buy on your own listing shows the existing barrier explanation with green **OK** at slot 39, an empty slot at 40, and orange **Cancel listing** at 41. OK keeps the offer active; its lore explains returning to listings. Cancel explains later collection through Unclaimed items. Both use non-italic tooltips, and navigation preserves the originating list/page/filter. Other notifications retain their existing layouts.
+With GUI notifications enabled, clicking Buy on your own listing shows the existing barrier explanation with green **OK** at slot 39, an empty slot at 40, and orange **Cancel listing** at 41. OK keeps the offer active; its lore explains returning to listings. Cancel explains later collection through Unclaimed items. Both use non-italic tooltips, and navigation preserves the originating list/page/filter. Build 035 also adds the common border, personal head, Back and Close to notifications; their explicit response buttons stay separate from navigation.
 
 The new `menu.yml` section is `notifications.ownListing`, with `rows` and `buttons.message`, `buttons.confirm`, `buttons.cancel`. Button item/slot definitions and lore are configurable. Existing own-item language keys provide the title/barrier text and `NOTIFICATION.CONFIRM` supplies OK. Missing sections use bundled defaults in memory without overwriting saved YAML. To customize, copy the bundled section and cleanly restart. With GUI notifications disabled, the existing chat warning remains.
 
@@ -929,11 +957,11 @@ Use a stopped, coordinated jar/market/economy/player-data backup for deployment.
 
 ## Player details and PlaceholderAPI (033)
 
-The main menu now has a pastel, non-italic **Your market** player head in the bottom-left corner. Hover to see your name, active listings, entries ready to collect, occupied listing slots and your permission-based limits. It is a read-only information item; clicking it does not run a command or move anything. Your shop and Unclaimed items keep their existing buttons. Personal history remains `/market recent` (or `/ah recent`).
+Build 033 introduced the pastel, non-italic **Your market** head on the main menu. Build 035 adds the same built-in personal summary at the bottom-left of every market menu, unless disabled for that menu. Hover to see your name, active listings, entries ready to collect, occupied listing slots and your permission-based limits. It is a read-only information item; clicking it does not run a command or move anything. Your shop and Unclaimed items keep their existing buttons. Personal history remains `/market recent` (or `/ah recent`).
 
 Counts are **listing entries**, not individual stack quantities. The general listing limit counts all retained entries, including cancelled and expired listings. The unclaimed limit blocks new listings when reached; it does not delete overflow or older items. Collecting unlisted items frees their slots. These details describe capacity, not a guarantee that a new listing will pass the other selling checks.
 
-The viewer's actual server UUID selects their listings, cached skin and external placeholder context, including Floodgate/Bedrock players. The existing local player/CMI skin cache supplies complete textures; a missing skin remains a plain head. Rendering makes no database, balance or remote identity request. No new commands, permissions, exported placeholders or storage migration are introduced. The existing `playershopguiplus.playershop` menu permission still applies.
+The viewer's actual server UUID selects their listings, cached skin and external placeholder context, including Floodgate/Bedrock players. The existing local player/CMI skin cache supplies complete textures; a missing skin remains a plain head. Rendering makes no database, balance or remote identity request. No new commands, permissions, exported placeholders or storage migration are introduced. Each menu retains its existing access checks; the informational head grants no additional access.
 
 ## Menu configuration
 
@@ -957,7 +985,7 @@ playerDetails:
       - "<muted>Your history: /market recent"
 ```
 
-Slots are zero-based; 36 is bottom-left in the default five-row menu. If this section is absent, the renderer uses built-in text and the bottom-left slot for the configured menu size, without rewriting saved YAML. An out-of-range slot, a slot occupied by another configured button, or a non-player-head material hides the information item rather than covering a control. `enabled: false` hides it deliberately. Keep `material: PLAYER_HEAD`.
+Slots are zero-based; 36 is bottom-left in the default five-row main menu. From build 035 the effective slot is fixed to bottom-left for the normalized menu size, and the icon material is normalized to `PLAYER_HEAD`; conflicting controls are relocated rather than hiding the head. The saved `slot` and item definitions are not rewritten. Missing sections use built-in defaults. Set `buttons.playerDetails.enabled: false` in a particular menu to hide its head deliberately. Only the main menu uses the custom name/lore template shown above; other menus show built-in local details.
 
 This title and lore accept MiniMessage, the existing 1MB palette and legacy colours. Italics are forcibly removed. Templates are bounded to 512 codepoints each and the first 16 lore lines. Menu file changes require a normal restart, as with other menu layouts; `/market admin reload` does not reload `menu.yml`.
 
@@ -974,7 +1002,7 @@ Local counts and limits are refreshed each time the menu is rendered. They work 
 
 ## Optional PlaceholderAPI consumption
 
-The first version deliberately supports **only this head's visible title and lore**. No other menu, listing name/lore, chat message, inventory title, command, price, identity decision or permission template receives general PlaceholderAPI expansion. This plugin does not register a PlaceholderAPI expansion or export `%market_*%` tokens.
+Optional PlaceholderAPI consumption remains restricted to **the main-menu player-details head's visible title and lore**, including in build 035. The heads on other menus use built-in local details only. No other menu, listing name/lore, chat message, inventory title, command, price, identity decision or permission template receives general PlaceholderAPI expansion. This plugin does not register a PlaceholderAPI expansion or export `%market_*%` tokens.
 
 The optional dependency is PlaceholderAPI; build 033 compiles against its official **2.12.3** API and tests that version. It is compile-only and is not bundled. A matching installed expansion/provider is also required for each selected token. Neither the plugin nor the test deployment downloads or installs expansions.
 
@@ -988,7 +1016,7 @@ playerDetails:
     fallback: "Unavailable"
 ```
 
-To opt in, choose reviewed fast, local/cached placeholders, set `enabled: true`, and list each exact token in `allowed`. Then put the same token in the head's name or lore. Apply the `config.yml` settings with `/market admin reload`; restart after editing `menu.yml`.
+To opt in, choose reviewed fast, local/cached placeholders, set `enabled: true`, and list each exact token in `allowed`. Then put the same token in the main-menu head's name or lore. Apply the `config.yml` settings with `/market admin reload`; restart after editing `menu.yml`.
 
 For example, with the PlaceholderAPI **Player expansion** already installed, allow `['%player_name%']` and add a lore line `<body>Player: <accent>%player_name%`. This illustrates external substitution; the built-in `%player%` is sufficient for names. Other providers, including CMI, require their own installed expansion and individually verified token. Their arbitrary tokens are not certified by testing the generic bridge.
 
