@@ -44,8 +44,7 @@ This is the public technical and operations guide for 1MoreBlock's maintained Pl
 | `/market sell <quantity> <price>` | `playershopguiplus.playershop.sell` | Offer an explicit quantity from the main hand, using the configured direct/wizard behavior. |
 | `/market <name>` | `playershopguiplus.playershop.player` | Open a locally known player's shop. Use the real username, retaining any Bedrock prefix. |
 | `/market admin stats [topic] [page]` | `playershopguiplus.admin.stats` | Current counts/prices, sellers and recorded sales; see [statistics](#market-statistics-010). |
-| `/market admin status` | `playershopguiplus.admin.recent` | View all market sales; default op, included in the admin umbrella. |
-| `playershopguiplus.admin.status` | Show runtime mode, saved preference, readiness, build, storage/economy type and listing counts. |
+| `/market admin status` | `playershopguiplus.admin.status` | Show runtime mode, saved preference, readiness, build, storage/economy type and listing counts. |
 | `/market admin reload` | `playershopguiplus.admin.reload` or `playershopguiplus.playershop.reload` | Reload supported settings, language, categories and sounds. |
 | `/market admin disable` | `playershopguiplus.admin.disable` | Pause market access and trading, persisting through restarts. |
 | `/market admin enable` | `playershopguiplus.admin.enable` | Save enabled mode and resume when shops/economy are ready. |
@@ -63,9 +62,9 @@ Examples: `/ah info`, `/ah help`, `/ah sell 500`, `/market sell 16 800`, `/marke
 
 Help/info are read-only and available to players and console, including before shop/player loading completes or in restricted worlds/game modes. They are case-insensitive; extra arguments show usage. Player help filters gameplay rows by the exact existing permissions; console help shows public guidance, permitted admin actions and an in-game reminder. Command rows suggest text in chat instead of executing sales or reloads. The header opens info and the docs link opens the player guide.
 
-Admin actions and reload/r are case-insensitive and work from console or for permitted staff before gameplay gates, including while dormant. Extra arguments show usage. Sell retains lowercase matching. Trading, menus and player lookup require an active market, an in-game player, loaded shop/player data, and an allowed world/game mode unless bypassed. Unknown first arguments are player names except reserved help, info, admin and debug.
+Admin actions and reload/r are case-insensitive and work from console or for permitted staff before gameplay gates, including while dormant. Extra arguments show usage. Sell retains lowercase matching. Trading, menus and player lookup require an active market, an in-game player, loaded shop/player data, and an allowed world/game mode unless bypassed. Unknown first arguments are player names except reserved help, info, admin, debug, recent and search, plus the existing sell/reload routes.
 
-Buying, cancelling, claiming, and searching use menus. `buy`, `cancel`, `cancelothers`, `claim`, `search`, and `player` are not subcommands. `/market recent [sales|purchases] [page]` and its `/ah` alias are the same personal read-only chat command; see [recent sales](#recent-sales-012).
+Buying, cancelling and claiming use menus. `buy`, `cancel`, `cancelothers`, `claim` and `player` are not subcommands. `/market search <material or keyword>` opens material-filtered results; the GUI chat prompt also supports custom item names. `/market recent [sales|purchases] [page]` and its `/ah` alias are the same personal read-only chat command; see [recent sales](#recent-sales-012).
 
 ### GUI safety in build 017
 
