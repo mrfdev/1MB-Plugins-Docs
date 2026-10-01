@@ -2,7 +2,7 @@ id: player-shop-gui-plus
 name: "PlayerShopGUIPlus"
 category: other-server-feature
 summary: "Let players list items in a shared marketplace and buy listings from other players."
-# Keep the live 001 root until candidate 033 is deployed; /market and /ah are documented as pending.
+# Keep the live 001 root until candidate 034 is deployed; /market and /ah are documented as pending.
 main_command: "/playershop"
 docs_url: https://docs.1moreblock.com/other-server-features/player-shop-gui-plus/
 player_guide: player-guide.md
