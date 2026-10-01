@@ -5,7 +5,7 @@ description: "Public-safe commands, permissions, configuration, integrations, an
 
 This is the public technical and operations guide for 1MoreBlock's maintained PlayerShopGUIPlus fork. For player instructions, use the [player guide](/player-guides/other-server-features/player-shop-gui-plus/). The plugin name and data directory remain `PlayerShopGUIPlus`.
 
-**Release status, reviewed 1 October 2026:** `001` is the last confirmed live build. `022` changes only the packaged back-navigation icons and version labels; its runtime classes match tested build `021`. It awaits live deployment. The main reference below describes `022`; [older live commands](#older-live-build-001) are recorded separately. Confirm the installed version before using a command or planning an update. Build 018 makes recent history personal by UUID and adds a separate staff market-wide view. Build 017 adds menu-session and inventory-event hardening. Its isolated tests use synthetic players/inventories and a Vault boundary; connected-client and actual-provider acceptance remains required. This documentation does not announce a live plugin deployment.
+**Release status, reviewed 1 October 2026:** `001` is the last confirmed live build. `023` changes the packaged Browse shops icon to a waxed oxidized copper chest; runtime classes remain identical to `022` and tested build `021`. It awaits live deployment. The main reference below describes `023`; [older live commands](#older-live-build-001) are recorded separately. Confirm the installed version before using a command or planning an update. Build 018 makes recent history personal by UUID and adds a separate staff market-wide view. Build 017 adds menu-session and inventory-event hardening. Its isolated tests use synthetic players/inventories and a Vault boundary; connected-client and actual-provider acceptance remains required. This documentation does not announce a live plugin deployment.
 
 <a id="commands-in-build-007"></a>
 
@@ -31,7 +31,9 @@ This is the public technical and operations guide for 1MoreBlock's maintained Pl
 
 <a id="commands-in-build-021"></a>
 
-## Commands in build 022
+<a id="commands-in-build-022"></a>
+
+## Commands in build 023
 
 `/market` is the main command; `/ah` is its native alias, using the same handler, arguments, and permissions. Root aliases `/playershop`, `/pshop`, `/playershops`, and `/pshops` are no longer registered. Existing CMI/server aliases are separate configuration and can still override native commands.
 
@@ -152,11 +154,17 @@ The bundled tiers are `limits.default: 10`, `limits.donator: 50`, `unclaimedLimi
 
 The base-menu node, recent node, seven admin nodes and seven debug nodes explicitly default to operators. Debug and admin are separate umbrellas; explicit child denials are respected. Debug grants do not add trading or administration access. Inherited nodes retain their previous unspecified defaults. Configure grants deliberately and check effective permissions with the installed permission manager. A normal player who should browse and sell needs the base menu node and sell node; player-name lookup is a separate grant. Do not grant the staff wildcard as a substitute. For a LuckPerms user-specific change, use the player's verified server UUID, including Bedrock identities; group grants target the intended group ID.
 
+## Browse-shops copper chest (023)
+
+The **Browse shops** button uses `WAXED_OXIDIZED_COPPER_CHEST`, the green copper chest, while keeping its label, lore, slot and action. Existing menu files are preserved: back up `plugins/PlayerShopGUIPlus/menu.yml`, set `menu.main.buttons.shops.item.material` to `WAXED_OXIDIZED_COPPER_CHEST`, then restart the server cleanly. New installations receive the packaged default. Restore the previous material and restart to undo it. There is no market-data migration.
+
+Correction to earlier menu-update guidance: `/market admin reload` applies supported config/language/category changes but does not load `menu.yml`. Both the arrow and copper-chest changes require a clean restart when editing an existing menu.
+
 ## Back-navigation arrows (022)
 
 Build 022 defaults all nine back-navigation buttons to `ARROW`, keeping their labels, positions and destinations. **Return to main menu**, **Return to shops** and **Return to categories** use the same navigation symbol. The earlier proposed nether-star back icon is superseded; the wider border/player-head/close-button layout remains planned.
 
-A jar upgrade preserves existing `plugins/PlayerShopGUIPlus/menu.yml`. Back up that file, then set `menu.<section>.buttons.back.item.material` to `ARROW` for `shops`, `items`, `categories`, `own`, `shop`, `category`, `searchShops`, `searchItems` and `unclaimed`. Preserve other controls and custom labels/slots. Run `/market admin reload` and reopen the menu; it briefly closes market menus. Restore those nine values from the backup and reload to undo this cosmetic change. No market/player-data migration is needed.
+A jar upgrade preserves existing `plugins/PlayerShopGUIPlus/menu.yml`. Back up that file, then set `menu.<section>.buttons.back.item.material` to `ARROW` for `shops`, `items`, `categories`, `own`, `shop`, `category`, `searchShops`, `searchItems` and `unclaimed`. Preserve other controls and custom labels/slots. Restart the server cleanly and reopen the menu. `/market admin reload` does not read `menu.yml`. Restore those nine values from the backup and restart to undo this cosmetic change. No market/player-data migration is needed.
 
 ## Item ordering and player preferences (021)
 
