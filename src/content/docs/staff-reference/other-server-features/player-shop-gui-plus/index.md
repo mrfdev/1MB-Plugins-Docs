@@ -5,7 +5,7 @@ description: "Public-safe commands, permissions, configuration, integrations, an
 
 This is the public technical and operations guide for 1MoreBlock's maintained PlayerShopGUIPlus fork. For player instructions, use the [player guide](/player-guides/other-server-features/player-shop-gui-plus/). The plugin name and data directory remain `PlayerShopGUIPlus`.
 
-**Release status, reviewed 1 October 2026:** `001` is the last confirmed live build. `019` is verified in isolated local Paper tests and awaits live deployment. The main reference below describes `019`; [older live commands](#older-live-build-001) are recorded separately. Confirm the installed version before using a command or planning an update. Build 018 makes recent history personal by UUID and adds a separate staff market-wide view. Build 017 adds menu-session and inventory-event hardening. Its isolated tests use synthetic players/inventories and a Vault boundary; connected-client and actual-provider acceptance remains required. This documentation does not announce a live plugin deployment.
+**Release status, reviewed 1 October 2026:** `001` is the last confirmed live build. `020` is verified in isolated local Paper tests and awaits live deployment. The main reference below describes `020`; [older live commands](#older-live-build-001) are recorded separately. Confirm the installed version before using a command or planning an update. Build 018 makes recent history personal by UUID and adds a separate staff market-wide view. Build 017 adds menu-session and inventory-event hardening. Its isolated tests use synthetic players/inventories and a Vault boundary; connected-client and actual-provider acceptance remains required. This documentation does not announce a live plugin deployment.
 
 <a id="commands-in-build-007"></a>
 
@@ -25,7 +25,9 @@ This is the public technical and operations guide for 1MoreBlock's maintained Pl
 
 <span id="commands-in-build-018"></span>
 
-## Commands in build 019
+<span id="commands-in-build-019"></span>
+
+## Commands in build 020
 
 `/market` is the main command; `/ah` is its native alias, using the same handler, arguments, and permissions. Root aliases `/playershop`, `/pshop`, `/playershops`, and `/pshops` are no longer registered. Existing CMI/server aliases are separate configuration and can still override native commands.
 
@@ -34,6 +36,7 @@ This is the public technical and operations guide for 1MoreBlock's maintained Pl
 | `/market info` | None | Introduction, next action, help, and clickable player-guide link. |
 | `/market help` | None | Available commands, descriptions, examples, and clickable suggestions. |
 | `/market` | `playershopguiplus.playershop` | Open the marketplace. |
+| `/market search <material or keyword>` | `playershopguiplus.playershop` | Exact vanilla item ID, otherwise substring keyword. Tab uses API materials only; in-game and active market required. |
 | `/market recent [sales\|purchases] [page]` | `playershopguiplus.recent` | Your sales/purchases by server UUID; five entries per section/page, including empty roles. |
 | `/market admin recent [page]` | `playershopguiplus.admin.recent` | Whole-market completed sales, with buyers, sellers and paid totals. |
 | `/market sell <price>` | `playershopguiplus.playershop.sell` | Immediately list the exact main-hand stack for this total price. |
@@ -138,13 +141,25 @@ Its sell syntax is quantity-first. With smart selling GUI enabled, omitted argum
 | `playershopguiplus.unclaimedlimit.<name>` | Selects a cancelled/expired-item limit from `unclaimedLimits`. |
 | `playershopguiplus.*` | Grants recent history, the admin and debug umbrellas plus the descriptor's inherited reload, sell, player-shop browsing, bypass, edit-name, cancel-others, and tax-exemption children. |
 
-No separate buying, claiming, searching, or ordinary self-cancellation permission is checked by this build. Help/info in `012` are public.
+There are no separate buying, claiming, search or ordinary self-cancellation permission nodes. Direct material search checks the base `playershopguiplus.playershop` grant. Help and info are public.
 
 The wildcard's declared children do not include main-menu access, refund permission, or dynamic limits. Grant required nodes explicitly. Configured limit tiers are sorted by numeric value descending, and the first granted tier wins; the `default` value is the fallback. Limits count listing entries, not individual items within a stack. Restrict bypass and cancellation permissions to the intended staff roles.
 
 The bundled tiers are `limits.default: 10`, `limits.donator: 50`, `unclaimedLimits.default: 20`, and `unclaimedLimits.donator: 40`. Their concrete nodes are `playershopguiplus.limit.default`, `playershopguiplus.limit.donator`, `playershopguiplus.unclaimedlimit.default`, and `playershopguiplus.unclaimedlimit.donator`. Keep the `default` entries when customizing tiers.
 
 The base-menu node, recent node, seven admin nodes and seven debug nodes explicitly default to operators. Debug and admin are separate umbrellas; explicit child denials are respected. Debug grants do not add trading or administration access. Inherited nodes retain their previous unspecified defaults. Configure grants deliberately and check effective permissions with the installed permission manager. A normal player who should browse and sell needs the base menu node and sell node; player-name lookup is a separate grant. Do not grant the staff wildcard as a substitute. For a LuckPerms user-specific change, use the player's verified server UUID, including Bedrock identities; group grants target the intended group ID.
+
+## Direct material search (020)
+
+`/market search <material or keyword>` and `/ah search` use the existing base market permission. No new permission node is needed. `/ah search blue` matches `blue` anywhere in canonical vanilla item IDs; `/ah search blue_wool` matches exactly that material. Full IDs take precedence over keyword matching, so `stone` does not include cobblestone or redstone. `minecraft:` is optional and input is case-insensitive. Spaces are not accepted; use underscores and Tab.
+
+Suggestions come only from the running Paper API's non-legacy, non-air `minecraft` item materials, never listing names, lore, usernames or shop names. They are sorted and capped at 100; narrow the keyword for more specific choices. Completion returns an empty list for invalid/unauthorized input instead of falling back to player-name suggestions. Execution accepts one 1–64 character keyword of letters, digits or underscores, plus optional `minecraft:`. Other namespaces, tags/markup, separators, extra arguments and oversized values are rejected. These inputs are not evaluated as SQL, regex, placeholders or commands.
+
+Valid material searches with no active listings open an empty refreshable menu; unknown keywords show guidance. Paging, sorting and refresh retain the material set and query current `IN_PROGRESS` listings. Normal expiry processing and action-time transaction checks still govern availability. The existing GUI chat search remains unchanged and can find `magic box` on a renamed stick; a stick does not become blue wool by changing its display name.
+
+Command execution uses the existing active/loaded/world/game-mode checks. Menu admission and its 200ms cooldown run before listing scans, and publication repeats permission, connection and session checks. Accepted material search ends an existing market chat prompt and flushes queued chat once; rejected input leaves it alone. `search` is now reserved as a command root argument, so use GUI shop search for a player named `search`. Existing confirmation Back navigation is unchanged.
+
+New language keys: `GUIDE.SEARCH`, `MSG.MATERIALSEARCH.UNKNOWN`, `MSG.MATERIALSEARCH.EMPTY`. They support the existing MiniMessage styling and add no replacement tokens. Existing custom language/menu files are retained. Help and paginated debug command/permission references include the new behavior. No storage, item payload, economy, dependency or permission migration. Reverting to 019 removes the direct command but retains GUI chat search and current data; use a clean jar swap with consistent current market/economy/inventory state.
 
 ## Non-italic menu tooltips (019)
 
