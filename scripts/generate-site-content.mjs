@@ -13,6 +13,21 @@ const publicRepoBlob = 'https://github.com/mrfdev/1MB-Plugins-Docs/blob/main';
 const publicRepoTree = 'https://github.com/mrfdev/1MB-Plugins-Docs/tree/main';
 
 const PLAYER_GUIDE_OVERRIDES = {
+  forage: {
+    fullSourceGuide: true,
+    playerDocument: 'forage-camps.md',
+    staffDocument: 'forage-camp-technical.md',
+    summary: 'Gather with curated tools, maintain your camps, and earn shared progression and rewards.',
+    intro: 'Gather with curated tools, maintain one Initial Camp and two optional Secondary Camps, and share progression across approved worlds.',
+    description: 'Learn Forage camps, tools, quests, repairs and dust, with a beta checklist and staff reference.',
+    features: [
+      'One Dappled Forest Initial Camp and two optional Secondary Camps, each with a Local Introduction.',
+      'Eight curated gathering tools with separate player and tool progression.',
+      'Global XP, points, skill branches, daily limits and daily, weekly and monthly quests.',
+      'Owned workstation purchases, reward claims, upgrades, Repair & Merge, turn-ins and dust crafting.',
+      'A practical beta checklist with player, staff, integration and recovery scenarios.',
+    ],
+  },
   pluginversions: {
     staffDocument: 'pluginversions.md',
     guide: 'Use /pv list to inspect versions, then /pv depend CMILib, Vault, ProtocolLib, or ViaVersion to see declared relationships. Review required, optional, and indirect dependents before testing a removal. The report does not establish whether an integration is active or a plugin is safe to uninstall.',
@@ -2588,6 +2603,9 @@ function groupedLists(plugins) {
 }
 
 const sharedGuideRoutes = {
+  'plugins/forage-camps.md': '/player-guides/plugins/forage/',
+  'plugins/forage.md': `${publicRepoBlob}/project-docs/cmi-api/docs/plugins/forage.md`,
+  'plugins/forage/checklist.md': '/staff-reference/plugins/forage-checklist/',
   'player-navigation.md': '/player-guides/next-and-guidance/',
   'player-guidance.md': '/player-guides/next-and-guidance/#choose-your-hints',
   'next-steps.md': '/player-guides/next-and-guidance/#find-your-next-step',
@@ -2612,8 +2630,8 @@ function rewriteLibraryLinks(markdown, sourceFile) {
     );
     const target = staffGuide
       ? `/staff-reference/plugins/${staffGuide[0]}/${anchor}`
-      : sharedGuideRoutes[resolved] && !fragment
-      ? sharedGuideRoutes[resolved]
+      : sharedGuideRoutes[resolved] && (!fragment || resolved.startsWith('plugins/forage'))
+      ? `${sharedGuideRoutes[resolved]}${anchor}`
       : plugin && !fragment
         ? `/player-guides/plugins/${slugFromFile(plugin.file)}/`
         : `${publicRepoBlob}/project-docs/cmi-api/docs/${resolved}${anchor}`;
@@ -2646,7 +2664,8 @@ ${rewriteLibraryLinks(navigationMarkdown.replace(/^# .+\n+/, '').trimEnd(), 'pla
 for (const plugin of guidePlugins) {
   const slug = slugFromFile(plugin.file);
   const override = PLAYER_GUIDE_OVERRIDES[slug] ?? {};
-  const markdown = await readFile(path.join(docsRoot, 'plugins', plugin.file), 'utf8');
+  const playerDocument = override.playerDocument ?? plugin.file;
+  const markdown = await readFile(path.join(docsRoot, 'plugins', playerDocument), 'utf8');
   const purpose = override.intro ?? introParagraph(markdown, plugin);
   const commandData = extractCommandData(markdown);
   commandData.curatedDescriptions = new Set(Object.keys(override.commandDescriptions ?? {}));
@@ -2670,7 +2689,7 @@ for (const plugin of guidePlugins) {
   const guideBody = override.guide ? escapeHtml(override.guide).replaceAll('\n\n', '\n\n') : guideParagraphs(markdown, plugin, commandData);
   const quickStart = override.quickStart ?? quickStartSteps(plugin, commandData);
   const featureBullets = override.features ?? FEATURE_BULLET_OVERRIDES[slug] ?? featureBulletItems(plugin, markdown, commandData);
-  const playerFaq = rewriteLibraryLinks(extractSection(markdown, ['Player FAQ']), `plugins/${plugin.file}`);
+  const playerFaq = rewriteLibraryLinks(extractSection(markdown, ['Player FAQ']), `plugins/${playerDocument}`);
   const notes = override.notes ?? goodToKnow(plugin, commandData);
   const examples = override.examples ?? commandData.playerExamples;
   const audience = audienceInfo(plugin);
@@ -2699,7 +2718,7 @@ title: ${JSON.stringify(`${plugin.name} Guide`)}
 description: ${JSON.stringify(pageDescription)}
 ---
 
-${rewriteLibraryLinks(stripDocumentPreamble(markdown), `plugins/${plugin.file}`)}
+${rewriteLibraryLinks(stripDocumentPreamble(markdown), `plugins/${playerDocument}`)}
 ` : `---
 title: ${plugin.name} Guide
 description: ${pageDescription}
@@ -2753,6 +2772,16 @@ ${rewriteLibraryLinks(stripDocumentPreamble(staffMarkdown), `plugins/${override.
 `);
   }
 }
+
+// Keep the shareable beta checklist generated from the same reviewed Markdown source.
+const forageChecklist = await readFile(path.join(docsRoot, 'plugins', 'forage', 'checklist.md'), 'utf8');
+await writeFile(path.join(contentRoot, 'staff-reference', 'plugins', 'forage-checklist.md'), `---
+title: Forage Beta Test Checklist
+description: In-game player walkthroughs, staff checks and recovery tests for the Forage beta.
+---
+
+${rewriteLibraryLinks(stripDocumentPreamble(forageChecklist), 'plugins/forage/checklist.md')}
+`);
 
 const registry = await loadRegistry(repoRoot);
 const additionalEntries = await loadAdditionalEntries(repoRoot, registry);

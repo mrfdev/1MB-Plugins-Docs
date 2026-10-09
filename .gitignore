@@ -38,3 +38,6 @@ project-docs/cmi-api/docs/feature-contracts.md
 project-docs/cmi-api/docs/public-documentation-url-migration-plan.md
 project-docs/cmi-api/docs/paper-runtime-identity-migration-plan.md
 project-docs/cmi-api/docs/shared-gui-presentation-centralization-plan.md
+
+# This reviewed Forage checklist is intentionally public beta documentation.
+!project-docs/cmi-api/docs/plugins/forage/checklist.md

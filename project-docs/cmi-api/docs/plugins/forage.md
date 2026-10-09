@@ -1,16 +1,18 @@
 # Forage
 
-Forage is a player-facing nature progression plugin for `/forage`. It is built for Paper 26.2+ and Java 25 and depends on CMI, CMILib, and `1MB-CMIAPI-Lib`.
+Forage is a player-facing nature progression plugin for `/forage`. It targets the reviewed Paper 26.3 line with Java 25-compatible bytecode and depends on CMI, CMILib, and `1MB-CMIAPI-Lib`.
 
-**Release status (2026-09-06): installed on live, with gameplay dormant.** Keep the live Forage config at `enabled: false` throughout 26.2 while development and gameplay testing continue on the maintained Paper 26.2 test server. Its JAR remains part of the complete suite build. Live activation is deferred until the 26.3 camp integration and release checks in the [Forage roadmap](forage-roadmap.md#release-gate-263-camp-integration) are complete.
+**Documentation review (2026-10-09): this guide covers the implemented beta features; live activation remains pending owner acceptance.** Live gameplay remains dormant until owner acceptance and activation. Development uses the maintained `servers/Paper-26.3/` instance on Java 27, with suite builds on JDK 25.0.4.1. The preserved 26.2 server is a rollback instance. Shipping the Forage JAR in a complete suite build does not activate it on live.
+
+The tool-protection verification recorded suite build 726 with the then-current 65 managed JARs, 156 passing Forage tests, and a Paper 26.3 BETA 159 probe with 390 assertions. These are dated verification results, not the identity of a later beta-server build. See the [tool-protection verification](../compatibility-tests/forage-tool-protection-2026-10-07.md). The earlier build 724 plant probe passed 88 assertions on Paper 26.3 BETA 157 covering custom-tool rewards, native growth, dust consumption, and protection boundaries. See the [plant compatibility verification](../compatibility-tests/forage-26.3-plants-2026-10-06.md). The earlier build 705 camp-guidance follow-up passed 19 native assertions on Paper 26.3 ALPHA 49. Real-client acceptance remains separate from these synthetic-player checks.
 
 Dormant Forage is excluded from `/next` recommendations, focus choices, first-success guides, and ScheduledTips promotion even though its JAR is loaded. ScheduledTips recognizes existing Forage tip IDs, text, and embedded commands automatically; see [tip feature requirements](scheduledtips.md#feature-availability-and-dormant-forage). Debug mode does not override dormancy. Saved progress and communication preferences remain available for a future activation.
 
-The intended experience is hands-on survival gathering: explore a biome, complete a discovered Abandoned Camp, register it through `/forage camp` as one of up to three owned camps, and return with resources for small rewards and progress. Planned Camp Stations connect gathering guidance, quests, streaks, milestones, storage, deliveries, and Community Efforts to the location. See the [product direction](forage-roadmap.md#product-direction) for the broader vision and its open design decisions.
+The camp model reserves **one Initial Camp in Dappled Forest in Wild and two optional Secondary Camps in other approved worlds**, three total and one per actual world. Camps are exclusively owned and cannot overlap. The Initial Camp must remain valid for the other camps to function; damage or relocation never erases global XP, points, quests, limits, or reward history. Every new registration needs its own short Local Introduction before global benefits unlock there.
 
-The camp rules below describe the current 26.2 implementation. Vanilla structure recognition, wool stairs/slabs, explicit three-camp registration, and the station/storage loop are planned work. Current anchors are claimed on first use without a per-player camp-count limit.
+Start with the [player camp guide](forage-camps.md), use the [beta test checklist](forage/checklist.md) for hands-on testing, and read the [technical camp guide](forage-camp-technical.md) for staff setup, mappings, recovery, validation, security, and persistence. These supersede the older first-use anchor claims and tree-grove camp checklist. Planned Community Efforts, managed Camp Storage, and new external reward engines remain roadmap features.
 
-Version 1 focuses on a testable core rather than the full long-term design. Players use curated PDC-marked Forage tools to earn Forage XP, Forage Points, skill branch progress, tool soul progress, daily, weekly, and monthly quest progress, leaderboard ranks, camp-only tool upgrades, camp turn-ins, and small treasure rolls from configured source families. Most v1 families are natural block routes, while Tier 2 sword and mace routes can also listen for configured entity kills. Normal tools still work as Minecraft tools, but they do not feed the Forage skill.
+Version 1 focuses on a testable core rather than the full long-term design. Players use curated PDC-marked Forage tools to earn Forage XP, Forage Points, skill branch progress, tool soul progress, daily, weekly, and monthly quest progress, leaderboard ranks, camp-only tool upgrades, camp turn-ins, and small treasure rolls from configured source families. Most v1 families are block-gathering routes; the later-unlocked sword and mace use configured entity kills. Normal tools still work as Minecraft tools, but they do not feed the Forage skill.
 
 The long-term ideas, v2/v3 options, and shelved feature notes live in [forage-roadmap.md](forage-roadmap.md).
 
@@ -34,7 +36,7 @@ The GUI uses the shared hardened GUI service with safe holders, cancelled clicks
 - camp-only Repair & Merge for worn Forage tools
 - camp turn-ins for plain vanilla forage items
 - multi-tier Forage Dust crafting and bounded growth pulses
-- tree-grove camp validation with optional lantern requirements
+- bounded camp material validation, explicit registration, and per-camp Local Introduction
 - titled gameplay tips for camps, quests, branches, Repair & Merge, chunk exhaustion, turn-in rules, dust, and tool soul
 - camp check with checklist, unlocks, and throttled ready feedback
 - Getting Started first-run guide for camp setup, first tool, daily limits, quests, and tips
@@ -42,13 +44,13 @@ The GUI uses the shared hardened GUI service with safe holders, cancelled clicks
 - CMI ctext guide button through the configured `gui.info-command`
 - `/menu` return button
 
-Outside the hub, v1 now treats the camp as the main activity anchor. `/forage guide`, `/forage status`, `/forage limits`, `/forage stats`, and `/forage camp` remain available away from a camp, but `/forage shop`, quests, branches, tips, leaderboards, tools, turn-in actions, upgrades, Repair & Merge, and Forage Dust require a complete nearby Forage camp.
+`/forage guide`, `/forage status`, `/forage limits`, `/forage stats`, and camp inspection remain available away from a camp. Activity and reward authority comes from **sneak-right-clicking your own composter workstation**. A nearby camp, command shortcut, or old menu does not authorize a remote claim. The current camp and Initial Camp are checked again before actions consume or deliver anything.
 
-If a player runs one of those camp-only command shortcuts while they are away from camp, Forage now stops the command immediately and tells them to travel back to their camp or sneak-right-click their camp anchor first. If an anchor is nearby but the build is incomplete, the plugin prints the missing checklist and opens the camp page. If the camp is ready, sneak-right-clicking the anchor opens the main Forage hub.
+Use `/forage camp register` to confirm a new registration, `/forage camp revalidate` after repair, `/forage camp list` to inspect your registrations, and `/forage camp unclaim [registration-UUID]` to release one deliberately. The initial role cannot become a third secondary role. Merely looking at an unclaimed anchor never registers it.
 
-Camp anchors are now player-locked. The first player to really use an unclaimed configured camp anchor claims that anchor, and other players cannot use that camp's anchor or camp-only shortcuts from it. They are told that the camp belongs to someone else and must travel to or build their own camp.
+Registration and revalidation require Survival mode. The Requirements book can glow because the physical checklist is complete while the composter action still says **Not ready yet: Survival mode required.** The action button only glows when its full checks pass. Clicking a blocked action explains its current reason in chat, including the player's current game mode; it does not silently fail or trust an earlier readiness display.
 
-Admins can manage those camp claims without editing `camps.yml` directly. `/forage admin camps list` shows claimed anchors, `/forage admin camps inspect <player|key>` reviews owners and locations, `/forage admin camps release <key|near>` clears a claim, `/forage admin camps reassign <key|near> <player>` changes ownership, and `/forage admin camps move <key|near>` lets an in-game admin move a claim to the nearest configured anchor. These commands only change claim data; they do not place or break blocks.
+Admin camp list/inspection and safe release remain recovery tools. Legacy claims are retained for owner review instead of being silently accepted as qualifying Initial Camps. Staff mutations must obey the new registration rules; consult the technical guide before changing claims or world mappings.
 
 `config.yml` also includes a top-level `enabled` toggle. When it is set to `false`, Forage becomes a player-facing emergency shutdown: normal gameplay progress stops, camp turn-ins and dust do nothing, player GUIs stop opening, and `/menu` hides the Forage button when Menu notices the toggle on the next open. Help, info, debug, and safe admin inspection/reload commands still work so staff can investigate and recover.
 
@@ -57,7 +59,8 @@ Forage now separates player progression XP from tool soul XP. Player XP and Fora
 Forage only awards progress when:
 
 - the plugin is enabled
-- the player is in an allowed world
+- the player is in an allowed world and is not in Creative or Spectator mode
+- persistence is healthy and no earlier Forage transaction is still pending
 - the player breaks a configured source block or kills a configured source entity
 - the player is holding the matching PDC-marked Forage tool
 - the daily cap has not been reached
@@ -65,7 +68,9 @@ Forage only awards progress when:
 - the chunk/source family is not exhausted
 - the WorldGuard global-only check passes when WorldGuard is installed and enabled
 
-The global daily cap limits one player's total Forage progress for the day. The source-family daily caps are separate: if shears/leaves are capped, a player can switch to a shovel, axe, sickle, pickaxe, brush, sword, or mace route and keep playing until those families also cap. This encourages variety without making one exhausted route feel like the whole feature is over for the day.
+The global daily cap limits one player’s rewarded gathering across families for the day. The source-family daily caps are separate: if shears/leaves are capped, a player can switch to a shovel, axe, sickle, pickaxe, brush, sword, or mace route and keep playing until those families also cap. This encourages variety without making one exhausted route feel like the whole feature is over for the day.
+
+Under the shipped `normal` preset, the daily allowances are 2,500 player XP or 1,200 actions globally and 700 XP or 275 actions per family, whichever applicable limit is reached first. Local exhaustion starts after 75 actions in a chunk/source family and lasts 30 minutes. Presets and staff configuration can change these values; `/forage limits` shows the current personal limits. Changing area helps local exhaustion, changing family helps a family cap, and neither bypasses a global cap.
 
 When a chunk/source family becomes exhausted, Forage both records the event in the batched recent summary and sends a short immediate warning so players do not keep wasting actions in the same area.
 
@@ -79,7 +84,7 @@ Progress needs the matching marked Forage tool and a supported block or creature
 
 ### Why do menus tell me to return to camp?
 
-Shopping, quests, upgrades, repairs, and other camp activities need your own complete nearby camp. `/forage camp` shows missing requirements. Sneak-right-click your ready anchor to open the hub.
+Camp activities need a current session opened by sneak-right-clicking your own composter. Complete that camp’s Local Introduction to unlock rewards, branches, upgrades, repairs, turn-ins, and dust crafting. Starter-tool shopping is available before the introduction is complete. `/forage camp` explains missing requirements; merely standing near a camp is insufficient.
 
 ### Why did XP stop while my tool still wore down?
 
@@ -87,7 +92,7 @@ Daily caps, source-family caps, or local chunk exhaustion can pause reward progr
 
 ### How do I claim quests?
 
-Return to your ready camp and open `/forage quests`, then choose Ready To Claim or the appropriate daily, weekly, or monthly page. Click an eligible quest and follow its claim requirements.
+Return to your fully active camp, sneak-right-click its composter, and open Quests & Rewards. Choose an eligible quest and follow its requirements. Finish that camp’s Local Introduction first; a command alone cannot authorize a reward claim.
 
 ### How do I repair or upgrade a Forage tool?
 
@@ -108,28 +113,59 @@ Default tools are:
 | Forage Sword | `COPPER_SWORD` | creature_drops | any Forage tool level 2 |
 | Forage Mace | `MACE` | danger_drops | any Forage tool level 2 |
 
+Bring the level-2 tool in your carried inventory when buying an unlocked tool; the shop does not inspect tools left in chests. Tool **level**, tool **tier**, and player **Forage level** are separate values. Check the shop card and `/forage stats` before spending. The four later tool types are shop unlocks, not automatically tier-II items.
+
+Examples of default gathering sources:
+
+| Tool | Useful first sources |
+| --- | --- |
+| Sickle | short grass, dandelions, wheat crops, red/brown mushrooms, red shrubs, shelf mushrooms |
+| Axe | oak/poplar logs, pumpkins, melons, sugar cane, bamboo |
+| Trowel | moss blocks, moss carpet, azaleas, dripleaf |
+| Shears | oak leaves and red/orange/yellow poplar leaves |
+| Pickaxe | calcite, tuff, basalt, end stone, glow lichen, rooted dirt |
+| Brush | sand, red sand, gravel, clay, suspicious sand/gravel |
+| Sword | cows, sheep, chickens, rabbits, squid |
+| Mace | zombies, skeletons, creepers, blazes, breezes, shulkers |
+
+Block routes award progress when you **break** a configured block with the matching tool. The Brush route is a block-breaking route, not a reward for completing vanilla archaeology brushing. The list above is a starting point; the workstation’s Tools & Families page and server configuration define the complete enabled list.
+
 Default family ownership is intentionally non-overlapping: one source family belongs to one matching tool. For example, logs and pumpkins belong to the axe, leaves belong to shears, moss belongs to the trowel, cave/stone finds belong to the pickaxe, dry/relic finds belong to the brush, gentle creature drops belong to the sword, and danger drops belong to the mace. This keeps players from buying multiple tools to farm the same source family.
 
-Sword and mace Forage progress is entity-based. The sword listens to configured gentle creature entities such as cows, sheep, chickens, squids, rabbits, and turtles. The mace listens to configured danger entities such as shulkers, blazes, breezes, wither skeletons, ghasts, and phantoms. The plugin records a short-lived matching-tool melee hit and only awards progress if that same player is still holding the same curated tool when the entity dies. The plugin does not register fragile custom enchants or rewrite vanilla loot tables for those routes; it awards Forage XP/points/treasure rolls when the matching curated tool is used for a configured entity source.
+Paper 26.3 gathering includes poplar logs and stripped poplar logs with the Forage Axe, red/orange/yellow poplar leaves with Forage Shears, and red shrubs and shelf mushrooms with the Forage Sickle. These use the existing family rewards, tool progression, quests, and caps. Saplings are planting stock, and crafted poplar building blocks are not gathering sources. The organic turn-in rules also recognize the new leaves, shrubs, and mushrooms when they are plain vanilla items.
+
+Sword and mace Forage progress is entity-based. The sword listens to configured gentle creature entities such as cows, sheep, chickens, squids, rabbits, and turtles. The mace listens to configured danger entities such as shulkers, blazes, breezes, wither skeletons, ghasts, and phantoms. The plugin records a short-lived matching-tool melee hit and only awards progress if that same player is still holding the same curated tool type when the entity dies, within ten seconds of the recorded hit. The plugin does not register fragile custom enchants or rewrite vanilla loot tables for those routes; it awards Forage XP/points/treasure rolls when the matching curated tool is used for a configured entity source.
 
 Tools are PDC-marked with schema, tool id, tier, tool XP, tool level, and use count. Lore includes a fake Foraging level, tool soul progress bar, short tool personality line, supported families, and a warning that the tool is curated.
 
-Forage tools are blocked from outside anvil, enchanting table, grindstone, smithing table, Mending repairs, and configured repair/enchant command prefixes such as `/cmi anvil`, `/repair`, `/fix`, and `/cmi enchant`. The same configured prefixes can also be blocked when they are dispatched by console and target an online player carrying a Forage tool, which protects menu/shop buttons that run CMI repair-style commands. Plugin-owned upgrades may still apply controlled vanilla improvements from the Forage upgrade GUI.
+Forage tools can only be upgraded, refined, enchanted, or repaired through their own camp menus. The supported pages are **Upgrade Tool** and **Repair & Merge**. Players can buy replacement tools and discard unwanted ones; ordinary storage, inventory rearrangement, dropping, and disposal remain available. Tools still work as ordinary Minecraft tools on other sources without earning Forage rewards.
 
-Forage tools can also freeze themselves at a low configured durability floor instead of breaking. By default they safety-lock at 5 durability remaining, stop working for block/tool actions, and must be restored through `/forage camp` -> Repair & Merge.
+Protection covers anvils (including virtual anvils), enchanting tables, grindstones, smithing, crafting repairs, automated crafters, smelting/fuel conversion, hopper insertion into transforming workstations, dispenser use, and Mending. Entity interactions such as armadillo brushing also respect tool integrity and the safety lock. These guards remain active when Forage gameplay is dormant. The legacy `tools.block-*` switches are retained for configuration compatibility but cannot disable item protection.
+
+Repair, rename, enchantment and item-edit commands recognize namespaces, registered aliases and configured alias chains. Core blocked prefixes are mandatory; `tools.blocked-repair-command-prefixes` can add restrictions. Checks cover the backpack, offhand, cursor and targeted online players, including console commands. A repair shortcut may be refused while carrying any Forage tool because providers differ in which inventory slots they modify.
+
+CMI protection checks the public command-executor boundary, including direct commands dispatched by other plugins, plus its virtual-anvil repair and rename events. mcMMO's public checks reject repair, Super Repair, salvage and arcane salvage before their mutations. PyroMining Vessels, PyroFishing Augments and PyroWelcomes `/points` repair purchases are guarded at their actual provider callbacks. The points-shop guard reads the authenticated menu's configured commands and rejects a protected purchase **before points are deducted**. Unrelated points purchases remain available.
+
+The reviewed Pyro adapters support PyroMining **4.6.1**, PyroFishingPro **4.9.35**, PyroWelcomesPro **0.5.1**, and PyroLib **1.4.9/1.6.0**. Those providers expose no equivalent cancellable application/purchase event, so isolated, read-only reflection authenticates their inventory sessions; display titles and lore are not trusted. The shared callback wrapper lets Halloween Virus and Forage protect their own items together and preserves either guard when the other closes. `/forage debug runtime` reports integration readiness. Missing protection for an installed provider pauses affected tool use, purchases and improvements until staff review it. See [protected tool integrations](../tool-item-protection.md) for the shared adapter lifecycle and verification boundaries.
+
+Each issued tool records its approved material, tier, name and enchantments in the existing Forage PDC namespace. Tool mechanics must retain their vanilla defaults; upgrades change only the aspects supported by Forage. Before use or a paid improvement, changed or malformed tools pause with an explanation. The separate durability record restores outside repairs. Already-applied Pyro Augment or Vessel data also pauses the tool; it is preserved for staff review instead of being erased. Unrelated foreign PDC and components remain intact. The durability record remains a backstop for arbitrary external item setters. DiscordChat's enchant menu rejects Forage tools before charging points.
+
+Unchanged older base tools migrate automatically. Older refined or enchanted tools pause for staff to check their history, keeping XP, uses, items and unrelated metadata. Staff can inspect with `/forage admin inspectitem <player>` and review `/forage admin toolapprove <player>` before explicitly adding `confirm`. This approves only supported older items with valid original identity and durability records. It cannot reapprove an already-recorded tool that was changed outside Forage.
+
+Forage tools can also freeze themselves at a low configured durability floor instead of breaking. By default they safety-lock at 5 durability remaining, stop working for block/tool actions, and must be restored through the owned composter workstation’s Repair & Merge page.
 
 To reduce sneaky external repair routes, each curated tool also stores its last legitimate durability state in PDC. Periodic inventory audits and live tool checks restore that tracked durability if an outside command, GUI, Mending tick, or console-dispatched repair action tries to heal the tool without using Forage's own repair flow.
 
-Forage tools can be upgraded through `/forage camp` -> Upgrade Tool:
+Forage tools can be upgraded through the owned composter workstation’s Upgrade Tool page, after that camp’s Local Introduction:
 
-- the player must stand near a complete Forage camp when `tools.upgrade.requires-complete-camp` is enabled
+- the player must keep the owned workstation session valid and remain beside the active camp
 - the main hand must hold the Forage tool to upgrade
 - the next tier must be within `tools.max-tier`
-- default tier progression is intentionally slow for live play: tier II needs level 12, `$25,000`, and `750` Forage Points, while tier III needs level 24, `$60,000`, and `2,000` Forage Points
+- with the shipped `normal` preset, tier II needs player Forage level 12, `$25,000`, and `750` Forage Points; tier III needs level 24, `$60,000`, and `2,000` Forage Points. Other presets scale the money and point costs
 - the player must meet the configured Forage level milestone
 - the player pays configured Forage Points and CMI/Vault money
 - the upgrade keeps existing tool XP, tool level, uses, and durability
-- higher tiers increase valid Forage XP rewards by 25% per tier above tier I
+- higher tiers increase valid Forage XP rewards according to the active preset: 20% per tier above tier I for `normal`, 25% for `testing`, and 15% for `live` or `grindy`
 
 The same upgrade page also offers controlled improvements:
 
@@ -138,22 +174,22 @@ The same upgrade page also offers controlled improvements:
 - shears, brushes, and maces have no diamond variant, so they stay on their native materials
 - compatible tools can receive plugin-owned Unbreaking I-III and Efficiency I-III, controlled by `tools.enchants.*`
 - real vanilla enchants added by Forage are shown on the item, while outside enchant routes remain blocked
-- all improvement confirmations re-read the main-hand tool and refund costs if the item changed
+- improvement confirmations re-read the main-hand tool after durable preparation; changed inputs cancel before charging, while an uncertain effect is retained for manual review
 
-Forage tools can be repaired only through `/forage camp` -> Repair & Merge:
+Forage tools can be repaired only through the owned composter workstation’s Repair & Merge page:
 
-- the player must stand near a complete Forage camp
+- the player must keep the workstation session valid at an active camp whose Local Introduction is complete
 - the main hand must hold the Forage tool to keep
 - the offhand must hold a matching Forage tool type to consume, such as shears with shears
 - one PDC-marked Forage treasure item is consumed
 - the player pays configured Forage Points and CMI/Vault money
 - the repair restores a configured durability percentage, capped by the player's Forage level
 - a configured percentage of the offhand donor tool XP is transferred into the main-hand tool
-- default repair tuning now restores up to 40% per merge, caps low-level repairs at 70%, and uses lower CMI/Vault money costs than the first test pass
+- default repair tuning restores up to 40 percentage points per merge, capped at 70% durability below Forage level 10, 85% from level 10, and 100% from level 20; it transfers 50% of donor tool XP. Review the current money and point costs before confirming
 
 ## Skill Branches
 
-Players can use `/forage branches` to choose an early Forage identity path. Branches are intentionally small focused bonuses, not a full skill tree yet. A branch only applies when the player earns valid Forage progress from one of that branch's configured source families.
+Players choose an early Forage identity path through the active workstation’s Skill Branches page; `/forage branches` directs them there. Branches are intentionally small focused bonuses, not a full skill tree yet. A branch only applies when the player earns valid Forage progress from one of that branch's configured source families.
 
 Default branches:
 
@@ -165,49 +201,77 @@ Default branches:
 | Cave Botanist | cave growth, moss, and mushrooms | level 3 |
 | Wild Alchemist | moss, crops, mushrooms, flora, and cave growth | level 5 |
 
-Each branch can configure display name, description, icon, focused source families, XP multiplier, flat Forage point bonus, treasure chance multiplier, and required Forage level. The first branch choice is free. Switching branches can be enabled or disabled, and can require a cooldown plus a Forage Points cost. Profile data tracks the current branch, last branch change time, and per-branch XP, action, and treasure history.
+Each branch can configure display name, description, icon, focused source families, XP multiplier, flat Forage point bonus, treasure chance multiplier, and required Forage level. The first branch choice is free. The shipped defaults allow later switches after a 72-hour cooldown for 250 Forage Points. Staff can change or disable switching. Profile data tracks the current branch, last branch change time, and per-branch XP, action, and treasure history.
+
+## Quests and Treasures
+
+Open Quests & Rewards at your active workstation and inspect the daily, weekly, monthly, and ready-to-claim pages. Quests count valid rewarded Forage actions automatically; no separate quest-accept command is required. The shipped definitions contain ten daily, eight weekly, and five monthly quests. Targets and rewards vary by player and period, so use your own quest card rather than another tester’s numbers.
+
+| Objective | What counts |
+| --- | --- |
+| Actions | Any rewarded Forage gathering action |
+| Family | Rewarded actions in that exact family, such as leaves for Canopy Sampler |
+| Material | Rewarded breaks of that exact block, such as oak leaves for Oak Leaf Run |
+| Biomes | A rewarded gathering action in each distinct biome; travelling through it alone does not count |
+| Treasure | A successfully delivered random Forage treasure find |
+
+Some quest descriptions use broad nature themes. Their configured family is decisive: Woodland Work counts **logs**, Forest Patrol counts **leaves**, Herbal Calendar counts **flora**, and Cave Cycle counts **cave**. Camp turn-ins, dust use, and admin XP/level changes do not substitute for gathering objectives.
+
+Completion makes a reward ready; it does not automatically claim it. Return to an eligible owned workstation and click the completed quest. Built-in rewards can add Forage Points, Forage XP, and CMI/Vault money once for that quest and period. Quest-claim XP is separate from the daily gathering allowance; reaching that allowance does not itself prevent claiming a completed quest. If payments or a configured extra reward are unavailable, keep the completion and ask staff to inspect it. Repeated clicks must not pay twice. Use `/forage review` for a waiting request and share its reference with staff.
+
+**Claim before the period ends.** The plugin uses the server’s configured timezone: daily quests reset by date, weekly quests use ISO weeks beginning Monday, and monthly quests use calendar months. A new period starts new progress and rolls; the current menu does not offer earlier periods’ unclaimed rewards. Confirm the test server’s timezone with staff.
+
+Treasure finds are occasional bonuses from rewarded gathering, not guaranteed drops. The base chance is 1.8% per eligible action before tool and branch modifiers, with a default 90-second cooldown after a successful roll is prepared. Keep inventory space available: if the inventory cannot fit the selected treasure, the find is skipped before delivery. Nothing drops on the ground, no treasure is queued for later, and treasure totals and treasure-quest progress do not increase. The otherwise-valid gathering action still earns its normal progress. Ordinary treasures are marked items used by Repair & Merge and Greater Forage Dust; a vanilla item with the same material or a renamed copy is not equivalent. Legendary Pulse Dust has a 3% replacement chance within a treasure roll, not a 3% chance per gathering action, and should not be required to pass a short natural-drop test.
 
 ## Camp Turn-Ins
 
-Players can use `/forage compost` or the Camp Turn-Ins button from a complete Forage camp. The turn-in does not open an escrow inventory. It safely scans the player's inventory, builds a plan, asks for confirmation, then re-scans and consumes only the planned slots if they still match.
+Players use the Camp Turn-Ins button at their fully active camp workstation. `/forage compost` directs them there. The turn-in does not open an escrow inventory. It safely scans the player's inventory, builds a plan, asks for confirmation, then re-scans and consumes only the planned slots if they still match.
 
 By default, camp turn-ins:
 
-- require a complete nearby Forage camp
+- require a current owned workstation session at an active camp
 - accept only plain vanilla item stacks with no custom name, lore, enchantments, PDC, custom model data, or other item meta
 - reject Forage tools and PDC-marked Forage treasures
 - accept configured organic source families such as flora, crops, mushrooms, leaves, fruits, and moss
 - reward reduced Forage XP and Forage Points compared to breaking blocks with a curated tool
 - respect the daily Forage XP cap
-- use a short cooldown to avoid duplicate clicks
+- take at most 192 items per submission and use a 30-second cooldown
+
+Camp Turn-Ins consume eligible stacks from the normal storage inventory, including the hotbar. Keep items you want to retain in a chest before confirming and read the Turn-In Sources and preview cards. This is an explicit Camp Delivery, not automatic credit for placing items in camp storage.
 
 ## Forage Dust
 
-Players can use `/forage dust` or the Forage Dust button from the hub/camp GUI to make PDC-marked pulse dust. The default camp trade now makes a standard batch, a second camp trade makes a stronger greater batch that also consumes Forage treasure items, and a very rare legendary pulse dust can appear from treasure rolls instead of a normal treasure item.
+Players use the Forage Dust button at their fully active camp workstation to make PDC-marked pulse dust. `/forage dust` directs them there. The default camp trade now makes a standard batch, a second camp trade makes a stronger greater batch that also consumes Forage treasure items, and a very rare legendary pulse dust can appear from treasure rolls instead of a normal treasure item.
 
 By default, Forage Dust:
 
-- requires a complete nearby Forage camp
+- crafting requires a current owned workstation session at an active camp; already-owned dust can be used away from camp
 - costs CMI/Vault money, Forage Points, and plain vanilla `BONE_MEAL`
 - offers a standard batch that makes 8 dust with a radius-3 pulse
 - offers a greater batch that makes 4 dust with a radius-6 pulse and consumes 2 PDC-marked Forage treasure items
-- can very rarely drop a legendary treasure-only pulse dust with a radius-12 pulse
+- can very rarely deliver legendary treasure-only pulse dust to the inventory with a radius-12 pulse
 - rejects custom bonemeal with names, lore, PDC, or other item meta
 - creates PDC-marked dust with a short lore warning that it does not award Forage XP
 - stores pulse radius and max-grown-block settings directly on each dust item through PDC, so old and new dust variants can coexist safely
 - uses one dust per right-click growth pulse
 - only works in allowed worlds and WorldGuard global-only areas
 - pulses only configured growable materials inside a small clamped radius
-- respects a per-player cooldown
-- does not award Forage XP or points, so it cannot become a bonemeal-to-Forage loop
+- respects a shared per-player cooldown, 45 seconds by default
+- growth itself does not award Forage XP, points, or gathering quest progress
+
+All three dust variants support poplar saplings, red shrubs, and shelf mushrooms alongside the existing crops and saplings. They use vanilla bone-meal behavior: poplar saplings attempt tree growth, red shrubs spread into suitable nearby space, and small shelf mushrooms grow larger. Normal space, support, maturity, and random growth rules still apply. Already-issued dust gains these targets automatically; its stored radius and target limit stay intact.
+
+Startup adds the 26.3 gathering materials and the three new dust targets to existing configuration lists without replacing other entries, prices, rewards, or enable switches. New installations include them in the defaults. Dust selects its eligible targets before applying growth, so shrubs created during a pulse are not pulsed again by that same use. The radius and maximum count limit applications of bone meal; a resulting tree may extend beyond that radius. Every proposed growth block is checked against Forage's WorldGuard policy, and growth crossing into a protected region is cancelled as a whole. If no target accepts a pulse, the dust is retained.
 
 ## Camp Feedback
 
-`/forage camp` gives a clearer camp status, while sneak-right-clicking the configured camp anchor now opens the main Forage hub when the camp is ready. If the build is incomplete, the plugin still shows the checklist camp view so players can see what is missing. The camp GUI separates the checklist, unlocks, turn-in action, tool upgrades, and Repair & Merge action so players can understand what the camp is for and what is still missing.
+`/forage camp` inspects the nearby camp, reports missing counts, and explains ownership, registration, Initial Camp validity, and Local Introduction progress. Sneak-right-click the owned composter to establish a workstation session. A pending remote Initial Camp check must finish before the camp can be used.
 
-Camp validation can require the configured camp anchor block, a campfire, barrel, crafting table, logs, leaves or canopy blocks, wool for a tent/bedroll feel, and a nearby tree-grove shape. `/forage camp` first looks for the configured camp anchor near the player and then scans the camp around that anchor, so standing on the edge of a camp is less likely to miss nearby workstations. The tree-grove check is still cheap: it looks for a trunk-like block with leaves, Nether wart canopy, warped wart canopy, or mushroom cap blocks nearby. `camp.require-lantern` is available for stricter camps, but defaults off so existing test camps do not all need a lantern immediately.
+Default construction needs a composter anchor, 24 wool-family blocks (full blocks, stairs, or slabs), six fences, one campfire, one chest/barrel, and one crafting table within ten blocks horizontally and six vertically. Existing vanilla camp features count; cushions, trees, and lanterns are optional. The defaults come from [measured 26.3 source templates](../compatibility-tests/forage-26.3-camp-templates-2026-09-27.md), not an invented average generated camp.
 
-When a player validates a complete camp, Forage can show a short ready message and play the configured camp sound/particle effect. This is throttled by player and camp chunk through `camp.ready-feedback.cooldown-seconds`, so repeated sneak-clicks do not spam chat. Ready camps unlock camp-only tool upgrades, Repair & Merge, camp turn-ins, Forage Dust, and tree-grove validation.
+The Local Introduction requires 30 fresh personal qualifying actions in the camp’s world and a deliberate delivery of eight eligible plain source items. Before completion, players can obtain starter tools and follow the introduction while rewards remain clearly locked. Repair preserves that progress; replacement starts it again. A broken Initial Camp pauses other camps without deleting any global progress.
+
+See the [complete camp guide](forage-camps.md) for requirements, world rules, repair, relocation, and reward claiming.
 
 ## Commands
 
@@ -217,42 +281,65 @@ When a player validates a complete camp, Forage can show a short ready message a
 | `/forage info` | anyone | Shows a player-friendly intro and public docs link. |
 | `/forage help` | anyone | Shows commands available to the sender. |
 | `/forage guide` | player/console | Opens the first-run guide for camp setup, first tool, limits, quests, and tips. Console prints the same starter flow. |
+| `/forage next` | player | Recommends the next Forage step from current registrations, Local Introduction, tools, quests, and blockers. |
+| `/next` | player | Includes available Forage recommendations in the shared activity hub. |
+| `/next guide forage` | player | Opens the short Initial Camp, first tool, and gathering checklist. |
+| `/guidance` | player | Controls optional shared hints, frequency, and hidden/postponed hints. Explicit next-step commands remain available with hints off. |
 | `/forage status` | player | Prints a compact progress summary with player XP, tool XP, caps, camp state, quest hint, upgrade hint, and next step. |
 | `/forage limits` | player/console | Shows personal daily caps, family caps, money/point context, tool costs, repair cost, and quest reward ranges. Console prints the admin balance report. |
-| `/forage shop` | player | Opens the curated tool shop from a complete nearby camp. |
+| `/forage shop` | player | Directs you to your composter workstation; choose Tool Shop there. |
 | `/forage stats` | player | Shows level, XP, points, caps, totals, and held tool details. |
-| `/forage quests` | player | Opens a quest index with Ready To Claim, Daily, Weekly, and Monthly Forage pages from `quests.yml`, showing claimed, claimable, and in-progress tasks at a ready camp. |
-| `/forage branches [branch]` | player | Opens the branch picker or selects a configured Forage skill branch at a ready camp. |
-| `/forage top [level\|xp\|points\|actions\|treasures\|daily\|weekly]` | player/console | Shows read-only Forage leaderboards from saved profile data. Player use requires a ready camp. |
-| `/forage recent [page]` | player | Shows details from the latest batched Forage progress message at a ready camp. |
-| `/forage tips` | anyone | Prints current Forage gameplay hints. Player use requires a ready camp. |
-| `/forage tools` | player | Opens the Forage tools GUI with tool family and source information at a ready camp. Clicking a tool prints a short source-family guide in chat. |
-| `/forage camp` | player | Checks whether the nearby camp requirements are met. |
-| `/forage compost` | player | Opens camp turn-ins near a complete Forage camp. |
-| `/forage dust` | player | Makes PDC-marked Forage Dust near a complete camp and explains growth pulses. |
+| `/forage quests` | player | Directs you to Quests & Rewards at your workstation; the page shows daily, weekly, monthly, and ready-to-claim objectives. |
+| `/forage branches [branch]` | player | Directs you to the workstation branch picker; commands do not select a branch remotely. |
+| `/forage top [level\|xp\|points\|actions\|treasures\|daily\|weekly]` | player/console | Console shows read-only leaderboards; players are directed to their workstation. |
+| `/forage recent [page]` | player | Directs you to recent gathering details at your workstation. |
+| `/forage tips` | anyone | Console prints hints; players are directed to the workstation tips page. |
+| `/forage tools` | player | Directs you to the workstation tool and source-family guide. |
+| `/forage camp [inspect\|list\|register\|revalidate\|unclaim [registration-UUID]]` | player | Inspects camps or opens explicit registration, repair validation, and release confirmations. |
+| `/forage compost` | player | Directs you to Camp Turn-ins at the workstation. |
+| `/forage dust` | player | Directs you to Forage Dust at the workstation. |
 | `/forage admin give <player> <tool> [tier]` | admin/console | Gives a PDC-marked Forage tool. |
 | `/forage admin inspect <player>` | admin/console | Shows saved profile data, caps, quests, nearby camp state, and held item identity. |
 | `/forage admin inspectitem [player] [main\|offhand\|boots\|leggings\|chestplate\|helmet]` | admin/console | Shows PDC, tool XP/level, durability, repair guard, and enchant diagnostics for one carried item. |
 | `/forage admin xp <player> <amount>` | admin/console | Adds or removes saved Forage profile XP for testing. |
 | `/forage admin level <player> <level>` | admin/console | Sets a player's saved Forage profile level by moving profile XP to that level floor. |
 | `/forage admin points <player> <amount>` | admin/console | Adds or removes saved Forage points for testing. |
+| `/forage admin toolapprove <player> [confirm]` | admin/console | Reviews and explicitly approves a supported older tool after checking its upgrade history; preserves progress and tracked durability. |
 | `/forage admin toollevel <player> <level>` | admin/console | Sets the held Forage tool level for testing upgrade flows. |
-| `/forage admin resetcap <player>` | admin/console | Clears today's daily XP/action cap progress for testing. |
+| `/forage admin resetcap <player>` | admin/console | Clears today's global and family XP/action cap buckets for an online tester; does not reset chunk exhaustion or quest progress. |
 | `/forage admin balance` | admin/console | Shows the active balance preset, multipliers, caps, source-family caps, tool price range, sample upgrade/improvement costs, repair sample cost, and quest reward ranges. |
 | `/forage admin livecheck` | admin/console | Shows the owner checklist for moving Forage from testing to live balance, including active preset, safety switches, caps, repair costs, and upgrade costs. |
 | `/forage admin check` | admin/console | Runs a colored config sanity report for `config.yml` and `quests.yml`, including YAML type drift, invalid materials/entities, source/tool/branch references, quest roll ranges, reward command prefixes, economy hook state, and live-readiness warnings. |
 | `/forage admin export [backup]` | admin/console | Saves current Forage data and writes a Discord-friendly Markdown export with profiles, caps, camps, chunk exhaustion, quest summaries, runtime counters, and top boards. Add `backup` to also copy raw Forage YAML files. |
 | `/forage admin camps list [page]` | admin/console | Lists claimed Forage camp anchors. |
+| `/forage admin camps worlds` | admin/console | Shows logical mappings, whitelist, blacklist, and each loaded world’s eligibility. |
+| `/forage admin camps legacy [page]` | admin/console | Lists preserved legacy reservations awaiting deliberate registration or release. |
 | `/forage admin camps near` | admin | Inspects the nearest configured camp anchor from the admin's location. |
-| `/forage admin camps inspect <player\|key>` | admin/console | Shows camp claims by owner name/UUID or exact camp key. |
-| `/forage admin camps release <key\|near>` | admin/console | Removes one camp anchor claim without editing world blocks. |
-| `/forage admin camps reassign <key\|near> <player>` | admin/console | Changes one camp anchor owner. |
-| `/forage admin camps move <key\|near>` | admin | Moves one existing claim to the nearest configured anchor at the admin's location. |
+| `/forage admin camps inspect <registration-UUID>` | admin/console | Shows a v2 registration, world identity, role, introduction, and current validation. Legacy player/key inspection remains available separately. |
+| `/forage admin camps release <registration-UUID>` | admin/console | Safely releases a v2 registration; blocks and global progress remain. Legacy key/near release remains available for old claims. |
+| `/forage admin camps reassign <key\|near> <player>` | admin/console | Legacy helper; unavailable where ownership transfer would bypass camp registration requirements. |
+| `/forage admin camps move <key\|near>` | admin | Legacy helper; use release and deliberate new registration under the 26.3 rules. |
 | `/forage admin chunks` | admin/console | Shows chunk exhaustion runtime counts. |
 | `/forage admin reload` | admin/console | Reloads config and saved data. |
 | `/forage admin save` | admin/console | Saves profiles and chunk state. |
+| `/forage admin recoveryack <transaction-UUID> confirm` | admin/console | Discards retained finalized item/economy recovery evidence only after staff verifies the external state. This is not a refund or replay command. |
+| `/forage review [reference]` | player | Shows the player's own saved requests, including while gameplay is dormant; use `/forage review page <number>` for further requests. |
 | `/forage debug tool [player]` | admin/console | Shows PDC data for the held Forage tool. |
+| `/forage debug runtime` | admin/console | Shows runtime counters and external tool-protection integration readiness. |
+| `/forage debug transactions` | admin/console | Inspects durable requests that may need review; it does not automatically refund or replay them. |
 | `/forage debug all` | admin/console | Uses the shared debug output for build, server, hooks, commands, permissions, placeholders, and config. |
+
+Player activity commands always redirect to the physical workstation, even when a camp is nearby. Use its GUI to perform activities; these commands do not grant or reuse reward-claim authority.
+
+### Staff beta setup and recovery
+
+Use the [beta test checklist](forage/checklist.md) to record the actual suite build, server build, preset, world mappings, client type, and outcomes. A test server must have Forage deliberately enabled; debug mode alone does not activate it. Keep gameplay tests in Survival and use an ordinary tester account to verify the default player permissions.
+
+Begin with `/forage admin check`, `/forage admin livecheck`, `/forage admin balance`, `/forage admin camps worlds`, and `/forage debug runtime`. A deliberate `testing` preset warning is expected during accelerated tests; malformed settings, unavailable payment services, or missing item-protection adapters need attention before the affected test. The technical camp guide contains activation and mapping details.
+
+For supervised advanced tests, `/forage admin give <player> <tool> [tier]`, `level`, `points`, and `toollevel` can prepare an online tester. Tool IDs are `sickle`, `axe`, `shovel`, `shears`, `pickaxe`, `brush`, `sword`, and `mace`; the Trowel uses the ID `shovel`. These helpers do not complete a camp’s Local Introduction or prove normal earning, shopping, or quest progress. Record any seeded state separately. There is no documented admin shortcut for granting marked treasure or dust; test their real delivery paths or let staff prepare an explicitly recorded test fixture.
+
+If a request reports uncertainty, save the `/forage review` reference, relevant `/forage debug transactions` output, and before/after items and balances. Staff should inspect retained evidence before retrying anything. `/forage admin recoveryack <transaction-UUID> confirm` discards finalized recovery evidence after external-state verification; it neither compensates the player nor replays delivery. Follow the technical recovery guide and keep a backup before deliberate failure or restart tests.
 
 ## Permissions
 
@@ -302,7 +389,7 @@ Camp ownership is stored separately in:
 plugins/1MB-CMIAPI/Forage/data/camps.yml
 ```
 
-Each claimed anchor stores the owner UUID, cached owner name, and claim time so camp-only access can stay tied to that specific anchor location.
+The 26.3 camp file uses `schema-version: 2` and `registry-v2` rows for registration identity, owner/world UUIDs, logical world, initial/secondary role, anchor, footprint, Local Introduction, and revalidation state. Older `claims` records remain preserved until the owner deliberately registers that anchor under the new rules or staff safely releases it. Invalid stored data fails closed rather than authorizing a camp. See the [technical recovery guide](forage-camp-technical.md#existing-data-and-recovery).
 
 ## Config Highlights
 
@@ -312,14 +399,14 @@ Important sections:
 
 - `enabled`: global emergency switch for all player-facing Forage actions
 - `onboarding.*`: first-run `/forage guide` flow and hub button
-- `worlds.allowed`: exact world allow-list
+- `worlds.allowed`, `worlds.blacklisted`, `worlds.initial`, `worlds.mappings`: logical whitelist, blacklist precedence, initial worlds, and explicit logical-to-actual aliases
 - `economy.*`: CMI-backed Vault shop integration
 - `balance.preset` and `balance.presets.*`: `testing`, `normal`, `live`, `grindy`, or custom balance multipliers for earned player XP, tool XP, points, quest rewards, caps, tier bonuses, upgrade costs, repair costs, and improvement costs
 - `progression.*`: level formula, daily XP/action caps, and progress message frequency
 - `progression.family-daily.*`: per-source-family daily XP/action caps, so one capped tool route does not stop all Forage play for the day
 - `messages.batch.*`: delayed batched progress summaries and `/forage recent` limits
 - `quests.enabled`, `quests.claims.*`, `quests.progress-message-every`, `quests.allowed-command-prefixes`: quest runtime controls in `config.yml`
-- `quests.yml`: daily, weekly, and monthly task definitions, min/max randomized targets, min/max point/XP/money rewards, and reward commands
+- `quests.yml`: daily, weekly, and monthly task definitions, min/max randomized targets, min/max point/XP/money rewards, and legacy reward commands (claims with arbitrary commands are blocked until an audited delivery adapter exists)
 - `branches.*`: branch ids, display names, icons, focused source families, level gates, switch cooldown/costs, and small branch bonuses
 - `tools.*`: tool ids, materials, prices, unlock gates, family coverage, tool soul settings, modification guards, tier upgrades, diamond refinement, controlled Unbreaking/Efficiency improvements, and Repair & Merge costs/caps
 - `sources.*.materials` and `sources.*.entities`: block-material and entity-type source definitions used by the matching curated tools
@@ -328,9 +415,7 @@ Important sections:
 - `sources.*`: source-family XP, point value, and material lists
 - `chunk-exhaustion.*`: v1 anti-grind cooldowns by chunk and source family
 - `protection.worldguard.*`: conservative global-only region check when WorldGuard is installed
-- `camp.*`: configurable camp anchor, anchor search radius, camp scan radius, wool tent/bedroll count, nearby block requirements, and ready feedback
-- `camp.require-tree`: requires a trunk/canopy tree-grove shape near the camp
-- `camp.require-lantern` and `camp.required-lantern-count`: optional camp ambience requirement
+- `camp.*`: composter anchor, bounded search/scan geometry, counted `camp.requirements.*`, Local Introduction, and ready feedback; the old tree/log/lantern checklist no longer controls the new camp model
 - `camp.turnins.*`: complete-camp requirement, accepted source families, item cap, reward scaling, cooldown, and daily-cap behavior
 - `growth.*`: bounded Forage Dust growth pulses, cooldown, legacy fallback radius/max blocks, and allowed target materials
 - `growth.dust.*`: standard dust item material/name/glint, batch amount, stored radius/max blocks, complete-camp requirement, money cost, point cost, and bonemeal cost
@@ -449,25 +534,25 @@ These are enough for holograms and ajLeaderboards around the Forage camp/NPC are
 - No RCON support is used or expected.
 - Player text input is not accepted in v1, so command injection risk is limited to admin-controlled config command hooks.
 - The CMI ctext guide command only allows the safe `cmi ctext` prefix.
-- Treasure delivery, quest claims, tool purchases, branch selection, tool improvements, Repair & Merge, compost turn-ins, and Forage Dust purchases use durable idempotent receipts. Exact changed items and inventory slots remain in payload escrow until money/points/profile state and delivery are finalized; unresolved operations are listed by `/forage debug transactions`.
-- Tool upgrades and improvements do not open an escrow inventory. They re-read the held main-hand Forage tool at confirmation time, withdraw configured costs, mutate only the trusted PDC-marked item, and refund costs if the item changed.
+- Treasure delivery, quest claims, tool purchases, branch selection, tool improvements, Repair & Merge, compost turn-ins, and Forage Dust purchases use durable idempotent receipts. Exact item and profile recovery evidence is written before effects. Finalized item/economy payloads remain retained until staff verifies the external state and acknowledges them; unresolved operations are listed by `/forage debug transactions`.
+- Tool upgrades and improvements do not open an escrow inventory. They re-read the held main-hand Forage tool after durable preparation, cancel changed inputs before charging, and mutate only the trusted PDC-marked item. An uncertain partial effect requires manual review rather than an automatic replay or refund.
 - Branch selection uses only configured ids, revalidates level/cooldown/point costs after GUI confirmation, and stores only sanitized branch ids.
 - Repair & Merge does not open an escrow inventory. It reads the main hand, offhand, and inventory treasure marker at confirmation time, then re-validates before changing items.
 - Curated tool durability is tracked in PDC. If an outside command, GUI, Mending tick, or targeted console repair command repairs a Forage tool without going through Repair & Merge, the plugin restores the last legitimate durability state on the next live check or audit pass.
 - Camp turn-ins do not open an escrow inventory. They scan plain vanilla inventory stacks, confirm the plan, revalidate each slot, and only then consume items.
 - Forage Dust does not open an escrow inventory. It checks camp state, money, Forage Points, plain vanilla bonemeal, required treasure items for greater dust, and inventory space at confirmation time before creating PDC-marked dust.
 - Forage Dust growth pulses are bounded by configured allowed materials, the radius and max block count stored on the dust item, shared cooldown, allowed worlds, and WorldGuard checks. Dust does not award Forage XP or points.
-- Camp tree-grove validation only scans the existing small camp radius and does not edit blocks or track persistence.
+- Field treasure finds and use of already obtained Forage Dust intentionally happen outside camps. Claiming an earned reward or purchasing dust still requires the eligible owned workstation; an inventory-delivered gathering find is not a remote reward-menu claim.
+- Camp validation scans a bounded footprint, rechecks the Initial Camp, and obtains missing chunks asynchronously without generation; validation never edits blocks.
 - WorldGuard is optional and checked by reflection so the jar can load without a compile-time WorldGuard dependency.
 - Chunk exhaustion is intentionally conservative and cheap: it tracks chunk, source family, action count, and cooldown.
-- Player-placed block provenance tracking is not part of v1 and remains a live-readiness discussion item.
+- The Local Introduction proves fresh personal qualifying actions in that world, not the origin of each ordinary stackable item. Source placement and farming controls remain part of anti-farm acceptance testing.
 
 ## Future Direction
 
-Forage is expected to grow gradually after test feedback:
+The 26.3 camp contract is described above. Later additions remain separate from this revamp:
 
-- richer Forage Camps
-- stricter or themed camp validation profiles
+- optional camp comforts and themed objectives
 - richer turn-in recipes and camp progression
 - richer skill trees built on the v1 branch identity system
 - higher-tier tool upgrades and unlock variants
@@ -476,7 +561,8 @@ Forage is expected to grow gradually after test feedback:
 - seasonal/event profiles
 - derbies and community milestones
 - museum/herbarium systems
-- optional storage hardening if YAML becomes too small for live scale
+- storage-engine changes if measured scale warrants them
+- audited reward adapters for temporary hearts, other-plugin points, kits, or tournaments
 
 ## Blocker recovery
 
@@ -484,9 +570,15 @@ Camp requirements, tool protections, gathering allowances, local exhaustion, pur
 
 ## Complete reward communication
 
-[COMM-08 reward communication](../reward-communication.md) documents the shared result states, adopted flows, delivery evidence, next actions, and client acceptance. Claims retain their existing safety records. An accepted external reward command is described as a request, with a private reference for checking missing delivery.
+[COMM-08 reward communication](../reward-communication.md) documents the shared result states, adopted flows, delivery evidence, next actions, and client acceptance. Claims retain their safety records and private review references. Arbitrary command-based quest rewards are blocked in the 26.3 revamp until an audited delivery adapter can verify their outcome; accepted dispatch alone is insufficient.
 
 ## Dynamic next steps
+
+`/forage next` uses the current camp registry. If the player has no Initial Camp, including after explicitly unclaiming one, the first recommendation is to find Dappled Forest in `/wild`, find or build a camp, and use `/forage camp` for its workstation and block checklist. This recommendation also works from a world where Forage gathering is unavailable. Configured Initial Camp worlds and logical-to-physical mappings are respected; unavailable or ambiguous mappings produce a staff-help explanation instead of an unusable destination.
+
+A registered Initial Camp is recognized while the player explores elsewhere. Known revalidation requirements direct them to restore that camp without resetting progress. In a registered camp's world, the Local Introduction recommendation shows fresh gathering progress and then the required item delivery. Global rewards and upgrades are not presented as ready there before the delivery is complete. Guidance never registers camps, performs deliveries, opens a remote reward session, or loads chunks to inspect distant camps.
+
+`/guidance` governs optional checklist invitations and progress hints through the shared service. Its quiet, off, hidden, and postponed preferences remain respected. `/next` and `/forage next` are explicitly requested recommendations, so players can continue using them with optional hints disabled. Dormant Forage remains excluded from recommendations.
 
 See [Dynamic next steps and the global hub](../next-steps.md) for `/next`, the integrated feature next commands, selection rules, current coverage, and safe navigation.
 
@@ -496,4 +588,4 @@ This feature contributes goals to the Shared Library's [focus system](../focus-g
 
 ## Remembered first steps
 
-`/next guide forage` opens a short, optional checklist for this activity. Finished steps stay remembered, existing successes count, and Later, dismissal, Resume and chat controls are shared across the suite. See [First-success checklists](../first-success-checklists.md) for the three-step path and controls.
+`/next guide forage` opens a short, optional checklist: register the Initial Camp, get a curated tool through the workstation, and gather from a matching source. Finished learning steps stay remembered, and Later, dismissal, Resume and chat controls are shared across the suite. Remembered learning does not prove that a camp is still usable: current registration and validation rules continue to govern activity, and `/forage next` explains current blockers. See [First-success checklists](../first-success-checklists.md) for the controls.

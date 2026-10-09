@@ -12,18 +12,20 @@ You do the activity to finish a step. Browsing a checklist does not sell items, 
 | --- | --- | --- |
 | AutoSell | Check what stays with you → Preview a sale → Make your first successful sale | `/next guide autosell` |
 | Passport | Open your passport → Find a missing stamp → Collect your first stamp | `/next guide passport` |
-| Forage | Complete your own camp → Get a Forage tool → Gather from a matching source | `/next guide forage` |
+| Forage | Register your Initial Camp → Get a Forage tool → Gather from a matching source | `/next guide forage` |
 | JourneyMap | See your saved journey → Browse badges → Choose a badge to follow | `/next guide journeymap` |
 | PlayerTodo | Write one small goal → Learn its controls → Finish your task | `/next guide todo` |
 
 For example, Forage can show:
 
-> **Done:** Finish your own camp\
+> **Done:** Register your Initial Camp\
 > **Done:** Get your first Forage tool\
 > **Next:** Gather from a matching source\
 > Hold your Forage tool and gather one of its matching sources in an allowed, fresh area. `/forage next` shows what counts and explains any pause.
 
 The camp and tool steps remain Done when you head out exploring. Gathering only completes after a qualifying Forage action. A successful purchase is recognized after delivery is confirmed; a pending payment record alone does not prove that you received a tool.
+
+The camp step explains Dappled Forest in `/wild`, or the server's other configured Initial Camp worlds, followed by `/forage camp` for the workstation and block checklist. Registration is explicit and requires Survival mode. The tool step directs players to sneak-right-click their registered composter, then open Tool Shop; starter shopping remains available before Local Introduction is finished. Finishing these three learning steps does not finish a camp's Local Introduction: that separately needs 30 fresh local actions and an explicit eight-item delivery by default. Remembered learning does not authorize camp activities: current camp validity, workstation interaction, and each camp's Local Introduction still apply. `/forage next` explains missing registration, repair, and remaining local gathering or delivery. See the [Forage player guide](plugins/forage-camps.md) for the full sequence.
 
 JourneyMap uses saved playtime rather than an invented live countdown. Its introductory goal is choosing a direction, so you do not have to wait hours to finish the guide. If you already have a focus you prefer to keep, you can leave this optional guide for later. An existing earned JourneyMap badge also counts as prior experience.
 
@@ -61,7 +63,7 @@ Keep these integration rules:
 
 - Providers run on the server thread. They may read cached profiles and already loaded world state, but must not load chunks, perform blocking I/O, assign quests, grant rewards, register camps, or mutate progression while producing a checklist.
 - View destinations belong to the provider's existing command root. Normal command ownership, permissions, costs, cooldowns and feature checks still apply when a player uses controls in the destination.
-- Forage checklist navigation uses a read-only camp check. The shop opens only for an already owned, complete nearby camp; registration remains a deliberate player action.
+- Forage checklist navigation never creates a workstation session. The shop requires a current visit opened by sneak-right-clicking the player's owned, complete camp anchor; being nearby or following `/forage shop` alone is insufficient. Registration remains deliberate, and starter shopping does not require finishing Local Introduction.
 - Learning evidence is a union of verified observations, current feature evidence, and remembered completed steps. A definition revision change drops obsolete learning proof while preserving the player's dismissal and pause preferences.
 - Data lives separately in the core player-data `first-steps/<uuid>.yml` directory. A bounded serial worker performs atomic updates through `PlayerDataStore`. Observations received during an initial load are queued immediately, so quitting before the load callback does not lose them. Queued writes drain on shutdown.
 - Malformed or unavailable checklist storage fails closed and explains recovery. It does not rewrite corrupt records as empty profiles, and it does not modify the player's underlying feature progress.

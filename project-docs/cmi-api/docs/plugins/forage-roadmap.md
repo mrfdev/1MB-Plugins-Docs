@@ -2,24 +2,19 @@
 
 This page preserves the planning notes for the `/forage` feature plugin. It is intentionally a roadmap, not a claim that every feature listed here exists today. The implemented v1 reference lives in [forage.md](forage.md).
 
-The goal is to build Forage gradually as a player-facing nature progression system for Paper 26.2+ and Java 25. It should complement mcMMO Woodcutting/Herbalism, JobsReborn jobs, and Pyro-style progression plugins without replacing them or creating economy loops.
+The goal is to build Forage gradually as a player-facing nature progression system for Paper 26.3+ and Java 25-compatible bytecode. It should complement mcMMO Woodcutting/Herbalism, JobsReborn jobs, and Pyro-style progression plugins without replacing them or creating economy loops.
 
 ## Release Gate: 26.3 Camp Integration
 
 Tracking issue: [#35](https://github.com/mrfdev/1MB-Library/issues/35).
 
-Direction agreed on 2026-09-06:
+The owner authorized the camp revamp on 27 September 2026. Its initial local verification used suite build 704 on Paper 26.3 ALPHA 49; that is historical evidence, not the current server baseline. As reviewed on 9 October 2026, the maintained target is Paper 26.3 BETA, with later plant and tool-protection verification documented in the [main reference](forage.md). The accepted contract is recorded in the [player guide](forage-camps.md) and [technical guide](forage-camp-technical.md). Use the [10 October beta checklist](forage/checklist.md) for connected-client acceptance. Live activation remains pending, and the 26.2 instance remains preserved for rollback.
 
-- Forage is already installed on live. Keep its gameplay dormant throughout Minecraft/Paper 26.2, with `enabled: false` and no player gameplay entry through `/forage` or `/menu`.
-- Exclude dormant Forage from `/next`, focus choices, first-success guides, and [ScheduledTips promotion](scheduledtips.md#feature-availability-and-dormant-forage). A loaded JAR or enabled debug mode does not make it a playable recommendation. Preserve saved player progress and hint preferences.
-- Continue development, balance work, and gameplay testing on the maintained Paper 26.2 test server using the existing player-built camps. Keep `paperTarget=26.2` until a deliberate version-upgrade review.
-- Continue including the Forage JAR in canonical suite builds. Shipping an updated dormant JAR does not release the feature or authorize live activation; preserve the live config instead of copying the enabled test config.
-- Defer the first live feature release until the camp model incorporates 26.3 vanilla Abandoned Camps: recognize the location, reuse its existing camp features, and let the player add a small set of missing Forage essentials.
-- Treat the availability of 26.3 as the point to finish and validate that integration. It does not automatically lift the release hold.
+Live gameplay remains dormant until the new camp integration and owner acceptance are complete. Keep `enabled: false` on live; a new suite JAR or successful local test is not permission to activate it. Exclude dormant Forage from `/next`, focus choices, first-success guides, and ScheduledTips promotion. Preserve saved progress and hint preferences.
 
-The owner also reports early tests using a Paper 26.3 pre-release 2 build on a separate branch. Those experiments can inform this design while the maintained 26.2 baseline and live release hold remain in place.
+The 26.3 pivot uses counted current features in a bounded footprint, with explicit registration of one Initial Camp and two optional Secondary Camps. It does not require structure provenance: a player-built equivalent is valid. The first camp and all its replacements must be Dappled Forest in an approved initial world, initially Wild. All camp use depends on that Initial Camp remaining valid. This replaces the earlier idea of treating the wilderness introduction as a permanent access unlock.
 
-Mojang introduced Abandoned Camps with biome-specific and shared structure pieces, alongside wool stairs and slabs, in [26.3 Snapshot 1](https://www.minecraft.net/en-us/article/minecraft-26-3-snapshot-1). Further camp variants were added in [Snapshot 6](https://www.minecraft.net/en-us/article/minecraft-26-3-snapshot-6). These are development references; verify the final vanilla structures and exact supported Paper APIs during the 26.3 upgrade review.
+Official [26.3 release notes](https://www.minecraft.net/en-us/article/minecraft-java-edition-26-3) and the actual local server templates were reviewed. [Measured template evidence](../compatibility-tests/forage-26.3-camp-templates-2026-09-27.md) establishes the material choices and explains why cushions are optional entities. The source inspection is reproducible without placing structures in any world.
 
 ## Product Direction
 
@@ -27,7 +22,7 @@ Forage should give players who enjoy hands-on survival gathering a reason to tra
 
 The owner's expanded vision is a loop of exploration, camp setup, biome gathering, storage, delivery, and progression. Small boosters, rewards, streaks, quests, milestones, and Community Efforts give those activities continuity. Camp Stations should make the placed camp feel functional: players can inspect their progress, learn what to gather, and see where to store or deliver it by interacting with the camp itself.
 
-Treat this as product direction for continued development. The three-camp registration flow below is a concrete design target; station assignments, progression details, and the first-release scope of boosters and Community Efforts still need to be settled through testing. The presence of an idea here does not mean it is implemented or that every long-term system must ship together.
+Treat this as product direction for continued development. The three-camp registration and workstation-access contract below is accepted; first-release activation still needs implementation verification and gameplay acceptance. Boosters, Community Efforts, and managed storage have separate scope. The presence of an idea here does not mean it is implemented or that every long-term system must ship together.
 
 Forage should make wilderness gathering feel like its own activity:
 
@@ -54,12 +49,12 @@ The feature can still be described as "Foraging" in titles and docs.
 
 V1 should be small enough to test seriously on the Paper test server.
 
-The version stages below describe feature scope. Completing a stage on 26.2 does not override the live release gate above.
+The version stages below preserve feature-scope history. Completing a local stage does not override the live release gate above.
 
 Included:
 
 - `/forage`, `/forage help`, `/forage info`, `/forage stats`, `/forage shop`, `/forage top`, `/forage tips`, `/forage tools`, `/forage debug all`
-- PDC-marked starter tools bought from `/forage shop`
+- PDC-marked starter tools bought at the owned composter workstation; `/forage shop` directs players there
 - tool-gated foraging only; normal tools do not count
 - basic source families: wood, plants, cave, mushrooms, moss, dry finds, and field fruit
 - Forage XP, levels, Forage Points, daily caps, and chunk exhaustion
@@ -77,13 +72,13 @@ V1 should not include mini-bosses, custom trees, auctions, pet magic, or broad t
 
 Add the home-base loop and early identity:
 
-- Forage Camps adapted from vanilla Abandoned Camps with a small set of additional Forage essentials; the existing logs, campfire, crafting table, barrel, composter, wool, and tree-grove checklist remains the 26.2 test implementation pending the camp pivot
+- Forage Camps adapted from vanilla Abandoned Camps or player-built equivalents, using the accepted 26.3 material checklist and a composter workstation
 - sneak-right-click camp composter opens Forage GUI or a camp page while normal right-click keeps vanilla composting behavior
 - camp composter turn-ins for approved vanilla natural scraps
 - camp ready notifications, implemented in v1 as throttled ready feedback when a player validates a complete camp
 - early skill branches such as Herbalist, Woodsman, Trailkeeper, Cave Botanist, and Wild Alchemist, implemented in v1 as configurable identity paths with focused source-family bonuses
 - camp-only tool tier upgrades using Forage Points and level milestones, implemented in v1 for held tools
-- explicit `/forage camp` registration for up to three camps per player, planned
+- explicit `/forage camp` registration for one Initial Camp plus two optional Secondary Camps, implemented and locally verified on 26.3
 - Camp Stations for gathering guidance and progress, with Camp Storage and deliberate Camp Deliveries, planned
 - more placeholders for holograms and ajLeaderboard
 
@@ -430,68 +425,42 @@ Debug output should explain cap/cooldown reasons clearly.
 
 ## Forage Camps
 
-Forage Camps give the activity a recognizable home in the world. The intended 26.3 flow is:
+The accepted 26.3 loop is:
 
-1. Find a vanilla Abandoned Camp and recognize it as a potential Forage location.
-2. Use `/forage camp` to inspect what is present, what is missing, whether the camp is already registered, and how many of the player's three camp slots are occupied.
-3. Add the missing Forage essentials and deliberately register the completed location through `/forage camp` as one of up to three owned Forage Camps.
-4. Interact with Camp Stations to see quests, streaks, milestones, gathering objectives, and storage or delivery guidance.
-5. Forage around the biome for the requested resources and return to the camp.
-6. Keep gathered resources in Camp Storage for later, or deliberately submit a Camp Delivery toward an objective to earn the applicable small reward and progress.
-7. Revisit these camps for further gathering trips, personal progression, and Community Efforts as those systems are introduced.
+1. Find Dappled Forest in Wild and complete a vanilla Abandoned Camp or build an equivalent.
+2. Inspect the materials and deliberately register an exclusive Initial Camp through `/forage camp`.
+3. Use its composter workstation for starter tools and the Local Introduction: fresh personal gathering in that world, followed by deliberate delivery.
+4. Complete the introduction to unlock eligible global benefits at that camp.
+5. Optionally establish two Secondary Camps in other whitelisted worlds, each with its own Local Introduction.
+6. Return to an owned valid workstation to submit resources or claim rewards; maintain the Initial Camp for all secondary access.
 
-The existing shop, upgrades, Repair & Merge, turn-ins, and dust activities remain useful parts of the camp loop.
+Exactly three registrations are allowed, one per actual world, with the initial slot permanently reserved. No camp sharing or overlapping footprints. Breaking a required block makes the camp unusable but preserves its registration until explicit unclaim. Repair/revalidation keeps its introduction progress; a replacement registration starts it again. Global XP, points, quests, caps, and claimed-reward history survive damage, unclaim, relocation, and world resets.
 
-### Registration And Three Camps
+The current whitelist is `end`, `nether`, `general`, `wild`, `cave`, `acid`, `oneblock`, `skyblock`, `chunkblock`, and `skygrid`. `builders`, `spawn`, and `legacy` are blacklisted; unlisted worlds are unavailable. Explicit logical-to-physical world mappings let the local server test game modes without copying live worlds. Future approved initial worlds can be added deliberately; Dappled validity remains required there.
 
-Target a maximum of three registered Forage Camps per player. The scan should explain missing essentials, an existing registration at this location, ownership by another player, and the player's current camp count. Rechecking or revisiting an owned camp must not consume another slot, and a fourth registration must explain the limit rather than silently replace a camp.
+### Materials and locality
 
-Inspection and incidental station use should not register a camp. Registration should be a deliberate part of the `/forage camp` flow once the location is complete. A registered camp can later become incomplete; readiness and registration must remain distinguishable. Final release/replacement controls and the treatment of existing test claims remain design work.
+The composter anchor, crafting table, 24 wool-family blocks, six fences, one campfire, and one chest/barrel are the initial minimum. Full wool, stairs, and slabs count toward shelter. Existing structure features count. The ten Dappled tent source templates contain 29–57 wool stairs and seven or eight fences, while campfire pieces vary; these are source-piece measurements, not a generated-camp average. Cushions and beds are optional, and the old tree-grove requirement is retired for this flow.
 
-The current 26.2 code claims an unclaimed anchor on first use, including `/forage camp` before its readiness check, and has no per-player camp-count limit. Explicit registration and the three-camp limit are planned changes to that behavior.
+Camp use revalidates both the camp being used and the owner's Initial Camp. Async no-generation loading and bounded scans must avoid synchronous cross-world stalls. Pending or unavailable verification cannot authorize submissions or reward delivery.
 
-### Camp Stations, Storage, And Deliveries
+### Local play and global benefits
 
-Use interactable camp objects to expose quest, streak, and milestone progress, gathering objectives, and instructions for storing or delivering resources. Exact blocks and the division of activities between stations remain open; the Camp Anchor identifies the camp, while Camp Stations give the location its practical uses.
+The default Local Introduction requires 30 personal qualifying actions after registration in the camp's world, then eight eligible plain gathering items deliberately submitted there. Starter tools and introduction instructions remain accessible while reward benefits are locked. The fresh action requirement cannot be met by another player's work or historical profile totals. Island and dimension routes need achievable sources without a multi-biome exploration requirement.
 
-Keep Camp Storage and Camp Delivery distinct. Putting resources away should not itself consume them for a quest or award progress; a deliberate delivery should identify the objective, required resources, and result. Choose physical versus plugin-managed storage, access rules, overflow behavior, and recovery before implementing this loop. Current inventory-based camp turn-ins are an existing foundation, not an implemented camp storage system.
+Balances and progression remain global. Current-inventory submissions contribute to the same profile regardless of world inventory groups. Rewards require a current owned workstation session, completed introduction, and valid Initial Camp. A command, old menu, or teleport cannot bypass the location rule. The design intentionally allows global points to be spent at any eligible owned camp; it does not turn every reward into a locally earned currency.
 
-### Recognition And Completion
+### Stations, storage, and later integrations
 
-Recognize varied biome layouts, orientations, and structure-piece combinations without requiring players to rebuild one fixed tent schematic. Existing shelter, campfire, storage, and other suitable features should count toward completion. The full 26.2 construction checklist must not become an extra build players repeat beside a vanilla camp.
+The composter is the Camp Anchor and workstation entry; normal right-click retains vanilla composting and sneak-right-click opens the Forage flow. Existing supported tool, quest, repair, upgrade, turn-in, and dust features remain foundations. Temporary hearts, external points, kits, and fishing tournaments are candidate audited reward integrations, not already available reward engines.
 
-Keep recognizing a camp location, checking its present condition, and establishing its player's claim as distinct concerns. An untouched Abandoned Camp is a candidate location; discovering it alone grants neither ownership nor Forage access. Camp-only actions must still respect ownership, current completeness, allowed worlds, and protection rules. Removing an essential after setup must make the camp incomplete again.
+Keep Camp Storage and Camp Delivery distinct. A plain chest/barrel satisfies physical storage requirements, but storing items there does not automatically submit them or earn progress. Plugin-managed storage and Community Efforts remain later work with their own permission, overflow, transaction, and recovery design.
 
-A composter/Camp Anchor and crafting table are candidates for the additional Forage equipment. Final required items, optional comforts, and material alternatives remain to be decided after inspecting 26.3 variants. The current validator counts only full wool blocks and does not identify vanilla structures, so wool stairs/slabs and structure recognition require deliberate integration work.
+### Security, durability, and acceptance
 
-### Work Before Live Activation
+All mutations need authoritative GUI/session checks, current camp and ownership checks, exact inventory/cost validation, duplicate protection, and durable transaction evidence. Arbitrary external command acceptance is not delivery proof. Ordinary progress saves must be frequent, bounded, ordered, and asynchronous; ambiguous effects after a crash require review rather than automatic replay.
 
-- Continue testing progression and existing camps on 26.2 while keeping the camp requirements open to this pivot.
-- Review the final 26.3 structures and exact-version Paper documentation, starting from the [PaperMC documentation index](https://docs.papermc.io/llms.txt) and [API Javadocs](https://jd.papermc.io/paper/), before choosing a supported recognition method.
-- Settle the equipment checklist, camp boundary and anchor placement, player-built camp fallback, and treatment of existing 26.2 test claims and worlds with limited new terrain.
-- Define the three-camp registration, release, and replacement flow, including duplicate/fourth registrations and migration of existing test claims.
-- Settle which Camp Stations and storage/delivery behaviors belong in the first release, and which progress belongs to the player versus an individual camp. Switching camps must preserve applicable player limits and earned progress.
-- Validate representative biome variants, rotations, wool stairs/slabs, partially damaged camps, missing/restored essentials, nearby competing anchors, ownership conflicts, protected locations, and claims across restarts.
-- Complete the deliberate Paper upgrade review, canonical suite build, and test-server gameplay acceptance before the owner releases Forage on live.
-
-Interactions, including planned Camp Stations:
-
-- Camp Stations expose the relevant Forage activity or progress view
-- normal right-click on camp composter keeps vanilla composting
-- sneak-right-click on camp composter opens camp GUI or camp compost/turn-in page
-- approved scraps can produce tiny XP, compost progress, camp ambience, or community progress
-
-Safety:
-
-- no arbitrary block deletion
-- no forced chunk loading
-- no region bypass
-- no rewards from invalid camps
-- never consume custom/PDC/named/lore items by accident
-
-### Prototype Maintenance
-
-As the prototype matures, keep camp recognition/readiness, Camp Registration, progression, and storage/delivery responsibilities clear enough to verify separately. Use the 26.2 test loop and isolated 26.3 experiments to guide focused improvements while preserving existing player data, tools, and useful gameplay.
+The private implementation checklist tracks adversarial GUI testing, migration, unload/reload, mapped worlds, cross-world claims, main-thread performance, restart/crash recovery, the canonical full-suite build, and local gameplay acceptance. The public guides and beta checklist are being published for advance reading and testing; publication does not authorize a live server change or activation.
 
 ## Foraging Magic
 

@@ -14,3 +14,7 @@ This namespace is a public documentation-only copy from the source project regis
 - Excluded on purpose: source code, jars, servers, databases, task logs, and internal checklists
 
 Only `project-docs/cmi-api/` is replaced when this source is synchronized. Other project namespaces remain untouched.
+
+## Scoped Forage beta refresh
+
+On 9 October 2026, the Forage player guide, staff guide, roadmap, public beta checklist, integration reference and dated Forage verification records were refreshed from the reviewed working tree based on source commit `f9fb787a`. Only Forage sections of the shared commands, permissions, feature index and onboarding references were included. Other documentation retains the baseline above. The source had local changes; this publication does not certify a new plugin build or completed in-game acceptance.

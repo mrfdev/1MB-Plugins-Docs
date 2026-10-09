@@ -1408,53 +1408,60 @@ Forage:
 /forage info
 /forage help
 /forage guide
+/forage next
 /forage status
 /forage limits
-/forage shop
 /forage stats
+/forage camp
+/forage camp list
+/forage camp register
+/forage camp revalidate
+/forage camp unclaim [registration-UUID]
+/forage shop
 /forage quests
 /forage branches
-/forage branch herbalist
-/forage top
-/forage top points
-/forage top daily
-/forage recent
+/forage top [level|xp|points|actions|treasures|daily|weekly]
+/forage recent [page]
 /forage tips
 /forage tools
-/forage camp
 /forage compost
 /forage dust
-/forage admin give mrfloris sickle 1
-/forage admin give mrfloris axe 2
-/forage admin give mrfloris sword 1
-/forage admin give mrfloris mace 1
-/forage admin inspect mrfloris
-/forage admin inspectitem mrfloris main
-/forage admin inspectitem mrfloris offhand
-/forage admin xp mrfloris 500
-/forage admin level mrfloris 25
-/forage admin points mrfloris 1000
-/forage admin toollevel mrfloris 12
-/forage admin resetcap mrfloris
+/forage review [reference]
+/forage review page <number>
+/forage admin give <player> <tool> [tier]
+/forage admin inspect <player>
+/forage admin inspectitem [player] [main|offhand|boots|leggings|chestplate|helmet]
+/forage admin xp <player> <amount>
+/forage admin level <player> <level>
+/forage admin points <player> <amount>
+/forage admin toollevel <player> <level>
+/forage admin toolapprove <player> [confirm]
+/forage admin resetcap <player>
 /forage admin balance
 /forage admin livecheck
 /forage admin check
-/forage admin export
-/forage admin export backup
-/forage admin camps list
+/forage admin export [backup]
+/forage admin camps list [page]
+/forage admin camps worlds
+/forage admin camps legacy [page]
 /forage admin camps near
-/forage admin camps inspect mrfloris
-/forage admin camps release near
-/forage admin camps reassign near mrfloris
+/forage admin camps inspect <registration-UUID>
+/forage admin camps release <registration-UUID>
 /forage admin chunks
 /forage admin reload
 /forage admin save
-/forage debug tool
-/forage debug tool mrfloris
+/forage admin recoveryack <transaction-UUID> confirm
+/forage debug tool [player]
+/forage debug runtime
+/forage debug transactions
 /forage debug all
 ```
 
-`/forage` opens the v1 Forage hub GUI. Players can use `/forage guide` for the first-run camp/tool/limits path, buy curated PDC-marked tools from the CMI-backed Vault camp shop, unlock Tier 2 pickaxe, brush, sword, and mace tools after growing any Forage tool to the configured level, view their level/XP/points, use `/forage status` for a compact progress and next-step summary, use `/forage limits` for daily caps, family caps, economy costs, and quest reward ranges, choose a small focused skill branch with `/forage branches`, complete daily, weekly, and monthly `/forage quests` from `quests.yml` for point, XP, and money rewards, read tips, inspect supported source families, view `/forage top` leaderboards, compost plain vanilla forage items near a complete camp, make PDC-marked Forage Dust for bounded growth pulses, upgrade held tools from the camp page, refine supported tools to diamond, add controlled Unbreaking/Efficiency upgrades, repair and merge matching tools near a complete camp, and check whether a nearby camp build is ready. Guide, stats, status, limits, and camp setup stay available away from camp, but the shop and broader activity pages expect a complete nearby camp. Forage progress only counts when a configured natural block is broken or a configured entity is killed with the matching Forage tool in an allowed world. The default tool ownership is intentionally non-overlapping: axe owns logs/fruits, shears own leaves, trowel owns moss, pickaxe owns cave/stone, brush owns sands/relics, sword owns gentle creature sources, and mace owns danger sources. Matching branch actions can grant small configured XP, point, and treasure chance bonuses. Frequent progress, branch, compost, growth, quest, treasure, level, and chunk exhaustion messages are batched into a clickable summary, `/forage recent` shows the latest details, and chunk exhaustion now also gives an immediate short warning so players can move on faster. Global daily caps slow total progress, while per-source-family daily caps let players switch tools and continue with another route when one family is capped. Forage Dust does not award Forage XP or points. When WorldGuard is installed, the default conservative check only counts actions in locations without a specific protected region. Camp anchors are UUID-owned on first real use. Admin commands can give tools, inspect player profiles, inspect held/offhand/armor item PDC and repair-guard state, add or remove profile XP and points, set profile or held-tool levels for testing, reset today's global and per-family daily cap progress, view the active balance preset/cost/cap report, run the colored `/forage admin check` config sanity report for config/quest ranges and references, run the read-only `/forage admin livecheck` readiness checklist for the suggested live preset, export a Markdown data summary with `/forage admin export [backup]`, manage camp claims, view chunk exhaustion counts, reload config/data, and use the shared debug pages.
+`/forage` opens the hub; guide, stats, status, limits, and camp inspection are available away from camp. Camps require deliberate registration: one Initial Camp in approved Wild Dappled Forest and up to two Secondary Camps in different approved worlds. Opening or inspecting an unclaimed composter does not register it. Use `register`, `revalidate`, and `unclaim` for deliberate registration, repair validation, and release; global progress is retained.
+
+Activity commands (`shop`, `quests`, `branches`, `top`, `recent`, `tips`, `tools`, `compost`, and `dust`) direct players to their own composter workstation. Sneak-right-click it and remain beside it to use its menus; proximity or a command alone does not authorize an activity. Starter tools are available before that camp's Local Introduction is complete. Global benefits, including quest claims, branches, upgrades, Repair & Merge, turn-ins, and dust crafting, require completion of the Local Introduction and a valid Initial Camp. Gathering uses the matching curated tool for configured block breaks or entity kills in allowed worlds; the later pickaxe, brush, sword, and mace shop unlocks require a carried tool at the configured tool level, not item tier II.
+
+Staff inspect camps by registration UUID. Legacy reassignment/move helpers are not a supported way to bypass the current registration rules. `resetcap` clears an online tester's daily global and family cap buckets, not chunk exhaustion or quest progress. `toolapprove` reviews supported older tools before explicit confirmation; `recoveryack` discards verified finalized recovery evidence and never refunds or replays delivery. Arbitrary quest reward commands remain blocked pending an audited delivery adapter. See the [Forage reference](plugins/forage.md#commands), [player guide](plugins/forage-camps.md), [staff guide](plugins/forage-camp-technical.md), and [beta checklist](plugins/forage/checklist.md) for current requirements and testing steps.
 
 AutoSell:
 
