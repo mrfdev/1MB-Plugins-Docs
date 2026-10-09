@@ -61,7 +61,7 @@ Every feature jar that does not implement a local debug command inherits `/<plug
 | Server Management | [EconomyGuardian](economyguardian.md) | Read-only CMI economy balance anomaly watcher. |
 | Server Management | [StartupDoctor](startupdoctor.md) | Startup/runtime diagnostics plus read-only Paper safety and folder-doctor reports. |
 | Server Management | [UpdateSmoke](updatesmoke.md) | Post-update smoke checks for runtime compatibility, hooks, command registration and dispatch, placeholders, feature metadata, and key CMI/CMILib APIs. |
-| Server Management | [PluginVersions](pluginversions.md) | Plugin version inventory, tested Java/Paper/dependency gate, URL curation, and Markdown/Discord export reports migrated from the standalone PluginVersions project. |
+| Server Management | [PluginVersions](pluginversions.md) | Plugin version inventory, declared dependency/dependent reports, tested Java/Paper/dependency gate, URL curation, and Markdown/Discord exports. |
 | Server Management | [Potions](potions.md) | Locked `/_potions` admin forge plus player-safe `/potions` held-item inspection for PDC-marked custom event potions with split config files, GUI definition editing, collection bundle generation, 14 style choices, snapshotted costs, particle presets, collections, and runtime disable controls. |
 | Server Management | [SchedulerCheck](schedulercheck.md) | Direct-console CMI scheduler YAML validator for syntax, timing ranges, command lists, enabled toggles, and Markdown exports. |
 | Server Management | [Upgrade](upgrade.md) | Admin-only `/_upgrade` helper that simulates, suggests, and applies guarded LuckPerms group upgrades from join-date and playtime signals, with a review queue GUI, optional cosmetic rewards, promotion effects, and Discord link reminders. |
@@ -119,67 +119,67 @@ Runtime jars use this shape:
 Examples:
 
 ```text
-1MB-Lib-Core-v1.0.4-702-j25-26.3.jar
-1MB-Lib-AFKShrine-v1.0.4-702-j25-26.3.jar
-1MB-Lib-RecordingMode-v1.0.4-702-j25-26.3.jar
-1MB-Lib-SellStreaks-v1.0.4-702-j25-26.3.jar
-1MB-Lib-ScheduledTips-v1.0.4-702-j25-26.3.jar
-1MB-Lib-Visit-v1.0.4-702-j25-26.3.jar
-1MB-Lib-PassportDiscovery-v1.0.4-702-j25-26.3.jar
-1MB-Lib-SocialGatherings-v1.0.4-702-j25-26.3.jar
-1MB-Lib-JourneyMap-v1.0.4-702-j25-26.3.jar
-1MB-Lib-KitStreaks-v1.0.4-702-j25-26.3.jar
-1MB-Lib-Nick-v1.0.4-702-j25-26.3.jar
-1MB-Lib-EmoteMenu-v1.0.4-702-j25-26.3.jar
-1MB-Lib-PvPToggle-v1.0.4-702-j25-26.3.jar
-1MB-Lib-Boosters-v1.0.4-702-j25-26.3.jar
-1MB-Lib-NameMC-v1.0.4-702-j25-26.3.jar
-1MB-Lib-Exchange-v1.0.4-702-j25-26.3.jar
-1MB-Lib-VoteTokens-v1.0.4-702-j25-26.3.jar
-1MB-Lib-DiscordChat-v1.0.4-702-j25-26.3.jar
-1MB-Lib-GameTypes-v1.0.4-702-j25-26.3.jar
-1MB-Lib-BirthdayLanterns-v1.0.4-702-j25-26.3.jar
-1MB-Lib-LavaBoots-v1.0.4-702-j25-26.3.jar
-1MB-Lib-Spawners-v1.0.4-702-j25-26.3.jar
-1MB-Lib-Collect-v1.0.4-702-j25-26.3.jar
-1MB-Lib-EventHunts-v1.0.4-702-j25-26.3.jar
-1MB-Lib-DropParty-v1.0.4-702-j25-26.3.jar
-1MB-Lib-Appreciation-v1.0.4-702-j25-26.3.jar
-1MB-Lib-Forage-v1.0.4-702-j25-26.3.jar
-1MB-Lib-AutoSell-v1.0.4-702-j25-26.3.jar
-1MB-Lib-MobHat-v1.0.4-702-j25-26.3.jar
-1MB-Lib-PlayerTodo-v1.0.4-702-j25-26.3.jar
-1MB-Lib-Refer-v1.0.4-702-j25-26.3.jar
-1MB-Lib-TPAuto-v1.0.4-702-j25-26.3.jar
-1MB-Lib-Menu-v1.0.4-702-j25-26.3.jar
-1MB-Lib-StaffCenter-v1.0.4-702-j25-26.3.jar
-1MB-Lib-Profile-v1.0.4-702-j25-26.3.jar
-1MB-Lib-ContentGuard-v1.0.4-702-j25-26.3.jar
-1MB-Lib-WarningLens-v1.0.4-702-j25-26.3.jar
-1MB-Lib-TeamMsg-v1.0.4-702-j25-26.3.jar
-1MB-Lib-CmdCostDashboard-v1.0.4-702-j25-26.3.jar
-1MB-Lib-CMIConfig-v1.0.4-702-j25-26.3.jar
-1MB-Lib-ConsoleNoiseRouter-v1.0.4-702-j25-26.3.jar
-1MB-Lib-EconomyGuardian-v1.0.4-702-j25-26.3.jar
-1MB-Lib-StartupDoctor-v1.0.4-702-j25-26.3.jar
-1MB-Lib-UpdateSmoke-v1.0.4-702-j25-26.3.jar
-1MB-Lib-PluginVersions-v1.0.4-702-j25-26.3.jar
-1MB-Lib-Placeholders-v1.0.4-702-j25-26.3.jar
-1MB-Lib-Potions-v1.0.4-702-j25-26.3.jar
-1MB-Lib-SchedulerCheck-v1.0.4-702-j25-26.3.jar
-1MB-Lib-Upgrade-v1.0.4-702-j25-26.3.jar
-1MB-Lib-EndCrystals-v1.0.4-702-j25-26.3.jar
-1MB-Lib-AntiFire-v1.0.4-702-j25-26.3.jar
-1MB-Lib-WorldSnapshot-v1.0.4-702-j25-26.3.jar
-1MB-Lib-SparkReviewer-v1.0.4-702-j25-26.3.jar
-1MB-Lib-Hoppers-v1.0.4-702-j25-26.3.jar
-1MB-Lib-EventRecorder-v1.0.4-702-j25-26.3.jar
-1MB-Lib-PermissionProbe-v1.0.4-702-j25-26.3.jar
-1MB-Lib-WarpAudit-v1.0.4-702-j25-26.3.jar
-1MB-Lib-WorthDrift-v1.0.4-702-j25-26.3.jar
-1MB-Lib-WorthHelper-v1.0.4-702-j25-26.3.jar
-1MB-Lib-CMIProbe-v1.0.4-702-j25-26.3.jar
-1MB-Lib-CMIDatabase-v1.0.4-702-j25-26.3.jar
+1MB-Lib-Core-v1.0.4-730-j25-26.3.jar
+1MB-Lib-AFKShrine-v1.0.4-730-j25-26.3.jar
+1MB-Lib-RecordingMode-v1.0.4-730-j25-26.3.jar
+1MB-Lib-SellStreaks-v1.0.4-730-j25-26.3.jar
+1MB-Lib-ScheduledTips-v1.0.4-730-j25-26.3.jar
+1MB-Lib-Visit-v1.0.4-730-j25-26.3.jar
+1MB-Lib-PassportDiscovery-v1.0.4-730-j25-26.3.jar
+1MB-Lib-SocialGatherings-v1.0.4-730-j25-26.3.jar
+1MB-Lib-JourneyMap-v1.0.4-730-j25-26.3.jar
+1MB-Lib-KitStreaks-v1.0.4-730-j25-26.3.jar
+1MB-Lib-Nick-v1.0.4-730-j25-26.3.jar
+1MB-Lib-EmoteMenu-v1.0.4-730-j25-26.3.jar
+1MB-Lib-PvPToggle-v1.0.4-730-j25-26.3.jar
+1MB-Lib-Boosters-v1.0.4-730-j25-26.3.jar
+1MB-Lib-NameMC-v1.0.4-730-j25-26.3.jar
+1MB-Lib-Exchange-v1.0.4-730-j25-26.3.jar
+1MB-Lib-VoteTokens-v1.0.4-730-j25-26.3.jar
+1MB-Lib-DiscordChat-v1.0.4-730-j25-26.3.jar
+1MB-Lib-GameTypes-v1.0.4-730-j25-26.3.jar
+1MB-Lib-BirthdayLanterns-v1.0.4-730-j25-26.3.jar
+1MB-Lib-LavaBoots-v1.0.4-730-j25-26.3.jar
+1MB-Lib-Spawners-v1.0.4-730-j25-26.3.jar
+1MB-Lib-Collect-v1.0.4-730-j25-26.3.jar
+1MB-Lib-EventHunts-v1.0.4-730-j25-26.3.jar
+1MB-Lib-DropParty-v1.0.4-730-j25-26.3.jar
+1MB-Lib-Appreciation-v1.0.4-730-j25-26.3.jar
+1MB-Lib-Forage-v1.0.4-730-j25-26.3.jar
+1MB-Lib-AutoSell-v1.0.4-730-j25-26.3.jar
+1MB-Lib-MobHat-v1.0.4-730-j25-26.3.jar
+1MB-Lib-PlayerTodo-v1.0.4-730-j25-26.3.jar
+1MB-Lib-Refer-v1.0.4-730-j25-26.3.jar
+1MB-Lib-TPAuto-v1.0.4-730-j25-26.3.jar
+1MB-Lib-Menu-v1.0.4-730-j25-26.3.jar
+1MB-Lib-StaffCenter-v1.0.4-730-j25-26.3.jar
+1MB-Lib-Profile-v1.0.4-730-j25-26.3.jar
+1MB-Lib-ContentGuard-v1.0.4-730-j25-26.3.jar
+1MB-Lib-WarningLens-v1.0.4-730-j25-26.3.jar
+1MB-Lib-TeamMsg-v1.0.4-730-j25-26.3.jar
+1MB-Lib-CmdCostDashboard-v1.0.4-730-j25-26.3.jar
+1MB-Lib-CMIConfig-v1.0.4-730-j25-26.3.jar
+1MB-Lib-ConsoleNoiseRouter-v1.0.4-730-j25-26.3.jar
+1MB-Lib-EconomyGuardian-v1.0.4-730-j25-26.3.jar
+1MB-Lib-StartupDoctor-v1.0.4-730-j25-26.3.jar
+1MB-Lib-UpdateSmoke-v1.0.4-730-j25-26.3.jar
+1MB-Lib-PluginVersions-v1.0.4-730-j25-26.3.jar
+1MB-Lib-Placeholders-v1.0.4-730-j25-26.3.jar
+1MB-Lib-Potions-v1.0.4-730-j25-26.3.jar
+1MB-Lib-SchedulerCheck-v1.0.4-730-j25-26.3.jar
+1MB-Lib-Upgrade-v1.0.4-730-j25-26.3.jar
+1MB-Lib-EndCrystals-v1.0.4-730-j25-26.3.jar
+1MB-Lib-AntiFire-v1.0.4-730-j25-26.3.jar
+1MB-Lib-WorldSnapshot-v1.0.4-730-j25-26.3.jar
+1MB-Lib-SparkReviewer-v1.0.4-730-j25-26.3.jar
+1MB-Lib-Hoppers-v1.0.4-730-j25-26.3.jar
+1MB-Lib-EventRecorder-v1.0.4-730-j25-26.3.jar
+1MB-Lib-PermissionProbe-v1.0.4-730-j25-26.3.jar
+1MB-Lib-WarpAudit-v1.0.4-730-j25-26.3.jar
+1MB-Lib-WorthDrift-v1.0.4-730-j25-26.3.jar
+1MB-Lib-WorthHelper-v1.0.4-730-j25-26.3.jar
+1MB-Lib-CMIProbe-v1.0.4-730-j25-26.3.jar
+1MB-Lib-CMIDatabase-v1.0.4-730-j25-26.3.jar
 ```
 
 [Documentation index](../README.md)

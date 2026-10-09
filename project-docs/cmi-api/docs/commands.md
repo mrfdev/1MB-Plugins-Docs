@@ -336,6 +336,10 @@ PluginVersions:
 /pv info
 /pv list
 /pv list 2
+/pv depend <plugin> [page]
+/pv depend CMILib
+/pv depend Vault
+/pv depend ViaVersion
 /pv gate
 /pv debug all
 /pv debug gate

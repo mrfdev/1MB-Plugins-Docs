@@ -13,6 +13,40 @@ const publicRepoBlob = 'https://github.com/mrfdev/1MB-Plugins-Docs/blob/main';
 const publicRepoTree = 'https://github.com/mrfdev/1MB-Plugins-Docs/tree/main';
 
 const PLAYER_GUIDE_OVERRIDES = {
+  pluginversions: {
+    staffDocument: 'pluginversions.md',
+    guide: 'Use /pv list to inspect versions, then /pv depend CMILib, Vault, ProtocolLib, or ViaVersion to see declared relationships. Review required, optional, and indirect dependents before testing a removal. The report does not establish whether an integration is active or a plugin is safe to uninstall.',
+    quickStart: [
+      'Run `/pv list` to find the current plugin names and versions.',
+      'Run `/pv depend CMILib` or `/pv depend Vault` to inspect a dependency report.',
+      'Use `/pv depend CMILib 2` for the next player page. Console receives the full report.',
+      'Review required chains and optional features, then test any removal with a full restart on the test server.',
+    ],
+    commandDescriptions: {
+      '/pv depend <plugin> [page]': 'Shows the target version/state, declared required and optional dependents, indirect required chains, its own dependencies, and load-order references. Does not certify safe removal.',
+    },
+    commandTableExamples: {
+      '/pv depend <plugin> [page]': '/pv depend CMILib',
+    },
+    afterFeatures: `## Reading a Dependency Report
+
+| Category | What it means |
+| --- | --- |
+| Required by | Plugins that declare the target as required to load. |
+| Optional integration for | Plugins that may lose features without the target. Active use is not confirmed. |
+| Indirectly required by | A shortest chain of required dependencies leading to the target. |
+| Depends on | Required and optional dependencies declared by the target itself. |
+| Load-order references | Ordering declarations, not proof of API use. |
+
+Names and provided aliases match case-insensitively. Conflicting aliases are reported, and missing declared targets remain queryable. The report reads a fresh runtime snapshot and does not modify plugins or the inventory database.`,
+    notes: [
+      'Dependency reports require `pluginversions.depend`, which defaults to op and is included in `pluginversions.*`. Use `/pv depend`, without an admin subcommand.',
+      'Enabled/disabled describes Paper plugin state, not whether each optional feature is active.',
+      'No declared dependents does not mean unused or safe to remove. ViaVersion can serve player connections even without plugin dependents.',
+      'Runtime metadata excludes unloaded JARs, undeclared hooks, embedded libraries, and some Paper declarations (bootstrap-only or `join-classpath: false`).',
+      'See the [full administration reference](/staff-reference/plugins/pluginversions/) for report scope and interpretation.',
+    ],
+  },
   halloweenvirus: {
     fullSourceGuide: true,
     staffDocument: 'halloweenvirus-administration.md',
@@ -1139,6 +1173,7 @@ const FEATURE_BULLET_OVERRIDES = {
   ],
   pluginversions: [
     'A searchable inventory of loaded plugins, versions, enabled state, and curated project links.',
+    'Declared dependency reports with required and optional dependents, indirect required chains, aliases, and load-order references.',
     'A tested Java, Paper, CMI, CMILib, and dependency compatibility gate.',
     'Plugin and server summaries for post-update support checks.',
     'A persistent plugin inventory database with optional refresh behavior.',

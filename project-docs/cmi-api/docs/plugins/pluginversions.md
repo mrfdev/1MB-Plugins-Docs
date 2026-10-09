@@ -2,7 +2,7 @@
 
 PluginVersions is the 1MB-CMIAPI merge of the standalone `PluginVersions` project. It keeps the familiar `/pv` command, plugin inventory database, manual URL curation, Markdown/Discord export flow, permissions, and `%pluginversions_*%` PlaceholderAPI expansion while adding a read-only tested Java/Paper/dependency version gate and moving runtime data into the shared 1MB-CMIAPI folder layout.
 
-Use it when staff need a quick loaded-plugin version list, a searchable plugin inventory, a tested Java/Paper/dependency version gate, or a support/export snapshot after Paper, CMI, CMILib, or feature-jar updates.
+Use it when staff need a quick loaded-plugin version list, a searchable plugin inventory, a declared dependency report before considering plugin removal, a tested Java/Paper/dependency version gate, or a support/export snapshot after Paper, CMI, CMILib, or feature-jar updates.
 
 ## Migration Notes
 
@@ -20,6 +20,7 @@ Use it when staff need a quick loaded-plugin version list, a searchable plugin i
 /pv info
 /pv help [page|topic]
 /pv list [page]
+/pv depend <plugin> [page]
 /pv gate [page]
 /pv reload
 /pv debug [page|topic]
@@ -39,6 +40,8 @@ Use it when staff need a quick loaded-plugin version list, a searchable plugin i
 ```
 
 Help topics:
+
+`/pv help commands` lists only commands allowed by the sender's permissions, with descriptions and no inline permission nodes. `/pv help permissions` directs authorized staff to `/pv debug permissions` for permission details.
 
 ```text
 /pv help overview
@@ -73,6 +76,11 @@ Debug topics:
 /pv info
 /pv list
 /pv list 2
+/pv depend CMILib
+/pv depend Vault
+/pv depend ProtocolLib
+/pv depend ViaVersion
+/pv depend CMILib 2
 /pv gate
 /pv debug status
 /pv debug gate
@@ -93,6 +101,7 @@ These preserve the standalone permission nodes so LuckPerms migration is simple:
 pluginversions.*
 pluginversions.help
 pluginversions.list
+pluginversions.depend
 pluginversions.gate
 pluginversions.reload
 pluginversions.debug
@@ -106,6 +115,8 @@ pluginversions.url.del
 ```
 
 `pluginversions.help` defaults to everyone. All other nodes default to op.
+
+`pluginversions.depend` controls dependency reports and their plugin-name/page completion. It is included in `pluginversions.*`. The command is directly under `/pv`, matching this administrative command root; there is no `/pv admin depend` route.
 
 ## Placeholders
 
@@ -189,6 +200,26 @@ version-gate.expected-plugin-version-prefixes
 
 `/pv list` sorts loaded plugins alphabetically and prints the plugin name plus current plugin metadata version. Running `/pv list` with no page lists all plugins; `/pv list <page>` uses `settings.lines-per-page`.
 
+### Declared dependency reports
+
+`/pv depend <plugin> [page]` reads a fresh snapshot of Paper's loaded-plugin metadata on every invocation. It shows the target's name, installed version when available, Paper enabled/disabled state, provided aliases, and relationship counts. Players receive pages using `settings.lines-per-page`, starting at page 1; console receives the full report. Page numbers outside the available range are rejected.
+
+| Report category | Meaning |
+| --- | --- |
+| Required by | Plugins declaring the target, or an unambiguous provided alias, as required to load. |
+| Optional integration for | Plugins declaring a soft dependency. Removal may disable features even if the consumer still loads. This does not confirm the integration is active. |
+| Indirectly required by | Plugins connected through two or more required dependencies. One shortest required chain is shown per plugin; optional and load-order relationships do not extend these chains. |
+| Depends on (required/optional) | The target's own declarations, resolved to loaded providers and versions where possible. Missing references are marked `not loaded`. |
+| Load-order list on target / Other load-order references | The target's declared load-before list and other plugins whose load-before lists reference the target. These rows are ordering information, not evidence of API use. |
+
+Names and provided aliases match case-insensitively, preserving punctuation. Primary names take precedence over provided aliases. Ambiguous aliases are rejected as query targets; ambiguous dependency references are displayed separately and excluded from confirmed counts and required chains. Duplicate references through several aliases do not duplicate a consumer. Cycles terminate without listing the target as its own dependent.
+
+Tab completion includes loaded primary names, provided aliases, and declared references. A referenced plugin that is not loaded can still be queried; its version is unavailable, but its known dependents remain visible. An unknown name produces a clear error instead of an empty dependency report.
+
+**Scope and removal decisions:** the report uses the common `PluginMeta` runtime metadata for Bukkit and Paper plugins, including plugins that Paper loaded but has disabled. Paper's common dependency lists exclude bootstrap-only declarations and Paper dependencies with `join-classpath: false`; these can still be required by the loader. The report also does not inspect JARs that failed to load, historical inventory entries, embedded/downloaded Java libraries, proxy plugins, configuration-driven hooks, or undeclared integrations. Paper's enabled state does not prove a feature or integration is active. An empty result says `No unambiguous declared dependents found in this snapshot`; it never certifies that a plugin is unused or safe to remove. ViaVersion, for example, can provide client-version compatibility independently of plugin dependents. Review the relevant integrations and test removal on the test server with a full restart and gameplay checks.
+
+The command performs no database refresh, file scan, network request, plugin disable/unload, or other mutation. Existing inventory exports are unchanged.
+
 `/pv gate` is read-only. It checks that the runtime Java major meets `version-gate.expected-java-major` as a minimum, then checks the Paper target string, required plugins, optional plugins, and configured version prefixes. The JARs target Java 25 and accept newer runtimes such as Java 27. Required plugins that are missing or disabled are issues. Optional plugins that are missing are informational. Version prefix drift is a warning so staff can decide whether a newer patch or dev build is acceptable.
 
 PluginVersions updates a YAML inventory database during startup when `database.update-on-enable` is true, during `/pv reload`, during `/pv list` when `database.update-on-list` is true, during URL audit, and during exports.
@@ -213,12 +244,13 @@ PluginVersions uses modern Paper/Bukkit plugin metadata APIs through `Plugin#get
 
 ## Security Notes
 
-- `/pv list`, `/pv debug`, `/pv config`, `/pv set`, `/pv export`, and URL edits are permission-gated.
+- `/pv list`, `/pv depend`, `/pv debug`, `/pv config`, `/pv set`, `/pv export`, and URL edits are permission-gated.
 - Console can always use the commands.
 - `database.file` and `exports.directory` are console-only through `/pv set`.
 - URL input must be a valid `http` or `https` URI with a host.
 - URL categories accept only letters, numbers, dashes, and underscores.
 - Dynamic text is escaped before MiniMessage rendering.
+- Dependency query names accept only letters, numbers, underscores, hyphens, and periods. Unprivileged users cannot complete plugin names for `/pv depend`.
 - The plugin writes only its own feature folder by default.
 
 ## Testing
@@ -227,6 +259,11 @@ PluginVersions uses modern Paper/Bukkit plugin metadata APIs through `Plugin#get
 /pv info
 /pv list
 /pv list 1
+/pv depend CMILib
+/pv depend Vault
+/pv depend ViaVersion
+/pv depend 1MB-Lib-Core
+/pv depend CMILib 2
 /pv gate
 /pv debug all
 /pv debug gate
@@ -238,5 +275,7 @@ PluginVersions uses modern Paper/Bukkit plugin metadata APIs through `Plugin#get
 /papi parse me %pluginversions_total%
 /papi parse me %onembcmi_pluginversions.enabled%
 ```
+
+For dependency reports, check the `pluginversions.depend` permission, player pagination versus full console output, case-insensitive aliases, missing declared targets, invalid names/pages, enabled/disabled labels, and the declaration/removal limitation. Focused automated tests exercise direct versus optional/order-only relationships, shortest required chains, cycles, alias collisions and duplicates, both common metadata implementations, fresh snapshots, permission checks, and completion.
 
 [Plugin index](README.md) | [Documentation index](../README.md)

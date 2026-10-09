@@ -772,7 +772,11 @@ hv admin stop
 hv debug config
 ```
 
-Wait for each confirmation. The last command now shows HV settings from `CoconutHunt/HalloweenVirus/config.yml`. The host can be active while HV remains dormant for setup. An initial host-startup report can precede HV's asynchronous ledger/configuration loading; use fresh `/hv admin status` and `/hv admin validate` output after initialization. `/hv admin start` and `auto` enable the HV module themselves; neither can activate an entirely disabled host through its dormant command gateway.
+Wait for each confirmation. The last command now shows HV settings from `CoconutHunt/HalloweenVirus/config.yml`. The host can be active while HV remains dormant for setup. The host startup report waits for asynchronous Door and HV initialization. While loading, it logs that the report is pending; once initialization finishes, it logs the settled result. HV loads its ledger and permanent item guards even when seasonally dormant, so its module switch does not bypass this wait. A real HV initialization failure releases the wait and reports its cause instead of placeholder kit, reward and date errors. Host reports also wait for pending HV reloads; `/hv admin status` and `/hv admin validate` distinguish loading from failed initialization.
+
+`PROTECTION: Not checked yet` remains a warning until an encounter location has actually been evaluated. It describes location protection, not reward-item modification guards, and does not mean saved kits or dates need to be set up again. It is not an approval of any location. Existing spawn checks still deny unsupported or failed protection queries. Use `/hv admin status` and `/hv admin validate` for a fresh result after gameplay.
+
+`/hv admin start` and `auto` enable the HV module themselves; neither can activate an entirely disabled host through its dormant command gateway.
 
 For a new installation, this example maps and enables only the End region. Replace the world id with the value shown by your server, and review protection and mob settings before repeating for other regions:
 

@@ -262,6 +262,7 @@ onembnamemc.verified
 pluginversions.*
 pluginversions.help
 pluginversions.list
+pluginversions.depend
 pluginversions.gate
 pluginversions.reload
 pluginversions.debug

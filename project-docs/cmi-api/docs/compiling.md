@@ -2,14 +2,14 @@
 
 ## Shared Hunt feature
 
-Door Hunt is source inside the compatibility-named `:plugins:player-fun:coconuthunt` project, not another Gradle plugin and not another JavaPlugin. Run `gradle :plugins:player-fun:coconuthunt:test` for the Coconut/Ghost/Door focused suite, then use `scripts/build-all.sh` for the suite-wide local test build. The centralized Java 25 and `paperApiVersion=26.3.build.46-alpha` settings apply to all three modules; do not import the standalone build-number mutation or its Paper coordinate. The output remains one `1MB-Lib-EventHunts-v<version>-<build>-j25-26.3.jar` plus the normal library dependency.
+Door Hunt is source inside the compatibility-named `:plugins:player-fun:coconuthunt` project, not another Gradle plugin and not another JavaPlugin. Run `gradle :plugins:player-fun:coconuthunt:test` for the Coconut/Ghost/Door focused suite, then use `scripts/build-all.sh` for the suite-wide local test build. The centralized Java 25 and `paperApiVersion=26.3.build.166-beta` settings apply to all three modules; do not import the standalone build-number mutation or its Paper coordinate. The output remains one `1MB-Lib-EventHunts-v<version>-<build>-j25-26.3.jar` plus the normal library dependency.
 
 The Gradle scaffold is present. The current baseline is:
 
 - Java 25 bytecode, built and tested with JDK 25.0.4.1
 - Java 27 on the live server; local runtime compatibility smoke testing uses JDK 27
-- Paper 26.3 alpha build 46 or newer
-- Paper API `26.3.build.46-alpha`
+- Paper 26.3 beta build 166 or newer
+- Paper API `26.3.build.166-beta`
 - separate jars for every feature
 - a separate shared library jar
 
@@ -44,13 +44,13 @@ The Gradle Java toolchain and Java 25 compiler target keep the jars runnable on 
 
 ## Paper Channel Alignment
 
-`gradle.properties` explicitly selects `paperTarget=26.3` and `paperChannel=ALPHA`. The default remains STABLE when the channel property is absent; experimental builds are never an automatic fallback. A later beta or stable transition requires changing the channel, matching API coordinate, and both PaperScript channel settings together.
+`gradle.properties` explicitly selects `paperTarget=26.3` and `paperChannel=BETA`. The default remains STABLE when the channel property is absent; experimental builds are never an automatic fallback. A later stable transition requires changing the channel, matching API coordinate, and both PaperScript channel settings together.
 
-The canonical build command performs this check and update automatically without crossing the configured Paper version. For manual repair, request the latest alpha build for the explicitly approved 26.3 target:
+The canonical build command performs this check and update automatically without crossing the configured Paper version. For manual repair, request the latest beta build for the explicitly approved 26.3 target:
 
 ```bash
 cd servers/Paper-26.3
-./paperscript.sh --yes download --version 26.3 --channel ALPHA
+./paperscript.sh --yes download --version 26.3 --channel BETA
 ./paperscript.sh status
 ```
 
@@ -75,11 +75,11 @@ This is a read-only drift check against the public `1MB-Plugins-Docs` checkout. 
 Expected jar naming:
 
 ```text
-1MB-Lib-Core-v1.0.4-702-j25-26.3.jar
-1MB-Lib-AntiFire-v1.0.4-702-j25-26.3.jar
-1MB-Lib-AFKShrine-v1.0.4-702-j25-26.3.jar
-1MB-Lib-StaffCenter-v1.0.4-702-j25-26.3.jar
-1MB-Lib-Profile-v1.0.4-702-j25-26.3.jar
+1MB-Lib-Core-v1.0.4-730-j25-26.3.jar
+1MB-Lib-AntiFire-v1.0.4-730-j25-26.3.jar
+1MB-Lib-AFKShrine-v1.0.4-730-j25-26.3.jar
+1MB-Lib-StaffCenter-v1.0.4-730-j25-26.3.jar
+1MB-Lib-Profile-v1.0.4-730-j25-26.3.jar
 ```
 
 Every new deployable build replaces the complete managed suite in:
