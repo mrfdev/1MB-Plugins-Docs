@@ -13,6 +13,8 @@ Related references: [player guide](/player-guides/plugins/forage/), [beta test c
 
 **Upcoming placed-resource protection:** the chunk-persistent placement guard below is also pending a later build and restart. The beta remains on build 738. Its recorded startup checks do not verify this new behavior.
 
+**Upcoming participation reward:** the one-daily-plus-one-weekly lifetime reward is pending a later build. Its actual map has not been supplied. Keep Forage participation claiming disabled while preparing the `forage_participation` CMI template; a disabled CMI kit alone is not a delivery lock because Forage can read disabled item templates.
+
 ## Prepare a beta session
 
 Use a normal Survival account for the player route and a separate staff account for diagnostics. The default player permissions are `onembcmi.forage.use`, `.shop`, `.stats`, and `.camp` with the same `onembcmi.forage` prefix. `onembcmi.forage.admin` and its give/inspect/reload/debug children default to **false**, including for operators; grant only the roles required for the session. Console can perform administrative inspection without giving every tester staff powers.
@@ -375,6 +377,27 @@ Preserve compatibility identities, namespaces, issued item PDC, player UUIDs, pr
 Before changing the data format, keep a recoverable backup. Review duplicate owners/worlds, overlapping footprints, missing world identities, and more than three old registrations. Keep questionable records unavailable until resolved. Staff release/reassignment/move helpers must apply the same role, world, biome, ownership, and overlap constraints as normal registration, or be restricted to safe release/inspection until that is possible. Player commands are `/forage camp [inspect|list|register|revalidate|unclaim [registration-UUID]]`; registration, revalidation, and release use explicit confirmations. Unclaim by registration UUID can be initiated remotely because it removes authority rather than granting a remote reward claim.
 
 A staff recovery action must never reset a player's reward history to make a camp usable. Restoring camp access and restoring an uncertain inventory transaction are separate operations.
+
+## Participation reward (upcoming)
+
+Record two lifetime qualifications under the player’s authoritative UUID: at least one successfully claimed daily quest and at least one successfully claimed weekly quest. Either order and different periods qualify. A completed but unclaimed quest, a failed claim or a monthly claim must not substitute. Period rollover must not clear these qualifications or the lifetime participation-claimed state.
+
+The persisted profile fields are `participation.daily-claimed`, `participation.weekly-claimed` and `participation.claimed`. On profile load, backfill qualifications only from retained historical quest records with `claimed: true`, never objective completion alone. Missing older records are not reconstructed. Existing pending or uncertain transactions continue to block claims through the transaction journal.
+
+When restoring backups, preserve the profile's lifetime participation flags together with the transaction journal and receipts. Do not restore an older profile alone to reset `participation.claimed`: that can discard evidence that the lifetime reward was already received. Transaction tombstones have bounded retention, so the journal alone is not a permanent substitute for the saved lifetime flags. Review inventory delivery and claim evidence together before recovery.
+
+The quest index exposes **Participation Reward** in slot 30. Its manual claim requires the player’s own current complete camp workstation and completed Local Introduction. Eligibility does not automatically award anything. While disabled, show “Claiming is not open yet” and preserve progress.
+
+```yaml
+participation:
+  enabled: false
+  reward-kit: forage_participation
+  reward-description: Forage participation keepsake
+```
+
+Keep qualification tracking independent from the participation-claim enable switch: successful daily/weekly claims still count while delivery is disabled. The map reward is not ready, so do not enable claiming merely because a template exists. Both maintained servers have a `forage_participation` definition in `plugins/CMI/Kits/forage.yml` with `Enabled: false`. The authored placeholder items can differ between servers; preserve those edits and inspect the intended server’s actual kit instead of copying another server’s contents over it. Preparing this template does not activate Forage participation claiming.
+
+Before enabling delivery, replace the placeholder with the approved real map item, preserving its required item data/components, and verify the exact kit contents. Keep the CMI kit disabled for ordinary `/kit` access. Forage’s separately disabled claim route is what prevents placeholder delivery; its item-only adapter can deliberately read disabled kits. Reward delivery remains subject to inventory capacity, transaction and recovery checks, and must not create a second lifetime reward after reconnects, new periods, camp changes or repeated clicks. Changing the configured kit name must not reset the lifetime claim.
 
 ## Reward scope and balance
 

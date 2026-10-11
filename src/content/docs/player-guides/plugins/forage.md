@@ -9,6 +9,8 @@ description: "Learn Forage camps, tools, quests, repairs and dust, with a beta c
 
 **Upcoming placed-resource protection:** the placement and growth rules below also await a later build and restart. They are not active on build 738; no beta restart has taken place for these updates.
 
+**Upcoming participation reward:** successfully claiming one daily and one weekly quest will qualify you for one lifetime participation reward. This feature is not on beta build 738. The actual map is still being prepared, so participation claiming will remain disabled until it is ready.
+
 Forage is hands-on gathering with your own tools and camps. You keep one set of Forage XP, points, quests, limits, and reward history wherever you play. Your camps determine where you can submit finds and claim those benefits.
 
 ## How Players Use It
@@ -402,6 +404,14 @@ Daily, Weekly and Monthly each have four top-row filters: **Show All**, **Incomp
 Filters only change what you see. Camp and Local Introduction requirements still apply to claims, and no reward can be claimed twice for the same period. Clicking an incomplete or already-claimed quest keeps your filter and page; confirming a claim closes the menu as before.
 
 Completing a quest makes its reward available. Return to your active workstation and deliberately claim it once, before its period ends. Daily quests follow the server's date, weekly quests use Monday-starting weeks, and monthly quests use calendar months. Your targets and rewards can differ from another tester's. If a claim is pending, keep its request reference and use `/forage review` instead of repeatedly trying to claim again.
+
+### Participation reward (upcoming)
+
+Claim a daily quest reward and a weekly quest reward successfully to qualify. They can be claimed in either order and in different periods; simply finishing their objectives is not enough. Monthly quests do not replace the daily or weekly requirement. This extra participation reward is available only once per player, not once per day, week, camp or world.
+
+After this feature is activated, find **Participation Reward** in **Forage → Quests & Rewards** and read its daily/weekly progress. When delivery is enabled, claim deliberately at your own complete camp workstation after its Local Introduction; the item is never awarded automatically. Retained records of older successfully claimed daily/weekly quests can also count when your profile is loaded.
+
+Your qualifying daily/weekly claims will be remembered even while the participation reward is switched off. The button explains “Claiming is not open yet” and that progress is saved. The real map is not ready yet, so there is currently nothing to claim from this feature. The unfinished kit item is a placeholder, not the promised map reward. Continue claiming your ordinary quest rewards as usual.
 
 **Skill Branches** gives focused bonuses for particular families: Herbalist, Woodsman, Trailkeeper, Cave Botanist, and Wild Alchemist are the defaults. Read each branch's level gate and affected families. Your first choice is free; later switches normally cost 250 Forage Points and require a 72-hour cooldown. The menu shows the current server rules.
 
