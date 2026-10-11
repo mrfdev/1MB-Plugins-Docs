@@ -19,7 +19,7 @@ The canonical command for a new deployable local test build is:
 scripts/build-all.sh
 ```
 
-This command reserves the next shared build number, updates to the latest Paper build for the exact configured `paperTarget` and `paperChannel`, aligns the Paper API coordinate, refreshes generated documentation, runs the complete build and test gate, and synchronizes every active JAR (currently 65) into the maintained test server. It persists the build number and Paper API coordinate only after deployment verifies successfully. If an attempt fails, correct the problem and rerun the same command; the pending transaction reuses the same proposed build number.
+This command reserves the next shared build number, updates to the latest Paper build for the exact configured `paperTarget` and `paperChannel`, aligns the Paper API coordinate, refreshes generated documentation, runs the complete build and test gate, and synchronizes every suite JAR (currently 66) into both maintained servers, Paper and Forage. Both servers must be stopped before the workflow starts. It selects the primary Paper runtime first, pins the Forage runtime to that same exact version/channel/build, and verifies identical runtime bytes before compiling. It persists the build number and Paper API coordinate only after deployment verifies successfully. If an attempt fails, correct the problem and rerun the same command; the pending transaction reuses the same proposed build number.
 
 Focused Gradle tasks are still appropriate during development. They do not create a new deployable build:
 
@@ -54,7 +54,7 @@ cd servers/Paper-26.3
 ./paperscript.sh status
 ```
 
-The expected runtime is the staged `Paper-{version}-{build}.jar`, matching the maintained launcher's highest numbered JAR for that version. `verifyLocalPaperAlignment` and `scripts/build-all.sh` share a read-only validator for PaperScript identity, exact target/build, checksum, configured channel, and launcher selection. Complete `staged_*` state takes precedence over old `current_*` records; partial or invalid staged state is rejected. Legacy `Paper-{version}.jar` state remains supported only when no staged fields exist, and any numbered launcher selection must agree. The selected Paper build must match `paperApiVersion`.
+The expected runtime is the staged `Paper-{version}-{build}.jar`, matching the maintained launcher's highest numbered JAR for that version. `verifyLocalPaperAlignment` and `scripts/build-all.sh` share a read-only validator for PaperScript identity, exact target/build, checksum, configured channel, and launcher selection. Complete `staged_*` state takes precedence over old `current_*` records; partial or invalid staged state is rejected. Legacy `Paper-{version}.jar` state remains supported only when no staged fields exist, and any numbered launcher selection must agree. The selected Paper build must match `paperApiVersion`. The Gradle gate checks both default synchronization targets, including their state/config/JAR inputs, and requires identical runtime bytes. Thus direct `gradle syncBuiltJarsToProjectServer` also refuses a stale, corrupt, or differently aligned clone before deployment. An explicit `projectJarSyncTarget` override validates only its selected server.
 
 ```bash
 gradle verifyLocalPaperAlignment printProjectMetadata
@@ -62,7 +62,7 @@ gradle verifyLocalPaperAlignment printProjectMetadata
 
 `/1mblib version`, `/1mblib status`, inherited feature debug pages, PluginVersions debug output, and support bundles obtain the semantic version, build, Java target, Paper target, and exact compiled Paper API from generated `BuildConstants`.
 
-Stop the Paper 26.3 test server before running `syncBuiltJarsToProjectServer`. The task checks the configured world's `session.lock` and refuses to replace loaded plugin jars while Paper is running; overwriting a live jar can leave Paper's lazy plugin classloader unable to load classes that were not used before the replacement. Run `gradle planProjectJarSync` first for the same complete-set and manifest preflight without server mutation.
+Stop both the Paper 26.3 and Forage 26.3 test servers before running `syncBuiltJarsToProjectServer`. The task checks both configured worlds’ `session.lock` files before replacing anything and holds existing locks throughout coordinated replacement; overwriting a live jar can leave Paper's lazy plugin classloader unable to load classes that were not used before the replacement. Run `gradle planProjectJarSync` first for the same complete-set and manifest preflight without server mutation.
 
 To check whether the public Starlight docs mirror is current, run:
 
@@ -82,10 +82,11 @@ Expected jar naming:
 1MB-Lib-Profile-v1.0.4-730-j25-26.3.jar
 ```
 
-Every new deployable build replaces the complete managed suite in:
+Every new deployable build synchronizes the same complete managed suite into both instance roots:
 
 ```text
 servers/Paper-26.3/plugins/
+servers/Forage-26.3/plugins/
 ```
 
 `scripts/build-all.sh` is the normal entry point because it increments the suite build and updates Paper first. The Gradle task and retained copy helper are repair/redeployment paths for the already-persisted build:
@@ -95,9 +96,21 @@ gradle syncBuiltJarsToProjectServer
 scripts/copy-built-jars-to-local-server.sh
 ```
 
-All paths recognize legacy `1MB-CMIAPI-*` and current `1MB-Lib-*` artifacts as one managed family. Synchronization depends on the complete project build gate and happens only after every active project build succeeds. Preflight requires the exact current count and suffix, Core, the expected source-project Paper identity set, and unique primary/provided identities. Candidates and prior active JARs are staged under `plugins-disabled/1mb-library-sync/transactions`; successful activation verifies names, manifests, identities, and bytes before removing the transaction. A normal activation or verification failure restores the exact prior active set. If the process is interrupted, later plan/sync attempts fail closed while the transaction remains: inspect its `rollback/`, `candidates/`, and active server set before recovery, and never delete that transaction blindly. GameTypes/BentoBox deployment remains separate from this repository-local sync flow.
+All paths recognize legacy `1MB-CMIAPI-*` and current `1MB-Lib-*` artifacts as one managed family. Synchronization depends on the complete project build gate. Both targets are checked and staged before any old JAR moves; backups remain until both new sets verify. Failure in either target restores both prior sets. Configuration files, worlds, playerdata, and unrelated plugins are never synchronized.
 
-The previous `servers/Paper-26.2/` instance remains in place as the 1.0.3 build-699 rollback snapshot. Other retired server instances are stored under the Git-ignored `archive/` directory. Gradle does not build against, sync to, stage from, or test against archived instances; `servers/Paper-26.3/` is the sole active repository-local target.
+Each server may have `1mb-library-disabled-artifacts.txt`, containing exact artifact stems, one per line (blank lines and `#` comments are allowed). The Forage beta uses:
+
+```text
+1MB-Lib-BedrockChatBridge
+```
+
+That artifact's matching build is placed in `plugins-disabled/1mb-library/`, because the beta has no Floodgate; the primary keeps it active. The complete suite remains identical by filename and bytes across each server's active plus deliberately disabled directories. Unknown policy entries and disabling Core are refused. Obsolete managed JARs are removed from both destinations only within the recoverable transaction.
+
+Transactions live under each instance's `plugins-disabled/1mb-library-sync/transactions/` with the same transaction ID, staged `candidates/`, and `rollback/active/` plus `rollback/disabled/`. An interrupted or unresolved transaction blocks later plan/sync attempts across the pair. Inspect both instances and their `targets.txt` records before recovery; never delete rollback evidence blindly. A cleanup warning after successful verification means both suites are committed but retained evidence still needs inspection. Paper runtime download/alignment failures occur before plugin synchronization and leave the pending build number reusable; rerun the canonical workflow after fixing the cause.
+
+The retained copy helper defaults to both servers. Its explicit path argument, or `-PprojectJarSyncTarget=/absolute/server/plugins`, deliberately overrides this with one repair target; it does not establish a new shared local-test build. Live handoff staging continues to use the complete primary Paper set. GameTypes/BentoBox deployment remains separate.
+
+The previous `servers/Paper-26.2/` instance remains in place as the 1.0.3 build-699 rollback snapshot. Other retired server instances are stored under the Git-ignored `archive/` directory. Gradle does not build against, sync to, stage from, or test against archived instances; `servers/Paper-26.3/` and `servers/Forage-26.3/` are the maintained synchronization targets.
 
 The project-local launch script requires Java 27 and discovers `java` through `PATH`. Run it with the installed JDK 27 for runtime compatibility smoke testing:
 

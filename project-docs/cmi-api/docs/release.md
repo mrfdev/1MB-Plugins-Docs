@@ -26,13 +26,13 @@ New builds use JDK 25.0.4.1 and retain Java 25 bytecode. The live and maintained
 
 The current source rollback point is recorded in [Live-Tested Working Baseline: 2026-08-15](compatibility-baselines/live-tested-working-2026-08-15.md). The exact pre-CMI-9.8.9.6 rollback combination is recorded in [Live-Tested Baseline: 2026-08-02](compatibility-baselines/live-tested-2026-08-02.md). The isolated replacement boot and remaining player test matrix are recorded in [CMI 9.8.9.6 Chat Compatibility Pass](compatibility-tests/cmi-9.8.9.6-chat.md).
 
-For every new local test build, stop Paper and run:
+For every new local test build, stop both Paper and Forage instances and run:
 
 ```bash
 scripts/build-all.sh
 ```
 
-The workflow keeps PaperScript on the explicit `paperChannel` (`BETA` for 26.3), requests the latest build for the exact configured `paperTarget`, stages `Paper-{version}-{build}.jar`, aligns `paperApiVersion`, increments the one suite-wide build number, builds and tests every active artifact (currently 65), and synchronizes their complete set. It persists release metadata only after the server JAR set verifies. `gradle verifyLocalPaperAlignment` fails when the local PaperScript state, configured channel, launcher-selected numbered JAR, checksum, or compile API build differs.
+The workflow keeps PaperScript on the explicit `paperChannel` (`BETA` for 26.3), requests the latest build for the exact configured `paperTarget`, stages `Paper-{version}-{build}.jar`, aligns `paperApiVersion`, increments the one suite-wide build number, builds and tests every active artifact (currently 66), pins the Forage runtime to the same selected Paper build, and synchronizes their complete set into both maintained instances. It persists release metadata only after both active-plus-disabled suite sets verify by filename and bytes. `gradle verifyLocalPaperAlignment` fails when the local PaperScript state, configured channel, launcher-selected numbered JAR, checksum, or compile API build differs.
 
 ## Jar Naming
 
@@ -142,12 +142,13 @@ npm run build
 
 Then review, commit, and push the public docs repository separately.
 
-## Copy To Project Test Server
+## Copy To Project Test Servers
 
-Every successful deployable build must place the complete active managed set (currently 65 JARs) into:
+Every successful deployable build must place the same complete managed set (currently 66 JARs) into both instances:
 
 ```text
 servers/Paper-26.3/plugins/
+servers/Forage-26.3/plugins/
 ```
 
 Run the non-mutating preflight first:
@@ -156,7 +157,7 @@ Run the non-mutating preflight first:
 gradle planProjectJarSync
 ```
 
-The canonical `scripts/build-all.sh` command performs this synchronization after the complete build gate. With Paper stopped, either lower-level entry point can repair or redeploy the already-persisted build for both legacy `1MB-CMIAPI-*` and current `1MB-Lib-*` JAR families:
+The canonical `scripts/build-all.sh` command performs this synchronization after the complete build gate. With both instances stopped, either lower-level entry point can repair or redeploy the already-persisted build for both legacy `1MB-CMIAPI-*` and current `1MB-Lib-*` JAR families:
 
 ```bash
 gradle syncBuiltJarsToProjectServer
@@ -168,9 +169,11 @@ or:
 scripts/copy-built-jars-to-local-server.sh
 ```
 
-The task first runs the complete project build gate. It then validates the complete candidate set before mutation, moves prior managed JARs into a transaction rollback directory, activates the candidate set, and verifies exact filenames, build suffix, Core, expected/unique Paper identities, and byte-for-byte copies. Ordinary activation or verification failures restore the prior set. An interrupted transaction blocks later plan/sync attempts until its staged candidates, rollback JARs, and active server state are inspected; do not delete the retained rollback material blindly. GameTypes/BentoBox deployment is handled outside the repository-local sync flow because the BentoBox environment is no longer a local repository test instance.
+The task runs the complete project build gate, preflights both targets, and holds their existing world locks during coordinated replacement. It stages candidates and backups on both instances before activation. A failure in either target restores both prior sets; an interrupted transaction blocks later attempts until both targets' staged candidates, `rollback/active/`, `rollback/disabled/`, and active/disabled state are reviewed. Independent configurations, worlds, playerdata, and third-party plugins remain untouched.
 
-Retired local servers live under the Git-ignored `archive/` directory and are excluded from build, sync, staging, and test workflows. The previous `servers/Paper-26.2/` instance is preserved in place as rollback material. Do not point release tasks at an archived or preserved server; `servers/Paper-26.3/` is the only active repository-local test target.
+A server's `1mb-library-disabled-artifacts.txt` routes named exact suite artifact stems into `plugins-disabled/1mb-library/`. The Forage beta lists `1MB-Lib-BedrockChatBridge` because Floodgate is absent: it receives 65 active JARs plus that one inactive matching JAR, while the primary receives all 66 active JARs. Filename and byte verification covers the complete combined set. See [compiling and deployment](compiling.md) for policy, recovery, and the explicit single-target repair override. GameTypes/BentoBox deployment remains outside this local pair.
+
+Retired local servers live under the Git-ignored `archive/` directory and are excluded from build, sync, staging, and test workflows. The previous `servers/Paper-26.2/` instance is preserved in place as rollback material. Do not point release tasks at an archived or preserved server; the maintained targets are `servers/Paper-26.3/` and `servers/Forage-26.3/`.
 
 ## Stage Tested Jars For Live
 

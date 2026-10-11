@@ -18,3 +18,7 @@ Only `project-docs/cmi-api/` is replaced when this source is synchronized. Other
 ## Scoped Forage beta refresh
 
 On 9 October 2026, the Forage player guide, staff guide, roadmap, public beta checklist, integration reference and dated Forage verification records were refreshed from the reviewed working tree based on source commit `f9fb787a`. Only Forage sections of the shared commands, permissions, feature index and onboarding references were included. Other documentation retains the baseline above. The source had local changes; this publication does not certify a new plugin build or completed in-game acceptance.
+
+## Scoped two-server build workflow refresh
+
+On 11 October 2026, only the local build, runtime-alignment, and deployment workflow sections of `docs/compiling.md` and `docs/release.md` were refreshed from the reviewed working tree. Default builds now synchronize the Paper and Forage instances together, preserve independent data, and support explicitly inactive suite artifacts. Direct deployment checks both selected runtimes as well as stopped-server state. Other documentation and historical build examples retain the baseline above. This publication does not certify a new suite build or completed gameplay acceptance.
