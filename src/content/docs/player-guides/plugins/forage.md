@@ -7,6 +7,8 @@ description: "Learn Forage camps, tools, quests, repairs and dust, with a beta c
 
 **Upcoming Turn-In update:** the clickable Accepted Turn-Ins item guide and cocoa-bean acceptance described below await a later build and restart. The beta still runs build 738: use the complete item list below with the explicit cocoa-bean exception for its current 70 accepted types.
 
+**Upcoming placed-resource protection:** the placement and growth rules below also await a later build and restart. They are not active on build 738; no beta restart has taken place for these updates.
+
 Forage is hands-on gathering with your own tools and camps. You keep one set of Forage XP, points, quests, limits, and reward history wherever you play. Your camps determine where you can submit finds and claim those benefits.
 
 ## How Players Use It
@@ -149,6 +151,18 @@ Player Forage level, a tool's level, and its tier are different. The four later 
 Use `/forage limits` to check personal and source-family daily caps. A capped family or exhausted chunk can stop rewards while ordinary harvesting and tool wear continue. Move to another eligible chunk or try a different family, subject to your remaining personal cap. A different camp or world does not reset your daily allowances.
 
 From 11 October 2026, the beta server’s `normal` preset allows **3,125 player XP or 1,500 actions per day globally**, and **875 XP or 344 actions per day for each source family**, whichever applicable limit is reached first. The 25% increase preserves today's already-earned progress and usage. Check `/forage limits` for your remaining allowance.
+
+## Placed blocks and grown harvests (upcoming)
+
+Once the update is activated, breaking a resource that a player placed will not earn Forage gathering rewards. This applies when someone else placed it, when either hand or an ordinary tool was used, and in any world, including Creative placements. Moving a marked block with a normal or sticky piston keeps its placement record. Falling sand, gravel and other marked falling resources keep that record when they land. The usual block break, drops and tool wear still happen when the other game and protection rules allow them.
+
+A rejected placed block gives no player XP, points, tool XP, branch or quest progress, Local Introduction action or treasure, and uses none of your reward allowance or chunk-exhaustion budget. Waiting does not make it eligible: the existing 12-second limit only controls repeated chat notices. Placement records remain through normally saved chunk unloads and server restarts.
+
+Growing a crop or tree is still useful. A crop you plant must genuinely grow to maturity before its recorded placement stops blocking rewards. Growth that replaces a block with a different type, such as a tree growing, clears the old placement mark. Applying bonemeal while leaving the same type in place does not clear it: the original placed moss block stays marked. Newly grown upper sugar-cane and bamboo blocks can qualify, while the placed base stays marked; manually stacking bamboo above its seedling does not bypass this. A growth check may finish on the following tick, and cancelled growth does not clear a mark. Other gathering rules and limits still apply.
+
+Tracking stays active for configured resources while Forage gameplay or a source family is paused. If Forage reports that placement tracking is unavailable, ask staff to inspect it. A tracking failure may also stop new placements or piston movement to avoid creating resources whose origin cannot be verified.
+
+Forage cannot reconstruct placements made before this update, and staff WorldEdit or other edits outside the supported events are not covered. This is not a promise to identify every farmed resource. Turn-Ins are a separate activity: eligible plain bought, traded or stored items remain acceptable there. On the current beta, record placement-loop behavior as build 738 feedback; the new rejection tests wait for activation.
 
 <!-- BEGIN GENERATED FORAGE SOURCES -->
 
