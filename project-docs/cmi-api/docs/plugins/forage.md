@@ -2,13 +2,13 @@
 
 Forage is a player-facing nature progression plugin for `/forage`. It targets the reviewed Paper 26.3 line with Java 25-compatible bytecode and depends on CMI, CMILib, and `1MB-CMIAPI-Lib`.
 
-**Beta deployment reviewed 11 October 2026: this guide covers suite build 738 on Paper 26.3 BETA 174.** Connected-client acceptance remains separate from automated checks and startup verification. Live gameplay remains dormant until owner acceptance and activation. Development uses the maintained `servers/Paper-26.3/` instance on Java 27, with suite builds on JDK 25.0.4.1. The preserved 26.2 server is a rollback instance. Shipping the Forage JAR in a complete suite build does not activate it on live.
+**Beta deployment reviewed 11 October 2026: this guide covers suite build 739 on Paper 26.3 BETA 174.** Connected-client acceptance remains separate from automated checks and startup verification. Live gameplay remains dormant until owner acceptance and activation. Development uses the maintained `servers/Paper-26.3/` instance on Java 27, with suite builds on JDK 25.0.4.1. The preserved 26.2 server is a rollback instance. Shipping the Forage JAR in a complete suite build does not activate it on live.
 
-**Upcoming Turn-In update:** a clickable Accepted Turn-Ins item list and cocoa-bean acceptance are pending a later build and restart. They are not active on the beta's build 738. The [complete accepted-item list](forage-camps.md#complete-accepted-turn-in-item-list) distinguishes the 70 currently accepted types from cocoa beans, the one upcoming addition.
+**Deployed in build 739:** Accepted Turn-Ins now opens the complete paginated inventory-item list, including cocoa beans. The [complete accepted-item list](forage-camps.md#complete-accepted-turn-in-item-list) contains 71 default types.
 
-**Upcoming placed-resource protection:** persistent placement tracking and the growth rules below also await a later build and restart. They are not active on build 738. The beta has not been restarted for either update.
+**Placed-resource protection is active from build 739:** newly recorded placements and supported movement follow the rules below. Earlier placements are not backfilled.
 
-**Upcoming participation reward:** a once-per-player reward after one successfully claimed daily quest and one successfully claimed weekly quest is pending a later build. Claiming stays disabled until the real participation map is supplied; the disabled `forage_participation` kit is an unfinished item placeholder. Beta build 738 does not include this feature.
+**Participation qualification tracking is active:** successfully claimed daily and weekly quests count toward one lifetime reward. Claiming stays disabled until the real participation map is supplied; the disabled `forage_participation` kit is an unfinished item placeholder.
 
 The tool-protection verification recorded suite build 726 with the then-current 65 managed JARs, 156 passing Forage tests, and a Paper 26.3 BETA 159 probe with 390 assertions. These are dated verification results, not the identity of a later beta-server build. See the [tool-protection verification](../compatibility-tests/forage-tool-protection-2026-10-07.md). The earlier build 724 plant probe passed 88 assertions on Paper 26.3 BETA 157 covering custom-tool rewards, native growth, dust consumption, and protection boundaries. See the [plant compatibility verification](../compatibility-tests/forage-26.3-plants-2026-10-06.md). The earlier build 705 camp-guidance follow-up passed 19 native assertions on Paper 26.3 ALPHA 49. Real-client acceptance remains separate from these synthetic-player checks.
 
@@ -157,9 +157,11 @@ Default family ownership is intentionally non-overlapping: one source family bel
 
 Paper 26.3 gathering includes poplar logs and stripped poplar logs with the Forage Axe, red/orange/yellow poplar leaves with Forage Shears, and red shrubs and shelf mushrooms with the Forage Sickle. These use the existing family rewards, tool progression, quests, and caps. Saplings are planting stock, and crafted poplar building blocks are not gathering sources. The organic turn-in rules also recognize the new leaves, shrubs, and mushrooms when they are plain vanilla items.
 
-### Placed resources and grown harvests (upcoming)
+<a id="placed-resources-and-grown-harvests-upcoming"></a>
 
-After activation, placing a configured resource records that position for Forage, regardless of who placed it, which hand/tool they used, their permissions or game mode, or the world. Breaking that marked block with a Forage tool will award no gathering XP, points, tool XP, branch progress, quest progress, Local Introduction action or treasure. This check runs before reward caps and chunk-exhaustion counters change. Ordinary breaking, drops and tool wear remain subject to their usual Minecraft, protection and tool-condition rules.
+### Placed resources and grown harvests
+
+From build 739, placing a configured resource records that position for Forage, regardless of who placed it, which hand/tool they used, their permissions or game mode, or the world. Breaking that marked block with a Forage tool will award no gathering XP, points, tool XP, branch progress, quest progress, Local Introduction action or treasure. This check runs before reward caps and chunk-exhaustion counters change. Ordinary breaking, drops and tool wear remain subject to their usual Minecraft, protection and tool-condition rules.
 
 Normal and sticky pistons carry existing placement marks with moved blocks, including across chunk boundaries. Falling resource blocks carry their marks while falling and restore them at the landing position. Cancelled placements or moves do not change tracking. Marks have no timed expiry; waiting beyond the existing 12-second chat throttle only allows another notice, not another reward. Tracking continues for configured resources while gameplay or their family is paused. It uses chunk/entity persistence rather than a CoreProtect lookup on each break; it does not synchronously force each placement to disk.
 
@@ -167,7 +169,7 @@ Legitimate growth can produce eligible harvests. A placed ageable crop loses its
 
 If tracking cannot verify a block, its gathering reward is withheld. A tracking-update failure can pause block rewards globally and prevent further placements or piston movements until staff investigates; a configuration reload does not clear that failure state. Check `/forage debug runtime` and the server log before planning recovery.
 
-Tracking begins at activation. Earlier placements have unknown history and are not backfilled. Staff WorldEdit and other out-of-band edits are not integrated. Normal chunk saves are not a guarantee that the latest in-memory marks survive a sudden crash before saving. See the [staff tracking contract](forage-camp-technical.md#placed-resource-tracking-upcoming) for the storage boundary. Camp Turn-Ins deliberately continue to accept eligible plain bought, traded or stored items without gathering provenance.
+Tracking on this beta begins with build 739. Earlier placements have unknown history and are not backfilled. Staff WorldEdit and other out-of-band edits are not integrated. Normal chunk saves are not a guarantee that the latest in-memory marks survive a sudden crash before saving. See the [staff tracking contract](forage-camp-technical.md#placed-resource-tracking) for the storage boundary. Camp Turn-Ins deliberately continue to accept eligible plain bought, traded or stored items without gathering provenance.
 
 Sword and mace Forage progress is entity-based. The sword listens to configured gentle creature entities such as cows, sheep, chickens, squids, rabbits, and turtles. The mace listens to configured danger entities such as shulkers, blazes, breezes, wither skeletons, ghasts, and phantoms. The plugin records a short-lived matching-tool melee hit and only awards progress if that same player is still holding the same curated tool type when the entity dies, within ten seconds of the recorded hit. The plugin does not register fragile custom enchants or rewrite vanilla loot tables for those routes; it awards Forage XP/points/treasure rolls when the matching curated tool is used for a configured entity source.
 
@@ -279,13 +281,15 @@ Quests may also include the item reward described on their card. Leave one empty
 
 **Claim before the period ends.** The plugin uses the server’s configured timezone: daily quests reset by date, weekly quests use ISO weeks beginning Monday, and monthly quests use calendar months. A new period starts new progress and rolls; the current menu does not offer earlier periods’ unclaimed rewards. Confirm the test server’s timezone with staff.
 
-### Participation reward (upcoming)
+<a id="participation-reward-upcoming"></a>
+
+### Participation reward
 
 Successfully claiming at least one daily quest and one weekly quest qualifies the player for one lifetime participation reward. Either order counts, and the two claims can come from different quest periods. Completing a quest without successfully claiming its reward does not qualify; monthly claims cannot replace either requirement. Qualifying claim history belongs to the player’s UUID and is retained across period changes, rather than resetting with daily or weekly quests.
 
 The manual claim button is **Forage → Quests & Rewards → Participation Reward**. Claiming requires the owner’s current complete camp workstation and completed Local Introduction; qualifying never automatically awards the item. On profile load, retained historical quest records with `claimed: true` can establish the daily/weekly qualifications. Records no longer retained cannot be reconstructed.
 
-Tracking qualifying claims and enabling the extra reward are separate. Once the new feature is active, successful daily/weekly claims must be recorded even while participation claiming is disabled. The real map has not been supplied, so claiming remains off. Staff have prepared a disabled CMI kit named `forage_participation` with an unfinished item placeholder; it is not the promised map and must not be delivered as the reward. See the [staff setup](forage-camp-technical.md#participation-reward-upcoming) and [beta checklist](forage/checklist.md) before activation.
+Tracking qualifying claims and enabling the extra reward are separate. Successful daily/weekly claims are recorded even while participation claiming is disabled. The real map has not been supplied, so claiming remains off. Staff have prepared a disabled CMI kit named `forage_participation` with an unfinished item placeholder; it is not the promised map and must not be delivered as the reward. See the [staff setup](forage-camp-technical.md#participation-reward) and [beta checklist](forage/checklist.md) before enabling participation delivery.
 
 Treasure finds are occasional bonuses from rewarded gathering, not guaranteed drops. The base chance is 1.8% per eligible action before tool and branch modifiers, with a default 90-second cooldown after a successful roll is prepared. Keep inventory space available: if the inventory cannot fit the selected treasure, the find is skipped before delivery. Nothing drops on the ground, no treasure is queued for later, and treasure totals and treasure-quest progress do not increase. The otherwise-valid gathering action still earns its normal progress. Ordinary treasures are marked items used by Repair & Merge and Greater Forage Dust; a vanilla item with the same material or a renamed copy is not equivalent. Legendary Pulse Dust has a 3% replacement chance within a treasure roll, not a 3% chance per gathering action, and should not be required to pass a short natural-drop test.
 
@@ -303,11 +307,11 @@ By default, camp turn-ins:
 - respect the daily Forage XP cap
 - take at most 192 items per submission and use a 30-second cooldown
 
-Camp Turn-Ins consume eligible stacks from the normal storage inventory, including the hotbar. Keep items you want to retain in a chest before confirming and read the **Accepted Turn-Ins** and preview cards. The current Accepted Turn-Ins card shows family names only; older “Turn-In Sources” wording refers to that same card. This is an explicit Camp Delivery, not automatic credit for placing items in camp storage.
+Camp Turn-Ins consume eligible stacks from the normal storage inventory, including the hotbar. Keep items you want to retain in a chest before confirming and read the **Accepted Turn-Ins** and preview cards. Click Accepted Turn-Ins for the full item catalogue; its entries reflect this server’s current eligibility rules. This is an explicit Camp Delivery, not automatic credit for placing items in camp storage.
 
-Use the [complete accepted Turn-In item list](forage-camps.md#complete-accepted-turn-in-item-list) for exact inventory materials and the [staff acceptance reference](forage-camp-technical.md#turn-in-acceptance-and-configuration) for configuration rules. This list is separate from the gathering catalogue: `GLOW_BERRIES` can be accepted as a crop item while its `CAVE_VINES` source is in the cave gathering family. Ordinary logs, calcite, saplings, sticks and poisonous potatoes are not accepted by default. `COCOA` is a crop block that Forage can gather, but beta build 738 does not accept its `COCOA_BEANS` drop.
+Use the [complete accepted Turn-In item list](forage-camps.md#complete-accepted-turn-in-item-list) for exact inventory materials and the [staff acceptance reference](forage-camp-technical.md#turn-in-acceptance-and-configuration) for configuration rules. This list is separate from the gathering catalogue: `GLOW_BERRIES` can be accepted as a crop item while its `CAVE_VINES` source is in the cave gathering family. Ordinary logs, calcite, saplings, sticks and poisonous potatoes are not accepted by default. `COCOA` is a crop block that Forage can gather; its plain `COCOA_BEANS` drop is accepted for Turn-Ins from build 739.
 
-The upcoming update makes Accepted Turn-Ins clickable and paginated, using the same effective material/family resolver as submission, and adds `COCOA_BEANS` to the crop drop aliases. This produces 71 accepted item types with the default families; the running build 738 accepts 70. Browsing the list will not submit items or grant rewards. A listed material must still be a plain vanilla stack, and the actual submission rechecks the inventory and camp conditions.
+Accepted Turn-Ins is clickable and paginated, using the same effective material/family resolver as submission, including the `COCOA_BEANS` crop drop alias. Build 739 accepts 71 item types with the default families. Browsing the list does not submit items or grant rewards. A listed material must still be a plain vanilla stack, and the actual submission rechecks the inventory and camp conditions.
 
 Items do not need Forage gathering provenance. Bought or traded plain resources can qualify, without completing a gathering quest, leveling a tool or choosing a branch first. Local Introduction and active workstation access remain required. Turn-Ins award their reduced player XP/points rather than gathering actions, tool XP or gathering-quest progress.
 
@@ -631,7 +635,7 @@ These are enough for holograms and ajLeaderboards around the Forage camp/NPC are
 - Camp validation scans a bounded footprint, rechecks the Initial Camp, and obtains missing chunks asynchronously without generation; validation never edits blocks.
 - WorldGuard is optional and checked by reflection so the jar can load without a compile-time WorldGuard dependency.
 - Chunk exhaustion is intentionally conservative and cheap: it tracks chunk, source family, action count, and cooldown.
-- The Local Introduction proves fresh personal qualifying actions in that world, not the origin of each ordinary stackable item. Build 738 does not comprehensively track placed sources. The upcoming placement guard rejects rewards for recorded placements and follows piston moves, with explicit growth exceptions; historical placements, out-of-band edits and creature origins remain outside that guarantee.
+- The Local Introduction proves fresh personal qualifying actions in that world, not the origin of each ordinary stackable item. Build 739 rejects rewards for placements recorded since its activation and follows supported piston/falling-block movement, with explicit growth exceptions; historical placements, out-of-band edits and creature origins remain outside that guarantee.
 
 ## Future Direction
 

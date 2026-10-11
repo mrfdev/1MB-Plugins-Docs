@@ -1,12 +1,12 @@
 # Forage: player guide
 
-**Reviewed 11 October 2026 for the 26.3 beta, suite build 738 on Paper BETA 174.** The features below are deployed on the beta server; player acceptance testing remains open. This guide describes the camp and gathering flow. Availability, prices, caps, and enabled sources depend on the server; live activation remains separate from beta testing.
+**Reviewed 11 October 2026 for the 26.3 beta, suite build 739 on Paper BETA 174.** The features below are deployed on the beta server; player acceptance testing remains open. This guide describes the camp and gathering flow. Availability, prices, caps, and enabled sources depend on the server; live activation remains separate from beta testing.
 
-**Upcoming Turn-In update:** the clickable Accepted Turn-Ins item guide and cocoa-bean acceptance described below await a later build and restart. The beta still runs build 738: use the complete item list below with the explicit cocoa-bean exception for its current 70 accepted types.
+**New in build 739:** Accepted Turn-Ins opens the complete item guide, and plain cocoa beans are accepted. The default list below contains 71 inventory item types.
 
-**Upcoming placed-resource protection:** the placement and growth rules below also await a later build and restart. They are not active on build 738; no beta restart has taken place for these updates.
+**Placed-resource protection is active from build 739:** newly recorded placements follow the movement and growth rules below. Placements from before this update are not backfilled.
 
-**Upcoming participation reward:** successfully claiming one daily and one weekly quest will qualify you for one lifetime participation reward. This feature is not on beta build 738. The actual map is still being prepared, so participation claiming will remain disabled until it is ready.
+**Participation progress is now tracked:** successfully claiming one daily and one weekly quest qualifies you for one lifetime participation reward. The actual map is still being prepared, so participation claiming remains disabled until it is ready.
 
 Forage is hands-on gathering with your own tools and camps. You keep one set of Forage XP, points, quests, limits, and reward history wherever you play. Your camps determine where you can submit finds and claim those benefits.
 
@@ -151,9 +151,11 @@ Use `/forage limits` to check personal and source-family daily caps. A capped fa
 
 From 11 October 2026, the beta server’s `normal` preset allows **3,125 player XP or 1,500 actions per day globally**, and **875 XP or 344 actions per day for each source family**, whichever applicable limit is reached first. The 25% increase preserves today's already-earned progress and usage. Check `/forage limits` for your remaining allowance.
 
-## Placed blocks and grown harvests (upcoming)
+<a id="placed-blocks-and-grown-harvests-upcoming"></a>
 
-Once the update is activated, breaking a resource that a player placed will not earn Forage gathering rewards. This applies when someone else placed it, when either hand or an ordinary tool was used, and in any world, including Creative placements. Moving a marked block with a normal or sticky piston keeps its placement record. Falling sand, gravel and other marked falling resources keep that record when they land. The usual block break, drops and tool wear still happen when the other game and protection rules allow them.
+## Placed blocks and grown harvests
+
+From build 739, breaking a resource whose placement Forage recorded earns no Forage gathering rewards. This applies when someone else placed it, when either hand or an ordinary tool was used, and in any world, including Creative placements. Moving a marked block with a normal or sticky piston keeps its placement record. Falling sand, gravel and other marked falling resources keep that record when they land. The usual block break, drops and tool wear still happen when the other game and protection rules allow them.
 
 A rejected placed block gives no player XP, points, tool XP, branch or quest progress, Local Introduction action or treasure, and uses none of your reward allowance or chunk-exhaustion budget. Waiting does not make it eligible: the existing 12-second limit only controls repeated chat notices. Placement records remain through normally saved chunk unloads and server restarts.
 
@@ -161,7 +163,7 @@ Growing a crop or tree is still useful. A crop you plant must genuinely grow to 
 
 Tracking stays active for configured resources while Forage gameplay or a source family is paused. If Forage reports that placement tracking is unavailable, ask staff to inspect it. A tracking failure may also stop new placements or piston movement to avoid creating resources whose origin cannot be verified.
 
-Forage cannot reconstruct placements made before this update, and staff WorldEdit or other edits outside the supported events are not covered. This is not a promise to identify every farmed resource. Turn-Ins are a separate activity: eligible plain bought, traded or stored items remain acceptable there. On the current beta, record placement-loop behavior as build 738 feedback; the new rejection tests wait for activation.
+Forage cannot reconstruct placements made before this update, and staff WorldEdit or other edits outside the supported events are not covered. This is not a promise to identify every farmed resource. Turn-Ins are a separate activity: eligible plain bought, traded or stored items remain acceptable there. On this beta, tracking begins with build 739. Test fresh placements separately from blocks whose earlier history is unknown.
 
 <!-- BEGIN GENERATED FORAGE SOURCES -->
 
@@ -402,13 +404,15 @@ Filters only change what you see. Camp and Local Introduction requirements still
 
 Completing a quest makes its reward available. Return to your active workstation and deliberately claim it once, before its period ends. Daily quests follow the server's date, weekly quests use Monday-starting weeks, and monthly quests use calendar months. Your targets and rewards can differ from another tester's. If a claim is pending, keep its request reference and use `/forage review` instead of repeatedly trying to claim again.
 
-### Participation reward (upcoming)
+<a id="participation-reward-upcoming"></a>
+
+### Participation reward
 
 Claim a daily quest reward and a weekly quest reward successfully to qualify. They can be claimed in either order and in different periods; simply finishing their objectives is not enough. Monthly quests do not replace the daily or weekly requirement. This extra participation reward is available only once per player, not once per day, week, camp or world.
 
-After this feature is activated, find **Participation Reward** in **Forage → Quests & Rewards** and read its daily/weekly progress. When delivery is enabled, claim deliberately at your own complete camp workstation after its Local Introduction; the item is never awarded automatically. Retained records of older successfully claimed daily/weekly quests can also count when your profile is loaded.
+Find **Participation Reward** in **Forage → Quests & Rewards** and read its daily/weekly progress. When delivery is enabled, claim deliberately at your own complete camp workstation after its Local Introduction; the item is never awarded automatically. Retained records of older successfully claimed daily/weekly quests can also count when your profile is loaded.
 
-Your qualifying daily/weekly claims will be remembered even while the participation reward is switched off. The button explains “Claiming is not open yet” and that progress is saved. The real map is not ready yet, so there is currently nothing to claim from this feature. The unfinished kit item is a placeholder, not the promised map reward. Continue claiming your ordinary quest rewards as usual.
+Your qualifying daily/weekly claims are remembered even while the participation reward is switched off. The button explains “Claiming is not open yet” and that progress is saved. The real map is not ready yet, so there is currently nothing to claim from this feature. The unfinished kit item is a placeholder, not the promised map reward. Continue claiming your ordinary quest rewards as usual.
 
 **Skill Branches** gives focused bonuses for particular families: Herbalist, Woodsman, Trailkeeper, Cave Botanist, and Wild Alchemist are the defaults. Read each branch's level gate and affected families. Your first choice is free; later switches normally cost 250 Forage Points and require a 72-hour cooldown. The menu shows the current server rules.
 
@@ -418,15 +422,15 @@ Treasures are occasional extra finds, not guaranteed on a short trip. Keep inven
 
 After Local Introduction, **Camp Turn-Ins** offers reduced XP and points for eligible plain organic items. Its default limit is 192 items per submission with a 30-second cooldown. It scans your normal inventory, including the hotbar; read the preview and put any plain resources you want to keep into a chest first. Named, enchanted, custom, container-bearing, and Forage-marked items must remain untouched. Putting items into camp storage does not submit them.
 
-The **Accepted Turn-Ins** card names the accepted families on beta build 738. It does not yet open an item list. If an older message says “Turn-In Sources,” it means this card; use the complete inventory-item list below until the clickable guide is activated. `/forage sources` describes blocks to break and creatures to defeat with Forage tools, which is a different list.
+Click **Accepted Turn-Ins** to browse the complete accepted inventory-item list for the running server. `/forage sources` describes blocks to break and creatures to defeat with Forage tools, which is a different list.
 
 Acceptance checks the item you submit, not how you obtained it. Eligible plain items bought from a shop or received from another player can qualify; no Forage-tool gathering provenance is required. Turn-Ins do not replace gathering quests, tool XP or Local Introduction gathering actions. Camp access, introduction completion, caps and cooldowns still apply.
 
-**After the upcoming update is activated**, clicking Accepted Turn-Ins will open a list built from the running server's eligibility rules, including cocoa beans. It shows up to 28 item types per page, with Previous/Next, an **About Accepted Turn-Ins** button to refresh the list, Back to Turn-Ins and a Public Turn-In Guide button that sends a clickable documentation link. Browsing submits nothing. Until then, cocoa beans are rejected on build 738. Other incidental drops are not automatically accepted: sticks, saplings and poisonous potatoes remain outside the default list. Logs and calcite also remain excluded even though matching Forage tools can gather their source families. Glow berries are accepted inventory items; their cave-vine gathering blocks belong to a separate gathering family.
+Accepted Turn-Ins uses the running server's eligibility rules, including cocoa beans with the defaults. It shows up to 28 item types per page, with Previous/Next, an **About Accepted Turn-Ins** button to refresh the list, Back to Turn-Ins and a Public Turn-In Guide button that sends a clickable documentation link. Browsing submits nothing. Other incidental drops are not automatically accepted: sticks, saplings and poisonous potatoes remain outside the default list. Logs and calcite also remain excluded even though matching Forage tools can gather their source families. Glow berries are accepted inventory items; their cave-vine gathering blocks belong to a separate gathering family.
 
 ## Complete accepted Turn-In item list
 
-**Current beta exception:** the list below contains 71 types from the upcoming source defaults. Build 738 accepts the other 70, but **not Cocoa Beans (`COCOA_BEANS`)**. The clickable in-game item list is also upcoming. Server configuration can change these defaults.
+**Current beta, build 739:** the list below contains 71 default accepted types, including **Cocoa Beans (`COCOA_BEANS`)**. The clickable in-game list reflects the running server's configuration, which can change these defaults.
 
 <!-- BEGIN GENERATED FORAGE TURN-INS -->
 

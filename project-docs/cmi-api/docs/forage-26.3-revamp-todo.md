@@ -4,9 +4,9 @@ Updated **11 October 2026**. This is the current work tracker for [GitHub issue 
 
 ## Current baseline
 
-- Both maintained instances, `servers/Paper-26.3/` and `servers/Forage-26.3/`, have the same managed suite build **738**, targeting Paper **26.3 BETA 174**. Each server keeps independent worlds, configuration and player progress. The current suite has **66** managed JARs; the historical 65-JAR counts below remain evidence for their original builds.
+- Both maintained instances, `servers/Paper-26.3/` and `servers/Forage-26.3/`, have the same managed suite build **739**, targeting Paper **26.3 BETA 174**. Each server keeps independent worlds, configuration and player progress. The current suite has **66** managed JARs; the historical 65-JAR counts below remain evidence for their original builds.
 - Build with JDK **25.0.4.1**, retaining Java 25 bytecode; maintained Paper runtimes use Java **27**. The canonical `scripts/build-all.sh` workflow requires both maintained servers stopped and synchronizes their complete suites and selected Paper runtime together.
-- The beta runs the accepted camp system, quest kit delivery, expanded camp requirements, recent activity, quest filters, source catalogue, tool protections and mcMMO ability blocking. The source-complete changes listed below are **not deployed in build 738**.
+- The beta runs the accepted camp system, quest kit delivery, expanded camp requirements, recent activity, quest filters, source catalogue, tool protections and mcMMO ability blocking. The additional changes listed below are deployed in build 739; participation claiming remains disabled pending the real map.
 - The public player/staff guides and beta checklist are published. Publication does not activate live gameplay. Live Forage remains dormant until its separate release gates and explicit owner authorization are complete.
 
 ## Completed implementation
@@ -16,28 +16,28 @@ Updated **11 October 2026**. This is the current work tracker for [GitHub issue 
 - [x] Support player-built equivalents and reused Abandoned Camp features through counted requirements, without requiring structure provenance or one schematic.
 - [x] Require the composter, crafting table, 24 wool-family shelter positions, six fences, storage, a lit campfire, a lit candle position, an intact straw bed, firefly bush, two placed cushions, water-filled cauldron, filled flowerpot, two stripped log/wood blocks and a placed banner. Stored items do not qualify; the [player guide](https://docs.1moreblock.com/player-guides/plugins/forage/) defines accepted variants and scan bounds.
 - [x] Provide the tool shop, tool XP/tier upgrades, repair/merge, skill branches, daily/weekly/monthly quests, deliberate inventory Turn-Ins and bounded Forage Dust/growth.
-- [x] Provide wrapped guidance, complete gathering-source browsing, Recent Activity and quest status filters. Further catalogue/navigation fixes awaiting deployment are listed separately below.
+- [x] Provide wrapped guidance, complete gathering-source browsing, Recent Activity and quest status filters. The build 739 catalogue/navigation additions are listed separately below.
 - [x] Protect curated tools from reviewed external modification routes, resolve the Pyro composter interaction conflict, permit workstation access at the durability safety limit, and block conflicting mcMMO Super Breaker, Tree Feller and Giga Drill Breaker behavior.
 - [x] Deliver item-only CMI quest kits with preflight, exact inventory checks, durable claim identities and retained recovery evidence. Kit templates can remain disabled for ordinary CMI access; arbitrary reward commands are still unsupported.
 - [x] Save Forage snapshots asynchronously and retain transaction evidence. This does **not** implement durable acknowledgement from external inventory/economy providers; see ENG-01.
-- [x] Publish current player/staff instructions and a separate beta checklist, with upcoming features clearly identified.
+- [x] Publish current player/staff instructions and a separate beta checklist, with delivery and acceptance gates clearly identified.
 
-## Source complete, awaiting deployment
+## Additional changes deployed in build 739
 
-These are completed implementation tasks, not new feature requests. Their activation is still open under REL-01.
+These completed implementation tasks were deployed at the authorized 11 October maintenance window. REL-01 is complete; content, engineering and player acceptance gates remain separate.
 
-- [x] **Queued: accepted Turn-Ins.** Add a clickable, paginated accepted-item browser using the submission resolver, and accept cocoa beans (71 default item types after deployment; 70 in build 738).
-- [x] **Queued: placed-resource protection.** Persist current-position provenance in chunk PDC, follow ordinary/sticky piston movement across chunks and apply the documented growth/falling-block rules. No per-break CoreProtect queries, expiry-based eligibility or historical backfill. See the [tracking contract](https://docs.1moreblock.com/staff-reference/plugins/forage/#placed-resource-tracking-upcoming).
-- [x] **Queued: source navigation and inspection.** Restore the Source Tools Back button and allow the verified read-only CMI `/itemnbt` route without weakening tool modification guards.
-- [x] **Queued: participation reward.** Track successfully claimed daily and weekly rewards across periods under the player's UUID, including retained earlier claimed history. Provide one lifetime manual claim through Quests & Rewards. Track qualifications while participation delivery is disabled; preserve claim history when changing kits/camps. The real map and activation remain CONTENT-02 and REL-02.
+- [x] **Deployed: accepted Turn-Ins.** Add a clickable, paginated accepted-item browser using the submission resolver, and accept cocoa beans (71 default item types, including cocoa beans).
+- [x] **Deployed: placed-resource protection.** Persist current-position provenance in chunk PDC, follow ordinary/sticky piston movement across chunks and apply the documented growth/falling-block rules. No per-break CoreProtect queries, expiry-based eligibility or historical backfill. See the [tracking contract](https://docs.1moreblock.com/staff-reference/plugins/forage/#placed-resource-tracking).
+- [x] **Deployed: source navigation and inspection.** Restore the Source Tools Back button and allow the verified read-only CMI `/itemnbt` route without weakening tool modification guards.
+- [x] **Deployed: participation tracking and UI.** Track successfully claimed daily and weekly rewards across periods under the player's UUID, including retained earlier claimed history. Provide one lifetime manual claim through Quests & Rewards. Track qualifications while participation delivery is disabled; preserve claim history when changing kits/camps. The real map and activation remain CONTENT-02 and REL-02.
 
 ## Remaining engineering, content and release work
 
 - [ ] **ENG-01 — Inventory/economy durability and recovery.** Implement the verified provider durability/reconciliation boundary required by the current live-release contract. Forage's own snapshots and receipts do not prove Minecraft or external inventory/economy state is durably saved. Pending/uncertain operations remain blocked for staff review; `/forage admin recoveryack` is an evidence-removal acknowledgement, not the missing adapter. Do not mark this complete from ordinary save tests or silently relax the live gate. See [transactions and recovery](https://docs.1moreblock.com/staff-reference/plugins/forage/#transactions-saving-and-crash-recovery).
 - [ ] **CONTENT-01 — Real quest rewards.** Replace the 23 beta kit placeholders (10 daily, eight weekly, five monthly) with authored rewards and update their `reward-description` values. At this review all 23 still contain named dirt. Preserve the user's edits and each server's separate configuration.
 - [ ] **CONTENT-02 — Participation map.** Add the finished map to `forage_participation`, preserving its map/item components. The beta template exists and currently holds a firefly bush; it is not the final map. Keep `participation.enabled: false` until ready. CMI's `Enabled: false` alone does not prevent Forage from reading a kit template.
-- [ ] **REL-01 — Deploy the completed queue.** At the next explicitly authorized maintenance window, stop both maintained servers, run the canonical full-suite build, and deploy matching complete JAR sets. The beta must not be restarted merely to update this tracker.
-- [ ] **REL-02 — Activate final reward content.** Load the authored CMI kits and matching Forage descriptions/mappings through their supported reloads. Once the participation feature is deployed and its real map is ready, deliberately enable its Forage claim route while keeping ordinary CMI `/kit` access disabled.
+- [x] **REL-01 — Deploy the completed queue.** On 11 October 2026, canonical build 739 synchronized matching complete sets of 66 managed JARs to both maintained servers on Paper 26.3 BETA 174. The primary native probe passed 213 checks, then stopped cleanly and its temporary plugin was removed. The beta completed startup at 20:29:05 Europe/Amsterdam; configuration reported zero errors, one expected normal-preset warning and 35 successful checks, with healthy storage, active placement tracking and active/armed integration guards.
+- [ ] **REL-02 — Activate final reward content.** Load the authored CMI kits and matching Forage descriptions/mappings through their supported reloads. Once the real participation map is ready, deliberately enable its Forage claim route while keeping ordinary CMI `/kit` access disabled.
 - [ ] **REL-03 — Prepare the owner-run live handoff.** Settle live balance, permissions, world mappings and reward contents; preserve existing live data/configuration and a rollback. After ENG-01 and acceptance, stage the exact accepted suite and obtain explicit live activation. Beta worlds, profiles and fixture settings are not live deployment inputs.
 
 ## Testing and owner acceptance, tracked separately
@@ -46,9 +46,9 @@ These remain open. A completed source checkbox, the published docs or automated 
 
 - [ ] **TEST-01 — Beta gameplay acceptance.** Complete the applicable player/staff checks in the [shareable beta checklist](https://docs.1moreblock.com/staff-reference/plugins/forage-checklist/), including current camp requirements, guidance, tool protection, progression, rewards and integration behavior, on supported real clients.
 - [ ] **TEST-02 — Adversarial and recovery acceptance.** Complete concurrent/stale GUI and inventory scenarios, actual inventory-provider failure/crash/restart cases, AutoSell interactions and the required acceptance of ENG-01. Retain unresolved evidence; do not replay uncertain deliveries automatically.
-- [ ] **TEST-03 — Queued changes after deployment.** Keep the new Turn-In, provenance and participation checks blocked on build 738. Participation delivery also waits for CONTENT-02 and REL-02; eligibility tracking can be exercised while claiming stays off.
+- [ ] **TEST-03 — Newly deployed changes.** Exercise the build 739 Turn-In catalogue/cocoa acceptance, placement/growth protection, source navigation, read-only item inspection and participation qualification checks on real clients. Tracking starts with build 739 and does not backfill earlier placements. Participation delivery still waits for CONTENT-02 and REL-02; eligibility tracking can be exercised while claiming stays off.
 
-Current local evidence: build 738's canonical suite recorded 4,191 tests (zero failures/errors, 11 skips), including 663 passing Forage tests. Subsequent source-only Forage verification reached **823 tests, zero failures/errors/skips**. Those development tests are not a new distributable suite or connected-client acceptance. Builds 704–706 and their native probes below are historical evidence only.
+Current local evidence: canonical build 739 passed **823 Forage tests, zero failures/errors/skips**. The primary native probe passed **213 checks** using detached native inventories/PDC and unregistered profile data; real profiles, camp registrations, reward chunk state and receipt summaries were unchanged. It did not prove connected-client acceptance, successful hub-Back navigation, physical piston movement, reward delivery or disk/crash persistence. Beta startup, configuration and Minecraft status/ping checks passed. Builds 704–706 and their native probes below are historical evidence only.
 
 ## Optional later development
 

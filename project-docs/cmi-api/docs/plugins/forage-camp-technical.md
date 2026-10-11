@@ -2,15 +2,15 @@
 
 **Documentation reviewed against the current implementation on 11 October 2026.** The camp revamp and its guidance, plant, and tool-protection follow-ups are implemented and locally verified; connected-client beta acceptance and live activation remain separate steps. The repository currently targets Paper 26.3 **BETA** with API build **174**, Java 25 bytecode, JDK 25.0.4.1 for Gradle, and Java **27+35-2325** for the local server. These are the configured baseline, not a claim that every historical probe below ran on build 174. The external inventory crash boundary remains a release gate.
 
-**Beta deployment, 11 October 2026:** suite build **738** is deployed and running on the maintained Forage beta with Paper 26.3 BETA **174**. CMI command, alias and virtual-anvil guards, mcMMO, Pyro and ItemSoulBind protections report ready; storage is available with no failure. Configuration reports zero errors and one expected normal-preset warning. Build 738 corrects the build 737 CMI command-map startup failure documented in the [protection compatibility record](../compatibility-tests/forage-protection-parity-2026-10-11.md). Startup verification does not sign off connected-client gameplay or live-server activation. Dated compatibility records retain their original pre-deployment findings.
+**Beta deployment, 11 October 2026:** suite build **739** is deployed on both maintained instances, with matching sets of 66 managed JARs and Paper 26.3 BETA **174**. The beta completed startup at 20:29:05 Europe/Amsterdam. CMI command, alias and virtual-anvil guards, mcMMO, Pyro and ItemSoulBind protections report active or armed; placement tracking and storage are healthy. Configuration reports zero errors, one expected normal-preset warning and 35 successful checks. The canonical build passed all 823 Forage tests. A native primary-server probe passed 213 checks with CMI 9.8.10.5 and CMILib 1.6.0.1, using detached inventories, PDC and profiles without player/world mutations or reward delivery. These checks do not sign off connected-client gameplay, physical piston behavior, disk/crash persistence or live activation. Dated compatibility records retain their original findings, including the [build 737/738 CMI correction](../compatibility-tests/forage-protection-parity-2026-10-11.md).
 
 Related references: [player guide](forage-camps.md), [beta test checklist](forage/checklist.md), [main feature reference](forage.md), and [template measurements](../compatibility-tests/forage-26.3-camp-templates-2026-09-27.md).
 
-**Upcoming Turn-In update:** the runtime item catalogue and `COCOA_BEANS` acceptance below are pending a later build and restart. The running beta remains on build 738 with 70 accepted inventory types; the new default list has 71. Do not mark the new menu or cocoa test passed on the current beta.
+**Turn-In update deployed:** build 739 provides the runtime item catalogue and `COCOA_BEANS` acceptance, for 71 default types. The native probe rendered all 71 across three pages; actual player submission checks remain open.
 
-**Upcoming placed-resource protection:** the chunk-persistent placement guard below is also pending a later build and restart. The beta remains on build 738. Its recorded startup checks do not verify this new behavior.
+**Placed-resource protection deployed:** tracking begins with build 739. Existing placements are not backfilled. The native probe verified detached PDC placement and cross-chunk movement callbacks; the physical-world and persistence acceptance cases remain open.
 
-**Upcoming participation reward:** the one-daily-plus-one-weekly lifetime reward is pending a later build. Its actual map has not been supplied. Keep Forage participation claiming disabled while preparing the `forage_participation` CMI template; a disabled CMI kit alone is not a delivery lock because Forage can read disabled item templates.
+**Participation tracking deployed, delivery disabled:** the one-daily-plus-one-weekly qualification and lifetime claim state are available in build 739. The actual map has not been supplied. Keep Forage participation claiming disabled while preparing the `forage_participation` CMI template; a disabled CMI kit alone is not a delivery lock because Forage can read disabled item templates.
 
 ## Prepare a beta session
 
@@ -173,7 +173,9 @@ gradle :plugins:player-fun:forage:test --tests '*ForageSourceDocumentationTest' 
 
 The normal Forage test suite also checks this generated section for drift, including when the guide changes. Generation modifies only its explicit markers and leaves surrounding prose intact. Review the generated diff, mirror the relevant Forage documents into the public documentation repository, then run that repository's `npm run docs:generate` and `npm run build`. These development checks do not build/deploy a new suite or restart a server. See the [source guide verification record](../compatibility-tests/forage-source-guide-2026-10-11.md) for the checked command, menu, source mapping and documentation behavior.
 
-## Placed-resource tracking (upcoming)
+<a id="placed-resource-tracking-upcoming"></a>
+
+## Placed-resource tracking
 
 Track a placed configured resource independently of the placing player's Forage eligibility. Both hands, ordinary/Forage tools, players without Forage permission, Creative placements and all worlds must produce the same placement record. Configured material IDs are retained for tracking even when their family or gameplay is disabled; pausing rewards must not provide an untracked placement window. The identity is the physical world UUID and block coordinates, not the player's UUID or a shared world name. Cancelled placements and cancelled piston movements leave the records unchanged.
 
@@ -191,11 +193,11 @@ There is no historical backfill: placements from before activation are unknown. 
 
 ## Turn-In acceptance and configuration
 
-Gathering sources and accepted inventory items are separate contracts. `/forage sources` lists breakable blocks and eligible creatures; it must not be used as an exhaustive Turn-In item list. In build 738, the **Accepted Turn-Ins** card shows only family names and has no click action. The old missing-items message's “Turn-In Sources” label is misleading. The upcoming update consistently names Accepted Turn-Ins and opens its read-only item catalogue from that card, with 28 entries per page, Previous/Next, refresh through **About Accepted Turn-Ins**, Back to Turn-Ins and a clickable Public Turn-In Guide link. Browsing must not consume inventory, mutate progress or create submission authority.
+Gathering sources and accepted inventory items are separate contracts. `/forage sources` lists breakable blocks and eligible creatures; it must not be used as an exhaustive Turn-In item list. Build 739 consistently names **Accepted Turn-Ins** and opens its read-only item catalogue from that card, with 28 entries per page, Previous/Next, refresh through **About Accepted Turn-Ins**, Back to Turn-Ins and a clickable Public Turn-In Guide link. Browsing must not consume inventory, mutate progress or create submission authority.
 
 The default allowed families are `flora`, `crops`, `mushrooms`, `leaves`, `fruits` and `moss`, configured under `camp.turnins.allowed-families`. A family must also be loaded and enabled through `sources.ids` and `sources.<family>.enabled`. For each inventory material, resolve its effective configured material-family binding first; only if it has none, use the built-in drop alias. Then require that family to be allowed for Turn-Ins. The catalogue must use this same resolver and include only item materials, never block-only types such as `CARROTS` or `COCOA`.
 
-The current drop aliases are `CARROT`, `POTATO`, `BEETROOT`, `WHEAT_SEEDS`, `BEETROOT_SEEDS`, `SWEET_BERRIES` and `CHORUS_FRUIT` to `crops`, plus `MELON_SLICE` and `APPLE` to `fruits`. The upcoming update adds `COCOA_BEANS` to `crops`. A configured direct binding takes precedence over these aliases. Item-only `GLOW_BERRIES` is a valid Turn-In material under crops even though its cave-vine gathering blocks belong to cave; do not derive this list by filtering the block-only source catalogue. Saplings, sticks and poisonous potatoes are not implicit aliases. Logs and calcite are gathering materials outside the default Turn-In families.
+The current drop aliases are `CARROT`, `POTATO`, `BEETROOT`, `WHEAT_SEEDS`, `BEETROOT_SEEDS`, `SWEET_BERRIES`, `CHORUS_FRUIT` and `COCOA_BEANS` to `crops`, plus `MELON_SLICE` and `APPLE` to `fruits`. A configured direct binding takes precedence over these aliases. Item-only `GLOW_BERRIES` is a valid Turn-In material under crops even though its cave-vine gathering blocks belong to cave; do not derive this list by filtering the block-only source catalogue. Saplings, sticks and poisonous potatoes are not implicit aliases. Logs and calcite are gathering materials outside the default Turn-In families.
 
 The exact item list below describes default eligibility, not current permission to submit. Submission still requires plain vanilla stacks without item meta, an eligible owned workstation, completed Local Introduction, available persistence, applicable caps and cooldowns. It scans normal storage including hotbar slots, not armor/offhand slots or container contents. There is no gathering-provenance check: eligible plain shop/traded items can qualify. Reduced Turn-In XP/points do not advance gathering actions, tool XP or gathering quests.
 
@@ -210,7 +212,7 @@ The normal Forage suite checks both Turn-In lists for drift. The generator chang
 
 ## Complete accepted Turn-In item list
 
-**Current beta exception:** the generated source-default list below has 71 types. Build 738 accepts all 70 types other than **`COCOA_BEANS`** with the audited default family configuration. Cocoa-bean acceptance and the clickable in-game list are upcoming, not active on this beta.
+**Current beta, build 739:** all 71 generated source-default types below, including **`COCOA_BEANS`**, are accepted with the audited default family configuration. The in-game catalogue uses the same effective resolver as submission.
 
 <!-- BEGIN GENERATED FORAGE TURN-INS -->
 
@@ -375,7 +377,9 @@ Before changing the data format, keep a recoverable backup. Review duplicate own
 
 A staff recovery action must never reset a player's reward history to make a camp usable. Restoring camp access and restoring an uncertain inventory transaction are separate operations.
 
-## Participation reward (upcoming)
+<a id="participation-reward-upcoming"></a>
+
+## Participation reward
 
 Record two lifetime qualifications under the player’s authoritative UUID: at least one successfully claimed daily quest and at least one successfully claimed weekly quest. Either order and different periods qualify. A completed but unclaimed quest, a failed claim or a monthly claim must not substitute. Period rollover must not clear these qualifications or the lifetime participation-claimed state.
 
