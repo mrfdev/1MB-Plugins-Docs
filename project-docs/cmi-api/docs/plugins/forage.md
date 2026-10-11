@@ -70,7 +70,9 @@ Forage only awards progress when:
 
 The global daily cap limits one player’s rewarded gathering across families for the day. The source-family daily caps are separate: if shears/leaves are capped, a player can switch to a shovel, axe, sickle, pickaxe, brush, sword, or mace route and keep playing until those families also cap. This encourages variety without making one exhausted route feel like the whole feature is over for the day.
 
-Under the shipped `normal` preset, the daily allowances are 2,500 player XP or 1,200 actions globally and 700 XP or 275 actions per family, whichever applicable limit is reached first. Local exhaustion starts after 75 actions in a chunk/source family and lasts 30 minutes. Presets and staff configuration can change these values; `/forage limits` shows the current personal limits. Changing area helps local exhaustion, changing family helps a family cap, and neither bypasses a global cap.
+Following the 11 October 2026 configuration reload, the beta server’s daily allowances under the `normal` preset are **3,125 player XP or 1,500 actions globally**, and **875 XP or 344 actions for every source family**, whichever applicable limit is reached first. This raises the previous 2,500/1,200 global and 700/275 family thresholds by 25%, rounding the family action limit up to a whole action. The next synchronized suite build uses these values as defaults; existing server configurations retain their saved thresholds unless staff change them. Raising the caps preserves today's recorded usage, XP, points and quest progress rather than resetting them. Check `/forage limits` for the effective personal limits.
+
+Local exhaustion remains 75 actions in a chunk/source family followed by 30 minutes of rest. Presets and staff configuration can change limits. Changing area helps local exhaustion, changing family helps a family cap, and neither bypasses a global cap.
 
 When a chunk/source family becomes exhausted, Forage both records the event in the batched recent summary and sends a short immediate warning so players do not keep wasting actions in the same area.
 
@@ -320,7 +322,7 @@ See the [complete camp guide](forage-camps.md) for requirements, world rules, re
 | `/forage admin camps reassign <key\|near> <player>` | admin/console | Legacy helper; unavailable where ownership transfer would bypass camp registration requirements. |
 | `/forage admin camps move <key\|near>` | admin | Legacy helper; use release and deliberate new registration under the 26.3 rules. |
 | `/forage admin chunks` | admin/console | Shows chunk exhaustion runtime counts. |
-| `/forage admin reload` | admin/console | Reloads config and saved data. |
+| `/forage admin reload` | admin/console | Reloads configuration and translations while preserving current in-memory player progress. |
 | `/forage admin save` | admin/console | Saves profiles and chunk state. |
 | `/forage admin recoveryack <transaction-UUID> confirm` | admin/console | Discards retained finalized item/economy recovery evidence only after staff verifies the external state. This is not a refund or replay command. |
 | `/forage review [reference]` | player | Shows the player's own saved requests, including while gameplay is dormant; use `/forage review page <number>` for further requests. |

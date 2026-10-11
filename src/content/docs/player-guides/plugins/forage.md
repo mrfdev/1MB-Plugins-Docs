@@ -125,6 +125,8 @@ Player Forage level, a tool's level, and its tier are different. The four later 
 
 Use `/forage limits` to check personal and source-family daily caps. A capped family or exhausted chunk can stop rewards while ordinary harvesting and tool wear continue. Move to another eligible chunk or try a different family, subject to your remaining personal cap. A different camp or world does not reset your daily allowances.
 
+From 11 October 2026, the beta server’s `normal` preset allows **3,125 player XP or 1,500 actions per day globally**, and **875 XP or 344 actions per day for each source family**, whichever applicable limit is reached first. The 25% increase preserves today's already-earned progress and usage. Check `/forage limits` for your remaining allowance.
+
 ## Quests, branches, and treasures
 
 At an active workstation, open **Quests & Rewards** to inspect daily, weekly, monthly, and ready-to-claim quests. Valid rewarded gathering advances applicable quests automatically. Follow the actual objective shown on your card: visiting a biome without gathering there is insufficient, and a material quest needs that exact material. Turn-ins, dust use, and staff-granted XP do not count as gathering actions.

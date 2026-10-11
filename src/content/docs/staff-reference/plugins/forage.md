@@ -110,6 +110,8 @@ Camp Turn-Ins includes the current world's `introductionSubmitted` state in its 
 
 Completing an introduction enables global benefits at that camp, subject to the Initial Camp remaining valid. XP, points, quest/collection state, personal daily caps, purchases, and claimed-reward history stay global. World or camp changes never create fresh allowances. Physical submissions and deliveries use the active inventory group only.
 
+The 11 October 2026 beta configuration reload raised normal-preset daily caps by 25%: global XP **2,500 → 3,125**, global actions **1,200 → 1,500**, and every source family's XP **700 → 875** and actions **275 → 344** (rounded up). The next suite build ships the new defaults; existing configurations retain their stored values and need an explicit staff edit plus reload. Changing these thresholds does not reset daily usage, profile progress or quest state. Local chunk exhaustion is unchanged. Verify the effective values with `/forage admin balance` and `/forage limits`; do not use `/forage admin resetcap` to apply this increase.
+
 An invalid Initial Camp blocks Secondary Camp activities regardless of their introduction status. Inspection, repair/revalidation, recovery review, and replacement controls remain accessible. Neither a broken camp nor a reset world deletes global profile progress.
 
 ## Workstation authority and GUI hardening
