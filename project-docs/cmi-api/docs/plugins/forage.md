@@ -164,6 +164,10 @@ Unchanged older base tools migrate automatically. Older refined or enchanted too
 
 Forage tools can also freeze themselves at a low configured durability floor instead of breaking. By default they safety-lock at 5 durability remaining, stop working for block/tool actions, and must be restored through the owned composter workstation’s Repair & Merge page.
 
+**Pending next build: container access while worn.** An otherwise valid Forage tool at the durability floor can remain in your hand while you open a chest, trapped chest, barrel, ender chest, any shulker box, furnace, blast furnace, smoker, hopper, dispenser, dropper or brewing stand. Opening one of these inventories does not use or repair the tool. Gathering, tool damage and external repairs remain blocked; a malformed or externally modified tool still fails its integrity checks before ordinary container access. This is a specific inventory-opening allowance, not permission to use every interactive block. On beta build 736, the broad durability guard can still block these containers; put the worn tool away before opening them.
+
+The pending change also keeps the sneak-right-click composter recovery gesture reachable when the held tool fails a durability or integrity check. Camp ownership, permissions and current camp state still govern workstation access, and paid actions revalidate the tool and their other requirements before charging or changing anything. Build 736 already permits the basic composter recovery gesture with a valid tool at 5 durability. Vanilla sneaking behavior and other plugins’ protection decisions remain unchanged; Forage does not reverse their cancellation to force a container or workstation open.
+
 To reduce sneaky external repair routes, each curated tool also stores its last legitimate durability state in PDC. Periodic inventory audits and live tool checks restore that tracked durability if an outside command, GUI, Mending tick, or console-dispatched repair action tries to heal the tool without using Forage's own repair flow.
 
 Forage tools can be upgraded through the owned composter workstation’s Upgrade Tool page, after that camp’s Local Introduction:
