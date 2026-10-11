@@ -134,13 +134,242 @@ Open **Tool Shop** at your complete registered camp to buy your first tool. Star
 | Sword | Configured creatures such as cows, sheep, chickens, rabbits, and squid | Carry any Forage tool at tool level 2 |
 | Mace | Configured hostile mobs such as zombies, skeletons, blazes, breezes, and shulkers | Carry any Forage tool at tool level 2 |
 
-For block routes, **break** a configured source with the matching tool in your main hand. The Brush route rewards block breaking, not completion of vanilla archaeology brushing. For sword/mace routes, make a matching melee hit and keep holding that tool type until the mob dies within ten seconds. Inspect **Tools & Families** for up to five source examples per family. There is no expandable in-game list of every enabled source yet. Poplar saplings and crafted poplar building blocks are not gathering sources.
+For block routes, **break** a configured source with the matching tool in your main hand. The Brush route rewards block breaking, not completion of vanilla archaeology brushing. For sword/mace routes, make a matching melee hit, receive the kill credit within ten seconds, and hold the same Forage tool type when the mob dies. Projectile-only kills and picking up drops do not count. Every tier of a tool uses the same source list; an upgrade does not unlock extra blocks or creatures. Poplar saplings and crafted poplar building blocks are not gathering sources.
+
+The [complete source catalogue](#complete-source-catalogue) below lists every supported source from the shipped defaults. **Build 736** only shows up to five examples per family in **Tools & Families**. **Pending next build:** use `/forage sources` from anywhere to inspect the held Forage tool, or choose a tool if none is held; `/forage sources <tool>` opens a specific tool. The Trowel uses the ID `shovel`. Click a tool in Tools & Families for its full paginated list, or use the catalogue's clickable public documentation link. This is read-only browsing: it does not create workstation access or grant gathering rewards. The in-game list follows the server's configuration, which may differ from the published defaults. Each source card separates support from current reward pauses and can be clicked to refresh that snapshot. Gathering still rechecks its rules when you act. The hub's **Tools & All Sources** button and onboarding's **What can I gather?** entry also open the catalogue before your camp is ready. Newly issued or normally updated tool lore includes a source hint; existing tools acquire it when Forage next refreshes their lore, not merely when you open the guide.
 
 Player Forage level, a tool's level, and its tier are different. The four later tool types unlock when you carry a level-2 Forage tool; a tool left in a chest cannot satisfy the shop check. Each rewarded action can advance player XP, points, the held tool, the matching skill branch, and applicable quests.
 
 Use `/forage limits` to check personal and source-family daily caps. A capped family or exhausted chunk can stop rewards while ordinary harvesting and tool wear continue. Move to another eligible chunk or try a different family, subject to your remaining personal cap. A different camp or world does not reset your daily allowances.
 
 From 11 October 2026, the beta server’s `normal` preset allows **3,125 player XP or 1,500 actions per day globally**, and **875 XP or 344 actions per day for each source family**, whichever applicable limit is reached first. The 25% increase preserves today's already-earned progress and usage. Check `/forage limits` for your remaining allowance.
+
+<!-- BEGIN GENERATED FORAGE SOURCES -->
+
+## Complete source catalogue
+
+This complete list is generated from the shipped defaults through the same source catalogue used by Forage. Staff can customize or disable sources; after the pending catalogue update is deployed, `/forage sources [tool]` shows that server's effective list. The command and clickable Tools & Families entries are **not available in beta build 736**.
+
+**Every tier of a tool uses the same sources.** Tool level, tier, refinements and enchantments do not unlock extra entries in its list. They affect progression or tool behavior separately. The Trowel's command/configuration ID is `shovel`.
+
+For block sources, break the listed block with the matching genuine Forage tool in your main hand. This includes the Brush: vanilla archaeology brushing is not a Forage gathering action. For creatures, land a matching melee hit, receive the kill credit within ten seconds, and hold the same Forage tool type in your main hand when the creature dies. Projectile-only kills and merely picking up drops do not qualify.
+
+**Listed source does not mean rewards are currently available.** Daily player/family caps, exhausted chunks, world and area restrictions, a paused feature or an unusable tool can still stop gathering rewards. Read the current feedback and `/forage limits`. Browsing the catalogue does not create a camp visit, complete an introduction, grant rewards or bypass these checks.
+
+Names below are followed by the exact material or entity ID used in staff configuration. Item-only materials cannot be broken as source blocks and are omitted from this catalogue.
+
+### Forage Axe sources
+
+Tool ID: `axe`. 31 source types.
+
+**Field Fruit** (`fruits`):
+
+- Bamboo (`BAMBOO`): Break this block.
+- Cactus (`CACTUS`): Break this block.
+- Kelp (`KELP`): Break this block.
+- Kelp Plant (`KELP_PLANT`): Break this block.
+- Melon (`MELON`): Break this block.
+- Pumpkin (`PUMPKIN`): Break this block.
+- Sugar Cane (`SUGAR_CANE`): Break this block.
+
+**Woodcraft** (`logs`):
+
+- Acacia Log (`ACACIA_LOG`): Break this block.
+- Birch Log (`BIRCH_LOG`): Break this block.
+- Cherry Log (`CHERRY_LOG`): Break this block.
+- Crimson Stem (`CRIMSON_STEM`): Break this block.
+- Dark Oak Log (`DARK_OAK_LOG`): Break this block.
+- Jungle Log (`JUNGLE_LOG`): Break this block.
+- Mangrove Log (`MANGROVE_LOG`): Break this block.
+- Oak Log (`OAK_LOG`): Break this block.
+- Pale Oak Log (`PALE_OAK_LOG`): Break this block.
+- Poplar Log (`POPLAR_LOG`): Break this block.
+- Spruce Log (`SPRUCE_LOG`): Break this block.
+- Stripped Acacia Log (`STRIPPED_ACACIA_LOG`): Break this block.
+- Stripped Birch Log (`STRIPPED_BIRCH_LOG`): Break this block.
+- Stripped Cherry Log (`STRIPPED_CHERRY_LOG`): Break this block.
+- Stripped Crimson Stem (`STRIPPED_CRIMSON_STEM`): Break this block.
+- Stripped Dark Oak Log (`STRIPPED_DARK_OAK_LOG`): Break this block.
+- Stripped Jungle Log (`STRIPPED_JUNGLE_LOG`): Break this block.
+- Stripped Mangrove Log (`STRIPPED_MANGROVE_LOG`): Break this block.
+- Stripped Oak Log (`STRIPPED_OAK_LOG`): Break this block.
+- Stripped Pale Oak Log (`STRIPPED_PALE_OAK_LOG`): Break this block.
+- Stripped Poplar Log (`STRIPPED_POPLAR_LOG`): Break this block.
+- Stripped Spruce Log (`STRIPPED_SPRUCE_LOG`): Break this block.
+- Stripped Warped Stem (`STRIPPED_WARPED_STEM`): Break this block.
+- Warped Stem (`WARPED_STEM`): Break this block.
+
+### Forage Brush sources
+
+Tool ID: `brush`. 8 source types.
+
+**Brush Relics** (`relics`):
+
+- Chiseled Bookshelf (`CHISELED_BOOKSHELF`): Break this block.
+- Decorated Pot (`DECORATED_POT`): Break this block.
+- Suspicious Gravel (`SUSPICIOUS_GRAVEL`): Break this block.
+- Suspicious Sand (`SUSPICIOUS_SAND`): Break this block.
+
+**Dry Finds** (`sands`):
+
+- Clay (`CLAY`): Break this block.
+- Gravel (`GRAVEL`): Break this block.
+- Red Sand (`RED_SAND`): Break this block.
+- Sand (`SAND`): Break this block.
+
+### Forage Mace sources
+
+Tool ID: `mace`. 9 source types.
+
+**Danger Finds** (`danger_drops`):
+
+- Blaze (`BLAZE`): Defeat this creature.
+- Breeze (`BREEZE`): Defeat this creature.
+- Creeper (`CREEPER`): Defeat this creature.
+- Ghast (`GHAST`): Defeat this creature.
+- Phantom (`PHANTOM`): Defeat this creature.
+- Shulker (`SHULKER`): Defeat this creature.
+- Skeleton (`SKELETON`): Defeat this creature.
+- Wither Skeleton (`WITHER_SKELETON`): Defeat this creature.
+- Zombie (`ZOMBIE`): Defeat this creature.
+
+### Forage Pickaxe sources
+
+Tool ID: `pickaxe`. 20 source types.
+
+Ordinary stone, deepslate and ores are not Forage Pickaxe sources in these defaults. Breaking them can still be normal Minecraft mining, without Forage rewards.
+
+**Cave Forage** (`cave`):
+
+- Cave Vines (`CAVE_VINES`): Break this block.
+- Cave Vines Plant (`CAVE_VINES_PLANT`): Break this block.
+- Glow Lichen (`GLOW_LICHEN`): Break this block.
+- Hanging Roots (`HANGING_ROOTS`): Break this block.
+- Pointed Dripstone (`POINTED_DRIPSTONE`): Break this block.
+- Rooted Dirt (`ROOTED_DIRT`): Break this block.
+- Spore Blossom (`SPORE_BLOSSOM`): Break this block.
+
+**Stone Relics** (`stone`):
+
+- Amethyst Cluster (`AMETHYST_CLUSTER`): Break this block.
+- Basalt (`BASALT`): Break this block.
+- Blackstone (`BLACKSTONE`): Break this block.
+- Bone Block (`BONE_BLOCK`): Break this block.
+- Calcite (`CALCITE`): Break this block.
+- Crying Obsidian (`CRYING_OBSIDIAN`): Break this block.
+- Dripstone Block (`DRIPSTONE_BLOCK`): Break this block.
+- End Stone (`END_STONE`): Break this block.
+- Magma Block (`MAGMA_BLOCK`): Break this block.
+- Obsidian (`OBSIDIAN`): Break this block.
+- Purpur Block (`PURPUR_BLOCK`): Break this block.
+- Smooth Basalt (`SMOOTH_BASALT`): Break this block.
+- Tuff (`TUFF`): Break this block.
+
+### Forage Shears sources
+
+Tool ID: `shears`. 14 source types.
+
+**Canopy Finds** (`leaves`):
+
+- Acacia Leaves (`ACACIA_LEAVES`): Break this block.
+- Azalea Leaves (`AZALEA_LEAVES`): Break this block.
+- Birch Leaves (`BIRCH_LEAVES`): Break this block.
+- Cherry Leaves (`CHERRY_LEAVES`): Break this block.
+- Dark Oak Leaves (`DARK_OAK_LEAVES`): Break this block.
+- Flowering Azalea Leaves (`FLOWERING_AZALEA_LEAVES`): Break this block.
+- Jungle Leaves (`JUNGLE_LEAVES`): Break this block.
+- Mangrove Leaves (`MANGROVE_LEAVES`): Break this block.
+- Oak Leaves (`OAK_LEAVES`): Break this block.
+- Orange Poplar Leaves (`ORANGE_POPLAR_LEAVES`): Break this block.
+- Pale Oak Leaves (`PALE_OAK_LEAVES`): Break this block.
+- Red Poplar Leaves (`RED_POPLAR_LEAVES`): Break this block.
+- Spruce Leaves (`SPRUCE_LEAVES`): Break this block.
+- Yellow Poplar Leaves (`YELLOW_POPLAR_LEAVES`): Break this block.
+
+### Forage Sickle sources
+
+Tool ID: `sickle`. 37 source types.
+
+**Farm Herbs** (`crops`):
+
+- Beetroots (`BEETROOTS`): Break this block.
+- Carrots (`CARROTS`): Break this block.
+- Cocoa (`COCOA`): Break this block.
+- Nether Wart (`NETHER_WART`): Break this block.
+- Potatoes (`POTATOES`): Break this block.
+- Sweet Berry Bush (`SWEET_BERRY_BUSH`): Break this block.
+- Wheat (`WHEAT`): Break this block.
+
+**Mushrooms** (`mushrooms`):
+
+- Brown Mushroom (`BROWN_MUSHROOM`): Break this block.
+- Brown Mushroom Block (`BROWN_MUSHROOM_BLOCK`): Break this block.
+- Mushroom Stem (`MUSHROOM_STEM`): Break this block.
+- Red Mushroom (`RED_MUSHROOM`): Break this block.
+- Red Mushroom Block (`RED_MUSHROOM_BLOCK`): Break this block.
+- Shelf Mushroom (`SHELF_MUSHROOM`): Break this block.
+
+**Wild Flora** (`flora`):
+
+- Allium (`ALLIUM`): Break this block.
+- Azure Bluet (`AZURE_BLUET`): Break this block.
+- Blue Orchid (`BLUE_ORCHID`): Break this block.
+- Cornflower (`CORNFLOWER`): Break this block.
+- Dandelion (`DANDELION`): Break this block.
+- Dead Bush (`DEAD_BUSH`): Break this block.
+- Fern (`FERN`): Break this block.
+- Large Fern (`LARGE_FERN`): Break this block.
+- Lilac (`LILAC`): Break this block.
+- Lily Of The Valley (`LILY_OF_THE_VALLEY`): Break this block.
+- Orange Tulip (`ORANGE_TULIP`): Break this block.
+- Oxeye Daisy (`OXEYE_DAISY`): Break this block.
+- Peony (`PEONY`): Break this block.
+- Pink Tulip (`PINK_TULIP`): Break this block.
+- Pitcher Plant (`PITCHER_PLANT`): Break this block.
+- Poppy (`POPPY`): Break this block.
+- Red Shrub (`RED_SHRUB`): Break this block.
+- Red Tulip (`RED_TULIP`): Break this block.
+- Rose Bush (`ROSE_BUSH`): Break this block.
+- Short Grass (`SHORT_GRASS`): Break this block.
+- Sunflower (`SUNFLOWER`): Break this block.
+- Tall Grass (`TALL_GRASS`): Break this block.
+- Torchflower (`TORCHFLOWER`): Break this block.
+- White Tulip (`WHITE_TULIP`): Break this block.
+
+### Forage Sword sources
+
+Tool ID: `sword`. 13 source types.
+
+**Creature Finds** (`creature_drops`):
+
+- Chicken (`CHICKEN`): Defeat this creature.
+- Cow (`COW`): Defeat this creature.
+- Donkey (`DONKEY`): Defeat this creature.
+- Glow Squid (`GLOW_SQUID`): Defeat this creature.
+- Horse (`HORSE`): Defeat this creature.
+- Llama (`LLAMA`): Defeat this creature.
+- Mooshroom (`MOOSHROOM`): Defeat this creature.
+- Mule (`MULE`): Defeat this creature.
+- Rabbit (`RABBIT`): Defeat this creature.
+- Sheep (`SHEEP`): Defeat this creature.
+- Squid (`SQUID`): Defeat this creature.
+- Trader Llama (`TRADER_LLAMA`): Defeat this creature.
+- Turtle (`TURTLE`): Defeat this creature.
+
+### Forage Trowel sources
+
+Tool ID: `shovel`. 6 source types.
+
+**Moss and Roots** (`moss`):
+
+- Azalea (`AZALEA`): Break this block.
+- Big Dripleaf (`BIG_DRIPLEAF`): Break this block.
+- Flowering Azalea (`FLOWERING_AZALEA`): Break this block.
+- Moss Block (`MOSS_BLOCK`): Break this block.
+- Moss Carpet (`MOSS_CARPET`): Break this block.
+- Small Dripleaf (`SMALL_DRIPLEAF`): Break this block.
+
+<!-- END GENERATED FORAGE SOURCES -->
 
 ## Quests, branches, and treasures
 
@@ -194,6 +423,7 @@ Forage camp ownership is not a general land claim. Follow the world's normal bui
 | `/forage status` | Current progression, camp/tool state, and a next-step summary. |
 | `/forage stats` | Player progression and held-tool details. |
 | `/forage limits` | Current daily limits, costs, and reward ranges. |
+| `/forage sources [tool] [page]` | Pending next build: complete read-only source list from anywhere; uses the held Forage tool or opens the picker. |
 | `/forage camp` | Inspect the nearby camp and its registration checklist. |
 | `/forage camp list` | Find your registrations and their IDs. |
 | `/forage camp register` | Open the deliberate registration action. |
@@ -209,7 +439,7 @@ Forage camp ownership is not a general land claim. Follow the world's normal bui
 
 **Why are rewards locked at 30/30?** Open Local Introduction and submit the eight eligible plain items explicitly. Camp Turn-Ins is a different activity and cannot finish that step for you.
 
-**Why does an ordinary tool, wrong tool, or crafted block give no progress?** Forage needs a genuine curated tool and one of its configured sources. The tool may still perform its normal Minecraft action without a Forage reward. Check Tools & Families and `/forage limits`.
+**Why does an ordinary tool, wrong tool, or crafted block give no progress?** Forage needs a genuine curated tool and one of its configured sources. The tool may still perform its normal Minecraft action without a Forage reward. Check the complete source catalogue (or `/forage sources` after deployment) and `/forage limits`.
 
 **Why does my Secondary Camp stop working after I change Wild?** Every workstation depends on a valid Initial Camp. Repair and revalidate that registration, or replace it with another qualifying Initial Camp. Your global points and claimed-reward history remain saved.
 

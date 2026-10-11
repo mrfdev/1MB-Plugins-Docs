@@ -147,6 +147,23 @@ Cancel GUI transport paths consistently: ordinary clicks, shift-clicks from eith
 
 Exact Paper event behavior matters: `InventoryDragEvent` is separate from `InventoryClickEvent`, and changing views during the click callback requires deferral. The shared GUI service's protections do not replace feature-level camp, price, inventory, or entitlement checks.
 
+## Source catalogue and configuration
+
+**Pending next synchronized build; not active in beta build 736.** `/forage sources [tool]` is a read-only player catalogue available without a camp visit. No argument selects the held Forage tool when recognized, otherwise the tool picker. A tool argument selects its complete paginated list. Tools & Families links into those lists and the catalogue offers a clickable [public source guide](/player-guides/plugins/forage/#complete-source-catalogue). Reading sources never grants workstation authority or changes progress.
+
+The catalogue uses the same effective material/entity-to-family maps as gathering after configuration loads. Enabled families come from `sources.ids` and `sources.<family>.enabled`; source IDs are in `sources.<family>.materials` and `sources.<family>.entities`. Enabled tools come from `tools.ids` and `tools.<tool>.enabled`, with family membership in `tools.<tool>.families`. The Trowel is `shovel`. The generated player catalogue includes every effective default ID. Invalid or item-only material entries are not block sources; disabled tools/families are absent from the effective catalogue. Keep any local modifications in configuration and compare the runtime list after reload.
+
+All tool tiers share their tool's family/source membership. Source membership is independent of daily player/family caps, chunk exhaustion, world/area permissions, feature availability and the held tool's condition. The menu displays current pause reasons separately, as a refreshable snapshot at the player's location. Those remain action-time reward or tool-use guards; a read-only catalogue is not an assertion that a player can earn a reward at the current location. Block sources require a matching main-hand tool and a real break, including the Brush. Creature sources require a matching melee hit, kill credit within ten seconds and the same tool type held at death. Gathering source blocks/entities are separate from dropped items, turn-in eligibility and vanilla archaeology.
+
+The marked **Complete source catalogue** section in `forage-camps.md` is generated from `ForagePlugin.defaultSettings()`, the production configuration loaders and the same catalogue adapter as the menu. Do not hand-edit that section or parse Java source text to maintain it. The offline generator obtains block/item classification from the exact compiled Paper API's public `BlockType` and `ItemType` declarations, so source membership does not depend on a live test server or mocked registry entries. With JDK 25.0.4.1 selected, run:
+
+```sh
+gradle :plugins:player-fun:forage:generateSourceDocumentation --console=plain
+gradle :plugins:player-fun:forage:test --tests '*ForageSourceDocumentationTest' --console=plain
+```
+
+The normal Forage test suite also checks this generated section for drift, including when the guide changes. Generation modifies only its explicit markers and leaves surrounding prose intact. Review the generated diff, mirror the relevant Forage documents into the public documentation repository, then run that repository's `npm run docs:generate` and `npm run build`. These development checks do not build/deploy a new suite or restart a server. See the [source guide verification record](https://github.com/mrfdev/1MB-Plugins-Docs/blob/main/project-docs/cmi-api/docs/compatibility-tests/forage-source-guide-2026-10-11.md) for the checked command, menu, source mapping and documentation behavior.
+
 ## Read-only guidance and onboarding
 
 Forage supplies current recommendations to the shared `/next` provider and `/forage next` gateway. The missing-Initial-Camp recommendation uses `registry-v2`, not legacy `claims` or historical gathering totals, and precedes current-world gathering blockers so a new player in Spawn still learns to find Dappled Forest in an approved Initial Camp world. The route defaults to `/wild`; `worlds.initial`, whitelist/blacklist rules, and unambiguous `worlds.mappings` determine eligible logical names. A player already in the mapped physical world is told to find the biome there. An empty or invalid eligible set yields a staff-help recommendation.

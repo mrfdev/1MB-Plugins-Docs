@@ -130,7 +130,11 @@ Examples of default gathering sources:
 | Sword | cows, sheep, chickens, rabbits, squid |
 | Mace | zombies, skeletons, creepers, blazes, breezes, shulkers |
 
-Block routes award progress when you **break** a configured block with the matching tool. The Brush route is a block-breaking route, not a reward for completing vanilla archaeology brushing. The list above is a starting point. The workstation’s Tools & Families page shows up to five examples per family; server configuration defines the complete enabled list. There is no expandable in-game source catalog yet.
+Block routes award progress when you **break** a configured block with the matching genuine Forage tool in your main hand. The Brush route is a block-breaking route, not a reward for completing vanilla archaeology brushing. The list above is a starting point; the [generated complete source catalogue](forage-camps.md#complete-source-catalogue) contains every effective block and creature source from the shipped defaults, with exact configuration IDs. Every tier of a tool uses the same sources.
+
+**Pending next build:** `/forage sources [tool]` opens the full read-only catalogue from anywhere. With no tool argument it selects the held Forage tool, or shows the tool picker. Trowel uses the command/configuration ID `shovel`. Tools & Families entries open the corresponding paginated catalogue, whose documentation button sends a clickable public guide link. The hub's Tools & All Sources button and onboarding's What can I gather? entry also provide access before camp readiness. The list uses the running server's enabled tool/family definitions and effective source bindings; it grants no camp visit, purchase, XP or quest progress. **Build 736** still shows only up to five examples per family and has no `/forage sources` command.
+
+A listed source can still give no reward because of a daily player/family cap, chunk exhaustion, world/area restrictions, disabled gathering or an unusable held tool. Source membership and current reward eligibility are separate; use `/forage limits` and the current feedback to diagnose a pause.
 
 Default family ownership is intentionally non-overlapping: one source family belongs to one matching tool. For example, logs and pumpkins belong to the axe, leaves belong to shears, moss belongs to the trowel, cave/stone finds belong to the pickaxe, dry/relic finds belong to the brush, gentle creature drops belong to the sword, and danger drops belong to the mace. This keeps players from buying multiple tools to farm the same source family.
 
@@ -313,6 +317,7 @@ See the [complete camp guide](forage-camps.md) for requirements, world rules, re
 | `/forage recent [page]` | player | Directs you to recent gathering details at your workstation. |
 | `/forage tips` | anyone | Console prints hints; players are directed to the workstation tips page. |
 | `/forage tools` | player | Directs you to the workstation tool and source-family guide. |
+| `/forage sources [tool] [page]` | player | Pending next build: opens the full read-only source catalogue anywhere; defaults to the held Forage tool or a picker. Trowel ID: `shovel`. |
 | `/forage camp [inspect\|list\|register\|revalidate\|unclaim [registration-UUID]]` | player | Inspects camps or opens explicit registration, repair validation, and release confirmations. |
 | `/forage compost` | player | Directs you to Camp Turn-ins at the workstation. |
 | `/forage dust` | player | Directs you to Forage Dust at the workstation. |
@@ -427,7 +432,9 @@ Important sections:
 - `quests.yml`: daily, weekly, and monthly task definitions, min/max randomized targets, min/max point/XP/money rewards, optional `reward-kit` item templates, and legacy reward commands (arbitrary commands remain blocked)
 - `branches.*`: branch ids, display names, icons, focused source families, level gates, switch cooldown/costs, and small branch bonuses
 - `tools.*`: tool ids, materials, prices, unlock gates, family coverage, tool soul settings, modification guards, tier upgrades, diamond refinement, controlled Unbreaking/Efficiency improvements, and Repair & Merge costs/caps
-- `sources.*.materials` and `sources.*.entities`: block-material and entity-type source definitions used by the matching curated tools
+- `sources.ids`, `sources.<family>.enabled`, `sources.<family>.materials` and `sources.<family>.entities`: enabled source-family IDs and exact block-material/entity definitions. Item-only materials cannot be block-break sources.
+- `tools.ids`, `tools.<tool>.enabled` and `tools.<tool>.families`: enabled tool IDs and supported family membership; the Trowel ID is `shovel`. All tiers share this mapping.
+- The generated [complete source catalogue](forage-camps.md#complete-source-catalogue) documents shipped defaults; the pending in-game catalogue follows effective runtime bindings after local configuration loads.
 - `tools.low-durability-lock.*`: safety-lock rules that stop curated tools before they break
 - `tools.durability-audit-seconds`: how often online inventories are scanned for unexpected external repairs
 - `sources.*`: source-family XP, point value, and material lists
