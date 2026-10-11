@@ -397,6 +397,14 @@ Forage tools cannot use ordinary anvils, enchanting tables, grindstones, smithin
 
 Successful growth uses one dust and shares a 45-second default cooldown. Dust does not award Forage XP or points. If no target accepts a pulse, the item stays with you. Crops and saplings follow normal growth rules; 26.3 adds poplar saplings, spreading red shrubs, and shelf mushrooms that can grow larger. Lack of space or a fully grown mushroom can prevent growth. A growth crossing a protected boundary should be cancelled rather than partly growing into it.
 
+## Review Recent Activity
+
+**Pending next build; beta build 736 is unchanged.** Choose **Recent Activity** in the hub or run `/forage recent [page]` to open the same personal history. The command works away from camp and while Forage gameplay is paused. It shows only your own entries and gives no camp access, reward claim or extra progress.
+
+Successful gathering records earned XP and points immediately. The list also includes treasure and level-up notices, quest progress notices and reward-ready updates, branch/turn-in/dust notices, and Forage warnings with their reason and next steps. Repeating the same warning within 30 seconds adds no duplicate entry. Pending chat summaries are already visible here; history keeps recording with chat batching off.
+
+Read the newest entries first, use Previous/Next for older entries, and Refresh for the latest. Entries show a category, time and readable wrapped details. Back returns to the hub; Close exits. By default the last 25 entries are kept, eight per page, and an empty history explains that nothing has been recorded yet. Disconnecting or restarting the plugin clears this temporary history; a Forage configuration reload keeps it. Use `/forage review` for saved transaction requests instead of relying on Recent Activity as a permanent receipt.
+
 ## Repair or move a camp
 
 | What happened | What changes | What is preserved |
@@ -425,6 +433,7 @@ Forage camp ownership is not a general land claim. Follow the world's normal bui
 | `/forage status` | Current progression, camp/tool state, and a next-step summary. |
 | `/forage stats` | Player progression and held-tool details. |
 | `/forage limits` | Current daily limits, costs, and reward ranges. |
+| `/forage recent [page]` | Pending next build: your read-only Recent Activity history, anywhere and while gameplay is paused. |
 | `/forage sources [tool] [page]` | Pending next build: complete read-only source list from anywhere; uses the held Forage tool or opens the picker. |
 | `/forage camp` | Inspect the nearby camp and its registration checklist. |
 | `/forage camp list` | Find your registrations and their IDs. |
@@ -433,7 +442,7 @@ Forage camp ownership is not a general land claim. Follow the world's normal bui
 | `/forage camp unclaim [registration-UUID]` | Review a release confirmation; global progress is kept. |
 | `/forage review` | Inspect a pending request and obtain the reference to share with staff. |
 
-`/forage shop`, `/forage quests`, `/forage branches`, `/forage tools`, `/forage compost`, `/forage dust`, `/forage top`, `/forage recent`, and `/forage tips` direct you to the corresponding workstation activity. They do not create a remote camp visit. Use the buttons after sneak-right-clicking your own registered composter.
+`/forage shop`, `/forage quests`, `/forage branches`, `/forage tools`, `/forage compost`, `/forage dust`, `/forage top`, and `/forage tips` direct you to the corresponding workstation activity. They do not create a remote camp visit. Use the buttons after sneak-right-clicking your own registered composter. Build 736 also directs `/forage recent` to the workstation; the pending read-only history replaces that restriction.
 
 ## Player FAQ
 

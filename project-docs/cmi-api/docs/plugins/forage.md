@@ -28,6 +28,7 @@ The GUI uses the shared hardened GUI service with safe holders, cancelled clicks
 
 - tool shop
 - player stats
+- Recent Activity personal history (pending next build)
 - quest index with ready-to-claim, daily, weekly, and monthly pages
 - skill branch picker
 - read-only top boards for level, XP, points, actions, treasures, daily XP, and weekly XP
@@ -52,7 +53,7 @@ Registration and revalidation require Survival mode. The Requirements book can g
 
 Admin camp list/inspection and safe release remain recovery tools. Legacy claims are retained for owner review instead of being silently accepted as qualifying Initial Camps. Staff mutations must obey the new registration rules; consult the technical guide before changing claims or world mappings.
 
-`config.yml` also includes a top-level `enabled` toggle. When it is set to `false`, Forage becomes a player-facing emergency shutdown: normal gameplay progress stops, camp turn-ins and dust do nothing, player GUIs stop opening, and `/menu` hides the Forage button when Menu notices the toggle on the next open. Help, info, debug, and safe admin inspection/reload commands still work so staff can investigate and recover.
+`config.yml` also includes a top-level `enabled` toggle. When it is set to `false`, Forage becomes a player-facing emergency shutdown: normal gameplay progress stops, camp turn-ins and dust do nothing, activity GUIs stop opening, and `/menu` hides the Forage button when Menu notices the toggle on the next open. Help, info, debug, and safe admin inspection/reload commands still work so staff can investigate and recover. After the pending Recent Activity update, `/forage recent` also remains available as a read-only personal history while gameplay is paused.
 
 Forage now separates player progression XP from tool soul XP. Player XP and Forage Points are tuned for account progression, while tool XP is tuned for tool upgrades and soul growth. This lets staff slow down live upgrades without making repairs or basic participation feel punishing.
 
@@ -74,9 +75,19 @@ Following the 11 October 2026 configuration reload, the beta server’s daily al
 
 Local exhaustion remains 75 actions in a chunk/source family followed by 30 minutes of rest. Presets and staff configuration can change limits. Changing area helps local exhaustion, changing family helps a family cap, and neither bypasses a global cap.
 
-When a chunk/source family becomes exhausted, Forage both records the event in the batched recent summary and sends a short immediate warning so players do not keep wasting actions in the same area.
+When a chunk/source family becomes exhausted, Forage sends a short immediate warning so players do not keep wasting actions in the same area. The pending Recent Activity history also retains that warning with its reason and next steps, separately from chat batching.
 
 When daily caps or chunk exhaustion pause reward progress, the curated tool still keeps its own use count and durability state updated. XP, points, branch progress, and quests pause, but the tool does not pretend it was never used.
+
+## Recent Activity
+
+**Pending next build; beta build 736 is unchanged.** The hub's **Recent Activity** button and `/forage recent [page]` open the same read-only personal history. The command works anywhere, including while Forage gameplay is paused, with `onembcmi.forage.use`. Only the requesting player's own UUID history is shown; no target-player argument exists. Opening it never creates a workstation visit, completes a camp requirement or claims a reward.
+
+Each successful gathering action records its earned XP and points immediately, without increasing chat frequency. History also includes delivered treasure notices, level-ups, quest progress notices and reward-ready updates, plus branch, turn-in and dust notices. Forage warnings include their title, reason and next steps; repeating the same warning within 30 seconds does not add another history entry. This is a recent feedback list, not a record of every quest-counter increment or every underlying server event.
+
+Entries appear newest first with a category, time and wrapped details. Previous/Next navigate older entries, Refresh returns to the latest entries, Back returns to the hub, and Close exits. An empty history explains that nothing has been recorded yet. Entries appear even before a pending chat summary is sent, remain across subsequent chat batches and still record when batching is disabled.
+
+The default is the most recent **25 entries**, displayed **8 per page**. `messages.batch.recent-retain-limit` is clamped to 1–100 and `messages.batch.recent-entries-per-page` to 3–20. History is kept in memory through `/forage admin reload`, but clears when the player disconnects or the plugin stops/restarts. It is not a persistent transaction audit or a reward-claim screen; use `/forage review` for saved request references and staff recovery.
 
 ## Player FAQ
 
@@ -318,7 +329,7 @@ See the [complete camp guide](forage-camps.md) for requirements, world rules, re
 | `/forage quests` | player | Directs you to Quests & Rewards at your workstation; the page shows daily, weekly, monthly, and ready-to-claim objectives. |
 | `/forage branches [branch]` | player | Directs you to the workstation branch picker; commands do not select a branch remotely. |
 | `/forage top [level\|xp\|points\|actions\|treasures\|daily\|weekly]` | player/console | Console shows read-only leaderboards; players are directed to their workstation. |
-| `/forage recent [page]` | player | Directs you to recent gathering details at your workstation. |
+| `/forage recent [page]` | player | Pending next build: opens the same personal read-only Recent Activity GUI as the hub button, anywhere and while gameplay is paused. Build 736 retains the workstation-directed command. |
 | `/forage tips` | anyone | Console prints hints; players are directed to the workstation tips page. |
 | `/forage tools` | player | Directs you to the workstation tool and source-family guide. |
 | `/forage sources [tool] [page]` | player | Pending next build: opens the full read-only source catalogue anywhere; defaults to the held Forage tool or a picker. Trowel ID: `shovel`. |
@@ -356,7 +367,7 @@ See the [complete camp guide](forage-camps.md) for requirements, world rules, re
 | `/forage debug transactions` | admin/console | Inspects durable requests that may need review; it does not automatically refund or replay them. |
 | `/forage debug all` | admin/console | Uses the shared debug output for build, server, hooks, commands, permissions, placeholders, and config. |
 
-Player activity commands always redirect to the physical workstation, even when a camp is nearby. Use its GUI to perform activities; these commands do not grant or reuse reward-claim authority.
+Commands for purchases, claims and other workstation activities redirect to the physical workstation, even when a camp is nearby. Use its GUI to perform those activities; a command does not grant reward-claim authority. The pending read-only source catalogue and Recent Activity commands can be used away from camp without granting a workstation visit.
 
 ### Staff beta setup and recovery
 
@@ -431,7 +442,7 @@ Important sections:
 - `balance.preset` and `balance.presets.*`: `testing`, `normal`, `live`, `grindy`, or custom balance multipliers for earned player XP, tool XP, points, quest rewards, caps, tier bonuses, upgrade costs, repair costs, and improvement costs
 - `progression.*`: level formula, daily XP/action caps, and progress message frequency
 - `progression.family-daily.*`: per-source-family daily XP/action caps, so one capped tool route does not stop all Forage play for the day
-- `messages.batch.*`: delayed batched progress summaries and `/forage recent` limits
+- `messages.batch.*`: delayed batched chat summaries; pending Recent Activity history records immediately even with batching disabled. `recent-retain-limit` defaults to 25 (clamped 1–100), and `recent-entries-per-page` defaults to 8 (clamped 3–20).
 - `quests.enabled`, `quests.claims.*`, `quests.progress-message-every`, `quests.allowed-command-prefixes`: quest runtime controls in `config.yml`
 - `quests.yml`: daily, weekly, and monthly task definitions, min/max randomized targets, min/max point/XP/money rewards, optional `reward-kit` item templates, and legacy reward commands (arbitrary commands remain blocked)
 - `branches.*`: branch ids, display names, icons, focused source families, level gates, switch cooldown/costs, and small branch bonuses
