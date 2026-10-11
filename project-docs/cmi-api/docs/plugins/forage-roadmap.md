@@ -2,7 +2,7 @@
 
 Reviewed **11 October 2026** against the current source and the **suite build 738 / Paper 26.3 BETA 174** beta baseline. This page distinguishes deployed functionality, completed source awaiting deployment, and proposals. It does not authorize a server restart, publication, or live activation.
 
-Use the [main reference](forage.md), [player guide](forage-camps.md), [technical guide](forage-camp-technical.md), and [beta checklist](forage/checklist.md) for operating details. The [camp implementation tracker](../forage-26.3-revamp-todo.md) and [issue #35](https://github.com/mrfdev/1MB-Library/issues/35) track the accepted camp revamp and its release gates.
+Use the [main reference](https://github.com/mrfdev/1MB-Plugins-Docs/blob/main/project-docs/cmi-api/docs/plugins/forage.md), [player guide](https://docs.1moreblock.com/player-guides/plugins/forage/), [technical guide](https://docs.1moreblock.com/staff-reference/plugins/forage/), and [beta checklist](https://docs.1moreblock.com/staff-reference/plugins/forage-checklist/) for operating details. The [camp implementation tracker](../forage-26.3-revamp-todo.md) and [issue #35](https://github.com/mrfdev/1MB-Library/issues/35) track the accepted camp revamp and its release gates.
 
 ## Current status
 
@@ -35,16 +35,16 @@ The IDs below match the [implementation and release tracker](../forage-26.3-reva
 ### Completed source awaiting deployment
 
 - **Accepted Turn-Ins:** a paginated, read-only item browser uses the same effective resolver as submission. It includes the `COCOA_BEANS` drop alias, bringing the shipped default list from build 738's 70 accepted types to 71. Named, PDC-bearing and other custom items remain protected from ordinary-material consumption.
-- **Placed-resource protection:** current placement marks are stored compactly in chunk PDC, with entity PDC while a marked block falls. Placement in either hand and by any player is tracked for configured resources; normal/sticky pistons and falling blocks preserve marks across movement. Recorded placements earn no gathering progression or treasure. Legitimate mature crop growth and verified type-changing growth have explicit exceptions. Marks do not expire with time. This uses in-memory checks and normal Paper persistence, not a CoreProtect query per break. Historical placements, creature origins and out-of-band edits are not backfilled. See the [tracking contract](forage-camp-technical.md#placed-resource-tracking-upcoming).
+- **Placed-resource protection:** current placement marks are stored compactly in chunk PDC, with entity PDC while a marked block falls. Placement in either hand and by any player is tracked for configured resources; normal/sticky pistons and falling blocks preserve marks across movement. Recorded placements earn no gathering progression or treasure. Legitimate mature crop growth and verified type-changing growth have explicit exceptions. Marks do not expire with time. This uses in-memory checks and normal Paper persistence, not a CoreProtect query per break. Historical placements, creature origins and out-of-band edits are not backfilled. See the [tracking contract](https://docs.1moreblock.com/staff-reference/plugins/forage/#placed-resource-tracking-upcoming).
 - **Sources Back navigation:** the source guide's Back route has been corrected while retaining the existing permission and camp access rules.
 - **CMI item inspection:** a narrowly authenticated read-only `/itemnbt` route can inspect Forage items. Mutation commands, unknown ownership and unsafe alias combinations remain guarded.
-- **Participation Reward:** after successfully claiming any daily quest and any weekly quest, in either order and across periods, the player qualifies for one manual lifetime reward at an eligible owned workstation. Qualifications persist by UUID even while claiming is disabled; retained historical `claimed: true` records can backfill them. Completion without a successful claim and monthly claims do not substitute. The implementation is complete, but the finished map and enabled delivery are separate requirements. See the [participation setup](forage-camp-technical.md#participation-reward-upcoming).
+- **Participation Reward:** after successfully claiming any daily quest and any weekly quest, in either order and across periods, the player qualifies for one manual lifetime reward at an eligible owned workstation. Qualifications persist by UUID even while claiming is disabled; retained historical `claimed: true` records can backfill them. Completion without a successful claim and monthly claims do not substitute. The implementation is complete, but the finished map and enabled delivery are separate requirements. See the [participation setup](https://docs.1moreblock.com/staff-reference/plugins/forage/#participation-reward-upcoming).
 
 ### Inventory durability and recovery
 
 Forage writes intent and exact recovery evidence before a valuable effect, saves its own immutable snapshots, then finalizes the receipt. It does **not** have a verified atomic commit or durable-save acknowledgement with Paper player inventories, an external inventory-group provider, or external economy storage. Those stores can roll back independently after a crash.
 
-Completed item/economy evidence is retained. `/forage admin recoveryack <transaction-UUID> confirm` releases finalized evidence only after staff verifies saved external state; it does not deliver, refund, restore inventory, or resolve an uncertain receipt. Uncertain effects block further claims for that player and are not automatically replayed. This mitigation is implemented, but it is not the missing durability/recovery adapter. The [technical durability contract](forage-camp-technical.md#transactions-saving-and-crash-recovery) remains authoritative.
+Completed item/economy evidence is retained. `/forage admin recoveryack <transaction-UUID> confirm` releases finalized evidence only after staff verifies saved external state; it does not deliver, refund, restore inventory, or resolve an uncertain receipt. Uncertain effects block further claims for that player and are not automatically replayed. This mitigation is implemented, but it is not the missing durability/recovery adapter. The [technical durability contract](https://docs.1moreblock.com/staff-reference/plugins/forage/#transactions-saving-and-crash-recovery) remains authoritative.
 
 Backups must preserve lifetime claim flags together with transaction records and recovery evidence. Restoring an old profile alone can discard a permanent entitlement's claim history; bounded journal tombstones are not a permanent substitute for those flags.
 
@@ -63,7 +63,7 @@ The current loop supports a manual gathering trip, a return to an owned camp, an
 - Shared GUI holders, live workstation sessions, action-time checks, ordered asynchronous saves, transaction receipts and explicit recovery paths protect valuable operations.
 - Existing placeholders expose progression, tools, branches, family limits, quests and leaderboards. Additional placeholders should follow an actual new feature rather than duplicate this baseline.
 
-Tool protection includes ordinary workstations, repair/enchant/item-edit command paths and the reviewed CMI, mcMMO, Pyro and ItemSoulBind routes. **mcMMO Super Breaker, Tree Feller and Giga Drill Breaker protection is already deployed on build 738.** Activation with a marked tool is refused, gathering pauses while a blocked ability is active, and simulated block checks cannot award Forage progress. The earlier build-736 pending note is obsolete. See the [main reference](forage.md) and [protected-tool integrations](../tool-item-protection.md) for exact provider boundaries.
+Tool protection includes ordinary workstations, repair/enchant/item-edit command paths and the reviewed CMI, mcMMO, Pyro and ItemSoulBind routes. **mcMMO Super Breaker, Tree Feller and Giga Drill Breaker protection is already deployed on build 738.** Activation with a marked tool is refused, gathering pauses while a blocked ability is active, and simulated block checks cannot award Forage progress. The earlier build-736 pending note is obsolete. See the [main reference](https://github.com/mrfdev/1MB-Plugins-Docs/blob/main/project-docs/cmi-api/docs/plugins/forage.md) and [protected-tool integrations](https://github.com/mrfdev/1MB-Plugins-Docs/blob/main/project-docs/cmi-api/docs/tool-item-protection.md) for exact provider boundaries.
 
 Arbitrary quest reward commands remain blocked because accepted command dispatch is not delivery proof. Item-only CMI rewards are implemented; temporary health, external points, LuckPerms reward delivery and tournament rewards would need their own audited delivery/recovery adapters. LuckPerms operations must use authoritative server UUIDs resolved locally, never name fallback or online identity lookups.
 
@@ -101,7 +101,7 @@ All required features must be inside the camp footprint. Counts remain configura
 | Storage | One chest, trapped chest or barrel |
 | Crafting | One crafting table |
 
-Inventory contents and dropped items do not count. Cushions are entities, but they and the straw bed are **required** under the current defaults. The old optional-cushion/bed plan and tree-grove requirement no longer describe current behavior. The [template measurements](../compatibility-tests/forage-26.3-camp-templates-2026-09-27.md) explain the original footprint choices; they do not override later approved requirements.
+Inventory contents and dropped items do not count. Cushions are entities, but they and the straw bed are **required** under the current defaults. The old optional-cushion/bed plan and tree-grove requirement no longer describe current behavior. The [template measurements](https://github.com/mrfdev/1MB-Plugins-Docs/blob/main/project-docs/cmi-api/docs/compatibility-tests/forage-26.3-camp-templates-2026-09-27.md) explain the original footprint choices; they do not override later approved requirements.
 
 Camp use revalidates both the selected camp and the Initial Camp. Unloaded chunks are prepared asynchronously without terrain generation; unavailable verification cannot authorize benefits. A recorded physical invalidation requires deliberate revalidation after repairs. Camp ownership and global progression remain intact.
 
@@ -132,7 +132,7 @@ If the owner adopts a stronger creature-source policy, define and implement whic
 
 ### Optional source and quest expansion
 
-These names and rewards are design candidates, not extra routes enabled by listing them here. Consult the [current source catalogue](forage-camps.md#complete-source-catalogue) for actual materials and entities.
+These names and rewards are design candidates, not extra routes enabled by listing them here. Consult the [current source catalogue](https://docs.1moreblock.com/player-guides/plugins/forage/#complete-source-catalogue) for actual materials and entities.
 
 - Crystal, volcanic, fossil and End-growth finds, potentially with narrower coverage and different treasure tables.
 - Shoreline/desert relics and a genuine archaeology interaction route, if deliberately added.
@@ -208,7 +208,7 @@ Any adopted storage change must preserve UUIDs, claim history and transaction id
 
 ## Commands, placeholders and configuration proposals
 
-The [main reference](forage.md) lists supported commands, placeholders and settings. Existing commands include camp management, quests, branches/skills, tools, source browsing, Recent Activity, limits, leaderboards, deliveries, dust and administration. Do not infer a working command from a historical wishlist.
+The [main reference](https://github.com/mrfdev/1MB-Plugins-Docs/blob/main/project-docs/cmi-api/docs/plugins/forage.md) lists supported commands, placeholders and settings. Existing commands include camp management, quests, branches/skills, tools, source browsing, Recent Activity, limits, leaderboards, deliveries, dust and administration. Do not infer a working command from a historical wishlist.
 
 Potential new commands such as `/forage streaks`, `/forage perks`, `/forage journal`, `/forage tournaments`, or event/tournament administration depend on adopting their underlying feature. The existing Recent Activity view is not a general collection journal. Camp administration already uses the documented `/forage admin camps ...` commands; the older hypothetical reset/validate command examples are not supported aliases.
 

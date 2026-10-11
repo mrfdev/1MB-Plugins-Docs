@@ -16,7 +16,7 @@ Date: 27 September 2026. Scope: local `servers/Paper-26.3/` only. No live-server
 
 The read-only template inspector examined ten Dappled tent pieces and 49 shared camp pieces in the exact server resources. Tent wool stairs range from 29 to 57, median 40.5; fences range from seven to eight. Every tent has storage, two of ten contain a crafting table, and none contain a composter. Cushions are entities. These are piece statistics, not invented random whole-camp averages.
 
-Build 49's structure, pool, template summaries and all 59 inspected pieces match the build-47 measurement. See [template evidence](forage-26.3-camp-templates-2026-09-27.md). The default checklist deliberately permits varied designs and requires the extra workstation/crafting station where missing.
+Build 49's structure, pool, template summaries and all 59 inspected pieces match the build-47 measurement. See [template evidence](https://github.com/mrfdev/1MB-Plugins-Docs/blob/main/project-docs/cmi-api/docs/compatibility-tests/forage-26.3-camp-templates-2026-09-27.md). The default checklist deliberately permits varied designs and requires the extra workstation/crafting station where missing.
 
 ## Unit and service coverage
 
