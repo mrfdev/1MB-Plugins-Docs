@@ -3,7 +3,7 @@ title: "Forage Guide"
 description: "Learn Forage camps, tools, quests, repairs and dust, with a beta checklist and staff reference."
 ---
 
-**Reviewed 9 October 2026 for the 26.3 beta.** This guide describes the implemented camp and gathering flow. Availability, prices, caps, and enabled sources depend on the server; live activation remains separate from beta testing.
+**Reviewed 11 October 2026 for the 26.3 beta.** The test server currently runs build **736**. Camp requirements marked **pending next build** below are not active there yet; a configuration reload cannot install them. This guide describes the camp and gathering flow. Availability, prices, caps, and enabled sources depend on the server; live activation remains separate from beta testing.
 
 Forage is hands-on gathering with your own tools and camps. You keep one set of Forage XP, points, quests, limits, and reward history wherever you play. Your camps determine where you can submit finds and claim those benefits.
 
@@ -38,22 +38,37 @@ Keep the composter near the center of the camp, with the shelter and campfire ne
 
 ## Build the checklist
 
+**Current beta build 736:** use these physical requirements until the host confirms the next build is deployed.
+
 | Feature | Default minimum | What counts |
 | --- | ---: | --- |
 | Camp Anchor | 1 | Composter at the registered location |
 | Shelter | 24 blocks | Full wool, wool stairs, and wool slabs in any color |
 | Supports | 6 blocks | Fence blocks, including nether brick fences; not gates or walls |
-| Fire | 1 | Campfire or soul campfire |
+| Fire | 1 | Campfire or soul campfire; build 736 does not require it to be lit |
 | Storage | 1 | Chest, trapped chest, or barrel |
 | Crafting station | 1 | Crafting table |
 
-Existing suitable blocks count, so you do not need to rebuild a vanilla tent beside itself. The camp page shows counted requirements and shortages: for example, “Shelter 21/24: add 3 wool blocks, stairs, or slabs” and “Supports 5/6: add 1 fence.” A missing composter or crafting table is shown as a missing workstation.
+Existing suitable blocks count, so you do not need to rebuild a vanilla tent beside itself. Abandoned Camp layouts vary; finding one does not guarantee that it meets every Forage requirement. The camp page shows counted requirements and shortages: for example, “Shelter 21/24: add 3 wool blocks, stairs, or slabs” and “Supports 5/6: add 1 fence.” A missing composter or crafting table is shown as a missing workstation.
 
 Wool carpets do not count as shelter. A double wool slab counts as one occupied block position. The whole camp scan must fit inside the world's build height.
 
 The **Requirements** book glows when the physical camp checklist is complete. The **Register Initial**, **Register Secondary**, or **Revalidate Camp** button glows only when the action's other requirements are also met. A complete build can therefore have a glowing book while registration remains blocked in Creative mode. The button and chat explain what still needs to change; the plugin checks again when you click.
 
-You can choose your layout and redesign it later. The plugin checks the required features within your camp, rather than demanding one exact schematic. Cushions, lanterns, trees, and straw beds make the camp more comfortable but are not part of the default minimum.
+You can choose your layout and redesign it later. The plugin checks the required features within your camp, rather than demanding one exact schematic. Cushions, lanterns and trees remain optional decoration.
+
+**Pending next build:** keep the composter, 24 shelter positions, six fences, one storage block and one crafting table. The fire must be lit, and three more features become required:
+
+| Feature | Default minimum | What counts after deployment |
+| --- | ---: | --- |
+| Lit fire | 1 | A lit campfire or lit soul campfire |
+| Lit candle | 1 position | A lit candle block, undyed or any color; candles on cakes do not count |
+| Straw bed | 1 complete bed | Both matching halves must be inside the scan; a bed counts once, not once per half |
+| Firefly bush | 1 | A placed firefly bush |
+
+A group of candles sharing one block position counts as one position, regardless of the number of candles. Waterlogged campfires and candles do not qualify. The firefly bush only needs to be present; visible fireflies or night-time are not required. Ordinary beds cannot replace the straw bed. These features belong inside the same camp scan; inspect `/forage camp` to see any shortages. Straw beds, candles and firefly bushes are optional under build 736 and become requirements only after the update.
+
+After that update, extinguishing the last qualifying campfire or candle makes the camp incomplete. So does losing its straw bed, either bed half, or its last firefly bush. Once Forage detects the shortage, restoring blocks alone does not clear the revalidation requirement. Restore or relight the missing features, then use `/forage camp revalidate` and confirm deliberately. Your registration, Local Introduction progress, XP, points and claimed rewards stay saved. An incomplete Initial Camp also pauses your Secondary Camps.
 
 ## Three camps total
 
@@ -119,7 +134,7 @@ Open **Tool Shop** at your complete registered camp to buy your first tool. Star
 | Sword | Configured creatures such as cows, sheep, chickens, rabbits, and squid | Carry any Forage tool at tool level 2 |
 | Mace | Configured hostile mobs such as zombies, skeletons, blazes, breezes, and shulkers | Carry any Forage tool at tool level 2 |
 
-For block routes, **break** a configured source with the matching tool in your main hand. The Brush route rewards block breaking, not completion of vanilla archaeology brushing. For sword/mace routes, make a matching melee hit and keep holding that tool type until the mob dies within ten seconds. Inspect **Tools & Families** for the server's complete enabled source lists. Poplar saplings and crafted poplar building blocks are not gathering sources.
+For block routes, **break** a configured source with the matching tool in your main hand. The Brush route rewards block breaking, not completion of vanilla archaeology brushing. For sword/mace routes, make a matching melee hit and keep holding that tool type until the mob dies within ten seconds. Inspect **Tools & Families** for up to five source examples per family. There is no expandable in-game list of every enabled source yet. Poplar saplings and crafted poplar building blocks are not gathering sources.
 
 Player Forage level, a tool's level, and its tier are different. The four later tool types unlock when you carry a level-2 Forage tool; a tool left in a chest cannot satisfy the shop check. Each rewarded action can advance player XP, points, the held tool, the matching skill branch, and applicable quests.
 
@@ -202,7 +217,7 @@ Forage camp ownership is not a general land claim. Follow the world's normal bui
 
 **Can I move my camp without resetting my character?** Yes. Unclaim the old registration and deliberately register a replacement. Global progress stays, but the new registration starts its own Local Introduction. Breaking the composter alone does not release the old slot.
 
-**Are shared storage and community objectives ready to test?** Plugin-managed Camp Storage and Community Efforts are not implemented features of this release. A chest/barrel currently satisfies the physical checklist and otherwise behaves as ordinary storage. Extra-heart rewards, other-plugin point rewards, Forage kits, and fishing tournaments are also future possibilities, not promised beta activities.
+**Are shared storage and community objectives ready to test?** Plugin-managed Camp Storage and Community Efforts are not implemented features of this release. A chest/barrel currently satisfies the physical checklist and otherwise behaves as ordinary storage. Extra-heart rewards, other-plugin point rewards, and fishing tournaments are future possibilities. Quest item rewards can use configured CMI kit templates through `reward-kit`; confirm the host has deployed a build supporting that setting and configured the mappings before testing them.
 
 ## Common blockers
 

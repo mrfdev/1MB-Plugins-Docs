@@ -3,7 +3,9 @@ title: "Forage Administration"
 description: "Setup, permissions, recovery, and operation of Forage."
 ---
 
-**Documentation reviewed against the current implementation on 9 October 2026.** The camp revamp and its guidance, plant, and tool-protection follow-ups are implemented and locally verified; connected-client beta acceptance and live activation remain separate steps. The repository currently targets Paper 26.3 **BETA** with API build **167**, Java 25 bytecode, JDK 25.0.4.1 for Gradle, and Java **27+35-2325** for the local server. These are the configured baseline, not a claim that every historical probe below ran on build 167. The external inventory crash boundary remains a release gate.
+**Documentation reviewed against the current implementation on 9 October 2026.** The camp revamp and its guidance, plant, and tool-protection follow-ups are implemented and locally verified; connected-client beta acceptance and live activation remain separate steps. The repository currently targets Paper 26.3 **BETA** with API build **174**, Java 25 bytecode, JDK 25.0.4.1 for Gradle, and Java **27+35-2325** for the local server. These are the configured baseline, not a claim that every historical probe below ran on build 174. The external inventory crash boundary remains a release gate.
+
+**Camp requirements follow-up, 11 October 2026: pending the next synchronized suite build.** The running beta remains on build **736**. Its original physical checklist is shown separately below; lit campfire/candle checks, a straw bed and a firefly bush require the new JARs. Publishing these instructions or reloading configuration does not install the update. Do not change the running beta's requirements or restart it for this documentation change.
 
 Related references: [player guide](/player-guides/plugins/forage/), [beta test checklist](/staff-reference/plugins/forage-checklist/), [main feature reference](https://github.com/mrfdev/1MB-Plugins-Docs/blob/main/project-docs/cmi-api/docs/plugins/forage.md), and [template measurements](https://github.com/mrfdev/1MB-Plugins-Docs/blob/main/project-docs/cmi-api/docs/compatibility-tests/forage-26.3-camp-templates-2026-09-27.md).
 
@@ -80,17 +82,32 @@ This follows Halloween Virus's logical/physical separation. Halloween Virus stor
 
 The default box is centered on the composter Camp Anchor, extending ten blocks along X/Z and six along Y, or at most 5,733 block positions. Registration reserves that three-dimensional footprint; overlapping boxes cannot share a camp site or its required blocks. A naturally generated camp qualifies by its current materials, not by a structure-origin flag or a rigid schematic. Player-built equivalents intentionally work.
 
+**Current beta build 736 defaults:**
+
 | Requirement | Configuration | Default |
 | --- | --- | ---: |
 | Horizontal scan radius | `camp.scan-radius` | 10 |
 | Vertical half-height | `camp.scan-height` | 6 |
 | Wool family block positions | `camp.requirements.shelter` | 24 |
 | Fence blocks | `camp.requirements.fences` | 6 |
-| Campfire or soul campfire | `camp.requirements.campfires` | 1 |
+| Campfire or soul campfire, lit or unlit | `camp.requirements.campfires` | 1 |
 | Chest, trapped chest, or barrel blocks | `camp.requirements.storage` | 1 |
 | Crafting tables | `camp.requirements.crafting-tables` | 1 |
 
 Shelter counts accept full wool, wool stairs, and wool slabs of every color, one occupied position each. A double slab does not get an extra placement count; wool carpets do not qualify. Supports count fences, including nether brick fences, but not fence gates or walls. The composter remains required as the default registered anchor; servers can deliberately change `camp.interact-block`. Default readiness has no mandatory tree, logs, lantern, or cushion. Vanilla cushions are entities; counting a nonexistent cushion block would make every camp fail. See the exact-template evidence for the reasons behind these thresholds.
+
+**Pending next-build defaults:** the composter, shelter, fences, storage and crafting-table requirements remain unchanged. The campfire requirement gains a lit-state check, and three new minimums apply:
+
+| Requirement after deployment | Configuration | Default |
+| --- | --- | ---: |
+| Lit campfire or lit soul campfire | `camp.requirements.campfires` | 1 |
+| Lit candle block positions | `camp.requirements.candles` | 1 |
+| Intact straw beds | `camp.requirements.straw-beds` | 1 |
+| Firefly bush blocks | `camp.requirements.firefly-bushes` | 1 |
+
+Candles may be undyed or any color. Candle cakes are excluded. A cluster of several candles is one block position, and an unlit candle counts as none. Waterlogged campfires and candles also count as none; the firefly bush has no night-time or particle check. Count a straw bed once only when both matching halves are present inside the scan box; an ordinary bed, orphan half or mismatched pair does not satisfy the requirement. The bush must be present within the same scan. Finding an Abandoned Camp does not guarantee any of these requirements; assess its actual remaining features and add what is missing.
+
+Once Forage observes a shortage, including an extinguished required campfire/candle or a disappeared/incomplete bed, the registration requires deliberate revalidation. Restoring or relighting the feature does not by itself clear that state. The owner restores the full checklist and confirms `/forage camp revalidate` in Survival. Keep the registration, Local Introduction and global progress intact; an invalid Initial Camp withholds Secondary Camp benefits too. This introduces no extra burning, consumption or bed-disappearance mechanic beyond vanilla behavior. Validate the observed state without generating chunks or loading distant camps merely because a block elsewhere changed. See checklist P03a and C05a for deployment acceptance and the [camp feature validation record](https://github.com/mrfdev/1MB-Plugins-Docs/blob/main/project-docs/cmi-api/docs/compatibility-tests/forage-camp-life-2026-10-11.md) for observer limits. Checks observe current loaded-world state after the event, not a complete block history; a feature restored before that check may not be recorded as missing.
 
 Every workstation open and state-changing confirmation must validate the camp being used, the owner's Initial Camp, world eligibility, ownership, and the player's current station context. Validate Initial Camp blocks again even when it is in another world. Missing worlds, missing chunks, timeouts, persistence problems, or unknown status do not authorize use.
 
@@ -120,7 +137,9 @@ Registration presentation distinguishes physical readiness from action eligibili
 
 Field treasure drops and use of previously obtained Forage Dust intentionally occur during gathering outside camps. Workstation authority applies to reward-menu claims, purchases, and camp activities; it does not require a camp visit for each field find or growth pulse.
 
-Forage is primarily a workstation feature. Reward claims require a current session established by sneak-right-clicking the owner's registered workstation. The session expires after **five minutes** and requires the player to remain within **six blocks** of the anchor's center with the managed menu open. Command shortcuts may inspect or guide but must not create remote claim authority. A player who teleports, changes world, moves out of range, closes/reopens the view, dies, quits, or loses ownership cannot reuse the old context. Reopen from the workstation after expiry, configuration reload, or a stale-menu rejection.
+Forage is primarily a workstation feature. Reward claims require a current visit established by sneak-right-clicking the owner's registered workstation. The visit expires after **five minutes** and requires the player to remain within **six blocks** of the anchor's center. Each action also requires the current authenticated Forage menu. Command shortcuts may inspect or guide but must not create or extend workstation authority. Teleporting, changing world, moving out of range, death, quit, Creative/Spectator mode, expiry and configuration reload invalidate the visit; current ownership and camp requirements are checked before every action.
+
+The pending navigation fix preserves an existing nearby visit across closing menus, browsing `/menu` and returning through `/forage`. Closing still invalidates the old GUI session and any pending click from it; a fresh Forage view is required for the next action. No visit is created from proximity alone. Beta build 736 instead clears the visit on menu close or a Forage command, so testers must close the menu and sneak-right-click their composter again. The [navigation regression record](https://github.com/mrfdev/1MB-Plugins-Docs/blob/main/project-docs/cmi-api/docs/compatibility-tests/forage-station-navigation-2026-10-11.md) documents this pending change and its verification.
 
 Use a server-side inventory holder and a per-player session identity. Menu names, item names, lore, and client slots are display data, never authority. At mutation time verify the owner UUID, open holder/session, permitted action, camp registration/revision, station position, distance, current world, permission, Local Introduction, current costs, inventory inputs, output capacity, and global eligibility. Deferred click handlers and asynchronous continuations must perform the same checks again.
 

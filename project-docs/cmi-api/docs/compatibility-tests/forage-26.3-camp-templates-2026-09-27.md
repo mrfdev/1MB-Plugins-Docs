@@ -54,7 +54,9 @@ All ten contain zero full wool blocks, wool slabs, campfires, composters, or cus
 
 The four Dappled-specific campsite templates are each 10 × 10 × 10. They have one campfire each, cushion counts 2, 2, 2, and 3, and either one chest or one barrel. None has a crafting table or composter.
 
-## Checklist decision
+## Checklist decision (27 September baseline)
+
+**Superseded gameplay requirements, 11 October 2026:** the next synchronized suite build keeps the measured shelter/support/storage/crafting thresholds, requires a lit campfire or soul campfire, and adds one lit candle position, one intact straw bed and one firefly bush. These are deliberate gameplay additions, not a claim that every measured vanilla template contains them or that every generated Abandoned Camp is complete. Requiring a placed straw bed is compatible with vanilla use consuming it: when Forage observes its absence, the owner replaces it and deliberately revalidates the same registration, preserving Local Introduction and global progress. Forage does not add a new bed-consumption mechanic. The earlier decision to leave straw beds optional is retained below as historical context; it still describes running beta build 736, not the pending update. All template measurements above remain unchanged. See the [current and pending camp checklists](../plugins/forage-camps.md#build-the-checklist).
 
 The initial defaults are 24 shelter blocks (any full wool, wool stair, or wool slab), six fences, one campfire, one chest/barrel, one crafting table, and the composter Camp Anchor. Existing qualifying blocks count. Crafting tables present in two tent variants are reused; players add a composter and whatever else is missing. These thresholds are gameplay choices below the smallest measured tent's 29 wool stairs and seven fences, not a claim that any naturally generated camp is guaranteed complete.
 
