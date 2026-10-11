@@ -232,6 +232,19 @@ Each branch can configure display name, description, icon, focused source famili
 
 Open Quests & Rewards at your active workstation and inspect the daily, weekly, monthly, and ready-to-claim pages. Quests count valid rewarded Forage actions automatically; no separate quest-accept command is required. The shipped definitions contain ten daily, eight weekly, and five monthly quests. Targets and rewards vary by player and period, so use your own quest card rather than another tester’s numbers.
 
+**Pending next build: quest status filters. Beta build 736 is unchanged.** Each Daily, Weekly and Monthly category has four buttons across the top:
+
+| Filter | Quests shown |
+| --- | --- |
+| Show All | Every quest in that category; selected whenever the category is opened |
+| Incomplete | Unfinished and unclaimed quests |
+| Completed | Finished but unclaimed quests, whose rewards are ready to claim subject to the normal claim checks |
+| Claimed | Quests whose rewards have already been received for this period |
+
+The selected filter is highlighted and the buttons show counts. Changing filters returns to page 1 while retaining the category's existing quest order. Up to 28 quests appear per page, with Previous/Next when needed. An empty filter explains that there are no matching quests and directs the player to Show All. The separate **Ready to Claim** view still collects completed, unclaimed quests across periods.
+
+Filtering changes only the display; it grants no progress, rewards or workstation authority. Claims still require the eligible owned camp, completed Local Introduction and the existing once-per-period checks. Confirming a claim closes the menu as before. Clicking an incomplete or already-claimed quest returns to the same filter and page; opening a category again starts at Show All.
+
 | Objective | What counts |
 | --- | --- |
 | Actions | Any rewarded Forage gathering action |
