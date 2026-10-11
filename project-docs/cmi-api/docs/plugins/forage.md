@@ -637,7 +637,7 @@ These are enough for holograms and ajLeaderboards around the Forage camp/NPC are
 
 The 26.3 camp contract is described above. Later additions remain separate from this revamp:
 
-- optional camp comforts and themed objectives
+- additional camp decoration and themed objectives beyond the current required features
 - richer turn-in recipes and camp progression
 - richer skill trees built on the v1 branch identity system
 - higher-tier tool upgrades and unlock variants
