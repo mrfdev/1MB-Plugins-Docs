@@ -1,6 +1,6 @@
 # Forage: player guide
 
-**Reviewed 11 October 2026 for the 26.3 beta.** The test server currently runs build **736**. Camp requirements marked **pending next build** below are not active there yet; a configuration reload cannot install them. This guide describes the camp and gathering flow. Availability, prices, caps, and enabled sources depend on the server; live activation remains separate from beta testing.
+**Reviewed 11 October 2026 for the 26.3 beta, suite build 738 on Paper BETA 174.** The features below are deployed on the beta server; player acceptance testing remains open. This guide describes the camp and gathering flow. Availability, prices, caps, and enabled sources depend on the server; live activation remains separate from beta testing.
 
 Forage is hands-on gathering with your own tools and camps. You keep one set of Forage XP, points, quests, limits, and reward history wherever you play. Your camps determine where you can submit finds and claim those benefits.
 
@@ -35,14 +35,14 @@ Keep the composter near the center of the camp, with the shelter and campfire ne
 
 ## Build the checklist
 
-**Current beta build 736:** use these physical requirements until the host confirms the next build is deployed.
+Use these core features together with the additional camp features below.
 
 | Feature | Default minimum | What counts |
 | --- | ---: | --- |
 | Camp Anchor | 1 | Composter at the registered location |
 | Shelter | 24 blocks | Full wool, wool stairs, and wool slabs in any color |
 | Supports | 6 blocks | Fence blocks, including nether brick fences; not gates or walls |
-| Fire | 1 | Campfire or soul campfire; build 736 does not require it to be lit |
+| Fire | 1 | Lit campfire or lit soul campfire, whether or not food is cooking |
 | Storage | 1 | Chest, trapped chest, or barrel |
 | Crafting station | 1 | Crafting table |
 
@@ -52,13 +52,12 @@ Wool carpets do not count as shelter. A double wool slab counts as one occupied 
 
 The **Requirements** book glows when the physical camp checklist is complete. The **Register Initial**, **Register Secondary**, or **Revalidate Camp** button glows only when the action's other requirements are also met. A complete build can therefore have a glowing book while registration remains blocked in Creative mode. The button and chat explain what still needs to change; the plugin checks again when you click.
 
-You can choose your layout and redesign it later. The plugin checks the required features within your camp, rather than demanding one exact schematic. In build 736, cushions, lanterns and trees remain optional decoration. The pending checklist below adds placed cushions; lanterns and trees remain optional.
+You can choose your layout and redesign it later. The plugin checks the required features within your camp, rather than demanding one exact schematic. Lanterns and trees remain optional; the listed features are required.
 
-**Pending next build:** keep the composter, 24 shelter positions, six fences, one storage block and one crafting table. The fire must be lit, and the following placed features become required:
+Also place the following required features inside the same footprint:
 
-| Feature | Default minimum | What counts after deployment |
+| Feature | Default minimum | What counts |
 | --- | ---: | --- |
-| Lit fire | 1 | A lit campfire or lit soul campfire, whether or not food is cooking |
 | Lit candle | 1 position | A lit candle block, undyed or any color, containing one to four candles; candles on cakes do not count |
 | Straw bed | 1 complete bed | Both matching halves must be inside the scan; a bed counts once, not once per half |
 | Firefly bush | 1 | A placed firefly bush |
@@ -68,9 +67,9 @@ You can choose your layout and redesign it later. The plugin checks the required
 | Stripped logs or wood | 2 blocks | Two placed stripped log or stripped wood blocks |
 | Banner | 1 | A placed standing or wall banner, any color; plain or patterned |
 
-One, two, three or four candles sharing one block position count as one position. Any color or mix of colors across separate positions is allowed. The campfire only needs to stay lit; placing or removing food does not affect this requirement. Waterlogged campfires and candles do not qualify. The firefly bush only needs to be present; visible fireflies or night-time are not required. Ordinary beds cannot replace the straw bed. These features must be placed inside the same camp scan; inspect `/forage camp` to see any shortages. Items carried in your inventory, dropped on the ground or stored in a chest/barrel do not satisfy the construction checklist. Two cushions of the same color work, and so do two different colors. The two firewood blocks can be different stripped log/wood types and can sit anywhere within the footprint; they need not touch the campfire. Stripped stems, hyphae and bamboo do not count. A banner may have a custom pattern or no pattern at all. The cauldron needs some water, not necessarily a full fill: any of its three water levels qualifies. Straw beds, candles, firefly bushes, cushions, a water-filled cauldron, filled flowerpots, stripped wood and banners become requirements only after the update; build 736 keeps its earlier checklist.
+One, two, three or four candles sharing one block position count as one position. Any color or mix of colors across separate positions is allowed. The campfire only needs to stay lit; placing or removing food does not affect this requirement. Waterlogged campfires and candles do not qualify. The firefly bush only needs to be present; visible fireflies or night-time are not required. Ordinary beds cannot replace the straw bed. These features must be placed inside the same camp scan; inspect `/forage camp` to see any shortages. Items carried in your inventory, dropped on the ground or stored in a chest/barrel do not satisfy the construction checklist. Two cushions of the same color work, and so do two different colors. The two firewood blocks can be different stripped log/wood types and can sit anywhere within the footprint; they need not touch the campfire. Stripped stems, hyphae and bamboo do not count. A banner may have a custom pattern or no pattern at all. The cauldron needs some water, not necessarily a full fill: any of its three water levels qualifies.
 
-After that update, extinguishing the last qualifying campfire or candle makes the camp incomplete. So does losing its straw bed, either bed half or its last firefly bush, having fewer than two placed cushions or stripped wood blocks, emptying/removing the only filled flowerpot or water-filled cauldron, or losing its only banner. Using some cauldron water remains valid while at least one water level remains. Once Forage detects the shortage, restoring blocks alone does not clear the revalidation requirement. Restore or relight the missing features, then use `/forage camp revalidate` and confirm deliberately. Your registration, Local Introduction progress, XP, points and claimed rewards stay saved. An incomplete Initial Camp also pauses your Secondary Camps.
+Extinguishing the last qualifying campfire or candle makes the camp incomplete. So does losing its straw bed, either bed half or its last firefly bush, having fewer than two placed cushions or stripped wood blocks, emptying/removing the only filled flowerpot or water-filled cauldron, or losing its only banner. Using some cauldron water remains valid while at least one water level remains. Once Forage detects the shortage, restoring blocks alone does not clear the revalidation requirement. Restore or relight the missing features, then use `/forage camp revalidate` and confirm deliberately. Your registration, Local Introduction progress, XP, points and claimed rewards stay saved. An incomplete Initial Camp also pauses your Secondary Camps.
 
 ## Three camps total
 
@@ -138,7 +137,7 @@ Open **Tool Shop** at your complete registered camp to buy your first tool. Star
 
 For block routes, **break** a configured source with the matching tool in your main hand. The Brush route rewards block breaking, not completion of vanilla archaeology brushing. For sword/mace routes, make a matching melee hit, receive the kill credit within ten seconds, and hold the same Forage tool type when the mob dies. Projectile-only kills and picking up drops do not count. Every tier of a tool uses the same source list; an upgrade does not unlock extra blocks or creatures. Poplar saplings and crafted poplar building blocks are not gathering sources.
 
-The [complete source catalogue](#complete-source-catalogue) below lists every supported source from the shipped defaults. **Build 736** only shows up to five examples per family in **Tools & Families**. **Pending next build:** use `/forage sources` from anywhere to inspect the held Forage tool, or choose a tool if none is held; `/forage sources <tool>` opens a specific tool. The Trowel uses the ID `shovel`. Click a tool in Tools & Families for its full paginated list, or use the catalogue's clickable public documentation link. This is read-only browsing: it does not create workstation access or grant gathering rewards. The in-game list follows the server's configuration, which may differ from the published defaults. Each source card separates support from current reward pauses and can be clicked to refresh that snapshot. Gathering still rechecks its rules when you act. The hub's **Tools & All Sources** button and onboarding's **What can I gather?** entry also open the catalogue before your camp is ready. Newly issued or normally updated tool lore includes a source hint; existing tools acquire it when Forage next refreshes their lore, not merely when you open the guide.
+The [complete source catalogue](#complete-source-catalogue) below lists every supported source from the shipped defaults. Use `/forage sources` from anywhere to inspect the held Forage tool, or choose a tool if none is held; `/forage sources <tool>` opens a specific tool. The Trowel uses the ID `shovel`. Click a tool in Tools & Families for its full paginated list, or use the catalogue's clickable public documentation link. This is read-only browsing: it does not create workstation access or grant gathering rewards. The in-game list follows the server's configuration, which may differ from the published defaults. Each source card separates support from current reward pauses and can be clicked to refresh that snapshot. Gathering still rechecks its rules when you act. The hub's **Tools & All Sources** button and onboarding's **What can I gather?** entry also open the catalogue before your camp is ready. Newly issued or normally updated tool lore includes a source hint; existing tools acquire it when Forage next refreshes their lore, not merely when you open the guide.
 
 Player Forage level, a tool's level, and its tier are different. The four later tool types unlock when you carry a level-2 Forage tool; a tool left in a chest cannot satisfy the shop check. Each rewarded action can advance player XP, points, the held tool, the matching skill branch, and applicable quests.
 
@@ -150,7 +149,7 @@ From 11 October 2026, the beta server’s `normal` preset allows **3,125 player 
 
 ## Complete source catalogue
 
-This complete list is generated from the shipped defaults through the same source catalogue used by Forage. Staff can customize or disable sources; after the pending catalogue update is deployed, `/forage sources [tool]` shows that server's effective list. The command and clickable Tools & Families entries are **not available in beta build 736**.
+This complete list is generated from the shipped defaults through the same source catalogue used by Forage. Staff can customize or disable sources; `/forage sources [tool]` shows that server's effective list.
 
 **Every tier of a tool uses the same sources.** Tool level, tier, refinements and enchantments do not unlock extra entries in its list. They affect progression or tool behavior separately. The Trowel's command/configuration ID is `shovel`.
 
@@ -377,7 +376,7 @@ Tool ID: `shovel`. 6 source types.
 
 At an active workstation, open **Quests & Rewards** to inspect daily, weekly, monthly, and ready-to-claim quests. Valid rewarded gathering advances applicable quests automatically. Follow the actual objective shown on your card: visiting a biome without gathering there is insufficient, and a material quest needs that exact material. Turn-ins, dust use, and staff-granted XP do not count as gathering actions.
 
-**Pending next build; beta build 736 is unchanged.** Daily, Weekly and Monthly each get four top-row filters: **Show All**, **Incomplete** (unfinished and unclaimed), **Completed** (finished but still unclaimed), and **Claimed** (reward already received). Each category opens on Show All. The selected button is highlighted, counts show how many quests match, and changing filters returns to page 1. Quest order stays the same, with up to 28 per page and Previous/Next for larger lists. If no quests match, the page explains how to return to Show All. The separate **Ready to Claim** view still brings together unclaimed completed quests from all periods.
+Daily, Weekly and Monthly each have four top-row filters: **Show All**, **Incomplete** (unfinished and unclaimed), **Completed** (finished but still unclaimed), and **Claimed** (reward already received). Each category opens on Show All. The selected button is highlighted, counts show how many quests match, and changing filters returns to page 1. Quest order stays the same, with up to 28 per page and Previous/Next for larger lists. If no quests match, the page explains how to return to Show All. The separate **Ready to Claim** view still brings together unclaimed completed quests from all periods.
 
 Filters only change what you see. Camp and Local Introduction requirements still apply to claims, and no reward can be claimed twice for the same period. Clicking an incomplete or already-claimed quest keeps your filter and page; confirming a claim closes the menu as before.
 
@@ -403,7 +402,7 @@ Successful growth uses one dust and shares a 45-second default cooldown. Dust do
 
 ## Review Recent Activity
 
-**Pending next build; beta build 736 is unchanged.** Choose **Recent Activity** in the hub or run `/forage recent [page]` to open the same personal history. The command works away from camp and while Forage gameplay is paused. It shows only your own entries and gives no camp access, reward claim or extra progress.
+Choose **Recent Activity** in the hub or run `/forage recent [page]` to open the same personal history. The command works away from camp and while Forage gameplay is paused. It shows only your own entries and gives no camp access, reward claim or extra progress.
 
 Successful gathering records earned XP and points immediately. The list also includes treasure and level-up notices, quest progress notices and reward-ready updates, branch/turn-in/dust notices, and Forage warnings with their reason and next steps. Repeating the same warning within 30 seconds adds no duplicate entry. Pending chat summaries are already visible here; history keeps recording with chat batching off.
 
@@ -437,8 +436,8 @@ Forage camp ownership is not a general land claim. Follow the world's normal bui
 | `/forage status` | Current progression, camp/tool state, and a next-step summary. |
 | `/forage stats` | Player progression and held-tool details. |
 | `/forage limits` | Current daily limits, costs, and reward ranges. |
-| `/forage recent [page]` | Pending next build: your read-only Recent Activity history, anywhere and while gameplay is paused. |
-| `/forage sources [tool] [page]` | Pending next build: complete read-only source list from anywhere; uses the held Forage tool or opens the picker. |
+| `/forage recent [page]` | Your read-only Recent Activity history, anywhere and while gameplay is paused. |
+| `/forage sources [tool] [page]` | Complete read-only source list from anywhere; uses the held Forage tool or opens the picker. |
 | `/forage camp` | Inspect the nearby camp and its registration checklist. |
 | `/forage camp list` | Find your registrations and their IDs. |
 | `/forage camp register` | Open the deliberate registration action. |
@@ -446,7 +445,7 @@ Forage camp ownership is not a general land claim. Follow the world's normal bui
 | `/forage camp unclaim [registration-UUID]` | Review a release confirmation; global progress is kept. |
 | `/forage review` | Inspect a pending request and obtain the reference to share with staff. |
 
-`/forage shop`, `/forage quests`, `/forage branches`, `/forage tools`, `/forage compost`, `/forage dust`, `/forage top`, and `/forage tips` direct you to the corresponding workstation activity. They do not create a remote camp visit. Use the buttons after sneak-right-clicking your own registered composter. Build 736 also directs `/forage recent` to the workstation; the pending read-only history replaces that restriction.
+`/forage shop`, `/forage quests`, `/forage branches`, `/forage tools`, `/forage compost`, `/forage dust`, `/forage top`, and `/forage tips` direct you to the corresponding workstation activity. They do not create a remote camp visit. Use the buttons after sneak-right-clicking your own registered composter.
 
 ## Player FAQ
 
@@ -454,7 +453,7 @@ Forage camp ownership is not a general land claim. Follow the world's normal bui
 
 **Why are rewards locked at 30/30?** Open Local Introduction and submit the eight eligible plain items explicitly. Camp Turn-Ins is a different activity and cannot finish that step for you.
 
-**Why does an ordinary tool, wrong tool, or crafted block give no progress?** Forage needs a genuine curated tool and one of its configured sources. The tool may still perform its normal Minecraft action without a Forage reward. Check the complete source catalogue (or `/forage sources` after deployment) and `/forage limits`.
+**Why does an ordinary tool, wrong tool, or crafted block give no progress?** Forage needs a genuine curated tool and one of its configured sources. The tool may still perform its normal Minecraft action without a Forage reward. Check the complete source catalogue or `/forage sources` and `/forage limits`.
 
 **Why does my Secondary Camp stop working after I change Wild?** Every workstation depends on a valid Initial Camp. Repair and revalidate that registration, or replace it with another qualifying Initial Camp. Your global points and claimed-reward history remain saved.
 
@@ -462,7 +461,7 @@ Forage camp ownership is not a general land claim. Follow the world's normal bui
 
 **Can I move my camp without resetting my character?** Yes. Unclaim the old registration and deliberately register a replacement. Global progress stays, but the new registration starts its own Local Introduction. Breaking the composter alone does not release the old slot.
 
-**Are shared storage and community objectives ready to test?** Plugin-managed Camp Storage and Community Efforts are not implemented features of this release. A chest/barrel currently satisfies the physical checklist and otherwise behaves as ordinary storage. Extra-heart rewards, other-plugin point rewards, and fishing tournaments are future possibilities. Quest item rewards can use configured CMI kit templates through `reward-kit`; confirm the host has deployed a build supporting that setting and configured the mappings before testing them.
+**Are shared storage and community objectives ready to test?** Plugin-managed Camp Storage and Community Efforts are not implemented features of this release. A chest/barrel currently satisfies the physical checklist and otherwise behaves as ordinary storage. Extra-heart rewards, other-plugin point rewards, and fishing tournaments are future possibilities. Quest item rewards can use configured CMI kit templates through `reward-kit`; confirm the host has configured the kit mappings before testing them.
 
 ## Common blockers
 

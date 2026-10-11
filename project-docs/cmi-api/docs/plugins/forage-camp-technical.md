@@ -1,8 +1,8 @@
 # Forage 26.3 camps: technical and administration guide
 
-**Documentation reviewed against the current implementation on 9 October 2026.** The camp revamp and its guidance, plant, and tool-protection follow-ups are implemented and locally verified; connected-client beta acceptance and live activation remain separate steps. The repository currently targets Paper 26.3 **BETA** with API build **174**, Java 25 bytecode, JDK 25.0.4.1 for Gradle, and Java **27+35-2325** for the local server. These are the configured baseline, not a claim that every historical probe below ran on build 174. The external inventory crash boundary remains a release gate.
+**Documentation reviewed against the current implementation on 11 October 2026.** The camp revamp and its guidance, plant, and tool-protection follow-ups are implemented and locally verified; connected-client beta acceptance and live activation remain separate steps. The repository currently targets Paper 26.3 **BETA** with API build **174**, Java 25 bytecode, JDK 25.0.4.1 for Gradle, and Java **27+35-2325** for the local server. These are the configured baseline, not a claim that every historical probe below ran on build 174. The external inventory crash boundary remains a release gate.
 
-**Camp requirements follow-up, 11 October 2026: pending the next synchronized suite build.** The running beta remains on build **736**. Its original physical checklist is shown separately below; lit campfire/candle checks, a straw bed, a firefly bush, cushions, a water-filled cauldron, a filled flowerpot, stripped firewood and a banner require the new JARs. Publishing these instructions or reloading configuration does not install the update. Do not change the running beta's requirements or restart it for this documentation change.
+**Beta deployment, 11 October 2026:** suite build **738** is deployed and running on the maintained Forage beta with Paper 26.3 BETA **174**. CMI command, alias and virtual-anvil guards, mcMMO, Pyro and ItemSoulBind protections report ready; storage is available with no failure. Configuration reports zero errors and one expected normal-preset warning. Build 738 corrects the build 737 CMI command-map startup failure documented in the [protection compatibility record](../compatibility-tests/forage-protection-parity-2026-10-11.md). Startup verification does not sign off connected-client gameplay or live-server activation. Dated compatibility records retain their original pre-deployment findings.
 
 Related references: [player guide](forage-camps.md), [beta test checklist](forage/checklist.md), [main feature reference](forage.md), and [template measurements](../compatibility-tests/forage-26.3-camp-templates-2026-09-27.md).
 
@@ -79,7 +79,7 @@ This follows Halloween Virus's logical/physical separation. Halloween Virus stor
 
 The default box is centered on the composter Camp Anchor, extending ten blocks along X/Z and six along Y, or at most 5,733 block positions. Registration reserves that three-dimensional footprint; overlapping boxes cannot share a camp site or its required blocks. A naturally generated camp qualifies by its current materials, not by a structure-origin flag or a rigid schematic. Player-built equivalents intentionally work.
 
-**Current beta build 736 defaults:**
+**Current scan geometry and core requirements:**
 
 | Requirement | Configuration | Default |
 | --- | --- | ---: |
@@ -87,15 +87,14 @@ The default box is centered on the composter Camp Anchor, extending ten blocks a
 | Vertical half-height | `camp.scan-height` | 6 |
 | Wool family block positions | `camp.requirements.shelter` | 24 |
 | Fence blocks | `camp.requirements.fences` | 6 |
-| Campfire or soul campfire, lit or unlit | `camp.requirements.campfires` | 1 |
 | Chest, trapped chest, or barrel blocks | `camp.requirements.storage` | 1 |
 | Crafting tables | `camp.requirements.crafting-tables` | 1 |
 
-Shelter counts accept full wool, wool stairs, and wool slabs of every color, one occupied position each. A double slab does not get an extra placement count; wool carpets do not qualify. Supports count fences, including nether brick fences, but not fence gates or walls. The composter remains required as the default registered anchor; servers can deliberately change `camp.interact-block`. Build 736 readiness has no mandatory tree, logs, lantern, or cushion. Vanilla cushions are entities; counting a nonexistent cushion block would make every camp fail. See the exact-template evidence for the reasons behind these thresholds.
+Shelter counts accept full wool, wool stairs, and wool slabs of every color, one occupied position each. A double slab does not get an extra placement count; wool carpets do not qualify. Supports count fences, including nether brick fences, but not fence gates or walls. The composter remains required as the default registered anchor; servers can deliberately change `camp.interact-block`. Trees and lanterns are optional. Stripped firewood and placed cushions are required as listed below. Vanilla cushions are entities; counting a nonexistent cushion block would make every camp fail. See the exact-template evidence for the reasons behind these thresholds.
 
-**Pending next-build defaults:** the composter, shelter, fences, storage and crafting-table requirements remain unchanged. The campfire requirement gains a lit-state check, and these placed-feature minimums apply:
+**Additional required camp features:**
 
-| Requirement after deployment | Configuration | Default |
+| Requirement | Configuration | Default |
 | --- | --- | ---: |
 | Lit campfire or lit soul campfire | `camp.requirements.campfires` | 1 |
 | Lit candle block positions | `camp.requirements.candles` | 1 |
@@ -131,7 +130,7 @@ Camp Turn-Ins includes the current world's `introductionSubmitted` state in its 
 
 Completing an introduction enables global benefits at that camp, subject to the Initial Camp remaining valid. XP, points, quest/collection state, personal daily caps, purchases, and claimed-reward history stay global. World or camp changes never create fresh allowances. Physical submissions and deliveries use the active inventory group only.
 
-The 11 October 2026 beta configuration reload raised normal-preset daily caps by 25%: global XP **2,500 → 3,125**, global actions **1,200 → 1,500**, and every source family's XP **700 → 875** and actions **275 → 344** (rounded up). The next suite build ships the new defaults; existing configurations retain their stored values and need an explicit staff edit plus reload. Changing these thresholds does not reset daily usage, profile progress or quest state. Local chunk exhaustion is unchanged. Verify the effective values with `/forage admin balance` and `/forage limits`; do not use `/forage admin resetcap` to apply this increase.
+The 11 October 2026 beta configuration reload raised normal-preset daily caps by 25%: global XP **2,500 → 3,125**, global actions **1,200 → 1,500**, and every source family's XP **700 → 875** and actions **275 → 344** (rounded up). These are the shipped defaults; existing configurations retain their stored values and need an explicit staff edit plus reload. Changing these thresholds does not reset daily usage, profile progress or quest state. Local chunk exhaustion is unchanged. Verify the effective values with `/forage admin balance` and `/forage limits`; do not use `/forage admin resetcap` to apply this increase.
 
 An invalid Initial Camp blocks Secondary Camp activities regardless of their introduction status. Inspection, repair/revalidation, recovery review, and replacement controls remain accessible. Neither a broken camp nor a reset world deletes global profile progress.
 
@@ -143,7 +142,7 @@ Field treasure drops and use of previously obtained Forage Dust intentionally oc
 
 Forage is primarily a workstation feature. Reward claims require a current visit established by sneak-right-clicking the owner's registered workstation. The visit expires after **five minutes** and requires the player to remain within **six blocks** of the anchor's center. Each action also requires the current authenticated Forage menu. Command shortcuts may inspect or guide but must not create or extend workstation authority. Teleporting, changing world, moving out of range, death, quit, Creative/Spectator mode, expiry and configuration reload invalidate the visit; current ownership and camp requirements are checked before every action.
 
-The pending navigation fix preserves an existing nearby visit across closing menus, browsing `/menu` and returning through `/forage`. Closing still invalidates the old GUI session and any pending click from it; a fresh Forage view is required for the next action. No visit is created from proximity alone. Beta build 736 instead clears the visit on menu close or a Forage command, so testers must close the menu and sneak-right-click their composter again. The [navigation regression record](../compatibility-tests/forage-station-navigation-2026-10-11.md) documents this pending change and its verification.
+Workstation navigation preserves an existing nearby visit across closing menus, browsing `/menu` and returning through `/forage`. Closing still invalidates the old GUI session and any pending click from it; a fresh Forage view is required for the next action. No visit is created from proximity alone. The [navigation regression record](../compatibility-tests/forage-station-navigation-2026-10-11.md) documents the change and its verification.
 
 Use a server-side inventory holder and a per-player session identity. Menu names, item names, lore, and client slots are display data, never authority. At mutation time verify the owner UUID, open holder/session, permitted action, camp registration/revision, station position, distance, current world, permission, Local Introduction, current costs, inventory inputs, output capacity, and global eligibility. Deferred click handlers and asynchronous continuations must perform the same checks again.
 
@@ -153,7 +152,7 @@ Exact Paper event behavior matters: `InventoryDragEvent` is separate from `Inven
 
 ## Source catalogue and configuration
 
-**Pending next synchronized build; not active in beta build 736.** `/forage sources [tool]` is a read-only player catalogue available without a camp visit. No argument selects the held Forage tool when recognized, otherwise the tool picker. A tool argument selects its complete paginated list. Tools & Families links into those lists and the catalogue offers a clickable [public source guide](forage-camps.md#complete-source-catalogue). Reading sources never grants workstation authority or changes progress.
+`/forage sources [tool]` is a read-only player catalogue available without a camp visit. No argument selects the held Forage tool when recognized, otherwise the tool picker. A tool argument selects its complete paginated list. Tools & Families links into those lists and the catalogue offers a clickable [public source guide](forage-camps.md#complete-source-catalogue). Reading sources never grants workstation authority or changes progress.
 
 The catalogue uses the same effective material/entity-to-family maps as gathering after configuration loads. Enabled families come from `sources.ids` and `sources.<family>.enabled`; source IDs are in `sources.<family>.materials` and `sources.<family>.entities`. Enabled tools come from `tools.ids` and `tools.<tool>.enabled`, with family membership in `tools.<tool>.families`. The Trowel is `shovel`. The generated player catalogue includes every effective default ID. Invalid or item-only material entries are not block sources; disabled tools/families are absent from the effective catalogue. Keep any local modifications in configuration and compare the runtime list after reload.
 
@@ -250,6 +249,6 @@ Test registration, repair, replacement, overlapping footprints, missing initial 
 
 Adversarial coverage includes rapid clicks, shift/drag/double-click/hotbar/offhand/drop/creative interactions, close/reopen, movement, teleport, world change, death, quit/kick, plugin disable, slow storage, storage failure, restart, and failure between each transaction stage. Test AutoSell and other item-producing plugins where installed. Profile validation and save behavior rather than assuming asynchronous code is inexpensive.
 
-Build/test using JDK 25.0.4.1. Stop the maintained Paper 26.3 server before `scripts/build-all.sh`; it reserves one suite build number and replaces the complete managed JAR set only after the full gate passes. Start the local server on Java 27 and verify startup, mapped-world camp flow, restart persistence, and shutdown. Record both automated evidence and remaining real-client gameplay acceptance. Do not present a module-only JAR as a deployable build.
+Build/test using JDK 25.0.4.1. Stop both maintained Paper 26.3 and Forage 26.3 servers before `scripts/build-all.sh`; it reserves one suite build number, aligns both Paper runtimes and replaces both complete managed JAR sets only after the full gate passes. Start the intended local server on Java 27 and verify startup, mapped-world camp flow, restart persistence, and shutdown. Record both automated evidence and remaining real-client gameplay acceptance. Do not present a module-only JAR as a deployable build.
 
 Keep the preserved 26.2 rollback instance untouched. Live server changes, live feature activation, and final live staging remain separate owner-directed steps; publishing these guides does not enable gameplay or establish beta acceptance.

@@ -1,8 +1,18 @@
 # Forage external item protections, 11 October 2026
 
-## Deployment status
+## Original source-review status
 
 This is a source and development-test follow-up to the Halloween Virus comparison. It is **not deployed in beta build 736**. No beta restart, live JAR replacement, account edit or gameplay configuration change is part of this work. A configuration reload cannot load these Java changes. The next approved maintenance window must use the synchronized suite build for both maintained servers, followed by checklist S04c–S04e and connected-client acceptance.
+
+## Build 737 startup finding and corrective deployment
+
+The later canonical build 737 synchronized the managed suite and started on Paper 26.3 BETA 174, but the CMI alias guard reported unavailable protection. Forage correctly paused tool use rather than allowing gathering without that guard; loaded menus alone were not proof that the plugin was ready.
+
+A native probe on the exact Paper 174 runtime confirmed that its forwarding command map extends `HashMap` while delegating map access to another backing map. Its inherited `forEach` and `replaceAll` methods see the unused internal table. The guard used those methods, so it failed to replace and track the real CMI alias command registrations even though ordinary command lookup returned them. This was a runtime-map compatibility failure, not a missing CMI permission or a reason to disable tool protection.
+
+Corrective suite build 738 replaces those bulk operations with a snapshot of the actual `entrySet`, followed by identity-checked `get`/`put` changes. Every command label keeps its wrapper, and closing one guard restores only registrations it still owns without removing another feature's protection. Four forwarding-map regressions failed twice before the correction; all 23 CMI alias tests then passed.
+
+The canonical build completed with 4,191 tests, zero failures/errors and 11 skips; all 663 Forage tests passed with no skips. All 66 managed JARs were synchronized and verified in both maintained server instances. The native Paper 174 probe with CMI 9.8.10.4 passed at both 100 and 300 ticks, with no raw CMI alias registrations remaining outside the wrappers. The beta then started build 738 at 17:41:33 on 11 October 2026. At 17:41:48, its actual CMI 9.8.10.5 command, alias and virtual-anvil guards reported active; mcMMO, Pyro and ItemSoulBind guards were ready, storage was available with no failure, and configuration reported zero errors, one expected normal-preset warning and 35 passing checks. These are startup and native-probe results, not a claim that a connected player completed tool purchases or the beta checklist. The earlier development-test totals below remain historical evidence; they do not establish that the native Paper startup path passed.
 
 ## Reviewed boundaries
 
@@ -31,7 +41,7 @@ After CMI aliases change, refreshing the guard checks the current registrations 
 
 Initial Forage, selected Halloween Virus guard/owned-Pyro-fixture, and shared item-guard tests passed before changes. Regression tests demonstrated the missing Forage binding check, unsupported CMI recipient forms, CMI alias bypass and refresh failures, and PyroMining command/removal gaps before production fixes.
 
-The final combined development run passed **2,496 tests**, with no failures, errors or skips:
+The original combined development run passed **2,496 tests**, with no failures, errors or skips:
 
 | Suite | Tests |
 | --- | ---: |
