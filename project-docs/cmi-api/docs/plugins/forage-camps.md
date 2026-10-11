@@ -2,6 +2,8 @@
 
 **Reviewed 11 October 2026 for the 26.3 beta, suite build 738 on Paper BETA 174.** The features below are deployed on the beta server; player acceptance testing remains open. This guide describes the camp and gathering flow. Availability, prices, caps, and enabled sources depend on the server; live activation remains separate from beta testing.
 
+**Upcoming Turn-In update:** the clickable Accepted Turn-Ins item guide and cocoa-bean acceptance described below await a later build and restart. The beta still runs build 738: use the complete item list below with the explicit cocoa-bean exception for its current 70 accepted types.
+
 Forage is hands-on gathering with your own tools and camps. You keep one set of Forage XP, points, quests, limits, and reward history wherever you play. Your camps determine where you can submit finds and claim those benefits.
 
 ## How Players Use It
@@ -289,12 +291,14 @@ Tool ID: `shears`. 14 source types.
 
 ### Forage Sickle sources
 
-Tool ID: `sickle`. 37 source types.
+Tool ID: `sickle`. 39 source types.
 
 **Farm Herbs** (`crops`):
 
 - Beetroots (`BEETROOTS`): Break this block.
 - Carrots (`CARROTS`): Break this block.
+- Chorus Flower (`CHORUS_FLOWER`): Break this block.
+- Chorus Plant (`CHORUS_PLANT`): Break this block.
 - Cocoa (`COCOA`): Break this block.
 - Nether Wart (`NETHER_WART`): Break this block.
 - Potatoes (`POTATOES`): Break this block.
@@ -386,9 +390,130 @@ Completing a quest makes its reward available. Return to your active workstation
 
 Treasures are occasional extra finds, not guaranteed on a short trip. Keep inventory room: a find that cannot fit is skipped, not dropped on the ground or queued for later. Genuine Forage treasures are used in Repair & Merge and Greater Forage Dust; a vanilla item of the same material is not a substitute. Legendary Pulse Dust is a rare treasure outcome, so a brief session without one is normal.
 
-## Turn in finds, care for tools, and make dust
+## Camp Turn-Ins
 
 After Local Introduction, **Camp Turn-Ins** offers reduced XP and points for eligible plain organic items. Its default limit is 192 items per submission with a 30-second cooldown. It scans your normal inventory, including the hotbar; read the preview and put any plain resources you want to keep into a chest first. Named, enchanted, custom, container-bearing, and Forage-marked items must remain untouched. Putting items into camp storage does not submit them.
+
+The **Accepted Turn-Ins** card names the accepted families on beta build 738. It does not yet open an item list. If an older message says “Turn-In Sources,” it means this card; use the complete inventory-item list below until the clickable guide is activated. `/forage sources` describes blocks to break and creatures to defeat with Forage tools, which is a different list.
+
+Acceptance checks the item you submit, not how you obtained it. Eligible plain items bought from a shop or received from another player can qualify; no Forage-tool gathering provenance is required. Turn-Ins do not replace gathering quests, tool XP or Local Introduction gathering actions. Camp access, introduction completion, caps and cooldowns still apply.
+
+**After the upcoming update is activated**, clicking Accepted Turn-Ins will open a list built from the running server's eligibility rules, including cocoa beans. It shows up to 28 item types per page, with Previous/Next, an **About Accepted Turn-Ins** button to refresh the list, Back to Turn-Ins and a Public Turn-In Guide button that sends a clickable documentation link. Browsing submits nothing. Until then, cocoa beans are rejected on build 738. Other incidental drops are not automatically accepted: sticks, saplings and poisonous potatoes remain outside the default list. Logs and calcite also remain excluded even though matching Forage tools can gather their source families. Glow berries are accepted inventory items; their cave-vine gathering blocks belong to a separate gathering family.
+
+## Complete accepted Turn-In item list
+
+**Current beta exception:** the list below contains 71 types from the upcoming source defaults. Build 738 accepts the other 70, but **not Cocoa Beans (`COCOA_BEANS`)**. The clickable in-game item list is also upcoming. Server configuration can change these defaults.
+
+<!-- BEGIN GENERATED FORAGE TURN-INS -->
+
+This list is generated from source defaults through the same acceptance resolver used by Camp Turn-Ins. Server configuration can change it. There are **71 accepted item types** in these defaults; this does not mean every type can be obtained through ordinary survival harvesting.
+
+These are inventory items, not a list of blocks that award gathering progress. Only plain vanilla stacks in your inventory, including the hotbar, qualify. Custom items and items outside those slots remain untouched. Camp readiness, the Local Introduction, cooldown and daily XP allowance still apply.
+
+### Farm Herbs turn-ins
+
+Family ID: `crops`. 13 item types.
+
+- Beetroot (`BEETROOT`).
+- Beetroot Seeds (`BEETROOT_SEEDS`).
+- Carrot (`CARROT`).
+- Chorus Flower (`CHORUS_FLOWER`).
+- Chorus Fruit (`CHORUS_FRUIT`).
+- Chorus Plant (`CHORUS_PLANT`).
+- Cocoa Beans (`COCOA_BEANS`).
+- Glow Berries (`GLOW_BERRIES`).
+- Nether Wart (`NETHER_WART`).
+- Potato (`POTATO`).
+- Sweet Berries (`SWEET_BERRIES`).
+- Wheat (`WHEAT`).
+- Wheat Seeds (`WHEAT_SEEDS`).
+
+### Wild Flora turn-ins
+
+Family ID: `flora`. 24 item types.
+
+- Allium (`ALLIUM`).
+- Azure Bluet (`AZURE_BLUET`).
+- Blue Orchid (`BLUE_ORCHID`).
+- Cornflower (`CORNFLOWER`).
+- Dandelion (`DANDELION`).
+- Dead Bush (`DEAD_BUSH`).
+- Fern (`FERN`).
+- Large Fern (`LARGE_FERN`).
+- Lilac (`LILAC`).
+- Lily Of The Valley (`LILY_OF_THE_VALLEY`).
+- Orange Tulip (`ORANGE_TULIP`).
+- Oxeye Daisy (`OXEYE_DAISY`).
+- Peony (`PEONY`).
+- Pink Tulip (`PINK_TULIP`).
+- Pitcher Plant (`PITCHER_PLANT`).
+- Poppy (`POPPY`).
+- Red Shrub (`RED_SHRUB`).
+- Red Tulip (`RED_TULIP`).
+- Rose Bush (`ROSE_BUSH`).
+- Short Grass (`SHORT_GRASS`).
+- Sunflower (`SUNFLOWER`).
+- Tall Grass (`TALL_GRASS`).
+- Torchflower (`TORCHFLOWER`).
+- White Tulip (`WHITE_TULIP`).
+
+### Field Fruit turn-ins
+
+Family ID: `fruits`. 8 item types.
+
+- Apple (`APPLE`).
+- Bamboo (`BAMBOO`).
+- Cactus (`CACTUS`).
+- Kelp (`KELP`).
+- Melon (`MELON`).
+- Melon Slice (`MELON_SLICE`).
+- Pumpkin (`PUMPKIN`).
+- Sugar Cane (`SUGAR_CANE`).
+
+### Canopy Finds turn-ins
+
+Family ID: `leaves`. 14 item types.
+
+- Acacia Leaves (`ACACIA_LEAVES`).
+- Azalea Leaves (`AZALEA_LEAVES`).
+- Birch Leaves (`BIRCH_LEAVES`).
+- Cherry Leaves (`CHERRY_LEAVES`).
+- Dark Oak Leaves (`DARK_OAK_LEAVES`).
+- Flowering Azalea Leaves (`FLOWERING_AZALEA_LEAVES`).
+- Jungle Leaves (`JUNGLE_LEAVES`).
+- Mangrove Leaves (`MANGROVE_LEAVES`).
+- Oak Leaves (`OAK_LEAVES`).
+- Orange Poplar Leaves (`ORANGE_POPLAR_LEAVES`).
+- Pale Oak Leaves (`PALE_OAK_LEAVES`).
+- Red Poplar Leaves (`RED_POPLAR_LEAVES`).
+- Spruce Leaves (`SPRUCE_LEAVES`).
+- Yellow Poplar Leaves (`YELLOW_POPLAR_LEAVES`).
+
+### Moss and Roots turn-ins
+
+Family ID: `moss`. 6 item types.
+
+- Azalea (`AZALEA`).
+- Big Dripleaf (`BIG_DRIPLEAF`).
+- Flowering Azalea (`FLOWERING_AZALEA`).
+- Moss Block (`MOSS_BLOCK`).
+- Moss Carpet (`MOSS_CARPET`).
+- Small Dripleaf (`SMALL_DRIPLEAF`).
+
+### Mushrooms turn-ins
+
+Family ID: `mushrooms`. 6 item types.
+
+- Brown Mushroom (`BROWN_MUSHROOM`).
+- Brown Mushroom Block (`BROWN_MUSHROOM_BLOCK`).
+- Mushroom Stem (`MUSHROOM_STEM`).
+- Red Mushroom (`RED_MUSHROOM`).
+- Red Mushroom Block (`RED_MUSHROOM_BLOCK`).
+- Shelf Mushroom (`SHELF_MUSHROOM`).
+
+<!-- END GENERATED FORAGE TURN-INS -->
+
+## Care for tools and make dust
 
 Use **Upgrade Tool** with the tool to improve in your main hand. Tier upgrades, supported diamond refinements, and compatible Forage enchantments each show their own level, money, and point requirements. Shears, brushes, and maces have no diamond refinement. Improvements preserve the tool's progression; a tier upgrade does not repair it.
 

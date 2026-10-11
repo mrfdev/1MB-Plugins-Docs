@@ -4,6 +4,8 @@ Forage is a player-facing nature progression plugin for `/forage`. It targets th
 
 **Beta deployment reviewed 11 October 2026: this guide covers suite build 738 on Paper 26.3 BETA 174.** Connected-client acceptance remains separate from automated checks and startup verification. Live gameplay remains dormant until owner acceptance and activation. Development uses the maintained `servers/Paper-26.3/` instance on Java 27, with suite builds on JDK 25.0.4.1. The preserved 26.2 server is a rollback instance. Shipping the Forage JAR in a complete suite build does not activate it on live.
 
+**Upcoming Turn-In update:** a clickable Accepted Turn-Ins item list and cocoa-bean acceptance are pending a later build and restart. They are not active on the beta's build 738. The [complete accepted-item list](forage-camps.md#complete-accepted-turn-in-item-list) distinguishes the 70 currently accepted types from cocoa beans, the one upcoming addition.
+
 The tool-protection verification recorded suite build 726 with the then-current 65 managed JARs, 156 passing Forage tests, and a Paper 26.3 BETA 159 probe with 390 assertions. These are dated verification results, not the identity of a later beta-server build. See the [tool-protection verification](../compatibility-tests/forage-tool-protection-2026-10-07.md). The earlier build 724 plant probe passed 88 assertions on Paper 26.3 BETA 157 covering custom-tool rewards, native growth, dust consumption, and protection boundaries. See the [plant compatibility verification](../compatibility-tests/forage-26.3-plants-2026-10-06.md). The earlier build 705 camp-guidance follow-up passed 19 native assertions on Paper 26.3 ALPHA 49. Real-client acceptance remains separate from these synthetic-player checks.
 
 Dormant Forage is excluded from `/next` recommendations, focus choices, first-success guides, and ScheduledTips promotion even though its JAR is loaded. ScheduledTips recognizes existing Forage tip IDs, text, and embedded commands automatically; see [tip feature requirements](scheduledtips.md#feature-availability-and-dormant-forage). Debug mode does not override dormancy. Saved progress and communication preferences remain available for a future activation.
@@ -277,7 +279,13 @@ By default, camp turn-ins:
 - respect the daily Forage XP cap
 - take at most 192 items per submission and use a 30-second cooldown
 
-Camp Turn-Ins consume eligible stacks from the normal storage inventory, including the hotbar. Keep items you want to retain in a chest before confirming and read the Turn-In Sources and preview cards. This is an explicit Camp Delivery, not automatic credit for placing items in camp storage.
+Camp Turn-Ins consume eligible stacks from the normal storage inventory, including the hotbar. Keep items you want to retain in a chest before confirming and read the **Accepted Turn-Ins** and preview cards. The current Accepted Turn-Ins card shows family names only; older “Turn-In Sources” wording refers to that same card. This is an explicit Camp Delivery, not automatic credit for placing items in camp storage.
+
+Use the [complete accepted Turn-In item list](forage-camps.md#complete-accepted-turn-in-item-list) for exact inventory materials and the [staff acceptance reference](forage-camp-technical.md#turn-in-acceptance-and-configuration) for configuration rules. This list is separate from the gathering catalogue: `GLOW_BERRIES` can be accepted as a crop item while its `CAVE_VINES` source is in the cave gathering family. Ordinary logs, calcite, saplings, sticks and poisonous potatoes are not accepted by default. `COCOA` is a crop block that Forage can gather, but beta build 738 does not accept its `COCOA_BEANS` drop.
+
+The upcoming update makes Accepted Turn-Ins clickable and paginated, using the same effective material/family resolver as submission, and adds `COCOA_BEANS` to the crop drop aliases. This produces 71 accepted item types with the default families; the running build 738 accepts 70. Browsing the list will not submit items or grant rewards. A listed material must still be a plain vanilla stack, and the actual submission rechecks the inventory and camp conditions.
+
+Items do not need Forage gathering provenance. Bought or traded plain resources can qualify, without completing a gathering quest, leveling a tool or choosing a branch first. Local Introduction and active workstation access remain required. Turn-Ins award their reduced player XP/points rather than gathering actions, tool XP or gathering-quest progress.
 
 ## Forage Dust
 

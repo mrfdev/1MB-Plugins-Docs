@@ -6,6 +6,8 @@
 
 Related references: [player guide](forage-camps.md), [beta test checklist](forage/checklist.md), [main feature reference](forage.md), and [template measurements](../compatibility-tests/forage-26.3-camp-templates-2026-09-27.md).
 
+**Upcoming Turn-In update:** the runtime item catalogue and `COCOA_BEANS` acceptance below are pending a later build and restart. The running beta remains on build 738 with 70 accepted inventory types; the new default list has 71. Do not mark the new menu or cocoa test passed on the current beta.
+
 ## Prepare a beta session
 
 Use a normal Survival account for the player route and a separate staff account for diagnostics. The default player permissions are `onembcmi.forage.use`, `.shop`, `.stats`, and `.camp` with the same `onembcmi.forage` prefix. `onembcmi.forage.admin` and its give/inspect/reload/debug children default to **false**, including for operators; grant only the roles required for the session. Console can perform administrative inspection without giving every tester staff powers.
@@ -166,6 +168,138 @@ gradle :plugins:player-fun:forage:test --tests '*ForageSourceDocumentationTest' 
 ```
 
 The normal Forage test suite also checks this generated section for drift, including when the guide changes. Generation modifies only its explicit markers and leaves surrounding prose intact. Review the generated diff, mirror the relevant Forage documents into the public documentation repository, then run that repository's `npm run docs:generate` and `npm run build`. These development checks do not build/deploy a new suite or restart a server. See the [source guide verification record](../compatibility-tests/forage-source-guide-2026-10-11.md) for the checked command, menu, source mapping and documentation behavior.
+
+## Turn-In acceptance and configuration
+
+Gathering sources and accepted inventory items are separate contracts. `/forage sources` lists breakable blocks and eligible creatures; it must not be used as an exhaustive Turn-In item list. In build 738, the **Accepted Turn-Ins** card shows only family names and has no click action. The old missing-items message's “Turn-In Sources” label is misleading. The upcoming update consistently names Accepted Turn-Ins and opens its read-only item catalogue from that card, with 28 entries per page, Previous/Next, refresh through **About Accepted Turn-Ins**, Back to Turn-Ins and a clickable Public Turn-In Guide link. Browsing must not consume inventory, mutate progress or create submission authority.
+
+The default allowed families are `flora`, `crops`, `mushrooms`, `leaves`, `fruits` and `moss`, configured under `camp.turnins.allowed-families`. A family must also be loaded and enabled through `sources.ids` and `sources.<family>.enabled`. For each inventory material, resolve its effective configured material-family binding first; only if it has none, use the built-in drop alias. Then require that family to be allowed for Turn-Ins. The catalogue must use this same resolver and include only item materials, never block-only types such as `CARROTS` or `COCOA`.
+
+The current drop aliases are `CARROT`, `POTATO`, `BEETROOT`, `WHEAT_SEEDS`, `BEETROOT_SEEDS`, `SWEET_BERRIES` and `CHORUS_FRUIT` to `crops`, plus `MELON_SLICE` and `APPLE` to `fruits`. The upcoming update adds `COCOA_BEANS` to `crops`. A configured direct binding takes precedence over these aliases. Item-only `GLOW_BERRIES` is a valid Turn-In material under crops even though its cave-vine gathering blocks belong to cave; do not derive this list by filtering the block-only source catalogue. Saplings, sticks and poisonous potatoes are not implicit aliases. Logs and calcite are gathering materials outside the default Turn-In families.
+
+The exact item list below describes default eligibility, not current permission to submit. Submission still requires plain vanilla stacks without item meta, an eligible owned workstation, completed Local Introduction, available persistence, applicable caps and cooldowns. It scans normal storage including hotbar slots, not armor/offhand slots or container contents. There is no gathering-provenance check: eligible plain shop/traded items can qualify. Reduced Turn-In XP/points do not advance gathering actions, tool XP or gathering quests.
+
+The marked Turn-In lists in both guides are generated from `ForagePlugin.defaultSettings()`, the production configuration loaders and the runtime `turnInCatalog()` resolver. Item classification comes from the exact compiled Paper API. Keep this workflow separate from gathering-source generation; filtering the gathering catalogue loses accepted item-only materials and drop aliases. With JDK 25.0.4.1 selected, run:
+
+```sh
+gradle :plugins:player-fun:forage:generateTurnInDocumentation --console=plain
+gradle :plugins:player-fun:forage:test --tests '*ForageTurnInDocumentationTest' --console=plain
+```
+
+The normal Forage suite checks both Turn-In lists for drift. The generator changes only `BEGIN/END GENERATED FORAGE TURN-INS` markers; keep deployment notices outside those markers. These development tasks do not build or deploy JARs, change server configuration, or restart a server. Mirror only the reviewed Forage documents and regenerate/check the public site after a list change.
+
+## Complete accepted Turn-In item list
+
+**Current beta exception:** the generated source-default list below has 71 types. Build 738 accepts all 70 types other than **`COCOA_BEANS`** with the audited default family configuration. Cocoa-bean acceptance and the clickable in-game list are upcoming, not active on this beta.
+
+<!-- BEGIN GENERATED FORAGE TURN-INS -->
+
+This list is generated from source defaults through the same acceptance resolver used by Camp Turn-Ins. Server configuration can change it. There are **71 accepted item types** in these defaults; this does not mean every type can be obtained through ordinary survival harvesting.
+
+These are inventory items, not a list of blocks that award gathering progress. Only plain vanilla stacks in your inventory, including the hotbar, qualify. Custom items and items outside those slots remain untouched. Camp readiness, the Local Introduction, cooldown and daily XP allowance still apply.
+
+### Farm Herbs turn-ins
+
+Family ID: `crops`. 13 item types.
+
+- Beetroot (`BEETROOT`).
+- Beetroot Seeds (`BEETROOT_SEEDS`).
+- Carrot (`CARROT`).
+- Chorus Flower (`CHORUS_FLOWER`).
+- Chorus Fruit (`CHORUS_FRUIT`).
+- Chorus Plant (`CHORUS_PLANT`).
+- Cocoa Beans (`COCOA_BEANS`).
+- Glow Berries (`GLOW_BERRIES`).
+- Nether Wart (`NETHER_WART`).
+- Potato (`POTATO`).
+- Sweet Berries (`SWEET_BERRIES`).
+- Wheat (`WHEAT`).
+- Wheat Seeds (`WHEAT_SEEDS`).
+
+### Wild Flora turn-ins
+
+Family ID: `flora`. 24 item types.
+
+- Allium (`ALLIUM`).
+- Azure Bluet (`AZURE_BLUET`).
+- Blue Orchid (`BLUE_ORCHID`).
+- Cornflower (`CORNFLOWER`).
+- Dandelion (`DANDELION`).
+- Dead Bush (`DEAD_BUSH`).
+- Fern (`FERN`).
+- Large Fern (`LARGE_FERN`).
+- Lilac (`LILAC`).
+- Lily Of The Valley (`LILY_OF_THE_VALLEY`).
+- Orange Tulip (`ORANGE_TULIP`).
+- Oxeye Daisy (`OXEYE_DAISY`).
+- Peony (`PEONY`).
+- Pink Tulip (`PINK_TULIP`).
+- Pitcher Plant (`PITCHER_PLANT`).
+- Poppy (`POPPY`).
+- Red Shrub (`RED_SHRUB`).
+- Red Tulip (`RED_TULIP`).
+- Rose Bush (`ROSE_BUSH`).
+- Short Grass (`SHORT_GRASS`).
+- Sunflower (`SUNFLOWER`).
+- Tall Grass (`TALL_GRASS`).
+- Torchflower (`TORCHFLOWER`).
+- White Tulip (`WHITE_TULIP`).
+
+### Field Fruit turn-ins
+
+Family ID: `fruits`. 8 item types.
+
+- Apple (`APPLE`).
+- Bamboo (`BAMBOO`).
+- Cactus (`CACTUS`).
+- Kelp (`KELP`).
+- Melon (`MELON`).
+- Melon Slice (`MELON_SLICE`).
+- Pumpkin (`PUMPKIN`).
+- Sugar Cane (`SUGAR_CANE`).
+
+### Canopy Finds turn-ins
+
+Family ID: `leaves`. 14 item types.
+
+- Acacia Leaves (`ACACIA_LEAVES`).
+- Azalea Leaves (`AZALEA_LEAVES`).
+- Birch Leaves (`BIRCH_LEAVES`).
+- Cherry Leaves (`CHERRY_LEAVES`).
+- Dark Oak Leaves (`DARK_OAK_LEAVES`).
+- Flowering Azalea Leaves (`FLOWERING_AZALEA_LEAVES`).
+- Jungle Leaves (`JUNGLE_LEAVES`).
+- Mangrove Leaves (`MANGROVE_LEAVES`).
+- Oak Leaves (`OAK_LEAVES`).
+- Orange Poplar Leaves (`ORANGE_POPLAR_LEAVES`).
+- Pale Oak Leaves (`PALE_OAK_LEAVES`).
+- Red Poplar Leaves (`RED_POPLAR_LEAVES`).
+- Spruce Leaves (`SPRUCE_LEAVES`).
+- Yellow Poplar Leaves (`YELLOW_POPLAR_LEAVES`).
+
+### Moss and Roots turn-ins
+
+Family ID: `moss`. 6 item types.
+
+- Azalea (`AZALEA`).
+- Big Dripleaf (`BIG_DRIPLEAF`).
+- Flowering Azalea (`FLOWERING_AZALEA`).
+- Moss Block (`MOSS_BLOCK`).
+- Moss Carpet (`MOSS_CARPET`).
+- Small Dripleaf (`SMALL_DRIPLEAF`).
+
+### Mushrooms turn-ins
+
+Family ID: `mushrooms`. 6 item types.
+
+- Brown Mushroom (`BROWN_MUSHROOM`).
+- Brown Mushroom Block (`BROWN_MUSHROOM_BLOCK`).
+- Mushroom Stem (`MUSHROOM_STEM`).
+- Red Mushroom (`RED_MUSHROOM`).
+- Red Mushroom Block (`RED_MUSHROOM_BLOCK`).
+- Shelf Mushroom (`SHELF_MUSHROOM`).
+
+<!-- END GENERATED FORAGE TURN-INS -->
 
 ## Read-only guidance and onboarding
 
