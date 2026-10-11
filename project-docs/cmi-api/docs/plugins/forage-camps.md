@@ -52,20 +52,25 @@ Wool carpets do not count as shelter. A double wool slab counts as one occupied 
 
 The **Requirements** book glows when the physical camp checklist is complete. The **Register Initial**, **Register Secondary**, or **Revalidate Camp** button glows only when the action's other requirements are also met. A complete build can therefore have a glowing book while registration remains blocked in Creative mode. The button and chat explain what still needs to change; the plugin checks again when you click.
 
-You can choose your layout and redesign it later. The plugin checks the required features within your camp, rather than demanding one exact schematic. Cushions, lanterns and trees remain optional decoration.
+You can choose your layout and redesign it later. The plugin checks the required features within your camp, rather than demanding one exact schematic. In build 736, cushions, lanterns and trees remain optional decoration. The pending checklist below adds placed cushions; lanterns and trees remain optional.
 
-**Pending next build:** keep the composter, 24 shelter positions, six fences, one storage block and one crafting table. The fire must be lit, and three more features become required:
+**Pending next build:** keep the composter, 24 shelter positions, six fences, one storage block and one crafting table. The fire must be lit, and the following placed features become required:
 
 | Feature | Default minimum | What counts after deployment |
 | --- | ---: | --- |
-| Lit fire | 1 | A lit campfire or lit soul campfire |
-| Lit candle | 1 position | A lit candle block, undyed or any color; candles on cakes do not count |
+| Lit fire | 1 | A lit campfire or lit soul campfire, whether or not food is cooking |
+| Lit candle | 1 position | A lit candle block, undyed or any color, containing one to four candles; candles on cakes do not count |
 | Straw bed | 1 complete bed | Both matching halves must be inside the scan; a bed counts once, not once per half |
 | Firefly bush | 1 | A placed firefly bush |
+| Cushions | 2 | Two placed cushions; any colors, matching or mixed |
+| Water-filled cauldron | 1 | A placed cauldron with water at level 1, 2 or 3; empty, lava and powder-snow cauldrons do not count |
+| Filled flowerpot | 1 | A placed flowerpot with any vanilla-valid potted contents; an empty pot does not count |
+| Stripped logs or wood | 2 blocks | Two placed stripped log or stripped wood blocks |
+| Banner | 1 | A placed standing or wall banner, any color; plain or patterned |
 
-A group of candles sharing one block position counts as one position, regardless of the number of candles. Waterlogged campfires and candles do not qualify. The firefly bush only needs to be present; visible fireflies or night-time are not required. Ordinary beds cannot replace the straw bed. These features belong inside the same camp scan; inspect `/forage camp` to see any shortages. Straw beds, candles and firefly bushes are optional under build 736 and become requirements only after the update.
+One, two, three or four candles sharing one block position count as one position. Any color or mix of colors across separate positions is allowed. The campfire only needs to stay lit; placing or removing food does not affect this requirement. Waterlogged campfires and candles do not qualify. The firefly bush only needs to be present; visible fireflies or night-time are not required. Ordinary beds cannot replace the straw bed. These features must be placed inside the same camp scan; inspect `/forage camp` to see any shortages. Items carried in your inventory, dropped on the ground or stored in a chest/barrel do not satisfy the construction checklist. Two cushions of the same color work, and so do two different colors. The two firewood blocks can be different stripped log/wood types and can sit anywhere within the footprint; they need not touch the campfire. Stripped stems, hyphae and bamboo do not count. A banner may have a custom pattern or no pattern at all. The cauldron needs some water, not necessarily a full fill: any of its three water levels qualifies. Straw beds, candles, firefly bushes, cushions, a water-filled cauldron, filled flowerpots, stripped wood and banners become requirements only after the update; build 736 keeps its earlier checklist.
 
-After that update, extinguishing the last qualifying campfire or candle makes the camp incomplete. So does losing its straw bed, either bed half, or its last firefly bush. Once Forage detects the shortage, restoring blocks alone does not clear the revalidation requirement. Restore or relight the missing features, then use `/forage camp revalidate` and confirm deliberately. Your registration, Local Introduction progress, XP, points and claimed rewards stay saved. An incomplete Initial Camp also pauses your Secondary Camps.
+After that update, extinguishing the last qualifying campfire or candle makes the camp incomplete. So does losing its straw bed, either bed half or its last firefly bush, having fewer than two placed cushions or stripped wood blocks, emptying/removing the only filled flowerpot or water-filled cauldron, or losing its only banner. Using some cauldron water remains valid while at least one water level remains. Once Forage detects the shortage, restoring blocks alone does not clear the revalidation requirement. Restore or relight the missing features, then use `/forage camp revalidate` and confirm deliberately. Your registration, Local Introduction progress, XP, points and claimed rewards stay saved. An incomplete Initial Camp also pauses your Secondary Camps.
 
 ## Three camps total
 
