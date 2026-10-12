@@ -135,3 +135,5 @@ When code changes command behavior, permissions, placeholders, debug output, con
 The shared library should remain the source of truth for global debug output. If a plugin adds commands, permissions, placeholders, or config keys, register those with the library so `/1mblib debug plugin <id> all` stays accurate.
 
 [Back to root README](../README.md)
+
+- [Fireworks administration](plugins/fireworks.md), [player guide](plugins/fireworks-player-guide.md).

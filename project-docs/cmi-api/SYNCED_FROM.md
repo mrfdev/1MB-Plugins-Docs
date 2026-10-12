@@ -22,3 +22,7 @@ On 9 October 2026, the Forage player guide, staff guide, roadmap, public beta ch
 ## Scoped two-server build workflow refresh
 
 On 11 October 2026, only the local build, runtime-alignment, and deployment workflow sections of `docs/compiling.md` and `docs/release.md` were refreshed from the reviewed working tree. Default builds now synchronize the Paper and Forage instances together, preserve independent data, and support explicitly inactive suite artifacts. Direct deployment checks both selected runtimes as well as stopped-server state. Other documentation and historical build examples retain the baseline above. This publication does not certify a new suite build or completed gameplay acceptance.
+
+## Scoped Fireworks and stable-channel refresh
+
+On 12 October 2026, the Fireworks player/staff guides, their index links, current Paper 26.3 STABLE 175 baseline, and mechanical suite-build 740 examples were updated from source commit `e53d9171bf19330d8dd86298873e1fefd2577c63`. The Fireworks owner-review document remains private. This is a scoped update, preserving the published Forage content and earlier provenance above. The source commit is a dormant development checkpoint with remaining activation and gameplay/legacy acceptance gates; this documentation publication is not a live plugin deployment or proof that all build-740 artifacts are reproduced by that isolated source commit.

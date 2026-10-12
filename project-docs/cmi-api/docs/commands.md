@@ -2219,3 +2219,7 @@ Appreciation:
 ### Community contribution
 
 `/collect community [chat|retry]` shows personal and shared saved score, the configured payoff, and a safe way to help. `retry` reloads a failed background score index. `/collect next`, `/next`, and `/next focus choose collect` connect the active goal to shared guidance. See [Community contribution](community-contribution.md).
+
+## Fireworks
+
+`/_fireworks` is staff-only, including info/help/tab suggestions. It supports `gui`, `create`, `edit <id>`, `list [page]`, `give <player> <id> <amount> [receipt-uuid]`, `inspect [player]`, `enable|disable|retire <id>`, `preview <id>`, `stop|resume`, `reload`, `info|help|admin|status`, and `debug`. Console supports non-GUI operations. No player-facing command or use permission. See [Fireworks](plugins/fireworks.md).

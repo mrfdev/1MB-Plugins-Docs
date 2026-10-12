@@ -1740,3 +1740,7 @@ Appreciation placeholders:
 Placeholder paths are strict and allowlisted. Unknown or unsafe paths return an empty value instead of exposing internals or throwing noisy errors.
 
 [Documentation index](README.md)
+
+## Fireworks
+
+Fireworks adds no PlaceholderAPI expansion or arbitrary command/placeholder effect steps. MiniMessage presentation and local recipient resolution use the shared library.

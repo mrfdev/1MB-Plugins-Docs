@@ -13,6 +13,15 @@ const publicRepoBlob = 'https://github.com/mrfdev/1MB-Plugins-Docs/blob/main';
 const publicRepoTree = 'https://github.com/mrfdev/1MB-Plugins-Docs/tree/main';
 
 const PLAYER_GUIDE_OVERRIDES = {
+  fireworks: {
+    fullSourceGuide: true,
+    playerDocument: 'fireworks-player-guide.md',
+    staffDocument: 'fireworks.md',
+    summary: 'Use special celebration items to launch short cosmetic fireworks without commands.',
+    description: 'Activate special fireworks and fountains, understand cooldowns, and keep older event items safe.',
+    commands: [],
+    includeInCommandIndex: false,
+  },
   forage: {
     fullSourceGuide: true,
     playerDocument: 'forage-camps.md',
@@ -2628,10 +2637,15 @@ function rewriteLibraryLinks(markdown, sourceFile) {
     const staffGuide = Object.entries(PLAYER_GUIDE_OVERRIDES).find(
       ([, override]) => override.staffDocument && `plugins/${override.staffDocument}` === resolved,
     );
+    const playerGuide = Object.entries(PLAYER_GUIDE_OVERRIDES).find(
+      ([, override]) => override.playerDocument && `plugins/${override.playerDocument}` === resolved,
+    );
     const target = staffGuide
       ? `/staff-reference/plugins/${staffGuide[0]}/${anchor}`
       : sharedGuideRoutes[resolved] && (!fragment || resolved.startsWith('plugins/forage'))
       ? `${sharedGuideRoutes[resolved]}${anchor}`
+      : playerGuide
+        ? `/player-guides/plugins/${playerGuide[0]}/${anchor}`
       : plugin && !fragment
         ? `/player-guides/plugins/${slugFromFile(plugin.file)}/`
         : `${publicRepoBlob}/project-docs/cmi-api/docs/${resolved}${anchor}`;

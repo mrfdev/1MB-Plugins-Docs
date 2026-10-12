@@ -665,3 +665,7 @@ KitStreaks guidance reuses `onembcmi.kitstreaks.use`; calendar and reward contro
 Automatic focused welcomes require `onembcmi.global.next` and `onembcmi.global.guidance`, plus the selected feature's current access. `/next welcome` uses next-step access; `/guidance welcomes on|off` uses guidance access and changes only the player's own preference. No welcome permission grants gameplay actions. See [Focused welcome](focused-welcome.md).
 
 Collect community guidance reuses `onembcmi.collect.use` and `onembcmi.collect.stats`. The accepted-items action additionally requires `onembcmi.collect.submit` and a valid submission world/week. Shared next/focus and optional welcomes retain their global checks. No new permission grants contributions or rewards. See [Community contribution](community-contribution.md).
+
+## Fireworks
+
+`onembcmi.fireworks.admin` defaults to false, including for operators, and gates the complete command root. It grants child nodes `gui`, `edit`, `give`, `inspect`, `toggle`, `preview`, `stop`, `reload`, and `debug`; explicit child denials still apply to active feature actions. Direct console is trusted; players need no permission to place eligible items. See [Fireworks](plugins/fireworks.md).

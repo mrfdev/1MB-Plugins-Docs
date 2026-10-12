@@ -3,7 +3,7 @@
 ## Runtime Baseline
 
 - Java 25+
-- Paper 26.3 (explicit BETA channel, reviewed against build 142)
+- Paper 26.3 (explicit STABLE channel, approved baseline build 175)
 - CMI installed
 - CMILib installed
 - CMI-API used at compile time
