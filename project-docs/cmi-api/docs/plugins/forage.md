@@ -2,9 +2,9 @@
 
 Forage is a player-facing nature progression plugin for `/forage`. It targets the reviewed Paper 26.3 line with Java 25-compatible bytecode and depends on CMI, CMILib, and `1MB-CMIAPI-Lib`.
 
-**Maintained beta baseline, 12 October 2026: suite build 741 on Paper 26.3 STABLE 175.** Connected-client acceptance remains separate from automated checks and startup verification. Live gameplay remains dormant until owner acceptance and activation. Development uses the maintained `servers/Paper-26.3/` instance on Java 27, with suite builds on JDK 25.0.4.1. The preserved 26.2 server is a rollback instance. Shipping the Forage JAR in a complete suite build does not activate it on live.
+**Maintained beta baseline, 12 October 2026: suite build 742 on Paper 26.3 STABLE 175.** Connected-client acceptance remains separate from automated checks and startup verification. Live gameplay remains dormant until owner acceptance and activation. Development uses the maintained `servers/Paper-26.3/` instance on Java 27, with suite builds on JDK 25.0.4.1. The preserved 26.2 server is a rollback instance. Shipping the Forage JAR in a complete suite build does not activate it on live.
 
-**Deployed in build 739:** Accepted Turn-Ins now opens the complete paginated inventory-item list, including cocoa beans. Build 741 adds Leaf Litter to flora gathering and ordinary Camp Turn-Ins. The [complete accepted-item list](forage-camps.md#complete-accepted-turn-in-item-list) contains 72 default types.
+**Deployed in build 739:** Accepted Turn-Ins now opens the complete paginated inventory-item list, including cocoa beans. Build 741 adds Leaf Litter to flora gathering and ordinary Camp Turn-Ins. Build 742 adds the Herbarium botanical routes, bringing the defaults to 97 accepted item types; see the [complete accepted-item list](forage-camps.md#complete-accepted-turn-in-item-list).
 
 **Placed-resource protection is active from build 739:** newly recorded placements and supported movement follow the rules below. Earlier placements are not backfilled.
 
@@ -292,6 +292,16 @@ The manual claim button is **Forage → Quests & Rewards → Participation Rewar
 Tracking qualifying claims and enabling the extra reward are separate. Successful daily/weekly claims are recorded even while participation claiming is disabled. The real map has not been supplied, so claiming remains off. Staff have prepared a disabled CMI kit named `forage_participation` with an unfinished item placeholder; it is not the promised map and must not be delivered as the reward. See the [staff setup](forage-camp-technical.md#participation-reward) and [beta checklist](forage/checklist.md) before enabling participation delivery.
 
 Treasure finds are occasional bonuses from rewarded gathering, not guaranteed drops. The base chance is 1.8% per eligible action before tool and branch modifiers, with a default 90-second cooldown after a successful roll is prepared. Keep inventory space available: if the inventory cannot fit the selected treasure, the find is skipped before delivery. Nothing drops on the ground, no treasure is queued for later, and treasure totals and treasure-quest progress do not increase. The otherwise-valid gathering action still earns its normal progress. Ordinary treasures are marked items used by Repair & Merge and Greater Forage Dust; a vanilla item with the same material or a renamed copy is not equivalent. Legendary Pulse Dust has a 3% replacement chance within a treasure roll, not a 3% chance per gathering action, and should not be required to pass a short natural-drop test.
+
+<a id="herbarium-upcoming"></a>
+
+## Herbarium
+
+The [Herbarium](forage-herbarium.md), deployed in build 742, adds a permanent personal botanical discovery journal and twelve fixed collections with one-time item-only CMI kit rewards. Discoveries record the first successful Forage harvest's time, world and namespaced biome; alternate block forms share one canonical specimen. Ordinary item pickup, purchases, Turn-Ins and rejected gathering do not count.
+
+The hub and `/forage herbarium` open the same journal anywhere while Forage and the journal are enabled. Show All/Missing/Discovered filters, pagination, source aliases, matching tools and habitat hints explain how to finish a collection. Browsing grants no camp authority. Claims require an owned active camp, Local Introduction and preview/confirmation, with no cost or expiry; ambiguous deliveries remain held for staff review. The shipped `herbarium.rewards.enabled` default remains false. The isolated beta deliberately enables its twelve named-dirt placeholder kits for delivery testing; authored/live reward acceptance is separate.
+
+Approved botanical additions include firefly bushes, wildflowers/petals, eyeblossoms, pale moss, Nether growth, aquatic plants and roots. Mature pitcher crops become an eligible route; immature crops remain excluded. The build-742 source-default Turn-In list contains 97 item types. See the generated gathering/Turn-In lists and the separate [Herbarium collection and source reference](forage-herbarium.md#complete-collection-requirements).
 
 <a id="seasonal-community-efforts-upcoming"></a>
 
@@ -667,7 +677,7 @@ The 26.3 camp contract is described above. Later additions remain separate from 
 - biome-specific rare herbs
 - broader event profiles beyond the quarterly Community Efforts
 - derbies and additional community milestones
-- museum/herbarium systems
+- museum displays and journal extensions beyond the personal Herbarium
 - storage-engine changes if measured scale warrants them
 - audited reward adapters for temporary hearts, other-plugin points, or tournaments
 

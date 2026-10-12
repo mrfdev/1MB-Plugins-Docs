@@ -15,11 +15,27 @@ Related references: [player guide](/player-guides/plugins/forage/), [beta test c
 
 **Participation tracking deployed, delivery disabled:** the one-daily-plus-one-weekly qualification and lifetime claim state are available in build 739. The actual map has not been supplied. Keep Forage participation claiming disabled while preparing the `forage_participation` CMI template; a disabled CMI kit alone is not a delivery lock because Forage can read disabled item templates.
 
+<a id="herbarium-upcoming"></a>
+
+## Herbarium
+
+The [Herbarium](https://github.com/mrfdev/1MB-Plugins-Docs/blob/main/project-docs/cmi-api/docs/plugins/forage-herbarium.md), deployed in canonical build 742 on Paper 26.3 STABLE 175, has a dedicated permanent personal discovery/collection ledger. Both maintained instances received matching complete sets of 66 managed JARs; the beta keeps BedrockChatBridge disabled. `/forage herbarium` and the hub provide own-player read-only browsing while Forage and the journal are enabled; `/forage admin herbarium <local-player|UUID>` provides authorized inspection. No inspection grants a workstation session or modifies progress.
+
+The build-742 Forage suite ran **1,195 cases: 1,167 passed, 28 existing optional-fixture skips, zero failures/errors**. All **179 Herbarium cases passed**. The primary native probe passed **1,325 checks**, including read-only validation and preparation of all twelve real CMI templates, with no real player/world mutations, commands dispatched or kits delivered. Detached native GUI/PDC/ledger checks do not prove connected-client acceptance, actual reward delivery or disk/crash recovery. Adding the twelve disabled templates preserved the prior 28 kit definitions. ENG-01 and authored reward acceptance remain open.
+
+The beta completed startup on 12 October 2026 at **07:10:28 Europe/Amsterdam**, on port 22442. Console inspection confirmed **102 supported specimens, 12 permanent collections and collection rewards enabled**. The primary probe stopped cleanly and was removed before beta activation. These are startup and inspection results, not a completed player acceptance sheet.
+
+Recording joins the successful gathering path after tool, world, area, placement, maturity, cap and chunk checks. The catalogue intersects reviewed botanical identities with actual enabled source/tool routes, coalesces the documented block aliases, and excludes unrelated blocks, creatures, inventory-only drops and unsupported precursors. First-find metadata uses the authoritative UUID, world UUID/name and namespaced biome. No historical discovery backfill is inferred from bought items or old progress totals.
+
+`herbarium.*` lives in the main config. Twelve explicitly versioned collection definitions have frozen IDs, requirements and item-only CMI kit names; adding a source does not change an old collection. Changing an already registered definition is rejected, including version or kit changes; use a new ID and retain prior history. `herbarium.rewards.enabled` defaults false; the owner-approved isolated beta enables named-dirt placeholder kit delivery for testing while the primary keeps that default. Disabling/removing collection configuration does not erase previously frozen definitions, progression or claims; archived definitions remain eligible under their original rules. One-time claims require an active owned workstation, Local Introduction and preview/confirmation, with inventory preflight and existing transaction recovery. They have no cost or expiry.
+
+Preserve `data/herbarium.yml`, `data/herbarium.initialized`, the transaction journal/receipts and original recovery evidence together. A missing initialized ledger or corruption stops the feature rather than resetting lifetime rewards. Snapshot persistence does not resolve ENG-01 or prove external inventory durability. See the [full configuration and restoration contract](https://github.com/mrfdev/1MB-Plugins-Docs/blob/main/project-docs/cmi-api/docs/plugins/forage-herbarium.md#staff-configuration-and-restoration).
+
 <a id="seasonal-community-efforts-upcoming"></a>
 
 ## Seasonal Community Efforts
 
-Canonical suite 741 synchronized matching complete sets of 66 managed JARs to both maintained instances on Paper 26.3 STABLE 175. It includes the seasonal controller, Leaf Litter gathering source and 72-type Turn-In defaults; beta activation is verified. Community settings use the main `config.yml` under `community.*` and default disabled. `data/community.yml` stores the independent edition/contribution/claim history. Preserve its `data/community.initialized` marker, backups, transaction journals and recovery evidence together.
+The following dated deployment evidence records the build-741 introduction; build 742 retains these features. Canonical suite 741 synchronized matching complete sets of 66 managed JARs to both maintained instances on Paper 26.3 STABLE 175. It includes the seasonal controller, Leaf Litter gathering source and 72-type Turn-In defaults; beta activation is verified. Community settings use the main `config.yml` under `community.*` and default disabled. `data/community.yml` stores the independent edition/contribution/claim history. Preserve its `data/community.initialized` marker, backups, transaction journals and recovery evidence together.
 
 The beta completed startup on 12 October 2026 at 06:12:18 Europe/Amsterdam. Configuration reported zero errors, one expected normal-preset warning and 36 successful checks; storage was available with no pending requests, queued writes or failure. The real 2026-fall edition started with all three totals at zero in General, Cave and ChunkBlock, ending on 1 December 2026 at 00:00 CET. Community Efforts and both debug flags are enabled on this isolated beta; the four seasonal CMI templates contain named dirt placeholders and remain disabled for ordinary CMI kit access. Debug reward delivery is therefore real placeholder delivery. The primary instance kept seasonal activation disabled and passed a clean restart/readback of its initialized empty ledger. Existing 24 CMI templates were preserved when the four seasonal fixtures were added. These checks do not authorize live activation.
 
@@ -229,11 +245,11 @@ The normal Forage suite checks both Turn-In lists for drift. The generator chang
 
 ## Complete accepted Turn-In item list
 
-**Build 741 defaults:** the source-default list below contains 72 types, including **`COCOA_BEANS`** and the added **`LEAF_LITTER`** flora/Turn-In route. The in-game catalogue always uses the running resolver/configuration.
+**Build-742 botanical defaults:** the generated source-default list below contains 97 types after the Herbarium source expansion, including `COCOA_BEANS` and `LEAF_LITTER`. The in-game catalogue always uses its current resolver/configuration.
 
 <!-- BEGIN GENERATED FORAGE TURN-INS -->
 
-This list is generated from source defaults through the same acceptance resolver used by Camp Turn-Ins. Server configuration can change it. There are **72 accepted item types** in these defaults; this does not mean every type can be obtained through ordinary survival harvesting.
+This list is generated from source defaults through the same acceptance resolver used by Camp Turn-Ins. Server configuration can change it. There are **97 accepted item types** in these defaults; this does not mean every type can be obtained through ordinary survival harvesting.
 
 These are inventory items, not a list of blocks that award gathering progress. Only plain vanilla stacks in your inventory, including the hotbar, qualify. Custom items and items outside those slots remain untouched. Camp readiness, the Local Introduction, cooldown and daily XP allowance still apply.
 
@@ -257,33 +273,51 @@ Family ID: `crops`. 13 item types.
 
 ### Wild Flora turn-ins
 
-Family ID: `flora`. 25 item types.
+Family ID: `flora`. 43 item types.
 
 - Allium (`ALLIUM`).
 - Azure Bluet (`AZURE_BLUET`).
 - Blue Orchid (`BLUE_ORCHID`).
+- Bush (`BUSH`).
+- Cactus Flower (`CACTUS_FLOWER`).
+- Closed Eyeblossom (`CLOSED_EYEBLOSSOM`).
 - Cornflower (`CORNFLOWER`).
+- Crimson Roots (`CRIMSON_ROOTS`).
 - Dandelion (`DANDELION`).
 - Dead Bush (`DEAD_BUSH`).
 - Fern (`FERN`).
+- Firefly Bush (`FIREFLY_BUSH`).
 - Large Fern (`LARGE_FERN`).
 - Leaf Litter (`LEAF_LITTER`).
 - Lilac (`LILAC`).
 - Lily Of The Valley (`LILY_OF_THE_VALLEY`).
+- Lily Pad (`LILY_PAD`).
+- Nether Sprouts (`NETHER_SPROUTS`).
+- Open Eyeblossom (`OPEN_EYEBLOSSOM`).
 - Orange Tulip (`ORANGE_TULIP`).
 - Oxeye Daisy (`OXEYE_DAISY`).
 - Peony (`PEONY`).
+- Pink Petals (`PINK_PETALS`).
 - Pink Tulip (`PINK_TULIP`).
 - Pitcher Plant (`PITCHER_PLANT`).
 - Poppy (`POPPY`).
 - Red Shrub (`RED_SHRUB`).
 - Red Tulip (`RED_TULIP`).
 - Rose Bush (`ROSE_BUSH`).
+- Seagrass (`SEAGRASS`).
+- Short Dry Grass (`SHORT_DRY_GRASS`).
 - Short Grass (`SHORT_GRASS`).
 - Sunflower (`SUNFLOWER`).
+- Tall Dry Grass (`TALL_DRY_GRASS`).
 - Tall Grass (`TALL_GRASS`).
 - Torchflower (`TORCHFLOWER`).
+- Twisting Vines (`TWISTING_VINES`).
+- Vine (`VINE`).
+- Warped Roots (`WARPED_ROOTS`).
+- Weeping Vines (`WEEPING_VINES`).
 - White Tulip (`WHITE_TULIP`).
+- Wildflowers (`WILDFLOWERS`).
+- Wither Rose (`WITHER_ROSE`).
 
 ### Field Fruit turn-ins
 
@@ -319,25 +353,32 @@ Family ID: `leaves`. 14 item types.
 
 ### Moss and Roots turn-ins
 
-Family ID: `moss`. 6 item types.
+Family ID: `moss`. 11 item types.
 
 - Azalea (`AZALEA`).
 - Big Dripleaf (`BIG_DRIPLEAF`).
 - Flowering Azalea (`FLOWERING_AZALEA`).
+- Mangrove Roots (`MANGROVE_ROOTS`).
 - Moss Block (`MOSS_BLOCK`).
 - Moss Carpet (`MOSS_CARPET`).
+- Muddy Mangrove Roots (`MUDDY_MANGROVE_ROOTS`).
+- Pale Hanging Moss (`PALE_HANGING_MOSS`).
+- Pale Moss Block (`PALE_MOSS_BLOCK`).
+- Pale Moss Carpet (`PALE_MOSS_CARPET`).
 - Small Dripleaf (`SMALL_DRIPLEAF`).
 
 ### Mushrooms turn-ins
 
-Family ID: `mushrooms`. 6 item types.
+Family ID: `mushrooms`. 8 item types.
 
 - Brown Mushroom (`BROWN_MUSHROOM`).
 - Brown Mushroom Block (`BROWN_MUSHROOM_BLOCK`).
+- Crimson Fungus (`CRIMSON_FUNGUS`).
 - Mushroom Stem (`MUSHROOM_STEM`).
 - Red Mushroom (`RED_MUSHROOM`).
 - Red Mushroom Block (`RED_MUSHROOM_BLOCK`).
 - Shelf Mushroom (`SHELF_MUSHROOM`).
+- Warped Fungus (`WARPED_FUNGUS`).
 
 <!-- END GENERATED FORAGE TURN-INS -->
 

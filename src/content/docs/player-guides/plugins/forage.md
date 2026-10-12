@@ -3,9 +3,9 @@ title: "Forage Guide"
 description: "Learn Forage camps, tools, quests, repairs and dust, with a beta checklist and staff reference."
 ---
 
-**Reviewed 12 October 2026 for the 26.3 beta, suite build 741 on Paper STABLE 175.** Build 741 includes seasonal Community Efforts and Leaf Litter; beta activation is verified. Player acceptance testing remains open. This guide describes the camp and gathering flow. Availability, prices, caps, and enabled sources depend on the server; live activation remains separate from beta testing.
+**Reviewed 12 October 2026 for the 26.3 beta, suite build 742 on Paper STABLE 175.** The beta includes seasonal Community Efforts, Leaf Litter and the Herbarium botanical journal; startup activation is verified. Player acceptance testing remains open. This guide describes the camp and gathering flow. Availability, prices, caps, and enabled sources depend on the server; live activation remains separate from beta testing.
 
-**New in build 739:** Accepted Turn-Ins opens the complete item guide, and plain cocoa beans are accepted. Build 741 adds Leaf Litter, bringing the default accepted inventory list to 72 types.
+**New in build 739:** Accepted Turn-Ins opens the complete item guide, and plain cocoa beans are accepted. Build 741 added Leaf Litter; build 742 adds the Herbarium botanical expansion, bringing the default accepted inventory list to 97 types.
 
 **Placed-resource protection is active from build 739:** newly recorded placements follow the movement and growth rules below. Placements from before this update are not backfilled.
 
@@ -168,6 +168,8 @@ Tracking stays active for configured resources while Forage gameplay or a source
 
 Forage cannot reconstruct placements made before this update, and staff WorldEdit or other edits outside the supported events are not covered. This is not a promise to identify every farmed resource. Turn-Ins are a separate activity: eligible plain bought, traded or stored items remain acceptable there. On this beta, tracking begins with build 739. Test fresh placements separately from blocks whose earlier history is unknown.
 
+**Build-742 botanical routes:** the source-default catalogue below includes the Herbarium expansion, including mature pitcher crops. `/forage sources` shows your running server's actual list.
+
 <!-- BEGIN GENERATED FORAGE SOURCES -->
 
 ## Complete source catalogue
@@ -312,7 +314,7 @@ Tool ID: `shears`. 14 source types.
 
 ### Forage Sickle sources
 
-Tool ID: `sickle`. 40 source types.
+Tool ID: `sickle`. 64 source types.
 
 **Farm Herbs** (`crops`):
 
@@ -330,38 +332,62 @@ Tool ID: `sickle`. 40 source types.
 
 - Brown Mushroom (`BROWN_MUSHROOM`): Break this block.
 - Brown Mushroom Block (`BROWN_MUSHROOM_BLOCK`): Break this block.
+- Crimson Fungus (`CRIMSON_FUNGUS`): Break this block.
 - Mushroom Stem (`MUSHROOM_STEM`): Break this block.
 - Red Mushroom (`RED_MUSHROOM`): Break this block.
 - Red Mushroom Block (`RED_MUSHROOM_BLOCK`): Break this block.
 - Shelf Mushroom (`SHELF_MUSHROOM`): Break this block.
+- Warped Fungus (`WARPED_FUNGUS`): Break this block.
 
 **Wild Flora** (`flora`):
 
 - Allium (`ALLIUM`): Break this block.
 - Azure Bluet (`AZURE_BLUET`): Break this block.
 - Blue Orchid (`BLUE_ORCHID`): Break this block.
+- Bush (`BUSH`): Break this block.
+- Cactus Flower (`CACTUS_FLOWER`): Break this block.
+- Closed Eyeblossom (`CLOSED_EYEBLOSSOM`): Break this block.
 - Cornflower (`CORNFLOWER`): Break this block.
+- Crimson Roots (`CRIMSON_ROOTS`): Break this block.
 - Dandelion (`DANDELION`): Break this block.
 - Dead Bush (`DEAD_BUSH`): Break this block.
 - Fern (`FERN`): Break this block.
+- Firefly Bush (`FIREFLY_BUSH`): Break this block.
 - Large Fern (`LARGE_FERN`): Break this block.
 - Leaf Litter (`LEAF_LITTER`): Break this block.
 - Lilac (`LILAC`): Break this block.
 - Lily Of The Valley (`LILY_OF_THE_VALLEY`): Break this block.
+- Lily Pad (`LILY_PAD`): Break this block.
+- Nether Sprouts (`NETHER_SPROUTS`): Break this block.
+- Open Eyeblossom (`OPEN_EYEBLOSSOM`): Break this block.
 - Orange Tulip (`ORANGE_TULIP`): Break this block.
 - Oxeye Daisy (`OXEYE_DAISY`): Break this block.
 - Peony (`PEONY`): Break this block.
+- Pink Petals (`PINK_PETALS`): Break this block.
 - Pink Tulip (`PINK_TULIP`): Break this block.
+- Pitcher Crop (`PITCHER_CROP`): Break this block.
 - Pitcher Plant (`PITCHER_PLANT`): Break this block.
 - Poppy (`POPPY`): Break this block.
 - Red Shrub (`RED_SHRUB`): Break this block.
 - Red Tulip (`RED_TULIP`): Break this block.
 - Rose Bush (`ROSE_BUSH`): Break this block.
+- Seagrass (`SEAGRASS`): Break this block.
+- Short Dry Grass (`SHORT_DRY_GRASS`): Break this block.
 - Short Grass (`SHORT_GRASS`): Break this block.
 - Sunflower (`SUNFLOWER`): Break this block.
+- Tall Dry Grass (`TALL_DRY_GRASS`): Break this block.
 - Tall Grass (`TALL_GRASS`): Break this block.
+- Tall Seagrass (`TALL_SEAGRASS`): Break this block.
 - Torchflower (`TORCHFLOWER`): Break this block.
+- Twisting Vines (`TWISTING_VINES`): Break this block.
+- Twisting Vines Plant (`TWISTING_VINES_PLANT`): Break this block.
+- Vine (`VINE`): Break this block.
+- Warped Roots (`WARPED_ROOTS`): Break this block.
+- Weeping Vines (`WEEPING_VINES`): Break this block.
+- Weeping Vines Plant (`WEEPING_VINES_PLANT`): Break this block.
 - White Tulip (`WHITE_TULIP`): Break this block.
+- Wildflowers (`WILDFLOWERS`): Break this block.
+- Wither Rose (`WITHER_ROSE`): Break this block.
 
 ### Forage Sword sources
 
@@ -385,15 +411,20 @@ Tool ID: `sword`. 13 source types.
 
 ### Forage Trowel sources
 
-Tool ID: `shovel`. 6 source types.
+Tool ID: `shovel`. 11 source types.
 
 **Moss and Roots** (`moss`):
 
 - Azalea (`AZALEA`): Break this block.
 - Big Dripleaf (`BIG_DRIPLEAF`): Break this block.
 - Flowering Azalea (`FLOWERING_AZALEA`): Break this block.
+- Mangrove Roots (`MANGROVE_ROOTS`): Break this block.
 - Moss Block (`MOSS_BLOCK`): Break this block.
 - Moss Carpet (`MOSS_CARPET`): Break this block.
+- Muddy Mangrove Roots (`MUDDY_MANGROVE_ROOTS`): Break this block.
+- Pale Hanging Moss (`PALE_HANGING_MOSS`): Break this block.
+- Pale Moss Block (`PALE_MOSS_BLOCK`): Break this block.
+- Pale Moss Carpet (`PALE_MOSS_CARPET`): Break this block.
 - Small Dripleaf (`SMALL_DRIPLEAF`): Break this block.
 
 <!-- END GENERATED FORAGE SOURCES -->
@@ -432,6 +463,16 @@ Acceptance checks the item you submit, not how you obtained it. Eligible plain i
 
 Accepted Turn-Ins uses the running server's eligibility rules, including cocoa beans with the defaults. It shows up to 28 item types per page, with Previous/Next, an **About Accepted Turn-Ins** button to refresh the list, Back to Turn-Ins and a Public Turn-In Guide button that sends a clickable documentation link. Browsing submits nothing. Other incidental drops are not automatically accepted: sticks, saplings and poisonous potatoes remain outside the default list. Logs and calcite also remain excluded even though matching Forage tools can gather their source families. Glow berries are accepted inventory items; their cave-vine gathering blocks belong to a separate gathering family.
 
+<a id="herbarium-upcoming"></a>
+
+## Herbarium
+
+**Active on the build-742 beta.** The Herbarium is your permanent personal plant-discovery journal. Open it from the hub or `/forage herbarium` to browse your collections and All Specimens away from camp. Show All, Missing and Discovered filters help you choose a route; each entry lists matching tools, accepted block forms and habitat guidance. Discovered entries retain the first date, world and biome. Collection themes do not add a separate biome checklist.
+
+Gather each specimen through a successful normal Forage action. Picking up, buying or turning in a plant does not discover it. Wrong tools, placed resources, protected areas, invalid tools, caps and exhausted chunks still stop discovery. Vine tips/bodies, open/closed eyeblossoms and other listed aliases count once. Harvest pitcher crops only when fully mature.
+
+Complete a fixed collection to qualify for its one-time CMI item kit. Preview and confirm at your own active camp after the Local Introduction; there is no cost or expiry. Claiming defaults off; the isolated beta enables owner-approved named-dirt placeholders for delivery tests, while authored reward acceptance remains separate. Your discoveries remain when camps move or rewards are claimed. Read the [complete Herbarium guide](https://github.com/mrfdev/1MB-Plugins-Docs/blob/main/project-docs/cmi-api/docs/plugins/forage-herbarium.md) for all twelve collections and every source.
+
 <a id="seasonal-community-efforts-upcoming"></a>
 
 ## Seasonal Community Efforts
@@ -446,11 +487,11 @@ Read the [complete seasonal guide](https://github.com/mrfdev/1MB-Plugins-Docs/bl
 
 ## Complete accepted Turn-In item list
 
-**Build 741 defaults:** the list below contains 72 types, including **Cocoa Beans (`COCOA_BEANS`)** and **Leaf Litter (`LEAF_LITTER`)**. Leaf Litter is also a Sickle gathering source. The clickable in-game list reflects the running server's configuration.
+**Build-742 botanical defaults:** the generated list below contains 97 accepted types after the Herbarium source expansion. Use the in-game catalogue for your server’s actual acceptance rules.
 
 <!-- BEGIN GENERATED FORAGE TURN-INS -->
 
-This list is generated from source defaults through the same acceptance resolver used by Camp Turn-Ins. Server configuration can change it. There are **72 accepted item types** in these defaults; this does not mean every type can be obtained through ordinary survival harvesting.
+This list is generated from source defaults through the same acceptance resolver used by Camp Turn-Ins. Server configuration can change it. There are **97 accepted item types** in these defaults; this does not mean every type can be obtained through ordinary survival harvesting.
 
 These are inventory items, not a list of blocks that award gathering progress. Only plain vanilla stacks in your inventory, including the hotbar, qualify. Custom items and items outside those slots remain untouched. Camp readiness, the Local Introduction, cooldown and daily XP allowance still apply.
 
@@ -474,33 +515,51 @@ Family ID: `crops`. 13 item types.
 
 ### Wild Flora turn-ins
 
-Family ID: `flora`. 25 item types.
+Family ID: `flora`. 43 item types.
 
 - Allium (`ALLIUM`).
 - Azure Bluet (`AZURE_BLUET`).
 - Blue Orchid (`BLUE_ORCHID`).
+- Bush (`BUSH`).
+- Cactus Flower (`CACTUS_FLOWER`).
+- Closed Eyeblossom (`CLOSED_EYEBLOSSOM`).
 - Cornflower (`CORNFLOWER`).
+- Crimson Roots (`CRIMSON_ROOTS`).
 - Dandelion (`DANDELION`).
 - Dead Bush (`DEAD_BUSH`).
 - Fern (`FERN`).
+- Firefly Bush (`FIREFLY_BUSH`).
 - Large Fern (`LARGE_FERN`).
 - Leaf Litter (`LEAF_LITTER`).
 - Lilac (`LILAC`).
 - Lily Of The Valley (`LILY_OF_THE_VALLEY`).
+- Lily Pad (`LILY_PAD`).
+- Nether Sprouts (`NETHER_SPROUTS`).
+- Open Eyeblossom (`OPEN_EYEBLOSSOM`).
 - Orange Tulip (`ORANGE_TULIP`).
 - Oxeye Daisy (`OXEYE_DAISY`).
 - Peony (`PEONY`).
+- Pink Petals (`PINK_PETALS`).
 - Pink Tulip (`PINK_TULIP`).
 - Pitcher Plant (`PITCHER_PLANT`).
 - Poppy (`POPPY`).
 - Red Shrub (`RED_SHRUB`).
 - Red Tulip (`RED_TULIP`).
 - Rose Bush (`ROSE_BUSH`).
+- Seagrass (`SEAGRASS`).
+- Short Dry Grass (`SHORT_DRY_GRASS`).
 - Short Grass (`SHORT_GRASS`).
 - Sunflower (`SUNFLOWER`).
+- Tall Dry Grass (`TALL_DRY_GRASS`).
 - Tall Grass (`TALL_GRASS`).
 - Torchflower (`TORCHFLOWER`).
+- Twisting Vines (`TWISTING_VINES`).
+- Vine (`VINE`).
+- Warped Roots (`WARPED_ROOTS`).
+- Weeping Vines (`WEEPING_VINES`).
 - White Tulip (`WHITE_TULIP`).
+- Wildflowers (`WILDFLOWERS`).
+- Wither Rose (`WITHER_ROSE`).
 
 ### Field Fruit turn-ins
 
@@ -536,25 +595,32 @@ Family ID: `leaves`. 14 item types.
 
 ### Moss and Roots turn-ins
 
-Family ID: `moss`. 6 item types.
+Family ID: `moss`. 11 item types.
 
 - Azalea (`AZALEA`).
 - Big Dripleaf (`BIG_DRIPLEAF`).
 - Flowering Azalea (`FLOWERING_AZALEA`).
+- Mangrove Roots (`MANGROVE_ROOTS`).
 - Moss Block (`MOSS_BLOCK`).
 - Moss Carpet (`MOSS_CARPET`).
+- Muddy Mangrove Roots (`MUDDY_MANGROVE_ROOTS`).
+- Pale Hanging Moss (`PALE_HANGING_MOSS`).
+- Pale Moss Block (`PALE_MOSS_BLOCK`).
+- Pale Moss Carpet (`PALE_MOSS_CARPET`).
 - Small Dripleaf (`SMALL_DRIPLEAF`).
 
 ### Mushrooms turn-ins
 
-Family ID: `mushrooms`. 6 item types.
+Family ID: `mushrooms`. 8 item types.
 
 - Brown Mushroom (`BROWN_MUSHROOM`).
 - Brown Mushroom Block (`BROWN_MUSHROOM_BLOCK`).
+- Crimson Fungus (`CRIMSON_FUNGUS`).
 - Mushroom Stem (`MUSHROOM_STEM`).
 - Red Mushroom (`RED_MUSHROOM`).
 - Red Mushroom Block (`RED_MUSHROOM_BLOCK`).
 - Shelf Mushroom (`SHELF_MUSHROOM`).
+- Warped Fungus (`WARPED_FUNGUS`).
 
 <!-- END GENERATED FORAGE TURN-INS -->
 
@@ -631,7 +697,7 @@ Forage camp ownership is not a general land claim. Follow the world's normal bui
 
 **Can I move my camp without resetting my character?** Yes. Unclaim the old registration and deliberately register a replacement. Global progress stays, but the new registration starts its own Local Introduction. Breaking the composter alone does not release the old slot.
 
-**Are shared storage and community objectives ready to test?** Seasonal Community Efforts are active on the build-741 beta and ready for the checklist cases; the seasonal kits are still test placeholders. Plugin-managed Camp Storage remains unimplemented. A chest/barrel currently satisfies the physical checklist and otherwise behaves as ordinary storage. Extra-heart rewards, other-plugin point rewards, and fishing tournaments are future possibilities. Quest item rewards can use configured CMI kit templates through `reward-kit`; confirm the host has configured the kit mappings before testing them.
+**Are shared storage and community objectives ready to test?** Seasonal Community Efforts are active on the maintained beta and ready for the checklist cases; the seasonal kits are still test placeholders. Plugin-managed Camp Storage remains unimplemented. A chest/barrel currently satisfies the physical checklist and otherwise behaves as ordinary storage. Extra-heart rewards, other-plugin point rewards, and fishing tournaments are future possibilities. Quest item rewards can use configured CMI kit templates through `reward-kit`; confirm the host has configured the kit mappings before testing them.
 
 ## Common blockers
 

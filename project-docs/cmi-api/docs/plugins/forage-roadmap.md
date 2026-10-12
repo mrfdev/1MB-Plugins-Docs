@@ -1,6 +1,6 @@
 # Forage Roadmap
 
-Reviewed **12 October 2026** against the current source and the **suite build 741 / Paper 26.3 STABLE 175** beta baseline. This page distinguishes deployed functionality, content and acceptance still required, and proposals. It does not authorize a server restart, publication, or live activation.
+Reviewed **12 October 2026** against the current source and the **suite build 742 / Paper 26.3 STABLE 175** beta baseline. This page distinguishes deployed functionality, content and acceptance still required, and proposals. It does not authorize a server restart, publication, or live activation.
 
 Use the [main reference](https://github.com/mrfdev/1MB-Plugins-Docs/blob/main/project-docs/cmi-api/docs/plugins/forage.md), [player guide](https://docs.1moreblock.com/player-guides/plugins/forage/), [technical guide](https://docs.1moreblock.com/staff-reference/plugins/forage/), and [beta checklist](https://docs.1moreblock.com/staff-reference/plugins/forage-checklist/) for operating details. The [camp implementation tracker](../forage-26.3-revamp-todo.md) and [issue #35](https://github.com/mrfdev/1MB-Library/issues/35) track the accepted camp revamp and its release gates.
 
@@ -17,6 +17,10 @@ Use the [main reference](https://github.com/mrfdev/1MB-Plugins-Docs/blob/main/pr
 | Optional later development | Creature provenance, managed Camp Storage, broader collections and streak rewards, richer skills/magic, additional event profiles/tournaments and audited reward integrations. None is silently added to the accepted camp revamp. |
 
 **CONTENT-03 — Final seasonal rewards remains open:** the four `forage_community_*` templates currently hold named dirt for beta testing. Author and review their real contents before final reward acceptance or live activation, and preserve old definitions for outstanding edition entitlements. CE01–CE12 still require manual beta results.
+
+## Herbarium deployed in build 742
+
+The approved [Herbarium](forage-herbarium.md) adds one permanent discovery per canonical botanical specimen, first-find world/biome details, twelve fixed collections and one-time CMI item kits. Modern botanical routes and mature pitcher harvesting are included in build 742. Canonical and native verification passed; the isolated beta enables twelve named-dirt collection kit templates for delivery testing, while the primary retains rewards disabled. Authored kit content, connected-client acceptance and crash/recovery acceptance remain required. Collection browsing does not grant camp authority, and claims keep the active-camp/Local Introduction rules. Additional biome/world checklists and museum displays are not included.
 
 ## Release Gate: 26.3 Camp Integration
 
@@ -171,7 +175,7 @@ These ideas remain outside the required first live rollout unless explicitly ado
 ### Progression and communal activities
 
 - General streaks, milestones and personal collections beyond current quests, tool levels and the new participation reward.
-- Herbarium collections and museum-style plant books.
+- Museum displays and further journal extensions beyond the approved personal Herbarium implementation above.
 - Richer branch skill trees, themed camp objectives and additional turn-in recipes.
 - Extensions beyond the implemented quarterly Community Efforts, such as additional community milestones. The seasonal implementation includes independent goals, personal limits, UUID attribution and durable reward claims; it does not implement managed Camp Storage.
 - Plugin-managed Camp Storage, with explicit ownership, inventory-group behavior, overflow and recovery rules. Plain chest/barrel storage already exists and remains separate from Camp Delivery.
@@ -217,7 +221,7 @@ Potential new commands such as `/forage streaks`, `/forage perks`, `/forage jour
 
 Existing placeholders use the documented dotted form, such as `%onembcmi_forage.player.level%`, and already cover many player, camp, tool, branch, family, quest and leaderboard values. Proposed streak, lifetime-points or tournament-rank placeholders need actual stored state and defined semantics before adding a name.
 
-Current configuration remains in the implemented files, chiefly `config.yml`, `quests.yml` and shared translations. The quarterly Community Efforts use `community.*` in the main config and persist runtime data in `data/community.yml`; no `seasons.yml` is required for that implementation. Proposed `seasons.yml`, `magic.yml`, `encounters.yml`, `herbarium.yml`, `auctions.yml` and `tournaments.yml` belong to future modules, not missing files that staff must create now.
+Current configuration remains in the implemented files, chiefly `config.yml`, `quests.yml` and shared translations. The quarterly Community Efforts use `community.*` in the main config and persist runtime data in `data/community.yml`; no `seasons.yml` is required for that implementation. The Herbarium uses `herbarium.*` in the main config and `data/herbarium.yml` for runtime state, with its initialization marker. Proposed standalone `seasons.yml`, `magic.yml`, `encounters.yml`, `auctions.yml` and `tournaments.yml` remain future configuration ideas, not missing files that staff must create now.
 
 ## Integration principles
 
