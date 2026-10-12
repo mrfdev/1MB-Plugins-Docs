@@ -3,9 +3,9 @@ title: "Forage Administration"
 description: "Setup, permissions, recovery, and operation of Forage."
 ---
 
-**Documentation reviewed against the current implementation on 11 October 2026.** The camp revamp and its guidance, plant, and tool-protection follow-ups are implemented and locally verified; connected-client beta acceptance and live activation remain separate steps. The repository currently targets Paper 26.3 **BETA** with API build **174**, Java 25 bytecode, JDK 25.0.4.1 for Gradle, and Java **27+35-2325** for the local server. These are the configured baseline, not a claim that every historical probe below ran on build 174. The external inventory crash boundary remains a release gate.
+**Documentation reviewed against the current implementation on 12 October 2026.** The camp revamp and its guidance, plant, and tool-protection follow-ups are implemented and locally verified; connected-client beta acceptance and live activation remain separate steps. The repository currently targets Paper 26.3 **STABLE** with API build **175**, Java 25 bytecode, JDK 25.0.4.1 for Gradle, and Java **27+35-2325** for the local server. These are the configured baseline, not a claim that every historical probe below ran on build 175. The external inventory crash boundary remains a release gate.
 
-**Beta deployment, 11 October 2026:** suite build **739** is deployed on both maintained instances, with matching sets of 66 managed JARs and Paper 26.3 BETA **174**. The beta completed startup at 20:29:05 Europe/Amsterdam. CMI command, alias and virtual-anvil guards, mcMMO, Pyro and ItemSoulBind protections report active or armed; placement tracking and storage are healthy. Configuration reports zero errors, one expected normal-preset warning and 35 successful checks. The canonical build passed all 823 Forage tests. A native primary-server probe passed 213 checks with CMI 9.8.10.5 and CMILib 1.6.0.1, using detached inventories, PDC and profiles without player/world mutations or reward delivery. These checks do not sign off connected-client gameplay, physical piston behavior, disk/crash persistence or live activation. Dated compatibility records retain their original findings, including the [build 737/738 CMI correction](https://github.com/mrfdev/1MB-Plugins-Docs/blob/main/project-docs/cmi-api/docs/compatibility-tests/forage-protection-parity-2026-10-11.md).
+**Historical Forage deployment, 11 October 2026:** suite build **739** was deployed on both maintained instances, with matching sets of 66 managed JARs and Paper 26.3 BETA **174**. The beta completed startup at 20:29:05 Europe/Amsterdam. CMI command, alias and virtual-anvil guards, mcMMO, Pyro and ItemSoulBind protections report active or armed; placement tracking and storage are healthy. Configuration reports zero errors, one expected normal-preset warning and 35 successful checks. The canonical build passed all 823 Forage tests. A native primary-server probe passed 213 checks with CMI 9.8.10.5 and CMILib 1.6.0.1, using detached inventories, PDC and profiles without player/world mutations or reward delivery. These checks do not sign off connected-client gameplay, physical piston behavior, disk/crash persistence or live activation. Dated compatibility records retain their original findings, including the [build 737/738 CMI correction](https://github.com/mrfdev/1MB-Plugins-Docs/blob/main/project-docs/cmi-api/docs/compatibility-tests/forage-protection-parity-2026-10-11.md).
 
 Related references: [player guide](/player-guides/plugins/forage/), [beta test checklist](/staff-reference/plugins/forage-checklist/), [main feature reference](https://github.com/mrfdev/1MB-Plugins-Docs/blob/main/project-docs/cmi-api/docs/plugins/forage.md), and [template measurements](https://github.com/mrfdev/1MB-Plugins-Docs/blob/main/project-docs/cmi-api/docs/compatibility-tests/forage-26.3-camp-templates-2026-09-27.md).
 
@@ -14,6 +14,20 @@ Related references: [player guide](/player-guides/plugins/forage/), [beta test c
 **Placed-resource protection deployed:** tracking begins with build 739. Existing placements are not backfilled. The native probe verified detached PDC placement and cross-chunk movement callbacks; the physical-world and persistence acceptance cases remain open.
 
 **Participation tracking deployed, delivery disabled:** the one-daily-plus-one-weekly qualification and lifetime claim state are available in build 739. The actual map has not been supplied. Keep Forage participation claiming disabled while preparing the `forage_participation` CMI template; a disabled CMI kit alone is not a delivery lock because Forage can read disabled item templates.
+
+<a id="seasonal-community-efforts-upcoming"></a>
+
+## Seasonal Community Efforts
+
+Canonical suite 741 synchronized matching complete sets of 66 managed JARs to both maintained instances on Paper 26.3 STABLE 175. It includes the seasonal controller, Leaf Litter gathering source and 72-type Turn-In defaults; beta activation is verified. Community settings use the main `config.yml` under `community.*` and default disabled. `data/community.yml` stores the independent edition/contribution/claim history. Preserve its `data/community.initialized` marker, backups, transaction journals and recovery evidence together.
+
+The beta completed startup on 12 October 2026 at 06:12:18 Europe/Amsterdam. Configuration reported zero errors, one expected normal-preset warning and 36 successful checks; storage was available with no pending requests, queued writes or failure. The real 2026-fall edition started with all three totals at zero in General, Cave and ChunkBlock, ending on 1 December 2026 at 00:00 CET. Community Efforts and both debug flags are enabled on this isolated beta; the four seasonal CMI templates contain named dirt placeholders and remain disabled for ordinary CMI kit access. Debug reward delivery is therefore real placeholder delivery. The primary instance kept seasonal activation disabled and passed a clean restart/readback of its initialized empty ledger. Existing 24 CMI templates were preserved when the four seasonal fixtures were added. These checks do not authorize live activation.
+
+The build-741 Forage suite ran 1,016 cases with zero failures/errors and 28 existing optional-fixture skips. The primary native seasonal probe passed 226 checks with no real player/world mutations, command dispatches or kit delivery. It exercised detached native items/inventories, ledger/YAML round-trips and controller pages; it does not prove connected-client gameplay, actual reward delivery, full GUI session routing or disk/crash recovery. ENG-01 remains open.
+
+The [seasonal reference](https://github.com/mrfdev/1MB-Plugins-Docs/blob/main/project-docs/cmi-api/docs/plugins/forage-community.md) documents the exact rotations, three independent goals, separate gathering and inventory-item lists, Amsterdam calendar, six-month dormancy, five-treasure immediate claim and preview/confirmation purge. Existing `worlds.mappings` resolves logical world pools; no inventory-group or world-isolation feature is implied. A stored edition freezes its dates, physical world names, material sets, limits and kit name. Staff changes affect later editions rather than rewriting earned progress.
+
+Use the isolated `/forage debug season ...` controls for boundary tests instead of changing the operating-system clock. `community.debug.enabled` and `community.debug.deliver-kits` both default false; real debug delivery requires both true. Debug records never become real season completions, but gathering and deliberate donations still affect real items. Existing mapped test worlds can cover all four pools without creating new worlds. Check [seasonal checklist cases](/staff-reference/plugins/forage-checklist/#seasonal-community-efforts-upcoming) and record fixture shortcuts separately from gameplay acceptance.
 
 ## Prepare a beta session
 
@@ -215,11 +229,11 @@ The normal Forage suite checks both Turn-In lists for drift. The generator chang
 
 ## Complete accepted Turn-In item list
 
-**Current beta, build 739:** all 71 generated source-default types below, including **`COCOA_BEANS`**, are accepted with the audited default family configuration. The in-game catalogue uses the same effective resolver as submission.
+**Build 741 defaults:** the source-default list below contains 72 types, including **`COCOA_BEANS`** and the added **`LEAF_LITTER`** flora/Turn-In route. The in-game catalogue always uses the running resolver/configuration.
 
 <!-- BEGIN GENERATED FORAGE TURN-INS -->
 
-This list is generated from source defaults through the same acceptance resolver used by Camp Turn-Ins. Server configuration can change it. There are **71 accepted item types** in these defaults; this does not mean every type can be obtained through ordinary survival harvesting.
+This list is generated from source defaults through the same acceptance resolver used by Camp Turn-Ins. Server configuration can change it. There are **72 accepted item types** in these defaults; this does not mean every type can be obtained through ordinary survival harvesting.
 
 These are inventory items, not a list of blocks that award gathering progress. Only plain vanilla stacks in your inventory, including the hotbar, qualify. Custom items and items outside those slots remain untouched. Camp readiness, the Local Introduction, cooldown and daily XP allowance still apply.
 
@@ -243,7 +257,7 @@ Family ID: `crops`. 13 item types.
 
 ### Wild Flora turn-ins
 
-Family ID: `flora`. 24 item types.
+Family ID: `flora`. 25 item types.
 
 - Allium (`ALLIUM`).
 - Azure Bluet (`AZURE_BLUET`).
@@ -253,6 +267,7 @@ Family ID: `flora`. 24 item types.
 - Dead Bush (`DEAD_BUSH`).
 - Fern (`FERN`).
 - Large Fern (`LARGE_FERN`).
+- Leaf Litter (`LEAF_LITTER`).
 - Lilac (`LILAC`).
 - Lily Of The Valley (`LILY_OF_THE_VALLEY`).
 - Orange Tulip (`ORANGE_TULIP`).
@@ -405,7 +420,7 @@ Before enabling delivery, replace the placeholder with the approved real map ite
 
 ## Reward scope and balance
 
-The first camp revamp gates existing supported Forage activities. Temporary extra hearts, other-plugin points, Forage kits, and fishing tournaments were examples of future reward choices, not a promise that all those integrations already exist. Community Efforts and plugin-managed Camp Storage remain separately tracked features.
+The first camp revamp gates existing supported Forage activities. Temporary extra hearts, other-plugin points, Forage kits, and fishing tournaments were examples of future reward choices, not a promise that all those integrations already exist. Seasonal Community Efforts are the build-741 follow-up described above. Plugin-managed Camp Storage remains a proposal.
 
 Any future LuckPerms reward must target the recipient's authoritative server UUID, resolved locally for offline records and retained on retries. Preserve Java and Floodgate identities, expand and validate placeholders before dispatch, reject ambiguous/missing local identities, and never query Mojang or fall back to a name-based LuckPerms command.
 

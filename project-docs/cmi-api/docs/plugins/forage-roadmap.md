@@ -1,6 +1,6 @@
 # Forage Roadmap
 
-Reviewed **11 October 2026** against the current source and the **suite build 739 / Paper 26.3 BETA 174** beta baseline. This page distinguishes deployed functionality, content and acceptance still required, and proposals. It does not authorize a server restart, publication, or live activation.
+Reviewed **12 October 2026** against the current source and the **suite build 741 / Paper 26.3 STABLE 175** beta baseline. This page distinguishes deployed functionality, content and acceptance still required, and proposals. It does not authorize a server restart, publication, or live activation.
 
 Use the [main reference](https://github.com/mrfdev/1MB-Plugins-Docs/blob/main/project-docs/cmi-api/docs/plugins/forage.md), [player guide](https://docs.1moreblock.com/player-guides/plugins/forage/), [technical guide](https://docs.1moreblock.com/staff-reference/plugins/forage/), and [beta checklist](https://docs.1moreblock.com/staff-reference/plugins/forage-checklist/) for operating details. The [camp implementation tracker](../forage-26.3-revamp-todo.md) and [issue #35](https://github.com/mrfdev/1MB-Library/issues/35) track the accepted camp revamp and its release gates.
 
@@ -13,7 +13,10 @@ Use the [main reference](https://github.com/mrfdev/1MB-Plugins-Docs/blob/main/pr
 | Content still needed | Author real items and descriptions for the 23 beta quest-kit placeholders, which still contain named dirt. The finished participation map must also replace its unfinished kit placeholder before participation claiming is enabled. |
 | Engineering still needed for the documented live gate | A verified inventory-provider durability/recovery adapter, described below. Forage's own durable receipts do not prove that inventory or external economy state reached disk. |
 | Release work remains | Final reward-content activation, remaining engineering and acceptance gates, and an explicit live activation decision. Player/staff guides and the beta checklist are already published; later status changes need corresponding public updates. |
-| Optional later development | Creature provenance, Community Efforts, managed Camp Storage, streaks and broader collections, richer skills/magic, seasons and tournaments, and additional audited reward integrations. None is silently added to the accepted camp revamp. |
+| Included in build 741; beta activation verified | Quarterly Community Efforts with three contribution axes, personal minima and daily caps, frozen editions, seasonal completion/streak history, post-season CMI kit claims, dormant reward reactivation and isolated debug runs. Leaf Litter joins flora gathering and ordinary Turn-Ins, raising source-default acceptance to 72. See the [seasonal contract](forage-community.md). |
+| Optional later development | Creature provenance, managed Camp Storage, broader collections and streak rewards, richer skills/magic, additional event profiles/tournaments and audited reward integrations. None is silently added to the accepted camp revamp. |
+
+**CONTENT-03 — Final seasonal rewards remains open:** the four `forage_community_*` templates currently hold named dirt for beta testing. Author and review their real contents before final reward acceptance or live activation, and preserve old definitions for outstanding edition entitlements. CE01–CE12 still require manual beta results.
 
 ## Release Gate: 26.3 Camp Integration
 
@@ -59,7 +62,7 @@ The current loop supports a manual gathering trip, a return to an owned camp, an
 - Daily, weekly and monthly quests support manual claims, filters and pagination. CMI item-only kit templates are supported, including disabled templates. Their items are copied through Forage's recorded delivery path; CMI commands, costs, cooldowns and usage limits are not executed.
 - Camp Turn-Ins deliberately consume approved plain items from the current inventory. Ordinary storage does not submit resources or earn progress.
 - Forage Dust has camp-gated crafting and bounded growth pulses with resource costs, cooldowns, world/protection checks and no Forage XP award for the pulse itself.
-- Sources and Recent Activity provide read-only guidance. Camp menus expose tool care, quest progress, deliveries and other implemented activities. Plugin-managed Camp Storage and Community Efforts remain separate proposals.
+- Sources and Recent Activity provide read-only guidance. Camp menus expose tool care, quest progress, deliveries and other implemented activities. Plugin-managed Camp Storage remains a proposal; the build-741 seasonal Community Efforts are described above.
 - Shared GUI holders, live workstation sessions, action-time checks, ordered asynchronous saves, transaction receipts and explicit recovery paths protect valuable operations.
 - Existing placeholders expose progression, tools, branches, family limits, quests and leaderboards. Additional placeholders should follow an actual new feature rather than duplicate this baseline.
 
@@ -170,7 +173,7 @@ These ideas remain outside the required first live rollout unless explicitly ado
 - General streaks, milestones and personal collections beyond current quests, tool levels and the new participation reward.
 - Herbarium collections and museum-style plant books.
 - Richer branch skill trees, themed camp objectives and additional turn-in recipes.
-- Community Efforts with contribution limits, UUID attribution and durable reward claims.
+- Extensions beyond the implemented quarterly Community Efforts, such as additional community milestones. The seasonal implementation includes independent goals, personal limits, UUID attribution and durable reward claims; it does not implement managed Camp Storage.
 - Plugin-managed Camp Storage, with explicit ownership, inventory-group behavior, overflow and recovery rules. Plain chest/barrel storage already exists and remains separate from Camp Delivery.
 
 ### Seasons and events
@@ -198,7 +201,7 @@ These remain ideas, not blocked implementations or commitments for the current r
 
 ## Performance, limits and storage
 
-Current progression uses global/family daily caps, chunk-plus-family action exhaustion and cooldowns, treasure cooldowns, and bounded dust growth. The older fresh/worked/tired/exhausted ladder, hourly bonuses, weekly shop limits, stock quotas and community contribution caps were proposals; they are not all present systems. Add a new limit only with a concrete mechanic and useful player/debug feedback.
+Current progression uses global/family daily caps, chunk-plus-family action exhaustion and cooldowns, treasure cooldowns, and bounded dust growth. Community Efforts add independent seasonal per-player gathering, resource-item and treasure caps. The older fresh/worked/tired/exhausted ladder, hourly bonuses, weekly shop limits and stock quotas remain proposals; they are not all present systems. Add a new limit only with a concrete mechanic and useful player/debug feedback.
 
 Runtime Forage progress and camps use YAML snapshots with an ordered bounded asynchronous writer. Valuable operations additionally retain transaction records and exact recovery payloads. The completed placement guard uses compact current-position chunk/entity PDC with no timed expiry; it does not require a new SQLite database or an aggressively pruned placement history.
 
@@ -214,7 +217,7 @@ Potential new commands such as `/forage streaks`, `/forage perks`, `/forage jour
 
 Existing placeholders use the documented dotted form, such as `%onembcmi_forage.player.level%`, and already cover many player, camp, tool, branch, family, quest and leaderboard values. Proposed streak, lifetime-points or tournament-rank placeholders need actual stored state and defined semantics before adding a name.
 
-Current configuration remains in the implemented files, chiefly `config.yml`, `quests.yml` and shared translations. Proposed `seasons.yml`, `magic.yml`, `encounters.yml`, `herbarium.yml`, `auctions.yml` and `tournaments.yml` belong to future modules, not missing files that staff must create now.
+Current configuration remains in the implemented files, chiefly `config.yml`, `quests.yml` and shared translations. The quarterly Community Efforts use `community.*` in the main config and persist runtime data in `data/community.yml`; no `seasons.yml` is required for that implementation. Proposed `seasons.yml`, `magic.yml`, `encounters.yml`, `herbarium.yml`, `auctions.yml` and `tournaments.yml` belong to future modules, not missing files that staff must create now.
 
 ## Integration principles
 

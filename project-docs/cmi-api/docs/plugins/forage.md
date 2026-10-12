@@ -2,9 +2,9 @@
 
 Forage is a player-facing nature progression plugin for `/forage`. It targets the reviewed Paper 26.3 line with Java 25-compatible bytecode and depends on CMI, CMILib, and `1MB-CMIAPI-Lib`.
 
-**Beta deployment reviewed 11 October 2026: this guide covers suite build 739 on Paper 26.3 BETA 174.** Connected-client acceptance remains separate from automated checks and startup verification. Live gameplay remains dormant until owner acceptance and activation. Development uses the maintained `servers/Paper-26.3/` instance on Java 27, with suite builds on JDK 25.0.4.1. The preserved 26.2 server is a rollback instance. Shipping the Forage JAR in a complete suite build does not activate it on live.
+**Maintained beta baseline, 12 October 2026: suite build 741 on Paper 26.3 STABLE 175.** Connected-client acceptance remains separate from automated checks and startup verification. Live gameplay remains dormant until owner acceptance and activation. Development uses the maintained `servers/Paper-26.3/` instance on Java 27, with suite builds on JDK 25.0.4.1. The preserved 26.2 server is a rollback instance. Shipping the Forage JAR in a complete suite build does not activate it on live.
 
-**Deployed in build 739:** Accepted Turn-Ins now opens the complete paginated inventory-item list, including cocoa beans. The [complete accepted-item list](forage-camps.md#complete-accepted-turn-in-item-list) contains 71 default types.
+**Deployed in build 739:** Accepted Turn-Ins now opens the complete paginated inventory-item list, including cocoa beans. Build 741 adds Leaf Litter to flora gathering and ordinary Camp Turn-Ins. The [complete accepted-item list](forage-camps.md#complete-accepted-turn-in-item-list) contains 72 default types.
 
 **Placed-resource protection is active from build 739:** newly recorded placements and supported movement follow the rules below. Earlier placements are not backfilled.
 
@@ -16,7 +16,7 @@ Dormant Forage is excluded from `/next` recommendations, focus choices, first-su
 
 The camp model reserves **one Initial Camp in Dappled Forest in Wild and two optional Secondary Camps in other approved worlds**, three total and one per actual world. Camps are exclusively owned and cannot overlap. The Initial Camp must remain valid for the other camps to function; damage or relocation never erases global XP, points, quests, limits, or reward history. Every new registration needs its own short Local Introduction before global benefits unlock there.
 
-Start with the [player camp guide](forage-camps.md), use the [beta test checklist](forage/checklist.md) for hands-on testing, and read the [technical camp guide](forage-camp-technical.md) for staff setup, mappings, recovery, validation, security, and persistence. These supersede the older first-use anchor claims and tree-grove camp checklist. Planned Community Efforts, managed Camp Storage, and new external reward engines remain roadmap features.
+Start with the [player camp guide](forage-camps.md), use the [beta test checklist](forage/checklist.md) for hands-on testing, and read the [technical camp guide](forage-camp-technical.md) for staff setup, mappings, recovery, validation, security, and persistence. These supersede the older first-use anchor claims and tree-grove camp checklist. Seasonal [Community Efforts](forage-community.md) are included in build 741; beta activation is verified. Managed Camp Storage and new external reward engines remain roadmap features.
 
 Version 1 focuses on a testable core rather than the full long-term design. Players use curated PDC-marked Forage tools to earn Forage XP, Forage Points, skill branch progress, tool soul progress, daily, weekly, and monthly quest progress, leaderboard ranks, camp-only tool upgrades, camp turn-ins, and small treasure rolls from configured source families. Most v1 families are block-gathering routes; the later-unlocked sword and mace use configured entity kills. Normal tools still work as Minecraft tools, but they do not feed the Forage skill.
 
@@ -293,6 +293,18 @@ Tracking qualifying claims and enabling the extra reward are separate. Successfu
 
 Treasure finds are occasional bonuses from rewarded gathering, not guaranteed drops. The base chance is 1.8% per eligible action before tool and branch modifiers, with a default 90-second cooldown after a successful roll is prepared. Keep inventory space available: if the inventory cannot fit the selected treasure, the find is skipped before delivery. Nothing drops on the ground, no treasure is queued for later, and treasure totals and treasure-quest progress do not increase. The otherwise-valid gathering action still earns its normal progress. Ordinary treasures are marked items used by Repair & Merge and Greater Forage Dust; a vanilla item with the same material or a renamed copy is not equivalent. Legendary Pulse Dust has a 3% replacement chance within a treasure roll, not a 3% chance per gathering action, and should not be required to pass a short natural-drop test.
 
+<a id="seasonal-community-efforts-upcoming"></a>
+
+## Seasonal Community Efforts
+
+**Included in canonical build 741; beta activation is verified.** `/forage community` and the hub's **Community Cleanup** button show quarterly progress, separate gathering/resource/treasure lists, donations, rewards and history. Browsing is read-only. Contributions require the player to be in that season's included world pool; deliberate donations and reward claims retain active-camp checks.
+
+All three community targets and all three personal minimums must be met. Defaults are 8,000 gathering actions and 8,000 donated resource items, each with a personal minimum of 300 and a daily player cap of 75; treasures have a community target of 35, personal minimum 2 and daily cap 1. These are independent totals. Seasonal donations consume eligible plain items or genuine marked treasures from backpack slots 9–35, preserving the hotbar/offhand. They do not award normal Turn-In XP/points. Ordinary gathering eligibility and rewards continue separately.
+
+Seasons begin March 1, June 1, September 1 and December 1 at 00:00 Europe/Amsterdam. Rewards unlock only after the edition ends. Season Completion determines lifetime totals and streaks independently of claiming. After six months an unclaimed entitlement becomes dormant; paying five genuine treasures and claiming that reward occur together in one deliberate transaction. Staff purges require a preview and confirmation and preserve completion history.
+
+See the [seasonal guide](forage-community.md) for the four world rotations, source/item distinction, frozen edition settings, CMI template requirements, isolated debug runs and backup/recovery boundaries. `community.enabled` defaults false; debug controls and actual debug kit delivery have separate false defaults.
+
 ## Camp Turn-Ins
 
 Players use the Camp Turn-Ins button at their fully active camp workstation. `/forage compost` directs them there. The turn-in does not open an escrow inventory. It safely scans the player's inventory, builds a plan, asks for confirmation, then re-scans and consumes only the planned slots if they still match.
@@ -379,6 +391,7 @@ See the [complete camp guide](forage-camps.md) for requirements, world rules, re
 | `/forage branches [branch]` | player | Directs you to the workstation branch picker; commands do not select a branch remotely. |
 | `/forage top [level\|xp\|points\|actions\|treasures\|daily\|weekly]` | player/console | Console shows read-only leaderboards; players are directed to their workstation. |
 | `/forage recent [page]` | player | Opens the same personal read-only Recent Activity GUI as the hub button, anywhere and while gameplay is paused. |
+| `/forage community` | player/console | Open seasonal Community Cleanup anywhere; console prints status. Donations and claims still require an active camp. |
 | `/forage tips` | anyone | Console prints hints; players are directed to the workstation tips page. |
 | `/forage tools` | player | Directs you to the workstation tool and source-family guide. |
 | `/forage sources [tool] [page]` | player | Opens the full read-only source catalogue anywhere; defaults to the held Forage tool or a picker. Trowel ID: `shovel`. |
@@ -414,6 +427,8 @@ See the [complete camp guide](forage-camps.md) for requirements, world rules, re
 | `/forage debug tool [player]` | admin/console | Shows PDC data for the held Forage tool. |
 | `/forage debug runtime` | admin/console | Shows runtime counters and external tool-protection integration readiness. |
 | `/forage debug transactions` | admin/console | Inspects durable requests that may need review; it does not automatically refund or replay them. |
+| `/forage debug season <spring\|summer\|fall\|winter\|real\|status\|nextday\|finish\|dormant\|ready player>` | admin/console | Isolated seasonal fixture controls; see the [seasonal debug contract](forage-community.md#isolated-seasonal-debug-runs). |
+| `/forage debug rewards purge expired [token]` | admin/console | Preview dormant real-season entitlements, then confirm that preview within 60 seconds. History remains; this is irreversible reward cleanup. |
 | `/forage debug all` | admin/console | Uses the shared debug output for build, server, hooks, commands, permissions, placeholders, and config. |
 
 Commands for purchases, claims and other workstation activities redirect to the physical workstation, even when a camp is nearby. Use its GUI to perform those activities; a command does not grant reward-claim authority. The read-only source catalogue and Recent Activity commands can be used away from camp without granting a workstation visit.
@@ -466,6 +481,8 @@ V1 also creates a separate quest definition file:
 plugins/1MB-CMIAPI/Forage/quests.yml
 ```
 
+The seasonal implementation also stores `data/community.yml` and `data/community.initialized`. Preserve the ledger and marker with transaction journals and receipts; it contains editions, contributions, daily usage, completion history and claim state. A profile-only backup does not cover seasonal entitlements.
+
 `profiles.yml` stores player level, XP, points, actions, treasure count, purchases, current branch id, branch change time, per-branch XP/actions/treasures, global daily caps, per-source-family daily caps, quest progress, quest claim state, and last action. `/forage top` reads this saved profile data in memory; it does not write separate leaderboard snapshots. `chunks.yml` stores active chunk exhaustion cooldowns. Runtime turn-in and dust/growth counters are exposed for debug/placeholders, but individual turn-ins and dust uses are not stored as permanent history in v1. This keeps v1 self-contained while the roadmap keeps SQLite as a later storage-hardening discussion item if the feature grows large enough to need it.
 
 `/forage admin export` saves current memory state and writes a timestamped Markdown report under `plugins/1MB-CMIAPI/Forage/data/exports/`. The report summarizes profile totals, top boards, camps, chunk exhaustion, quest definition and claim counts, active balance/cap settings, and live runtime counters such as tool purchases, compost turn-ins, dust crafts, and growth pulses. `/forage admin export backup` also copies the raw `profiles.yml`, `chunks.yml`, `camps.yml`, `config.yml`, and `quests.yml` files into a timestamped backup folder. The export command stays available while the global Forage switch is disabled so the owner can snapshot data before emergency config edits.
@@ -509,6 +526,7 @@ Important sections:
 - `growth.*`: bounded Forage Dust growth pulses, cooldown, legacy fallback radius/max blocks, and allowed target materials
 - `growth.dust.*`: standard dust item material/name/glint, batch amount, stored radius/max blocks, complete-camp requirement, money cost, point cost, and bonemeal cost
 - `growth.dust.greater.*`: second stronger camp dust trade with its own amount, radius, max blocks, costs, and treasure requirement
+- `community.*`: seasonal activation, logical world rotations, separate gathering/donation lists, axis goals and caps, literal CMI kit IDs, and explicitly gated debug controls
 - `treasures.*`: simple v1 treasure chance, vanilla material list, optional PDC/lore treasure markers, and rare legendary pulse dust replacement rolls
 - `effects.*`: sounds and particles
 - `gui.tip-line-max-chars`: approximate maximum lore line length in the tips GUI
@@ -647,8 +665,8 @@ The 26.3 camp contract is described above. Later additions remain separate from 
 - higher-tier tool upgrades and unlock variants
 - richer Forage Growth recipes and dust variants
 - biome-specific rare herbs
-- seasonal/event profiles
-- derbies and community milestones
+- broader event profiles beyond the quarterly Community Efforts
+- derbies and additional community milestones
 - museum/herbarium systems
 - storage-engine changes if measured scale warrants them
 - audited reward adapters for temporary hearts, other-plugin points, or tournaments

@@ -1,8 +1,8 @@
 # Forage: player guide
 
-**Reviewed 11 October 2026 for the 26.3 beta, suite build 739 on Paper BETA 174.** The features below are deployed on the beta server; player acceptance testing remains open. This guide describes the camp and gathering flow. Availability, prices, caps, and enabled sources depend on the server; live activation remains separate from beta testing.
+**Reviewed 12 October 2026 for the 26.3 beta, suite build 741 on Paper STABLE 175.** Build 741 includes seasonal Community Efforts and Leaf Litter; beta activation is verified. Player acceptance testing remains open. This guide describes the camp and gathering flow. Availability, prices, caps, and enabled sources depend on the server; live activation remains separate from beta testing.
 
-**New in build 739:** Accepted Turn-Ins opens the complete item guide, and plain cocoa beans are accepted. The default list below contains 71 inventory item types.
+**New in build 739:** Accepted Turn-Ins opens the complete item guide, and plain cocoa beans are accepted. Build 741 adds Leaf Litter, bringing the default accepted inventory list to 72 types.
 
 **Placed-resource protection is active from build 739:** newly recorded placements follow the movement and growth rules below. Placements from before this update are not backfilled.
 
@@ -309,7 +309,7 @@ Tool ID: `shears`. 14 source types.
 
 ### Forage Sickle sources
 
-Tool ID: `sickle`. 39 source types.
+Tool ID: `sickle`. 40 source types.
 
 **Farm Herbs** (`crops`):
 
@@ -342,6 +342,7 @@ Tool ID: `sickle`. 39 source types.
 - Dead Bush (`DEAD_BUSH`): Break this block.
 - Fern (`FERN`): Break this block.
 - Large Fern (`LARGE_FERN`): Break this block.
+- Leaf Litter (`LEAF_LITTER`): Break this block.
 - Lilac (`LILAC`): Break this block.
 - Lily Of The Valley (`LILY_OF_THE_VALLEY`): Break this block.
 - Orange Tulip (`ORANGE_TULIP`): Break this block.
@@ -428,13 +429,25 @@ Acceptance checks the item you submit, not how you obtained it. Eligible plain i
 
 Accepted Turn-Ins uses the running server's eligibility rules, including cocoa beans with the defaults. It shows up to 28 item types per page, with Previous/Next, an **About Accepted Turn-Ins** button to refresh the list, Back to Turn-Ins and a Public Turn-In Guide button that sends a clickable documentation link. Browsing submits nothing. Other incidental drops are not automatically accepted: sticks, saplings and poisonous potatoes remain outside the default list. Logs and calcite also remain excluded even though matching Forage tools can gather their source families. Glow berries are accepted inventory items; their cave-vine gathering blocks belong to a separate gathering family.
 
+<a id="seasonal-community-efforts-upcoming"></a>
+
+## Seasonal Community Efforts
+
+**Included in build 741; beta activation is verified.** Open **Community Cleanup** from Forage or use `/forage community` to see the current season. Your gathering, donated resources and donated treasures each have their own totals and daily cap. Meet all three personal minimums, and help the community meet all three goals. Bought items can support donations but cannot replace your own gathering.
+
+The default personal requirements are 300 gathering actions, 300 resource items and 2 genuine Forage treasures; daily caps are 75 actions, 75 resource items and 1 treasure. All included worlds share those limits. Spring uses General/Nether/OneBlock; summer Wild/End/SkyGrid; fall General/Cave/ChunkBlock; winter Wild/SkyBlock/Acid. Only contributions while physically in that season's pool count. Donations require an active camp there and use backpack slots 9–35, keeping your hotbar and offhand untouched. The seasonal item list is separate from ordinary Camp Turn-Ins.
+
+Seasons start at 00:00 Amsterdam time on March 1, June 1, September 1 and December 1. You cannot claim early. After the season ends, qualified participants claim manually at an active camp. An unclaimed reward becomes dormant six months later; pay five genuine treasures to claim that reward immediately. Completion history and streaks are based on qualifying seasons, not how quickly you claim.
+
+Read the [complete seasonal guide](forage-community.md) for targets, source/item examples, claim rules and staff test controls. Ordinary gathering rules, camp ownership and pending-request protections still apply. This does not add plugin-managed Camp Storage.
+
 ## Complete accepted Turn-In item list
 
-**Current beta, build 739:** the list below contains 71 default accepted types, including **Cocoa Beans (`COCOA_BEANS`)**. The clickable in-game list reflects the running server's configuration, which can change these defaults.
+**Build 741 defaults:** the list below contains 72 types, including **Cocoa Beans (`COCOA_BEANS`)** and **Leaf Litter (`LEAF_LITTER`)**. Leaf Litter is also a Sickle gathering source. The clickable in-game list reflects the running server's configuration.
 
 <!-- BEGIN GENERATED FORAGE TURN-INS -->
 
-This list is generated from source defaults through the same acceptance resolver used by Camp Turn-Ins. Server configuration can change it. There are **71 accepted item types** in these defaults; this does not mean every type can be obtained through ordinary survival harvesting.
+This list is generated from source defaults through the same acceptance resolver used by Camp Turn-Ins. Server configuration can change it. There are **72 accepted item types** in these defaults; this does not mean every type can be obtained through ordinary survival harvesting.
 
 These are inventory items, not a list of blocks that award gathering progress. Only plain vanilla stacks in your inventory, including the hotbar, qualify. Custom items and items outside those slots remain untouched. Camp readiness, the Local Introduction, cooldown and daily XP allowance still apply.
 
@@ -458,7 +471,7 @@ Family ID: `crops`. 13 item types.
 
 ### Wild Flora turn-ins
 
-Family ID: `flora`. 24 item types.
+Family ID: `flora`. 25 item types.
 
 - Allium (`ALLIUM`).
 - Azure Bluet (`AZURE_BLUET`).
@@ -468,6 +481,7 @@ Family ID: `flora`. 24 item types.
 - Dead Bush (`DEAD_BUSH`).
 - Fern (`FERN`).
 - Large Fern (`LARGE_FERN`).
+- Leaf Litter (`LEAF_LITTER`).
 - Lilac (`LILAC`).
 - Lily Of The Valley (`LILY_OF_THE_VALLEY`).
 - Orange Tulip (`ORANGE_TULIP`).
@@ -614,7 +628,7 @@ Forage camp ownership is not a general land claim. Follow the world's normal bui
 
 **Can I move my camp without resetting my character?** Yes. Unclaim the old registration and deliberately register a replacement. Global progress stays, but the new registration starts its own Local Introduction. Breaking the composter alone does not release the old slot.
 
-**Are shared storage and community objectives ready to test?** Plugin-managed Camp Storage and Community Efforts are not implemented features of this release. A chest/barrel currently satisfies the physical checklist and otherwise behaves as ordinary storage. Extra-heart rewards, other-plugin point rewards, and fishing tournaments are future possibilities. Quest item rewards can use configured CMI kit templates through `reward-kit`; confirm the host has configured the kit mappings before testing them.
+**Are shared storage and community objectives ready to test?** Seasonal Community Efforts are active on the build-741 beta and ready for the checklist cases; the seasonal kits are still test placeholders. Plugin-managed Camp Storage remains unimplemented. A chest/barrel currently satisfies the physical checklist and otherwise behaves as ordinary storage. Extra-heart rewards, other-plugin point rewards, and fishing tournaments are future possibilities. Quest item rewards can use configured CMI kit templates through `reward-kit`; confirm the host has configured the kit mappings before testing them.
 
 ## Common blockers
 
