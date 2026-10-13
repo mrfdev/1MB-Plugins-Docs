@@ -3,7 +3,7 @@ title: "Forage Guide"
 description: "Learn Forage camps, tools, quests, repairs and dust, with a beta checklist and staff reference."
 ---
 
-**Reviewed 13 October 2026 against suite build 754 on Paper 26.3 STABLE 180.** The beta includes seasonal Community Efforts, Leaf Litter and the Herbarium botanical journal; startup activation is verified. Player acceptance testing remains open. This guide describes the camp and gathering flow. Availability, prices, caps, and enabled sources depend on the server; live activation remains separate from beta testing.
+**Reviewed 13 October 2026 against suite build 755 on Paper 26.3 STABLE 180.** The beta includes seasonal Community Efforts, Leaf Litter and the Herbarium botanical journal; startup activation is verified. Player acceptance testing remains open. This guide describes the camp and gathering flow. Availability, prices, caps, and enabled sources depend on the server; live activation remains separate from beta testing.
 
 **New in build 739:** Accepted Turn-Ins opens the complete item guide, and plain cocoa beans are accepted. Build 741 added Leaf Litter; build 742 adds the Herbarium botanical expansion, bringing the default accepted inventory list to 97 types.
 
@@ -139,9 +139,9 @@ Open **Tool Shop** at your complete registered camp to buy your first tool. Star
 | --- | --- | --- |
 | Sickle | Flora, crops, mushrooms: grass, wheat, red shrubs, shelf mushrooms | Starter |
 | Axe | Logs and fruits: oak/poplar logs, pumpkins, melons, sugar cane | Starter |
-| Trowel | Moss: moss blocks/carpet, azaleas, dripleaf | Starter |
+| Trowel | Moss: moss blocks/carpet, azaleas, big dripleaf | Starter |
 | Shears | Leaves, including red, orange, and yellow poplar leaves | Starter |
-| Pickaxe | Stone and cave finds: calcite, tuff, basalt, end stone, glow lichen | Carry any Forage tool at tool level 2 |
+| Pickaxe | Stone and cave finds: calcite, tuff, basalt, end stone, pointed dripstone | Carry any Forage tool at tool level 2 |
 | Brush | Sands and relics: sand, red sand, gravel, clay, suspicious sand/gravel | Carry any Forage tool at tool level 2 |
 | Sword | Configured creatures such as cows, sheep, chickens, rabbits, and squid | Carry any Forage tool at tool level 2 |
 | Mace | Configured hostile mobs such as zombies, skeletons, blazes, breezes, and shulkers | Carry any Forage tool at tool level 2 |
@@ -172,6 +172,8 @@ Forage cannot reconstruct placements made before this update, and staff WorldEdi
 
 **Build-742 botanical routes:** the source-default catalogue below includes the Herbarium expansion, including mature pitcher crops. `/forage sources` shows your running server's actual list.
 
+**Source-tool correction (from build 755):** the generated catalogue below includes eleven exact-source Shears assignments. Older builds keep their previous tool requirements; use the running server's `/forage sources` and `/forage inspect` for its actual settings. Source families and quest membership are unchanged.
+
 <!-- BEGIN GENERATED FORAGE SOURCES -->
 
 ## Complete source catalogue
@@ -181,6 +183,8 @@ This complete list is generated from the shipped defaults through the same sourc
 Look at a nearby block and use `/forage inspect` for a quick summary and a clickable **Source details** link, or search by name with `/forage source seagrass`. Exact matches take precedence over partial matches; multiple matches open a paginated chooser. Existing tool, family and control names keep their command meaning; use `/forage source block <name>`, `/forage source creature <name>` or `/forage source search <name>` to disambiguate.
 
 Gathering sources, Camp Turn-In items and seasonal contributions are separate lists. Use `/forage sources turnins [page]` for ordinary accepted inventory items, `/forage sources community [page]` for the current season's gathering sources, and `/forage sources donations [page]` for its resource-donation items. A quest's **What Counts?** explains that quest's actual objective.
+
+**Families group quest progress, not one universal tool.** A family can contain sources that need different tools: the source entry gives the exact matching tool. Glow Lichen and Hanging Roots remain Cave sources but use Shears, so players can collect their vanilla drops.
 
 **Every tier of a tool uses the same sources.** Tool level, tier, refinements and enchantments do not unlock extra entries in its list. They affect progression or tool behavior separately. The Trowel's command/configuration ID is `shovel`.
 
@@ -267,7 +271,7 @@ Tool ID: `mace`. 9 source types.
 
 ### Forage Pickaxe sources
 
-Tool ID: `pickaxe`. 20 source types.
+Tool ID: `pickaxe`. 19 source types.
 
 Ordinary stone, deepslate and ores are not Forage Pickaxe sources in these defaults. Breaking them can still be normal Minecraft mining, without Forage rewards.
 
@@ -275,8 +279,6 @@ Ordinary stone, deepslate and ores are not Forage Pickaxe sources in these defau
 
 - Cave Vines (`CAVE_VINES`): Break this block.
 - Cave Vines Plant (`CAVE_VINES_PLANT`): Break this block.
-- Glow Lichen (`GLOW_LICHEN`): Break this block.
-- Hanging Roots (`HANGING_ROOTS`): Break this block.
 - Pointed Dripstone (`POINTED_DRIPSTONE`): Break this block.
 - Rooted Dirt (`ROOTED_DIRT`): Break this block.
 - Spore Blossom (`SPORE_BLOSSOM`): Break this block.
@@ -292,6 +294,7 @@ Ordinary stone, deepslate and ores are not Forage Pickaxe sources in these defau
 - Dripstone Block (`DRIPSTONE_BLOCK`): Break this block.
 - End Stone (`END_STONE`): Break this block.
 - Magma Block (`MAGMA_BLOCK`): Break this block.
+- Netherrack (`NETHERRACK`): Break this block.
 - Obsidian (`OBSIDIAN`): Break this block.
 - Purpur Block (`PURPUR_BLOCK`): Break this block.
 - Smooth Basalt (`SMOOTH_BASALT`): Break this block.
@@ -299,7 +302,7 @@ Ordinary stone, deepslate and ores are not Forage Pickaxe sources in these defau
 
 ### Forage Shears sources
 
-Tool ID: `shears`. 14 source types.
+Tool ID: `shears`. 25 source types.
 
 **Canopy Finds** (`leaves`):
 
@@ -318,9 +321,29 @@ Tool ID: `shears`. 14 source types.
 - Spruce Leaves (`SPRUCE_LEAVES`): Break this block.
 - Yellow Poplar Leaves (`YELLOW_POPLAR_LEAVES`): Break this block.
 
+**Cave Forage** (`cave`):
+
+- Glow Lichen (`GLOW_LICHEN`): Break this block.
+- Hanging Roots (`HANGING_ROOTS`): Break this block.
+
+**Moss and Roots** (`moss`):
+
+- Pale Hanging Moss (`PALE_HANGING_MOSS`): Break this block.
+- Small Dripleaf (`SMALL_DRIPLEAF`): Break this block.
+
+**Wild Flora** (`flora`):
+
+- Bush (`BUSH`): Break this block.
+- Nether Sprouts (`NETHER_SPROUTS`): Break this block.
+- Seagrass (`SEAGRASS`): Break this block.
+- Short Dry Grass (`SHORT_DRY_GRASS`): Break this block.
+- Tall Dry Grass (`TALL_DRY_GRASS`): Break this block.
+- Tall Seagrass (`TALL_SEAGRASS`): Break this block.
+- Vine (`VINE`): Break this block.
+
 ### Forage Sickle sources
 
-Tool ID: `sickle`. 64 source types.
+Tool ID: `sickle`. 57 source types.
 
 **Farm Herbs** (`crops`):
 
@@ -350,7 +373,6 @@ Tool ID: `sickle`. 64 source types.
 - Allium (`ALLIUM`): Break this block.
 - Azure Bluet (`AZURE_BLUET`): Break this block.
 - Blue Orchid (`BLUE_ORCHID`): Break this block.
-- Bush (`BUSH`): Break this block.
 - Cactus Flower (`CACTUS_FLOWER`): Break this block.
 - Closed Eyeblossom (`CLOSED_EYEBLOSSOM`): Break this block.
 - Cornflower (`CORNFLOWER`): Break this block.
@@ -364,7 +386,6 @@ Tool ID: `sickle`. 64 source types.
 - Lilac (`LILAC`): Break this block.
 - Lily Of The Valley (`LILY_OF_THE_VALLEY`): Break this block.
 - Lily Pad (`LILY_PAD`): Break this block.
-- Nether Sprouts (`NETHER_SPROUTS`): Break this block.
 - Open Eyeblossom (`OPEN_EYEBLOSSOM`): Break this block.
 - Orange Tulip (`ORANGE_TULIP`): Break this block.
 - Oxeye Daisy (`OXEYE_DAISY`): Break this block.
@@ -377,17 +398,12 @@ Tool ID: `sickle`. 64 source types.
 - Red Shrub (`RED_SHRUB`): Break this block.
 - Red Tulip (`RED_TULIP`): Break this block.
 - Rose Bush (`ROSE_BUSH`): Break this block.
-- Seagrass (`SEAGRASS`): Break this block.
-- Short Dry Grass (`SHORT_DRY_GRASS`): Break this block.
 - Short Grass (`SHORT_GRASS`): Break this block.
 - Sunflower (`SUNFLOWER`): Break this block.
-- Tall Dry Grass (`TALL_DRY_GRASS`): Break this block.
 - Tall Grass (`TALL_GRASS`): Break this block.
-- Tall Seagrass (`TALL_SEAGRASS`): Break this block.
 - Torchflower (`TORCHFLOWER`): Break this block.
 - Twisting Vines (`TWISTING_VINES`): Break this block.
 - Twisting Vines Plant (`TWISTING_VINES_PLANT`): Break this block.
-- Vine (`VINE`): Break this block.
 - Warped Roots (`WARPED_ROOTS`): Break this block.
 - Weeping Vines (`WEEPING_VINES`): Break this block.
 - Weeping Vines Plant (`WEEPING_VINES_PLANT`): Break this block.
@@ -417,7 +433,7 @@ Tool ID: `sword`. 13 source types.
 
 ### Forage Trowel sources
 
-Tool ID: `shovel`. 11 source types.
+Tool ID: `shovel`. 9 source types.
 
 **Moss and Roots** (`moss`):
 
@@ -428,10 +444,8 @@ Tool ID: `shovel`. 11 source types.
 - Moss Block (`MOSS_BLOCK`): Break this block.
 - Moss Carpet (`MOSS_CARPET`): Break this block.
 - Muddy Mangrove Roots (`MUDDY_MANGROVE_ROOTS`): Break this block.
-- Pale Hanging Moss (`PALE_HANGING_MOSS`): Break this block.
 - Pale Moss Block (`PALE_MOSS_BLOCK`): Break this block.
 - Pale Moss Carpet (`PALE_MOSS_CARPET`): Break this block.
-- Small Dripleaf (`SMALL_DRIPLEAF`): Break this block.
 
 <!-- END GENERATED FORAGE SOURCES -->
 
@@ -447,7 +461,23 @@ If you know a source's name, use `/forage source seagrass`. Lookup checks exact 
 
 Source details shows the current family, matching tools and gathering rules. A wrong-tool warning names the supported tool or tools and offers the same **Source details** link. Those details explain support; caps, world/protection rules, placed-block tracking and tool condition can still stop rewards. Neither inspection nor following a link grants a camp visit.
 
+**Quest/tool links (from build 755):** source cards and Source Details preview up to three specific family/material quest matches and show how many more there are. **Matching Quests** opens the full list, also explaining broad action, biome and treasure objectives, while **Quests for This Tool** in a tool's source catalogue shows relevant quests. On a quest's What Counts? page, **Filter by Tool** narrows its sources; **All tools** is the starting view. Browsing these links does not accept, advance or claim a quest.
+
 For a specific activity, follow its **What Counts?** link. Quests explain their own objective; Camp Turn-Ins explain plain accepted inventory items; Community Cleanup keeps seasonal gathering, resource donations and treasure donations separate. Browsing these guides spends nothing, awards nothing and grants no workstation visit. The running server's lists take precedence over the published shipped defaults.
+
+**Cave Cycle means Cave Forage, not everything found underground.** Its seven sources remain Glow Lichen, Cave Vines, Cave Vines Plant, Spore Blossom, Hanging Roots, Rooted Dirt and Pointed Dripstone. **Tool correction (from build 755):** Glow Lichen and Hanging Roots use **Forage Shears**; the other five keep the **Forage Pickaxe**. Calcite, Amethyst Cluster, Magma Block and Dripstone Block remain Stone-family sources and do not advance Cave Cycle.
+
+**Exact-source Shears assignments (from build 755):** these plants keep their current family and quest credit while requiring a different Forage tool. The Sickle remains a copper hoe; Forage Shears remain actual shears.
+
+| Family retained | Sources assigned to Forage Shears |
+| --- | --- |
+| Cave Forage | Glow Lichen, Hanging Roots |
+| Wild Flora | Seagrass, Tall Seagrass, Vine, Nether Sprouts, Bush, Short Dry Grass, Tall Dry Grass |
+| Moss and Roots | Small Dripleaf, Pale Hanging Moss |
+
+Other assignments stay unchanged. Check each source entry for its tool instead of assuming that one family always means one tool. Forage progress does not promise a vanilla item drop on every action; plant state, loot chances and other ordinary drop rules still apply.
+
+Look up the block you gather, rather than only its icon or drop: a Glow Berries icon can represent Cave Vines; an Amethyst Shard is not an Amethyst Cluster block. `/forage source seagrass` and `/forage inspect` are already available to identify a source's actual family and matching tool.
 
 ## Quests, branches, and treasures
 

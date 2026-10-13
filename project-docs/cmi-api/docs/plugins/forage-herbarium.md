@@ -34,6 +34,8 @@ Use `/forage admin herbarium <local-player|UUID>` for authorized read-only inspe
 
 The generated sections below use the same shipped source loader, botanical catalogue and settings as the feature. After changing source bindings, aliases or collection definitions, run `gradle :plugins:player-fun:forage:generateSourceDocumentation :plugins:player-fun:forage:generateTurnInDocumentation :plugins:player-fun:forage:generateHerbariumDocumentation` with the repository's JDK 25.0.4.1, then review the diffs and run the focused documentation tests. This is a development documentation step, not a distributable suite build.
 
+**Source-tool correction (from build 755):** the generated specimen tool column below includes the exact-source Shears assignments. Older builds keep their previous tool requirements; use each entry on the running server for its actual settings. Collection requirements, specimen identities and recorded discoveries are unchanged.
+
 <!-- BEGIN GENERATED FORAGE HERBARIUM -->
 
 ## Complete collection requirements
@@ -203,17 +205,17 @@ Each row is one permanent specimen. Any listed source alias can identify it afte
 | Acacia Leaves | `ACACIA_LEAVES` | `ACACIA_LEAVES` | Forage Shears | Harvest matching tree foliage with Forage Shears. |
 | Acacia Log | `ACACIA_LOG` | `ACACIA_LOG`, `STRIPPED_ACACIA_LOG` | Forage Axe | Harvest this tree's wood; stripped and unstripped logs identify the same specimen. |
 | Allium | `ALLIUM` | `ALLIUM` | Forage Sickle | Search grassy routes, flower patches and woodland groundcover. |
-| Azalea | `AZALEA` | `AZALEA` | Forage Trowel | Search lush growth and mossy woodland with a Forage Trowel. |
+| Azalea | `AZALEA` | `AZALEA` | Forage Trowel | Search lush growth and mossy woodland; use the matching Forage tool shown on this entry. |
 | Azalea Leaves | `AZALEA_LEAVES` | `AZALEA_LEAVES` | Forage Shears | Harvest matching tree foliage with Forage Shears. |
 | Azure Bluet | `AZURE_BLUET` | `AZURE_BLUET` | Forage Sickle | Search grassy routes, flower patches and woodland groundcover. |
 | Bamboo | `BAMBOO` | `BAMBOO` | Forage Axe | Harvest eligible field growth; newly grown cane and bamboo differ from a placed base. |
 | Beetroots | `BEETROOTS` | `BEETROOTS` | Forage Sickle | Harvest mature beetroot plants; picking up beetroots does not count. |
-| Big Dripleaf | `BIG_DRIPLEAF` | `BIG_DRIPLEAF` | Forage Trowel | Search lush growth and mossy woodland with a Forage Trowel. |
+| Big Dripleaf | `BIG_DRIPLEAF` | `BIG_DRIPLEAF` | Forage Trowel | Search lush growth and mossy woodland; use the matching Forage tool shown on this entry. |
 | Birch Leaves | `BIRCH_LEAVES` | `BIRCH_LEAVES` | Forage Shears | Harvest matching tree foliage with Forage Shears. |
 | Birch Log | `BIRCH_LOG` | `BIRCH_LOG`, `STRIPPED_BIRCH_LOG` | Forage Axe | Harvest this tree's wood; stripped and unstripped logs identify the same specimen. |
 | Blue Orchid | `BLUE_ORCHID` | `BLUE_ORCHID` | Forage Sickle | Search grassy routes, flower patches and woodland groundcover. |
 | Brown Mushroom | `BROWN_MUSHROOM` | `BROWN_MUSHROOM`, `BROWN_MUSHROOM_BLOCK` | Forage Sickle | Find mushrooms or a huge brown mushroom cap; both identify the same specimen. |
-| Bush | `BUSH` | `BUSH` | Forage Sickle | Search grassy routes, flower patches and woodland groundcover. |
+| Bush | `BUSH` | `BUSH` | Forage Shears | Search grassy routes, flower patches and woodland groundcover. |
 | Cactus | `CACTUS` | `CACTUS` | Forage Axe | Harvest eligible field growth; newly grown cane and bamboo differ from a placed base. |
 | Cactus Flower | `CACTUS_FLOWER` | `CACTUS_FLOWER` | Forage Sickle | Search grassy routes, flower patches and woodland groundcover. |
 | Carrots | `CARROTS` | `CARROTS` | Forage Sickle | Harvest mature carrot plants; picking up carrots does not count. |
@@ -234,10 +236,10 @@ Each row is one permanent specimen. Any listed source alias can identify it afte
 | Eyeblossom | `OPEN_EYEBLOSSOM` | `CLOSED_EYEBLOSSOM`, `OPEN_EYEBLOSSOM` | Forage Sickle | Search the Pale Garden; open and closed flowers are the same specimen. |
 | Fern | `FERN` | `FERN` | Forage Sickle | Search grassy routes, flower patches and woodland groundcover. |
 | Firefly Bush | `FIREFLY_BUSH` | `FIREFLY_BUSH` | Forage Sickle | Search grassy routes, flower patches and woodland groundcover. |
-| Flowering Azalea | `FLOWERING_AZALEA` | `FLOWERING_AZALEA` | Forage Trowel | Search lush growth and mossy woodland with a Forage Trowel. |
+| Flowering Azalea | `FLOWERING_AZALEA` | `FLOWERING_AZALEA` | Forage Trowel | Search lush growth and mossy woodland; use the matching Forage tool shown on this entry. |
 | Flowering Azalea Leaves | `FLOWERING_AZALEA_LEAVES` | `FLOWERING_AZALEA_LEAVES` | Forage Shears | Harvest matching tree foliage with Forage Shears. |
-| Glow Lichen | `GLOW_LICHEN` | `GLOW_LICHEN` | Forage Pickaxe | Search lush caves with the matching Forage Pickaxe. |
-| Hanging Roots | `HANGING_ROOTS` | `HANGING_ROOTS` | Forage Pickaxe | Search lush caves with the matching Forage Pickaxe. |
+| Glow Lichen | `GLOW_LICHEN` | `GLOW_LICHEN` | Forage Shears | Search lush caves; use the matching Forage tool shown on this entry. |
+| Hanging Roots | `HANGING_ROOTS` | `HANGING_ROOTS` | Forage Shears | Search lush caves; use the matching Forage tool shown on this entry. |
 | Jungle Leaves | `JUNGLE_LEAVES` | `JUNGLE_LEAVES` | Forage Shears | Harvest matching tree foliage with Forage Shears. |
 | Jungle Log | `JUNGLE_LOG` | `JUNGLE_LOG`, `STRIPPED_JUNGLE_LOG` | Forage Axe | Harvest this tree's wood; stripped and unstripped logs identify the same specimen. |
 | Kelp | `KELP` | `KELP`, `KELP_PLANT` | Forage Axe | Search underwater kelp; the tip and body identify the same specimen. |
@@ -250,16 +252,16 @@ Each row is one permanent specimen. Any listed source alias can identify it afte
 | Mangrove Log | `MANGROVE_LOG` | `MANGROVE_LOG`, `STRIPPED_MANGROVE_LOG` | Forage Axe | Harvest this tree's wood; stripped and unstripped logs identify the same specimen. |
 | Mangrove Roots | `MANGROVE_ROOTS` | `MANGROVE_ROOTS`, `MUDDY_MANGROVE_ROOTS` | Forage Trowel | Search mangrove roots; muddy roots identify the same specimen. |
 | Melon | `MELON` | `MELON` | Forage Axe | Harvest eligible field growth; newly grown cane and bamboo differ from a placed base. |
-| Moss Block | `MOSS_BLOCK` | `MOSS_BLOCK` | Forage Trowel | Search lush growth and mossy woodland with a Forage Trowel. |
-| Moss Carpet | `MOSS_CARPET` | `MOSS_CARPET` | Forage Trowel | Search lush growth and mossy woodland with a Forage Trowel. |
-| Nether Sprouts | `NETHER_SPROUTS` | `NETHER_SPROUTS` | Forage Sickle | Search Nether vegetation with a matching Forage tool. |
+| Moss Block | `MOSS_BLOCK` | `MOSS_BLOCK` | Forage Trowel | Search lush growth and mossy woodland; use the matching Forage tool shown on this entry. |
+| Moss Carpet | `MOSS_CARPET` | `MOSS_CARPET` | Forage Trowel | Search lush growth and mossy woodland; use the matching Forage tool shown on this entry. |
+| Nether Sprouts | `NETHER_SPROUTS` | `NETHER_SPROUTS` | Forage Shears | Search Nether vegetation with a matching Forage tool. |
 | Nether Wart | `NETHER_WART` | `NETHER_WART` | Forage Sickle | Search or grow eligible Nether or End plants with the matching Forage tool. |
 | Oak Leaves | `OAK_LEAVES` | `OAK_LEAVES` | Forage Shears | Harvest matching tree foliage with Forage Shears. |
 | Oak Log | `OAK_LOG` | `OAK_LOG`, `STRIPPED_OAK_LOG` | Forage Axe | Harvest this tree's wood; stripped and unstripped logs identify the same specimen. |
 | Orange Poplar Leaves | `ORANGE_POPLAR_LEAVES` | `ORANGE_POPLAR_LEAVES` | Forage Shears | Harvest matching tree foliage with Forage Shears. |
 | Orange Tulip | `ORANGE_TULIP` | `ORANGE_TULIP` | Forage Sickle | Search grassy routes, flower patches and woodland groundcover. |
 | Oxeye Daisy | `OXEYE_DAISY` | `OXEYE_DAISY` | Forage Sickle | Search grassy routes, flower patches and woodland groundcover. |
-| Pale Hanging Moss | `PALE_HANGING_MOSS` | `PALE_HANGING_MOSS` | Forage Trowel | Search the Pale Garden's ground and hanging moss. |
+| Pale Hanging Moss | `PALE_HANGING_MOSS` | `PALE_HANGING_MOSS` | Forage Shears | Search the Pale Garden's ground and hanging moss. |
 | Pale Moss Block | `PALE_MOSS_BLOCK` | `PALE_MOSS_BLOCK` | Forage Trowel | Search the Pale Garden's ground and hanging moss. |
 | Pale Moss Carpet | `PALE_MOSS_CARPET` | `PALE_MOSS_CARPET` | Forage Trowel | Search the Pale Garden's ground and hanging moss. |
 | Pale Oak Leaves | `PALE_OAK_LEAVES` | `PALE_OAK_LEAVES` | Forage Shears | Harvest matching tree foliage with Forage Shears. |
@@ -277,22 +279,22 @@ Each row is one permanent specimen. Any listed source alias can identify it afte
 | Red Shrub | `RED_SHRUB` | `RED_SHRUB` | Forage Sickle | Search grassy routes, flower patches and woodland groundcover. |
 | Red Tulip | `RED_TULIP` | `RED_TULIP` | Forage Sickle | Search grassy routes, flower patches and woodland groundcover. |
 | Rose Bush | `ROSE_BUSH` | `ROSE_BUSH` | Forage Sickle | Search grassy routes, flower patches and woodland groundcover. |
-| Seagrass | `SEAGRASS` | `SEAGRASS`, `TALL_SEAGRASS` | Forage Sickle | Search shallow water; short and tall seagrass are the same specimen. |
+| Seagrass | `SEAGRASS` | `SEAGRASS`, `TALL_SEAGRASS` | Forage Shears | Search shallow water; short and tall seagrass are the same specimen. |
 | Shelf Mushroom | `SHELF_MUSHROOM` | `SHELF_MUSHROOM` | Forage Sickle | Search woodland fungi and Nether fungal forests. |
-| Short Dry Grass | `SHORT_DRY_GRASS` | `SHORT_DRY_GRASS` | Forage Sickle | Search grassy routes, flower patches and woodland groundcover. |
+| Short Dry Grass | `SHORT_DRY_GRASS` | `SHORT_DRY_GRASS` | Forage Shears | Search grassy routes, flower patches and woodland groundcover. |
 | Short Grass | `SHORT_GRASS` | `SHORT_GRASS` | Forage Sickle | Search grassy routes, flower patches and woodland groundcover. |
-| Small Dripleaf | `SMALL_DRIPLEAF` | `SMALL_DRIPLEAF` | Forage Trowel | Search lush growth and mossy woodland with a Forage Trowel. |
-| Spore Blossom | `SPORE_BLOSSOM` | `SPORE_BLOSSOM` | Forage Pickaxe | Search lush caves with the matching Forage Pickaxe. |
+| Small Dripleaf | `SMALL_DRIPLEAF` | `SMALL_DRIPLEAF` | Forage Shears | Search lush growth and mossy woodland; use the matching Forage tool shown on this entry. |
+| Spore Blossom | `SPORE_BLOSSOM` | `SPORE_BLOSSOM` | Forage Pickaxe | Search lush caves; use the matching Forage tool shown on this entry. |
 | Spruce Leaves | `SPRUCE_LEAVES` | `SPRUCE_LEAVES` | Forage Shears | Harvest matching tree foliage with Forage Shears. |
 | Spruce Log | `SPRUCE_LOG` | `SPRUCE_LOG`, `STRIPPED_SPRUCE_LOG` | Forage Axe | Harvest this tree's wood; stripped and unstripped logs identify the same specimen. |
 | Sugar Cane | `SUGAR_CANE` | `SUGAR_CANE` | Forage Axe | Harvest eligible field growth; newly grown cane and bamboo differ from a placed base. |
 | Sunflower | `SUNFLOWER` | `SUNFLOWER` | Forage Sickle | Search grassy routes, flower patches and woodland groundcover. |
 | Sweet Berry Bush | `SWEET_BERRY_BUSH` | `SWEET_BERRY_BUSH` | Forage Sickle | Break an eligible berry bush; right-clicking berries is not a Forage gathering action. |
-| Tall Dry Grass | `TALL_DRY_GRASS` | `TALL_DRY_GRASS` | Forage Sickle | Search grassy routes, flower patches and woodland groundcover. |
+| Tall Dry Grass | `TALL_DRY_GRASS` | `TALL_DRY_GRASS` | Forage Shears | Search grassy routes, flower patches and woodland groundcover. |
 | Tall Grass | `TALL_GRASS` | `TALL_GRASS` | Forage Sickle | Search grassy routes, flower patches and woodland groundcover. |
 | Torchflower | `TORCHFLOWER` | `TORCHFLOWER` | Forage Sickle | Search grassy routes, flower patches and woodland groundcover. |
 | Twisting Vines | `TWISTING_VINES` | `TWISTING_VINES`, `TWISTING_VINES_PLANT` | Forage Sickle | Search the Warped Forest; the vine tip and body are the same specimen. |
-| Vine | `VINE` | `VINE` | Forage Sickle | Search grassy routes, flower patches and woodland groundcover. |
+| Vine | `VINE` | `VINE` | Forage Shears | Search grassy routes, flower patches and woodland groundcover. |
 | Warped Fungus | `WARPED_FUNGUS` | `WARPED_FUNGUS` | Forage Sickle | Search woodland fungi and Nether fungal forests. |
 | Warped Roots | `WARPED_ROOTS` | `WARPED_ROOTS` | Forage Sickle | Search Nether vegetation with a matching Forage tool. |
 | Warped Stem | `WARPED_STEM` | `STRIPPED_WARPED_STEM`, `WARPED_STEM` | Forage Axe | Harvest a huge Nether fungus; stripped and unstripped stems identify the same specimen. |

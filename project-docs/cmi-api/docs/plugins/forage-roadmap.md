@@ -118,7 +118,7 @@ Camp use revalidates both the selected camp and the Initial Camp. Unloaded chunk
 
 The four later shop tool types are implemented. Calling them the old “Tier 2A/2B” expansion must not be confused with a held tool's separately purchased tier upgrade.
 
-| Tool | Current default base item | Current default families | Purchase unlock beyond ordinary workstation/payment checks |
+| Tool | Current default base item | Family fallback | Purchase unlock beyond ordinary workstation/payment checks |
 | --- | --- | --- | --- |
 | Sickle | `COPPER_HOE` | flora, crops, mushrooms | Starter |
 | Axe | `COPPER_AXE` | logs, fruits | Starter |
@@ -128,6 +128,8 @@ The four later shop tool types are implemented. Calling them the old “Tier 2A/
 | Brush | `BRUSH` | relics, sands | Carry any genuine Forage tool at tool level 2 |
 | Sword | `COPPER_SWORD` | creature_drops | Carry any genuine Forage tool at tool level 2 |
 | Mace | `MACE` | danger_drops | Carry any genuine Forage tool at tool level 2 |
+
+**Exact-source correction (from build 755):** the family table is a fallback, not a promise that one tool handles every family member. Eleven plants in Cave/Flora/Moss are assigned to Shears without changing their family, quest membership or caps; see the [player guide mapping](forage-camps.md#find-what-counts).
 
 The later types also require completed Local Introduction. Tool level, tool tier and player Forage level are distinct. Current defaults do not require owning all four starter types, levelling all four, reaching player level 10, paying a separate one-time expansion unlock, finding 100 treasures, or completing a separate Tier 2 quest chain. Those were earlier proposals, not current gates. Future changes to this progression ladder need a separate product decision.
 
