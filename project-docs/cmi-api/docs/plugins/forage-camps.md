@@ -1,6 +1,6 @@
 # Forage: player guide
 
-**Reviewed 13 October 2026 against suite build 746 on Paper 26.3 STABLE 178.** The beta includes seasonal Community Efforts, Leaf Litter and the Herbarium botanical journal; startup activation is verified. Player acceptance testing remains open. This guide describes the camp and gathering flow. Availability, prices, caps, and enabled sources depend on the server; live activation remains separate from beta testing.
+**Reviewed 13 October 2026 against suite build 748 on Paper 26.3 STABLE 178.** The beta includes seasonal Community Efforts, Leaf Litter and the Herbarium botanical journal; startup activation is verified. Player acceptance testing remains open. This guide describes the camp and gathering flow. Availability, prices, caps, and enabled sources depend on the server; live activation remains separate from beta testing.
 
 **New in build 739:** Accepted Turn-Ins opens the complete item guide, and plain cocoa beans are accepted. Build 741 added Leaf Litter; build 742 adds the Herbarium botanical expansion, bringing the default accepted inventory list to 97 types.
 
@@ -632,6 +632,8 @@ Forage tools cannot use ordinary anvils, enchanting tables, grindstones, smithin
 <a id="mending-upgrade"></a>
 
 **Optional Mending I, introduced in build 745 and verified on build 746:** Player acceptance remains open; the native probe used synthetic repair events, not a real client collecting XP. Tool Upgrades lets you buy Mending once for a Tier III or higher Forage tool. All eight tool types are eligible by default. Use your owned active camp after its Local Introduction, with the tool in your main hand. The held-tool level requirement defaults to 1; there is no extra player-level gate for this purchase. Its base price is $10,000 and 250 Forage Points; the default `normal` balance multiplier makes it **$9,000 and 225 Points**. Check the displayed price before confirming.
+
+**Active from build 748:** a new Mending purchase consumes **5 genuine Forage treasures per tool**, in any mix, as well as the unchanged money and Points price above. The treasure cost is unscaled. First reach **100 lifetime successful rewarded Forage gathering actions**, including creature actions; past qualifying actions count. That personal unlock is not spent. Quest rewards and Turn-Ins do not count, and purchasing Mending does not deduct XP. Put genuine Forage treasures in the inventory rows above your hotbar. Items in the hotbar, offhand or containers are kept. Genuine traded treasures also count; ordinary or renamed items do not. These additions follow the historical build-746 verification and do not affect already-purchased Mending.
 
 The purchased improvement stays with the tool if you trade it. It lets ordinary Minecraft XP repair the tool up to **100%**, including in your offhand and at the five-durability safety lock. Buying the enchantment does not repair it immediately. XP repair grants no Forage progress or points and does not reset gathering limits. Repair & Merge keeps its existing donor, treasure and durability-cap rules. Disabling later purchases does not remove a tool's already-approved Mending.
 

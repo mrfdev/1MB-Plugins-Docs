@@ -2,7 +2,7 @@
 
 Forage is a player-facing nature progression plugin for `/forage`. It targets the reviewed Paper 26.3 line with Java 25-compatible bytecode and depends on CMI, CMILib, and `1MB-CMIAPI-Lib`.
 
-**Latest documented verification, 13 October 2026: suite build 746 on Paper 26.3 STABLE 178.** Connected-client acceptance remains separate from automated checks and startup verification. Live gameplay remains dormant until owner acceptance and activation. Development uses the maintained `servers/Paper-26.3/` instance on Java 27, with suite builds on JDK 25.0.4.1. The preserved 26.2 server is a rollback instance. Shipping the Forage JAR in a complete suite build does not activate it on live.
+**Latest documented verification, 13 October 2026: suite build 748 on Paper 26.3 STABLE 178.** Connected-client acceptance remains separate from automated checks and startup verification. Live gameplay remains dormant until owner acceptance and activation. Development uses the maintained `servers/Paper-26.3/` instance on Java 27, with suite builds on JDK 25.0.4.1. The preserved 26.2 server is a rollback instance. Shipping the Forage JAR in a complete suite build does not activate it on live.
 
 **Deployed in build 739:** Accepted Turn-Ins now opens the complete paginated inventory-item list, including cocoa beans. Build 741 adds Leaf Litter to flora gathering and ordinary Camp Turn-Ins. Build 742 adds the Herbarium botanical routes, bringing the defaults to 97 accepted item types; see the [complete accepted-item list](forage-camps.md#complete-accepted-turn-in-item-list).
 
@@ -228,6 +228,10 @@ The same upgrade page also offers controlled improvements:
 **Introduced in canonical build 745 and verified on build 746 / Paper 26.3 STABLE 178 on 13 October 2026.** Tool Upgrades offers a one-time **Mending I** purchase for an eligible tool at **Tier III or higher**. The defaults cover all eight tools: Sickle, Axe, Trowel, Shears, Pickaxe, Brush, Sword and Mace. Hold the tool in your main hand at your owned active camp, complete its Local Introduction and review the confirmation. The required held-tool level defaults to 1; there is no additional player Forage-level requirement for Mending once camp access and the tool's tier are satisfied.
 
 The base price is **$10,000 and 250 Forage Points**, scaled by the existing improvement-cost multiplier. The shipped `normal` preset's 0.9 multiplier makes this **$9,000 and 225 Points**. The current menu quote is authoritative. Buying it does not restore durability immediately, and the same tool cannot buy Mending again.
+
+**Active from build 748:** each new Mending purchase also consumes **5 genuine Forage treasures per tool**, in any mix. This treasure amount is not scaled by the improvement multiplier. The player must first have **100 lifetime successful rewarded Forage gathering actions**; earlier qualifying actions, including creature actions, count. This is a personal unlock, not a balance to spend. Quest rewards and Turn-Ins do not count. The money and point prices above stay unchanged, and purchasing Mending does not deduct XP. These requirements were added after the historical build-746 verification.
+
+For this purchase, put the treasures in your main backpack, **slots 9–35 above the hotbar**. Hotbar, offhand, armor and container contents do not count. Each treasure must carry Forage's genuine treasure marker and a valid delivery UUID; renamed ordinary items do not qualify. Treasures may come from another player: there is no finder-ownership requirement. Already-purchased Mending keeps working without meeting the new purchase requirements.
 
 An approved Mending tool repairs through **ordinary Minecraft XP**, including while held in the offhand or stopped at the five-durability safety lock. It can reach **100% durability**, independently of Repair & Merge's player-level caps; normal Minecraft XP consumption and equipment selection still apply. XP repair grants no Forage XP, tool XP, points, quests, branch or treasure progress, and does not reset any gathering cap or chunk exhaustion. The improvement belongs to the tradable tool, not the purchaser's account.
 
@@ -539,6 +543,7 @@ Important sections:
 - `tools.ids`, `tools.<tool>.enabled` and `tools.<tool>.families`: enabled tool IDs and supported family membership; the Trowel ID is `shovel`. All tiers share this mapping.
 - The generated [complete source catalogue](forage-camps.md#complete-source-catalogue) documents shipped defaults; the in-game catalogue follows effective runtime bindings after local configuration loads.
 - `tools.enchants.mending.*` (build 745+): one-time Mending I purchases; defaults `enabled: true`, `max-level: 1`, `required-tier: 3`, all eight `tools` IDs, `required-tool-level-per-level: 1`, base money/points `10000`/`250` and both per-level costs `0`. Existing improvement multipliers apply; disabled/removed purchase eligibility does not revoke an already-approved Tier III+ tool.
+- Build 748 purchase requirements: `tools.enchants.mending.treasure-cost: 5` is an unscaled per-tool payment; `required-gathering-actions: 100` is a personal lifetime rewarded-gathering unlock, not spent. Set either to `0` to remove that individual requirement. Previously approved Mending is unaffected.
 - `tools.low-durability-lock.*`: safety-lock rules that stop curated tools before they break
 - `tools.durability-audit-seconds`: how often online inventories are scanned for unexpected external repairs
 - `sources.*`: source-family XP, point value, and material lists
