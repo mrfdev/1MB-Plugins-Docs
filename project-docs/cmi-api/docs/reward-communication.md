@@ -19,7 +19,7 @@ An accepted console command is never proof that an item, money, permission, or k
 
 ## Shared implementation
 
-`RewardMessage` is an immutable presentation value in the Shared Library. It uses literal Adventure text, localized state/next/action labels, two chat lines, and at most two deliberate navigation/copy actions. Every navigation button prints its command for clients without clickable chat. Reward names or descriptions cannot inject MiniMessage click actions.
+`RewardMessage` is an immutable presentation value in the Shared Library. It uses literal Adventure text, localized state/next/action labels, two chat lines, and at most two deliberate navigation/copy actions. Navigation buttons print their commands by default. Successful Forage item claims instead use the compact follow-up `Next: Missing items? [View claim] [Copy reference]`. The View claim hover contains the private claim reference, explains that clicking views the claim, and asks players whose items are still missing after reconnecting to use Copy reference and share it with staff. The copy action retains the same reference payload. Requested, pending and recovery messages keep their existing rendering. Reward names or descriptions cannot inject MiniMessage click actions.
 
 `RewardMessage.settled` derives the state from the confirmed and requested portions. A nonempty requested portion always produces **Reward request recorded**, even when there are also confirmed internal benefits. With neither portion, the result only confirms completion.
 
