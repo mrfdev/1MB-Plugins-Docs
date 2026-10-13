@@ -35,6 +35,8 @@ Seasons begin at **00:00 Europe/Amsterdam** on March 1, June 1, September 1 and 
 
 Each pool shares the same totals. You must physically be in an included world when gathering or donating; opening the menu there and moving elsewhere does not preserve eligibility. Existing camp world mappings determine the actual server world names. Worlds do not automatically share or isolate inventories because they participate in a Community Effort. Keep the ordinary Initial Camp and Local Introduction rules in mind when choosing a Secondary Camp for donations.
 
+**Available from build 752:** **What Counts?** provides an overview with direct links to the season’s separate gathering and resource-donation lists. `/forage sources community [page]` opens the gathering list and `/forage sources donations [page]` opens the resource-item list. These routes use the selected season edition, including its frozen requirements, rather than ordinary Camp Turn-In acceptance. Reading the lists does not donate items or establish a camp visit.
+
 The gathering and donation buttons show separate complete lists. Source block IDs and their item drops can differ: break `COCOA`, donate `COCOA_BEANS`; break `MELON`, donate `MELON_SLICE`; break `CAVE_VINES`, donate `GLOW_BERRIES`; break `SWEET_BERRY_BUSH`, donate `SWEET_BERRIES`. Seasonal resource lists may include logs or End Stone even though ordinary Camp Turn-Ins do not accept them by default.
 
 ## Rewards, completion history and dormant claims

@@ -29,6 +29,9 @@ const PLAYER_GUIDE_OVERRIDES = {
     summary: 'Gather with curated tools, maintain your camps, and earn shared progression and rewards.',
     intro: 'Gather with curated tools, maintain one Initial Camp and two optional Secondary Camps, and share progression across approved worlds.',
     description: 'Learn Forage camps, tools, quests, repairs and dust, with a beta checklist and staff reference.',
+    commandTableExamples: {
+      '/forage sources family <id> [page]': '/forage sources family flora',
+    },
     features: [
       'One Dappled Forest Initial Camp and two optional Secondary Camps, each with a Local Introduction.',
       'Eight curated gathering tools with separate player and tool progression.',

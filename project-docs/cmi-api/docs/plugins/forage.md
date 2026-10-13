@@ -2,7 +2,7 @@
 
 Forage is a player-facing nature progression plugin for `/forage`. It targets the reviewed Paper 26.3 line with Java 25-compatible bytecode and depends on CMI, CMILib, and `1MB-CMIAPI-Lib`.
 
-**Latest documented verification, 13 October 2026: suite build 749 on Paper 26.3 STABLE 178.** Connected-client acceptance remains separate from automated checks and startup verification. Live gameplay remains dormant until owner acceptance and activation. Development uses the maintained `servers/Paper-26.3/` instance on Java 27, with suite builds on JDK 25.0.4.1. The preserved 26.2 server is a rollback instance. Shipping the Forage JAR in a complete suite build does not activate it on live.
+**Latest documented verification, 13 October 2026: suite build 752 on Paper 26.3 STABLE 180.** Connected-client acceptance remains separate from automated checks and startup verification. Live gameplay remains dormant until owner acceptance and activation. Development uses the maintained `servers/Paper-26.3/` instance on Java 27, with suite builds on JDK 25.0.4.1. The preserved 26.2 server is a rollback instance. Shipping the Forage JAR in a complete suite build does not activate it on live.
 
 **Deployed in build 739:** Accepted Turn-Ins now opens the complete paginated inventory-item list, including cocoa beans. Build 741 adds Leaf Litter to flora gathering and ordinary Camp Turn-Ins. Build 742 adds the Herbarium botanical routes, bringing the defaults to 97 accepted item types; see the [complete accepted-item list](forage-camps.md#complete-accepted-turn-in-item-list).
 
@@ -149,7 +149,13 @@ Examples of default gathering sources:
 
 Block routes award progress when you **break** a configured block with the matching genuine Forage tool in your main hand. The Brush route is a block-breaking route, not a reward for completing vanilla archaeology brushing. The list above is a starting point; the [generated complete source catalogue](forage-camps.md#complete-source-catalogue) contains every effective block and creature source from the shipped defaults, with exact configuration IDs. Every tier of a tool uses the same sources.
 
-`/forage sources [tool]` opens the full read-only catalogue from anywhere. With no tool argument it selects the held Forage tool, or shows the tool picker. Trowel uses the command/configuration ID `shovel`. Tools & Families entries open the corresponding paginated catalogue, whose documentation button sends a clickable public guide link. The hub's Tools & All Sources button and onboarding's What can I gather? entry also provide access before camp readiness. The list uses the running server's enabled tool/family definitions and effective source bindings; it grants no camp visit, purchase, XP or quest progress.
+**Available from build 752:** family browsing, contextual What Counts? pages and the additional source routes below are deployed on the maintained test servers. Connected-client acceptance remains open.
+
+`/forage sources [tool] [page]` opens the full read-only catalogue from anywhere. With no tool argument it selects the held Forage tool, or shows the tool picker. Trowel uses the command/configuration ID `shovel`. Tools & Families entries open the corresponding paginated catalogue, whose documentation button sends a clickable public guide link. The hub's Tools & All Sources button and onboarding's What can I gather? entry also provide access before camp readiness. The list uses the running server's enabled tool/family definitions and effective source bindings; it grants no camp visit, purchase, XP or quest progress.
+
+**Source Families** in the source picker, or `/forage sources families [page]`, lists gathering families such as Wild Flora (`flora`) and Stone (`stone`). A family page shows its matching tools and complete paginated sources. `/forage sources flora [page]` is the short form; `/forage sources family <id> [page]` removes ambiguity when a family ID matches a tool ID. Existing tool IDs win that collision. `/forage source` is a singular alias, and page numbers start at 1.
+
+Contextual **What Counts?** pages keep eligibility separate: a quest explains its actual objective; `/forage sources turnins [page]` lists ordinary accepted inventory items; `/forage sources community [page]` and `/forage sources donations [page]` list the current season's gathering sources and resource-donation items. A family or tool source list is not an item hand-in list. Reading any guide does not alter reward progress or grant submission/claim authority.
 
 A listed source can still give no reward because of a daily player/family cap, chunk exhaustion, world/area restrictions, disabled gathering or an unusable held tool. Source membership and current reward eligibility are separate; use `/forage limits` and the current feedback to diagnose a pause.
 
@@ -279,7 +285,7 @@ Open Quests & Rewards at your active workstation and inspect the daily, weekly, 
 
 The selected filter is highlighted and the buttons show counts. Changing filters returns to page 1 while retaining the category's existing quest order. Up to 28 quests appear per page, with Previous/Next when needed. An empty filter explains that there are no matching quests and directs the player to Show All. The separate **Ready to Claim** view still collects completed, unclaimed quests across periods.
 
-Filtering changes only the display; it grants no progress, rewards or workstation authority. Claims still require the eligible owned camp, completed Local Introduction and the existing once-per-period checks. Confirming a claim closes the menu as before. Clicking an incomplete or already-claimed quest returns to the same filter and page; opening a category again starts at Show All.
+Filtering changes only the display; it grants no progress, rewards or workstation authority. Clicking any quest opens its details with separate **What Counts?** and **Claim Reward** buttons. Back retains the originating category, filter and page; opening a category again starts at Show All. What Counts? uses the actual objective type below. Claim Reward retains the eligible owned camp, completed Local Introduction and once-per-period checks, and a confirmed claim closes the menu.
 
 | Objective | What counts |
 | --- | --- |
@@ -291,7 +297,7 @@ Filtering changes only the display; it grants no progress, rewards or workstatio
 
 Some quest descriptions use broad nature themes. Their configured family is decisive: Woodland Work counts **logs**, Forest Patrol counts **leaves**, Herbal Calendar counts **flora**, and Cave Cycle counts **cave**. Camp turn-ins, dust use, and admin XP/level changes do not substitute for gathering objectives.
 
-Completion makes a reward ready; it does not automatically claim it. Return to an eligible owned workstation and click the completed quest. Built-in rewards can add Forage Points, Forage XP, and CMI/Vault money once for that quest and period. Quest-claim XP is separate from the daily gathering allowance; reaching that allowance does not itself prevent claiming a completed quest. If payments or a configured extra reward are unavailable, keep the completion and ask staff to inspect it. Repeated clicks must not pay twice. Use `/forage review` for a waiting request and share its reference with staff.
+Completion makes a reward ready; it does not automatically claim it. Return to an eligible owned workstation, open the completed quest and choose **Claim Reward** from its details. Built-in rewards can add Forage Points, Forage XP, and CMI/Vault money once for that quest and period. Quest-claim XP is separate from the daily gathering allowance; reaching that allowance does not itself prevent claiming a completed quest. If payments or a configured extra reward are unavailable, keep the completion and ask staff to inspect it. Repeated clicks must not pay twice. Use `/forage review` for a waiting request and share its reference with staff.
 
 Quests may also include the item reward described on their card. Leave one empty inventory slot per reward stack: the whole reward must fit before anything is paid or claimed. Items go into your inventory, never onto the ground or into occupied equipment slots. If you are short of space, store some items and claim again; you do not need to repeat the quest. After successful delivery, the confirmation lists the received item reward, followed by `Next: Missing items? [View claim] [Put reference in chat]`. Hover View claim for the private reference and help; click it to view your claim. If items are still missing after reconnecting, choose Put reference in chat. It places the reference in an unsent chat draft; use Ctrl+A (Cmd+A on Mac), then Ctrl+C (Cmd+C on Mac), to copy it for staff. Nothing is sent automatically. Forage review and recovery reference buttons use the same behavior.
 
@@ -345,11 +351,11 @@ By default, camp turn-ins:
 - respect the daily Forage XP cap
 - take at most 192 items per submission and use a 30-second cooldown
 
-Camp Turn-Ins consume eligible stacks from the normal storage inventory, including the hotbar. Keep items you want to retain in a chest before confirming and read the **Accepted Turn-Ins** and preview cards. Click Accepted Turn-Ins for the full item catalogue; its entries reflect this server’s current eligibility rules. This is an explicit Camp Delivery, not automatic credit for placing items in camp storage.
+Camp Turn-Ins consume eligible stacks from the normal storage inventory, including the hotbar. Keep items you want to retain in a chest before confirming and read the **Accepted Turn-Ins** and preview cards. Click Accepted Turn-Ins, or use `/forage sources turnins [page]`, for the full item catalogue; its entries reflect this server’s current eligibility rules. The separate What Counts? page explains submission rules and Source Families opens the gathering overview. This is an explicit Camp Delivery, not automatic credit for placing items in camp storage.
 
 Use the [complete accepted Turn-In item list](forage-camps.md#complete-accepted-turn-in-item-list) for exact inventory materials and the [staff acceptance reference](forage-camp-technical.md#turn-in-acceptance-and-configuration) for configuration rules. This list is separate from the gathering catalogue: `GLOW_BERRIES` can be accepted as a crop item while its `CAVE_VINES` source is in the cave gathering family. Ordinary logs, calcite, saplings, sticks and poisonous potatoes are not accepted by default. `COCOA` is a crop block that Forage can gather; its plain `COCOA_BEANS` drop is accepted for Turn-Ins from build 739.
 
-Accepted Turn-Ins is clickable and paginated, using the same effective material/family resolver as submission, including the `COCOA_BEANS` crop drop alias. Build 739 accepts 71 item types with the default families. Browsing the list does not submit items or grant rewards. A listed material must still be a plain vanilla stack, and the actual submission rechecks the inventory and camp conditions.
+Accepted Turn-Ins is clickable and paginated, using the same effective material/family resolver as submission, including the `COCOA_BEANS` crop drop alias. The current shipped defaults contain 97 accepted item types; build 739 introduced the earlier 71-type list. Browsing the list does not submit items or grant rewards. A listed material must still be a plain vanilla stack, and the actual submission rechecks the inventory and camp conditions.
 
 Items do not need Forage gathering provenance. Bought or traded plain resources can qualify, without completing a gathering quest, leveling a tool or choosing a branch first. Local Introduction and active workstation access remain required. Turn-Ins award their reduced player XP/points rather than gathering actions, tool XP or gathering-quest progress.
 
@@ -420,7 +426,12 @@ See the [complete camp guide](forage-camps.md) for requirements, world rules, re
 | `/forage community` | player/console | Open seasonal Community Cleanup anywhere; console prints status. Donations and claims still require an active camp. |
 | `/forage tips` | anyone | Console prints hints; players are directed to the workstation tips page. |
 | `/forage tools` | player | Directs you to the workstation tool and source-family guide. |
-| `/forage sources [tool] [page]` | player | Opens the full read-only source catalogue anywhere; defaults to the held Forage tool or a picker. Trowel ID: `shovel`. |
+| `/forage sources [tool] [page]` | player | Opens the full read-only source catalogue anywhere; defaults to the held Forage tool or a picker. Trowel ID: `shovel`; `/forage source` is an alias. |
+| `/forage sources families [page]` | player | Browse source families and matching tools. |
+| `/forage sources family <id> [page]` | player | Open one gathering family. Bare IDs also work unless they match a tool ID. |
+| `/forage sources turnins [page]` | player | Exact ordinary Camp Turn-In inventory-item list. |
+| `/forage sources community [page]` | player | Exact current-season gathering list. |
+| `/forage sources donations [page]` | player | Exact current-season resource-donation list. |
 | `/forage camp [inspect\|list\|register\|revalidate\|unclaim [registration-UUID]]` | player | Inspects camps or opens explicit registration, repair validation, and release confirmations. |
 | `/forage compost` | player | Directs you to Camp Turn-ins at the workstation. |
 | `/forage dust` | player | Directs you to Forage Dust at the workstation. |

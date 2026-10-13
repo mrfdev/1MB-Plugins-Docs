@@ -1,12 +1,14 @@
 # Forage: player guide
 
-**Reviewed 13 October 2026 against suite build 749 on Paper 26.3 STABLE 178.** The beta includes seasonal Community Efforts, Leaf Litter and the Herbarium botanical journal; startup activation is verified. Player acceptance testing remains open. This guide describes the camp and gathering flow. Availability, prices, caps, and enabled sources depend on the server; live activation remains separate from beta testing.
+**Reviewed 13 October 2026 against suite build 752 on Paper 26.3 STABLE 180.** The beta includes seasonal Community Efforts, Leaf Litter and the Herbarium botanical journal; startup activation is verified. Player acceptance testing remains open. This guide describes the camp and gathering flow. Availability, prices, caps, and enabled sources depend on the server; live activation remains separate from beta testing.
 
 **New in build 739:** Accepted Turn-Ins opens the complete item guide, and plain cocoa beans are accepted. Build 741 added Leaf Litter; build 742 adds the Herbarium botanical expansion, bringing the default accepted inventory list to 97 types.
 
 **Placed-resource protection is active from build 739:** newly recorded placements follow the movement and growth rules below. Placements from before this update are not backfilled.
 
 **Participation progress is now tracked:** successfully claiming one daily and one weekly quest qualifies you for one lifetime participation reward. The actual map is still being prepared, so participation claiming remains disabled until it is ready.
+
+**Available from build 752:** Source Families, the additional `/forage sources` routes and quest details with **What Counts?** below are deployed on the maintained test servers. Existing gathering, submission and claim requirements remain in force; the checklist still needs actual player results.
 
 Forage is hands-on gathering with your own tools and camps. You keep one set of Forage XP, points, quests, limits, and reward history wherever you play. Your camps determine where you can submit finds and claim those benefits.
 
@@ -171,7 +173,9 @@ Forage cannot reconstruct placements made before this update, and staff WorldEdi
 
 ## Complete source catalogue
 
-This complete list is generated from the shipped defaults through the same source catalogue used by Forage. Staff can customize or disable sources; `/forage sources [tool]` shows that server's effective list.
+This complete list is generated from the shipped defaults through the same source catalogue used by Forage. Staff can customize or disable sources; `/forage sources [tool] [page]` shows that server's effective list. Browse families with `/forage sources families [page]`, then open one with `/forage sources family <id> [page]`, such as `flora` or `stone`. Each family shows its matching tools and complete gathering sources.
+
+Gathering sources, Camp Turn-In items and seasonal contributions are separate lists. Use `/forage sources turnins [page]` for ordinary accepted inventory items, `/forage sources community [page]` for the current season's gathering sources, and `/forage sources donations [page]` for its resource-donation items. A quest's **What Counts?** explains that quest's actual objective.
 
 **Every tier of a tool uses the same sources.** Tool level, tier, refinements and enchantments do not unlock extra entries in its list. They affect progression or tool behavior separately. The Trowel's command/configuration ID is `shovel`.
 
@@ -426,15 +430,23 @@ Tool ID: `shovel`. 11 source types.
 
 <!-- END GENERATED FORAGE SOURCES -->
 
+## Find what counts
+
+Use **Source Families** in the source picker, or `/forage sources families`, to browse families such as Wild Flora (`flora`) and Stone (`stone`). Select a family to see its matching tools and every supported block or creature, with Previous/Next for longer lists. A family describes gathering sources; it does not mean every item dropped by those sources can be submitted.
+
+`/forage sources flora` opens the flora family directly. Use `/forage sources family <id> [page]` when a family name also matches a tool ID; tool IDs keep their existing meaning. `/forage source` is a singular alias for `/forage sources`. With no argument, the command still uses your held Forage tool or opens the tool picker. Page numbers start at 1.
+
+For a specific activity, follow its **What Counts?** link. Quests explain their own objective; Camp Turn-Ins explain plain accepted inventory items; Community Cleanup keeps seasonal gathering, resource donations and treasure donations separate. Browsing these guides spends nothing, awards nothing and grants no workstation visit. The running server's lists take precedence over the published shipped defaults.
+
 ## Quests, branches, and treasures
 
 At an active workstation, open **Quests & Rewards** to inspect daily, weekly, monthly, and ready-to-claim quests. Valid rewarded gathering advances applicable quests automatically. Follow the actual objective shown on your card: visiting a biome without gathering there is insufficient, and a material quest needs that exact material. Turn-ins, dust use, and staff-granted XP do not count as gathering actions.
 
 Daily, Weekly and Monthly each have four top-row filters: **Show All**, **Incomplete** (unfinished and unclaimed), **Completed** (finished but still unclaimed), and **Claimed** (reward already received). Each category opens on Show All. The selected button is highlighted, counts show how many quests match, and changing filters returns to page 1. Quest order stays the same, with up to 28 per page and Previous/Next for larger lists. If no quests match, the page explains how to return to Show All. The separate **Ready to Claim** view still brings together unclaimed completed quests from all periods.
 
-Filters only change what you see. Camp and Local Introduction requirements still apply to claims, and no reward can be claimed twice for the same period. Clicking an incomplete or already-claimed quest keeps your filter and page; confirming a claim closes the menu as before.
+Filters only change what you see. Clicking a quest opens its details, with separate **What Counts?** and **Claim Reward** buttons. What Counts? distinguishes exact-family actions, exact-material breaks, any rewarded actions, gathering in distinct biomes and successfully delivered treasure finds. These are not item hand-ins. Back returns to the same category, filter and page. Camp and Local Introduction requirements still apply to Claim Reward, and no reward can be claimed twice for the same period; a confirmed claim closes the menu.
 
-Completing a quest makes its reward available. Return to your active workstation and deliberately claim it once, before its period ends. Daily quests follow the server's date, weekly quests use Monday-starting weeks, and monthly quests use calendar months. Your targets and rewards can differ from another tester's. If a claim is pending, keep its request reference and use `/forage review` instead of repeatedly trying to claim again.
+Completing a quest makes its reward available. Return to your active workstation, open the quest details and deliberately choose **Claim Reward** once, before its period ends. Daily quests follow the server's date, weekly quests use Monday-starting weeks, and monthly quests use calendar months. Your targets and rewards can differ from another tester's. If a claim is pending, keep its request reference and use `/forage review` instead of repeatedly trying to claim again.
 
 <a id="participation-reward-upcoming"></a>
 
@@ -454,7 +466,7 @@ Treasures are occasional extra finds, not guaranteed on a short trip. Keep inven
 
 After Local Introduction, **Camp Turn-Ins** offers reduced XP and points for eligible plain organic items. Its default limit is 192 items per submission with a 30-second cooldown. It scans your normal inventory, including the hotbar; read the preview and put any plain resources you want to keep into a chest first. Named, enchanted, custom, container-bearing, and Forage-marked items must remain untouched. Putting items into camp storage does not submit them.
 
-Click **Accepted Turn-Ins** to browse the complete accepted inventory-item list for the running server. `/forage sources` describes blocks to break and creatures to defeat with Forage tools, which is a different list.
+Click **Accepted Turn-Ins**, or use `/forage sources turnins [page]`, to browse the complete accepted inventory-item list for the running server. **What Counts?** explains submission rules, and **Source Families** opens the gathering overview. Gathering blocks and creatures are a different list from accepted inventory items; those links do not change which items can be submitted.
 
 Acceptance checks the item you submit, not how you obtained it. Eligible plain items bought from a shop or received from another player can qualify; no Forage-tool gathering provenance is required. Turn-Ins do not replace gathering quests, tool XP or Local Introduction gathering actions. Camp access, introduction completion, caps and cooldowns still apply.
 
@@ -476,7 +488,7 @@ Complete a fixed collection to qualify for its one-time CMI item kit. Preview an
 
 **Included in build 741; beta activation is verified.** Open **Community Cleanup** from Forage or use `/forage community` to see the current season. Your gathering, donated resources and donated treasures each have their own totals and daily cap. Meet all three personal minimums, and help the community meet all three goals. Bought items can support donations but cannot replace your own gathering.
 
-The default personal requirements are 300 gathering actions, 300 resource items and 2 genuine Forage treasures; daily caps are 75 actions, 75 resource items and 1 treasure. All included worlds share those limits. Spring uses General/Nether/OneBlock; summer Wild/End/SkyGrid; fall General/Cave/ChunkBlock; winter Wild/SkyBlock/Acid. Only contributions while physically in that season's pool count. Donations require an active camp there and use backpack slots 9–35, keeping your hotbar and offhand untouched. The seasonal item list is separate from ordinary Camp Turn-Ins.
+The default personal requirements are 300 gathering actions, 300 resource items and 2 genuine Forage treasures; daily caps are 75 actions, 75 resource items and 1 treasure. All included worlds share those limits. Spring uses General/Nether/OneBlock; summer Wild/End/SkyGrid; fall General/Cave/ChunkBlock; winter Wild/SkyBlock/Acid. Only contributions while physically in that season's pool count. Donations require an active camp there and use backpack slots 9–35, keeping your hotbar and offhand untouched. The seasonal item list is separate from ordinary Camp Turn-Ins. **What Counts?** opens the seasonal rules and links to its exact lists: `/forage sources community [page]` for gathering and `/forage sources donations [page]` for resource items.
 
 Seasons start at 00:00 Amsterdam time on March 1, June 1, September 1 and December 1. You cannot claim early. After the season ends, qualified participants claim manually at an active camp. An unclaimed reward becomes dormant six months later; pay five genuine treasures to claim that reward immediately. Completion history and streaks are based on qualifying seasons, not how quickly you claim.
 
@@ -489,6 +501,8 @@ Read the [complete seasonal guide](forage-community.md) for targets, source/item
 <!-- BEGIN GENERATED FORAGE TURN-INS -->
 
 This list is generated from source defaults through the same acceptance resolver used by Camp Turn-Ins. Server configuration can change it. There are **97 accepted item types** in these defaults; this does not mean every type can be obtained through ordinary survival harvesting.
+
+Open **Accepted Turn-Ins** or `/forage sources turnins [page]` for the running server's exact inventory-item list. **What Counts?** explains submission rules; **Source Families** explains gathering families and does not expand Turn-In acceptance. Seasonal resource donations have their own list at `/forage sources donations [page]`.
 
 These are inventory items, not a list of blocks that award gathering progress. Only plain vanilla stacks in your inventory, including the hotbar, qualify. Custom items and items outside those slots remain untouched. Camp readiness, the Local Introduction, cooldown and daily XP allowance still apply.
 
@@ -678,7 +692,12 @@ Forage camp ownership is not a general land claim. Follow the world's normal bui
 | `/forage stats` | Player progression and held-tool details. |
 | `/forage limits` | Current daily limits, costs, and reward ranges. |
 | `/forage recent [page]` | Your read-only Recent Activity history, anywhere and while gameplay is paused. |
-| `/forage sources [tool] [page]` | Complete read-only source list from anywhere; uses the held Forage tool or opens the picker. |
+| `/forage sources [tool] [page]` | Complete read-only gathering list; uses the held Forage tool or opens the picker. `/forage source` is an alias. |
+| `/forage sources families [page]` | Browse gathering families and their matching tools. |
+| `/forage sources family <id> [page]` | Open one family's gathering sources; a bare family ID also works unless it matches a tool ID. |
+| `/forage sources turnins [page]` | Exact ordinary Camp Turn-In inventory-item list. |
+| `/forage sources community [page]` | The current season's gathering sources. |
+| `/forage sources donations [page]` | The current season's resource-donation items. |
 | `/forage camp` | Inspect the nearby camp and its registration checklist. |
 | `/forage camp list` | Find your registrations and their IDs. |
 | `/forage camp register` | Open the deliberate registration action. |
