@@ -31,6 +31,10 @@ const PLAYER_GUIDE_OVERRIDES = {
     description: 'Learn Forage camps, tools, quests, repairs and dust, with a beta checklist and staff reference.',
     commandTableExamples: {
       '/forage sources family <id> [page]': '/forage sources family flora',
+      '/forage source <name>': '/forage source seagrass',
+      '/forage source block <name>': '/forage source block seagrass',
+      '/forage source creature <name>': '/forage source creature cow',
+      '/forage source search <name>': '/forage source search stone',
     },
     features: [
       'One Dappled Forest Initial Camp and two optional Secondary Camps, each with a Local Introduction.',
@@ -1782,6 +1786,7 @@ function codeBlocks(section) {
 
 function isLikelyPlayerCommand(command) {
   const value = command.toLowerCase();
+  if (value.trim() === '/forage inspect') return true;
   const parts = commandParts(command).map((part) => part.toLowerCase());
   const root = parts[0] ?? '';
   const sub = parts[1] ?? '';

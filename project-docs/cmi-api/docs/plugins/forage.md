@@ -2,7 +2,7 @@
 
 Forage is a player-facing nature progression plugin for `/forage`. It targets the reviewed Paper 26.3 line with Java 25-compatible bytecode and depends on CMI, CMILib, and `1MB-CMIAPI-Lib`.
 
-**Latest documented verification, 13 October 2026: suite build 752 on Paper 26.3 STABLE 180.** Connected-client acceptance remains separate from automated checks and startup verification. Live gameplay remains dormant until owner acceptance and activation. Development uses the maintained `servers/Paper-26.3/` instance on Java 27, with suite builds on JDK 25.0.4.1. The preserved 26.2 server is a rollback instance. Shipping the Forage JAR in a complete suite build does not activate it on live.
+**Latest documented verification, 13 October 2026: suite build 753 on Paper 26.3 STABLE 180.** Connected-client acceptance remains separate from automated checks and startup verification. Live gameplay remains dormant until owner acceptance and activation. Development uses the maintained `servers/Paper-26.3/` instance on Java 27, with suite builds on JDK 25.0.4.1. The preserved 26.2 server is a rollback instance. Shipping the Forage JAR in a complete suite build does not activate it on live.
 
 **Deployed in build 739:** Accepted Turn-Ins now opens the complete paginated inventory-item list, including cocoa beans. Build 741 adds Leaf Litter to flora gathering and ordinary Camp Turn-Ins. Build 742 adds the Herbarium botanical routes, bringing the defaults to 97 accepted item types; see the [complete accepted-item list](forage-camps.md#complete-accepted-turn-in-item-list).
 
@@ -154,6 +154,12 @@ Block routes award progress when you **break** a configured block with the match
 `/forage sources [tool] [page]` opens the full read-only catalogue from anywhere. With no tool argument it selects the held Forage tool, or shows the tool picker. Trowel uses the command/configuration ID `shovel`. Tools & Families entries open the corresponding paginated catalogue, whose documentation button sends a clickable public guide link. The hub's Tools & All Sources button and onboarding's What can I gather? entry also provide access before camp readiness. The list uses the running server's enabled tool/family definitions and effective source bindings; it grants no camp visit, purchase, XP or quest progress.
 
 **Source Families** in the source picker, or `/forage sources families [page]`, lists gathering families such as Wild Flora (`flora`) and Stone (`stone`). A family page shows its matching tools and complete paginated sources. `/forage sources flora [page]` is the short form; `/forage sources family <id> [page]` removes ambiguity when a family ID matches a tool ID. Existing tool IDs win that collision. `/forage source` is a singular alias, and page numbers start at 1.
+
+**Inspect and lookup (available from build 753):** `/forage inspect` prints a quick chat summary for the looked-at block within six blocks, with a clickable **Source details** link. Water is ignored while underwater plant outlines remain targetable; walls occlude the view and only loaded chunks are examined. Inspection is read-only and does not break blocks, consume allowances or create workstation access.
+
+`/forage source <name>` searches effective sources by normalized name or ID, preferring exact matches before partial matches. Spaces, underscores, hyphens and `minecraft:` prefixes are supported. Multiple matches open a paginated chooser. Existing tool, family and control names retain precedence; `/forage source block <name>`, `/forage source creature <name>` and `/forage source search <name>` explicitly disambiguate source searches. `/forage source seagrass` is a direct example. Details show the current family, supported tools and rules, not a guarantee that an action will earn rewards.
+
+Wrong-tool feedback names the source's actual supported tool or tools and links to **Source details**. The existing play-feedback throttle and protection/provenance checks remain; an explanatory link does not permit an otherwise blocked gather or grant progress.
 
 Contextual **What Counts?** pages keep eligibility separate: a quest explains its actual objective; `/forage sources turnins [page]` lists ordinary accepted inventory items; `/forage sources community [page]` and `/forage sources donations [page]` list the current season's gathering sources and resource-donation items. A family or tool source list is not an item hand-in list. Reading any guide does not alter reward progress or grant submission/claim authority.
 
@@ -427,6 +433,11 @@ See the [complete camp guide](forage-camps.md) for requirements, world rules, re
 | `/forage tips` | anyone | Console prints hints; players are directed to the workstation tips page. |
 | `/forage tools` | player | Directs you to the workstation tool and source-family guide. |
 | `/forage sources [tool] [page]` | player | Opens the full read-only source catalogue anywhere; defaults to the held Forage tool or a picker. Trowel ID: `shovel`; `/forage source` is an alias. |
+| `/forage inspect` | player | Quick chat summary of the looked-at block within six blocks and clickable Source details. |
+| `/forage source <name>` | player | Exact-first name/ID lookup, then partial matches with a paginated chooser. |
+| `/forage source block <name>` | player | Explicit block-source lookup. |
+| `/forage source creature <name>` | player | Explicit creature-source lookup. |
+| `/forage source search <name>` | player | Explicit source lookup without tool/family/control-name precedence. |
 | `/forage sources families [page]` | player | Browse source families and matching tools. |
 | `/forage sources family <id> [page]` | player | Open one gathering family. Bare IDs also work unless they match a tool ID. |
 | `/forage sources turnins [page]` | player | Exact ordinary Camp Turn-In inventory-item list. |

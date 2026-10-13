@@ -3,7 +3,7 @@ title: "Forage Guide"
 description: "Learn Forage camps, tools, quests, repairs and dust, with a beta checklist and staff reference."
 ---
 
-**Reviewed 13 October 2026 against suite build 752 on Paper 26.3 STABLE 180.** The beta includes seasonal Community Efforts, Leaf Litter and the Herbarium botanical journal; startup activation is verified. Player acceptance testing remains open. This guide describes the camp and gathering flow. Availability, prices, caps, and enabled sources depend on the server; live activation remains separate from beta testing.
+**Reviewed 13 October 2026 against suite build 753 on Paper 26.3 STABLE 180.** The beta includes seasonal Community Efforts, Leaf Litter and the Herbarium botanical journal; startup activation is verified. Player acceptance testing remains open. This guide describes the camp and gathering flow. Availability, prices, caps, and enabled sources depend on the server; live activation remains separate from beta testing.
 
 **New in build 739:** Accepted Turn-Ins opens the complete item guide, and plain cocoa beans are accepted. Build 741 added Leaf Litter; build 742 adds the Herbarium botanical expansion, bringing the default accepted inventory list to 97 types.
 
@@ -148,7 +148,7 @@ Open **Tool Shop** at your complete registered camp to buy your first tool. Star
 
 For block routes, **break** a configured source with the matching tool in your main hand. The Brush route rewards block breaking, not completion of vanilla archaeology brushing. For sword/mace routes, make a matching melee hit, receive the kill credit within ten seconds, and hold the same Forage tool type when the mob dies. Projectile-only kills and picking up drops do not count. Every tier of a tool uses the same source list; an upgrade does not unlock extra blocks or creatures. Poplar saplings and crafted poplar building blocks are not gathering sources.
 
-The [complete source catalogue](#complete-source-catalogue) below lists every supported source from the shipped defaults. Use `/forage sources` from anywhere to inspect the held Forage tool, or choose a tool if none is held; `/forage sources <tool>` opens a specific tool. The Trowel uses the ID `shovel`. Click a tool in Tools & Families for its full paginated list, or use the catalogue's clickable public documentation link. This is read-only browsing: it does not create workstation access or grant gathering rewards. The in-game list follows the server's configuration, which may differ from the published defaults. Each source card separates support from current reward pauses and can be clicked to refresh that snapshot. Gathering still rechecks its rules when you act. The hub's **Tools & All Sources** button and onboarding's **What can I gather?** entry also open the catalogue before your camp is ready. Newly issued or normally updated tool lore includes a source hint; existing tools acquire it when Forage next refreshes their lore, not merely when you open the guide.
+The [complete source catalogue](#complete-source-catalogue) below lists every supported source from the shipped defaults. Use `/forage sources` from anywhere to inspect the held Forage tool, or choose a tool if none is held; `/forage sources <tool>` opens a specific tool. The Trowel uses the ID `shovel`. Click a tool in Tools & Families for its full paginated list, or use the catalogue's clickable public documentation link. This is read-only browsing: it does not create workstation access or grant gathering rewards. The in-game list follows the server's configuration, which may differ from the published defaults. Each source card separates support from current reward pauses. Clicking a source card opens its details; Back reopens the list with a fresh snapshot. Gathering still rechecks its rules when you act. The hub's **Tools & All Sources** button and onboarding's **What can I gather?** entry also open the catalogue before your camp is ready. Newly issued or normally updated tool lore includes a source hint; existing tools acquire it when Forage next refreshes their lore, not merely when you open the guide.
 
 Player Forage level, a tool's level, and its tier are different. The four later tool types unlock when you carry a level-2 Forage tool; a tool left in a chest cannot satisfy the shop check. Each rewarded action can advance player XP, points, the held tool, the matching skill branch, and applicable quests.
 
@@ -177,6 +177,8 @@ Forage cannot reconstruct placements made before this update, and staff WorldEdi
 ## Complete source catalogue
 
 This complete list is generated from the shipped defaults through the same source catalogue used by Forage. Staff can customize or disable sources; `/forage sources [tool] [page]` shows that server's effective list. Browse families with `/forage sources families [page]`, then open one with `/forage sources family <id> [page]`, such as `flora` or `stone`. Each family shows its matching tools and complete gathering sources.
+
+Look at a nearby block and use `/forage inspect` for a quick summary and a clickable **Source details** link, or search by name with `/forage source seagrass`. Exact matches take precedence over partial matches; multiple matches open a paginated chooser. Existing tool, family and control names keep their command meaning; use `/forage source block <name>`, `/forage source creature <name>` or `/forage source search <name>` to disambiguate.
 
 Gathering sources, Camp Turn-In items and seasonal contributions are separate lists. Use `/forage sources turnins [page]` for ordinary accepted inventory items, `/forage sources community [page]` for the current season's gathering sources, and `/forage sources donations [page]` for its resource-donation items. A quest's **What Counts?** explains that quest's actual objective.
 
@@ -439,6 +441,12 @@ Use **Source Families** in the source picker, or `/forage sources families`, to 
 
 `/forage sources flora` opens the flora family directly. Use `/forage sources family <id> [page]` when a family name also matches a tool ID; tool IDs keep their existing meaning. `/forage source` is a singular alias for `/forage sources`. With no argument, the command still uses your held Forage tool or opens the tool picker. Page numbers start at 1.
 
+**Inspect and lookup (available from build 753):** look at a block within six blocks and use `/forage inspect`. Chat shows a quick summary with a clickable **Source details** link. Water does not block the view, so you can inspect underwater plants; walls still block it. The check uses loaded chunks only. It does not break the block or earn progress.
+
+If you know a source's name, use `/forage source seagrass`. Lookup checks exact matches before partial matches and opens a paginated chooser when several sources match. Names can use spaces, underscores or hyphens, and a `minecraft:` prefix is accepted. Existing tool, family and control names keep their meaning: use `/forage source block <name>`, `/forage source creature <name>` or `/forage source search <name>` when you need to disambiguate a source name.
+
+Source details shows the current family, matching tools and gathering rules. A wrong-tool warning names the supported tool or tools and offers the same **Source details** link. Those details explain support; caps, world/protection rules, placed-block tracking and tool condition can still stop rewards. Neither inspection nor following a link grants a camp visit.
+
 For a specific activity, follow its **What Counts?** link. Quests explain their own objective; Camp Turn-Ins explain plain accepted inventory items; Community Cleanup keeps seasonal gathering, resource donations and treasure donations separate. Browsing these guides spends nothing, awards nothing and grants no workstation visit. The running server's lists take precedence over the published shipped defaults.
 
 ## Quests, branches, and treasures
@@ -696,6 +704,11 @@ Forage camp ownership is not a general land claim. Follow the world's normal bui
 | `/forage limits` | Current daily limits, costs, and reward ranges. |
 | `/forage recent [page]` | Your read-only Recent Activity history, anywhere and while gameplay is paused. |
 | `/forage sources [tool] [page]` | Complete read-only gathering list; uses the held Forage tool or opens the picker. `/forage source` is an alias. |
+| `/forage inspect` | Summarize the looked-at block within six blocks, with clickable Source details. |
+| `/forage source <name>` | Find an exact or partial source name; choose from paginated matches when needed. |
+| `/forage source block <name>` | Search block sources explicitly. |
+| `/forage source creature <name>` | Search creature sources explicitly. |
+| `/forage source search <name>` | Search sources even when the name matches a tool, family or control. |
 | `/forage sources families [page]` | Browse gathering families and their matching tools. |
 | `/forage sources family <id> [page]` | Open one family's gathering sources; a bare family ID also works unless it matches a tool ID. |
 | `/forage sources turnins [page]` | Exact ordinary Camp Turn-In inventory-item list. |
@@ -716,7 +729,7 @@ Forage camp ownership is not a general land claim. Follow the world's normal bui
 
 **Why are rewards locked at 30/30?** Open Local Introduction and submit the eight eligible plain items explicitly. Camp Turn-Ins is a different activity and cannot finish that step for you.
 
-**Why does an ordinary tool, wrong tool, or crafted block give no progress?** Forage needs a genuine curated tool and one of its configured sources. The tool may still perform its normal Minecraft action without a Forage reward. Check the complete source catalogue or `/forage sources` and `/forage limits`.
+**Why does an ordinary tool, wrong tool, or crafted block give no progress?** Forage needs a genuine curated tool and one of its configured sources. The tool may still perform its normal Minecraft action without a Forage reward. Check the complete source catalogue or `/forage sources` and `/forage limits`. `/forage inspect`, `/forage source <name>` and the wrong-tool warning’s Source details link identify the matching tools for that source.
 
 **Why does my Secondary Camp stop working after I change Wild?** Every workstation depends on a valid Initial Camp. Repair and revalidate that registration, or replace it with another qualifying Initial Camp. Your global points and claimed-reward history remain saved.
 
