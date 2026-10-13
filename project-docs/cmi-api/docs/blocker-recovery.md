@@ -30,7 +30,7 @@ Forage and Passport use the shared, read-only commands:
 - `/forage review page <number>` and `/passport review page <number>`: further pages.
 - `/forage review <reference>` and `/passport review <reference>`: an owned saved request, including closed requests.
 
-AutoSell retains `/autosell review [reference]` and its detailed copyable support report. Forage and Passport provide **Copy reference**. Copying puts text on the player's clipboard; it sends nothing to staff automatically. The UUID remains visible when copying is unavailable.
+AutoSell retains `/autosell review [reference]` and its detailed copyable support report. Forage provides **Put reference in chat**, which opens an unsent chat draft for manual copying; Passport provides **Copy reference**, which copies directly to the clipboard. Copying puts text on the player's clipboard; it sends nothing to staff automatically. The UUID remains visible when copying is unavailable.
 
 These views do not expose another player's records, raw stored commands, internal errors or transaction history. They remain available while a loaded feature's gameplay is dormant and do not require its gameplay permission, so losing access does not prevent a player from checking their own prior request. Staff inspection and reconciliation remain behind the existing admin permissions.
 
