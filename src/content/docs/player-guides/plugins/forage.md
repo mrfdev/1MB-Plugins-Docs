@@ -125,7 +125,7 @@ Sneak-right-click your registered composter to open the camp workstation. Normal
 
 Rewards are claimed **at your own camp**, in its world. A command, old menu, teleport, or another player's workstation cannot stand in for being there. Forage rechecks the camp and your Initial Camp when you act, including when you confirm a purchase or reward.
 
-Stay within **six blocks** of the composter while using the menu. A workstation visit expires after **five minutes**; closing the menu, teleporting, dying, or leaving also ends that visit. If an action tells you to use the workstation again, close the old menu and sneak-right-click your composter to start a fresh visit.
+Stay within **six blocks** of the composter. A workstation visit expires after **five minutes**. Closing a menu keeps an existing visit while you remain nearby and eligible; it does not restart the timer. Teleporting, dying, disconnecting or leaving the range ends the visit. Reopen a fresh Forage menu to continue; old menu clicks no longer apply. If an action tells you to use the workstation again, close the old menu and sneak-right-click your composter to start a fresh visit.
 
 Your current inventory supplies any submitted items and receives any item reward. Forage does not move inventory between game modes. If General and Wild already share an inventory, finds from General can be brought to Wild and submitted there. Finds in a separate SkyBlock inventory can be submitted at your SkyBlock camp toward the same global progress.
 
