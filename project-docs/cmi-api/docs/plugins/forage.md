@@ -2,7 +2,7 @@
 
 Forage is a player-facing nature progression plugin for `/forage`. It targets the reviewed Paper 26.3 line with Java 25-compatible bytecode and depends on CMI, CMILib, and `1MB-CMIAPI-Lib`.
 
-**Latest documented verification, 13 October 2026: suite build 755 on Paper 26.3 STABLE 180.** Connected-client acceptance remains separate from automated checks and startup verification. Live gameplay remains dormant until owner acceptance and activation. Development uses the maintained `servers/Paper-26.3/` instance on Java 27, with suite builds on JDK 25.0.4.1. The preserved 26.2 server is a rollback instance. Shipping the Forage JAR in a complete suite build does not activate it on live.
+**Latest documented verification, 13 October 2026: suite build 756 on Paper 26.3 STABLE 180.** Connected-client acceptance remains separate from automated checks and startup verification. Live gameplay remains dormant until owner acceptance and activation. Development uses the maintained `servers/Paper-26.3/` instance on Java 27, with suite builds on JDK 25.0.4.1. The preserved 26.2 server is a rollback instance. Shipping the Forage JAR in a complete suite build does not activate it on live.
 
 **Deployed in build 739:** Accepted Turn-Ins now opens the complete paginated inventory-item list, including cocoa beans. Build 741 adds Leaf Litter to flora gathering and ordinary Camp Turn-Ins. Build 742 adds the Herbarium botanical routes, bringing the defaults to 97 accepted item types; see the [complete accepted-item list](forage-camps.md#complete-accepted-turn-in-item-list).
 
@@ -119,7 +119,7 @@ Use your camp’s Upgrade Tool or Repair & Merge page. Review the money, point, 
 
 ## V1 Tools
 
-Read the [Tool Shop guide](forage-camps.md#tool-shop-guide) for all eight tool types, exact-source examples, the carried level-2 unlock, player level versus tool tier, and supported care. **Next build:** the shop's top-left book closes the inventory and posts this public link in chat; the player chooses whether to open it. Browsing grants no purchase or workstation authority.
+Read the [Tool Shop guide](forage-camps.md#tool-shop-guide) for all eight tool types, exact-source examples, the carried level-2 unlock, player level versus tool tier, and supported care. **From build 756:** the shop's top-left book closes the inventory and posts this public link in chat; the player chooses whether to open it. Browsing grants no purchase or workstation authority.
 
 Default tools are:
 

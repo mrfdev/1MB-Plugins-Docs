@@ -1,6 +1,6 @@
 # Forage: player guide
 
-**Reviewed 13 October 2026 against suite build 755 on Paper 26.3 STABLE 180.** The beta includes seasonal Community Efforts, Leaf Litter and the Herbarium botanical journal; startup activation is verified. Player acceptance testing remains open. This guide describes the camp and gathering flow. Availability, prices, caps, and enabled sources depend on the server; live activation remains separate from beta testing.
+**Reviewed 13 October 2026 against suite build 756 on Paper 26.3 STABLE 180.** The beta includes seasonal Community Efforts, Leaf Litter and the Herbarium botanical journal; startup activation is verified. Player acceptance testing remains open. This guide describes the camp and gathering flow. Availability, prices, caps, and enabled sources depend on the server; live activation remains separate from beta testing.
 
 **New in build 739:** Accepted Turn-Ins opens the complete item guide, and plain cocoa beans are accepted. Build 741 added Leaf Litter; build 742 adds the Herbarium botanical expansion, bringing the default accepted inventory list to 97 types.
 
@@ -135,7 +135,7 @@ Your global points can be spent at any of your fully active camps. A camp's Loca
 
 Open **Tool Shop** at your complete registered camp to buy a genuine Forage tool. Sneak-right-click your own composter first. Starter shopping works before Local Introduction is finished; the four later types require that introduction to be complete. Check the displayed price and keep room in your inventory. Ordinary Minecraft tools and renamed copies do not earn Forage progress.
 
-**Next build adds a guide book:** the book in the Tool Shop's top-left corner closes the inventory and posts a clickable link to this section in chat. Click that link to use Minecraft's normal web-link confirmation flow. It does not open a browser automatically, buy a tool or unlock anything. This guide can already be read directly.
+**Tool Shop guide book (from build 756):** the book in the Tool Shop's top-left corner closes the inventory and posts a clickable link to this section in chat. Click that link to use Minecraft's normal web-link confirmation flow. It does not open a browser automatically, buy a tool or unlock anything. You can also read this guide directly.
 
 ### Choose among the eight tools
 
