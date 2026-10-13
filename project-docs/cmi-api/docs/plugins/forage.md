@@ -2,7 +2,7 @@
 
 Forage is a player-facing nature progression plugin for `/forage`. It targets the reviewed Paper 26.3 line with Java 25-compatible bytecode and depends on CMI, CMILib, and `1MB-CMIAPI-Lib`.
 
-**Latest documented verification, 13 October 2026: suite build 756 on Paper 26.3 STABLE 180.** Connected-client acceptance remains separate from automated checks and startup verification. Live gameplay remains dormant until owner acceptance and activation. Development uses the maintained `servers/Paper-26.3/` instance on Java 27, with suite builds on JDK 25.0.4.1. The preserved 26.2 server is a rollback instance. Shipping the Forage JAR in a complete suite build does not activate it on live.
+**Latest documented verification, 13 October 2026: suite build 757 on Paper 26.3 STABLE 180.** Connected-client acceptance remains separate from automated checks and startup verification. Live gameplay remains dormant until owner acceptance and activation. Development uses the maintained `servers/Paper-26.3/` instance on Java 27, with suite builds on JDK 25.0.4.1. The preserved 26.2 server is a rollback instance. Shipping the Forage JAR in a complete suite build does not activate it on live.
 
 **Deployed in build 739:** Accepted Turn-Ins now opens the complete paginated inventory-item list, including cocoa beans. Build 741 adds Leaf Litter to flora gathering and ordinary Camp Turn-Ins. Build 742 adds the Herbarium botanical routes, bringing the defaults to 97 accepted item types; see the [complete accepted-item list](forage-camps.md#complete-accepted-turn-in-item-list).
 
@@ -63,7 +63,7 @@ Admin camp list/inspection and safe release remain recovery tools. Legacy claims
 
 Forage now separates player progression XP from tool soul XP. Player XP and Forage Points are tuned for account progression, while tool XP is tuned for tool upgrades and soul growth. This lets staff slow down live upgrades without making repairs or basic participation feel punishing.
 
-Forage only awards progress when:
+Forage awards ordinary gathering progression when:
 
 - the plugin is enabled
 - the player is in an allowed world and is not in Creative or Spectator mode
@@ -75,7 +75,7 @@ Forage only awards progress when:
 - the chunk/source family is not exhausted
 - the WorldGuard global-only check passes when WorldGuard is installed and enabled
 
-The global daily cap limits one player’s rewarded gathering across families for the day. The source-family daily caps are separate: if shears/leaves are capped, a player can switch to a shovel, axe, sickle, pickaxe, brush, sword, or mace route and keep playing until those families also cap. This encourages variety without making one exhausted route feel like the whole feature is over for the day.
+The global daily cap limits one player’s rewarded gathering across families for the day. Source-family daily caps are separate: after one family caps, another uncapped family can still earn rewards until the global cap is reached. The family belongs to the source, not the tool: Cave/Pickaxe and Cave/Shears share Cave usage. Switching tools alone never creates a fresh family allowance.
 
 Following the 11 October 2026 configuration reload, the beta server’s daily allowances under the `normal` preset are **3,125 player XP or 1,500 actions globally**, and **875 XP or 344 actions for every source family**, whichever applicable limit is reached first. This raises the previous 2,500/1,200 global and 700/275 family thresholds by 25%, rounding the family action limit up to a whole action. The shipped defaults use these values; existing server configurations retain their saved thresholds unless staff change them. Raising the caps preserves today's recorded usage, XP, points and quest progress rather than resetting them. Check `/forage limits` for the effective personal limits.
 
@@ -83,7 +83,7 @@ Local exhaustion remains 75 actions in a chunk/source family followed by 30 minu
 
 When a chunk/source family becomes exhausted, Forage sends a short immediate warning so players do not keep wasting actions in the same area. Recent Activity history also retains that warning with its reason and next steps, separately from chat batching.
 
-When daily caps or chunk exhaustion pause reward progress, the curated tool still keeps its own use count and durability state updated. XP, points, branch progress, and quests pause, but the tool does not pretend it was never used.
+When daily caps or chunk exhaustion pause ordinary reward progress, the curated tool still keeps its own use count and durability state updated. The build-757 [daily-quest exception](forage-camps.md#daily-quests-after-caps) allows only specified unfinished daily objectives after global/family caps; it does not bypass chunk exhaustion or restore ordinary rewards.
 
 ## Recent Activity
 
@@ -282,7 +282,9 @@ Each branch can configure display name, description, icon, focused source famili
 
 ## Quests and Treasures
 
-Open Quests & Rewards at your active workstation and inspect the daily, weekly, monthly, and ready-to-claim pages. Quests count valid rewarded Forage actions automatically; no separate quest-accept command is required. The shipped definitions contain ten daily, eight weekly, and five monthly quests. Targets and rewards vary by player and period, so use your own quest card rather than another tester’s numbers.
+Open Quests & Rewards at your active workstation and inspect the daily, weekly, monthly, and ready-to-claim pages. Quests count eligible Forage actions automatically; no separate quest-accept command is required. The shipped definitions contain ten daily, eight weekly, and five monthly quests. Targets and rewards vary by player and period, so use your own quest card rather than another tester’s numbers.
+
+**Active from build 757:** `quests.daily-cap-progress.enabled` defaults to `true`. After a global or source-family daily XP/action cap, otherwise-valid actions may advance only unfinished, unclaimed current daily `actions`, `family`, `material` and `biomes` objectives, stopping at their targets. They grant no regular XP/tool XP/Points, treasures, branch/community/Herbarium/introduction progress or lifetime rewarded-action credit. Treasure, weekly and monthly objectives are excluded. All other gathering checks and chunk limits apply; spend chunk allowance only for an action that actually adds daily quest credit. Daily reset remains server-local midnight, and full once-per-period rewards still require the normal active-camp claim. Turn-Ins and the global gathering XP cap are unchanged. See the [player explanation](forage-camps.md#daily-quests-after-caps).
 
 **Quest status filters.** Each Daily, Weekly and Monthly category has four buttons across the top:
 
@@ -299,11 +301,13 @@ Filtering changes only the display; it grants no progress, rewards or workstatio
 
 | Objective | What counts |
 | --- | --- |
-| Actions | Any rewarded Forage gathering action |
-| Family | Rewarded actions in that exact family, such as leaves for Canopy Sampler |
-| Material | Rewarded breaks of that exact block, such as oak leaves for Oak Leaf Run |
-| Biomes | A rewarded gathering action in each distinct biome; travelling through it alone does not count |
+| Actions | Any eligible Forage gathering action |
+| Family | Eligible actions in that exact family, such as leaves for Canopy Sampler |
+| Material | Eligible breaks of that exact block, such as oak leaves for Oak Leaf Run |
+| Biomes | An eligible gathering action in each distinct biome; travelling through it alone does not count |
 | Treasure | A successfully delivered random Forage treasure find |
+
+Eligibility normally requires rewarded gathering. The build-757 cap exception above additionally permits daily-only credit for its four supported objective types; it does not extend to weekly, monthly or treasure objectives.
 
 Some quest descriptions use broad nature themes. Their configured family is decisive: Woodland Work counts **logs**, Forest Patrol counts **leaves**, Herbal Calendar counts **flora**, and Cave Cycle counts **cave**. Camp turn-ins, dust use, and admin XP/level changes do not substitute for gathering objectives.
 
@@ -566,6 +570,7 @@ Important sections:
 - `progression.family-daily.*`: per-source-family daily XP/action caps, so one capped tool route does not stop all Forage play for the day
 - `messages.batch.*`: delayed batched chat summaries; Recent Activity history records immediately even with batching disabled. `recent-retain-limit` defaults to 25 (clamped 1–100), and `recent-entries-per-page` defaults to 8 (clamped 3–20).
 - `quests.enabled`, `quests.claims.*`, `quests.progress-message-every`, `quests.allowed-command-prefixes`: quest runtime controls in `config.yml`
+- From build 757: `quests.daily-cap-progress.enabled` defaults to `true`; permits only qualifying unfinished daily quest credit after global/family daily caps. Disabling it restores the ordinary cap stop without changing saved progress.
 - `quests.yml`: daily, weekly, and monthly task definitions, min/max randomized targets, min/max point/XP/money rewards, optional `reward-kit` item templates, and legacy reward commands (arbitrary commands remain blocked)
 - `branches.*`: branch ids, display names, icons, focused source families, level gates, switch cooldown/costs, and small branch bonuses
 - `tools.*`: tool ids, materials, prices, unlock gates, family coverage, tool soul settings, modification guards, tier upgrades, diamond refinement, controlled Unbreaking/Efficiency improvements, and Repair & Merge costs/caps

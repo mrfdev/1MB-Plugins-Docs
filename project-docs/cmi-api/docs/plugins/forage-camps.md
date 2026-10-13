@@ -1,6 +1,6 @@
 # Forage: player guide
 
-**Reviewed 13 October 2026 against suite build 756 on Paper 26.3 STABLE 180.** The beta includes seasonal Community Efforts, Leaf Litter and the Herbarium botanical journal; startup activation is verified. Player acceptance testing remains open. This guide describes the camp and gathering flow. Availability, prices, caps, and enabled sources depend on the server; live activation remains separate from beta testing.
+**Reviewed 13 October 2026 against suite build 757 on Paper 26.3 STABLE 180.** The beta includes seasonal Community Efforts, Leaf Litter and the Herbarium botanical journal; startup activation is verified. Player acceptance testing remains open. This guide describes the camp and gathering flow. Availability, prices, caps, and enabled sources depend on the server; live activation remains separate from beta testing.
 
 **New in build 739:** Accepted Turn-Ins opens the complete item guide, and plain cocoa beans are accepted. Build 741 added Leaf Litter; build 742 adds the Herbarium botanical expansion, bringing the default accepted inventory list to 97 types.
 
@@ -511,11 +511,25 @@ Look up the block you gather, rather than only its icon or drop: a Glow Berries 
 
 ## Quests, branches, and treasures
 
-At an active workstation, open **Quests & Rewards** to inspect daily, weekly, monthly, and ready-to-claim quests. Valid rewarded gathering advances applicable quests automatically. Follow the actual objective shown on your card: visiting a biome without gathering there is insufficient, and a material quest needs that exact material. Turn-ins, dust use, and staff-granted XP do not count as gathering actions.
+At an active workstation, open **Quests & Rewards** to inspect daily, weekly, monthly, and ready-to-claim quests. Eligible gathering advances applicable quests automatically; the daily-only cap exception below is separate from ordinary gathering rewards. Follow the actual objective shown on your card: visiting a biome without gathering there is insufficient, and a material quest needs that exact material. Turn-ins, dust use, and staff-granted XP do not count as gathering actions.
 
 Daily, Weekly and Monthly each have four top-row filters: **Show All**, **Incomplete** (unfinished and unclaimed), **Completed** (finished but still unclaimed), and **Claimed** (reward already received). Each category opens on Show All. The selected button is highlighted, counts show how many quests match, and changing filters returns to page 1. Quest order stays the same, with up to 28 per page and Previous/Next for larger lists. If no quests match, the page explains how to return to Show All. The separate **Ready to Claim** view still brings together unclaimed completed quests from all periods.
 
-Filters only change what you see. Clicking a quest opens its details, with separate **What Counts?** and **Claim Reward** buttons. What Counts? distinguishes exact-family actions, exact-material breaks, any rewarded actions, gathering in distinct biomes and successfully delivered treasure finds. These are not item hand-ins. Back returns to the same category, filter and page. Camp and Local Introduction requirements still apply to Claim Reward, and no reward can be claimed twice for the same period; a confirmed claim closes the menu.
+Filters only change what you see. Clicking a quest opens its details, with separate **What Counts?** and **Claim Reward** buttons. What Counts? distinguishes exact-family actions, exact-material breaks, any eligible gathering actions, gathering in distinct biomes and successfully delivered treasure finds. These are not item hand-ins. Back returns to the same category, filter and page. Camp and Local Introduction requirements still apply to Claim Reward, and no reward can be claimed twice for the same period; a confirmed claim closes the menu.
+
+<a id="daily-quests-after-caps"></a>
+
+### Finish daily quests after gathering caps (from build 757)
+
+**Active from build 757.** With the new default-enabled option, reaching a personal global or source-family daily XP/action cap can still let otherwise valid gathering finish an **unfinished, unclaimed current daily quest**. This covers action counts, an exact family, an exact block material, or a new required biome. Biome quests still need a qualifying gathering action there; travel alone does not count. Credit stops at the quest's target.
+
+This gives **daily quest progress only**. It earns no ongoing player XP, tool XP, Points, treasure rolls, branch progress, Community Effort gathering, Herbarium discoveries, Local Introduction actions or lifetime rewarded-action credit for Mending. Weekly and monthly quests stay paused, and completed or claimed daily quests gain nothing more. Ordinary permitted Minecraft drops and tool wear continue.
+
+A family limit belongs to the source's **family**, not its tool: switching from Cave/Pickaxe to Cave/Shears does not create a new Cave allowance. Another uncapped family can still earn normal rewards until your global limit is reached. Neither changing worlds nor this exception resets a global cap. **Chunk exhaustion still blocks credit**; use a fresh eligible chunk or wait for recovery. Remaining chunk allowance is used only when the capped action actually adds eligible daily quest credit. Wrong tools, placed resources, denied worlds/protected actions, unusable tools and other normal gathering blockers still refuse progress.
+
+**Treasure quests are the exception:** they need a genuine successful Forage treasure delivery. Capped actions roll no treasures, and owning, buying, trading or turning in an old treasure does not advance a find-treasure quest. Camp Turn-Ins remain a separate activity and do not substitute for these gathering objectives.
+
+Finish and claim before **midnight in the server's timezone**; daily quests then reset to a new day. Claim normally at your own active camp after Local Introduction. A completed daily quest keeps its full configured once-per-period reward; this exception does not automatically claim it or bypass payment/delivery checks. Quest-claim XP is separate from the unchanged daily gathering XP cap.
 
 Completing a quest makes its reward available. Return to your active workstation, open the quest details and deliberately choose **Claim Reward** once, before its period ends. Daily quests follow the server's date, weekly quests use Monday-starting weeks, and monthly quests use calendar months. Your targets and rewards can differ from another tester's. If a claim is pending, keep its request reference and use `/forage review` instead of repeatedly trying to claim again.
 
