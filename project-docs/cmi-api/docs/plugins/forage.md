@@ -2,7 +2,7 @@
 
 Forage is a player-facing nature progression plugin for `/forage`. It targets the reviewed Paper 26.3 line with Java 25-compatible bytecode and depends on CMI, CMILib, and `1MB-CMIAPI-Lib`.
 
-**Maintained beta baseline, 12 October 2026: suite build 742 on Paper 26.3 STABLE 175.** Connected-client acceptance remains separate from automated checks and startup verification. Live gameplay remains dormant until owner acceptance and activation. Development uses the maintained `servers/Paper-26.3/` instance on Java 27, with suite builds on JDK 25.0.4.1. The preserved 26.2 server is a rollback instance. Shipping the Forage JAR in a complete suite build does not activate it on live.
+**Latest documented verification, 13 October 2026: suite build 746 on Paper 26.3 STABLE 178.** Connected-client acceptance remains separate from automated checks and startup verification. Live gameplay remains dormant until owner acceptance and activation. Development uses the maintained `servers/Paper-26.3/` instance on Java 27, with suite builds on JDK 25.0.4.1. The preserved 26.2 server is a rollback instance. Shipping the Forage JAR in a complete suite build does not activate it on live.
 
 **Deployed in build 739:** Accepted Turn-Ins now opens the complete paginated inventory-item list, including cocoa beans. Build 741 adds Leaf Litter to flora gathering and ordinary Camp Turn-Ins. Build 742 adds the Herbarium botanical routes, bringing the defaults to 97 accepted item types; see the [complete accepted-item list](forage-camps.md#complete-accepted-turn-in-item-list).
 
@@ -175,9 +175,9 @@ Sword and mace Forage progress is entity-based. The sword listens to configured 
 
 Tools are PDC-marked with schema, tool id, tier, tool XP, tool level, and use count. Lore includes a fake Foraging level, tool soul progress bar, short tool personality line, supported families, and a warning that the tool is curated.
 
-Forage tools can only be upgraded, refined, enchanted, or repaired through their own camp menus. The supported pages are **Upgrade Tool** and **Repair & Merge**. Players can buy replacement tools and discard unwanted ones; ordinary storage, inventory rearrangement, dropping, and disposal remain available. Tools still work as ordinary Minecraft tools on other sources without earning Forage rewards.
+Forage tool upgrades, refinement and enchantment application belong to their own camp menus. Repair & Merge is the existing repair route; the optional [Mending Upgrade](#mending-upgrade) below is included from build 745. The supported pages are **Upgrade Tool** and **Repair & Merge**. Players can buy replacement tools and discard unwanted ones; ordinary storage, inventory rearrangement, dropping, and disposal remain available. Tools still work as ordinary Minecraft tools on other sources without earning Forage rewards.
 
-Protection covers anvils (including virtual anvils), enchanting tables, grindstones, smithing, crafting repairs, automated crafters, smelting/fuel conversion, hopper insertion into transforming workstations, dispenser use, and Mending. Entity interactions such as armadillo brushing also respect tool integrity and the safety lock. These guards remain active when Forage gameplay is dormant. The legacy `tools.block-*` switches are retained for configuration compatibility but cannot disable item protection.
+Protection covers anvils (including virtual anvils), enchanting tables, grindstones, smithing, crafting repairs, automated crafters, smelting/fuel conversion, hopper insertion into transforming workstations, dispenser use, and unauthorized Mending. The approved Mending exception described below requires build 745 or newer. Entity interactions such as armadillo brushing also respect tool integrity and the safety lock. These guards remain active when Forage gameplay is dormant. The legacy `tools.block-*` switches are retained for configuration compatibility but cannot disable item protection.
 
 Repair, rename, enchantment and item-edit commands recognize namespaces, registered aliases and configured alias chains. Core blocked prefixes are mandatory; `tools.blocked-repair-command-prefixes` can add restrictions. Checks cover the backpack, offhand, cursor and targeted online players, including console commands. A repair shortcut may be refused while carrying any Forage tool because providers differ in which inventory slots they modify.
 
@@ -193,13 +193,13 @@ Each issued tool records its approved material, tier, name and enchantments in t
 
 Unchanged older base tools migrate automatically. Older refined or enchanted tools pause for staff to check their history, keeping XP, uses, items and unrelated metadata. Staff can inspect with `/forage admin inspectitem <player>` and review `/forage admin toolapprove <player>` before explicitly adding `confirm`. This approves only supported older items with valid original identity and durability records. It cannot reapprove an already-recorded tool that was changed outside Forage.
 
-Forage tools can also freeze themselves at a low configured durability floor instead of breaking. By default they safety-lock at 5 durability remaining, stop working for block/tool actions, and must be restored through the owned composter workstation’s Repair & Merge page.
+Forage tools can also freeze themselves at a low configured durability floor instead of breaking. By default they safety-lock at 5 durability remaining, stop working for block/tool actions, and can be restored through the owned composter workstation’s Repair & Merge page. The Mending Upgrade adds ordinary XP repair for an approved tool, including at this five-durability lock.
 
 **Container access while worn.** An otherwise valid Forage tool at the durability floor can remain in your hand while you open a chest, trapped chest, barrel, ender chest, any shulker box, furnace, blast furnace, smoker, hopper, dispenser, dropper or brewing stand. Opening one of these inventories does not use or repair the tool. Gathering, tool damage and external repairs remain blocked; a malformed or externally modified tool still fails its integrity checks before ordinary container access. This is a specific inventory-opening allowance, not permission to use every interactive block.
 
 Forage also keeps the sneak-right-click composter recovery gesture reachable when the held tool fails a durability or integrity check. Camp ownership, permissions and current camp state still govern workstation access, and paid actions revalidate the tool and their other requirements before charging or changing anything. Vanilla sneaking behavior and other plugins’ protection decisions remain unchanged; Forage does not reverse their cancellation to force a container or workstation open.
 
-To reduce sneaky external repair routes, each curated tool also stores its last legitimate durability state in PDC. Periodic inventory audits and live tool checks restore that tracked durability if an outside command, GUI, Mending tick, or console-dispatched repair action tries to heal the tool without using Forage's own repair flow.
+To reduce sneaky external repair routes, each curated tool also stores its last legitimate durability state in PDC. Periodic inventory audits and live tool checks restore that tracked durability if an outside command, GUI, unauthorized Mending tick, or console-dispatched repair action tries to heal the tool outside an approved Forage repair path.
 
 Forage tools can be upgraded through the owned composter workstation’s Upgrade Tool page, after that camp’s Local Introduction:
 
@@ -221,7 +221,19 @@ The same upgrade page also offers controlled improvements:
 - real vanilla enchants added by Forage are shown on the item, while outside enchant routes remain blocked
 - improvement confirmations re-read the main-hand tool after durable preparation; changed inputs cancel before charging, while an uncertain effect is retained for manual review
 
-Forage tools can be repaired only through the owned composter workstation’s Repair & Merge page:
+<a id="mending-upgrade"></a>
+
+### Optional Mending I
+
+**Introduced in canonical build 745 and verified on build 746 / Paper 26.3 STABLE 178 on 13 October 2026.** Tool Upgrades offers a one-time **Mending I** purchase for an eligible tool at **Tier III or higher**. The defaults cover all eight tools: Sickle, Axe, Trowel, Shears, Pickaxe, Brush, Sword and Mace. Hold the tool in your main hand at your owned active camp, complete its Local Introduction and review the confirmation. The required held-tool level defaults to 1; there is no additional player Forage-level requirement for Mending once camp access and the tool's tier are satisfied.
+
+The base price is **$10,000 and 250 Forage Points**, scaled by the existing improvement-cost multiplier. The shipped `normal` preset's 0.9 multiplier makes this **$9,000 and 225 Points**. The current menu quote is authoritative. Buying it does not restore durability immediately, and the same tool cannot buy Mending again.
+
+An approved Mending tool repairs through **ordinary Minecraft XP**, including while held in the offhand or stopped at the five-durability safety lock. It can reach **100% durability**, independently of Repair & Merge's player-level caps; normal Minecraft XP consumption and equipment selection still apply. XP repair grants no Forage XP, tool XP, points, quests, branch or treasure progress, and does not reset any gathering cap or chunk exhaustion. The improvement belongs to the tradable tool, not the purchaser's account.
+
+Disabling new Mending purchases or removing a tool ID from the eligible purchase list does not revoke an already-approved Mending I tool at Tier III or higher. Outside enchantment application, repair commands, anvils and other item-modification routes remain blocked. Repair & Merge's donor, treasure, cost, durability-cap and donor-XP rules remain unchanged.
+
+Repair & Merge remains available through the owned composter workstation, with its existing donor rules unchanged:
 
 - the player must keep the workstation session valid at an active camp whose Local Introduction is complete
 - the main hand must hold the Forage tool to keep
@@ -526,6 +538,7 @@ Important sections:
 - `sources.ids`, `sources.<family>.enabled`, `sources.<family>.materials` and `sources.<family>.entities`: enabled source-family IDs and exact block-material/entity definitions. Item-only materials cannot be block-break sources.
 - `tools.ids`, `tools.<tool>.enabled` and `tools.<tool>.families`: enabled tool IDs and supported family membership; the Trowel ID is `shovel`. All tiers share this mapping.
 - The generated [complete source catalogue](forage-camps.md#complete-source-catalogue) documents shipped defaults; the in-game catalogue follows effective runtime bindings after local configuration loads.
+- `tools.enchants.mending.*` (build 745+): one-time Mending I purchases; defaults `enabled: true`, `max-level: 1`, `required-tier: 3`, all eight `tools` IDs, `required-tool-level-per-level: 1`, base money/points `10000`/`250` and both per-level costs `0`. Existing improvement multipliers apply; disabled/removed purchase eligibility does not revoke an already-approved Tier III+ tool.
 - `tools.low-durability-lock.*`: safety-lock rules that stop curated tools before they break
 - `tools.durability-audit-seconds`: how often online inventories are scanned for unexpected external repairs
 - `sources.*`: source-family XP, point value, and material lists
@@ -655,7 +668,7 @@ These are enough for holograms and ajLeaderboards around the Forage camp/NPC are
 - Tool upgrades and improvements do not open an escrow inventory. They re-read the held main-hand Forage tool after durable preparation, cancel changed inputs before charging, and mutate only the trusted PDC-marked item. An uncertain partial effect requires manual review rather than an automatic replay or refund.
 - Branch selection uses only configured ids, revalidates level/cooldown/point costs after GUI confirmation, and stores only sanitized branch ids.
 - Repair & Merge does not open an escrow inventory. It reads the main hand, offhand, and inventory treasure marker at confirmation time, then re-validates before changing items.
-- Curated tool durability is tracked in PDC. If an outside command, GUI, Mending tick, or targeted console repair command repairs a Forage tool without going through Repair & Merge, the plugin restores the last legitimate durability state on the next live check or audit pass.
+- Curated tool durability is tracked in PDC. If an outside command, GUI, unauthorized Mending tick, or targeted console repair command repairs a Forage tool outside an approved repair path, the plugin restores the last legitimate durability state on the next live check or audit pass.
 - Camp turn-ins do not open an escrow inventory. They scan plain vanilla inventory stacks, confirm the plan, revalidate each slot, and only then consume items.
 - Forage Dust does not open an escrow inventory. It checks camp state, money, Forage Points, plain vanilla bonemeal, required treasure items for greater dust, and inventory space at confirmation time before creating PDC-marked dust.
 - Forage Dust growth pulses are bounded by configured allowed materials, the radius and max block count stored on the dust item, shared cooldown, allowed worlds, and WorldGuard checks. Dust does not award Forage XP or points.

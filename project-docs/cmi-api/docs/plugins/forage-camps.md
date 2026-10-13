@@ -1,6 +1,6 @@
 # Forage: player guide
 
-**Reviewed 12 October 2026 for the 26.3 beta, suite build 742 on Paper STABLE 175.** The beta includes seasonal Community Efforts, Leaf Litter and the Herbarium botanical journal; startup activation is verified. Player acceptance testing remains open. This guide describes the camp and gathering flow. Availability, prices, caps, and enabled sources depend on the server; live activation remains separate from beta testing.
+**Reviewed 13 October 2026 against suite build 746 on Paper 26.3 STABLE 178.** The beta includes seasonal Community Efforts, Leaf Litter and the Herbarium botanical journal; startup activation is verified. Player acceptance testing remains open. This guide describes the camp and gathering flow. Availability, prices, caps, and enabled sources depend on the server; live activation remains separate from beta testing.
 
 **New in build 739:** Accepted Turn-Ins opens the complete item guide, and plain cocoa beans are accepted. Build 741 added Leaf Litter; build 742 adds the Herbarium botanical expansion, bringing the default accepted inventory list to 97 types.
 
@@ -464,7 +464,7 @@ Accepted Turn-Ins uses the running server's eligibility rules, including cocoa b
 
 ## Herbarium
 
-**Active on the build-742 beta.** The Herbarium is your permanent personal plant-discovery journal. Open it from the hub or `/forage herbarium` to browse your collections and All Specimens away from camp. Show All, Missing and Discovered filters help you choose a route; each entry lists matching tools, accepted block forms and habitat guidance. Discovered entries retain the first date, world and biome. Collection themes do not add a separate biome checklist.
+**Available since build 742.** The Herbarium is your permanent personal plant-discovery journal. Open it from the hub or `/forage herbarium` to browse your collections and All Specimens away from camp. Show All, Missing and Discovered filters help you choose a route; each entry lists matching tools, accepted block forms and habitat guidance. Discovered entries retain the first date, world and biome. Collection themes do not add a separate biome checklist.
 
 Gather each specimen through a successful normal Forage action. Picking up, buying or turning in a plant does not discover it. Wrong tools, placed resources, protected areas, invalid tools, caps and exhausted chunks still stop discovery. Vine tips/bodies, open/closed eyeblossoms and other listed aliases count once. Harvest pitcher crops only when fully mature.
 
@@ -627,7 +627,13 @@ Use **Upgrade Tool** with the tool to improve in your main hand. Tier upgrades, 
 
 For **Repair & Merge**, hold the tool to keep in your main hand, put a matching Forage tool type in your offhand as the donor, and carry a genuine Forage treasure. Confirm only after reviewing the money/point costs: the donor and treasure are consumed. Repair restores a limited amount of durability and transfers some donor XP. By default, a tool locks at five durability remaining so it can be repaired before breaking.
 
-Forage tools cannot use ordinary anvils, enchanting tables, grindstones, smithing, crafting repairs, Mending, or other plugins' repair/enchant services. Keep approved upgrades and repairs inside Forage. If a tool pauses for review, retain it and tell staff; renaming or stripping its identity is not a repair. Normal storage, dropping, and replacement purchases remain available.
+Forage tools cannot use ordinary anvils, enchanting tables, grindstones, smithing, crafting repairs, unauthorized Mending, or other plugins' repair/enchant services. The Mending Upgrade below, included from build 745, is the only added XP-repair exception; its enchantment must be purchased through Forage. If a tool pauses for review, retain it and tell staff; renaming or stripping its identity is not a repair. Normal storage, dropping, and replacement purchases remain available.
+
+<a id="mending-upgrade"></a>
+
+**Optional Mending I, introduced in build 745 and verified on build 746:** Player acceptance remains open; the native probe used synthetic repair events, not a real client collecting XP. Tool Upgrades lets you buy Mending once for a Tier III or higher Forage tool. All eight tool types are eligible by default. Use your owned active camp after its Local Introduction, with the tool in your main hand. The held-tool level requirement defaults to 1; there is no extra player-level gate for this purchase. Its base price is $10,000 and 250 Forage Points; the default `normal` balance multiplier makes it **$9,000 and 225 Points**. Check the displayed price before confirming.
+
+The purchased improvement stays with the tool if you trade it. It lets ordinary Minecraft XP repair the tool up to **100%**, including in your offhand and at the five-durability safety lock. Buying the enchantment does not repair it immediately. XP repair grants no Forage progress or points and does not reset gathering limits. Repair & Merge keeps its existing donor, treasure and durability-cap rules. Disabling later purchases does not remove a tool's already-approved Mending.
 
 **Forage Dust** crafting uses plain bone meal, money, and points at an active camp. The default standard batch makes eight radius-3 dust; the greater batch makes four radius-6 dust and also consumes two Forage treasures. Read the current recipe before confirming. Hold dust in your main hand and right-click a suitable growing block; already-owned dust can be used away from camp in an allowed area.
 

@@ -3,7 +3,7 @@ title: "Forage Administration"
 description: "Setup, permissions, recovery, and operation of Forage."
 ---
 
-**Documentation reviewed against the current implementation on 12 October 2026.** The camp revamp and its guidance, plant, and tool-protection follow-ups are implemented and locally verified; connected-client beta acceptance and live activation remain separate steps. The repository currently targets Paper 26.3 **STABLE** with API build **175**, Java 25 bytecode, JDK 25.0.4.1 for Gradle, and Java **27+35-2325** for the local server. These are the configured baseline, not a claim that every historical probe below ran on build 175. The external inventory crash boundary remains a release gate.
+**Documentation reviewed against the verified build-746 implementation on 13 October 2026.** The camp revamp and its guidance, plant, and tool-protection follow-ups are implemented and locally verified; connected-client beta acceptance and live activation remain separate steps. That verification used Paper 26.3 **STABLE** with API build **178**, Java 25 bytecode, JDK 25.0.4.1 for Gradle, and Java **27+35-2325** for the local server. Historical probes below retain their original Paper builds. The external inventory crash boundary remains a release gate.
 
 **Historical Forage deployment, 11 October 2026:** suite build **739** was deployed on both maintained instances, with matching sets of 66 managed JARs and Paper 26.3 BETA **174**. The beta completed startup at 20:29:05 Europe/Amsterdam. CMI command, alias and virtual-anvil guards, mcMMO, Pyro and ItemSoulBind protections report active or armed; placement tracking and storage are healthy. Configuration reports zero errors, one expected normal-preset warning and 35 successful checks. The canonical build passed all 823 Forage tests. A native primary-server probe passed 213 checks with CMI 9.8.10.5 and CMILib 1.6.0.1, using detached inventories, PDC and profiles without player/world mutations or reward delivery. These checks do not sign off connected-client gameplay, physical piston behavior, disk/crash persistence or live activation. Dated compatibility records retain their original findings, including the [build 737/738 CMI correction](https://github.com/mrfdev/1MB-Plugins-Docs/blob/main/project-docs/cmi-api/docs/compatibility-tests/forage-protection-parity-2026-10-11.md).
 
@@ -409,6 +409,30 @@ Transaction records remain under the feature's `Forage/transactions/records`, wi
 Finalized item/economy recovery evidence is retained until staff verifies the external state and explicitly uses `/forage admin recoveryack <transaction-uuid> confirm`. Internal-only camp receipts can clear automatically. Normal completed operations remain usable after restart; unresolved effects block the affected actor for manual review. Recovery acknowledgment discards evidence after review and must never be used as a blanket cleanup command.
 
 Quest rewards containing arbitrary commands now fail closed before claiming. Audited internal/item rewards and Vault rewards with explicit responses remain the supported paths; configuration of a command prefix is not sufficient delivery verification. A future adapter must supply its own idempotent outcome/recovery contract before those command rewards can be enabled safely.
+
+<a id="mending-upgrade"></a>
+
+## Optional Mending I
+
+Mending was introduced in canonical build 745 and verified on build 746 / Paper 26.3 STABLE 178 on 13 October 2026. The Forage suite ran 1,268 cases: 1,240 passed, 28 existing optional-fixture skips and zero failures/errors. All 73 Mending tests passed. Real-client acceptance remains open. This adds a deliberate Tool Upgrades purchase; other external repair routes remain blocked. Defaults allow all eight tool IDs (`sickle`, `axe`, `shovel`, `shears`, `pickaxe`, `brush`, `sword`, `mace`), require tool Tier III and held-tool level 1, and add no separate player Forage-level gate beyond the existing camp access/tier prerequisites. The Trowel's ID is `shovel`. Base money/point costs are 10,000/250 through the existing improvement-cost multiplier: the normal preset charges 9,000/225. Confirmation must retain the owned active-camp session and current tool, eligibility and costs. Duplicate purchase is refused; the item is not repaired by buying Mending.
+
+The build-746 native probe passed **243 checks** across all eight base tools and five supported diamond refinements, using synthetic Mending events and emulating vanilla damage application. It changed no real player or world state. This does not verify an actual client collecting XP, normal XP allocation across carried equipment or live economy behavior. The canonical suite reported 4,831 cases, with 4,790 passed, 41 existing optional-fixture skips and zero failures/errors. On 13 October, the Forage instance completed startup at 09:53:05 Europe/Amsterdam; its configuration check reported zero errors, one expected normal-preset warning and 37 successful checks. The probe was removed and the primary restarted cleanly at 09:56:30. The 24 checked primary Forage configuration/data files remained semantically equal to the stopped backup. ENG-01 and the M01–M06 real-client checks remain open.
+
+The settings are under `tools.enchants.mending`:
+
+| Key | Default | Meaning |
+| --- | --- | --- |
+| `enabled` | `true` | Offer new purchases; disabling does not revoke an approved tool. |
+| `max-level` | `1` | Mending I is the only supported level. |
+| `required-tier` | `3` | Purchase requires at least Tier III; lower configured values are warned about and cannot unlock tiers I/II. |
+| `tools` | `sickle, axe, shovel, shears, pickaxe, brush, sword, mace` | Eligible purchase IDs; removing an ID does not revoke an approved tool. |
+| `required-tool-level-per-level` | `1` | Held-tool level required for the single Mending level. |
+| `money-cost-base` / `money-cost-per-level` | `10000` / `0` | Money cost before the active improvement multiplier. |
+| `points-cost-base` / `points-cost-per-level` | `250` / `0` | Forage Point cost before that multiplier. |
+
+Already-approved Mending I follows the tradable tool. Removing an eligible purchase ID or disabling the purchase option does not revoke it; the item still needs its valid approved state, Mending I and Tier III or higher. Normal Minecraft XP may repair it up to full durability in either hand, including at the five-durability safety lock. This repair has no camp requirement and creates no Forage XP, tool XP, points, quest/branch/treasure progress, cap reset or chunk reset. It does not inherit Repair & Merge's player-level durability ceilings. Ordinary Minecraft XP allocation remains in effect.
+
+Outside enchantment application and every other external repair/modification route remain protected. A renamed imitation, changed approved state or externally added Mending does not acquire this exception. Keep Repair & Merge's existing donor consumption, treasure, cost, durability ceilings and donor-XP transfer unchanged. Test the two repair routes independently, using [Mending checklist cases](/staff-reference/plugins/forage-checklist/#mending-upgrade).
 
 ## Tool transformation boundary
 
