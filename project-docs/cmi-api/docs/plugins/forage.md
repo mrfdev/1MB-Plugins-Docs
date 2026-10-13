@@ -119,6 +119,8 @@ Use your camp’s Upgrade Tool or Repair & Merge page. Review the money, point, 
 
 ## V1 Tools
 
+Read the [Tool Shop guide](forage-camps.md#tool-shop-guide) for all eight tool types, exact-source examples, the carried level-2 unlock, player level versus tool tier, and supported care. **Next build:** the shop's top-left book closes the inventory and posts this public link in chat; the player chooses whether to open it. Browsing grants no purchase or workstation authority.
+
 Default tools are:
 
 | Tool | Material | Family fallback | Default Unlock |

@@ -131,26 +131,59 @@ Your current inventory supplies any submitted items and receives any item reward
 
 Your global points can be spent at any of your fully active camps. A camp's Local Introduction establishes some participation in that world; it does not require every future reward to be earned there. Server inventory rules can also allow you to carry an already claimed reward into another world. Camp rules control Forage's claim location, not all normal item travel.
 
-## Pick a tool and gather
+<a id="pick-a-tool-and-gather"></a>
+<a id="tool-shop-guide"></a>
 
-Open **Tool Shop** at your complete registered camp to buy your first tool. Starter shopping works before Local Introduction is finished. Check the displayed price and keep room in your inventory. These are special Forage items; ordinary Minecraft tools and renamed copies do not earn Forage progress.
+## Tool Shop guide: choose and care for tools
 
-| Tool | Matching sources and useful examples | Default access |
+Open **Tool Shop** at your complete registered camp to buy a genuine Forage tool. Sneak-right-click your own composter first. Starter shopping works before Local Introduction is finished; the four later types require that introduction to be complete. Check the displayed price and keep room in your inventory. Ordinary Minecraft tools and renamed copies do not earn Forage progress.
+
+**Next build adds a guide book:** the book in the Tool Shop's top-left corner closes the inventory and posts a clickable link to this section in chat. Click that link to use Minecraft's normal web-link confirmation flow. It does not open a browser automatically, buy a tool or unlock anything. This guide can already be read directly.
+
+### Choose among the eight tools
+
+Click a tool name for its complete source list. The examples below use the shipped settings, including the build-755 plant corrections; the running server's source entry takes precedence if staff changes a mapping.
+
+| Tool and full source list | Base item | Purpose and useful examples | Default access |
+| --- | --- | --- | --- |
+| [Sickle](#forage-sickle-sources) | Copper hoe | Flora, crops and mushrooms: short grass, dandelions, mature wheat, red shrubs, shelf mushrooms | Starter |
+| [Axe](#forage-axe-sources) | Copper axe | Logs and fruits: oak/poplar logs, pumpkins, melons, sugar cane | Starter |
+| [Trowel](#forage-trowel-sources) | Copper shovel | Moss and Roots: **Moss Block**, moss carpet, azaleas, big dripleaf | Starter |
+| [Shears](#forage-shears-sources) | Shears | Leaves plus selected plants: poplar leaves, **Glow Lichen**, hanging roots, seagrass, small dripleaf | Starter |
+| [Pickaxe](#forage-pickaxe-sources) | Copper pickaxe | Stone and Cave sources: calcite, tuff, basalt, end stone, rooted dirt, pointed dripstone | Carry any Forage tool at tool level 2; finish this camp's Local Introduction |
+| [Brush](#forage-brush-sources) | Brush | Sands and relics: sand, red sand, gravel, clay, suspicious sand/gravel | Carry any Forage tool at tool level 2; finish this camp's Local Introduction |
+| [Sword](#forage-sword-sources) | Copper sword | Creature Finds: configured cows, sheep, chickens, rabbits and squid | Carry any Forage tool at tool level 2; finish this camp's Local Introduction |
+| [Mace](#forage-mace-sources) | Mace | Danger Finds: configured zombies, skeletons, blazes, breezes and shulkers | Carry any Forage tool at tool level 2; finish this camp's Local Introduction |
+
+**Moss Block needs the Trowel; Glow Lichen needs Shears.** A family groups quest progress, but can contain sources for different tools. For example, Glow Lichen stays in Cave Forage with its Shears assignment, while Pointed Dripstone stays Cave/Pickaxe. Calcite is Stone/Pickaxe and does not count toward Cave Cycle. Follow [Matching Quests and What Counts?](#find-what-counts) for the actual objective.
+
+### Tool level, player level and tier
+
+| Value | What it means | What it unlocks by default |
 | --- | --- | --- |
-| Sickle | Flora, crops, mushrooms: grass, wheat, red shrubs, shelf mushrooms | Starter |
-| Axe | Logs and fruits: oak/poplar logs, pumpkins, melons, sugar cane | Starter |
-| Trowel | Moss: moss blocks/carpet, azaleas, big dripleaf | Starter |
-| Shears | Leaves, including red, orange, and yellow poplar leaves | Starter |
-| Pickaxe | Stone and cave finds: calcite, tuff, basalt, end stone, pointed dripstone | Carry any Forage tool at tool level 2 |
-| Brush | Sands and relics: sand, red sand, gravel, clay, suspicious sand/gravel | Carry any Forage tool at tool level 2 |
-| Sword | Configured creatures such as cows, sheep, chickens, rabbits, and squid | Carry any Forage tool at tool level 2 |
-| Mace | Configured hostile mobs such as zombies, skeletons, blazes, breezes, and shulkers | Carry any Forage tool at tool level 2 |
+| **Tool level** | The progression saved on that individual tool, earned by eligible gathering with it | Carry one genuine tool at level 2 to buy Pickaxe, Brush, Sword or Mace. The qualifying tool is not consumed; a tool left in a chest cannot satisfy the check. |
+| **Player Forage level** | Your personal Forage progression, shown in `/forage stats` | Separate gates for improvements and higher Repair & Merge ceilings. All eight shop types have a default player-level requirement of 1. |
+| **Tool tier I–III** | A separately purchased improvement on one tool | The upgrade card checks your player Forage level separately for tier II and tier III. A level-2 tool is not automatically tier II. Every shop purchase starts at tier I, including the four later tool types. |
+
+You do not need to own or level all four starter tools. All tiers use the same exact source list, so upgrading will not make a Pickaxe gather a Shears source.
+
+### Improve and repair through Forage
+
+Return to your **active camp**, finish its Local Introduction and hold the tool in your main hand. Use **Upgrade Tool** for tier upgrades, diamond refinement and the compatible enchantments that Forage offers. Review the current level requirements, money, Points and item costs before confirming; prices depend on server settings and the balance preset.
+
+- **Tier upgrades** improve the tool's Forage bonus while keeping its XP, uses and current durability. They do not repair it or unlock extra sources.
+- **Diamond refinement** changes a supported copper Sickle, Axe, Trowel, Pickaxe or Sword to its diamond material, keeping progression and durability percentage. Defaults require player Forage level 5 and held-tool level 3. Shears, Brush and Mace have no diamond variant.
+- **Forage enchantments** offer compatible Unbreaking and Efficiency improvements with their own held-tool-level gates. Apply them in this menu; ordinary enchanting tables, enchanted books, anvils and other plugins' repair/enchant services cannot improve these protected tools.
+- **Optional [Mending I](#mending-upgrade)** is bought once per eligible Tier III tool through Forage. After that approved purchase, ordinary Minecraft XP can repair it, including in the offhand and at the five-durability lock. This is the deliberate exception to external repair blocking, not permission to add Mending elsewhere. It stays with a traded tool and grants no Forage progress or cap reset.
+- **[Repair & Merge](#care-for-tools-and-make-dust)** keeps the main-hand tool and consumes a matching offhand Forage donor, one genuine treasure and the displayed money/Points. By default it restores up to 40 percentage points, capped at 70% durability below player level 10, 85% from level 10 and 100% from level 20, and transfers 50% of the donor's tool XP. Keep the desired tool in the correct hand before confirming.
+
+### Gather with the matching tool
 
 For block routes, **break** a configured source with the matching tool in your main hand. The Brush route rewards block breaking, not completion of vanilla archaeology brushing. For sword/mace routes, make a matching melee hit, receive the kill credit within ten seconds, and hold the same Forage tool type when the mob dies. Projectile-only kills and picking up drops do not count. Every tier of a tool uses the same source list; an upgrade does not unlock extra blocks or creatures. Poplar saplings and crafted poplar building blocks are not gathering sources.
 
 The [complete source catalogue](#complete-source-catalogue) below lists every supported source from the shipped defaults. Use `/forage sources` from anywhere to inspect the held Forage tool, or choose a tool if none is held; `/forage sources <tool>` opens a specific tool. The Trowel uses the ID `shovel`. Click a tool in Tools & Families for its full paginated list, or use the catalogue's clickable public documentation link. This is read-only browsing: it does not create workstation access or grant gathering rewards. The in-game list follows the server's configuration, which may differ from the published defaults. Each source card separates support from current reward pauses. Clicking a source card opens its details; Back reopens the list with a fresh snapshot. Gathering still rechecks its rules when you act. The hub's **Tools & All Sources** button and onboarding's **What can I gather?** entry also open the catalogue before your camp is ready. Newly issued or normally updated tool lore includes a source hint; existing tools acquire it when Forage next refreshes their lore, not merely when you open the guide.
 
-Player Forage level, a tool's level, and its tier are different. The four later tool types unlock when you carry a level-2 Forage tool; a tool left in a chest cannot satisfy the shop check. Each rewarded action can advance player XP, points, the held tool, the matching skill branch, and applicable quests.
+Each rewarded action can advance player XP, points, the held tool, the matching skill branch, and applicable quests.
 
 Use `/forage limits` to check personal and source-family daily caps. A capped family or exhausted chunk can stop rewards while ordinary harvesting and tool wear continue. Move to another eligible chunk or try a different family, subject to your remaining personal cap. A different camp or world does not reset your daily allowances.
 
