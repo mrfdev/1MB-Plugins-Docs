@@ -1,6 +1,6 @@
 # Forage: player guide
 
-**Reviewed 13 October 2026 against suite build 753 on Paper 26.3 STABLE 180.** The beta includes seasonal Community Efforts, Leaf Litter and the Herbarium botanical journal; startup activation is verified. Player acceptance testing remains open. This guide describes the camp and gathering flow. Availability, prices, caps, and enabled sources depend on the server; live activation remains separate from beta testing.
+**Reviewed 13 October 2026 against suite build 754 on Paper 26.3 STABLE 180.** The beta includes seasonal Community Efforts, Leaf Litter and the Herbarium botanical journal; startup activation is verified. Player acceptance testing remains open. This guide describes the camp and gathering flow. Availability, prices, caps, and enabled sources depend on the server; live activation remains separate from beta testing.
 
 **New in build 739:** Accepted Turn-Ins opens the complete item guide, and plain cocoa beans are accepted. Build 741 added Leaf Litter; build 742 adds the Herbarium botanical expansion, bringing the default accepted inventory list to 97 types.
 
@@ -469,6 +469,8 @@ Your qualifying daily/weekly claims are remembered even while the participation 
 **Skill Branches** gives focused bonuses for particular families: Herbalist, Woodsman, Trailkeeper, Cave Botanist, and Wild Alchemist are the defaults. Read each branch's level gate and affected families. Your first choice is free; later switches normally cost 250 Forage Points and require a 72-hour cooldown. The menu shows the current server rules.
 
 Treasures are occasional extra finds, not guaranteed on a short trip. Keep inventory room: a find that cannot fit is skipped, not dropped on the ground or queued for later. Genuine Forage treasures are used in Repair & Merge and Greater Forage Dust; a vanilla item of the same material is not a substitute. Legendary Pulse Dust is a rare treasure outcome, so a brief session without one is normal.
+
+**Treasure shine (from build 754):** new ordinary Forage treasures shine by default, without gaining an enchantment or extra power. Staff can turn the shine off for future finds. Older genuine treasures stay valid even if they do not shine; already-owned items keep their appearance. Shine alone never proves that an item is a genuine Forage treasure.
 
 ## Camp Turn-Ins
 
