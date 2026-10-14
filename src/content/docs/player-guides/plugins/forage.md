@@ -211,6 +211,8 @@ In OneBlock or Cave, a bought, traded or reward-issued starter is fine to cultiv
 
 Growing a crop or tree is still useful. A crop you plant must genuinely grow to maturity before its recorded placement stops blocking rewards. Growth that replaces a block with a different type, such as a tree growing, clears the old placement mark. Applying bonemeal while leaving the same type in place does not clear it: the original placed moss block stays marked. Newly grown upper sugar-cane and bamboo blocks can qualify, while the placed base stays marked; manually stacking bamboo above its seedling does not bypass this. A growth check may finish on the following tick, and cancelled growth does not clear a mark. Other gathering rules and limits still apply.
 
+From build 764, new dripstone growth also counts correctly when an earlier placed plant at that spot disappeared after losing its support. The original placed starter still does not count.
+
 Tracking stays active for configured resources while Forage gameplay or a source family is paused. If Forage reports that placement tracking is unavailable, ask staff to inspect it. A tracking failure may also stop new placements or piston movement to avoid creating resources whose origin cannot be verified.
 
 Forage cannot reconstruct placements made before this update, and staff WorldEdit or other edits outside the supported events are not covered. This is not a promise to identify every farmed resource. Turn-Ins are a separate activity: eligible plain bought, traded or stored items remain acceptable there. On this beta, tracking begins with build 739. Test fresh placements separately from blocks whose earlier history is unknown.
