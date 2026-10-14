@@ -464,6 +464,16 @@ Finalized item/economy recovery evidence is retained until staff verifies the ex
 
 Quest rewards containing arbitrary commands now fail closed before claiming. Audited internal/item rewards and Vault rewards with explicit responses remain the supported paths; configuration of a command prefix is not sufficient delivery verification. A future adapter must supply its own idempotent outcome/recovery contract before those command rewards can be enabled safely.
 
+<a id="claim-all"></a>
+
+### Claim All quest rewards (available from build 766)
+
+The Quests hub and Ready to Claim list offer **Claim All** for a fixed snapshot of ready, unclaimed quests in the current daily/weekly/monthly periods. The click starts immediately and retains the original inventory session while processing one existing quest-claim transaction at a time. Each reward keeps its own operation identity, inventory preflight, delivery evidence and finalization; this is not one all-or-nothing reward transaction. Advance only after the previous claim finalizes successfully, then close the menu and report the claimed count.
+
+Revalidate the player, inventory session, current world, owned Active Camp/Initial Camp, Local Introduction, permissions, quest period/definition, configuration and claim state for every queued claim. A full inventory, failure, stale session, lost authority, reload or period change stops further delivery. Do not include newly completed quests or a new period automatically. Finalized claims stay finalized; untouched entries remain unclaimed. Any uncertain in-flight effect keeps the existing review/recovery state and must not be automatically retried, refunded or replayed. Closing the menu, quitting, death and disable do not create a resumable background claim queue.
+
+Participation qualification still follows each successful daily/weekly claim. Claim All does not claim Participation, Community Effort or Herbarium rewards, consume dormant-season fees, extend quest expiry, or create workstation authority. Individual claim buttons and existing recovery references remain supported.
+
 <a id="mending-upgrade"></a>
 
 ## Optional Mending I

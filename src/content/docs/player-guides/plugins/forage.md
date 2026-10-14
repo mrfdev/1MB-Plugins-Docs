@@ -534,6 +534,16 @@ Daily, Weekly and Monthly each have four top-row filters: **Show All**, **Incomp
 
 Filters only change what you see. Clicking a quest opens its details, with separate **What Counts?** and **Claim Reward** buttons. What Counts? distinguishes exact-family actions, exact-material breaks, any eligible gathering actions, gathering in distinct biomes and successfully delivered treasure finds. These are not item hand-ins. Back returns to the same category, filter and page. Camp and Local Introduction requirements still apply to Claim Reward, and no reward can be claimed twice for the same period; a confirmed claim closes the menu.
 
+<a id="claim-all"></a>
+
+### Claim All (available from build 766)
+
+**Claim All** appears in the Quests hub and **Ready to Claim** list. Its count includes ready, unclaimed quests from the current daily, weekly and monthly periods. Click once to start claiming that set, one reward at a time. Keep the menu open and stay beside your active workstation while it runs; individual **Claim Reward** buttons remain available.
+
+The summary reports how many rewards were claimed. If your inventory fills, a claim cannot finish, or you close or leave the menu/camp, the run stops. Rewards already received stay yours; untouched quests remain available until their normal period reset. Clear the reported blocker, reopen the workstation and use Claim All again. If a claim needs review, keep its reference and ask staff before retrying.
+
+Claim All covers these quest rewards only. **Participation**, **Community Efforts** and **Herbarium** rewards still use their own claim buttons. Successfully claimed daily and weekly quests continue to count toward participation qualification.
+
 <a id="daily-quests-after-caps"></a>
 
 ### Finish daily quests after gathering caps (from build 757)
