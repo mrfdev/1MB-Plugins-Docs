@@ -20,6 +20,10 @@ The targets are intended as a starting point for roughly seven regular players. 
 
 Gathering must already qualify under ordinary Forage rules: the matching genuine tool, eligible source, permitted location, tool condition, placement/growth policy and ordinary gathering caps still apply. Seasonal credit adds no second XP, points or treasure reward. Legitimate farms, mature crops, tree growth and generators can contribute when their blocks qualify under those rules. A listed material is not a blanket exemption for directly placed resources.
 
+Genuine new growth may come from bought, traded or reward-issued starters. The player must manually harvest an eligible listed source with its matching Forage tool, in an included world; direct place/break and automated harvesting or item pickup earn no seasonal gathering credit. Original placed starters and new offspring are distinct. Moss Block uses the Trowel and belongs to Moss; Pointed Dripstone uses the Pickaxe and Glow Lichen uses Shears, both in Cave. Ordinary and seasonal caps still apply; daily-only quest credit after ordinary caps does not contribute to the season. You do not need to harvest every listed material to meet the season’s gathering target.
+
+Staff setting up scarce OneBlock/Cave sources must verify an early accessible starter route without requiring the same cultivation objective or a later seasonal reward first. Seasonal rewards arrive after the season, so they cannot provide the first starter needed to complete that season. See the [staff setup checks](forage-camp-technical.md#placed-resource-tracking).
+
 Resource and treasure donations use **backpack slots 9–35**, not the hotbar or offhand. Resource items must be plain; custom names, lore, enchantments and other item metadata disqualify them. Only marked genuine Forage treasure drops count as treasure donations; ordinary lookalikes and Forage Dust do not. Review the exact amount and confirm before anything is consumed. Donations grant seasonal contribution, not ordinary Camp Turn-In XP or points. Those two menus have separate lists and rules.
 
 ## Calendar and world rotations

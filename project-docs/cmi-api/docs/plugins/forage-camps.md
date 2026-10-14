@@ -194,6 +194,18 @@ From build 739, breaking a resource whose placement Forage recorded earns no For
 
 A rejected placed block gives no player XP, points, tool XP, branch or quest progress, Local Introduction action or treasure, and uses none of your reward allowance or chunk-exhaustion budget. Waiting does not make it eligible: the existing 12-second limit only controls repeated chat notices. Placement records remain through normally saved chunk unloads and server restarts.
 
+Genuine grown crops and new growth count when harvested under the normal Forage rules, including growth from bought, traded or reward-issued starters. Placing and breaking the original starter does not count; simply receiving or picking up a starter grants no gathering credit.
+
+Harvest the eligible growth yourself with the exact matching genuine Forage tool. Natural growth and permitted bonemeal/dust growth can supply harvests, but a piston, water stream or other automated harvest grants no Forage gathering credit, even if you pick up its drops afterward. World access, protection, tool condition, placement/maturity checks, caps and the actual quest objective still apply. Growth does not guarantee every source a vanilla item drop.
+
+| Manually harvested growth | Family and tool | What it does not imply |
+| --- | --- | --- |
+| Newly spread Moss Block | Moss and Roots / **Trowel** | The original placed moss starter is not made eligible by applying bonemeal; moss does not become a Cave source. |
+| Newly grown Pointed Dripstone | Cave Forage / **Pickaxe** | Directly placing and breaking the starter is not a harvest of new growth. |
+| Newly grown Glow Lichen patch | Cave Forage / **Shears** | Cave membership does not make it a Pickaxe source. |
+
+In OneBlock or Cave, a bought, traded or reward-issued starter is fine to cultivate. Read the quest’s **What Counts?** list: a family quest accepts repeated eligible harvests from any matching source, so you do not need every material in that family. A material-specific quest still requires its named source.
+
 Growing a crop or tree is still useful. A crop you plant must genuinely grow to maturity before its recorded placement stops blocking rewards. Growth that replaces a block with a different type, such as a tree growing, clears the old placement mark. Applying bonemeal while leaving the same type in place does not clear it: the original placed moss block stays marked. Newly grown upper sugar-cane and bamboo blocks can qualify, while the placed base stays marked; manually stacking bamboo above its seedling does not bypass this. A growth check may finish on the following tick, and cancelled growth does not clear a mark. Other gathering rules and limits still apply.
 
 Tracking stays active for configured resources while Forage gameplay or a source family is paused. If Forage reports that placement tracking is unavailable, ask staff to inspect it. A tracking failure may also stop new placements or piston movement to avoid creating resources whose origin cannot be verified.
