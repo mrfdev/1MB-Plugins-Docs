@@ -148,10 +148,10 @@ Click a tool name for its complete source list. The examples below use the shipp
 | --- | --- | --- | --- |
 | [Sickle](#forage-sickle-sources) | Copper hoe | Flora, crops and mushrooms: short grass, dandelions, mature wheat, red shrubs, shelf mushrooms | Starter |
 | [Axe](#forage-axe-sources) | Copper axe | Logs and fruits: oak/poplar logs, pumpkins, melons, sugar cane | Starter |
-| [Trowel](#forage-trowel-sources) | Copper shovel | Moss and Roots: **Moss Block**, moss carpet, azaleas, big dripleaf | Starter |
+| [Trowel](#forage-trowel-sources) | Copper shovel | Moss and Roots plus Dry Finds: **Moss Block**, moss carpet, azaleas, big dripleaf; break sand, red sand, gravel or clay | Starter |
 | [Shears](#forage-shears-sources) | Shears | Leaves plus selected plants: poplar leaves, **Glow Lichen**, hanging roots, seagrass, small dripleaf | Starter |
 | [Pickaxe](#forage-pickaxe-sources) | Copper pickaxe | Stone and Cave sources: calcite, tuff, basalt, end stone, rooted dirt, pointed dripstone | Carry any Forage tool at tool level 2; finish this camp's Local Introduction |
-| [Brush](#forage-brush-sources) | Brush | Sands and relics: sand, red sand, gravel, clay, suspicious sand/gravel | Carry any Forage tool at tool level 2; finish this camp's Local Introduction |
+| [Brush](#brush-activities) | Brush | Sift sand/gravel/clay, excavate suspicious blocks, clean decorated pots, survey bone blocks and groom armadillos | Carry any Forage tool at tool level 2; finish this camp's Local Introduction |
 | [Sword](#forage-sword-sources) | Copper sword | Creature Finds: configured cows, sheep, chickens, rabbits and squid | Carry any Forage tool at tool level 2; finish this camp's Local Introduction |
 | [Mace](#forage-mace-sources) | Mace | Danger Finds: configured zombies, skeletons, blazes, breezes and shulkers | Carry any Forage tool at tool level 2; finish this camp's Local Introduction |
 
@@ -179,7 +179,7 @@ Return to your **active camp**, finish its Local Introduction and hold the tool 
 
 ### Gather with the matching tool
 
-For block routes, **break** a configured source with the matching tool in your main hand. The Brush route rewards block breaking, not completion of vanilla archaeology brushing. For sword/mace routes, make a matching melee hit, receive the kill credit within ten seconds, and hold the same Forage tool type when the mob dies. Projectile-only kills and picking up drops do not count. Every tier of a tool uses the same source list; an upgrade does not unlock extra blocks or creatures. Poplar saplings and crafted poplar building blocks are not gathering sources.
+For ordinary block routes, **break** a configured source with the matching tool in your main hand. The Brush has its own [right-click activities](#brush-activities); breaking a brush-only relic or fossil does not count. For sword/mace routes, make a matching melee hit, receive the kill credit within ten seconds, and hold the same Forage tool type when the mob dies. Projectile-only kills and picking up drops do not count. Every tier of a tool uses the same source list; an upgrade does not unlock extra blocks or creatures. Poplar saplings and crafted poplar building blocks are not gathering sources.
 
 The [complete source catalogue](#complete-source-catalogue) below lists every supported source from the shipped defaults. Use `/forage sources` from anywhere to inspect the held Forage tool, or choose a tool if none is held; `/forage sources <tool>` opens a specific tool. The Trowel uses the ID `shovel`. Click a tool in Tools & Families for its full paginated list, or use the catalogue's clickable public documentation link. This is read-only browsing: it does not create workstation access or grant gathering rewards. The in-game list follows the server's configuration, which may differ from the published defaults. Each source card separates support from current reward pauses. Clicking a source card opens its details; Back reopens the list with a fresh snapshot. Gathering still rechecks its rules when you act. The hub's **Tools & All Sources** button and onboarding's **What can I gather?** entry also open the catalogue before your camp is ready. Newly issued or normally updated tool lore includes a source hint; existing tools acquire it when Forage next refreshes their lore, not merely when you open the guide.
 
@@ -219,6 +219,38 @@ Forage cannot reconstruct placements made before this update, and staff WorldEdi
 
 **Build-742 botanical routes:** the source-default catalogue below includes the Herbarium expansion, including mature pitcher crops. `/forage sources` shows your running server's actual list.
 
+<a id="brush-activities"></a>
+
+## Brush activities (available from build 767)
+
+One **Forage Brush** performs all five activities below. Hold the genuine tool in your main hand and follow the source's action label. This replaces the old Brush block-breaking route; chiseled bookshelves are no longer a source. `/forage sources brush`, `/forage source <name>` and `/forage inspect` help identify the activity and its matching quests.
+
+| Activity | Source | What to do | What happens |
+| --- | --- | --- | --- |
+| **Archaeology** | Suspicious sand or suspicious gravel | Complete normal Minecraft brushing with the Forage Brush. | A successful excavation keeps its normal archaeological loot and can grant Forage progress once. Starting and abandoning brushing gives no progress. |
+| **Sifting** | Sand, red sand, gravel or clay | Hold right-click on the same block for the displayed progress, normally three seconds. | The source block is consumed on completion. Normal Forage rewards and treasure chances apply; a treasure is not guaranteed. |
+| **Relic Cleaning** | A naturally generated decorated pot | Hold right-click with the Brush, normally three seconds. | Leaves the pot, its pattern and its contents intact. Its first successful cleaning can grant Forage progress. |
+| **Fossil Survey** | A naturally generated bone block | Hold right-click with the Brush, normally three seconds. | Leaves the block intact. Its first successful survey can grant Forage progress. Each eligible bone block is a source, not a new collectible item or separate tool. |
+| **Animal Grooming** | An adult armadillo | Brush the animal and successfully obtain its normal scute drop. | That grooming can grant Animal Care progress. Killing it, picking up a dropped scute or an automatic scute drop does not qualify. |
+
+**Two ways to gather ordinary ground:** sand, red sand, gravel and clay support **left-click breaking with a Forage Trowel** (`shovel`) or **held right-click sifting with a Forage Brush**. Both routes can earn their normal **Sands / Dry Finds** progress and share the same family allowance. The Trowel is the quick digging route; the Brush takes time and can find a Silted Keepsake. An ordinary Minecraft shovel does not grant Forage progress. Suspicious sand/gravel still require archaeology brushing, not Trowel breaking.
+
+**Sifting find: Silted Keepsake.** A qualifying sift has a **25% chance** to award this glowing stick. It starts with **three uses**; each right-click consumes one use and grants a random whole number from **3 to 15 personal Forage XP**. The lore shows the remaining uses, and the item disappears after the third use. It grants no tool XP or Minecraft XP and is **not a treasure payment item** for Mending, repairs or seasonal contributions. Daily-quest-only actions after a reward cap do not drop keepsakes.
+
+Keepsakes are exclusive to successful Brush sifting. Trowel digging keeps its ordinary reward and treasure rules but never rolls this special find.
+
+Keep room in your backpack for the find. Finding one counts as one treasure discovery for matching objectives; spending its charges does not count as more discoveries or gathers. A keepsake replaces the ordinary treasure roll for that sift; otherwise the normal treasure roll still applies. Sifting's normal block drops remain, and using an earned keepsake does not spend your daily gathering allowance.
+
+A cleaned pot or surveyed bone block is shared world history: **only the first successful examination of that physical source rewards anyone**. Another player, a new day, a chunk reload or a clean server restart does not reset it. Cleaning and then breaking a pot cannot grant two Forage rewards. Crafted, bought, traded or reward-issued blocks placed by players remain ineligible; moving a block does not make it natural. Staff edits and old terrain history need the same care as other gathering sources.
+
+Armadillo rewards default to **one credited grooming per animal every 24 hours, shared by all players**, plus **eight credited groomings per player per day**. The animal does not have to die. These are additional Forage limits, not a promise that ordinary Minecraft will withhold further scutes. Brushing uses the tool's normal durability safeguards, so check its condition first.
+
+For held block activities, keep looking at the same nearby block with the same main-hand tool. Releasing use, changing tools, moving away or losing access cancels the unfinished activity. Protected areas, unavailable worlds, an unusable tool and the usual reward safeguards still apply. Personal/family caps and chunk exhaustion are not reset by using the Brush; the bounded daily-quest exception follows its normal rules.
+
+Families remain precise: suspicious blocks and pots are **Relics**; sifted ground is **Sands**; bone blocks are **Fossils**; armadillos are **Animal Care**. A bone block does not advance Stone or Cave quests merely because it was found underground. Check a quest's **What Counts?** and the source's **Matching Quests** before gathering for it.
+
+Island worlds may not offer natural archaeology, pots or fossils. You can use an allowed wilderness world for those activities; placing a purchased source is not an alternative eligibility route.
+
 **Source-tool correction (from build 755):** the generated catalogue below includes eleven exact-source Shears assignments. Older builds keep their previous tool requirements; use the running server's `/forage sources` and `/forage inspect` for its actual settings. Source families and quest membership are unchanged.
 
 <!-- BEGIN GENERATED FORAGE SOURCES -->
@@ -235,7 +267,9 @@ Gathering sources, Camp Turn-In items and seasonal contributions are separate li
 
 **Every tier of a tool uses the same sources.** Tool level, tier, refinements and enchantments do not unlock extra entries in its list. They affect progression or tool behavior separately. The Trowel's command/configuration ID is `shovel`.
 
-For block sources, break the listed block with the matching genuine Forage tool in your main hand. This includes the Brush: vanilla archaeology brushing is not a Forage gathering action. For creatures, land a matching melee hit, receive the kill credit within ten seconds, and hold the same Forage tool type in your main hand when the creature dies. Projectile-only kills and merely picking up drops do not qualify.
+For ordinary block sources, break the listed block with the matching genuine Forage tool in your main hand. **The Brush uses the activity shown beside each source:** complete archaeology, sift ground, clean a relic, survey a fossil or brush an adult armadillo. Read [Brush activities](#brush-activities) for controls and repeat limits. Breaking a brush-only relic or fossil does not count. Other creature sources require a matching melee hit, kill credit within ten seconds and the same Forage tool type in your main hand when the creature dies. Projectile-only kills and merely picking up drops do not qualify.
+
+**Sand, red sand, gravel and clay support two default routes:** left-click breaking with a Forage Trowel, or held right-click sifting with a Forage Brush. Both belong to Sands / Dry Finds and share its allowance. Silted Keepsakes are exclusive to Brush sifting; Trowel breaking uses ordinary gathering and treasure rules. Suspicious sand and gravel require archaeology brushing.
 
 **Listed source does not mean rewards are currently available.** Daily player/family caps, exhausted chunks, world and area restrictions, a paused feature or an unusable tool can still stop gathering rewards. Read the current feedback and `/forage limits`. Browsing the catalogue does not create a camp visit, complete an introduction, grant rewards or bypass these checks.
 
@@ -284,21 +318,28 @@ Tool ID: `axe`. 31 source types.
 
 ### Forage Brush sources
 
-Tool ID: `brush`. 8 source types.
+Tool ID: `brush`. 9 source types.
+
+**Animal Care** (`animal_care`):
+
+- Armadillo (`ARMADILLO`): Brush this adult animal.
 
 **Brush Relics** (`relics`):
 
-- Chiseled Bookshelf (`CHISELED_BOOKSHELF`): Break this block.
-- Decorated Pot (`DECORATED_POT`): Break this block.
-- Suspicious Gravel (`SUSPICIOUS_GRAVEL`): Break this block.
-- Suspicious Sand (`SUSPICIOUS_SAND`): Break this block.
+- Decorated Pot (`DECORATED_POT`): Clean this relic.
+- Suspicious Gravel (`SUSPICIOUS_GRAVEL`): Complete archaeology brushing.
+- Suspicious Sand (`SUSPICIOUS_SAND`): Complete archaeology brushing.
 
 **Dry Finds** (`sands`):
 
-- Clay (`CLAY`): Break this block.
-- Gravel (`GRAVEL`): Break this block.
-- Red Sand (`RED_SAND`): Break this block.
-- Sand (`SAND`): Break this block.
+- Clay (`CLAY`): Sift this block.
+- Gravel (`GRAVEL`): Sift this block.
+- Red Sand (`RED_SAND`): Sift this block.
+- Sand (`SAND`): Sift this block.
+
+**Fossil Finds** (`fossils`):
+
+- Bone Block (`BONE_BLOCK`): Survey this fossil.
 
 ### Forage Mace sources
 
@@ -318,7 +359,7 @@ Tool ID: `mace`. 9 source types.
 
 ### Forage Pickaxe sources
 
-Tool ID: `pickaxe`. 19 source types.
+Tool ID: `pickaxe`. 18 source types.
 
 Ordinary stone, deepslate and ores are not Forage Pickaxe sources in these defaults. Breaking them can still be normal Minecraft mining, without Forage rewards.
 
@@ -335,7 +376,6 @@ Ordinary stone, deepslate and ores are not Forage Pickaxe sources in these defau
 - Amethyst Cluster (`AMETHYST_CLUSTER`): Break this block.
 - Basalt (`BASALT`): Break this block.
 - Blackstone (`BLACKSTONE`): Break this block.
-- Bone Block (`BONE_BLOCK`): Break this block.
 - Calcite (`CALCITE`): Break this block.
 - Crying Obsidian (`CRYING_OBSIDIAN`): Break this block.
 - Dripstone Block (`DRIPSTONE_BLOCK`): Break this block.
@@ -480,7 +520,14 @@ Tool ID: `sword`. 13 source types.
 
 ### Forage Trowel sources
 
-Tool ID: `shovel`. 9 source types.
+Tool ID: `shovel`. 13 source types.
+
+**Dry Finds** (`sands`):
+
+- Clay (`CLAY`): Break this block.
+- Gravel (`GRAVEL`): Break this block.
+- Red Sand (`RED_SAND`): Break this block.
+- Sand (`SAND`): Break this block.
 
 **Moss and Roots** (`moss`):
 

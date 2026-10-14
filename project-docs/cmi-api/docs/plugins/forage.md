@@ -127,10 +127,10 @@ Default tools are:
 | --- | --- | --- | --- |
 | Forage Sickle | `COPPER_HOE` | flora, crops, mushrooms | starter |
 | Forage Axe | `COPPER_AXE` | logs, fruits | starter |
-| Forage Trowel | `COPPER_SHOVEL` | moss | starter |
+| Forage Trowel | `COPPER_SHOVEL` | moss, sands | starter |
 | Forage Shears | `SHEARS` | leaves | starter |
 | Forage Pickaxe | `COPPER_PICKAXE` | stone, cave | any Forage tool level 2 |
-| Forage Brush | `BRUSH` | relics, sands | any Forage tool level 2 |
+| Forage Brush | `BRUSH` | relics, sands, fossils, animal_care | any Forage tool level 2 |
 | Forage Sword | `COPPER_SWORD` | creature_drops | any Forage tool level 2 |
 | Forage Mace | `MACE` | danger_drops | any Forage tool level 2 |
 
@@ -142,14 +142,32 @@ Examples of default gathering sources:
 | --- | --- |
 | Sickle | short grass, dandelions, wheat crops, red/brown mushrooms, red shrubs, shelf mushrooms |
 | Axe | oak/poplar logs, pumpkins, melons, sugar cane, bamboo |
-| Trowel | moss blocks, moss carpet, azaleas, big dripleaf |
+| Trowel | moss blocks, moss carpet, azaleas, big dripleaf; normal sand, red sand, gravel and clay |
 | Shears | oak leaves and red/orange/yellow poplar leaves |
 | Pickaxe | calcite, tuff, basalt, end stone, rooted dirt, pointed dripstone |
-| Brush | sand, red sand, gravel, clay, suspicious sand/gravel |
+| Brush | sifted sand/red sand/gravel/clay; excavated suspicious blocks; cleaned pots; surveyed bone blocks; adult armadillos |
 | Sword | cows, sheep, chickens, rabbits, squid |
 | Mace | zombies, skeletons, creepers, blazes, breezes, shulkers |
 
-Block routes award progress when you **break** a configured block with the matching genuine Forage tool in your main hand. The Brush route is a block-breaking route, not a reward for completing vanilla archaeology brushing. The list above is a starting point; the [generated complete source catalogue](forage-camps.md#complete-source-catalogue) contains every effective block and creature source from the shipped defaults, with exact configuration IDs. Every tier of a tool uses the same sources.
+Ordinary block routes award progress when you **break** a configured block with the matching genuine Forage tool in your main hand. The expanded Brush routes, available from build 767, use archaeology completion, timed sifting, non-destructive relic cleaning/fossil surveys and successful adult-armadillo grooming instead. See [Brush activities](#brush-activities). The list above is a starting point; the [generated complete source catalogue](forage-camps.md#complete-source-catalogue) contains every effective block and creature source from the shipped defaults, with exact configuration IDs. Every tier of a tool uses the same sources.
+
+<a id="brush-activities"></a>
+
+### Brush activities (available from build 767)
+
+All five routes use the existing Forage Brush. Complete vanilla archaeology on `SUSPICIOUS_SAND`/`SUSPICIOUS_GRAVEL`; hold use for the configured duration (normally three seconds) to sift `SAND`/`RED_SAND`/`GRAVEL`/`CLAY`, clean a natural `DECORATED_POT`, or survey a natural `BONE_BLOCK`; brush an adult `ARMADILLO` and obtain its normal scute for Animal Care. Sifting consumes the source; cleaning/surveying leaves it intact. Ordinary breaking of brush-only sources and creature kills do not substitute for these actions. `CHISELED_BOOKSHELF` is removed from the default sources.
+
+Normal sand, red sand, gravel and clay also support **left-click breaking with the Forage Trowel** (`shovel`) by default. The Trowel's families are `moss,sands`; the Brush still uses held right-click sifting on those four materials. Both earn the same Sands-family progress under the same allowance and provenance rules. An ordinary shovel earns no Forage credit, and suspicious sand/gravel remain archaeology-only sources.
+
+A normally rewarded sift has a default **25% chance** to award a glowing stick named **Silted Keepsake**. Its three right-click uses each grant a random integer **3–15 personal Forage XP**, then the item disappears after its final use. Tool XP, Minecraft XP and genuine treasure-payment currency are separate. Capped daily-quest-only actions cannot drop keepsakes. Per-item identity and per-charge delivery tracking prevent the same charge paying twice, including after the item changes hands; failed or uncertain claims follow the transaction review path.
+
+A delivered keepsake counts once toward treasure-discovery objectives when found, replacing that sift's ordinary treasure roll. The ordinary roll still applies when no keepsake is selected, and normal block drops remain. Charge redemption grants no new gathering/discovery credit and consumes no daily gathering allowance. Keep room for the uniquely identified find.
+
+The keepsake roll is **Brush-sifting-only**. Breaking the same materials with a Forage Trowel retains ordinary gathering/treasure behavior but cannot award Silted Keepsakes.
+
+`BONE_BLOCK` belongs to the new `fossils` family, not `stone`; `ARMADILLO` belongs to `animal_care`. Brush family fallback includes `relics`, `sands`, `fossils` and `animal_care`. Match quest objectives to these actual families rather than treating any underground find as Cave credit. Source details and generated lists distinguish Brush sifting from Trowel breaking for the four shared ground sources.
+
+Only the first successful cleaning/survey of a physical source can reward any player, retained across chunk reloads and clean restarts. Player-placed blocks remain ineligible, and moving or breaking/replacing a source does not reset its history. Grooming has an additional default shared 24-hour animal cooldown and eight-credit personal daily cap. Genuine Brush state, world/area permissions, provenance, ordinary reward caps and the existing bounded daily-quest exception remain authoritative. See the [player instructions](forage-camps.md#brush-activities), [technical contract](forage-camp-technical.md#brush-activities) and [acceptance checklist](forage/checklist.md#brush-activities).
 
 **Available from build 752:** family browsing, contextual What Counts? pages and the additional source routes below are deployed on the maintained test servers. Connected-client acceptance remains open.
 
