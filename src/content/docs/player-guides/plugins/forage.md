@@ -155,7 +155,9 @@ Click a tool name for its complete source list. The examples below use the shipp
 | [Sword](#forage-sword-sources) | Copper sword | Creature Finds: configured cows, sheep, chickens, rabbits and squid | Carry any Forage tool at tool level 2; finish this camp's Local Introduction |
 | [Mace](#forage-mace-sources) | Mace | Danger Finds: configured zombies, skeletons, blazes, breezes and shulkers | Carry any Forage tool at tool level 2; finish this camp's Local Introduction |
 
-**Moss Block needs the Trowel; Glow Lichen needs Shears.** A family groups quest progress, but can contain sources for different tools. For example, Glow Lichen stays in Cave Forage with its Shears assignment, while Pointed Dripstone stays Cave/Pickaxe. Calcite is Stone/Pickaxe and does not count toward Cave Cycle. Follow [Matching Quests and What Counts?](#find-what-counts) for the actual objective.
+**Moss Block and Moss Carpet need the Trowel; Glow Lichen needs Shears.** Shears can gather Small Dripleaf and Pale Hanging Moss from the Moss and Roots family. That does not make it suitable for every Moss source. A family groups quest progress, but can contain sources for different tools: Glow Lichen stays in Cave Forage with its Shears assignment, while Pointed Dripstone stays Cave/Pickaxe. Calcite is Stone/Pickaxe and does not count toward Cave Cycle. Follow [Matching Quests and What Counts?](#find-what-counts) for the actual objective.
+
+The shop card and your tool's description explain whether it supports **all N listed sources** in a family or **some**, with examples and a `+N more` count when needed. “All” means every source listed for that family on this server, not every Minecraft block that resembles it. Use `/forage sources shears` for the full Shears list, or `/forage sources shovel` for the Trowel list. To identify one block directly, look at it and use `/forage inspect`.
 
 ### Tool level, player level and tier
 
@@ -169,13 +171,13 @@ You do not need to own or level all four starter tools. All tiers use the same e
 
 ### Improve and repair through Forage
 
-Return to your **active camp**, finish its Local Introduction and hold the tool in your main hand. Use **Upgrade Tool** for tier upgrades, diamond refinement and the compatible enchantments that Forage offers. Review the current level requirements, money, Points and item costs before confirming; prices depend on server settings and the balance preset.
+Return to your **active camp**, finish its Local Introduction and hold the tool in your main hand. **Sneak-right-click your own composter → Forage Camp → Upgrade Tool** opens tier upgrades, diamond refinement and the compatible enchantments that Forage offers. For a worn tool, use **Forage Camp → Repair & Merge** instead. The [repair walkthrough](#repair-and-merge) and [upgrade walkthrough](#upgrade-a-tool) below explain each click and which items to bring. Review the current level requirements, money, Points and item costs before confirming; prices depend on server settings and the balance preset.
 
 - **Tier upgrades** improve the tool's Forage bonus while keeping its XP, uses and current durability. They do not repair it or unlock extra sources.
 - **Diamond refinement** changes a supported copper Sickle, Axe, Trowel, Pickaxe or Sword to its diamond material, keeping progression and durability percentage. Defaults require player Forage level 5 and held-tool level 3. Shears, Brush and Mace have no diamond variant.
 - **Forage enchantments** offer compatible Unbreaking and Efficiency improvements with their own held-tool-level gates. Apply them in this menu; ordinary enchanting tables, enchanted books, anvils and other plugins' repair/enchant services cannot improve these protected tools.
 - **Optional [Mending I](#mending-upgrade)** is bought once per eligible Tier III tool through Forage. After that approved purchase, ordinary Minecraft XP can repair it, including in the offhand and at the five-durability lock. This is the deliberate exception to external repair blocking, not permission to add Mending elsewhere. It stays with a traded tool and grants no Forage progress or cap reset.
-- **[Repair & Merge](#care-for-tools-and-make-dust)** keeps the main-hand tool and consumes a matching offhand Forage donor, one genuine treasure and the displayed money/Points. By default it restores up to 40 percentage points, capped at 70% durability below player level 10, 85% from level 10 and 100% from level 20, and transfers 50% of the donor's tool XP. Keep the desired tool in the correct hand before confirming.
+- **[Repair & Merge](#repair-and-merge)** keeps the main-hand tool and consumes a matching offhand Forage donor, one genuine treasure and the displayed money/Points. By default it restores up to 40 percentage points, capped at 70% durability below player level 10, 85% from level 10 and 100% from level 20, and transfers 50% of the donor's tool XP. Keep the desired tool in the correct hand before confirming.
 
 ### Gather with the matching tool
 
@@ -798,19 +800,65 @@ Family ID: `mushrooms`. 8 item types.
 
 ## Care for tools and make dust
 
-Use **Upgrade Tool** with the tool to improve in your main hand. Tier upgrades, supported diamond refinements, and compatible Forage enchantments each show their own level, money, and point requirements. Shears, brushes, and maces have no diamond refinement. Improvements preserve the tool's progression; a tier upgrade does not repair it.
+Tool care takes place at **your own active camp**, after that camp's Local Introduction is complete and while your Initial Camp is valid. **Sneak-right-click its composter**, then choose **Forage Camp** in the hub. This page contains both **Repair & Merge** and **Upgrade Tool**. Stay within six blocks of the composter while using them. Simply holding two tools and a treasure does not start a repair.
 
-For **Repair & Merge**, hold the tool to keep in your main hand, put a matching Forage tool type in your offhand as the donor, and carry a genuine Forage treasure. Confirm only after reviewing the money/point costs: the donor and treasure are consumed. Repair restores a limited amount of durability and transfers some donor XP. By default, a tool locks at five durability remaining so it can be repaired before breaking.
+<a id="repair-and-merge"></a>
+
+### Repair a worn tool, step by step
+
+1. Put the **Forage tool you want to keep in your main hand**. For the two-Trowel example, this is your worn Trowel.
+2. Put the **Forage tool you are willing to lose in your offhand**. It must be the same tool type: Trowel with Trowel, Shears with Shears, and so on. An ordinary Minecraft tool is not a donor. The donor does not have to be the same tier.
+3. Carry **one genuine Forage treasure** in your ordinary inventory or hotbar, plus enough money and Forage Points for the quoted cost. Items inside a bundle, shulker box or other container do not count. The glowing **Silted Keepsake** from Brush sifting is an XP item, not a repair treasure.
+4. **Sneak-right-click your own camp's composter → Forage Camp → Repair & Merge** (the anvil button). Keep both tools in their hands; you do not place them in GUI slots or a real anvil.
+5. Check the **Keep**, **Merge** and **Forage Treasure Ready** cards. Hover **Confirm Repair & Merge** to see the durability change, money, Points and donor-XP transfer. The selected treasure is consumed automatically, so store treasures you want to keep before opening the repair page.
+6. Click **Confirm Repair & Merge**, then accept the final spending confirmation. **The entire offhand donor tool and one treasure are consumed**, along with the displayed money and Points. The repaired tool stays in your main hand.
+
+The keeper retains its own tier, material, enchantments, uses and progression, and receives the stated donor XP. The donor's tier, material and enchantments do **not** transfer. By default, one merge adds up to **40 percentage points of durability** and transfers **50% of the donor's tool XP**. It does not copy the donor's remaining durability. The maximum repaired durability depends on your **player Forage level**, not the tool's level:
+
+| Player Forage level | Repair & Merge ceiling |
+| --- | --- |
+| 1–9 | 70% durability |
+| 10–19 | 85% durability |
+| 20+ | 100% durability |
+
+For example, a tool at 10% can reach 50% in one merge. Below player level 10, a second merge can reach 70%, with a new donor, treasure and payment required. A tool already at its current ceiling cannot use Repair & Merge again until it wears down or you unlock a higher ceiling. To repair beyond the 70% or 85% ceiling, raise your player level or use an approved [Mending Upgrade](#mending-upgrade). The menu shows the actual amount and price before you spend anything, including when less than 40 percentage points can be restored.
+
+**If the button is blocked:** click it to print the missing requirements. Check the hands, matching tool type, treasure, balances and repair ceiling. If Forage asks you to use your workstation, close the menu and sneak-right-click your own composter again. A five-durability safety lock still allows this recovery gesture. If the camp needs repair or its Local Introduction is unfinished, resolve that first; your saved tool progress is kept.
+
+<a id="upgrade-a-tool"></a>
+
+### Upgrade or enchant a tool, step by step
+
+1. Hold the **Forage tool to improve in your main hand** at your active camp. A donor in the offhand is only needed for Repair & Merge.
+2. **Sneak-right-click your composter → Forage Camp → Upgrade Tool**.
+3. Choose the improvement you want and read its requirements. For a tier upgrade, review **Upgrade Requirements**, then click **Confirm Upgrade**. For the other choices, click **Refine to Diamond**, **Add Unbreaking**, **Add Efficiency** or **Add Mending I**.
+4. Review and accept the final confirmation. Keep the same tool selected and stay beside the workstation. If a requirement is missing, clicking the blocked option explains what to do next.
+
+These are separate purchases: buying a higher tier does not automatically refine the material or add enchantments.
+
+| Improvement | What it does | Shipped requirements to look for |
+| --- | --- | --- |
+| **Tier I → II → III** | Improves Forage rewards without changing which sources the tool can gather | Player Forage level **12** for II, then **24** for III, plus the shown money and Points. Buy each tier in order. Tool level 2 is a different value and does not mean Tier II. |
+| **Refine to Diamond** | Changes the Sickle, Axe, Trowel, Pickaxe or Sword to its diamond material | Player Forage level **5**, held-tool level **3**, money and Points. Shears, Brush and Mace have no diamond variant. |
+| **Unbreaking I–III** | Adds the next Unbreaking level to a compatible tool | Held-tool levels **2 / 4 / 6**, plus money and Points for each purchase. |
+| **Efficiency I–III** | Adds the next Efficiency level where compatible | Held-tool levels **3 / 6 / 9**, plus money and Points for each purchase. |
+| **Mending I** | Enables ordinary Minecraft XP repair on that tool | Tier **III**, **50 personal rewarded gathers**, **3 genuine treasures**, money and Points; see [Mending](#mending-upgrade) below. |
+
+Improvements preserve the tool's progression. Tier upgrades and enchantment purchases do not repair it; diamond refinement preserves its durability percentage. Prices and requirements can be tuned by staff, so the live menu quote takes precedence over these defaults.
 
 Forage tools cannot use ordinary anvils, enchanting tables, grindstones, smithing, crafting repairs, unauthorized Mending, or other plugins' repair/enchant services. The Mending Upgrade below, included from build 745, is the only added XP-repair exception; its enchantment must be purchased through Forage. If a tool pauses for review, retain it and tell staff; renaming or stripping its identity is not a repair. Normal storage, dropping, and replacement purchases remain available.
 
 <a id="mending-upgrade"></a>
 
-**Optional Mending I, introduced in build 745 and verified on build 746:** Player acceptance remains open; the native probe used synthetic repair events, not a real client collecting XP. Tool Upgrades lets you buy Mending once for a Tier III or higher Forage tool. All eight tool types are eligible by default. Use your owned active camp after its Local Introduction, with the tool in your main hand. The held-tool level requirement defaults to 1; there is no extra player-level gate for this purchase. Its base price is $10,000 and 250 Forage Points; the default `normal` balance multiplier makes it **$9,000 and 225 Points**. Check the displayed price before confirming.
+### Optional Mending I
 
-**Active balance from build 749:** a new Mending purchase consumes **3 genuine Forage treasures per tool**, in any mix, as well as the unchanged money and Points price above. The treasure cost is unscaled. First reach **50 lifetime successful rewarded Forage gathering actions**, including creature actions; past qualifying actions count. That personal unlock is not spent. Quest rewards and Turn-Ins do not count, and purchasing Mending does not deduct XP. Put genuine Forage treasures in the inventory rows above your hotbar. Items in the hotbar, offhand or containers are kept. Genuine traded treasures also count; ordinary or renamed items do not. These additions follow the historical build-746 verification and do not affect already-purchased Mending.
+In **Upgrade Tool**, choose **Add Mending I** to buy Mending once for a Tier III or higher Forage tool. All eight tool types are eligible by default. Use your owned active camp after its Local Introduction, with the tool in your main hand. The held-tool level requirement defaults to 1; there is no extra player-level gate for this purchase. Its base price is $10,000 and 250 Forage Points; the default `normal` balance multiplier makes it **$9,000 and 225 Points**. Check the displayed price before confirming.
+
+A new Mending purchase consumes **3 genuine Forage treasures per tool**, in any mix, as well as the money and Points price above. First reach **50 lifetime successful rewarded Forage gathering actions**, including creature actions; past qualifying actions count. That personal unlock is not spent. Quest rewards and Turn-Ins do not count, and purchasing Mending does not deduct XP. Put genuine Forage treasures in the inventory rows above your hotbar. Items in the hotbar, offhand or containers are kept. Genuine traded treasures also count; ordinary or renamed items do not. These requirements apply to buying Mending, not to using a tool that already has approved Mending.
 
 The purchased improvement stays with the tool if you trade it. It lets ordinary Minecraft XP repair the tool up to **100%**, including in your offhand and at the five-durability safety lock. Buying the enchantment does not repair it immediately. XP repair grants no Forage progress or points and does not reset gathering limits. Repair & Merge keeps its existing donor, treasure and durability-cap rules. Disabling later purchases does not remove a tool's already-approved Mending.
+
+### Make Forage Dust
 
 **Forage Dust** crafting uses plain bone meal, money, and points at an active camp. The default standard batch makes eight radius-3 dust; the greater batch makes four radius-6 dust and also consumes two Forage treasures. Read the current recipe before confirming. Hold dust in your main hand and right-click a suitable growing block; already-owned dust can be used away from camp in an allowed area.
 

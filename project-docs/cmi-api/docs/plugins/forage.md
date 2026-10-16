@@ -128,7 +128,7 @@ Default tools are:
 | Forage Sickle | `COPPER_HOE` | flora, crops, mushrooms | starter |
 | Forage Axe | `COPPER_AXE` | logs, fruits | starter |
 | Forage Trowel | `COPPER_SHOVEL` | moss, sands | starter |
-| Forage Shears | `SHEARS` | leaves | starter |
+| Forage Shears | `SHEARS` | leaves; exact-source overrides add selected Cave, Flora and Moss plants | starter |
 | Forage Pickaxe | `COPPER_PICKAXE` | stone, cave | any Forage tool level 2 |
 | Forage Brush | `BRUSH` | relics, sands, fossils, animal_care | any Forage tool level 2 |
 | Forage Sword | `COPPER_SWORD` | creature_drops | any Forage tool level 2 |
@@ -143,7 +143,7 @@ Examples of default gathering sources:
 | Sickle | short grass, dandelions, wheat crops, red/brown mushrooms, red shrubs, shelf mushrooms |
 | Axe | oak/poplar logs, pumpkins, melons, sugar cane, bamboo |
 | Trowel | moss blocks, moss carpet, azaleas, big dripleaf; normal sand, red sand, gravel and clay |
-| Shears | oak leaves and red/orange/yellow poplar leaves |
+| Shears | oak/poplar leaves, glow lichen, hanging roots, seagrass, small dripleaf, pale hanging moss |
 | Pickaxe | calcite, tuff, basalt, end stone, rooted dirt, pointed dripstone |
 | Brush | sifted sand/red sand/gravel/clay; excavated suspicious blocks; cleaned pots; surveyed bone blocks; adult armadillos |
 | Sword | cows, sheep, chickens, rabbits, squid |
@@ -187,7 +187,7 @@ Contextual **What Counts?** pages keep eligibility separate: a quest explains it
 
 A listed source can still give no reward because of a daily player/family cap, chunk exhaustion, world/area restrictions, disabled gathering or an unusable held tool. Source membership and current reward eligibility are separate; use `/forage limits` and the current feedback to diagnose a pause.
 
-Source families define quest membership and shared family progression/caps; they are not an assurance that every block in a family uses the same tool. Tool family lists provide the fallback. **Exact-source correction (from build 755):** eleven plants in the Cave, Flora and Moss families use Forage Shears instead, keeping their existing family. See the [player guide mapping](forage-camps.md#find-what-counts). Switching tools within one family does not bypass that family's allowance.
+Source families define quest membership and shared family progression/caps; they are not an assurance that every block in a family uses the same tool. Tool family lists provide the fallback. **Exact-source correction (from build 755):** eleven plants in the Cave, Flora and Moss families use Forage Shears instead, keeping their existing family. Within Moss and Roots, Shears supports Small Dripleaf and Pale Hanging Moss; Moss Block and Moss Carpet require the Trowel. Shop cards and held-tool lore distinguish `all N listed sources` from `(some)` followed by exact examples and a `+N more` count. `/forage sources <tool>` shows the complete effective list. See the [player guide mapping](forage-camps.md#find-what-counts). Switching tools within one family does not bypass that family's allowance.
 
 Paper 26.3 gathering includes poplar logs and stripped poplar logs with the Forage Axe, red/orange/yellow poplar leaves with Forage Shears, and red shrubs and shelf mushrooms with the Forage Sickle. These use the existing family rewards, tool progression, quests, and caps. Saplings are planting stock, and crafted poplar building blocks are not gathering sources. The organic turn-in rules also recognize the new leaves, shrubs, and mushrooms when they are plain vanilla items.
 
@@ -213,7 +213,7 @@ Sword and mace Forage progress is entity-based. The sword listens to configured 
 
 Tools are PDC-marked with schema, tool id, tier, tool XP, tool level, and use count. Lore includes a fake Foraging level, tool soul progress bar, short tool personality line, supported families, and a warning that the tool is curated.
 
-Forage tool upgrades, refinement and enchantment application belong to their own camp menus. Repair & Merge is the existing repair route; the optional [Mending Upgrade](#mending-upgrade) below is included from build 745. The supported pages are **Upgrade Tool** and **Repair & Merge**. Players can buy replacement tools and discard unwanted ones; ordinary storage, inventory rearrangement, dropping, and disposal remain available. Tools still work as ordinary Minecraft tools on other sources without earning Forage rewards.
+Forage tool upgrades, refinement and enchantment application belong to their own camp menus. Repair & Merge is the existing repair route; the optional [Mending Upgrade](#mending-upgrade) below is included from build 745. The supported pages are **Upgrade Tool** and **Repair & Merge**: **sneak-right-click your own composter → Forage Camp → choose the service**. The player guide has complete [Repair & Merge instructions](forage-camps.md#repair-and-merge) and [upgrade/enchantment instructions](forage-camps.md#upgrade-a-tool), including both confirmation steps, which hand holds each tool and what gets consumed. Players can buy replacement tools and discard unwanted ones; ordinary storage, inventory rearrangement, dropping, and disposal remain available. Tools still work as ordinary Minecraft tools on other sources without earning Forage rewards.
 
 Protection covers anvils (including virtual anvils), enchanting tables, grindstones, smithing, crafting repairs, automated crafters, smelting/fuel conversion, hopper insertion into transforming workstations, dispenser use, and unauthorized Mending. The approved Mending exception described below requires build 745 or newer. Entity interactions such as armadillo brushing also respect tool integrity and the safety lock. These guards remain active when Forage gameplay is dormant. The legacy `tools.block-*` switches are retained for configuration compatibility but cannot disable item protection.
 
@@ -279,11 +279,11 @@ Repair & Merge remains available through the owned composter workstation, with i
 
 - the player must keep the workstation session valid at an active camp whose Local Introduction is complete
 - the main hand must hold the Forage tool to keep
-- the offhand must hold a matching Forage tool type to consume, such as shears with shears
-- one PDC-marked Forage treasure item is consumed
+- the offhand must hold a matching Forage tool type to consume, such as shears with shears; donor tier and material do not need to match
+- one PDC-marked Forage treasure item is consumed from ordinary inventory storage, including the hotbar; container contents are not searched. This differs from Mending's backpack-only treasure selection. Silted Keepsakes are not payment treasures
 - the player pays configured Forage Points and CMI/Vault money
 - the repair restores a configured durability percentage, capped by the player's Forage level
-- a configured percentage of the offhand donor tool XP is transferred into the main-hand tool
+- a configured percentage of the offhand donor tool XP is transferred into the main-hand tool; donor durability, tier, material and enchantments are not transferred
 - default repair tuning restores up to 40 percentage points per merge, capped at 70% durability below Forage level 10, 85% from level 10, and 100% from level 20; it transfers 50% of donor tool XP. Review the current money and point costs before confirming
 
 ## Skill Branches
