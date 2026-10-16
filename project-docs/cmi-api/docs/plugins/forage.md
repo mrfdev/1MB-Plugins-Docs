@@ -136,6 +136,8 @@ Default tools are:
 
 Bring the level-2 tool in your carried inventory when buying an unlocked tool; the shop does not inspect tools left in chests. Tool **level**, tool **tier**, and player **Forage level** are separate values. Check the shop card and `/forage stats` before spending. The four later tool types are shop unlocks, not automatically tier-II items.
 
+Player Forage levels and Points are shared across that player's tools. A player who already meets the configured player-level gates can purchase a new tool and upgrade its tiers immediately by paying each cost. Tier upgrades do not raise its tool level or require it to earn fresh XP first. The held-tool description distinguishes **Forage tier: III** from **Tool level: 1**; both can legitimately appear on the same tool.
+
 Examples of default gathering sources:
 
 | Tool | Useful first sources |
@@ -168,6 +170,8 @@ The keepsake roll is **Brush-sifting-only**. Breaking the same materials with a 
 `BONE_BLOCK` belongs to the new `fossils` family, not `stone`; `ARMADILLO` belongs to `animal_care`. Brush family fallback includes `relics`, `sands`, `fossils` and `animal_care`. Match quest objectives to these actual families rather than treating any underground find as Cave credit. Source details and generated lists distinguish Brush sifting from Trowel breaking for the four shared ground sources.
 
 Only the first successful cleaning/survey of a physical source can reward any player, retained across chunk reloads and clean restarts. Player-placed blocks remain ineligible, and moving or breaking/replacing a source does not reset its history. Grooming has an additional default shared 24-hour animal cooldown and eight-credit personal daily cap. Genuine Brush state, world/area permissions, provenance, ordinary reward caps and the existing bounded daily-quest exception remain authoritative. See the [player instructions](forage-camps.md#brush-activities), [technical contract](forage-camp-technical.md#brush-activities) and [acceptance checklist](forage/checklist.md#brush-activities).
+
+Vanilla armadillo grooming costs **16 durability from a Brush's full 64** before Unbreaking: a quarter of a new Brush, or about a third of a partly repaired one. Repeated grooming can still yield ordinary scutes and spend durability while its Forage reward is on cooldown. Forage's approved Unbreaking can reduce wear and approved Mending can repair it with Minecraft XP; a tier upgrade alone does neither.
 
 **Available from build 752:** family browsing, contextual What Counts? pages and the additional source routes below are deployed on the maintained test servers. Connected-client acceptance remains open.
 
@@ -211,7 +215,7 @@ Tracking on this beta begins with build 739. Earlier placements have unknown his
 
 Sword and mace Forage progress is entity-based. The sword listens to configured gentle creature entities such as cows, sheep, chickens, squids, rabbits, and turtles. The mace listens to configured danger entities such as shulkers, blazes, breezes, wither skeletons, ghasts, and phantoms. The plugin records a short-lived matching-tool melee hit and only awards progress if that same player is still holding the same curated tool type when the entity dies, within ten seconds of the recorded hit. The plugin does not register fragile custom enchants or rewrite vanilla loot tables for those routes; it awards Forage XP/points/treasure rolls when the matching curated tool is used for a configured entity source.
 
-Tools are PDC-marked with schema, tool id, tier, tool XP, tool level, and use count. Lore includes a fake Foraging level, tool soul progress bar, short tool personality line, supported families, and a warning that the tool is curated.
+Tools are PDC-marked with schema, tool id, tier, tool XP, tool level, and use count. Lore explicitly labels the purchased **Forage tier** and XP-earned **Tool level**, alongside the tool soul progress bar, short tool personality line, exact-source hints, and a warning that the tool is curated.
 
 Forage tool upgrades, refinement and enchantment application belong to their own camp menus. Repair & Merge is the existing repair route; the optional [Mending Upgrade](#mending-upgrade) below is included from build 745. The supported pages are **Upgrade Tool** and **Repair & Merge**: **sneak-right-click your own composter → Forage Camp → choose the service**. The player guide has complete [Repair & Merge instructions](forage-camps.md#repair-and-merge) and [upgrade/enchantment instructions](forage-camps.md#upgrade-a-tool), including both confirmation steps, which hand holds each tool and what gets consumed. Players can buy replacement tools and discard unwanted ones; ordinary storage, inventory rearrangement, dropping, and disposal remain available. Tools still work as ordinary Minecraft tools on other sources without earning Forage rewards.
 
@@ -265,9 +269,11 @@ The same upgrade page also offers controlled improvements:
 
 **Introduced in canonical build 745 and verified on build 746 / Paper 26.3 STABLE 178 on 13 October 2026.** Tool Upgrades offers a one-time **Mending I** purchase for an eligible tool at **Tier III or higher**. The defaults cover all eight tools: Sickle, Axe, Trowel, Shears, Pickaxe, Brush, Sword and Mace. Hold the tool in your main hand at your owned active camp, complete its Local Introduction and review the confirmation. The required held-tool level defaults to 1; there is no additional player Forage-level requirement for Mending once camp access and the tool's tier are satisfied.
 
+A **Tier III, Tool Level 1 Brush** is therefore eligible when the other requirements are met. The tier gate does not mean Tool Level 3. Unbreaking and Efficiency retain their separate configured tool-level gates.
+
 The base price is **$10,000 and 250 Forage Points**, scaled by the existing improvement-cost multiplier. The shipped `normal` preset's 0.9 multiplier makes this **$9,000 and 225 Points**. The current menu quote is authoritative. Buying it does not restore durability immediately, and the same tool cannot buy Mending again.
 
-**Active balance from build 749:** each new Mending purchase consumes **3 genuine Forage treasures per tool**, in any mix. This treasure amount is not scaled by the improvement multiplier. The player must first have **50 lifetime successful rewarded Forage gathering actions**; earlier qualifying actions, including creature actions, count. This is a personal unlock, not a balance to spend. Quest rewards and Turn-Ins do not count. The money and point prices above stay unchanged, and purchasing Mending does not deduct XP. These requirements were added after the historical build-746 verification.
+**Active balance from build 749:** each new Mending purchase consumes **3 genuine Forage treasures per tool**, in any mix. This treasure amount is not scaled by the improvement multiplier. The player must first have **50 lifetime successful rewarded Forage gathering actions**; earlier qualifying actions with any matching Forage tool, including creature actions, count. This is a personal unlock, not a balance to spend or a requirement to gather 50 more times for each tool. Quest rewards and Turn-Ins do not count. The money and point prices above stay unchanged, and purchasing Mending does not deduct XP. These requirements were added after the historical build-746 verification.
 
 For this purchase, put the treasures in your main backpack, **slots 9–35 above the hotbar**. Hotbar, offhand, armor and container contents do not count. Each treasure must carry Forage's genuine treasure marker and a valid delivery UUID; renamed ordinary items do not qualify. Treasures may come from another player: there is no finder-ownership requirement. Already-purchased Mending keeps working without meeting the new purchase requirements.
 
