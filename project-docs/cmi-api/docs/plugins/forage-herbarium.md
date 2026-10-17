@@ -1,12 +1,12 @@
 # Forage Herbarium
 
-**Deployed in build 742, reviewed 12 October 2026, on Paper 26.3 STABLE 175.** The maintained beta includes the Herbarium and its expanded botanical gathering routes. Connected-client gameplay and authored reward acceptance remain open; automated and native checks do not sign off those tests or authorize live activation.
-
-The Herbarium is your permanent personal plant-discovery journal. Gather an eligible botanical source once with its matching genuine Forage tool to discover that specimen. The first discovery records its date, world name and world UUID, and namespaced biome. Repeat harvests do not replace that first-find information. Camps, season changes and claiming a collection reward do not reset discoveries.
+The Herbarium is your permanent personal plant-discovery journal. Gather an eligible botanical source once with its matching genuine Forage tool to discover that specimen. The first discovery records its date, world and biome. Repeat harvests do not replace that first-find information. Camps, season changes and claiming a collection reward do not reset discoveries.
 
 ## Browse and discover
 
-Open **Herbarium** from the Forage hub or use `/forage herbarium`. Browsing works away from a camp while Forage and the Herbarium are enabled, for an online, living player with `onembcmi.forage.use`. It shows your own journal only. The collection overview links to **All Specimens**; collection and specimen pages offer **Show All**, **Missing** and **Discovered**, pagination and Back. Entries explain matching tools, source aliases and habitat, with first-find details after discovery. Browsing never creates a camp visit or grants rewards.
+Open **Herbarium** from the Forage hub or use `/forage herbarium`. Browsing works away from a camp while Forage and the Herbarium are available. It shows your own journal only. The collection overview links to **All Specimens**; collection and specimen pages offer **Show All**, **Missing** and **Discovered**, pagination and Back. Entries explain matching tools, source aliases and habitat, with first-find details after discovery. Browsing never creates a camp visit or grants rewards.
+
+Back keeps your place: a journal returns to the collection page that opened it, and a reward confirmation returns to the same specimen filter and page. These returns still work after a camp visit ends. Claiming the reward continues to require a valid visit to your own active camp.
 
 Discovery requires a successful normal Forage gathering action. Cancelled or synthetic events, ordinary tools, a wrong tool, invalid or unusable tools, restricted worlds/areas, player-placed sources, unavailable placement tracking, exhausted chunks and reached reward caps do not grant a discovery. Buying, picking up, storing or turning in an item does not count. The existing growth rules still allow legitimate grown harvests. A pitcher crop must be fully mature; breaking an immature upper half does not qualify.
 
@@ -18,23 +18,13 @@ The catalogue is botanical. Stone, minerals, relics and creatures do not become 
 
 Each collection has an explicit fixed list. Discover every required specimen to complete it. A shared specimen can contribute to several themed collections, and some journal specimens have no collection reward. Requirements do not grow automatically when staff add a new source.
 
-Collection rewards are one-time item-only CMI kits. There is no claim cost or expiry. To claim, open your own complete camp workstation, finish its Local Introduction, and remain eligible in Survival or Adventure mode. Preview the collection reward, then confirm. Full inventories and unavailable or invalid kits refuse before delivery; repeated and stale confirmations cannot create a second claim. Uncertain deliveries remain blocked for staff review. A kit name or successful command dispatch is not proof that a reward was delivered.
+Collection rewards are one-time bundles of items, including themed Herbarium equipment and collectibles. There is no claim cost or expiry. To claim, open your own complete camp workstation, finish its Local Introduction, and remain eligible in Survival or Adventure mode. Preview the collection reward, then confirm. Full inventories and unavailable or invalid kits refuse before delivery; repeated and stale confirmations cannot create a second claim. Uncertain deliveries remain blocked for staff review. Keep the claim reference if the menu asks you to contact staff.
 
-The shipped `herbarium.rewards.enabled` default is **false** until staff author and review the kits. Discovery and completion can still be recorded while claiming is off. CMI `Enabled: false` protects ordinary `/kit` access but does not prevent Forage from reading an item template through its audited delivery adapter. The owner has approved named-dirt placeholders for isolated beta delivery tests, with beta claiming deliberately enabled; the primary default remains false. Those tests do not approve placeholder content for live rewards.
+If collection claims are temporarily paused, keep gathering: normal eligible discoveries and completed collections remain saved. Claim after the reward service reopens. Changing camps or Minecraft name does not create a second collection reward.
 
-## Staff configuration and restoration
+**Ancient Flowers collection and voucher exchange are different.** The botanical collection contains Torchflower and Pitcher Plant. The [Ancient Creaking Flower exchange](forage-camps.md#ancient-flowers-and-early-access) consumes special monthly reward flowers and has its own two-voucher lifetime limit.
 
-The main `config.yml` uses `herbarium.enabled`, `herbarium.rewards.enabled`, `herbarium.collections.ids` and `herbarium.collections.<id>.{enabled,version,display-name,specimens,reward-kit}`. Requirements use canonical specimen IDs, not item-drop names or alias block forms. An enabled collection with no matching active gathering route is a configuration error. Restore its source or disable that collection; never silently reduce its requirements. Disabling or removing collection configuration prevents new registration of that configured definition; it does not delete a previously frozen definition or its discoveries, completion and claim history. Existing registered collections remain archived and can continue progression/claims under their frozen rules while the journal and reward service permit them.
-
-Collection definitions are frozen after registration. Changing an existing ID's version, display name, requirements or kit is refused; create an explicit new collection ID for a new entitlement. Previously registered history and claims remain. Retain the item templates used by old outstanding entitlements.
-
-Use `/forage admin herbarium <local-player|UUID>` for authorized read-only inspection; resolve player identities locally and keep the original UUID. Runtime state lives in `data/herbarium.yml` with the `data/herbarium.initialized` marker. Missing or corrupt state after initialization stops the journal rather than creating an empty replacement. Preserve both files, the original journal/transaction receipts and recovery item evidence together. Do not restore an older profile or delete the marker to reset a one-time claim. Review ambiguous external effects before retrying or acknowledging recovery. The existing [inventory/economy durability gate](forage-camp-technical.md#transactions-saving-and-crash-recovery) remains open; journal persistence alone does not prove that an external inventory provider committed an item to disk.
-
-## Maintain this reference
-
-The generated sections below use the same shipped source loader, botanical catalogue and settings as the feature. After changing source bindings, aliases or collection definitions, run `gradle :plugins:player-fun:forage:generateSourceDocumentation :plugins:player-fun:forage:generateTurnInDocumentation :plugins:player-fun:forage:generateHerbariumDocumentation` with the repository's JDK 25.0.4.1, then review the diffs and run the focused documentation tests. This is a development documentation step, not a distributable suite build.
-
-**Source-tool correction (from build 755):** the generated specimen tool column below includes the exact-source Shears assignments. Older builds keep their previous tool requirements; use each entry on the running server for its actual settings. Collection requirements, specimen identities and recorded discoveries are unchanged.
+The complete list below follows the shipped collection and source definitions. Check the in-game entry for any server-specific availability or tool changes.
 
 <!-- BEGIN GENERATED FORAGE HERBARIUM -->
 
@@ -307,4 +297,4 @@ Each row is one permanent specimen. Any listed source alias can identify it afte
 
 <!-- END GENERATED FORAGE HERBARIUM -->
 
-See the [player guide](forage-camps.md), [staff guide](forage-camp-technical.md) and [beta checklist](forage/checklist.md) for the wider Forage rules and acceptance tests.
+Return to the [Forage player guide](forage-camps.md), [tool and repair instructions](forage-camps.md#tool-shop-guide), or [seasonal Community Efforts](forage-community.md).

@@ -26,3 +26,5 @@ On 11 October 2026, only the local build, runtime-alignment, and deployment work
 ## Scoped Fireworks and stable-channel refresh
 
 On 12 October 2026, the Fireworks player/staff guides, their index links, current Paper 26.3 STABLE 175 baseline, and mechanical suite-build 740 examples were updated from source commit `e53d9171bf19330d8dd86298873e1fefd2577c63`. The Fireworks owner-review document remains private. This is a scoped update, preserving the published Forage content and earlier provenance above. The source commit is a dormant development checkpoint with remaining activation and gameplay/legacy acceptance gates; this documentation publication is not a live plugin deployment or proof that all build-740 artifacts are reproduced by that isolated source commit.
+
+Forage player-guide refresh: 17 October 2026. Only reviewed Forage guides, their shared navigation references and private-path removals were refreshed for public beta. Unrelated documentation retains its previously published source snapshot.

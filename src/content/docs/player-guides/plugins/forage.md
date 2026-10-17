@@ -1,19 +1,13 @@
 ---
 title: "Forage Guide"
-description: "Learn Forage camps, tools, quests, repairs and dust, with a beta checklist and staff reference."
+description: "Learn Forage camps, tools, exact sources, repairs, quests, Herbarium collections and seasonal rewards."
 ---
 
-**Reviewed 13 October 2026 against suite build 757 on Paper 26.3 STABLE 180.** The beta includes seasonal Community Efforts, Leaf Litter and the Herbarium botanical journal; startup activation is verified. Player acceptance testing remains open. This guide describes the camp and gathering flow. Availability, prices, caps, and enabled sources depend on the server; live activation remains separate from beta testing.
+Build a camp, choose a Forage tool and turn your travels into discoveries. Forage adds personal progression, plant collections and cooperative seasonal goals to survival play. Your XP, Points, quests and reward history follow you between supported worlds; your own camps provide the workstations where you spend and claim them.
 
-**New in build 739:** Accepted Turn-Ins opens the complete item guide, and plain cocoa beans are accepted. Build 741 added Leaf Litter; build 742 adds the Herbarium botanical expansion, bringing the default accepted inventory list to 97 types.
+This guide covers Forage's public beta. The menus show the current prices, targets, enabled activities and source lists. If a service is temporarily paused, read its message before spending resources; a pause does not erase saved progress.
 
-**Placed-resource protection is active from build 739:** newly recorded placements follow the movement and growth rules below. Placements from before this update are not backfilled.
-
-**Participation progress is now tracked:** successfully claiming one daily and one weekly quest qualifies you for one lifetime participation reward. The actual map is still being prepared, so participation claiming remains disabled until it is ready.
-
-**Available from build 752:** Source Families, the additional `/forage sources` routes and quest details with **What Counts?** below are deployed on the maintained test servers. Existing gathering, submission and claim requirements remain in force; the checklist still needs actual player results.
-
-Forage is hands-on gathering with your own tools and camps. You keep one set of Forage XP, points, quests, limits, and reward history wherever you play. Your camps determine where you can submit finds and claim those benefits.
+**Start here:** [first camp](#start-in-wild) · [building checklist](#build-the-checklist) · [tools and repairs](#tool-shop-guide) · [every gathering source](#complete-source-catalogue) · [quests and rewards](#quests-branches-and-treasures) · [accepted Turn-Ins](#complete-accepted-turn-in-item-list) · [Herbarium](/player-guides/plugins/forage-herbarium/) · [Community Efforts](/player-guides/plugins/forage-community/) · [FAQ](#player-faq).
 
 ## How Players Use It
 
@@ -22,15 +16,26 @@ Available features include:
 - Eight curated tool types with matching gathering sources and their own tool progression.
 - One Initial Camp and up to two Secondary Camps, each with a Local Introduction.
 - Shared player XP, Forage Points, daily limits, and skill branch progress.
-- Daily, weekly, and monthly quests with deliberate camp reward claims.
+- Daily, weekly, and monthly quests, Claim All, and a one-time participation reward.
+- A permanent Herbarium with 102 botanical specimens and twelve collection rewards.
+- Seasonal Community Efforts with shared goals, personal contributions and season rewards.
+- Ancient Creaking Flowers and a limited personal early-access voucher exchange.
 - Camp Turn-Ins, tool upgrades, Repair & Merge, and Forage Dust crafting.
 - Occasional treasures, leaderboards, progress guidance, and request review.
 
-For the beta session, work through the [in-game test checklist](/staff-reference/plugins/forage-checklist/) and record what happened alongside the expected result. Staff setup and recovery are covered in the [technical guide](/staff-reference/plugins/forage/).
+### Your first outing
+
+1. Use `/wild`, find **Dappled Forest**, and build or complete a camp using the checklist below.
+2. Register it in Survival mode, then **sneak-right-click your composter** to open its workstation.
+3. Buy one starter Forage tool. Use `/forage inspect` or `/forage source <name>` to find matching sources.
+4. Make **30 qualifying gathers in that camp's world**, then return and submit **8 eligible plain items** through **Local Introduction**.
+5. Open **Quests & Rewards**, choose an objective and follow **What Counts?**. Return to your active camp to claim completed rewards.
+
+You can browse guides, sources, quests and your Herbarium away from camp. Purchases, repairs, submissions, reward claims and Ancient Flower exchanges need your own active workstation.
 
 ## Start in Wild
 
-Use `/forage next` when you are unsure what to do. Before you have an Initial Camp, it points you to **Dappled Forest in `/wild`**, then `/forage camp` to check the workstation and required blocks. On a test server where Wild is mapped to another world, the hint recognizes when you are already in the mapped Wild world. If the server later approves more Initial Camp worlds, the hint follows that configuration.
+Use `/forage next` when you are unsure what to do. Before you have an Initial Camp, it points you to **Dappled Forest in `/wild`**, then `/forage camp` to check the workstation and required blocks. The hint follows the server’s world mappings and recognizes when you are already in Wild.
 
 `/next` includes Forage among the server's available activities. `/next guide forage` opens the short camp, tool, and gathering checklist. `/guidance` controls optional hints, their frequency, and hidden or postponed hints; you can still request `/forage next` with optional hints switched off.
 
@@ -138,11 +143,11 @@ Your global points can be spent at any of your fully active camps. A camp's Loca
 
 Open **Tool Shop** at your complete registered camp to buy a genuine Forage tool. Sneak-right-click your own composter first. Starter shopping works before Local Introduction is finished; the four later types require that introduction to be complete. Check the displayed price and keep room in your inventory. Ordinary Minecraft tools and renamed copies do not earn Forage progress.
 
-**Tool Shop guide book (from build 756):** the book in the Tool Shop's top-left corner closes the inventory and posts a clickable link to this section in chat. Click that link to use Minecraft's normal web-link confirmation flow. It does not open a browser automatically, buy a tool or unlock anything. You can also read this guide directly.
+**Tool Shop guide book:** the book in the Tool Shop's top-left corner closes the inventory and posts a clickable link to this section in chat. Click that link to use Minecraft's normal web-link confirmation flow. It does not open a browser automatically, buy a tool or unlock anything. You can also read this guide directly.
 
 ### Choose among the eight tools
 
-Click a tool name for its complete source list. The examples below use the shipped settings, including the build-755 plant corrections; the running server's source entry takes precedence if staff changes a mapping.
+Click a tool name for its complete source list. The examples below use the shipped settings, the running server's source entry takes precedence if staff changes a mapping.
 
 | Tool and full source list | Base item | Purpose and useful examples | Default access |
 | --- | --- | --- | --- |
@@ -191,13 +196,13 @@ Each rewarded action can advance player XP, points, the held tool, the matching 
 
 Use `/forage limits` to check personal and source-family daily caps. A capped family or exhausted chunk can stop rewards while ordinary harvesting and tool wear continue. Move to another eligible chunk or try a different family, subject to your remaining personal cap. A different camp or world does not reset your daily allowances.
 
-From 11 October 2026, the beta server’s `normal` preset allows **3,125 player XP or 1,500 actions per day globally**, and **875 XP or 344 actions per day for each source family**, whichever applicable limit is reached first. The 25% increase preserves today's already-earned progress and usage. Check `/forage limits` for your remaining allowance.
+The standard `normal` preset allows **3,125 player XP or 1,500 actions per day globally**, and **875 XP or 344 actions per day for each source family**, whichever applicable limit is reached first. The live server may use a different balance preset. Check `/forage limits` for its actual limits and your remaining allowance.
 
 <a id="placed-blocks-and-grown-harvests-upcoming"></a>
 
 ## Placed blocks and grown harvests
 
-From build 739, breaking a resource whose placement Forage recorded earns no Forage gathering rewards. This applies when someone else placed it, when either hand or an ordinary tool was used, and in any world, including Creative placements. Moving a marked block with a normal or sticky piston keeps its placement record. Falling sand, gravel and other marked falling resources keep that record when they land. The usual block break, drops and tool wear still happen when the other game and protection rules allow them.
+Breaking a resource whose placement Forage recorded earns no Forage gathering rewards. This applies when someone else placed it, when either hand or an ordinary tool was used, and in any world, including Creative placements. Moving a marked block with a normal or sticky piston keeps its placement record. Falling sand, gravel and other marked falling resources keep that record when they land. The usual block break, drops and tool wear still happen when the other game and protection rules allow them.
 
 A rejected placed block gives no player XP, points, tool XP, branch or quest progress, Local Introduction action or treasure, and uses none of your reward allowance or chunk-exhaustion budget. Waiting does not make it eligible: the existing 12-second limit only controls repeated chat notices. Placement records remain through normally saved chunk unloads and server restarts.
 
@@ -215,17 +220,17 @@ In OneBlock or Cave, a bought, traded or reward-issued starter is fine to cultiv
 
 Growing a crop or tree is still useful. A crop you plant must genuinely grow to maturity before its recorded placement stops blocking rewards. Growth that replaces a block with a different type, such as a tree growing, clears the old placement mark. Applying bonemeal while leaving the same type in place does not clear it: the original placed moss block stays marked. Newly grown upper sugar-cane and bamboo blocks can qualify, while the placed base stays marked; manually stacking bamboo above its seedling does not bypass this. A growth check may finish on the following tick, and cancelled growth does not clear a mark. Other gathering rules and limits still apply.
 
-From build 764, new dripstone growth also counts correctly when an earlier placed plant at that spot disappeared after losing its support. The original placed starter still does not count.
+New dripstone growth also counts when an earlier placed plant at that spot disappeared after losing its support. The original placed starter still does not count.
 
 Tracking stays active for configured resources while Forage gameplay or a source family is paused. If Forage reports that placement tracking is unavailable, ask staff to inspect it. A tracking failure may also stop new placements or piston movement to avoid creating resources whose origin cannot be verified.
 
-Forage cannot reconstruct placements made before this update, and staff WorldEdit or other edits outside the supported events are not covered. This is not a promise to identify every farmed resource. Turn-Ins are a separate activity: eligible plain bought, traded or stored items remain acceptable there. On this beta, tracking begins with build 739. Test fresh placements separately from blocks whose earlier history is unknown.
+Turn-Ins are a separate activity: eligible plain bought, traded or stored items remain acceptable there. If a naturally grown source seems to be blocked incorrectly, keep its location and ask staff to check it.
 
-**Build-742 botanical routes:** the source-default catalogue below includes the Herbarium expansion, including mature pitcher crops. `/forage sources` shows your running server's actual list.
+The source catalogue below includes the Herbarium’s botanical routes, including mature pitcher crops. `/forage sources` shows your running server's actual list.
 
 <a id="brush-activities"></a>
 
-## Brush activities (available from build 767)
+## Brush activities
 
 One **Forage Brush** performs all five activities below. Hold the genuine tool in your main hand and follow the source's action label. This replaces the old Brush block-breaking route; chiseled bookshelves are no longer a source. `/forage sources brush`, `/forage source <name>` and `/forage inspect` help identify the activity and its matching quests.
 
@@ -241,7 +246,7 @@ One **Forage Brush** performs all five activities below. Hold the genuine tool i
 
 **Sifting find: Silted Keepsake.** A qualifying sift has a **25% chance** to award this glowing warped fungus on a stick. It starts with **three uses**; each right-click consumes one use and grants a random whole number from **3 to 15 personal Forage XP**. The lore shows the remaining uses, and the item disappears after the third use. It grants no tool XP or Minecraft XP and is **not a treasure payment item** for Mending, repairs or seasonal contributions. Daily-quest-only actions after a reward cap do not drop keepsakes.
 
-Keepsakes are exclusive to successful Brush sifting. Trowel digging keeps its ordinary reward and treasure rules but never rolls this special find.
+Brush sifting is the gathering route that can find Keepsakes; selected reward kits may also include a fresh three-use Keepsake. Trowel digging keeps its ordinary reward and treasure rules but never rolls this special find.
 
 Keep room in your backpack for the find. Finding one counts as one treasure discovery for matching objectives; spending its charges does not count as more discoveries or gathers. A keepsake replaces the ordinary treasure roll for that sift; otherwise the normal treasure roll still applies. Sifting's normal block drops remain, and using an earned keepsake does not spend your daily gathering allowance.
 
@@ -257,7 +262,7 @@ Families remain precise: suspicious blocks and pots are **Relics**; sifted groun
 
 Island worlds may not offer natural archaeology, pots or fossils. You can use an allowed wilderness world for those activities; placing a purchased source is not an alternative eligibility route.
 
-**Source-tool correction (from build 755):** the generated catalogue below includes eleven exact-source Shears assignments. Older builds keep their previous tool requirements; use the running server's `/forage sources` and `/forage inspect` for its actual settings. Source families and quest membership are unchanged.
+Use `/forage sources` and `/forage inspect` for the server’s actual source assignments. A source’s family and its matching tool answer different questions: which objectives it advances, and what you need to hold.
 
 <!-- BEGIN GENERATED FORAGE SOURCES -->
 
@@ -555,19 +560,19 @@ Use **Source Families** in the source picker, or `/forage sources families`, to 
 
 `/forage sources flora` opens the flora family directly. Use `/forage sources family <id> [page]` when a family name also matches a tool ID; tool IDs keep their existing meaning. `/forage source` is a singular alias for `/forage sources`. With no argument, the command still uses your held Forage tool or opens the tool picker. Page numbers start at 1.
 
-**Inspect and lookup (available from build 753):** look at a block within six blocks and use `/forage inspect`. Chat shows a quick summary with a clickable **Source details** link. Water does not block the view, so you can inspect underwater plants; walls still block it. The check uses loaded chunks only. It does not break the block or earn progress.
+**Inspect and lookup:** look at a block within six blocks and use `/forage inspect`. Chat shows a quick summary with a clickable **Source details** link. Water does not block the view, so you can inspect underwater plants; walls still block it. The check uses loaded chunks only. It does not break the block or earn progress.
 
 If you know a source's name, use `/forage source seagrass`. Lookup checks exact matches before partial matches and opens a paginated chooser when several sources match. Names can use spaces, underscores or hyphens, and a `minecraft:` prefix is accepted. Existing tool, family and control names keep their meaning: use `/forage source block <name>`, `/forage source creature <name>` or `/forage source search <name>` when you need to disambiguate a source name.
 
 Source details shows the current family, matching tools and gathering rules. A wrong-tool warning names the supported tool or tools and offers the same **Source details** link. Those details explain support; caps, world/protection rules, placed-block tracking and tool condition can still stop rewards. Neither inspection nor following a link grants a camp visit.
 
-**Quest/tool links (from build 755):** source cards and Source Details preview up to three specific family/material quest matches and show how many more there are. **Matching Quests** opens the full list, also explaining broad action, biome and treasure objectives, while **Quests for This Tool** in a tool's source catalogue shows relevant quests. On a quest's What Counts? page, **Filter by Tool** narrows its sources; **All tools** is the starting view. Browsing these links does not accept, advance or claim a quest.
+**Quest/tool links:** source cards and Source Details preview up to three specific family/material quest matches and show how many more there are. **Matching Quests** opens the full list, also explaining broad action, biome and treasure objectives, while **Quests for This Tool** in a tool's source catalogue shows relevant quests. On a quest's What Counts? page, **Filter by Tool** narrows its sources; **All tools** is the starting view. Browsing these links does not accept, advance or claim a quest.
 
 For a specific activity, follow its **What Counts?** link. Quests explain their own objective; Camp Turn-Ins explain plain accepted inventory items; Community Cleanup keeps seasonal gathering, resource donations and treasure donations separate. Browsing these guides spends nothing, awards nothing and grants no workstation visit. The running server's lists take precedence over the published shipped defaults.
 
-**Cave Cycle means Cave Forage, not everything found underground.** Its seven sources remain Glow Lichen, Cave Vines, Cave Vines Plant, Spore Blossom, Hanging Roots, Rooted Dirt and Pointed Dripstone. **Tool correction (from build 755):** Glow Lichen and Hanging Roots use **Forage Shears**; the other five keep the **Forage Pickaxe**. Calcite, Amethyst Cluster, Magma Block and Dripstone Block remain Stone-family sources and do not advance Cave Cycle.
+**Cave Cycle means Cave Forage, not everything found underground.** Its seven sources remain Glow Lichen, Cave Vines, Cave Vines Plant, Spore Blossom, Hanging Roots, Rooted Dirt and Pointed Dripstone. **Matching tools:** Glow Lichen and Hanging Roots use **Forage Shears**; the other five keep the **Forage Pickaxe**. Calcite, Amethyst Cluster, Magma Block and Dripstone Block remain Stone-family sources and do not advance Cave Cycle.
 
-**Exact-source Shears assignments (from build 755):** these plants keep their current family and quest credit while requiring a different Forage tool. The Sickle remains a copper hoe; Forage Shears remain actual shears.
+**Plants gathered with Shears:** these sources belong to several families but all use the Forage Shears. The Sickle remains a copper hoe; Forage Shears remain actual shears.
 
 | Family retained | Sources assigned to Forage Shears |
 | --- | --- |
@@ -581,7 +586,18 @@ Look up the block you gather, rather than only its icon or drop: a Glow Berries 
 
 ## Quests, branches, and treasures
 
-At an active workstation, open **Quests & Rewards** to inspect daily, weekly, monthly, and ready-to-claim quests. Eligible gathering advances applicable quests automatically; the daily-only cap exception below is separate from ordinary gathering rewards. Follow the actual objective shown on your card: visiting a biome without gathering there is insufficient, and a material quest needs that exact material. Turn-ins, dust use, and staff-granted XP do not count as gathering actions.
+### Understand your progress
+
+| Value | What you use it for |
+| --- | --- |
+| **Player Forage XP and level** | Your account’s progression and level-based unlocks, shared between supported worlds. |
+| **Forage Points** | A separate spendable balance for improvements, repairs, branch changes and camp services. Spending Points does not lower your XP level. |
+| **Tool XP, Tool level and soul bar** | Progress recorded on that individual tool. The soul bar visualizes its tool XP; it is separate from the purchased tier. |
+| **Minecraft XP** | Ordinary Minecraft experience, used by an approved Mending enchantment. It is not Forage XP or Forage Points. |
+
+Use `/forage stats` to compare player and held-tool progress, `/forage status` for a short summary, and `/forage limits` for remaining allowances. The hub’s leaderboards compare player level, XP, Points, actions, treasure finds and daily/weekly XP. They are informational and do not create extra reward claims.
+
+Open **Quests & Rewards** from the hub or use `/forage quests` anywhere to inspect daily, weekly, monthly, ready-to-claim and saved quest rewards. You can read details and follow Back buttons without a camp visit; browsing does not create or extend one. Claim Reward, Claim All and Participation Reward still require your active owned workstation and completed Local Introduction. Eligible gathering advances applicable quests automatically; the daily-only cap exception below is separate from ordinary gathering rewards. Follow the actual objective shown on your card: visiting a biome without gathering there is insufficient, and a material quest needs that exact material. Turn-ins, dust use, and staff-granted XP do not count as gathering actions.
 
 Daily, Weekly and Monthly each have four top-row filters: **Show All**, **Incomplete** (unfinished and unclaimed), **Completed** (finished but still unclaimed), and **Claimed** (reward already received). Each category opens on Show All. The selected button is highlighted, counts show how many quests match, and changing filters returns to page 1. Quest order stays the same, with up to 28 per page and Previous/Next for larger lists. If no quests match, the page explains how to return to Show All. The separate **Ready to Claim** view still brings together unclaimed completed quests from all periods.
 
@@ -589,19 +605,19 @@ Filters only change what you see. Clicking a quest opens its details, with separ
 
 <a id="claim-all"></a>
 
-### Claim All (available from build 766)
+### Claim All
 
-**Claim All** appears in the Quests hub and **Ready to Claim** list. Its count includes ready, unclaimed quests from the current daily, weekly and monthly periods. Click once to start claiming that set, one reward at a time. Keep the menu open and stay beside your active workstation while it runs; individual **Claim Reward** buttons remain available.
+**Claim All** appears in the Quests hub and **Ready to Claim** list. Its count includes eligible, unclaimed current daily, weekly and monthly quests, plus earlier rewards preserved during a staff claim pause. Paused categories cannot be claimed yet. Click once to start claiming that set, one reward at a time. Keep the menu open and stay beside your active workstation while it runs; individual **Claim Reward** buttons remain available.
 
-The summary reports how many rewards were claimed. If your inventory fills, a claim cannot finish, or you close or leave the menu/camp, the run stops. Rewards already received stay yours; untouched quests remain available until their normal period reset. Clear the reported blocker, reopen the workstation and use Claim All again. If a claim needs review, keep its reference and ask staff before retrying.
+The summary reports how many rewards were claimed. If your inventory fills, a claim cannot finish, or you close or leave the menu/camp, the run stops. Rewards already received stay yours; untouched quests keep their existing claim state and deadline. Clear the reported blocker, reopen the workstation and use Claim All again. If a claim needs review, keep its reference and ask staff before retrying.
 
 Claim All covers these quest rewards only. **Participation**, **Community Efforts** and **Herbarium** rewards still use their own claim buttons. Successfully claimed daily and weekly quests continue to count toward participation qualification.
 
 <a id="daily-quests-after-caps"></a>
 
-### Finish daily quests after gathering caps (from build 757)
+### Finish daily quests after gathering caps
 
-**Active from build 757.** With the new default-enabled option, reaching a personal global or source-family daily XP/action cap can still let otherwise valid gathering finish an **unfinished, unclaimed current daily quest**. This covers action counts, an exact family, an exact block material, or a new required biome. Biome quests still need a qualifying gathering action there; travel alone does not count. Credit stops at the quest's target.
+With the daily-quest exception enabled, reaching a personal global or source-family daily XP/action cap can still let otherwise valid gathering finish an **unfinished, unclaimed current daily quest**. This covers action counts, an exact family, an exact block material, or a new required biome. Biome quests still need a qualifying gathering action there; travel alone does not count. Credit stops at the quest's target.
 
 This gives **daily quest progress only**. It earns no ongoing player XP, tool XP, Points, treasure rolls, branch progress, Community Effort gathering, Herbarium discoveries, Local Introduction actions or lifetime rewarded-action credit for Mending. Weekly and monthly quests stay paused, and completed or claimed daily quests gain nothing more. Ordinary permitted Minecraft drops and tool wear continue.
 
@@ -609,9 +625,35 @@ A family limit belongs to the source's **family**, not its tool: switching from 
 
 **Treasure quests are the exception:** they need a genuine successful Forage treasure delivery. Capped actions roll no treasures, and owning, buying, trading or turning in an old treasure does not advance a find-treasure quest. Camp Turn-Ins remain a separate activity and do not substitute for these gathering objectives.
 
-Finish and claim before **midnight in the server's timezone**; daily quests then reset to a new day. Claim normally at your own active camp after Local Introduction. A completed daily quest keeps its full configured once-per-period reward; this exception does not automatically claim it or bypass payment/delivery checks. Quest-claim XP is separate from the unchanged daily gathering XP cap.
+Finish and normally claim before **midnight in the server's timezone**; daily quests then reset to a new day. A completed reward protected by a staff claim pause is retained as described below. Claim normally at your own active camp after Local Introduction. A completed daily quest keeps its full configured once-per-period reward; this exception does not automatically claim it or bypass payment/delivery checks. Quest-claim XP is separate from the unchanged daily gathering XP cap.
 
-Completing a quest makes its reward available. Return to your active workstation, open the quest details and deliberately choose **Claim Reward** once, before its period ends. Daily quests follow the server's date, weekly quests use Monday-starting weeks, and monthly quests use calendar months. Your targets and rewards can differ from another tester's. If a claim is pending, keep its request reference and use `/forage review` instead of repeatedly trying to claim again.
+Completing a quest makes its reward available. Return to your active workstation, open the quest details and deliberately choose **Claim Reward** once, before its period ends. Daily quests follow the server's date, weekly quests use Monday-starting weeks, and monthly quests use calendar months. Your targets and rewards can differ from another player's. If a claim is pending, keep its request reference and use `/forage review` instead of repeatedly trying to claim again.
+
+### Reward types at a glance
+
+| Reward | How you earn it | How often you may claim |
+| --- | --- | --- |
+| Daily quest | Complete its current daily objective | Once for that quest in that day |
+| Weekly quest | Complete its current weekly objective | Once for that quest in that week |
+| Monthly quest | Complete its current monthly objective | Once for that quest in that month |
+| Participation | Successfully claim a daily and a weekly quest reward | Once in your lifetime |
+| Herbarium collection | Discover every specimen in its fixed list | Once for each collection |
+| Community Effort | Community succeeds and you meet all personal minimums | Once for each qualifying season, after it ends |
+| Ancient Flowers voucher | Exchange 16 special flowers | Two exchanges in your lifetime, before the expiry date |
+
+Quest rewards combine the XP, Forage Points, money and item reward shown on their cards. They are deliberate claims, so check the deadline and inventory space. Weekly kits include collectible green-and-white Canopy banners: the six letters **F O R A G E**, **Wildflower** and **Fern Curl**. Monthly kits each include an Ancient Creaking Flower. Herbarium rewards form a themed collection of equipment and useful keepsakes. The current reward preview shows exact contents; ordinary themed kit equipment is separate from the genuine Forage tools sold in Tool Shop.
+
+### When staff pause a feature
+
+Daily, weekly, monthly and participation rewards are part of the public-beta offering. Staff can temporarily pause an activity or reward category while fixing a problem. A paused reward category does not erase your progress. If gathering remains available, eligible actions still advance the current quests, including the usual limited daily-cap exception. A tools or gathering pause stops new Forage progress; it does not remove what you already earned.
+
+Completed, unclaimed quests protected by a staff claim pause survive a day, week or month changing. Once that category reopens, use **Quests & Rewards → Saved Quest Rewards** to claim those earlier completions. The original period and earned reward rolls stay with each reward; two completed months are two separate claims. Claim All includes eligible saved rewards. Keep enough inventory space and return to your active camp as usual.
+
+Unfinished quests still start fresh with their next period, and ordinary unpaused rewards still have their normal claim deadlines. Waiting for monthly rewards does not make the monthly gathering cap disappear. Participation qualification from successful daily and weekly claims, Herbarium discoveries, earned collection completions and seasonal history also remain recorded when their reward claims are paused. Seasonal rewards still become dormant after six months and require their normal five-treasure reactivation payment.
+
+When a tool-care or exchange service is paused, its menu explains that it is unavailable. Your tools, materials, voucher counts and existing claims are kept. Do not try to work around the pause with external repair commands or repeated claims; report the problem to staff.
+
+If branch selection is paused, your current Skill Branch and its usual gathering bonuses stay active; only selecting or changing the branch is unavailable.
 
 <a id="participation-reward-upcoming"></a>
 
@@ -621,13 +663,25 @@ Claim a daily quest reward and a weekly quest reward successfully to qualify. Th
 
 Find **Participation Reward** in **Forage → Quests & Rewards** and read its daily/weekly progress. When delivery is enabled, claim deliberately at your own complete camp workstation after its Local Introduction; the item is never awarded automatically. Retained records of older successfully claimed daily/weekly quests can also count when your profile is loaded.
 
-Your qualifying daily/weekly claims are remembered even while the participation reward is switched off. The button explains “Claiming is not open yet” and that progress is saved. The real map is not ready yet, so there is currently nothing to claim from this feature. The unfinished kit item is a placeholder, not the promised map reward. Continue claiming your ordinary quest rewards as usual.
+The participation kit includes the **four-piece Forage map-art set**. Make room for its items and claim it once from the participation page. Your qualifying daily/weekly claims are remembered if staff temporarily pause participation claiming; the button will explain the pause. Continue claiming your ordinary quest rewards as usual.
 
 **Skill Branches** gives focused bonuses for particular families: Herbalist, Woodsman, Trailkeeper, Cave Botanist, and Wild Alchemist are the defaults. Read each branch's level gate and affected families. Your first choice is free; later switches normally cost 250 Forage Points and require a 72-hour cooldown. The menu shows the current server rules.
 
-Treasures are occasional extra finds, not guaranteed on a short trip. Keep inventory room: a find that cannot fit is skipped, not dropped on the ground or queued for later. Genuine Forage treasures are used in Repair & Merge and Greater Forage Dust; a vanilla item of the same material is not a substitute. Legendary Pulse Dust is a rare treasure outcome, so a brief session without one is normal.
+Treasures are occasional extra finds, not guaranteed on a short trip. The ordinary treasure forms are Apple, Glow Berries, Honeycomb, Amethyst Shard, Moss Block and Bone Meal, each issued with its Forage identity and lore. Keep inventory room: a find that cannot fit is skipped, not dropped on the ground or queued for later. Genuine Forage treasures are used in Repair & Merge, Mending upgrades, Greater Forage Dust, Community Effort treasure donations and dormant seasonal claims; a vanilla item of the same material is not a substitute. Legendary Pulse Dust is a rare treasure outcome, so a brief session without one is normal.
 
-**Treasure shine (from build 754):** new ordinary Forage treasures shine by default, without gaining an enchantment or extra power. Staff can turn the shine off for future finds. Older genuine treasures stay valid even if they do not shine; already-owned items keep their appearance. Shine alone never proves that an item is a genuine Forage treasure.
+**Treasure shine:** new ordinary Forage treasures shine by default, without gaining an enchantment or extra power. Staff can turn the shine off for future finds. Older genuine treasures stay valid even if they do not shine; already-owned items keep their appearance. Shine alone never proves that an item is a genuine Forage treasure.
+
+### Ancient Flowers and early access
+
+Each monthly reward kit includes one **Ancient Creaking Flower**, a special closed eyeblossom with a grey-to-green name and orange lore. Keep it as an item: it cannot be planted, potted, composted or crafted into something else. Ordinary eyeblossoms and renamed flowers do not count. The special flowers can be given, traded or sold to other players, so friends can help one another complete a collection.
+
+At your active camp, open **Quests & Rewards → Ancient Flowers**. Put **16 special flowers in your backpack**, then review and confirm the exchange for one **Ancient Flowers Voucher!** book. Your hotbar, offhand and equipped items are protected. The book can use a slot freed by spending the flowers; if there is still no room, nothing is taken. `/forage ancientflowers` lets you browse the rules and read a preview from elsewhere, but the exchange requires your active camp workstation.
+
+You may complete **two exchanges in your lifetime**, across all camps, worlds, quest periods and Minecraft name changes. Thirty-two flowers can therefore buy two vouchers. Extra flowers can still be shared. Each voucher belongs only to the player who exchanged the flowers, named on its first page. Giving the book away does not transfer that right, and the book cannot be copied.
+
+Give your voucher to **mrfloris** to arrange early access to **one upcoming feature per voucher**, such as `/discovery` (also known as `/passport`) or `mcmmo-more`. Other choices may become available. Access is granted manually as features become ready, potentially days, weeks or months before general release. Reading the book does not grant access automatically.
+
+**All vouchers expire on 1 June 2027 at 00:00 Europe/Amsterdam.** Exchange your flowers and redeem your vouchers before that moment. Flower exchanges also close then; leftover flowers and your lifetime history are retained.
 
 ## Camp Turn-Ins
 
@@ -637,29 +691,29 @@ Click **Accepted Turn-Ins**, or use `/forage sources turnins [page]`, to browse 
 
 Acceptance checks the item you submit, not how you obtained it. Eligible plain items bought from a shop or received from another player can qualify; no Forage-tool gathering provenance is required. Turn-Ins do not replace gathering quests, tool XP or Local Introduction gathering actions. Camp access, introduction completion, caps and cooldowns still apply.
 
-Accepted Turn-Ins uses the running server's eligibility rules, including cocoa beans with the defaults. It shows up to 28 item types per page, with Previous/Next, an **About Accepted Turn-Ins** button to refresh the list, Back to Turn-Ins and a Public Turn-In Guide button that sends a clickable documentation link. Browsing submits nothing. Other incidental drops are not automatically accepted: sticks, saplings and poisonous potatoes remain outside the default list. Logs and calcite also remain excluded even though matching Forage tools can gather their source families. Glow berries are accepted inventory items; their cave-vine gathering blocks belong to a separate gathering family.
+Accepted Turn-Ins uses the running server's eligibility rules, including cocoa beans with the defaults. It shows up to 28 item types per page, with Previous/Next, an **About Accepted Turn-Ins** button to refresh the list, a Back button and a Public Turn-In Guide button that sends a clickable documentation link. Back returns to the Turn-In preview when your workstation visit is still valid, or to the hub if that visit has ended. Browsing submits nothing. Other incidental drops are not automatically accepted: sticks, saplings and poisonous potatoes remain outside the default list. Logs and calcite also remain excluded even though matching Forage tools can gather their source families. Glow berries are accepted inventory items; their cave-vine gathering blocks belong to a separate gathering family.
 
 <a id="herbarium-upcoming"></a>
 
 ## Herbarium
 
-**Available since build 742.** The Herbarium is your permanent personal plant-discovery journal. Open it from the hub or `/forage herbarium` to browse your collections and All Specimens away from camp. Show All, Missing and Discovered filters help you choose a route; each entry lists matching tools, accepted block forms and habitat guidance. Discovered entries retain the first date, world and biome. Collection themes do not add a separate biome checklist.
+The Herbarium is your permanent personal plant-discovery journal. Open it from the hub or `/forage herbarium` to browse your collections and All Specimens away from camp. Show All, Missing and Discovered filters help you choose a route; each entry lists matching tools, accepted block forms and habitat guidance. Discovered entries retain the first date, world and biome. Collection themes do not add a separate biome checklist.
 
 Gather each specimen through a successful normal Forage action. Picking up, buying or turning in a plant does not discover it. Wrong tools, placed resources, protected areas, invalid tools, caps and exhausted chunks still stop discovery. Vine tips/bodies, open/closed eyeblossoms and other listed aliases count once. Harvest pitcher crops only when fully mature.
 
-Complete a fixed collection to qualify for its one-time CMI item kit. Preview and confirm at your own active camp after the Local Introduction; there is no cost or expiry. Claiming defaults off; the isolated beta enables owner-approved named-dirt placeholders for delivery tests, while authored reward acceptance remains separate. Your discoveries remain when camps move or rewards are claimed. Read the [complete Herbarium guide](https://github.com/mrfdev/1MB-Plugins-Docs/blob/main/project-docs/cmi-api/docs/plugins/forage-herbarium.md) for all twelve collections and every source.
+Complete a fixed collection to qualify for its one-time CMI item kit. Preview and confirm at your own active camp after the Local Introduction; there is no cost or expiry. The rewards include themed Herbarium equipment and collectibles; inspect the reward preview before claiming. Your discoveries remain when camps move or rewards are claimed. Read the [complete Herbarium guide](/player-guides/plugins/forage-herbarium/) for all twelve collections and every source.
 
 <a id="seasonal-community-efforts-upcoming"></a>
 
 ## Seasonal Community Efforts
 
-**Included in build 741; beta activation is verified.** Open **Community Cleanup** from Forage or use `/forage community` to see the current season. Your gathering, donated resources and donated treasures each have their own totals and daily cap. Meet all three personal minimums, and help the community meet all three goals. Bought items can support donations but cannot replace your own gathering.
+Open **Community Cleanup** from Forage or use `/forage community` to see the current season. Your gathering, donated resources and donated treasures each have their own totals and daily cap. Meet all three personal minimums, and help the community meet all three goals. Bought items can support donations but cannot replace your own gathering.
 
 The default personal requirements are 300 gathering actions, 300 resource items and 2 genuine Forage treasures; daily caps are 75 actions, 75 resource items and 1 treasure. All included worlds share those limits. Spring uses General/Nether/OneBlock; summer Wild/End/SkyGrid; fall General/Cave/ChunkBlock; winter Wild/SkyBlock/Acid. Only contributions while physically in that season's pool count. Donations require an active camp there and use backpack slots 9–35, keeping your hotbar and offhand untouched. The seasonal item list is separate from ordinary Camp Turn-Ins. **What Counts?** opens the seasonal rules and links to its exact lists: `/forage sources community [page]` for gathering and `/forage sources donations [page]` for resource items.
 
 Seasons start at 00:00 Amsterdam time on March 1, June 1, September 1 and December 1. You cannot claim early. After the season ends, qualified participants claim manually at an active camp. An unclaimed reward becomes dormant six months later; pay five genuine treasures to claim that reward immediately. Completion history and streaks are based on qualifying seasons, not how quickly you claim.
 
-Read the [complete seasonal guide](https://github.com/mrfdev/1MB-Plugins-Docs/blob/main/project-docs/cmi-api/docs/plugins/forage-community.md) for targets, source/item examples, claim rules and staff test controls. Ordinary gathering rules, camp ownership and pending-request protections still apply. This does not add plugin-managed Camp Storage.
+Read the [complete seasonal guide](/player-guides/plugins/forage-community/) for targets, source/item examples, claim rules and common questions. Ordinary gathering rules, camp ownership and pending-request protections still apply. This does not add plugin-managed Camp Storage.
 
 ## Complete accepted Turn-In item list
 
@@ -850,7 +904,7 @@ These are separate purchases: buying a higher tier does not automatically refine
 
 Improvements preserve the tool's progression. Tier upgrades and enchantment purchases do not repair it; diamond refinement preserves its durability percentage. Prices and requirements can be tuned by staff, so the live menu quote takes precedence over these defaults.
 
-Forage tools cannot use ordinary anvils, enchanting tables, grindstones, smithing, crafting repairs, unauthorized Mending, or other plugins' repair/enchant services. The Mending Upgrade below, included from build 745, is the only added XP-repair exception; its enchantment must be purchased through Forage. If a tool pauses for review, retain it and tell staff; renaming or stripping its identity is not a repair. Normal storage, dropping, and replacement purchases remain available.
+Forage tools cannot use ordinary anvils, enchanting tables, grindstones, smithing, crafting repairs, unauthorized Mending, or other plugins' repair/enchant services. The Mending Upgrade below is the approved XP-repair route; its enchantment must be purchased through Forage. If a tool pauses for review, retain it and tell staff; renaming or stripping its identity is not a repair. Normal storage, dropping, and replacement purchases remain available.
 
 <a id="mending-upgrade"></a>
 
@@ -906,6 +960,7 @@ Forage camp ownership is not a general land claim. Follow the world's normal bui
 | `/forage status` | Current progression, camp/tool state, and a next-step summary. |
 | `/forage stats` | Player progression and held-tool details. |
 | `/forage limits` | Current daily limits, costs, and reward ranges. |
+| `/forage quests` | Browse quest categories, details and saved rewards anywhere; claims still require your active owned workstation and completed Local Introduction. |
 | `/forage recent [page]` | Your read-only Recent Activity history, anywhere and while gameplay is paused. |
 | `/forage sources [tool] [page]` | Complete read-only gathering list; uses the held Forage tool or opens the picker. `/forage source` is an alias. |
 | `/forage inspect` | Summarize the looked-at block within six blocks, with clickable Source details. |
@@ -923,9 +978,12 @@ Forage camp ownership is not a general land claim. Follow the world's normal bui
 | `/forage camp register` | Open the deliberate registration action. |
 | `/forage camp revalidate` | Recheck and confirm your repaired registration. |
 | `/forage camp unclaim [registration-UUID]` | Review a release confirmation; global progress is kept. |
-| `/forage review` | Inspect a pending request and obtain the reference to share with staff. |
+| `/forage herbarium` | Browse your plant discoveries, collection requirements and first-find details. |
+| `/forage community` | Browse the active season, included worlds and your contributions. |
+| `/forage ancientflowers` | Browse the flower exchange and personal voucher rules; trading still requires your workstation. |
+| `/forage review [reference]` | Inspect a saved request and obtain its reference to share with staff. |
 
-`/forage shop`, `/forage quests`, `/forage branches`, `/forage tools`, `/forage compost`, `/forage dust`, `/forage top`, and `/forage tips` direct you to the corresponding workstation activity. They do not create a remote camp visit. Use the buttons after sneak-right-clicking your own registered composter.
+`/forage shop`, `/forage branches`, `/forage tools`, `/forage compost`, `/forage dust`, `/forage top`, and `/forage tips` direct you to the corresponding workstation activity. They do not create a remote camp visit. Use the buttons after sneak-right-clicking your own registered composter.
 
 ## Player FAQ
 
@@ -941,7 +999,33 @@ Forage camp ownership is not a general land claim. Follow the world's normal bui
 
 **Can I move my camp without resetting my character?** Yes. Unclaim the old registration and deliberately register a replacement. Global progress stays, but the new registration starts its own Local Introduction. Breaking the composter alone does not release the old slot.
 
-**Are shared storage and community objectives ready to test?** Seasonal Community Efforts are active on the maintained beta and ready for the checklist cases; the seasonal kits are still test placeholders. Plugin-managed Camp Storage remains unimplemented. A chest/barrel currently satisfies the physical checklist and otherwise behaves as ordinary storage. Extra-heart rewards, other-plugin point rewards, and fishing tournaments are future possibilities. Quest item rewards can use configured CMI kit templates through `reward-kit`; confirm the host has configured the kit mappings before testing them.
+**Does putting items into my camp chest submit them?** No. Chests and barrels are ordinary storage. Use Local Introduction, Camp Turn-Ins or Community Cleanup deliberately; each has its own item list and confirmation.
+
+**Can I give another player my Forage tool?** Yes. Its tool XP, tier, approved enchantments and wear stay with it. The holder uses their own player progression, daily limits, camp access and purchase requirements.
+
+**Is chunk exhaustion shared with everyone?** Chunk exhaustion is shared by everyone for that world, chunk and source family. Another player cannot bypass its rest period. Your daily player/family allowances are personal. Try another eligible chunk or another family, or wait for the area to recover.
+
+**Does “Cave” mean any block found in a cave?** No. Glow Lichen, vines, roots and Pointed Dripstone have specific Cave routes. Calcite and Amethyst Cluster are Stone, and Moss Block is Moss and Roots. Use What Counts? on the quest, then Filter by Tool.
+
+**Can farms and bought starters help?** Yes, genuine new growth can qualify when you harvest it yourself with the correct tool. Placing and immediately breaking the starter, automated harvesting and picking up drops do not earn gathering credit. Plain inventory items from other players can still qualify for ordinary Turn-Ins or seasonal donations.
+
+**Why did daily quest progress move after XP stopped?** The limited daily-cap exception can finish an unfinished daily gathering objective. It grants no ongoing XP, Points, tool XP, treasures, Herbarium discoveries or weekly/monthly progress. Chunk exhaustion and other eligibility checks still apply.
+
+**Why does a Brush wear out so quickly on an armadillo?** A normal grooming costs 16 of its 64 durability before Unbreaking, even when that animal cannot give more Forage credit. See the Brush section before grooming repeatedly.
+
+**Why has my tool stopped with a little durability left?** Genuine Forage tools safety-lock at five remaining durability by default. Use Repair & Merge at your camp, or collect Minecraft XP with approved Mending. You can still use the composter recovery gesture and open ordinary storage while holding a worn tool.
+
+**Can I combine Forage tools with mcMMO abilities or other plugins’ upgrades?** Forage controls its own tools. Super Breaker, Tree Feller and Giga Drill Breaker cannot be activated with one, and gathering with a Forage tool pauses while those abilities are active. Use ordinary tools for those abilities. External repair, enchantment, augment, vessel and soulbinding services cannot replace the approved Forage menus.
+
+**Why will my treasures not stack?** Genuine reward items may carry different delivery information. Keep them as issued; non-stacking finds remain usable when the payment menu recognizes them. A matching vanilla material or custom name does not make an ordinary item a Forage treasure.
+
+**Can I pay with a Silted Keepsake?** No. It is a three-use personal XP find, not a treasure payment item. Its right-click uses give 3–15 Forage XP each.
+
+**Is participation the only one-time reward?** No. Participation is once per player, and each Herbarium collection has its own one-time claim. Quests repeat in new periods; seasonal rewards belong to their particular Season Edition. Ancient Flowers has a separate lifetime limit of two voucher exchanges.
+
+**Does the Herbarium’s Ancient Flowers collection give the voucher?** No. That collection discovers Torchflower and Pitcher Plant. The early-access exchange consumes sixteen special Ancient Creaking Flowers from monthly reward kits and issues a personal voucher.
+
+**Where do I report a missing reward?** Open View Claim or `/forage review`. Keep the reference, the reward name and what is missing, then contact staff. The reference button puts the text into your chat input without sending it. Do not repeatedly claim a request that needs review.
 
 ## Common blockers
 
@@ -952,4 +1036,4 @@ Forage camp ownership is not a general land claim. Follow the world's normal bui
 - **“Checking your Initial Camp.”** Its area needs verification. Wait for that result and retry; no items or points should be spent by a pending validation.
 - **“Request needs review.”** Keep the request reference and use `/forage review`. Do not repeat an uncertain purchase hoping it will deliver twice.
 
-Read the [main Forage reference](https://github.com/mrfdev/1MB-Plugins-Docs/blob/main/project-docs/cmi-api/docs/plugins/forage.md) for full tool, source-family, cost, quest, and configuration details. Use the [beta test checklist](/staff-reference/plugins/forage-checklist/) to record your results; staff can use the [technical guide](/staff-reference/plugins/forage/) for world mappings, recovery, and verification requirements.
+Continue with the [Herbarium collection guide](/player-guides/plugins/forage-herbarium/), [seasonal Community Efforts](/player-guides/plugins/forage-community/), or return to the [tool and repair guide](#tool-shop-guide). In game, `/forage next` suggests your next useful step.

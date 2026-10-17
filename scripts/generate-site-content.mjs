@@ -25,10 +25,9 @@ const PLAYER_GUIDE_OVERRIDES = {
   forage: {
     fullSourceGuide: true,
     playerDocument: 'forage-camps.md',
-    staffDocument: 'forage-camp-technical.md',
     summary: 'Gather with curated tools, maintain your camps, and earn shared progression and rewards.',
     intro: 'Gather with curated tools, maintain one Initial Camp and two optional Secondary Camps, and share progression across approved worlds.',
-    description: 'Learn Forage camps, tools, quests, repairs and dust, with a beta checklist and staff reference.',
+    description: 'Learn Forage camps, tools, exact sources, repairs, quests, Herbarium collections and seasonal rewards.',
     commandTableExamples: {
       '/forage sources family <id> [page]': '/forage sources family flora',
       '/forage source <name>': '/forage source seagrass',
@@ -41,7 +40,8 @@ const PLAYER_GUIDE_OVERRIDES = {
       'Eight curated gathering tools with separate player and tool progression.',
       'Global XP, points, skill branches, daily limits and daily, weekly and monthly quests.',
       'Owned workstation purchases, reward claims, upgrades, Repair & Merge, turn-ins and dust crafting.',
-      'A practical beta checklist with player, staff, integration and recovery scenarios.',
+      'A permanent Herbarium, quarterly Community Efforts and a one-time participation map-art reward.',
+      'Exact source lookup, quest/tool links, modern plant routes and five Brush activities.',
     ],
   },
   pluginversions: {
@@ -2621,8 +2621,9 @@ function groupedLists(plugins) {
 
 const sharedGuideRoutes = {
   'plugins/forage-camps.md': '/player-guides/plugins/forage/',
-  'plugins/forage.md': `${publicRepoBlob}/project-docs/cmi-api/docs/plugins/forage.md`,
-  'plugins/forage/checklist.md': '/staff-reference/plugins/forage-checklist/',
+  'plugins/forage.md': '/player-guides/plugins/forage/',
+  'plugins/forage-community.md': '/player-guides/plugins/forage-community/',
+  'plugins/forage-herbarium.md': '/player-guides/plugins/forage-herbarium/',
   'player-navigation.md': '/player-guides/next-and-guidance/',
   'player-guidance.md': '/player-guides/next-and-guidance/#choose-your-hints',
   'next-steps.md': '/player-guides/next-and-guidance/#find-your-next-step',
@@ -2795,15 +2796,25 @@ ${rewriteLibraryLinks(stripDocumentPreamble(staffMarkdown), `plugins/${override.
   }
 }
 
-// Keep the shareable beta checklist generated from the same reviewed Markdown source.
-const forageChecklist = await readFile(path.join(docsRoot, 'plugins', 'forage', 'checklist.md'), 'utf8');
-await writeFile(path.join(contentRoot, 'staff-reference', 'plugins', 'forage-checklist.md'), `---
-title: Forage Beta Test Checklist
-description: In-game player walkthroughs, staff checks and recovery tests for the Forage beta.
+// Forage now publishes player guides only. Remove the former private-beta routes
+// even when generating into an older checkout, so they cannot linger in search.
+for (const retired of ['forage.md', 'forage-checklist.md']) {
+  await rm(path.join(contentRoot, 'staff-reference', 'plugins', retired), { force: true });
+}
+for (const [document, title, description] of [
+  ['forage-community', 'Forage Community Efforts', 'Seasonal teamwork, contribution rules, world pools and reward claims.'],
+  ['forage-herbarium', 'Forage Herbarium', 'All botanical specimens, twelve permanent collections and one-time collection rewards.'],
+]) {
+  const source = `plugins/${document}.md`;
+  const markdown = await readFile(path.join(docsRoot, source), 'utf8');
+  await writeFile(path.join(pluginGuideRoot, `${document}.md`), `---
+title: ${JSON.stringify(title)}
+description: ${JSON.stringify(description)}
 ---
 
-${rewriteLibraryLinks(stripDocumentPreamble(forageChecklist), 'plugins/forage/checklist.md')}
+${rewriteLibraryLinks(stripDocumentPreamble(markdown), source)}
 `);
+}
 
 const registry = await loadRegistry(repoRoot);
 const additionalEntries = await loadAdditionalEntries(repoRoot, registry);

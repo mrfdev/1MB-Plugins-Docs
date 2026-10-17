@@ -12,9 +12,9 @@ Before changing the allowlist, update its focused test and the installation docu
 
 ### Forage Release Hold
 
-Forage remains dormant on live while development continues on the maintained Paper 26.3 test server. Preserve its live `enabled: false` setting and keep it outside the default-enabled allowlist. Its JAR still belongs in the complete suite build; do not copy the enabled test-server config to live.
+Forage is enabled on a server only through the owner’s explicit activation decision. Preserve its current top-level switch during a suite installation and keep it outside automatic default activation. Its JAR belongs in the complete suite build; server configurations remain independent.
 
-The first live `/forage` release requires integration with 26.3 vanilla Abandoned Camps, the deliberate Paper upgrade review, and gameplay acceptance of recognition, completion, and ownership across camp variants. The arrival of 26.3 alone does not authorize activation. See the [Forage release gate](plugins/forage-roadmap.md#release-gate-263-camp-integration).
+Forage player instructions are maintained in the [player guide](plugins/forage-camps.md). Release approval and operational evidence are kept in the private source repository; publishing documentation does not activate gameplay.
 
 ## Release Baseline
 
