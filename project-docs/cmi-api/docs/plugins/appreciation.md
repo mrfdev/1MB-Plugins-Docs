@@ -179,6 +179,8 @@ A qualifying streak consists of seven consecutive calendar days with a funded ap
 
 The free Gentle Sparkle celebration remains available without a purchase. Titles do not grant global chat or LuckPerms titles; they are intentionally contained within Appreciation.
 
+When [Hide and Sheep](hideandsheep.md) is available, its reward shop also offers **1 Appreciation Point for 200 sheep points** by default. Staff can change or disable that exchange. It adds spendable points through Appreciation's durable native receipt service without sending a note, completing a streak, changing activity statistics, or granting extra sending allowances. Appreciation must be active and its point provider ready. An exchange retains the original recipient and transaction identity; uncertain results require receipt review rather than a duplicate credit.
+
 ## Commands
 
 ```text
@@ -302,7 +304,7 @@ plugins/1MB-CMIAPI/Appreciation/state.yml.backup
 
 `config.yml` controls lifecycle, debug quota behavior, `/thanks`, timezone, quotas, anonymous fee, gift presets and maximums, per-type new-gift switches, item world scopes, blocked materials, reasons, the Birthday reason switch, point costs, 60-day expiry and scan interval, shared-celebration radius, staff audit thresholds, GUI filler, CMI notifications, and `/menu` integration.
 
-`state.yml` stores receipts and profiles. Receipt records contain transaction identity, sender audit identity, public anonymity, recipient, reason, exact gift data, item hash and scope, timestamps, expiration, one recipient reaction, revision, favorite state, and lifecycle state. Profiles contain points, one-time streak award ids, purchased unlocks, selections, gift/notification/accessibility preferences, and staff quota reset markers. Schema 1 data is migrated to schema 2 without dropping existing receipts.
+`state.yml` stores receipts and profiles. Receipt records contain transaction identity, sender audit identity, public anonymity, recipient, reason, exact gift data, item hash and scope, timestamps, expiration, one recipient reaction, revision, favorite state, and lifecycle state. Profiles contain points, one-time streak award ids, purchased unlocks, selections, gift/notification/accessibility preferences, and staff quota reset markers. Schema 1 and 2 data migrate to schema 3 without dropping existing receipts or profiles. Schema 3 also stores permanent `point-credits` records keyed by the originating transaction UUID, with the authoritative player UUID, original display name, amount, and save timestamp. A native credit updates the spendable balance, lifetime total, and its receipt in one atomic save. These records survive ordinary profile updates and gift finalization; they are never pruned with gift payloads. Repeating the same transaction and recipient/amount confirms the saved award without adding points again. Conflicting identities or uncertain writes require review of the original receipt; an absent proof must not trigger a replacement credit. Credits do not add sending activity, streak awards, or quota allowances. Point and lifetime overflow, malformed receipts, and unavailable storage fail closed.
 
 The repository writes through temporary files and atomic replacement, keeps a known-good backup, serializes writes on a dedicated storage executor, and fails closed on malformed or failed persistence. Damaged state is quarantined by the shared durable YAML layer rather than silently loading as an empty economy.
 
@@ -310,7 +312,7 @@ The repository writes through temporary files and atomic replacement, keeps a kn
 
 Required:
 
-- Paper 26.2
+- Paper 26.3 STABLE
 - Java 25
 - CMI
 - CMILib
@@ -357,12 +359,12 @@ Before a private or public beta:
 12. Run `/appreciate admin audit`, verify indicators are staff-only and informational, then test every new-gift staff switch while proving old escrow remains claimable.
 13. Turn isolated debug mode off with `/appreciate debug mode false` before public use.
 
-Build target: Paper 26.2 stable, Java 25, project version `1.0.1`.
+Build target: Paper 26.3 stable build 241 or newer, Java 25 bytecode, project version `1.0.4`.
 
 Current test jar:
 
 ```text
-1MB-Lib-Appreciation-v1.0.4-740-j25-26.3.jar
+1MB-Lib-Appreciation-v1.0.4-835-j25-26.3.jar
 ```
 
 [Documentation index](README.md)

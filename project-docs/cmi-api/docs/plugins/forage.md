@@ -8,6 +8,7 @@ Start with `/forage next`, or open `/forage` for the overview. The complete play
 
 - [Complete Forage guide](forage-camps.md): getting started, camps, all eight tools, progression and troubleshooting.
 - [Camp construction checklist](forage-camps.md#build-the-checklist): what to build and how registration works.
+- [Travel to your camps](forage-camps.md#travel-to-your-camps): paid camp teleporting, confirmation and cooldowns.
 - [Tool Shop and care](forage-camps.md#tool-shop-guide): unlocks, matching sources, repairs, tiers, enchantments and Mending.
 - [Complete gathering sources](forage-camps.md#complete-source-catalogue): sources organized by tool and family, including the modern botanical routes.
 - [Quests and rewards](forage-camps.md#quests-branches-and-treasures): daily, weekly, monthly, Claim All, participation and claim deadlines.

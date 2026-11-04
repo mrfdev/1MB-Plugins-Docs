@@ -7,29 +7,28 @@ This page introduces Halloween Ghost Hunt from a public server-docs point of vie
 
 ## What It Does
 
-Halloween Ghost Hunt is the Ghost module in the shared Event Hunts feature. Its 2026 weekend edition uses four waves of 20 collectible Ghosts, daily kits, an all-80 bonus, personal visual preferences, coordinate-free hints, and durable edition snapshots.
+Halloween Ghost Hunt is part of Event Hunts. The 2026 hunt runs October 29 through November 1, with four cumulative waves of six Ghosts: 24 in total. Each completed wave earns its own kit, and all 24 unlock the completion bonus.
 
 ## How Players Use It
 
-Open `/hunt` for the shared seasonal-event index or `/ghost` for the Halloween overview. During an active edition, travel to the Halloween world and right-click an unlocked Ghost head with your main hand. Each Ghost counts once for you and remains available to other players.
+Open `/ghosthunt` for progress, earned rewards and the Ghost Points shop, or `/hunt` for all seasonal activities. During hunting dates, right-click an unlocked Ghost head with your main hand. Each Ghost counts once for you and remains available to others.
 
 Available features include:
 
-- A shared `/hunt` index for Coconut, Ghost, and Door Hunt events.
-- Four daily waves of 20 Ghosts with catch-up collection access.
-- Four date-specific daily kits and an all-80 perfect-weekend reward.
-- Personal progress, streak, community, reward, point, shop, and history views.
-- Coordinate-free hints that never reveal a Ghost id or exact location.
-- Full, reduced, and off visual modes for private effects without changing participation.
-- Immutable edition snapshots and guarded current or historical reward claims.
-- The `/ghosthunt` compatibility alias while `/ghost` remains the recommended root.
+- Four six-Ghost waves with catch-up access until hunting ends.
+- Four independent wave kits and a separate all-24 completion bonus.
+- Two one-time item bundles at 20 Ghost Points each.
+- One permanent choice of Bat, Fox or Cat MobHat for 24 points per edition.
+- A confirmation page showing the current price and actual bundle contents.
+- Private full, reduced or off effects and coordinate-free hints during the hunt.
+- Saved progress and reward claims after hunting ends, through the configured deadline.
 
 ## Quick Start
 
-1. Use `/hunt` to see every available Event Hunt, or `/ghost` to open the Halloween overview directly.
-2. During an active edition, visit the Halloween world and right-click unlocked Ghost heads with your main hand.
-3. Use `/ghost hint` for a broad direction or `/ghost effects reduced` for quieter visuals.
-4. Check `/ghost rewards` after completing the current date target or larger collection goals.
+1. Open `/ghosthunt` to check your saved progress and the current event phase.
+2. During the hunt, visit Halloween and right-click unlocked Ghosts; use `/ghosthunt hint` if needed.
+3. Use `/ghosthunt rewards` for earned wave kits and the completion bonus.
+4. Use `/ghosthunt shop` to preview bundles or your one MobHat choice before confirming.
 
 ## Commands
 
@@ -44,124 +43,127 @@ Available features include:
   <tbody>
     <tr>
       <td><code>/hunt</code></td>
-      <td>Opens the shared Event Hunts index for Coconut, Ghost, and Door Hunt events.</td>
+      <td>Opens the shared Event Hunts index.</td>
       <td><code>/hunt</code></td>
     </tr>
     <tr>
-      <td><code>/ghost</code></td>
-      <td>Opens the four-day Halloween Ghost Hunt overview.</td>
-      <td><code>/ghost</code></td>
+      <td><code>/ghosthunt</code></td>
+      <td>Opens the Halloween Ghost Hunt overview.</td>
+      <td><code>/ghosthunt</code></td>
     </tr>
     <tr>
-      <td><code>/ghost info</code></td>
-      <td>Shows the current Halloween edition, state, and player documentation.</td>
-      <td><code>/ghost info</code></td>
+      <td><code>/ghosthunt info</code></td>
+      <td>Shows the current edition, state and documentation.</td>
+      <td><code>/ghosthunt info</code></td>
     </tr>
     <tr>
-      <td><code>/ghost help</code></td>
-      <td>Opens the Ghost Hunt player help page.</td>
-      <td><code>/ghost help</code></td>
+      <td><code>/ghosthunt help</code></td>
+      <td>Opens the player help page.</td>
+      <td><code>/ghosthunt help</code></td>
     </tr>
     <tr>
-      <td><code>/ghost progress</code></td>
+      <td><code>/ghosthunt progress</code></td>
       <td>Shows personal finds and four-wave progress.</td>
-      <td><code>/ghost progress</code></td>
+      <td><code>/ghosthunt progress</code></td>
     </tr>
     <tr>
-      <td><code>/ghost milestones</code></td>
+      <td><code>/ghosthunt milestones</code></td>
       <td>Shows collection milestones and their reward states.</td>
-      <td><code>/ghost milestones</code></td>
+      <td><code>/ghosthunt milestones</code></td>
     </tr>
     <tr>
-      <td><code>/ghost streak</code></td>
-      <td>Shows date-specific participation and streak totals.</td>
-      <td><code>/ghost streak</code></td>
+      <td><code>/ghosthunt streak</code></td>
+      <td>Shows participation and streak statistics; streaks do not gate wave kits.</td>
+      <td><code>/ghosthunt streak</code></td>
     </tr>
     <tr>
-      <td><code>/ghost community</code></td>
-      <td>Shows community goals and your contribution.</td>
-      <td><code>/ghost community</code></td>
+      <td><code>/ghosthunt community</code></td>
+      <td>Shows community progress and your contribution.</td>
+      <td><code>/ghosthunt community</code></td>
     </tr>
     <tr>
-      <td><code>/ghost rewards</code></td>
-      <td>Shows daily, collection, community, and perfect reward states.</td>
-      <td><code>/ghost rewards</code></td>
+      <td><code>/ghosthunt rewards</code></td>
+      <td>Shows the four wave kits and all-24 completion reward.</td>
+      <td><code>/ghosthunt rewards</code></td>
     </tr>
     <tr>
-      <td><code>/ghost points</code></td>
+      <td><code>/ghosthunt points</code></td>
       <td>Shows your Ghost Point balance and earning history.</td>
-      <td><code>/ghost points</code></td>
+      <td><code>/ghosthunt points</code></td>
     </tr>
     <tr>
-      <td><code>/ghost shop</code></td>
-      <td>Opens the confirmation-gated Ghost Points shop.</td>
-      <td><code>/ghost shop</code></td>
+      <td><code>/ghosthunt shop</code></td>
+      <td>Previews bundles and the one-of-three MobHat choice before purchase.</td>
+      <td><code>/ghosthunt shop</code></td>
     </tr>
     <tr>
-      <td><code>/ghost claim &lt;reward-id|<wbr />all&gt; [event-id]</code></td>
-      <td>Claims eligible current or retained-edition rewards in safe order.</td>
-      <td><code>/ghost claim all</code></td>
+      <td><code>/ghosthunt claim &lt;reward-id|<wbr />all&gt; [event-id]</code></td>
+      <td>Claims eligible rewards before their deadline.</td>
+      <td><code>/ghosthunt claim all</code></td>
     </tr>
     <tr>
-      <td><code>/ghost history [event-id]</code></td>
-      <td>Shows current or retained Halloween editions without merging their progress.</td>
-      <td><code>/ghost history</code></td>
+      <td><code>/ghosthunt history [event-id]</code></td>
+      <td>Shows current or retained editions without merging their progress.</td>
+      <td><code>/ghosthunt history</code></td>
     </tr>
     <tr>
-      <td><code>/ghost hint</code></td>
-      <td>Gives a broad distance and direction hint without revealing exact coordinates.</td>
-      <td><code>/ghost hint</code></td>
+      <td><code>/ghosthunt hint</code></td>
+      <td>Gives broad distance and direction toward an eligible uncaught Ghost.</td>
+      <td><code>/ghosthunt hint</code></td>
     </tr>
     <tr>
-      <td><code>/ghost effects &lt;full|<wbr />reduced|<wbr />off&gt;</code></td>
-      <td>Changes private visual and sound effects without changing participation.</td>
-      <td><code>/ghost effects reduced</code></td>
+      <td><code>/ghosthunt effects &lt;full|<wbr />reduced|<wbr />off&gt;</code></td>
+      <td>Changes private effects without changing reward eligibility.</td>
+      <td><code>/ghosthunt effects reduced</code></td>
     </tr>
   </tbody>
 </table>
 
-## Aliases
-
-- `/ghosthunt`
-
 ## Examples
 
 - `/hunt`
-- `/ghost`
-- `/ghost progress`
-- `/ghost hint`
-- `/ghost effects reduced`
-- `/ghost rewards`
-- `/ghost claim all`
+- `/ghosthunt`
+- `/ghosthunt progress`
+- `/ghosthunt hint`
+- `/ghosthunt effects reduced`
+- `/ghosthunt rewards`
+- `/ghosthunt shop`
+- `/ghosthunt claim all`
 
 ## Player FAQ
 
 ### How do I catch a Ghost or get a hint?
 
-During the event, right-click an unlocked Ghost with your main hand. It counts once for you and remains available for others. `/ghost hint` gives direction and distance guidance toward an eligible uncaught Ghost, with a cooldown.
+During the event, right-click an unlocked Ghost with your main hand. It counts once for you and remains available for others. `/ghosthunt hint` gives direction and distance guidance toward an eligible uncaught Ghost, with a cooldown.
 
 ### Can I catch up on a missed day and still earn every daily kit?
 
-You can catch older unlocked Ghosts later, but daily kits need the required new finds on that specific event date. In the 2026 rules that is 20 finds per day. Missing one date does not block a later day’s kit.
+Yes. Complete the six heads assigned to each unlocked wave before the hunt ends. Completing both day 1 and day 2 on day 2 earns both kits. Completing all four waves on the final hunt day earns all four kits and the all-24 bonus.
 
 ### What is required for the perfect-weekend reward?
 
-The 2026 edition requires all 80 Ghosts and qualifying participation on all four event dates. Finding all 80 on fewer dates does not satisfy the daily requirements. Check your reward checklist.
+The 2026 bonus requires all 24 Ghosts, regardless of the dates on which they were found. Catching up all 24 on the final date qualifies for the bonus. Each wave’s six heads also earns that wave’s kit, including when completed later.
 
 ### How do I collect earned kits?
 
-Open `/ghost rewards` and claim in a configured reward world before the edition’s claim deadline. Read any space, AutoSell, or delivery message; a reward needing staff attention is not another collection goal.
+Open `/ghosthunt rewards` and claim in a configured reward world before the edition’s claim deadline. Read any AutoSell or delivery message; a reward needing staff attention is not another collection goal. The bundled 2026 weekend profile awards four wave kits and one completion bonus. Earned kits remain claimable through November 10 inclusive.
+
+### Where can I spend Ghost Points?
+
+Open `/ghosthunt shop` for two item bundles costing 20 points each and one choice of Bat, Fox, or Cat MobHat costing 24 points. Each bundle can be purchased once per edition, and only one of the three hats can be selected. The shop closes with earned-kit claims after November 10. See the [November 2026 shop details](#november-2026-ghost-point-shop) for contents and delivery rules. An edition with no configured offers directs players to **Earned Rewards** instead.
 
 ### Can I reduce the effects without losing progress?
 
-Yes. `/ghost effects reduced` lowers effects and removes close-encounter Darkness. `/ghost effects off` hides the private effects entirely. Both modes retain discovery and reward eligibility.
+Yes. `/ghosthunt effects reduced` lowers effects and removes close-encounter Darkness. `/ghosthunt effects off` hides the private effects entirely. Both modes retain discovery and reward eligibility.
 
 ## Good To Know
 
-- Each daily kit requires the configured number of new finds on that event date; older Ghosts remain collectible later.
-- Hints never reveal the Ghost id, block coordinates, or a teleport command.
-- Visual mode changes only private effects and never changes discovery or reward eligibility.
-- Use `/ghost`; `/ghosthunt` remains available only as a compatibility alias.
+- The updated 2026 Ghost reward window includes November 10 and closes November 11 at 00:00 Europe/Amsterdam. Doors and Halloween Virus retain November 7. Check the in-game menu for installed availability.
+- Hunting and Halloween travel end after November 1; extending rewards does not reopen the hunt.
+- Completing all six Ghosts in a wave earns its kit even on a later hunt day. Finding all 24 earns all four wave kits and the bonus.
+- Claim and shop in an allowed reward world with AutoSell off. Kit overflow drops nearby, so collect somewhere suitable.
+- A delivered or uncertain purchase is not a new purchase opportunity. Follow the recovery message instead of buying again.
+- Use `/ghosthunt`. The separate CMI `/ghost` emote does not forward plugin commands.
 
 ## Full Reference
 

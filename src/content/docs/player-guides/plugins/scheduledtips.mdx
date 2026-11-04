@@ -7,26 +7,26 @@ This page introduces ScheduledTips from a public server-docs point of view. It f
 
 ## What It Does
 
-Clickable rotating tips with per-player dismiss, visibility controls, and live booster reminders.
+ScheduledTips chooses useful topics separately for each player. Your world, available permissions and recorded playtime shape the mix, while shared guidance settings control how optional hints reach you.
 
 ## How Players Use It
 
-Start with /tips status. The sections below explain what ScheduledTips is for, which commands players can try, and what to expect when your account has access.
+Start with /tips. The sections below explain what ScheduledTips is for, which commands players can try, and what to expect when your account has access.
 
 Available features include:
 
-- Clickable scheduled tips with compact, readable formatting.
-- Per-player seen counts and dismissal controls for tips that are no longer useful.
-- A global personal /tips on or /tips off preference.
-- Quick click actions for dismissing one tip or hiding scheduled tips entirely.
-- Live booster substitutions for matching mcMMO, Jobs, Points, and DiscordChat tips.
-- Persistent visibility and dismissal preferences in shared playerdata.
+- Clickable scheduled tips chosen separately for your world, permissions and recorded playtime.
+- More introductory topics for newcomers without increasing message frequency.
+- A /tips menu with a catalogue, visibility explanations and preference recovery.
+- Individual hiding after the configured qualifying-chat threshold, at least 12 views.
+- Optional purchased skips with a price preview and confirmation; free /guidance quiet controls remain available.
+- Live booster reminders and saved preferences, with unavailable activities excluded.
 
 ## Quick Start
 
-1. Start with `/tips status` to open or view ScheduledTips.
-2. Use `/tips status` to check your current progress, settings, or state.
-3. Try `/tips settings` when you are ready to use one of the feature actions.
+1. Open `/tips` to review delivery status, the tip catalogue and optional purchased skips.
+2. Open `/guidance` for free frequency, pause and display controls.
+3. After enough normal chat views, hide a repeated topic in the catalogue or with `/tips dismiss <tip-id>`.
 
 ## Commands
 
@@ -40,29 +40,44 @@ Available features include:
   </thead>
   <tbody>
     <tr>
+      <td><code>/tips</code></td>
+      <td>Opens your tips menu, catalogue and optional skip purchase.</td>
+      <td><code>/tips</code></td>
+    </tr>
+    <tr>
+      <td><code>/tips gui</code></td>
+      <td>Opens the same tips menu.</td>
+      <td><code>/tips gui</code></td>
+    </tr>
+    <tr>
       <td><code>/tips status</code></td>
       <td>Shows your current ScheduledTips status.</td>
       <td><code>/tips status</code></td>
     </tr>
     <tr>
       <td><code>/tips settings</code></td>
-      <td>Runs the ScheduledTips settings action.</td>
+      <td>Opens the tips home page and shared-settings links.</td>
       <td><code>/tips settings</code></td>
     </tr>
     <tr>
       <td><code>/tips on</code></td>
-      <td>Changes or clears your ScheduledTips setting.</td>
+      <td>Resumes an old saved off preference, still respecting shared guidance settings.</td>
       <td><code>/tips on</code></td>
     </tr>
     <tr>
       <td><code>/tips off</code></td>
-      <td>Changes or clears your ScheduledTips setting.</td>
+      <td>Opens the paid-skip review menu without charging or setting permanent quiet mode.</td>
       <td><code>/tips off</code></td>
     </tr>
     <tr>
       <td><code>/tips toggle</code></td>
-      <td>Changes or clears your ScheduledTips setting.</td>
+      <td>Resumes an old off preference or opens the skip review.</td>
       <td><code>/tips toggle</code></td>
+    </tr>
+    <tr>
+      <td><code>/tips suppress</code></td>
+      <td>Opens the optional skip purchase for review and confirmation.</td>
+      <td><code>/tips suppress</code></td>
     </tr>
     <tr>
       <td><code>/tips list [page]</code></td>
@@ -76,13 +91,18 @@ Available features include:
     </tr>
     <tr>
       <td><code>/tips dismiss &lt;tip-id&gt;</code></td>
-      <td>Runs the ScheduledTips dismiss action.</td>
+      <td>Hides a topic after its qualifying-chat-view threshold is met.</td>
       <td><code>/tips dismiss welcome</code></td>
     </tr>
     <tr>
       <td><code>/tips reset</code></td>
-      <td>Manages one of your ScheduledTips entries.</td>
+      <td>Resets local tip counts and preferences; keeps purchased skips and shared guidance choices.</td>
       <td><code>/tips reset</code></td>
+    </tr>
+    <tr>
+      <td><code>/tips retry</code></td>
+      <td>Retries safe preference and allowance recovery without repeating an uncertain payment.</td>
+      <td><code>/tips retry</code></td>
     </tr>
   </tbody>
 </table>
@@ -93,17 +113,39 @@ Available features include:
 
 ## Player FAQ
 
+### What is in the tips menu?
+
+`/tips` and `/tips settings` open the home page. It explains tips, shows delivery and storage status, links to `/guidance` and `/next`, and shows the remaining purchased allowance. **All tips** opens the paginated catalog. The menus use a glass-pane border, your player head at the bottom left, page arrows, a back button, **Back to /menu**, and a barrier to close.
+
+Each tip has a colored title, readable text and a yellow action line. Glint means you have allowed that individual tip; no glint means you have hidden it. A glowing tip may still be paused by staff, an unavailable activity, shared quiet preferences or a purchased allowance. Its lore explains that state and shows qualifying chat views. Restoring a hidden tip does not immediately send it.
+
 ### How do I stop seeing tips?
 
-Use `/tips off` to hide scheduled tips. `/tips on` allows them again, following your shared guidance choices. Open `/tips settings` or `/guidance` to choose fewer hints across connected features, pause for a while, or use the action bar.
+Open `/tips` to review the optional purchase: by default, **skip the next 250 eligible scheduled tips for $2,500**. The confirmation shows the current price, number of skips and remaining allowance. Nothing is charged merely by opening a menu. `/tips off` and `/tips suppress` open this menu; they no longer create a new permanent all-tips off preference.
+
+`/guidance` still offers **Normal**, **Fewer**, **Off**, a temporary pause and chat/action-bar choices for free. `/next` remains a free activity hub. RecordingMode's temporary quiet control also remains free. These controls apply to connected optional hints, while the purchased allowance applies to ordinary ScheduledTips entries only.
+
+An old saved `/tips off` choice stays in effect. The home page offers **Resume tips**, and `/tips on` resumes it explicitly. `/tips toggle` resumes an existing off choice or opens the suppression menu. Resuming still follows shared guidance choices.
 
 ### Can I hide one repeated tip instead of all tips?
 
-Yes. Click **[Hide]** on a chat hint or open **Recent hints** in `/guidance`. You can also use `/tips dismiss <tip-id>` immediately; no minimum view count is required. `/tips list` lets you read tips and find their IDs.
+Yes, after that tip has appeared in your normal chat at least **12 times**. The server may configure a higher threshold. The same rule applies in the tips menu, `/tips dismiss <tip-id>`, the chat **[Hide]** control and `/guidance` hide routes. Before that, the menu shows your progress and how many chat views remain.
+
+Reading a menu or `/tips list`, previews, action-bar output, suppressed opportunities and live-booster replacements do not earn chat views for the original tip. **[Later]** remains available to postpone hints. Existing hidden choices remain hidden across the upgrade, even when historical records cannot prove 12 chat views.
 
 ### How do I bring dismissed tips back?
 
-For hints hidden through **[Hide]**, open **Hidden and postponed hints** in `/guidance` and restore one or all. `/tips reset` resets ScheduledTips' own seen counts, local dismissals from `/tips dismiss`, and visibility. It preserves your shared hidden hints, frequency, and display choice. `/tips status` links to the shared settings.
+Use the tip catalog's restore action. Shared hidden/postponed hints can also be restored in `/guidance`. `/tips reset` resets ScheduledTips' own delivery counts, qualifying chat counts, local dismissals and legacy visibility. It preserves shared hidden hints, frequency and display choices, and does not erase purchased allowance or transaction receipts. Restore shared hidden hints through `/guidance` when needed.
+
+### When does a purchased skip get used?
+
+One skip is consumed when an ordinary tip has passed the shared delivery checks and is admitted as an eligible opportunity. Hidden or postponed topics, shared Off/pause, RecordingMode, repeat and frequency limits, unavailable features, missing permissions and stale content are checked before admission. An unused allowance survives logout and restart; it is a count, not a timed subscription. Other providers' hints and live-booster reminders do not consume it.
+
+There is a small race after admission: a logout, permission change or other state change may occur while the durable allowance update is completing. That already-admitted opportunity still consumes one skip, even if the later state would prevent chat delivery. It is recorded once and never replayed or automatically refunded. A blocked or failed storage operation pauses delivery until recovery rather than sending through an uncertain allowance.
+
+### What if saving or a purchase fails?
+
+The menu shows that tips are paused and offers recovery. Use `/tips retry` to retry saving your latest preference changes and recover safe local allowance receipts. A failed save does not silently restore an older opt-in choice. If a payment outcome is uncertain, do not buy again to retry it: staff must inspect the transaction and verify the economy outcome. Recovery never automatically repeats a withdrawal.
 
 ### Why did a tip become a booster reminder?
 
@@ -111,13 +153,17 @@ When the matching booster is active, an ordinary tip can be replaced by a clicka
 
 ### Why did a tip disappear?
 
-An activity may be paused or unavailable to you. Its tips disappear from rotation, `/tips list`, and `/tips seen` until it is available again. Your hidden choices and view counts stay saved. Older entries in `/guidance` use an unavailable title while retaining their hide/restore controls. Restoring one does not enable the activity or immediately replay a tip.
+An activity may be paused or unavailable to you. Its tips are excluded from rotation and the eligible text listings until it is available again; the GUI can explain an unavailable catalog entry without promising delivery. Your hidden choices and view counts stay saved. Older entries in `/guidance` use an unavailable title and apply the current hide/restore rules. Restoring one does not enable the activity or immediately replay a tip. The scheduler keeps checking when all dependent tips are temporarily unavailable.
+
+### Why do other players see different tips?
+
+Tips are selected for each player using their current world, available permissions and recorded playtime. Newer players see introductory topics more often, while experienced players see them less often. These choices change the mix of topics; they do not increase the scheduled message frequency or override your quiet settings.
 
 ## Good To Know
 
-- Some commands may be hidden until your group, event progress, or unlocks allow them.
-- If a command opens a menu, follow the buttons in-game; the website is only the learning guide.
-- Settings commands only change your own player preferences unless the page says otherwise.
+- The default optional purchase skips 250 eligible scheduled tips for $2,500; review the in-game quote before confirming.
+- Free /guidance quiet controls, RecordingMode pauses and saved hidden choices remain respected.
+- Playtime weighting changes the mix of topics, not the scheduled message frequency.
 
 ## Full Reference
 

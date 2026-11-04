@@ -12,7 +12,9 @@ This guide describes the Beta 2 feature set. Reward availability, milestone list
 
 ### Can I check my points from Discord?
 
-DiscordChat supports an optional Discord `/discordchat` command. Once staff enable it, use it in **#server-chat** for a reply visible only to you. It shows your linked Minecraft account, available points, XP toward your next point, current streak and next milestone, earning guidance, in-game menu commands, and the [DiscordChat guide](https://docs.1moreblock.com/player-guides/plugins/discordchat/).
+DiscordChat supports an optional Discord `/discordchat` command. Once staff enable it, use it in **#server-chat** for a reply visible only to you. It shows your linked Minecraft account, available points, XP toward your next point, current streak and next milestone, today's message XP and daily cap, earning guidance, in-game menu commands, and the [DiscordChat guide](https://docs.1moreblock.com/player-guides/plugins/discordchat/).
+
+The reply tells you how much message XP remains today or says **Daily cap reached**, with the hours and minutes until the cap resets. Reset follows midnight in the server's configured calendar timezone, normally Europe/Amsterdam. Message XP is shared across qualifying Discord and in-game chat; separate bonus XP does not use this cap.
 
 You can check your saved progress while logged out of Minecraft, provided the Minecraft server and its DiscordSRV bot are running. If you are not linked, start with `/discord link` **in Minecraft**. A linked account without saved activity receives getting-started help. A temporary lookup failure does not display a made-up balance.
 
@@ -149,6 +151,8 @@ Fishing and farming also share an active-event check: either running tournament 
 Yes. Choosing an eligible upgrade opens a confirmation before applying it. In `/discordchat tools`, place exactly one tool or weapon in the yellow slot below the chest, then choose an upgrade on the right. You see the proposed item, enchantment level, and point cost before pressing **Confirm Upgrade**. **Cancel Upgrade** or **Back** returns to the choices without spending points. Closing returns your original item; if your inventory is full, it stays stored for recovery. The yellow pane is only a guide and cannot be collected.
 
 Only confirming can apply the upgrade or spend points. Changed items, prices, settings, permissions, or an insufficient current balance invalidate the review. Leaving an allowed world or leaving Survival also blocks confirmation. A configuration reload requires a fresh review.
+
+Issued Halloween Virus keepsakes cannot receive these upgrades, even outside the event. The menu rejects them before spending points and returns the original item when closed. Ordinary kit supplies and items that only share their names or lore remain eligible.
 
 If the item cannot receive the upgrade, the tool explains why and spends no points. An enchantment already at or above the offered level is kept: selecting Unbreaking IV for an Unbreaking V item will not lower it or charge you.
 
@@ -618,11 +622,28 @@ The command's guild is derived from the configured `discordsrv.channel-id` text 
 
 Edit the `discord-command.*` keys in `plugins/1MB-CMIAPI/CMIAPILIB/translations/discordchat.yml` to customize the reply. Reload snapshots the configured earning rates, ratio, daily cap, calendar and milestones along with the text. `/discordchat debug status` reports whether the integration is disabled, waiting, ready or unavailable. An unavailable DiscordSRV/link service or unreadable profile gives a temporary error, not a zero balance or an unlinked result.
 
+Linked replies read today's saved `daily.<date>.message-exp` against `xp.daily-message-cap`. They show usage plus either remaining XP or **Daily cap reached**, including when staff lower the cap below usage already earned. Pending XP and separate streak, conversation, first-Discord and milestone bonuses are excluded. A linked account with no saved activity shows zero usage without creating a profile. A zero cap means message XP is disabled; the reply does not suggest that midnight will enable it.
+
+The reset countdown uses the next local midnight in `calendar.zone-id` (Europe/Amsterdam by default), including 23- and 25-hour daylight-saving days. Partial minutes round up. Displaying the next day's allowance does not reset or write any saved data. The new translation keys are:
+
+| Key under `discord-command` | Placeholders |
+| --- | --- |
+| `daily-available` | `{earned}`, `{cap}`, `{remaining}` |
+| `daily-reached` | `{earned}`, `{cap}`, `{remaining}` |
+| `daily-disabled` | None |
+| `daily-reset` | `{hours}`, `{minutes}`, `{zone}` |
+
 The optional DiscordSRV adapter registers one guild command without parameters. It defers privately before doing background work, permits one request per Discord account every five seconds, and uses a 32-request queue and eight-second response deadline. Authoritative link lookup is repeated before a delayed response; reload/disable cancels pending replies. No profile is created, repaired or updated by this command. Its work is separate from chat accounting and cannot refresh the recent-Discord activity window.
 
 Registration checks same-application global/guild name collisions and records its owned bot/guild/command IDs in `DiscordChat/discord-command-registration.txt`. Keep this file with this installation. An unowned `/discordchat` entry or a record from another bot blocks registration for staff review. Startup, DiscordReadyEvent, enable/disable and reload are handled; text-only reloads do not re-register. Removal deletes only the recorded command ID. A disconnected/stopped bot may leave a stale command until a later connected reload can remove it.
 
+Initial registration waits until the server scheduler starts ticking, so a long plugin/world startup does not consume its ten-second routing timeout. Temporary request timeouts, network errors, rate limits and Discord server errors receive at most three automatic retries, with one-, two- and four-second delays. Command collisions, invalid ownership records and permanent permission/setup errors still require staff review. Reload, disable and shutdown invalidate pending recovery work. Debug status and registration warnings identify the failed stage and exception type.
+
+The Discord-side command runs inside the existing DiscordSRV bot. It does not require a separate bot process and does not depend on CMI's legacy-versus-Paper chat setting. On an older build affected by the startup timeout, `/discordchat reload` after the server has finished starting retries registration without restarting the server.
+
 DiscordSRV 1.30.5 bulk-replaces guild commands in `updateSlashCommands()`. This adapter cancels all such writes during its own routing refresh and then upserts only its own command. Other guilds and same-application commands installed outside the provider mechanism are preserved. The exact 1.30.5/JDA empty-batch exception after every update is cancelled is narrowly handled and tested through the real API router. This compatibility path should be reviewed when changing DiscordSRV versions.
+
+If a separate DiscordSRV update for the configured guild omits this provider, DiscordChat performs three verification passes, waiting 1, 5 and then 30 seconds between checks. Each pass checks ownership again and refreshes routing; it recreates the command only if the recorded command is missing. A conflicting command stops recovery. This finite check covers a delayed startup update removing a newly registered command; it is not continuous monitoring. Reload, disable and shutdown cancel outstanding checks.
 
 Real Discord acceptance remains part of the Beta 2 pre-live checklist: use the separate test bot/private guild, verify guild registration and coexistence, #server-chat-only access, private linked/unlinked/offline replies, reload/removal/reconnect, and byte-identical profiles/XP counters. Never activate copied live bot credentials on the test server. The maintained server currently has DiscordSRV compile support only, so local startup does not prove gateway delivery.
 
@@ -875,6 +896,10 @@ gradle :plugins:player-fun:discordchat:test
 ```
 
 The suite covers quality metrics and no-XP decisions, repeat-window ordering, streak progression, floor EXP conversion, reward transaction ledgers, profile backup/quarantine/atomic writes, command validation, cooldowns, GUI reward bindings, fresh-install spending defaults, and escrow recovery. Beta 2 adds exact window expiry, reloadable channel rates and snowflake precision, zero-rate bonus/streak rejection, real profile accounting across source rates and shared caps, event stacking and point conversion, duplicate concurrent callbacks, failed saves, unlinking, and stale lifecycle messages. Full Bukkit inventory sessions, real serialized `ItemStack` recovery, DiscordSRV gateway routing, and live reload concurrency still require test-server integration checks.
+
+Discord slash-command registration tests hold the first scheduler callback while checking that no registration request starts, then admit startup and verify registration. They also exercise transient failure recovery, retry limits, a delayed DiscordSRV update removing the registered command, stale callbacks after reload/disable/shutdown, command ownership and the exact DiscordSRV 1.30.5 router. These tests use mocked Discord REST responses; real registration and private replies still require the separate test bot/private guild acceptance described above.
+
+Daily-cap reply tests cover decimal usage, reached and lowered caps, bonus exclusion, missing profiles, zero-cap disablement, calendar timezone selection, midnight rollover, minute rounding, 23- and 25-hour daylight-saving days, and translation customization/fallback. A saved-profile service test verifies the private reply's usage and countdown while preserving every profile and backup byte.
 
 Claim-rule tests cover all four game modes, the ten reviewed world IDs, excluded/unknown/alias lookalikes, empty/invalid/reloaded allowlists, OPs, repeated rejected purchases, changed confirmations, and console retry/refund paths. Integration tests exercise the real ledger and atomic profile store, asserting unchanged files for rejected purchases/retries, preserved reservations after partial delivery, and no duplicate charge or command on recovery. Tool event tests verify mode/world/config changes block both preview and confirmation while item return stays available.
 

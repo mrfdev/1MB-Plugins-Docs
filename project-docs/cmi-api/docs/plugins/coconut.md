@@ -2,7 +2,7 @@
 
 CoconutHunt adds a reusable seven-day `/coconut` event for the Summer Beach. The preserved, provisional Summer 2027 edition uses 70 special coconut heads, with 10 unlocking on each of seven cumulative days. Players return as new waves unlock, find each coconut once for themselves, build a daily participation streak, help community goals, claim milestone rewards, earn Coconut Points, and redeem those points for configured cosmetics and event rewards.
 
-Event Hunts is the public host player-fun plugin, while Coconut Hunt remains the mature collectible-head module and compatibility namespace. The same `1MB-CMIAPI-EventHunts` jar serves Summer through `/coconut`, Halloween heads through `/ghost` (`/ghosthunt` remains an alias), the isolated Trick-or-Treat Doors module through `/doors`, and [Halloween Virus](halloweenvirus.md) through `/hv`. Keeping the established CoconutHunt files, PDC marker, permissions, placeholders, registry entries, snapshots, and player records avoids a risky data move. See [Halloween Ghost Hunt](ghosthunt.md) and [Door Hunt](doors.md). The canonical host switch `modules.coconut.enabled` defaults to `false` until the 2027 Summer event is reviewed and deliberately enabled; its older `hunts.coconut.enabled` content gate remains readable for compatibility.
+Event Hunts is the public host player-fun plugin, while Coconut Hunt remains the mature collectible-head module and compatibility namespace. The same `1MB-CMIAPI-EventHunts` jar serves Summer through `/coconut`, Halloween heads through `/ghosthunt`, the isolated Trick-or-Treat Doors module through `/doors`, and [Halloween Virus](halloweenvirus.md) through `/hv`. Keeping the established CoconutHunt files, PDC marker, permissions, placeholders, registry entries, snapshots, and player records avoids a risky data move. See [Halloween Ghost Hunt](ghosthunt.md) and [Door Hunt](doors.md). The canonical host switch `modules.coconut.enabled` defaults to `false` until the 2027 Summer event is reviewed and deliberately enabled; its older `hunts.coconut.enabled` content gate remains readable for compatibility.
 
 Implemented and proposed shared-host improvements are tracked in the [Event Hunts quality-of-life roadmap](event-hunts-roadmap.md); every remaining proposal still requires a separate greenlight.
 
@@ -431,7 +431,7 @@ Staff commands:
 
 Admin player resolution uses the shared safe cached/online resolver. The text-only inspect overview works from chat or console and links to fixed five-row pages for each event day and for configured rewards. Day pages compare the player's finds with the immutable event snapshot. Missing rows expose a copyable CMI teleport command; in-game staff can click the missing entry to teleport or click the mail action to send that still-missing location to the player's cached real name. The server revalidates the event, snapshot entry, missing state, CMI provider, permission, and a short mail cooldown when the action runs.
 
-Reward inspection classifies every configured reward as claimed, ready, earned but blocked, or not earned. It prints the exact current eligibility or claim-window reason and, when retained, the durable claim transaction id, state, accepted command count, attempts, update time, and detail. Coconut retains its legacy allowlisted console-command delivery: a finalized transaction proves that the server accepted the configured commands, not the contents or later behavior of a separate kit or command provider. Legacy or compacted claims can therefore have a claim marker without retained external-delivery evidence. Halloween's five direct kit entitlements instead use the synchronous inventory receipt described in [Halloween Ghost Hunt](ghosthunt.md#reward-safety).
+Reward inspection classifies every configured reward as claimed, ready, earned but blocked, or not earned. It prints the exact current eligibility or claim-window reason and, when retained, the durable claim transaction id, state, accepted command count, attempts, update time, and detail. Coconut retains its legacy allowlisted console-command delivery: a finalized transaction proves that the server accepted the configured commands, not the contents or later behavior of a separate kit or command provider. Legacy or compacted claims can therefore have a claim marker without retained external-delivery evidence. Halloween's five kit entitlements instead use verified CMI acquisition and inventory/drop receipts described in [Halloween Ghost Hunt](ghosthunt.md#reward-safety).
 
 Every reset requires an explicit dry-run or confirmation. The complete event reset is debug-only and preserves configuration and setup; production has only the guarded per-player form. Event start/end hooks and each daily wave hook use durable at-most-once keys, including catch-up after restart.
 
@@ -541,6 +541,8 @@ The plugin-scoped key is `coconuthunt`, with separate edition entries for produc
 
 Routine player saves use detached snapshots and one bounded background worker. The host's `persistence.flush-interval-ticks` still defaults to `600` (30 seconds at 20 TPS), but unchanged profiles produce no file writes. Changed snapshots for the same UUID are coalesced; YAML serialization, backups, atomic replacement and disk synchronization happen off the server thread. Quit saves use the same path and retain the latest cached profile until persistence succeeds, including through a quick reconnect. Shared-file updates preserve other plugins' sections.
 
+Login profile reads also use that worker, so a shared playerdata write by another plugin cannot stall or throw out of EventHunts' join handler. Progress becomes available on the server thread after a successful read. During loading, Coconut/Ghost menus, discoveries and reward actions ask the player to retry; proximity effects wait silently. Quit, reconnect and disable invalidate old callbacks. A failed read or full queue gets at most three attempts, one second apart; persistent failure leaves progress unavailable and asks the player to reconnect or contact staff. It never creates replacement empty progress. No reset or data migration is needed.
+
 Queue saturation or a failed write leaves the unsaved profile cached for retry at the next flush; warnings identify storage trouble. Clean disable drains accepted work and retries retained snapshots. A shutdown timeout or persistent failure is reported explicitly; do not force a reload while an old writer is still draining. Reward/discovery/purchase commits and administrative resets still wait for durable confirmation before their existing side effects, so this optimization does not remove those transaction safeguards. No schema change, file move, player reset or interval adjustment is required.
 
 ## Command Hooks
@@ -595,7 +597,7 @@ The shared report includes commands, granular permissions, placeholders, config/
 The current build produces:
 
 ```text
-1MB-Lib-EventHunts-v1.0.4-740-j25-26.3.jar
+1MB-Lib-EventHunts-v1.0.4-835-j25-26.3.jar
 ```
 
 CMI, CMILib, and `1MB-CMIAPI-Lib` are required runtime dependencies. Deploy CoconutHunt and `1MB-CMIAPI-Lib` from the same build. CoconutHunt verifies the shared atomic playerdata API before activating and fails closed with one actionable compatibility diagnostic instead of allowing repeated asynchronous linkage failures. CoconutHunt uses the shared library for feature registration, translated messages, hardened GUI sessions, safe player resolution, documentation metadata, PlaceholderAPI registration, and shared playerdata. It uses the installed CMI runtime for configured kit/warp/broadcast commands; private Paper TextDisplays provide the default proximity holograms. CMILib remains part of the common runtime baseline.
@@ -615,7 +617,7 @@ Modern Paper 26.2 APIs provide player-head profile data, PDC identity, skull til
 - [ ] Confirm MobHat and LuckPerms are available for cosmetic offers; generic event-kit offers must still work without them.
 - [ ] Run coconut validation and require zero issues with exactly 70 enabled heads, 10 assigned to each day.
 - [ ] Run `/coconut admin event validate` and require zero config, command-template, reward, world, or registry issues.
-- [ ] Keep `/coconut admin enabled false` until the Summer launch is deliberately approved; this must not disable `/ghost` or the shared jar.
+- [ ] Keep `/coconut admin enabled false` until the Summer launch is deliberately approved; this must not disable `/ghosthunt` or the shared jar.
 - [ ] Review `/hunt admin event status summer_2027`, run the activation dry-run, and confirm the selected event/audit after activation.
 - [ ] Review deterministic wave counts and spot-check explicit assignments.
 - [ ] Complete a 15-head isolated debug run and verify the player and full debug-event reset dry-runs before confirming either one.

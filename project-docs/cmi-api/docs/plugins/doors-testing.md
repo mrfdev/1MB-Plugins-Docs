@@ -2,7 +2,7 @@
 
 This is the complete clean-room v3 test and release handoff, adapted for `:plugins:player-fun:coconuthunt`. Run focused tests with `gradle :plugins:player-fun:coconuthunt:test` and the full gate with `gradle clean refreshBuildDocs test assemble verifyBuildMetadata verifyFeatureInstallPolicyCoverage`. Before synchronizing v1.0.3, run `gradle planProjectJarSync`; the recoverable sync must pass its complete-set and mixed-prefix checks. The standalone source and its data remain rollback material; its JAR must never be active beside the combined Hunt JAR.
 
-# Paper 26.2 and future-minor staging checklist
+# Paper 26.3 and future-minor staging checklist
 
 Use a copy of the Halloween world and never the only production copy.
 
@@ -33,13 +33,13 @@ Use the focused task for iteration and the full repository gate before synchroni
 
 ## Full-stack test-server synchronization
 
-The canonical live-test target for this project is `servers/Paper-26.2`.
-After a numbered JAR passes automated and isolated smoke checks:
+The sole maintained test target for this project is `servers/Paper-26.3`. Retired instances are preserved under `archive/servers/2026-10-19/`; the dated build evidence below retains its original paths.
+After focused automated and isolated smoke checks:
 
 1. Confirm the full test server is stopped cleanly.
 2. Move any standalone Trick-or-Treat Doors JAR to
    `plugins-disabled/feature-builds/`; never delete either data folder.
-3. Run `gradle planProjectJarSync`, then—with Paper stopped—run `gradle syncBuiltJarsToProjectServer`; it recoverably refreshes every active 1MB Library artifact, not only Hunt.
+3. With Paper stopped, run `scripts/build-all.sh` for the suite-wide numbered build and recoverable full deployment. For an already-persisted build, `gradle planProjectJarSync` and `gradle syncBuiltJarsToProjectServer` remain the preflight and repair/redeployment path; they refresh every managed 1MB Library artifact, not only Hunt.
 4. Verify that exactly one combined JAR with Paper identity `1MB-CMIAPI-EventHunts` is active, no standalone Doors JAR is active, and the embedded version, Paper target, and compatibility aliases match the verified artifact.
 5. Start the full stack, run `/totdoors debug health`, and complete the relevant
    connected-player checks before considering the build ready for production.
@@ -97,9 +97,11 @@ An isolated smoke-test instance does not replace this synchronization step.
 11. Run `/doors hint`; verify no coordinates leak, direction changes with
     player yaw, completed doors are skipped, and the persisted 15-minute
     cooldown/custom public clue survive reconnect/restart.
-12. Run `/doors stats`, `/doors journal`, `/doors quests [stream] [season]`, and
-    `/doors rewards`. Verify the reward hub separates the Treat Bag from
-    milestone unlocks. Earn the same treat on multiple event days and confirm
+12. Run `/doors stats`, `/doors journal`, `/doors quests [stream] [season]`,
+    `/doors treatbag`, and `/doors rewards`. Verify `treatbag` opens **Your
+    Halloween Treat Bag** directly and `rewards` still opens the broader hub
+    showing saved treats and milestone prizes. Complete the focused
+    routing checks below. Earn the same treat on multiple event days and confirm
     every occurrence remains an independent claim. Verify all GUI pages,
     current/historical season selection, journal
     pagination, no undiscovered coordinate/key leak, district completion,
@@ -144,30 +146,112 @@ An isolated smoke-test instance does not replace this synchronization step.
     `PREPARED` treats become `IMMEDIATE` rather than claimable. Create more than
     100 terminal transactions plus waiting/ambiguous records and prove every
     nonterminal record survives save/restart.
-21. Add CMI, LuckPerms, and split CMI kit files. Run
+21. Add CMI/CMILib and split CMI kit files. Run
     `/totdoors admin rewards preflight all`; verify the report-worker scan
-    covers all 36 configured daily
-    kits (`tot01` through `tot36`) plus every annual `tot_2026_*` milestone kit,
-    including missing/misspelled/indented/commented keys. Keep incomplete
-    entries disabled.
-22. Enable one disposable milestone reward. Verify permission grant dispatch,
-    reconnect persistence, failure state, and permission-aware reconciliation.
-    Confirm `dispatched` never claims the kit was redeemed.
-23. Verify every enabled treat resolves to exactly one enabled item-only CMI
-    kit and every trick command in a disposable world. At the Halloween door,
-    prove a treat adds no items and increments the Treat Bag; prove a trick is
-    immediate. Return to each configured claim world and claim one treat. Test
-    a full inventory, AutoSell safety, creative/spectator mode, rapid clicks,
-    reconnect before reservation, disconnect after reservation, restart with a
-    `CLAIMING` receipt, missing/disabled/command-bearing kits, and alternate
-    door reward pools. A retry-safe failure must leave the receipt claimable;
-    an ambiguous claim must not auto-replay.
+    covers all 36 daily kits (`tot01` through `tot36`), all ten candy kits and
+    every annual `tot_2026_*` milestone kit. Check missing/misspelled keys and
+    command-bearing or cost-bearing templates. Keep incomplete prize definitions
+    disabled. A disabled ordinary CMI kit must remain usable by console claims.
+22. Use `/totdoors admin rewards enable <reward-id>` on one disposable milestone
+    definition. Verify permission-denied commands and tab completion cannot
+    expose configuration actions to ordinary players; the dedicated configure
+    permission works without other reward-admin permissions. Check one ID and
+    `all`, unknown IDs, concurrent configuration saves, persistence after reload,
+    and `/totdoors admin rewards disable <reward-id>`. These commands must not
+    pay items immediately or change milestone requirements. Earn it, confirm one receipt is
+    queued, and claim through Doors with no new LuckPerms permission or `/kits`
+    redemption. Repeat earning, reconnect and reconcile: no second milestone
+    receipt may appear. Migrate an already completed/attempted legacy unlock and
+    confirm it cannot produce a fresh payout. Existing historical permissions
+    are not revoked; ordinary access stays blocked by disabled CMI templates.
+23. Verify every enabled treat resolves to one item-only CMI kit. Capture the
+    actual console kit command and the intended online player identity. Test
+    each trick in a disposable world. At a Halloween door, the main treat stays
+    saved; a trick happens immediately; either outcome independently chooses
+    one `hdc01`-`hdc10` candy receipt for automatic delivery. Automatic candy must
+    work in `halloween` although manual claims are blocked there. It must not
+    consume the saved treat, add a visit, or repeat on rapid clicks.
+    Follow the saved-treat `/doors treatbag` link; opening the page must not
+    claim anything. Claim manual treats, saved candy and milestone prizes in
+    each of `end`, `nether`, `general`, `wild`, `cave`, `acid`, `oneblock`,
+    `chunkblock`, `skyblock`, and `skygrid`. Block all three types in `halloween`,
+    `spawn`, and an unknown world without consuming a receipt. Check that
+    `claims.allowed-worlds: []` blocks every manual claim, custom names match
+    case-insensitively and exactly, and old `treat-bag.allowed-worlds` is ignored.
+    With `DropOnGround: true`, claim into a full inventory near a hopper and
+    verify CMI overflow. Exercise AutoSell safety, creative/spectator, stale
+    menus, rapid/concurrent clicks, missing templates, player quit, world change,
+    module disable and restart around reservation/dispatch/final persistence.
+    A proven pre-dispatch failure leaves the reward waiting; a possibly paid
+    attempt closes with an audit reference, does not replay, and does not block
+    another reward. Repeat the same `totXX` result several times and claim each
+    earned receipt exactly once. Do not mistake CMI command acceptance, a kit
+    event or its usage counter alone for proof of item delivery.
 24. Generate `staff`, `public`, `discord`, and `all` reports. Confirm the staff
     file contains UUIDs/coordinates/notes; public/Discord exclude those fields;
     public still contains player display names; every Discord part is at most
     1,900 characters; concurrent exports use separate atomic directories.
 25. Review creeper/mob griefing and keep disruptive tricks disabled unless the
    event rules explicitly allow them.
+
+## Treat Bag command routing
+
+- Run `/doors treatbag` with `totdoors.command.rewards`. It must open the
+  current season's existing **Your Halloween Treat Bag** page, with the same
+  receipts and claim action reached through `/doors rewards` → Treat Bag.
+  Opening either route must not reserve or consume a receipt.
+- Populate a disposable Treat Bag with four distinct receipt dates, including
+  fully claimed older days. The centre of row three must remain **Claim Your
+  Next Reward** when any receipt is waiting and claims are open. Date-history
+  cards belong only in rows four and five; they must never replace the claim,
+  summary or navigation controls. Repeat with 0, 1, 3, 5, 14 and 15 dates,
+  expired claims and a fully claimed bag. Check newest-first history and totals,
+  left-click delivery after the close delay, and rejected alternate click types.
+- Check `/doors admin rewards expiry show [season]`, `set` and `clear` with
+  only `totdoors.admin.rewards.configure`, then without that permission. Use
+  `2026-11-08 00:00` in `Europe/Amsterdam`: the stored instant must be
+  `2026-11-07T23:00:00Z`. Invalid dates and the Amsterdam spring gap/autumn
+  overlap must be rejected without saving a shifted time. Verify optional
+  retained-season selection, missing/extra arguments and permission-aware tabs.
+- On a disposable season, test one instant before, exactly at and after the
+  exclusive cutoff. Saved treats, waiting candy and milestone prizes must share
+  the same rule. Repeat with an already-open menu, a pending asynchronous
+  reservation and a cutoff shortened during preparation. No expired payout
+  may start; a payout already attempted must finish its audit/finalization.
+- End the knocking schedule, and separately set event mode `dormant`, while
+  leaving the Doors module enabled. Both reward pages must still show the
+  deadline and offer eligible claims until expiry. The player's private end
+  message must include both `/doors rewards` and `/doors treatbag`, with their
+  own waiting count; other players must receive no broadcast. Fully disabling
+  the module must keep claims unavailable even after `admin prepare`.
+- Extend an expired cutoff or clear it. Waiting receipts must become claimable
+  again without replaying processed receipts. Restart after a configured date
+  and after `clear`; the bootstrap `claims.initial-expiries` entry must not
+  overwrite either explicit choice. A previously unstored Halloween 2026
+  deadline initializes to November 8, 00:00 Europe/Amsterdam, exactly once.
+- Check `%totdoors_claims_open%`, `%totdoors_claims_expire_at%` and their
+  `%onembcmi_DoorHunt.claims.open%` / `%onembcmi_DoorHunt.claims.expire.at%`
+  forms before and after expiry and while the module is unavailable.
+- Run `/doors treatbag <retained-season>` and `/doors rewards <retained-season>`.
+  Confirm both select that season, Back returns to the matching reward hub,
+  and a claim cannot consume another season's receipt. An unknown season must
+  show the existing season error without opening or mutating a bag.
+- Deny `totdoors.command.rewards`, then try both commands, their tab completion,
+  and any previously opened reward GUI. Confirm command access is denied and a
+  stale claim action cannot bypass the permission. Restore the same permission
+  and verify both routes work without granting a new permission node.
+- Exercise `/totdoors treatbag`, `/totdoor treatbag`, and
+  `/trickortreatdoors treatbag`, including a retained season. Confirm they route
+  identically to `/doors treatbag`; retain `/totdoors` as the unambiguous command
+  fallback when another plugin owns `/doors`.
+- Try the direct command from console and with an online profile still loading.
+  Confirm the player-only/profile-readiness response is clear and does not
+  trigger synchronous player-file loading or reward delivery. Repeat with the
+  Doors module disabled and verify its existing availability checks still apply.
+- Keep `/doors rewards` in player help and GUI navigation as the broader hub
+  for Treat Bag claims and milestone rewards. Saved-treat chat links and direct
+  claim instructions must point to `/doors treatbag`. Milestone prizes use
+  Doors claims too; no new `/kits` permission should be granted.
 
 ## Future Paper minor smoke test
 
@@ -193,7 +277,7 @@ loads it. For each new minor or meaningful Paper build:
 6. Verify configured sound and particle keys resolve through current Paper
    registries and run without warnings.
 7. Repeat the complete command/alias, `/doors` onboarding, event/debug/season,
-   PlaceholderAPI, CMI/LuckPerms, persistence, reports, adversarial interaction,
+   PlaceholderAPI, CMI command claims, persistence, reports, adversarial interaction,
    startup, reload, and clean-shutdown checks above.
 8. Inspect the full log for plugin exceptions, deprecated-API warnings,
    main-thread I/O, rejected tasks, registry failures, and shutdown leftovers.
@@ -219,9 +303,9 @@ prepared rather than published.
 
 The season/statistics/progression/setup feature branch is not considered live
 verified until every applicable step above passes with a connected player in a
-copy of the Halloween world, CMI, LuckPerms, PlaceholderAPI, and the actual kit
+copy of the Halloween world, CMI, PlaceholderAPI, and the actual kit
 configuration. Automated tests and a clean Paper startup are necessary but do
-not prove physical-door interaction, external permission delivery, kit content,
+not prove physical-door interaction, CMI item delivery, kit content,
 or report publishing policy.
 
 ## Verified build 001

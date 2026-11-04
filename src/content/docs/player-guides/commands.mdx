@@ -442,6 +442,18 @@ This table is generated from every registered project and curated feature guide.
     </tr>
     <tr>
       <td><a href="../plugins/scheduledtips/">ScheduledTips</a></td>
+      <td><code>/tips</code></td>
+      <td>Opens your tips menu, catalogue and optional skip purchase.</td>
+      <td><code>/tips</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/scheduledtips/">ScheduledTips</a></td>
+      <td><code>/tips gui</code></td>
+      <td>Opens the same tips menu.</td>
+      <td><code>/tips gui</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/scheduledtips/">ScheduledTips</a></td>
       <td><code>/tips status</code></td>
       <td>Shows your current ScheduledTips status.</td>
       <td><code>/tips status</code></td>
@@ -449,26 +461,32 @@ This table is generated from every registered project and curated feature guide.
     <tr>
       <td><a href="../plugins/scheduledtips/">ScheduledTips</a></td>
       <td><code>/tips settings</code></td>
-      <td>Runs the ScheduledTips settings action.</td>
+      <td>Opens the tips home page and shared-settings links.</td>
       <td><code>/tips settings</code></td>
     </tr>
     <tr>
       <td><a href="../plugins/scheduledtips/">ScheduledTips</a></td>
       <td><code>/tips on</code></td>
-      <td>Changes or clears your ScheduledTips setting.</td>
+      <td>Resumes an old saved off preference, still respecting shared guidance settings.</td>
       <td><code>/tips on</code></td>
     </tr>
     <tr>
       <td><a href="../plugins/scheduledtips/">ScheduledTips</a></td>
       <td><code>/tips off</code></td>
-      <td>Changes or clears your ScheduledTips setting.</td>
+      <td>Opens the paid-skip review menu without charging or setting permanent quiet mode.</td>
       <td><code>/tips off</code></td>
     </tr>
     <tr>
       <td><a href="../plugins/scheduledtips/">ScheduledTips</a></td>
       <td><code>/tips toggle</code></td>
-      <td>Changes or clears your ScheduledTips setting.</td>
+      <td>Resumes an old off preference or opens the skip review.</td>
       <td><code>/tips toggle</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/scheduledtips/">ScheduledTips</a></td>
+      <td><code>/tips suppress</code></td>
+      <td>Opens the optional skip purchase for review and confirmation.</td>
+      <td><code>/tips suppress</code></td>
     </tr>
     <tr>
       <td><a href="../plugins/scheduledtips/">ScheduledTips</a></td>
@@ -485,14 +503,20 @@ This table is generated from every registered project and curated feature guide.
     <tr>
       <td><a href="../plugins/scheduledtips/">ScheduledTips</a></td>
       <td><code>/tips dismiss &lt;tip-id&gt;</code></td>
-      <td>Runs the ScheduledTips dismiss action.</td>
+      <td>Hides a topic after its qualifying-chat-view threshold is met.</td>
       <td><code>/tips dismiss welcome</code></td>
     </tr>
     <tr>
       <td><a href="../plugins/scheduledtips/">ScheduledTips</a></td>
       <td><code>/tips reset</code></td>
-      <td>Manages one of your ScheduledTips entries.</td>
+      <td>Resets local tip counts and preferences; keeps purchased skips and shared guidance choices.</td>
       <td><code>/tips reset</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/scheduledtips/">ScheduledTips</a></td>
+      <td><code>/tips retry</code></td>
+      <td>Retries safe preference and allowance recovery without repeating an uncertain payment.</td>
+      <td><code>/tips retry</code></td>
     </tr>
     <tr>
       <td><a href="../plugins/visit/">Visit</a></td>
@@ -1756,93 +1780,99 @@ This table is generated from every registered project and curated feature guide.
     </tr>
     <tr>
       <td><a href="../plugins/ghosthunt/">Halloween Ghost Hunt</a></td>
-      <td><code>/ghost</code></td>
-      <td>Opens the four-day Halloween Ghost Hunt overview.</td>
-      <td><code>/ghost</code></td>
+      <td><code>/ghosthunt</code></td>
+      <td>Opens the Halloween Ghost Hunt overview.</td>
+      <td><code>/ghosthunt</code></td>
     </tr>
     <tr>
       <td><a href="../plugins/ghosthunt/">Halloween Ghost Hunt</a></td>
-      <td><code>/ghost info</code></td>
-      <td>Shows the current Halloween edition, state, and player documentation.</td>
-      <td><code>/ghost info</code></td>
+      <td><code>/ghosthunt info</code></td>
+      <td>Shows the current edition, state and documentation.</td>
+      <td><code>/ghosthunt info</code></td>
     </tr>
     <tr>
       <td><a href="../plugins/ghosthunt/">Halloween Ghost Hunt</a></td>
-      <td><code>/ghost help</code></td>
-      <td>Opens the Ghost Hunt player help page.</td>
-      <td><code>/ghost help</code></td>
+      <td><code>/ghosthunt help</code></td>
+      <td>Opens the player help page.</td>
+      <td><code>/ghosthunt help</code></td>
     </tr>
     <tr>
       <td><a href="../plugins/ghosthunt/">Halloween Ghost Hunt</a></td>
-      <td><code>/ghost progress</code></td>
+      <td><code>/ghosthunt progress</code></td>
       <td>Shows personal finds and four-wave progress.</td>
-      <td><code>/ghost progress</code></td>
+      <td><code>/ghosthunt progress</code></td>
     </tr>
     <tr>
       <td><a href="../plugins/ghosthunt/">Halloween Ghost Hunt</a></td>
-      <td><code>/ghost milestones</code></td>
+      <td><code>/ghosthunt milestones</code></td>
       <td>Shows collection milestones and their reward states.</td>
-      <td><code>/ghost milestones</code></td>
+      <td><code>/ghosthunt milestones</code></td>
     </tr>
     <tr>
       <td><a href="../plugins/ghosthunt/">Halloween Ghost Hunt</a></td>
-      <td><code>/ghost streak</code></td>
-      <td>Shows date-specific participation and streak totals.</td>
-      <td><code>/ghost streak</code></td>
+      <td><code>/ghosthunt streak</code></td>
+      <td>Shows participation and streak statistics; streaks do not gate wave kits.</td>
+      <td><code>/ghosthunt streak</code></td>
     </tr>
     <tr>
       <td><a href="../plugins/ghosthunt/">Halloween Ghost Hunt</a></td>
-      <td><code>/ghost community</code></td>
-      <td>Shows community goals and your contribution.</td>
-      <td><code>/ghost community</code></td>
+      <td><code>/ghosthunt community</code></td>
+      <td>Shows community progress and your contribution.</td>
+      <td><code>/ghosthunt community</code></td>
     </tr>
     <tr>
       <td><a href="../plugins/ghosthunt/">Halloween Ghost Hunt</a></td>
-      <td><code>/ghost rewards</code></td>
-      <td>Shows daily, collection, community, and perfect reward states.</td>
-      <td><code>/ghost rewards</code></td>
+      <td><code>/ghosthunt rewards</code></td>
+      <td>Shows the four wave kits and all-24 completion reward.</td>
+      <td><code>/ghosthunt rewards</code></td>
     </tr>
     <tr>
       <td><a href="../plugins/ghosthunt/">Halloween Ghost Hunt</a></td>
-      <td><code>/ghost points</code></td>
+      <td><code>/ghosthunt points</code></td>
       <td>Shows your Ghost Point balance and earning history.</td>
-      <td><code>/ghost points</code></td>
+      <td><code>/ghosthunt points</code></td>
     </tr>
     <tr>
       <td><a href="../plugins/ghosthunt/">Halloween Ghost Hunt</a></td>
-      <td><code>/ghost shop</code></td>
-      <td>Opens the confirmation-gated Ghost Points shop.</td>
-      <td><code>/ghost shop</code></td>
+      <td><code>/ghosthunt shop</code></td>
+      <td>Previews bundles and the one-of-three MobHat choice before purchase.</td>
+      <td><code>/ghosthunt shop</code></td>
     </tr>
     <tr>
       <td><a href="../plugins/ghosthunt/">Halloween Ghost Hunt</a></td>
-      <td><code>/ghost claim &lt;reward-id|<wbr />all&gt; [event-id]</code></td>
-      <td>Claims eligible current or retained-edition rewards in safe order.</td>
-      <td><code>/ghost claim all</code></td>
+      <td><code>/ghosthunt claim &lt;reward-id|<wbr />all&gt; [event-id]</code></td>
+      <td>Claims eligible rewards before their deadline.</td>
+      <td><code>/ghosthunt claim all</code></td>
     </tr>
     <tr>
       <td><a href="../plugins/ghosthunt/">Halloween Ghost Hunt</a></td>
-      <td><code>/ghost history [event-id]</code></td>
-      <td>Shows current or retained Halloween editions without merging their progress.</td>
-      <td><code>/ghost history</code></td>
+      <td><code>/ghosthunt history [event-id]</code></td>
+      <td>Shows current or retained editions without merging their progress.</td>
+      <td><code>/ghosthunt history</code></td>
     </tr>
     <tr>
       <td><a href="../plugins/ghosthunt/">Halloween Ghost Hunt</a></td>
-      <td><code>/ghost hint</code></td>
-      <td>Gives a broad distance and direction hint without revealing exact coordinates.</td>
-      <td><code>/ghost hint</code></td>
+      <td><code>/ghosthunt hint</code></td>
+      <td>Gives broad distance and direction toward an eligible uncaught Ghost.</td>
+      <td><code>/ghosthunt hint</code></td>
     </tr>
     <tr>
       <td><a href="../plugins/ghosthunt/">Halloween Ghost Hunt</a></td>
-      <td><code>/ghost effects &lt;full|<wbr />reduced|<wbr />off&gt;</code></td>
-      <td>Changes private visual and sound effects without changing participation.</td>
-      <td><code>/ghost effects reduced</code></td>
+      <td><code>/ghosthunt effects &lt;full|<wbr />reduced|<wbr />off&gt;</code></td>
+      <td>Changes private effects without changing reward eligibility.</td>
+      <td><code>/ghosthunt effects reduced</code></td>
     </tr>
     <tr>
       <td><a href="../plugins/halloweenvirus/">Halloween Virus</a></td>
       <td><code>/hv</code></td>
       <td>Open your 23-fragment collection and reward menu.</td>
       <td><code>/hv</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/halloweenvirus/">Halloween Virus</a></td>
+      <td><code>/hv community</code></td>
+      <td>Open Community Challenges, personal requirements, shared progress, supply quests and challenge rewards.</td>
+      <td><code>/hv community</code></td>
     </tr>
     <tr>
       <td><a href="../plugins/halloweenvirus/">Halloween Virus</a></td>
@@ -1984,8 +2014,20 @@ This table is generated from every registered project and curated feature guide.
     </tr>
     <tr>
       <td><a href="../plugins/doors/">Door Hunt</a></td>
+      <td><code>/doors treatbag [season]</code></td>
+      <td>Opens Your Halloween Treat Bag directly for the current or a retained season. Claim saved rewards one at a time in an allowed world.</td>
+      <td><code>/doors treatbag</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/doors/">Door Hunt</a></td>
+      <td><code>/doors trade</code></td>
+      <td>Previews the candy exchange, shows the accepted candy in your inventory, and asks you to confirm before spending it for your seasonal gift.</td>
+      <td><code>/doors trade</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/doors/">Door Hunt</a></td>
       <td><code>/doors rewards [season]</code></td>
-      <td>Opens the Treat Bag and the separate milestone-reward page. Treats are claimed one at a time in configured gameplay worlds.</td>
+      <td>Opens the reward hub with links to the Treat Bag and separate milestone rewards.</td>
       <td><code>/doors rewards</code></td>
     </tr>
     <tr>
@@ -2035,6 +2077,156 @@ This table is generated from every registered project and curated feature guide.
       <td><code>/dropparty help</code></td>
       <td>Shows the DropParty commands available to you.</td>
       <td><code>/dropparty help</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/advent/">Advent</a></td>
+      <td><code>/advent</code></td>
+      <td>Opens the Christmas workshop index.</td>
+      <td><code>/advent</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/advent/">Advent</a></td>
+      <td><code>/advent tree</code></td>
+      <td>Shows all 24 presents and their unlock states.</td>
+      <td><code>/advent tree</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/advent/">Advent</a></td>
+      <td><code>/advent elf</code></td>
+      <td>Shows the current elf’s landmark clue and next step.</td>
+      <td><code>/advent elf</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/advent/">Advent</a></td>
+      <td><code>/advent claim</code></td>
+      <td>Opens earned rewards for selection and confirmed collection.</td>
+      <td><code>/advent claim</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/advent/">Advent</a></td>
+      <td><code>/advent rewards</code></td>
+      <td>Opens the same earned-rewards menu.</td>
+      <td><code>/advent rewards</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/advent/">Advent</a></td>
+      <td><code>/advent stories</code></td>
+      <td>Opens stories earned through unlocked days.</td>
+      <td><code>/advent stories</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/advent/">Advent</a></td>
+      <td><code>/advent stats</code></td>
+      <td>Shows personal progress, counters and milestones.</td>
+      <td><code>/advent stats</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/advent/">Advent</a></td>
+      <td><code>/advent milestones</code></td>
+      <td>Shows personal milestones and community progress.</td>
+      <td><code>/advent milestones</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/advent/">Advent</a></td>
+      <td><code>/advent extras</code></td>
+      <td>Shows independent bonus-day and enabled quest rewards.</td>
+      <td><code>/advent extras</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/advent/">Advent</a></td>
+      <td><code>/advent passport</code></td>
+      <td>Shows your seasonal stamps and optional quest badge.</td>
+      <td><code>/advent passport</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/advent/">Advent</a></td>
+      <td><code>/advent passport download</code></td>
+      <td>Creates a signed souvenir of your current passport.</td>
+      <td><code>/advent passport download</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/advent/">Advent</a></td>
+      <td><code>/advent kindness</code></td>
+      <td>Opens the approved Kindness book and postcard controls.</td>
+      <td><code>/advent kindness</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/advent/">Advent</a></td>
+      <td><code>/advent postcard</code></td>
+      <td>Opens the same Kindness menu.</td>
+      <td><code>/advent postcard</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/advent/">Advent</a></td>
+      <td><code>/advent mitten</code></td>
+      <td>Shows the optional quest’s current stage and landmark clue.</td>
+      <td><code>/advent mitten</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/advent/">Advent</a></td>
+      <td><code>/advent community</code></td>
+      <td>Shows community milestones and photo-spot guidance.</td>
+      <td><code>/advent community</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/advent/">Advent</a></td>
+      <td><code>/advent info</code></td>
+      <td>Introduces Advent and its current availability.</td>
+      <td><code>/advent info</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/advent/">Advent</a></td>
+      <td><code>/advent help</code></td>
+      <td>Opens the player guide book.</td>
+      <td><code>/advent help</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/hideandsheep/">Hide and Sheep</a></td>
+      <td><code>/sheep</code></td>
+      <td>Opens the event menu with round status, joining and your points.</td>
+      <td><code>/sheep</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/hideandsheep/">Hide and Sheep</a></td>
+      <td><code>/sheep join</code></td>
+      <td>Joins the current gathering or search; each round requires a new entry.</td>
+      <td><code>/sheep join</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/hideandsheep/">Hide and Sheep</a></td>
+      <td><code>/sheep leave</code></td>
+      <td>Leaves this round and restores access to ordinary travel and perks.</td>
+      <td><code>/sheep leave</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/hideandsheep/">Hide and Sheep</a></td>
+      <td><code>/sheep stats</code></td>
+      <td>Shows participation, finds, lifetime points and spendable points.</td>
+      <td><code>/sheep stats</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/hideandsheep/">Hide and Sheep</a></td>
+      <td><code>/sheep book</code></td>
+      <td>Opens Woolbur’s story and the rules.</td>
+      <td><code>/sheep book</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/hideandsheep/">Hide and Sheep</a></td>
+      <td><code>/sheep rewards</code></td>
+      <td>Opens the reward shop and its claim-world requirements.</td>
+      <td><code>/sheep rewards</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/hideandsheep/">Hide and Sheep</a></td>
+      <td><code>/sheep info</code></td>
+      <td>Introduces the feature and current availability.</td>
+      <td><code>/sheep info</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/hideandsheep/">Hide and Sheep</a></td>
+      <td><code>/sheep help</code></td>
+      <td>Shows the commands available to you.</td>
+      <td><code>/sheep help</code></td>
     </tr>
     <tr>
       <td><a href="../plugins/appreciation/">Appreciation</a></td>
@@ -2242,6 +2434,12 @@ This table is generated from every registered project and curated feature guide.
     </tr>
     <tr>
       <td><a href="../plugins/forage/">Forage</a></td>
+      <td><code>/forage teleport [1|<wbr />2|<wbr />3]</code></td>
+      <td>Review paid travel to your own registered camp; defaults to your Initial Camp.</td>
+      <td><code>/forage teleport</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/forage/">Forage</a></td>
       <td><code>/forage camp register</code></td>
       <td>Open the deliberate registration action.</td>
       <td><code>/forage camp register</code></td>
@@ -2308,6 +2506,12 @@ This table is generated from every registered project and curated feature guide.
     </tr>
     <tr>
       <td><a href="../plugins/autosell/">AutoSell</a></td>
+      <td><code>/autosell reminders &lt;hide|<wbr />show&gt;</code></td>
+      <td>Player</td>
+      <td><code>/autosell reminders example</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/autosell/">AutoSell</a></td>
       <td><code>/autosell stats</code></td>
       <td>Player/console</td>
       <td><code>/autosell stats</code></td>
@@ -2371,6 +2575,12 @@ This table is generated from every registered project and curated feature guide.
       <td><code>/autosell toggle</code></td>
       <td>Player</td>
       <td><code>/autosell toggle</code></td>
+    </tr>
+    <tr>
+      <td><a href="../plugins/autosell/">AutoSell</a></td>
+      <td><code>/autosell presets</code></td>
+      <td>Player</td>
+      <td><code>/autosell presets</code></td>
     </tr>
     <tr>
       <td><a href="../plugins/autosell/">AutoSell</a></td>
@@ -3004,9 +3214,9 @@ This table is generated from every registered project and curated feature guide.
     </tr>
     <tr>
       <td><a href="../plugins/economyguardian/">EconomyGuardian</a></td>
-      <td><code>/economyguardian player &lt;player&gt;</code></td>
+      <td><code>/economyguardian player &lt;player|<wbr />uuid&gt;</code></td>
       <td>Runs the EconomyGuardian player action.</td>
-      <td><code>/economyguardian player Steve</code></td>
+      <td><code>/economyguardian player example</code></td>
     </tr>
     <tr>
       <td><a href="../plugins/economyguardian/">EconomyGuardian</a></td>

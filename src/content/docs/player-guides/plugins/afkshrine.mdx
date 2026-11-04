@@ -246,6 +246,8 @@ Available features include:
 
 Return from AFK and use `/afkshrine claim` to move pending tokens into your spendable balance. Then browse `/afkshrine rewards` and use `/afkshrine trade` to spend them. Going AFK does not automatically deliver reward kits.
 
+AFK and bed-rest sessions save their earned progress in the background. A short saving interval can delay the return summary and temporarily pause that player's claims or trades. Disconnecting or beginning another session does not cancel an earlier completion. If saving or an optional session hook needs recovery, the original completion remains recorded; staff should inspect `/afkshrine debug transactions` before retrying or acknowledging delivery. An accepted command alone is not proof that its configured effect happened.
+
 Unclaimed points expire after **six calendar months**. `/afkshrine claim` protects the remaining points by moving them into the claimed balance, which does not expire. `/afkshrine balance` and the claim button show the next expiry date. New earnings have their own deadlines and never renew older points.
 
 When points expire, the player receives a private message such as: “100 of your oldest unclaimed AFKShrine points expired. Unclaimed points expire after six months. Use /afkshrine claim regularly to keep your points. Remaining pending: 30.” The command in this message is clickable. Offline players receive the message when they return; notification is recorded after the expiry has been saved.

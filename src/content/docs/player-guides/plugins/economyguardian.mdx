@@ -18,6 +18,7 @@ Available features include:
 - Listens to CMIUserBalanceChangeEvent at monitor priority.
 - Tracks total observed positive and negative balance movement.
 - Tracks per-player balance movement and anomaly counts.
+- Looks up exact recorded Java or Bedrock names, including the Floodgate prefix, or the actual server UUID. Ambiguous names require a UUID.
 - Flags large positive spikes, large negative movement, sharp percent changes, and repeated high-value action/source paths.
 - Keeps bounded recent anomaly records.
 - Shows Vault loaded state for support context.
@@ -26,7 +27,7 @@ Available features include:
 
 1. Start with `/economyguardian` to open or view EconomyGuardian.
 2. Use `/economyguardian status` to check your current progress, settings, or state.
-3. Try `/economyguardian player Steve` when you are ready to use one of the feature actions.
+3. Try `/economyguardian player example` when you are ready to use one of the feature actions.
 
 ## Commands
 
@@ -50,9 +51,9 @@ Available features include:
       <td><code>/economyguardian status</code></td>
     </tr>
     <tr>
-      <td><code>/economyguardian player &lt;player&gt;</code></td>
+      <td><code>/economyguardian player &lt;player|<wbr />uuid&gt;</code></td>
       <td>Runs the EconomyGuardian player action.</td>
-      <td><code>/economyguardian player Steve</code></td>
+      <td><code>/economyguardian player example</code></td>
     </tr>
     <tr>
       <td><code>/economyguardian anomalies [page]</code></td>
@@ -72,6 +73,8 @@ Available features include:
 - `/economyguardian`
 - `/economyguardian status`
 - `/economyguardian player mrfloris`
+- `/economyguardian player .BedrockPlayer`
+- `/economyguardian player 00000000-0000-0000-0009-01abcdef1234`
 - `/economyguardian anomalies`
 - `/economyguardian anomalies 2`
 

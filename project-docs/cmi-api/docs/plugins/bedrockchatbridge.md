@@ -8,6 +8,7 @@ BedrockChatBridge is a temporary, fail-closed compatibility feature for servers 
 
 - Requires `CMI`, `CMILib`, `floodgate`, and `1MB-CMIAPI-Lib`.
 - Requires `Chat.UsePaperType: true` in CMI `Settings/Chat.yml` unless the reviewed safety gate is explicitly disabled.
+- When CMI Paper chat is disabled or its configuration is missing, startup and reload keep the bridge inactive and print a plain yellow console notice, without an ERROR or WARN log entry. Malformed or unreadable YAML can still produce a configuration-parser error. Dependency, API, and unsafe listener-order failures still report errors.
 - Registers late, verifies CMI's Paper formatter exists, rejects an unsafe `MONITOR` formatter, and verifies the bridge listener is ordered after CMI before becoming active.
 - Uses the final `ServerLoadEvent` registration as authoritative during cold startup and a next-tick fallback for live feature activation after startup.
 - Checks the sender UUID through Floodgate. Eligible messages snapshot their viewers, are rendered separately for each viewer, and are delivered on the main server thread as system chat.
@@ -71,4 +72,6 @@ On a disposable Paper server with CMI Paper chat and Floodgate enabled:
 4. Send one Java message and one Floodgate message. Java delivery must be untouched; the Floodgate message must appear once per viewer with CMI's viewer-aware rendering.
 5. Stop cleanly and require no pending-delivery, scheduler, listener, or linkage errors.
 
-The implementation targets Java 25 and Paper 26.2. `Geyser-Spigot`, DiscordSRV, and dynmap remain optional ordering/integration context rather than trusted delivery dependencies.
+With `Chat.UsePaperType: false`, also verify that startup and a bridge config reload report `Bridge remains inactive` in yellow at normal console severity, and that `/bedrockchatbridge status` reports `Bridge=inactive`.
+
+The implementation targets Java 25 and Paper 26.3. `Geyser-Spigot`, DiscordSRV, and dynmap remain optional ordering/integration context rather than trusted delivery dependencies.

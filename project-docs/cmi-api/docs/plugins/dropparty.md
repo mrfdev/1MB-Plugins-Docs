@@ -74,7 +74,7 @@ Default recognized structure:
 - nearby marker within the configured radius: `SULFUR`
 - nearby fluid within the configured radius: `WATER`
 
-These material names are config-driven for Paper 26.2. A practical build can place bedrock below a magma vent, then use the new sulfur and water blocks as visible parts of the geyser.
+These material names are config-driven. A practical build can place bedrock below a magma vent, then use the new sulfur and water blocks as visible parts of the geyser.
 
 ## Collection And Anti-Idle Safety
 
@@ -353,7 +353,7 @@ CMILib and 1MB-CMIAPI-Lib:
 
 - feature registry, lifecycle, metadata, messages, config comments, permissions, placeholders, safe player output, shared AutoSell reward guard, hardened GUI sessions, durable operations, and debug pages
 
-Paper 26.2:
+Paper 26.3:
 
 - custom `InventoryHolder` GUI identity through `GuiService`
 - entity and item PDC identity
@@ -383,9 +383,9 @@ No NMS or reflective server internals are used.
 ## Build And Target
 
 ```text
-jar: 1MB-Lib-DropParty-v1.0.4-740-j25-26.3.jar
+jar: 1MB-Lib-DropParty-v1.0.4-835-j25-26.3.jar
 Java target: 25
-Paper target: 26.2 stable build 84 or newer
+Paper target: 26.3 stable build 206 or newer
 ```
 
 [Documentation index](README.md)

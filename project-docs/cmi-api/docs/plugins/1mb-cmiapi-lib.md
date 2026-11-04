@@ -16,6 +16,8 @@ The shared GUI contract includes owner-bound sessions, unpredictable nonces, exa
 
 `InventoryCapacity` provides a common exact-stack capacity preflight for item-delivery actions. A full inventory with no empty or matching-stack capacity must refuse before costs are committed or leave the item in its authoritative durable escrow.
 
+`MobHatAvailability` is the shared, read-only Bukkit service for checking whether a mob type is supported and enabled in MobHat's stable head position. Call `canEquipType(String)` on the server thread. MobHat registers the service while active and unregisters it on shutdown. The Ghost Points shop uses it before offering a cosmetic; it does not establish the player's ownership, permissions or current-world eligibility. Missing or inactive providers make the cosmetic unavailable, and payment/delivery checks remain the caller's responsibility.
+
 In-game list output stays paginated so chat remains readable. Console senders receive the full list in one command for debug pages that use the shared pagination renderer, which makes support logs easier to copy and review.
 
 Feature configs are validated and repaired through the shared `FeatureSettings` loader. Missing default keys are added safely on startup or reload while existing values are preserved. Use `/<plugin-command> debug health` or `/1mblib debug plugin <id> health` to see expected config keys, repaired defaults from the last reload, missing keys, and validation issues.
@@ -194,19 +196,25 @@ The read-only `/1mblib validate ...` command exposes the default rules for owner
 
 `RewardDeliverySafety` lets one feature provide a fail-closed safety check that every other feature can call immediately before delivering a reward. AutoSell registers the first provider: it prevents ordinary vanilla reward items from being sold when a player forgot that AutoSell was still active.
 
-Feature plugins extending `AbstractCmiApiFeaturePlugin` use one of two entry points:
+Feature plugins extending `AbstractCmiApiFeaturePlugin` use a manual preflight or an asynchronous automatic-delivery preflight:
 
 ```java
 if (!allowManualRewardClaim(player, "the AFKShrine starter kit")) {
     return;
 }
 
-if (!prepareAutomaticRewardDelivery(player, "the referral reward")) {
-    return;
-}
+prepareAutomaticRewardDeliveryAsync(player, "the referral reward", allowed -> {
+    if (!allowed) return;
+    // Recheck this reward's current eligibility, receipt, cost and delivery state here.
+    // Continue the existing durable transaction; this callback is not proof of delivery.
+});
 ```
 
-`allowManualRewardClaim(...)` blocks an active AutoSell user, explains that nothing was spent, and supplies a clickable `/autosell toggle` action. It must run before deducting currency or items, marking a one-time claim, or consuming a reward charge. `prepareAutomaticRewardDelivery(...)` turns AutoSell off, cancels its pending delayed batch, and persists the off state before automatic commands run. A failed provider or failed safe-state save blocks delivery.
+`allowManualRewardClaim(...)` blocks an active AutoSell user, explains that nothing was spent, and supplies a clickable `/autosell toggle` action. It must run before deducting currency or items, marking a one-time claim, or consuming a reward charge. Automatic preparation turns AutoSell off, cancels its pending delayed batch, and waits for the off state to reach disk before allowing automatic commands. A failed provider or failed safe-state save blocks delivery.
+
+Call `prepareAutomaticRewardDeliveryAsync(...)` on the server thread. Its callback returns there exactly once, including cancellation. It waits for pending safety storage without blocking ticks, then rechecks the authoritative guard. Feature disable/reload, a changed guard registry, a changed player connection or world, and a 60-second timeout cancel approval. Each feature admits at most 256 pending preparations. Callers must retain unclaimed rewards or their existing transaction receipts while waiting and recheck their own conditions before continuing.
+
+The synchronous `prepareAutomaticRewardDelivery(...)` remains available as an action-time guard. It returns false while a save is pending; it must not be treated as a completed asynchronous preparation or used to discard an earned reward. Readiness means only that the safety preflight passed, never that a reward was delivered.
 
 New reward implementations must guard every delivery route, including GUI clicks, bulk claims, automatic milestones, staff retries, and recovery commands. The service protects integrated 1MB feature rewards only; it cannot infer that an ordinary item came from an unrelated plugin or direct staff command.
 

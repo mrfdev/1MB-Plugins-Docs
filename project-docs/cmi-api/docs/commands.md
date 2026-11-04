@@ -21,6 +21,50 @@ This page documents the global command shape. Individual plugins have their own 
 /guidance preview|help|info|retry
 ```
 
+## Hide and Sheep
+
+`/sheep` opens Woolbur's event menu. `/hideandsheep` is an alias. The feature installs dormant; enabling and starting are separate actions. See the [staff reference](plugins/hideandsheep.md) and [player guide](plugins/hideandsheep-player-guide.md).
+
+```text
+/sheep
+/sheep help
+/sheep info
+/sheep join
+/sheep leave
+/sheep stats
+/sheep rewards
+/sheep book
+/sheep admin
+/sheep admin enable|disable
+/sheep admin setspawn
+/sheep admin radius|duration|gathering|points|decoys <number>
+/sheep admin preset <id>
+/sheep admin custom <scale> <upside-down> <rainbow> <color>
+/sheep admin setup
+/sheep admin setup list
+/sheep admin setup preset <normal_regular|speedrun|difficulty_high>
+/sheep admin setup save|load|replace|delete <name...>
+/sheep admin reset
+/sheep admin world <role> <actual-world,...>
+/sheep admin start|stop|status|history
+/sheep admin reload
+/sheep admin claims [player-uuid]
+/sheep admin receipt <claim-uuid>
+/sheep admin retry <claim-uuid>
+/sheep admin resolve <claim-uuid> delivered|refund <evidence note...>
+/sheep debug
+/sheep debug enable true|false
+/sheep debug cleanup <uuid|player>
+```
+
+Players must join each round through the menu or `/sheep join` before Woolbur or decoy touches can score. Joining applies the temporary `hideandsheep_playing` fair-play subgroup through LuckPerms. `/sheep leave` releases it and prevents same-round re-entry while preserving points. Staff can force cleanup with `/sheep debug cleanup <uuid|player>`, even while dormant or when no active record remains. Names resolve only from trusted local real-name records; UUIDs must be actual server UUIDs.
+
+`duration` is search time in seconds. `gathering` defaults to 120 seconds before searching; use 0 to skip it or choose up to 600. Players can teleport while gathering, but sheep and scoring begin afterward. `decoys` accepts 1–16; the starting count fixes the per-decoy points for that round. Costume `preset` offers eight designs, while `setup preset` applies a full round's rules.
+
+Set the arrival point in game, then choose `setup preset normal_regular`, `speedrun`, or `difficulty_high` in the Saved setups menu or by command. These preserve the current arrival point, enablement, rewards and saved setups. `/sheep admin reset` restores only the normal-regular rules: radius 128, twelve decoys, 360 search seconds, 120 gathering seconds, 100 first-place points, and scale 0.75. Existing configured preparation stays unchanged on upgrade until staff deliberately select a preset or reset. Start separately from the GUI, command, or direct console.
+
+`/sheep admin setup save Spawn Meadow` remembers the full preparation; `setup load Spawn Meadow` restores it without starting. Names accept spaces without quotes. Browse saved setups through `/sheep admin`; replacing and deleting are explicit actions. Player reward claims use separately mapped worlds.
+
 ## Current Global Library Commands
 
 Feature commands remain separate from these library controls. For the fall event, `/hv` opens Halloween Virus, and `/hunt hv` routes to the same module. See the [player commands](plugins/halloweenvirus.md#commands) and [full staff command reference](plugins/halloweenvirus-administration.md#staff-commands), including live spawning controls, regional outbreaks, particle/glow tuning, player resets, balance reports and reward-kit keepsake templates. `/hv debug commands`, `/hv debug permissions` and `/hv debug placeholders` show the running module's catalogs to authorized staff.
@@ -660,11 +704,16 @@ PassportDiscovery:
 
 ScheduledTips:
 
+`/tips` opens preferences and the tip catalog. `/tips off` opens the optional suppression purchase review; shared `/guidance` quiet controls remain free. Individual hiding requires at least 12 normal chat deliveries.
+
 ```text
+/tips
 /tips settings
 /tips status
 /tips off
 /tips on
+/tips suppress
+/tips retry
 /tips list
 /tips seen
 /tips dismiss visit
@@ -680,6 +729,9 @@ ScheduledTips:
 /tips admin config
 /tips admin set schedule.interval-seconds 600
 /tips admin reload
+/tips admin purchases <uuid>
+/tips admin recover <uuid> <transaction>
+/tips admin resolve <transaction> <revision> charged|not-charged|refunded confirm
 ```
 
 SocialGatherings:
@@ -921,6 +973,14 @@ Boosters:
 /rate help
 /rate admin
 /rate admin status
+/rate admin mcmmo
+/rate admin mcmmo draft mining 2h 4 in 2 hours
+/rate admin mcmmo draft all 1h 2 daily 12:00,20:00
+/rate admin mcmmo preset next-hour
+/rate admin mcmmo list 1
+/rate admin mcmmo confirm <preview-token>
+/rate admin mcmmo cancel <plan-uuid>
+/rate admin mcmmo stop <plan-uuid>
 /rate admin start all 1h 2
 /rate admin stop all
 /rate admin reload
@@ -1307,45 +1367,46 @@ Themed Hunts (`CoconutHunt` jar):
 /coconut admin reset event <--dry-run|--confirm>
 /coconut admin report [event-id]
 /coconut admin shop regrant <online-player> <offer-id>
-/ghost
-/ghost info
-/ghost help
-/ghost progress
-/ghost milestones
-/ghost streak
-/ghost community
-/ghost rewards
-/ghost points
-/ghost shop
-/ghost claim <reward-id|all> [event-id]
-/ghost history [event-id]
-/ghost hint
-/ghost effects <full|reduced|off>
-/ghost admin reload
-/ghost admin status
-/ghost admin enabled <true|false>
-/ghost admin debug <true|false>
-/ghost admin expected <count|production>
-/ghost admin day <1-4|off>
-/ghost admin date <yyyy-mm-dd|off>
-/ghost admin event <validate|snapshot|start|end>
-/ghost admin event force-mutation --confirm
-/ghost admin event snapshot --force-confirm
-/ghost admin ghost give [amount] [unlock-day]
-/ghost admin ghost register [unlock-day]
-/ghost admin ghost inspect
-/ghost admin ghost <enable|disable|remove>
-/ghost admin ghost list [page]
-/ghost admin ghost validate
-/ghost admin ghost waves auto [days] [seed]
-/ghost admin inspect <player>
-/ghost admin inspect <player> day <1-4> [page]
-/ghost admin inspect <player> rewards [page]
-/ghost admin rewards retry <online-player> <reward-id> [--force-confirm]
-/ghost admin reset player <player> [event-id] <--dry-run|--confirm>
-/ghost admin reset event <--dry-run|--confirm>
-/ghost admin report [event-id]
-/ghost admin shop regrant <online-player> <offer-id>
+/ghosthunt
+/ghosthunt info
+/ghosthunt help
+/ghosthunt progress
+/ghosthunt milestones
+/ghosthunt streak
+/ghosthunt community
+/ghosthunt rewards
+/ghosthunt points
+/ghosthunt shop
+/ghosthunt claim <reward-id|all> [event-id]
+/ghosthunt history [event-id]
+/ghosthunt hint
+/ghosthunt effects <full|reduced|off>
+/ghosthunt admin reload
+/ghosthunt admin status
+/ghosthunt admin enabled <true|false>
+/ghosthunt admin debug <true|false>
+/ghosthunt admin expected <count|production>
+/ghosthunt admin day <1-4|off>
+/ghosthunt admin date <yyyy-mm-dd|off>
+/ghosthunt admin event <validate|snapshot|start|end>
+/ghosthunt admin event force-mutation --confirm
+/ghosthunt admin event snapshot --force-confirm
+/ghosthunt admin ghost give [amount] [unlock-day]
+/ghosthunt admin ghost register [unlock-day]
+/ghosthunt admin ghost inspect
+/ghosthunt admin ghost <enable|disable|remove>
+/ghosthunt admin ghost list [page]
+/ghosthunt admin ghost validate
+/ghosthunt admin ghost waves auto [days] [seed]
+/ghosthunt admin inspect <player>
+/ghosthunt admin inspect <player> day <1-4> [page]
+/ghosthunt admin inspect <player> rewards [page]
+/ghosthunt admin rewards retry <online-player> <reward-id> [--force-confirm]
+/ghosthunt admin reset player <player> [event-id] <--dry-run|--confirm>
+/ghosthunt admin reset event <--dry-run|--confirm>
+/ghosthunt admin report [event-id]
+/ghosthunt admin shop regrant <online-player> <legacy-offer-id>
+/ghosthunt admin points add <online-player-or-uuid> <1-1000000>
 /hunt
 /hunt info
 /hunt help
@@ -1370,7 +1431,15 @@ Themed Hunts (`CoconutHunt` jar):
 /doors stats [season]
 /doors journal [season] [page]
 /doors quests [stream] [season]
+/doors treatbag [season]
+/doors trade
 /doors rewards [season]
+/doors admin trade status
+/doors admin trade preflight
+/doors admin trade enable <true|false>
+/doors admin trade price <1-100000>
+/doors admin trade kit <kit-id>
+/doors admin trade season <season-id>
 /doors admin migrate standalone --dry-run
 /doors admin migrate standalone --confirm
 /totdoors
@@ -1387,15 +1456,19 @@ Themed Hunts (`CoconutHunt` jar):
 
 For players, `/hunt`, `/hunt info`, and `/hunt help` open the six-row Event Hunts index. `/hunt calendar`, or clicking Coming Up in that index, opens a separate fixed six-row read-only calendar generated from the same registry. It lists every module in public live, upcoming, claims-open, ended, unpublished, then dormant order; displays concise `Europe/Amsterdam` dates and countdowns; and keeps event-card lore to at most nine lines. Calendar rendering never requests player progress or mutates event/reward state. Each index or calendar card opens that module's GUI only after resolving its current registry entry again. Dormant collectible hunts and Doors expose only a read-only preview; all progress, hints, discoveries, knocking, claims, and purchases still pass the module's normal runtime and event guards. Console receives the compact text index instead. Cards, text listings, tab completion, and `/hunt <module>` routing are derived from the validated Event Hunts module registry. A future module participates only after it provides unique metadata, a read-only status provider, and guarded command/GUI routes matching a managed runtime module. Staff use `/hunt admin status` or `/hunt debug status` for one immutable aggregate snapshot of module switches, lifecycle/effective editions, debug state, required worlds, registered/enabled/eligible/expected locations, reward providers, and pending/failed/uncertain claims. Every warning/failure includes an operator action; Door claim counts are explicitly limited to the loaded-player cache until the all-profile audit runs. `/hunt admin modules` uses the same severity model. Capturing this status never loads chunks, scans player files, reloads configuration, or mutates an event. Module-specific status commands remain available. `/hunt admin preflight [all|coconut|ghost|doors]` runs sequential deeper readiness checks with `PASS`, `WARN`, and `FAIL` results. It prepares only existing collectible chunks without terrain generation, reuses the authoritative Coconut/Ghost validators and Doors health report, and never activates, reloads, repairs, migrates, claims, or saves event state.
 
-`/coconut`, `/ghost`, and `/doors` open themed six-row event overviews. The Door Hunt overview includes Halloween travel, daily progress, hints, statistics, a coordinate-private journal, quests, a persistent Treat Bag, separate milestone reward unlocks, retained seasons, an All Event Hunts return, and shortcuts to the sibling hunts. A successful Door treat is frozen as one durable receipt instead of being paid in the Halloween world; `/doors rewards [season]` lets the player claim one receipt at a time in a configured gameplay world without receiving CMI kit permission. Tricks still happen immediately at the door. `/ghosthunt` remains a compatibility alias for `/ghost`. Each annual edition has an isolated registry, snapshot, progress, points, community state, claims, purchases, receipts, reports, and debug namespace. The generated per-hunt defaults leave Coconut disabled and Ghost enabled while the shared jar remains enabled. `/ghost hint` returns cooldown-protected relative direction and distance guidance to an eligible unfound Ghost without revealing coordinates. `/ghost effects full|reduced|off` controls only private Ghost visuals, sounds, titles, Darkness, and capture presentation; participation and reward eligibility remain unchanged. Historical views and claims stay bound to the requested edition's snapshot, claim deadline, reward worlds, and claim records.
+`/coconut`, `/ghosthunt`, and `/doors` open themed six-row event overviews. The Door Hunt overview includes Halloween travel, daily progress, hints, statistics, a coordinate-private journal, quests, a persistent Treat Bag, separate milestone reward unlocks, retained seasons, an All Event Hunts return, and shortcuts to the sibling hunts. A successful Door treat is frozen as one durable receipt instead of being paid in the Halloween world; `/doors treatbag [season]` opens Your Halloween Treat Bag directly so the player can claim one receipt at a time in an allowed claim world without receiving CMI kit permission. `/doors rewards [season]` keeps the broader overview with the Treat Bag and separate milestone rewards. Tricks still happen immediately at the door. `/ghosthunt` is the public plugin command; `/ghost` remains registered for compatibility but may be owned by a separate CMI alias. Each annual edition has an isolated registry, snapshot, progress, points, community state, claims, purchases, receipts, reports, and debug namespace. The generated per-hunt defaults leave Coconut disabled and Ghost enabled while the shared jar remains enabled. `/ghosthunt hint` returns cooldown-protected relative direction and distance guidance to an eligible unfound Ghost without revealing coordinates. `/ghosthunt effects full|reduced|off` controls only private Ghost visuals, sounds, titles, Darkness, and capture presentation; participation and reward eligibility remain unchanged. Historical views and claims stay bound to the requested edition's snapshot, claim deadline, reward worlds, and claim records.
 
-All three reward GUIs use the same presentation-only status legend: gray `Locked`, yellow `In progress`, orange `Ready to claim`, green `Claimed`, and red `Delivery needs attention`. Collectible cards translate their existing eligibility, claim marker, and retained durable transaction; Door cards translate Treat Bag and milestone ledgers. A dispatched Door milestone remains ready because its kit is still collected through `/kits`. The shared labels do not change eligibility, permissions, commands, persistence, delivery, retry, or claim behavior.
+All three reward GUIs use the same presentation-only status legend: gray `Locked`, yellow `In progress`, orange `Ready to claim`, green `Claimed`, and red `Delivery needs attention`. Collectible cards translate their existing eligibility, claim marker, and retained durable transaction; Door cards translate Treat Bag and milestone ledgers. Door milestones are claimed directly through `/doors rewards`; they do not grant a separate `/kits` entitlement. The shared labels do not change eligibility, permissions, commands, persistence, delivery, retry, or claim behavior.
 
-The `halloween_2026` contract is four cumulative daily waves of 20 Ghosts from October 30 through November 2. Reaching 20 new finds on one event date unlocks that date's independent `daily_1` through `daily_4` kit; missing one date does not block a later daily kit. Completing all four dates and all 80 snapshot Ghosts unlocks the separate bonus box. `summer_2027` preserves the seven-day/70-coconut design with provisional dates and remains disabled by default. A themed `admin enabled false` switch stops that theme's participation, discovery, effects, visit action, and shop. It does not strand support for a live immutable edition: read-only UI/history and already-earned claims remain available only while the edition is `ACTIVE` or `CLAIMING` and has an immutable snapshot. An upcoming edition or one without a snapshot is blocked.
+The `halloween_2026` contract is four cumulative daily waves of six Ghosts from October 29 through November 1. Finding all six immutable snapshot heads in one wave unlocks that wave's independent `daily_1` through `daily_4` kit, including later catch-up. Completing waves 1 and 2 on day 2 earns both kits; completing all four waves on the final day earns all four kits. Finding all 24 snapshot Ghosts unlocks the separate bonus box, including catch-up on a later event date. Collection closes at November 2, 00:00 Europe/Amsterdam; earned rewards and point-shop purchases remain available through November 10, closing at November 11, 00:00. Doors and Halloween Virus retain their November 7 claim deadline. `summer_2027` preserves the seven-day/70-coconut design with provisional dates and remains disabled by default. A themed `admin enabled false` switch stops that theme's participation, discovery, effects, visit action, and shop. It does not strand support for a live immutable edition: read-only UI/history and already-earned claims remain available only while the edition is `ACTIVE` or `CLAIMING` and has an immutable snapshot. An upcoming edition or one without a snapshot is blocked.
 
-The themed setup commands give PDC setup heads, register looked-at heads, inspect or change only matching event/theme entries, validate the exact expected total, and deterministically assign unassigned collectibles across waves. Event validation preflights worlds, regions, visuals, milestones/rewards, allowlists, command templates, and registry integrity. Debug uses separate `debug_<event>` data, defaults to an immediately active day 1, uses 15 heads across seven floor/ceiling-balanced Coconut waves or exactly 16 heads across four Ghost waves, and suppresses live reward commands by default. Once created, the immutable snapshot blocks setup edits through the claim deadline; emergency replacement requires the configurable short force-mutation window, clean validation, and a second explicit snapshot confirmation. Player and debug-event resets require dry-run or confirm; event-wide reset preserves setup/configuration and cannot target production. Recorded shop delivery can be regranted without charging again.
+The themed setup commands give PDC setup heads, register looked-at heads, inspect or change only matching event/theme entries, validate the exact expected total, and deterministically assign unassigned collectibles across waves. Event validation preflights worlds, regions, visuals, milestones/rewards, allowlists, command templates, and registry integrity. Debug uses separate `debug_<event>` data, defaults to an immediately active day 1, uses 15 heads across seven floor/ceiling-balanced Coconut waves or exactly 16 heads across four Ghost waves, and suppresses live reward commands by default. Once created, the immutable snapshot blocks setup edits through the claim deadline; emergency replacement requires the configurable short force-mutation window, clean validation, and a second explicit snapshot confirmation. Player and debug-event resets require dry-run or confirm; event-wide reset preserves setup/configuration and cannot target production. Recorded legacy shop delivery can be regranted without charging again. The paid Ghost offers refuse `admin shop regrant`; safely recoverable receipts resume their original delivery without another debit, and uncertain item delivery requires staff review.
 
-The five Halloween entitlements each require exactly one matching `cmi kit <kit> {player} -s` command. Every referenced CMI kit must exist, be enabled, contain at least one deliverable item, and contain no internal kit commands. Claim-time readiness processes the kit for the claiming player and refuses delivery unless all items fit in storage. The processed items are inserted synchronously; overflow or a runtime failure restores the prior inventory, and a successful inventory mutation is the delivery receipt. `/ghost admin rewards retry <online-player> <reward-id> [--force-confirm]` is limited to unresolved durable Halloween delivery records and never replays a finalized kit. Coconut rewards retain their legacy allowlisted console-command delivery contract, where dispatch acceptance is recorded but does not prove an external provider's result.
+Use `/ghosthunt` for the plugin; the CMI `/ghost` emote alias remains unchanged. The five Halloween entitlements each require exactly one matching `cmi kit <kit> {player} -s` command. Every referenced CMI kit must exist, contain at least one deliverable item, allow `DropOnGround: true`, and contain no internal kit commands. Templates remain disabled so players cannot use `/kits` to claim them. Ghost Hunt dispatches the configured CMI command as console for the exact online claimant, bound to the original server UUID. CMI delivers items and drops overflow; full inventory does not block a claim. The hunt verifies acquisition and inventory/drop evidence, waiting up to two ticks for deferred overflow before finalizing the durable receipt. Command acceptance alone never proves delivery. Ghost claims are allowed in the configured worlds, including `chunkblock`, and claim-all waits for each completed delivery before starting the next. `/ghosthunt admin rewards retry <online-player> <reward-id> [--force-confirm]` is limited to unresolved durable Halloween delivery records and never replays a finalized kit. Coconut rewards retain their legacy allowlisted console-command delivery contract, where dispatch acceptance is recorded but does not prove an external provider's result.
+
+`/ghosthunt shop` offers two once-per-edition 20-point bundles and one 24-point choice of Bat, Fox or Cat MobHat. Purchases require confirmation, an allowed reward world and AutoSell off. The menu previews the actual kit, and delivery must be verified before its receipt finalizes. See [the shop contract](plugins/ghosthunt.md#november-2026-ghost-point-shop) for ownership, permissions and recovery. `/ghosthunt admin points add <online-player-or-uuid> <1-1000000>` adds saved points to the selected Ghost edition without resetting finds, claims or purchase limits; it requires `onembcmi.GhostHunt.admin.points` (operator by default) or direct console and resolves only the exact locally known online identity.
+
+`/doors trade` previews a gift costing 256 matching Halloween candy items from normal inventory/hotbar slots. It allows one gift per player UUID and configured season, independently of Treat Bag claims. The normal claim deadline and world rules apply. `/doors admin trade status|preflight` checks readiness; `enable`, `price`, `kit` and `season` save settings and invalidate open confirmations. See [the administration guide](plugins/doors-administration.md#halloween-candy-exchange) for exact permissions, durable records and uncertain-delivery policy.
 
 Use `/hunt admin event status <event-id>` and `activate ... --dry-run` before production selection. Confirmation creates or verifies the target immutable snapshot, preserves the previous event, and writes an activation audit. It does not rewrite dates, merge or delete progress, invalidate old claims, or silently end the prior event. Switching away from an event currently inside its live dates is refused unless staff use the additional `--force-confirm` form.
 
@@ -1445,6 +1518,9 @@ Forage:
 /forage admin export [backup]
 /forage admin camps list [page]
 /forage admin camps worlds
+/forage admin camps regions list
+/forage admin camps regions add <actual-world> <existing-region>
+/forage admin camps regions remove <actual-world> <region>
 /forage admin camps legacy [page]
 /forage admin camps near
 /forage admin camps inspect <registration-UUID>
@@ -1465,6 +1541,8 @@ Activity commands (`shop`, `branches`, `top`, `tips`, `tools`, `compost`, and `d
 
 `/forage herbarium` opens the permanent botanical journal from anywhere while Forage and the journal are enabled. Collection filters show all, missing or discovered specimens, including first-find world/biome details. One-time collection kits require an active owned camp and preview/confirmation. `/forage admin herbarium <local-player|UUID>` uses the existing inspect permission for read-only progress and claim inspection. See the [Herbarium reference](plugins/forage-herbarium.md).
 
+`/forage admin camps regions` requires the separate `onembcmi.forage.camps.regions` permission or console. It defaults to false and is not granted by the general Forage admin node. The command approves existing WorldGuard regions for camp services while active or dormant, without a restart. Every named region at the anchor must be approved and the camp player must be a WorldGuard owner or member of each; gathering remains global-only. WorldEdit/WorldGuard region creation and membership permissions remain separate.
+
 Staff inspect camps by registration UUID. Legacy reassignment/move helpers are not a supported way to bypass the current registration rules. `resetcap` clears an online tester's daily global and family cap buckets, not chunk exhaustion or quest progress. `toolapprove` reviews supported older tools before explicit confirmation; `recoveryack` discards verified finalized recovery evidence and never refunds or replays delivery. Arbitrary quest reward commands remain blocked; configured CMI kit items use the audited `reward-kit` delivery path. See the [Forage player guide](plugins/forage-camps.md#commands) for player commands and camp requirements. Private operational evidence is kept in the source repository.
 
 AutoSell:
@@ -1474,6 +1552,8 @@ AutoSell:
 /autosell info
 /autosell help
 /autosell status
+/autosell reminders hide
+/autosell reminders show
 /autosell stats
 /autosell preview
 /autosell recent
@@ -1486,6 +1566,7 @@ AutoSell:
 /autosell milestones claim all
 /autosell caps
 /autosell toggle
+/autosell presets
 /autosell onlysell cobblestone
 /autosell trigger full
 /autosell trigger always
@@ -1528,7 +1609,13 @@ AutoSell:
 /autosell debug all
 ```
 
+`/autosell presets` opens five free starter selections and two personal slots unlocked permanently for 5 and 15 Broker Points by default. Presets show paginated item previews and confirm before replacing category/item switches. Personal slots save ON items inside OFF categories as paused selections. AutoSell on/off, filters, worlds, and sale protections stay as configured.
+
 `/autosell onlysell <material>` enables AutoSell for just that priced, permitted material and disables every other item and category. For example, `/autosell onlysell cobblestone` saves Cobblestone as the only selection, including after restarts or future worth additions. Normal safety rules, filters, triggers, worlds, and caps still apply. Players can adjust the saved selection through the existing item and category controls.
+
+`/autosell categories` opens All Categories. Its hopper cycles through All Categories, Off Categories, On Categories, All Off Items and All On Items, with reverse cycling on right-click and 28 entries per page. Global On Items requires both category and item switches to be on; Off Items includes either switch being off. Staff-blocked materials stay excluded. Clicking an item opens its category controls at that item's page, and Back restores the original browser filter and page. Changing the view does not change selling preferences.
+
+`/autosell admin inspect <player>` also shows the latest saved cap-blocked automatic attempt with its absolute timestamp, earned/cap/remaining amounts, minimum sale, trigger mode and skipped-stack reasons. This single snapshot survives daily resets and restarts; repeated identical attempts keep their first timestamp. `/autosell preview` checks only the current inventory and does not record an attempt. Cap messages show the remaining allowance and Amsterdam midnight reset, even when unrelated inventory items are deliberately switched off.
 
 `/autosell` opens an opt-in inventory cleanup GUI. Players can turn AutoSell on or off, choose categories, browse per-category material pages, toggle individual materials, use the top-row bulk control to turn every available item in one category on or off across all of its pages, or use the adjacent view control to show all available items, only off items, or only on items. Enabled material choices glint for quick scanning, disabled choices stay plain, hover lore shows the exact state, and staff-blacklisted materials do not appear in these player item views. The bulk action leaves staff-blacklisted items blocked and does not change other categories. Players can also set value filters, choose a notification style, opt into allowed worlds, choose whether AutoSell runs after pickup/break batches or only when inventory storage slots are nearly full, preview what would sell, review recent batched results, inspect their own top sold categories/materials with `/autosell stats`, use the quest hub for claimable rewards plus daily/weekly/monthly/all quest pages, view the visible `/autosell milestones` tree for one-time lifetime, bulk-batch, chain, streak, and broker goals, and spend broker points on permanent daily cap unlocks. AutoSell reads CMI `Worth.yml`, pays through the CMI-backed Vault economy provider, and only scans normal inventory storage slots after a short delayed batch. It never sells hotbar, offhand, armor, open-container, custom-name, lore, enchant, damaged, PDC, custom-model, shulker, bundle, or other modified/storage items by default. The final sale rechecks exact stack identity before removing items and refunds removed stacks if the economy payment fails. Broker progress grows from legitimate sold item volume, configurable milestone and quest rewards can grant broker points, small daily bonuses, and safe allowlisted CMI command rewards, sell chains reward active batches within a short window, daily/weekly streaks reward repeated qualifying use, and staff can start preset/manual temporary AutoSell Happy Hour boosts that appear in `/rate` while AutoSell is enabled. Scheduled Happy Hour automation exists but is disabled by default. Admin commands can reload config/data/worth, run colored readiness checks, print richer economy reports, manage a hard material blacklist, blacklist materials directly from numbered material warnings, move materials between categories, inspect player profiles, review suspicious volume warnings, review chunk revenue heatmaps, start/stop passive tuning observation sessions that only produce suggestions, list/start/stop AutoSell boosts, and export Markdown reports with server/player totals, top earners, top categories, top materials, category/material leaders, cap usage, broker growth, quest progress, heatmaps, passive tuning suggestions, and warning summaries.
 
@@ -1551,6 +1638,9 @@ MobHat:
 /mobhat mob armadillo
 /mobhat mob frog
 /mobhat mob turtle
+/mobhat mob bat
+/mobhat mob fox
+/mobhat mob cat
 /mobhat position
 /mobhat position reset
 /mobhat target
@@ -1804,6 +1894,8 @@ EconomyGuardian:
 /economyguardian
 /economyguardian status
 /economyguardian player mrfloris
+/economyguardian player .BedrockPlayer
+/economyguardian player 00000000-0000-0000-0009-01abcdef1234
 /economyguardian anomalies
 /economyguardian anomalies 2
 /economyguardian reload
@@ -2227,3 +2319,7 @@ Appreciation:
 ## Fireworks
 
 `/_fireworks` is staff-only, including info/help/tab suggestions. It supports `gui`, `create`, `edit <id>`, `list [page]`, `give <player> <id> <amount> [receipt-uuid]`, `inspect [player]`, `enable|disable|retire <id>`, `preview <id>`, `stop|resume`, `reload`, `info|help|admin|status`, and `debug`. Console supports non-GUI operations. No player-facing command or use permission. See [Fireworks](plugins/fireworks.md).
+
+## Advent
+
+`/advent` opens the Christmas index. `claim`, `tree`, `elf`, `stories`, `stats` and `help` provide player views. `/advent admin` opens staff preparation; see [the complete command list](plugins/advent.md). Regular commands never unlock a present.

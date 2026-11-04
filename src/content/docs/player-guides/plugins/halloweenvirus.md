@@ -3,9 +3,9 @@ title: "Halloween Virus Guide"
 description: "Learn what Halloween Virus does, how to use it, and which public commands are available."
 ---
 
-A strange infection is spreading across the worlds. Fight marked infected mobs, recover 23 different pottery fragments, and record them in `/hv` to defeat the virus and earn the completion reward.
+A strange infection is spreading across the worlds. Fight marked infected mobs, recover 23 different pottery fragments, and record them in `/hv` to defeat the virus and earn the completion reward. Then keep the roads safe, light the lanterns and prepare the shelters through three **Community Challenges**. Once staff open challenge access for you, you can help while finishing your sherd collection; collecting all 23 is required to claim any challenge reward.
 
-Halloween Virus is a fall adventure within the bigger `/halloween` celebration. The scheduled 2026 hunt runs from **1 October through 1 November**, with rewards available **25 October through 4 November**. Staff may open the hunt early in September. All dates use **Europe/Amsterdam** time. Staff must enable participation; `/hunt` includes the event alongside the existing seasonal adventures.
+Halloween Virus is a fall adventure within the bigger `/halloween` celebration. The scheduled 2026 hunt runs from **1 October through 1 November**, with rewards available **25 October through 7 November**. Staff may open the hunt early in September. All dates use **Europe/Amsterdam** time. Staff must enable participation; `/hunt` includes the event alongside the existing seasonal adventures.
 
 Read ahead and plan your first expedition. This guide describes the adventure; check `/hv info` for the current event state and claim dates when you have access. Finding this page does not mean the hunt has opened yet.
 
@@ -13,11 +13,11 @@ Player guide: <https://docs.1moreblock.com/player-guides/plugins/halloweenvirus/
 
 While the hunt is live, you may receive a spooky invitation about **90 seconds after joining**. Click **[/hv]** to open the event menu, or **[Don't remind me again]** to hide this season's join invitations and reward-claim reminder. Your choice survives reconnects, server restarts and collection resets. You can also type `/hv reminders off`, check your choice with `/hv reminders`, or restore reminders with `/hv reminders on`. Staff announcements are separate. Hunt invitations stop when the hunt ends and are skipped once all 23 sherds are recorded.
 
-If you finish your collection early, you can receive **one private reminder when your reward becomes available**. If you are offline then, it waits until an eligible login, about 90 seconds after joining. The reminder also works during **2–4 November**, when hunting has ended but claims remain open. It shows the claim dates and a clickable **[/hv]** button; you still choose to claim the reward yourself. Already claimed or pending rewards are not reminded, and the saved reminder does not repeat on normal relogs or restarts.
+If you finish your collection early, you can receive **one private reminder when your reward becomes available**. If you are offline then, it waits until an eligible login, about 90 seconds after joining. The reminder also works during **2–7 November**, when hunting has ended but claims remain open. It shows the claim dates and a clickable **[/hv]** button; you still choose to claim the reward yourself. Already claimed or pending rewards are not reminded, and the saved reminder does not repeat on normal relogs or restarts.
 
 ## Start your collection
 
-1. Open `/hv`. Your head in the bottom left shows the current event phase, your collected total, reward availability, and the local hunt end date.
+1. Open `/hv`. While hunting is live, your head in the bottom left shows your sherd collection and Community Challenge progress, alongside the current event phase, reward availability and local hunt end date. After the hunt ends, it shows a concise ended-event summary and the inclusive reward deadline, **7 November** for 2026. Both the main and Community Challenge menus link directly to `/ghosthunt` and `/doors`. Their Halloween travel button closes automatically after the event and asks players to try again next year.
 2. Choose **World & Mob Guide**. Hover over a world to see your recorded progress, the exact fragment IDs you still need, and which infected mobs to look for. Use **Only Missing** to hide completed regions.
 3. Look for mobs with infected or regional boss names, unusual sizes, and eerie particles. Boss variants also have a colored outline for their region. Some wear distinctive dyed and trimmed armor, sometimes with an enchantment shimmer. They have more health and hit harder than ordinary mobs. Bring suitable equipment and leave yourself a way out.
 4. Defeat eligible infected mobs and collect their event fragments. The default chance is 75% per eligible kill; the fragment comes from that world's pool. A kill does not guarantee a drop.
@@ -31,12 +31,84 @@ The confirmed 2026 timetable is:
 | Before 1 October | The automatic hunt is scheduled. Staff may open the hunt early or run a limited test. |
 | 1–24 October | Find infected mobs and record your sherds. Completed collections stay saved until claims open. |
 | 25 October–1 November | Continue hunting and collecting, and claim your completed reward. |
-| 2–4 November | **Claims only:** no new infected encounters. Trade and submit existing unused sherds, finish your collection, and claim. |
-| From 5 November | The event is dormant. Collection submissions and claims close; recorded progress remains saved. |
+| 2–7 November | **Claims only:** no new infected encounters. Trade and submit existing unused sherds, finish your collection, and claim. |
+| From 8 November | The event is dormant. Collection submissions and claims close; recorded progress remains saved. |
 
-The automatic hunt opens at **00:00 on 1 October** and ends at **00:00 on 2 November**, so all of 1 November is included. An early opening keeps that end date and does not open rewards early. Claims open at **00:00 on 25 October** and close at **00:00 on 5 November**, including all of 4 November. Staff can adjust the dates or pause access; `/hv info`, the field guide, and the menu show the current state and dates.
+The automatic hunt opens at **00:00 on 1 October** and ends at **00:00 on 2 November**, so all of 1 November is included. An early opening keeps that end date and does not open rewards early. Claims open at **00:00 on 25 October** and close at **00:00 on 8 November**, including all of 7 November. Staff can adjust the dates or pause access; `/hv info`, the field guide, and the menu show the current state and dates.
 
 The icons in `/hv` display your collection; they are not items you can take out. Once all 23 types are recorded, **Collect Sherds** confirms that your collection is complete and tells you whether your reward is ready, already claimed, awaiting staff setup, or needs staff review. Extra sherds stay yours to trade. The guide book at the top explains the story and rules. Use the barrier at the bottom right to close the menu.
+
+## Community Challenges
+
+*The cure is taking shape, but the fall nights are still restless. Help your neighbours keep watch, light the roads and prepare the shelters before the final Halloween nights.*
+
+Community Challenges have a separate opening from the original hunt. Staff may first give a few players access for testing. If your `/hv` challenge button says access is not available yet, you can continue collecting sherds and enjoying the original adventure. Your kills and items will not contribute to challenges until staff grant you access; earlier kills are not added retroactively. Having all 23 sherds does not open this access by itself.
+
+When you have access, open **Community Challenges** from `/hv`, or type `/hv community`. The three icons are numbered in order: **Community Challenge: #1** is the sword (Regional Night Watch), **#2** is the carved pumpkin (Light the Last Lantern), and **#3** is the barrel (Autumn Relief Stockpile). Hover for a short story, your contribution toward the personal minimum, the community progress bar and your next step. Click a challenge for the full requirements, eligible worlds and mobs or supply checklist, contribution dates and reward conditions.
+
+Hover over your head in the bottom left of the collection or community menus for your own overview. Your sherd collection shows **Not started**, **In progress** or **Complete**. Each challenge shows your contribution against its minimum, with **Locked**, **Not started**, **In progress** or **Minimum met** to explain where you stand. For Autumn Relief, deliveries to an unfinished supply quest are shown too, even before you earn your first Supply Credit. Accepting a quest alone does not count as delivering supplies.
+
+**Minimum met** means you have done your personal share; it does not mean the reward is ready. The community must still finish that challenge, you must have all 23 recorded sherds, and claims must be open. The challenge's detail page shows those conditions separately.
+
+**Contributions are scheduled from 2 October through 24 October 2026**, while you have challenge access and the event and challenges are enabled. **Rewards can be claimed from 25 October through 7 November**, in Europe/Amsterdam time. The menu shows current availability if staff pause the event. A completed community goal never closes participation early: you can keep contributing until the end of 24 October.
+
+You do **not** need all 23 sherds to begin helping. Your own progress unlocks each next challenge: meet the Night Watch minimum to unlock pumpkin deliveries, then deliver your personal pumpkin minimum to unlock Autumn Relief. You never need to wait for a community goal to finish before advancing. To claim a challenge's reward, you need **all 23 recorded sherds, that challenge's personal requirement, its completed community goal and an open claim window**. Each challenge reward can be claimed once; you do not have to claim the original reward first.
+
+### 1. Regional Night Watch
+
+*A lantern in every world, a watch on every road. Bring the familiar dangers under control so the autumn travellers can reach home.*
+
+Defeat the listed **naturally spawned** mobs in Survival with a player finishing blow. Ordinary qualifying mobs count; you do not need to find an infected version. Spawner mobs, trial-spawner mobs, spawn eggs, commands and artificially spawned mobs do not count. Automatic farm deaths do not count. One death contributes one kill, even when friends fight together.
+
+| Region | Eligible mobs | Community goal |
+| --- | --- | ---: |
+| The Wilderness | Zombies, husks, drowned | 500 |
+| Skygrid | Skeletons, spiders | 250 |
+| Oneblock | Spiders, zombies | 350 |
+| Skyblock | Skeletons, zombies | 125 |
+| General World | Bogged | 100 |
+| Cave World | Skeletons, spiders | 100 |
+| Acid World | Drowned, zombies | 100 |
+| Chunkblock | Zombies, spiders | 100 |
+| The Nether | Wither skeletons, piglins | 100 |
+| The End | Endermen | 100 |
+
+Every configured region must reach its goal. These starting targets total **1,825 kills**, giving a personal minimum of **183 kills** (10%, rounded up). Your kills can come from any listed regions; you do not need to visit them all. Extra kills in a completed region still advance your personal progress, but cannot replace another region's missing community kills. The in-game list reflects staff changes.
+
+Reaching your personal minimum unlocks the next challenge. Completing every community region also qualifies participating players for the Night Watch reward once their sherd collection and claim dates allow it.
+
+### 2. Light the Last Lantern
+
+*Fill the roads with grinning lanterns. A shared farm, a spare harvest and a neighbour's helping hand can carry the light further.*
+
+Submit **carved pumpkins** through this challenge's menu. The shared goal is **75,000**, your personal minimum is **576** (nine full stacks), and the starting daily limit is **750 per player**. Partial deliveries are welcome. Your daily allowance resets at midnight in Europe/Amsterdam; reconnecting or restarting the server does not reset it. Staff can adjust the cap during the event.
+
+Shared farms, supplies gathered earlier and player trading are welcome. Ordinary pumpkins do not count for this challenge until carved. Meeting your personal minimum unlocks Autumn Relief. Your remaining deliveries can help the community finish even after you qualify.
+
+### 3. Autumn Relief Stockpile
+
+*Help prepare the shelters before the final Halloween nights. Food for the tables, a place by the hearth, supplies for the watch and gifts from the woodland all have a part to play.*
+
+Choose and accept a **supply quest**. This is a delivery you can complete, not a permanent role. Bring whichever kind suits your farms, home or adventures. You have one active supply quest at a time, so check its whole recipe before accepting. Submit its requirements gradually; the menu remembers what you have supplied and takes only the quantities still needed for that quest. Finish it before accepting another.
+
+| Supply quest | One complete delivery | Community goal |
+| --- | --- | ---: |
+| Harvest Supplies | 128 wheat, 128 potatoes, 64 ordinary pumpkins, 32 bread | 3 completed quests |
+| Shelter Supplies | 64 white wool, 128 oak planks, 16 straw beds, 16 orange cushions | 3 completed quests |
+| Patrol Supplies | 64 string, 64 bones, 64 charcoal, 128 arrows | 3 completed quests |
+| Woodland Supplies | 128 poplar logs, 64 shelf mushrooms, 32 red shrubs, 128 poplar planks | 3 completed quests |
+
+Complete **every ingredient in one accepted quest** to earn a personal **Supply Credit**. Credits are saved progress inside `/hv`; you do not receive a token to carry or trade. One credit satisfies your personal requirement. More completed quests help the community, which must finish the required number in **every** category. After finishing, you may deliberately accept the same quest again or choose another; no one needs to supply every category themselves. Claiming the reward does not give repeat rewards for extra credits.
+
+Finishing a delivery closes that quest and keeps your earned credit. Inactive quests show **ingredients per delivery**, without personal progress bars. Once your personal minimum is met, the menu labels another accepted quest **Your Optional Delivery**. Its ingredient counters track that new delivery; they do not replace or erase your saved Supply Credits.
+
+### Fair participation and item deliveries
+
+The community bar stops at **100%**, but actual contribution totals keep growing. A late arrival can still meet the same personal requirements in completed worlds and categories until the participation deadline. Additional supply quests replenish the shelters. Extra contributions never increase anyone's personal minimum.
+
+Item submission is deliberate and **consumes the displayed items**. Completed community goals still accept additional deliveries for personal catch-up; the menu explains this before submission. Only plain matching vanilla materials are accepted. Named, enchanted or custom items with plugin identity are left alone, including event rewards and keepsakes. Check the ingredient type and color: for example, Shelter Supplies requires white wool and oak planks in its starting recipe.
+
+Community rewards are separate from the original collection reward. Each has its own claim status in its challenge page. Leave inventory space before claiming. If staff are still preparing a reward, temporarily remove challenge access or need to review a transaction, your recorded contribution remains saved. You need challenge access again to continue or claim; access never skips the participation requirements or reward dates.
 
 ## Your field journal
 
@@ -160,6 +232,7 @@ Keep a fragment unmodified until you submit or trade it. Infected items cannot b
 | Command | Purpose |
 | --- | --- |
 | `/hv` | Open your 23-fragment collection and reward menu. |
+| `/hv community` | Open Community Challenges, personal requirements, shared progress, supply quests and challenge rewards. |
 | `/hv info` | Show the introduction, current event state, and player guide link. |
 | `/hv help` | Show the commands you can use. |
 | `/hv book` | Read the event story and field guide. |
@@ -181,6 +254,12 @@ Access is granted by staff for the testing period and then to the intended playe
 
 ## If something is unclear
 
+**Can I help before collecting all 23 sherds?** Yes. Night Watch starts your challenge progression immediately while contributions are open. Meet its personal minimum to unlock pumpkins, then meet the pumpkin minimum to unlock supplies. You must still record all 23 sherds before claiming any of the three challenge rewards. Your contribution alone does not finish your sherd collection.
+
+**The community already finished. Am I too late?** You can still contribute until the end of 24 October. The same personal requirements apply, and completed regions and supply categories continue accepting qualifying contributions. The community stays complete while your personal progress catches up.
+
+**Does one kill or one pumpkin qualify me?** No. The starting Night Watch minimum is 183 eligible kills, pumpkins require 576 donations, and Autumn Relief requires one fully completed supply quest. Each challenge shows your exact remaining requirement. Community totals alone never grant an individual's reward.
+
 **Can I complete my collection with sherds that have another player's name?** Yes! Trade your duplicates or give them to friends, then submit the received sherds through `/hv` → **Collect Sherds**. The finder's name and world in the lore are informational; they do not lock the sherd to that player. Authentic, unused sherds from the current event count toward **your** collection, even if someone else found them all. Submitting consumes one of each missing type and leaves extra copies in your inventory. No renaming or re-stamping is needed. Sharing and teamwork are welcome!
 
 **Why is my fragment still in my inventory?** You may already have that type recorded, the event may be dormant, or the item may not have authentic identity for this edition. `/hv` shows which types are still missing. Staff can inspect older kit samples when necessary.
@@ -196,5 +275,7 @@ Fight in Survival and finish the encounter with your own attack or projectile, s
 **What happens if staff reset my collection?** Your recorded total returns to 0/23 and the optional Seal ending resets. Your encounter field notes remain saved. Existing unused event sherds still work, and you do not need to re-stamp them. Submitted sherds are not returned. Staff can separately choose whether to clear a previous reward claim; an ordinary collection reset keeps that claim recorded.
 
 **My collection is complete. Why can I not claim?** Check the claim dates in `/hv info`, leave inventory space, and make sure the reward has not already been received. Claims only open during the configured window, even if the reward is ready and your collection is complete. Staff can also pause claims. If the reward is awaiting staff setup, your collection stays saved until staff finish preparing it. A pending or review-required transaction must be resolved before another attempt.
+
+**Can I modify my reward items?** Special Halloween keepsakes and gear keep their identity: renaming, merging, enchanting, trimming and repair are blocked. This includes CMI repair and trim commands, repair purchases through `/welcomes` or `/points`, and DiscordChat tool upgrades. Rejected purchases do not spend points. You cannot add or change soulbind on protected Halloween items, including through automatic ItemSoulBind binding or reward menus. Any soulbind already on an issued item stays intact. Protected fishing rods cannot receive Pyro Augments, and protected pickaxes cannot receive Pyro Vessels. Ordinary supplies and ordinary items inside reward shulkers work normally. You can still move, store, trade, sell or discard protected items.
 
 **Does this replace the other Halloween activities?** No. Halloween Virus is another adventure in the Event Hunts jar; Ghost Hunt, Doors, and Coconut Hunt keep their own rules and progress.

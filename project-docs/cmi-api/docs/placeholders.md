@@ -1737,6 +1737,22 @@ Appreciation placeholders:
 %onembcmi_appreciation_streak%
 ```
 
+Hide and Sheep placeholders:
+
+```text
+%onembcmi_hideandsheep_state%
+%onembcmi_hideandsheep_live%
+%onembcmi_hideandsheep_world%
+%onembcmi_hideandsheep_time_left%
+%onembcmi_hideandsheep_gathering_left%
+%onembcmi_hideandsheep_participated%
+%onembcmi_hideandsheep_found%
+%onembcmi_hideandsheep_earned%
+%onembcmi_hideandsheep_points%
+```
+
+`state` includes `GATHERING` while players arrive and `LIVE` while searching. `live` is true in both phases. `time_left` is remaining search seconds, rounded up, and zero during gathering or when no search is live. `gathering_left` is the arrival countdown in seconds, rounded up, and zero outside gathering. `earned` is lifetime points; `points` is the current spendable balance. Player values read committed UUID statistics without disk or network access and return zero without a ready ledger/player context. The feature registers its placeholder surface while active. See [Hide and Sheep](plugins/hideandsheep.md#placeholders).
+
 Placeholder paths are strict and allowlisted. Unknown or unsafe paths return an empty value instead of exposing internals or throwing noisy errors.
 
 [Documentation index](README.md)

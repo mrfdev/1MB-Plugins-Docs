@@ -16,7 +16,8 @@ That keeps CMI's `/hat` behavior intact while still allowing a friendly shortcut
 - Supports world allow/block rules, blocked environments, and optional per-world permissions.
 - Can require one empty inventory slot before equipping, so it stays safe beside CMI `/hat` item workflows.
 - Removes cosmetic mob hats on quit, death, world change, dismount, disable, and stale/orphan cleanup.
-- Cancels damage and targeting for MobHat entities.
+- Cancels damage, targeting, interaction, taming, breeding, item pickup and drops for marked MobHat entities.
+- Includes Halloween bat, red baby fox and black baby cat cosmetics in fresh-install defaults.
 - Keeps CMI's normal `/hat` command untouched except for the optional `/hat mob` bridge.
 
 ## Player FAQ
@@ -24,6 +25,10 @@ That keeps CMI's `/hat` behavior intact while still allowing a friendly shortcut
 ### How do I wear or remove a mob hat?
 
 Use `/mobhat list` to browse supported mobs, then `/mobhat mob <type>` or `/mobhat target` while looking at an allowed mob. `/mobhat remove` takes it off.
+
+### What does a Halloween MobHat purchase unlock?
+
+The Ghost Points shop offers one permanent choice of Bat, Fox or Cat for 24 points in the 2026 edition. After the purchase completes, select it with `/mobhat mob bat`, `/mobhat mob fox` or `/mobhat mob cat`. Removing the temporary hat does not remove your unlock. Only one of those three choices can be purchased this edition; normal world and server availability rules still apply. See [Ghost Hunt](ghosthunt.md#november-2026-ghost-point-shop) for the shop deadline and other offers.
 
 ### Does using a pet as a hat take the real pet?
 
@@ -84,6 +89,9 @@ When `alias.hat-mob.no-type-uses-target` is true, `/hat mob` with no type behave
 /mobhat mob armadillo
 /mobhat mob frog
 /mobhat mob turtle
+/mobhat mob bat
+/mobhat mob fox
+/mobhat mob cat
 /mobhat position
 /mobhat position reset
 /mobhat target
@@ -124,6 +132,9 @@ onembcmi.mobhat.mob.rabbit
 onembcmi.mobhat.mob.armadillo
 onembcmi.mobhat.mob.frog
 onembcmi.mobhat.mob.turtle
+onembcmi.mobhat.mob.bat
+onembcmi.mobhat.mob.fox
+onembcmi.mobhat.mob.cat
 ```
 
 For the first limited live test, grant only the exact mob nodes you want a tester to use:
@@ -203,6 +214,9 @@ position:
     - ARMADILLO
     - FROG
     - TURTLE
+    - BAT
+    - FOX
+    - CAT
     back: []
     shoulder: []
   offset:
@@ -242,6 +256,9 @@ mobs:
   - ARMADILLO
   - FROG
   - TURTLE
+  - BAT
+  - FOX
+  - CAT
   remove-existing-before-equip: true
   target-max-distance: '8.0'
 cosmetic:
@@ -262,6 +279,9 @@ scaling:
   - ARMADILLO=0.75
   - FROG=0.80
   - TURTLE=0.65
+  - BAT=0.70
+  - FOX=0.70
+  - CAT=0.70
 worlds:
   allowed: []
   blocked: []
@@ -284,9 +304,23 @@ All config comments are written by the shared config helper and re-applied on re
 
 `mobs.allowed` is the global safety whitelist. It controls `/mobhat list`, tab suggestions, and whether `/mobhat mob <type>` can equip. The per-position lists under `position.allowed-mobs.*` only decide which already-globally-allowed mobs may be used on `head`, `back`, or `shoulder`; they do not allow a mob by themselves.
 
+An empty head list inherits the global list. A nonempty head list remains restrictive even when none of its entries are globally allowed; it does not fall back to all global types.
+
 If `/mobhat preview rabbit` says `global allowed: no`, add `RABBIT` to `mobs.allowed` as well as the position list you want, then run `/mobhat reload`. Preview requires `onembcmi.mobhat.preview`.
 
 `scaling.default` and `scaling.per-mob` control visual size. `1.0` is normal mob scale before baby/adult state. Because `mobs.baby-mobs-only` defaults to true, many animals are already baby-sized and then scaled again, so values around `0.70` to `0.95` are usually more readable than very small values.
+
+### Halloween MobHat rollout
+
+Fresh installations include `BAT`, `FOX`, and `CAT` alongside rabbit, armadillo, frog and turtle. Existing configurations keep their current lists and scale overrides. Updating the suite JARs alone does not enable these three on an existing installation.
+
+For an owner-approved rollout, back up `plugins/1MB-CMIAPI/MobHat/config.yml`, then append `BAT`, `FOX`, and `CAT` to both `mobs.allowed` and `position.allowed-mobs.head`. Keep existing entries. Ensure `enabled: true` and retain `head` as the stable position. The initial visual recommendation is `BAT=0.70`, `FOX=0.70`, and `CAT=0.70` under `scaling.per-mob`; preserve deliberate custom overrides. Reload MobHat after applying the configuration, then preview and equip each type on the local test server before live acceptance. This change does not automatically alter live configuration.
+
+The bat is awake. Fox is a red baby with no held item or trusted player; cat is an untamed black baby with no owner. Fox and cat remain babies with breeding disabled. These three always disable AI, awareness, item pickup, persistence, collision, sound and ordinary damage, regardless of the general cosmetic flags. They also disable distance despawning so an equipped cosmetic remains available until normal lifecycle cleanup.
+
+All three use the registered vanilla `minecraft:entities/bat` loot table, which has no loot pools in the reviewed Paper 26.3 build 241. That version has no registered `minecraft:empty` table, and [setting a null loot table restores the species default](https://jd.papermc.io/paper/26.3/org/bukkit/loot/Lootable.html#setLootTable(org.bukkit.loot.LootTable)). Initialization fails closed if the BAT table is unavailable. Independent death-event guards clear drops and experience, including loot added by a data pack or another earlier listener.
+
+EventHunts checks the Shared Library's `MobHatAvailability` service before offering an unlock for purchase. It must be registered by an enabled MobHat plugin and confirm that the requested type is globally allowed and supported in the head position. If either configured list excludes the type, the purchase stays unavailable. This check grants no permissions; equipping still enforces the player's exact mob permission, wear permission, world rules and inventory requirements. The Halloween Ghost Point offer unlocks one selected bat, fox or cat for 24 points.
 
 ### Position Test Bed
 
@@ -508,7 +542,7 @@ Normal CMI `/hat` usage is left alone.
 - Uses normal Paper/Bukkit entity teleporting for experimental offset-position testing.
 - Forces offset-position mobs to no-AI, not-aware, no-gravity, non-collidable, and an extra scale multiplier to reduce hitbox overlap.
 - Uses `World#rayTraceEntities` for `/mobhat target`.
-- Uses `PersistentDataContainer` to mark spawned MobHat entities with owner/type metadata.
+- Sets namespaced `PersistentDataContainer` owner/type metadata and cosmetic safety flags before the entity is added to the world.
 - Uses the modern `Attribute.SCALE` attribute where available to size cosmetic mobs.
 - Uses Bukkit entity lifecycle events to remove hats safely.
 
@@ -517,7 +551,10 @@ Normal CMI `/hat` usage is left alone.
 - Only whitelisted `EntityType` values can be spawned.
 - Mob command input is restricted to a small safe entity-name pattern.
 - Cosmetic mobs are marked, non-persistent by default, no-AI by default, silent by default, invulnerable by default, non-collidable by default, and cannot pick up items by default.
-- The plugin cancels damage and target events for marked MobHat entities.
+- Protection requires both the canonical owner UUID and matching entity-type PDC marker. Ordinary entities of the same species are unaffected.
+- The plugin cancels incoming and outgoing damage and targeting for marked MobHat entities.
+- Both-hand entity interactions are cancelled for marked hats, preventing vanilla feeding, taming and fox item exchange. Leashing, breeding, transformation, item pickup and item drops are also cancelled; death drops and experience are cleared.
+- A marked hat may mount only its owner, and other entities cannot ride the hat. Capture integrations must honor the cancelled interaction event.
 - Dismounted `head` MobHat entities are always removed so they cannot become normal world mobs.
 - A periodic orphan cleanup removes marked MobHat entities that are not still tracked.
 - Offset-position mobs are no-AI, no-gravity, marked cosmetics that are removed on quit, death, world change, plugin disable, and stale startup cleanup.
@@ -535,6 +572,9 @@ Grant `onembcmi.mobhat.preview` before testing `/mobhat preview`.
 /mobhat mob armadillo
 /mobhat mob frog
 /mobhat mob turtle
+/mobhat mob bat
+/mobhat mob fox
+/mobhat mob cat
 /mobhat status
 /mobhat remove
 /hat mob rabbit
@@ -543,5 +583,7 @@ Grant `onembcmi.mobhat.preview` before testing `/mobhat preview`.
 /mobhat debug all
 papi parse mrfloris %onembcmi_mobhat.active%
 ```
+
+Focused automated verification: `scripts/gradle-oracle.sh :plugins:player-fun:mobhat:test`. It covers both hands, normal-entity controls, damage/target direction, taming/breeding/leashing, pickup/drop/death loot, ownership, availability, lifecycle cleanup and stale removal after replacement. Native entity initialization and registered event guards are also checked against Paper 26.3 build 241 during local acceptance. Human head-passenger appearance still requires an in-game check.
 
 [Plugin index](README.md) | [Documentation index](../README.md)

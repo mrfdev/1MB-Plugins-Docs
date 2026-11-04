@@ -31,6 +31,8 @@ These are the AFKShrine features players should be able to learn about from the 
 
 Return from AFK and use `/afkshrine claim` to move pending tokens into your spendable balance. Then browse `/afkshrine rewards` and use `/afkshrine trade` to spend them. Going AFK does not automatically deliver reward kits.
 
+AFK and bed-rest sessions save their earned progress in the background. A short saving interval can delay the return summary and temporarily pause that player's claims or trades. Disconnecting or beginning another session does not cancel an earlier completion. If saving or an optional session hook needs recovery, the original completion remains recorded; staff should inspect `/afkshrine debug transactions` before retrying or acknowledging delivery. An accepted command alone is not proof that its configured effect happened.
+
 Unclaimed points expire after **six calendar months**. `/afkshrine claim` protects the remaining points by moving them into the claimed balance, which does not expire. `/afkshrine balance` and the claim button show the next expiry date. New earnings have their own deadlines and never renew older points.
 
 When points expire, the player receives a private message such as: “100 of your oldest unclaimed AFKShrine points expired. Unclaimed points expire after six months. Use /afkshrine claim regularly to keep your points. Remaining pending: 30.” The command in this message is clickable. Offline players receive the message when they return; notification is recorded after the expiry has been saved.
@@ -783,6 +785,8 @@ The Quiet Lantern design button displays a shield carrying the actual banner pat
 
 Older reward items are authenticated against their full captured template, allowing ordinary durability wear and exact captured-owner personalization in the name/lore to be normalized for comparison. Matching is not based on a display name alone. The first successful upgrade adds namespaced identity, instance, and stage PDC; subsequent steps validate that identity and the required material/stage. Material conversion preserves unknown PDC, explicit component overrides and removals, third-party metadata, and current wear. Existing higher enchantment levels are retained; incompatible changes fail before payment.
 
+A shield carrying issued Halloween Virus identity cannot buy the soulbind step, even if it also has valid shrine identity. This refusal leaves existing binding data and the player's balance unchanged.
+
 The final shield step requires ItemSoulBind to be enabled and stores the authoritative server UUID, including for Floodgate/Bedrock players. An existing foreign, malformed, or group soulbind is refused for staff review, and an already self-bound shield cannot buy binding again. The integration preserves the installed ItemSoulBind ownership contract; it does not resolve player identities through an external service.
 
 ### AFKShrine Note Exchanges
@@ -933,7 +937,7 @@ Community claim audit rows are included in staff exports from `logs/community.lo
 
 Reward trades and optional hooks are still owner-configured console commands. The readiness check/report call this out for manual review, but they do not block or rewrite commands.
 
-AFK session settlement, bed-rest settlement, pending-token claims, reward trades, community claims, and configured tool/book actions use the shared durable transaction receipts. Their captured-item payment payloads retain before/after inventory state until profile state and command delivery are finalized. Staff can inspect these shared transactions through `/afkshrine debug transactions` and `/afkshrine debug transaction <uuid>`.
+AFK session settlement, bed-rest settlement, pending-token claims, reward trades, community claims, and configured tool/book actions use the shared durable transaction receipts. Their captured-item payment payloads retain before/after inventory state until profile state and command delivery are finalized. Staff can inspect these shared transactions through `/afkshrine debug transactions` and `/afkshrine debug transaction <uuid>`. Optional session hooks wait for asynchronous automatic-reward preparation, including AutoSell saving its disabled state, before entering command delivery. A pending or declined preparation retains the applied progress and completion journal for retry; it does not replay a reward or acknowledge a command that has not run.
 
 Native equipment upgrades and Note exchanges use their separate retained inventory journal and per-player receipt, described above. Their menu previews never take custody of the selected item. After a restart, only an exact supported inventory/receipt match is recovered automatically; other states remain blocked for staff review. DiscordChat's independent credit receipt supplies delivery evidence for the four-point exchange.
 
@@ -1037,7 +1041,13 @@ afkshrine:
       - "time:30|1|lifetime|1|2026-05-19T12:00:00Z"
 ```
 
-Player opt-out, selected style, pending points, claimed balance, trade claims, milestones, quests, biomes, repeat award counts, streaks, rested state, bounded no-repeat zone history, bed-rest history, recovery settlement ids, and leaderboard period totals are persistent. `zones.history` is capped by `no-repeat-zones.history-limit` and `sleep.zones.history` is capped by `sleep.zone-history-limit` so they cannot grow forever. `active-session` is temporary recovery state for a currently active AFK session; it is cleared after normal AFK leave, clean shutdown settlement, or successful join recovery. Active bed sessions are runtime-only and settle on bed leave, quit, or clean plugin shutdown. Temporary visual state should live in cache and be safe to clean.
+Player opt-out, selected style, pending points, claimed balance, trade claims, milestones, quests, biomes, repeat award counts, streaks, rested state, bounded no-repeat zone history, bed-rest history, recovery settlement ids, and leaderboard period totals are persistent. `zones.history` is capped by `no-repeat-zones.history-limit` and `sleep.zones.history` is capped by `sleep.zone-history-limit` so they cannot grow forever. `active-session` is temporary recovery state for a currently active AFK session; it is cleared after normal AFK leave, clean shutdown settlement, or successful join recovery. Active bed sessions are runtime-only and settle on bed leave, quit, or clean plugin shutdown.
+
+Completed AFK and bed sessions are retained in durable completion journals while saving. If a profile is not loaded yet, a raw completion also retains its original time, reward settings and eligibility until it transfers safely to the calculated journal. Keep both `session-completions` and `raw-completions` with the feature data during backups or recovery; unresolved records must be inspected before removal or reward retry.
+
+Recovery of both journals, orphan backups and their saved player profiles runs on the existing ordered persistence worker. Enabling the feature returns while that work runs. Commands which change player state, new AFK/bed sessions, expiry sweeps and session reward delivery wait until both recovered stores are published together on the server thread; item and menu protections remain registered. An unreadable record or rejected recovery pauses gameplay with a clear message instead of substituting empty progress. Disable/re-enable fences old callbacks and waits asynchronously for the previous durable checkpoint before admitting new work. Retained transaction identities, completion order and earned progress survive this process.
+
+While a player has an unresolved completion, new AFK and bed-rest reward sessions for that player pause; already accepted sessions remain retained. This applies backpressure during storage failure instead of allowing an unlimited backlog. Temporary visual state should live in cache and be safe to clean.
 
 Community milestone state is stored in the AFKShrine feature data folder:
 

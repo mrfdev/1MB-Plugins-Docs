@@ -261,10 +261,10 @@ The script uses only the Python standard library. It scans `latest.log`, config 
 To run a one-label server workflow from the command line:
 
 ```text
-scripts/run-spark-reviewer-workflow.sh servers/Paper-26.2 Paper-26.2.jar mfm-on 180
+scripts/run-spark-reviewer-workflow.sh servers/Paper-26.3 Paper-26.3-<build>.jar mfm-on 180
 ```
 
-That helper starts the server with `java -jar ... nogui`, waits for startup, sends `/sparkreviewer stress <label> <seconds>` through console input, waits for the profile window, sends `/sparkreviewer dump`, stops the server, and writes an offline Markdown report. For an MFM comparison, run it once with hopper control enabled and once with hopper control disabled, then compare the two copied server folders or the plugin snapshots.
+Replace `<build>` with the maintained launcher's verified numbered Paper JAR. Run this only with the local test server stopped and the required Java 27 runtime selected. That helper starts the server with `java -jar ... nogui`, waits for startup, sends `/sparkreviewer stress <label> <seconds>` through console input, waits for the profile window, sends `/sparkreviewer dump`, stops the server, and writes an offline Markdown report. For an MFM comparison, run it once with hopper control enabled and once with hopper control disabled, then compare the two copied server folders or the plugin snapshots.
 
 ## Data And Cache
 

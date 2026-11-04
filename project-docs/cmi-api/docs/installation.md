@@ -10,66 +10,68 @@ Paper loads normal plugin jars from the top-level server `/plugins/` directory, 
 plugins/
   CMI-<version>.jar
   CMILib<version>.jar
-  1MB-Lib-Core-v1.0.4-740-j25-26.3.jar
-  1MB-Lib-AntiFire-v1.0.4-740-j25-26.3.jar
-  1MB-Lib-AFKShrine-v1.0.4-740-j25-26.3.jar
-  1MB-Lib-RecordingMode-v1.0.4-740-j25-26.3.jar
-  1MB-Lib-SellStreaks-v1.0.4-740-j25-26.3.jar
-  1MB-Lib-ScheduledTips-v1.0.4-740-j25-26.3.jar
-  1MB-Lib-Visit-v1.0.4-740-j25-26.3.jar
-  1MB-Lib-PassportDiscovery-v1.0.4-740-j25-26.3.jar
-  1MB-Lib-SocialGatherings-v1.0.4-740-j25-26.3.jar
-  1MB-Lib-JourneyMap-v1.0.4-740-j25-26.3.jar
-  1MB-Lib-KitStreaks-v1.0.4-740-j25-26.3.jar
-  1MB-Lib-Nick-v1.0.4-740-j25-26.3.jar
-  1MB-Lib-EmoteMenu-v1.0.4-740-j25-26.3.jar
-  1MB-Lib-PvPToggle-v1.0.4-740-j25-26.3.jar
-  1MB-Lib-Boosters-v1.0.4-740-j25-26.3.jar
-  1MB-Lib-NameMC-v1.0.4-740-j25-26.3.jar
-  1MB-Lib-Exchange-v1.0.4-740-j25-26.3.jar
-  1MB-Lib-VoteTokens-v1.0.4-740-j25-26.3.jar
-  1MB-Lib-DiscordChat-v1.0.4-740-j25-26.3.jar
-  1MB-Lib-GameTypes-v1.0.4-740-j25-26.3.jar
-  1MB-Lib-BirthdayLanterns-v1.0.4-740-j25-26.3.jar
-  1MB-Lib-LavaBoots-v1.0.4-740-j25-26.3.jar
-  1MB-Lib-Spawners-v1.0.4-740-j25-26.3.jar
-  1MB-Lib-Collect-v1.0.4-740-j25-26.3.jar
-  1MB-Lib-EventHunts-v1.0.4-740-j25-26.3.jar
-  1MB-Lib-DropParty-v1.0.4-740-j25-26.3.jar
-  1MB-Lib-Appreciation-v1.0.4-740-j25-26.3.jar
-  1MB-Lib-Forage-v1.0.4-740-j25-26.3.jar
-  1MB-Lib-AutoSell-v1.0.4-740-j25-26.3.jar
-  1MB-Lib-MobHat-v1.0.4-740-j25-26.3.jar
-  1MB-Lib-PlayerTodo-v1.0.4-740-j25-26.3.jar
-  1MB-Lib-Refer-v1.0.4-740-j25-26.3.jar
-  1MB-Lib-TPAuto-v1.0.4-740-j25-26.3.jar
-  1MB-Lib-Menu-v1.0.4-740-j25-26.3.jar
-  1MB-Lib-StaffCenter-v1.0.4-740-j25-26.3.jar
-  1MB-Lib-Profile-v1.0.4-740-j25-26.3.jar
-  1MB-Lib-ContentGuard-v1.0.4-740-j25-26.3.jar
-  1MB-Lib-WarningLens-v1.0.4-740-j25-26.3.jar
-  1MB-Lib-TeamMsg-v1.0.4-740-j25-26.3.jar
-  1MB-Lib-CmdCostDashboard-v1.0.4-740-j25-26.3.jar
-  1MB-Lib-CMIConfig-v1.0.4-740-j25-26.3.jar
-  1MB-Lib-ConsoleNoiseRouter-v1.0.4-740-j25-26.3.jar
-  1MB-Lib-EconomyGuardian-v1.0.4-740-j25-26.3.jar
-  1MB-Lib-StartupDoctor-v1.0.4-740-j25-26.3.jar
-  1MB-Lib-UpdateSmoke-v1.0.4-740-j25-26.3.jar
-  1MB-Lib-PluginVersions-v1.0.4-740-j25-26.3.jar
-  1MB-Lib-Placeholders-v1.0.4-740-j25-26.3.jar
-  1MB-Lib-Potions-v1.0.4-740-j25-26.3.jar
-  1MB-Lib-Upgrade-v1.0.4-740-j25-26.3.jar
-  1MB-Lib-EndCrystals-v1.0.4-740-j25-26.3.jar
-  1MB-Lib-WorldSnapshot-v1.0.4-740-j25-26.3.jar
-  1MB-Lib-SparkReviewer-v1.0.4-740-j25-26.3.jar
-  1MB-Lib-Hoppers-v1.0.4-740-j25-26.3.jar
-  1MB-Lib-EventRecorder-v1.0.4-740-j25-26.3.jar
-  1MB-Lib-BedrockChatBridge-v1.0.4-740-j25-26.3.jar
-  1MB-Lib-CMIProbe-v1.0.4-740-j25-26.3.jar
-  1MB-Lib-CMIDatabase-v1.0.4-740-j25-26.3.jar
-  1MB-Lib-PermissionProbe-v1.0.4-740-j25-26.3.jar
-  1MB-Lib-WarpAudit-v1.0.4-740-j25-26.3.jar
-  1MB-Lib-WorthDrift-v1.0.4-740-j25-26.3.jar
+  1MB-Lib-Core-v1.0.4-835-j25-26.3.jar
+  1MB-Lib-AntiFire-v1.0.4-835-j25-26.3.jar
+  1MB-Lib-AFKShrine-v1.0.4-835-j25-26.3.jar
+  1MB-Lib-RecordingMode-v1.0.4-835-j25-26.3.jar
+  1MB-Lib-SellStreaks-v1.0.4-835-j25-26.3.jar
+  1MB-Lib-ScheduledTips-v1.0.4-835-j25-26.3.jar
+  1MB-Lib-Visit-v1.0.4-835-j25-26.3.jar
+  1MB-Lib-PassportDiscovery-v1.0.4-835-j25-26.3.jar
+  1MB-Lib-SocialGatherings-v1.0.4-835-j25-26.3.jar
+  1MB-Lib-JourneyMap-v1.0.4-835-j25-26.3.jar
+  1MB-Lib-KitStreaks-v1.0.4-835-j25-26.3.jar
+  1MB-Lib-Nick-v1.0.4-835-j25-26.3.jar
+  1MB-Lib-EmoteMenu-v1.0.4-835-j25-26.3.jar
+  1MB-Lib-PvPToggle-v1.0.4-835-j25-26.3.jar
+  1MB-Lib-Boosters-v1.0.4-835-j25-26.3.jar
+  1MB-Lib-NameMC-v1.0.4-835-j25-26.3.jar
+  1MB-Lib-Exchange-v1.0.4-835-j25-26.3.jar
+  1MB-Lib-VoteTokens-v1.0.4-835-j25-26.3.jar
+  1MB-Lib-DiscordChat-v1.0.4-835-j25-26.3.jar
+  1MB-Lib-GameTypes-v1.0.4-835-j25-26.3.jar
+  1MB-Lib-BirthdayLanterns-v1.0.4-835-j25-26.3.jar
+  1MB-Lib-LavaBoots-v1.0.4-835-j25-26.3.jar
+  1MB-Lib-Spawners-v1.0.4-835-j25-26.3.jar
+  1MB-Lib-Collect-v1.0.4-835-j25-26.3.jar
+  1MB-Lib-EventHunts-v1.0.4-835-j25-26.3.jar
+  1MB-Lib-DropParty-v1.0.4-835-j25-26.3.jar
+  1MB-Lib-Advent-v1.0.4-835-j25-26.3.jar
+  1MB-Lib-HideAndSheep-v1.0.4-835-j25-26.3.jar
+  1MB-Lib-Appreciation-v1.0.4-835-j25-26.3.jar
+  1MB-Lib-Forage-v1.0.4-835-j25-26.3.jar
+  1MB-Lib-AutoSell-v1.0.4-835-j25-26.3.jar
+  1MB-Lib-MobHat-v1.0.4-835-j25-26.3.jar
+  1MB-Lib-PlayerTodo-v1.0.4-835-j25-26.3.jar
+  1MB-Lib-Refer-v1.0.4-835-j25-26.3.jar
+  1MB-Lib-TPAuto-v1.0.4-835-j25-26.3.jar
+  1MB-Lib-Menu-v1.0.4-835-j25-26.3.jar
+  1MB-Lib-StaffCenter-v1.0.4-835-j25-26.3.jar
+  1MB-Lib-Profile-v1.0.4-835-j25-26.3.jar
+  1MB-Lib-ContentGuard-v1.0.4-835-j25-26.3.jar
+  1MB-Lib-WarningLens-v1.0.4-835-j25-26.3.jar
+  1MB-Lib-TeamMsg-v1.0.4-835-j25-26.3.jar
+  1MB-Lib-CmdCostDashboard-v1.0.4-835-j25-26.3.jar
+  1MB-Lib-CMIConfig-v1.0.4-835-j25-26.3.jar
+  1MB-Lib-ConsoleNoiseRouter-v1.0.4-835-j25-26.3.jar
+  1MB-Lib-EconomyGuardian-v1.0.4-835-j25-26.3.jar
+  1MB-Lib-StartupDoctor-v1.0.4-835-j25-26.3.jar
+  1MB-Lib-UpdateSmoke-v1.0.4-835-j25-26.3.jar
+  1MB-Lib-PluginVersions-v1.0.4-835-j25-26.3.jar
+  1MB-Lib-Placeholders-v1.0.4-835-j25-26.3.jar
+  1MB-Lib-Potions-v1.0.4-835-j25-26.3.jar
+  1MB-Lib-Upgrade-v1.0.4-835-j25-26.3.jar
+  1MB-Lib-EndCrystals-v1.0.4-835-j25-26.3.jar
+  1MB-Lib-WorldSnapshot-v1.0.4-835-j25-26.3.jar
+  1MB-Lib-SparkReviewer-v1.0.4-835-j25-26.3.jar
+  1MB-Lib-Hoppers-v1.0.4-835-j25-26.3.jar
+  1MB-Lib-EventRecorder-v1.0.4-835-j25-26.3.jar
+  1MB-Lib-BedrockChatBridge-v1.0.4-835-j25-26.3.jar
+  1MB-Lib-CMIProbe-v1.0.4-835-j25-26.3.jar
+  1MB-Lib-CMIDatabase-v1.0.4-835-j25-26.3.jar
+  1MB-Lib-PermissionProbe-v1.0.4-835-j25-26.3.jar
+  1MB-Lib-WarpAudit-v1.0.4-835-j25-26.3.jar
+  1MB-Lib-WorthDrift-v1.0.4-835-j25-26.3.jar
 ```
 
 The common `1MB-Lib-` prefix keeps the project JARs together when sorted by filename.
@@ -124,7 +126,28 @@ Console, the feature's `onembcmi.<feature-id>.admin` permission, or `onembcmi.gl
 
 This is a missing-value default, not an upgrade override. Existing `enabled: true` and `enabled: false` values are preserved. The project test server can therefore keep all of its existing beta features enabled while a fresh live installation fails closed. New feature ids also default to disabled until the live allowlist is deliberately updated and tested.
 
-Use `gradle planProjectJarSync` first to validate the complete v1.0.3 candidate set and report how many legacy/current active files would be replaced without mutating the server. With Paper stopped, `gradle syncBuiltJarsToProjectServer` recoverably replaces both `1MB-CMIAPI-*` and `1MB-Lib-*` families as one set. After testing that exact server folder, `gradle stageTestedJarsForLive` creates a verified `build/tested-jars/live/` handoff set for manual live deployment. The staging task refuses legacy, stale, incomplete, unexpected, or duplicate identity sets and preserves the previous handoff on failure. The project does not use RCON for deployment.
+Use `gradle planProjectJarSync` first to validate the complete current candidate set and report how many legacy/current active files would be replaced without mutating the server. With Paper stopped, `gradle syncBuiltJarsToProjectServer` recoverably replaces both `1MB-CMIAPI-*` and `1MB-Lib-*` families as one set. After testing that exact server folder, `gradle stageTestedJarsForLive` creates a verified `build/tested-jars/live/` handoff set for manual live deployment. The staging task refuses legacy, stale, incomplete, unexpected, or duplicate identity sets and preserves the previous handoff on failure. The project does not use RCON for deployment.
+
+## Hide and Sheep
+
+The `1MB-Lib-HideAndSheep-*` artifact belongs to the complete suite. Its Paper identity is `1MB-CMIAPI-HideAndSheep`, with `1MB-Lib-HideAndSheep` provided as the bridge alias. Keep it dormant on first live install. Its `/sheep` status/book view and permission-gated preparation remain available while dormant; event gameplay and reward delivery stay closed.
+
+The Shared Library, CMI and CMILib are required. LuckPerms is required for round participation: the plugin creates the reserved `hideandsheep_playing` restriction subgroup when a player joins. Keep that group dedicated to this feature; do not inherit it from permanent ranks. DiscordChat, AFKShrine, AutoSell, and Appreciation provide optional point exchanges. **All item kits require active Forage's reviewed inventory save-proof service**, as well as CMI kit templates. This storage integration does not require the player to own or visit a Forage Camp. Do not enable Forage automatically merely to install Hide and Sheep; preserve its independently reviewed activation state.
+
+Copy the reviewed `config/cmi/kits/hideandseek.yml` into `plugins/CMI/Kits/` and load it through CMI's normal configuration workflow. These five item-only templates deliberately disable ordinary `/kit` access. Suite JAR synchronization does not install this configuration file or overwrite live CMI files.
+
+Map `rewards.worlds.<role>` to actual server worlds for `end`, `nether`, `wild`, `general`, `cave`, `acid`, `oneblock`, `skyblock`, `skygrid`, and `chunkblock`. Test-world names can differ from production names. The event itself may run in any prepared loaded world.
+
+```text
+/sheep admin setspawn
+/sheep admin radius 100
+/sheep admin preset pocket_prism
+/sheep admin enable
+/sheep admin status
+/sheep admin start
+```
+
+Set the spawn in game while standing at a safe arrival point. Start can then come from the admin GUI, in-game command, or direct console. Enabling does not start an event. Players must join each round before sheep touches count. Preserve `plugins/1MB-CMIAPI/HideAndSheep/state.yml`, `participation.yml` and the corresponding provider journals; they contain progression, participation recovery and reward evidence. `/sheep debug cleanup <uuid|player>` repairs stale participation and removes the event subgroup without erasing points or ordinary ranks. See the [staff reference](plugins/hideandsheep.md) for kit-save verification and reconciliation.
 
 ## Runtime Data
 
@@ -313,13 +336,13 @@ Use dry-run first when cleaning one feature's section from shared playerdata:
 
 ## Local Project Test Server
 
-When a jar is built, copy it into:
+Use `servers/Paper-26.3/` as the sole maintained project-local test server. Stop it and run `scripts/build-all.sh` for a new suite-wide numbered build; the canonical workflow verifies the runtime and deploys the complete managed JAR set into:
 
 ```text
-servers/Paper-26.2/plugins/
+servers/Paper-26.3/plugins/
 ```
 
-This is the project-local test server. It is ignored by Git and can contain Paper, CMI, CMILib, worlds, configs, logs, and private data.
+Focused module JARs are development feedback, not deployable handoffs. See [compiling](compiling.md) for complete-set preflight, recoverable repair/redeployment and manual live staging. The test server is ignored by Git and can contain Paper, CMI, CMILib, worlds, configs, logs and private data. Retired Forage 26.3 and Paper 26.2 instances belong intact under `archive/servers/2026-10-19/`; do not use those archives as current deployment targets.
 
 [Documentation index](README.md)
 

@@ -129,7 +129,9 @@ Available features include:
 
 ### Can I check my points from Discord?
 
-DiscordChat supports an optional Discord `/discordchat` command. Once staff enable it, use it in **#server-chat** for a reply visible only to you. It shows your linked Minecraft account, available points, XP toward your next point, current streak and next milestone, earning guidance, in-game menu commands, and the [DiscordChat guide](https://docs.1moreblock.com/player-guides/plugins/discordchat/).
+DiscordChat supports an optional Discord `/discordchat` command. Once staff enable it, use it in **#server-chat** for a reply visible only to you. It shows your linked Minecraft account, available points, XP toward your next point, current streak and next milestone, today's message XP and daily cap, earning guidance, in-game menu commands, and the [DiscordChat guide](https://docs.1moreblock.com/player-guides/plugins/discordchat/).
+
+The reply tells you how much message XP remains today or says **Daily cap reached**, with the hours and minutes until the cap resets. Reset follows midnight in the server's configured calendar timezone, normally Europe/Amsterdam. Message XP is shared across qualifying Discord and in-game chat; separate bonus XP does not use this cap.
 
 You can check your saved progress while logged out of Minecraft, provided the Minecraft server and its DiscordSRV bot are running. If you are not linked, start with `/discord link` **in Minecraft**. A linked account without saved activity receives getting-started help. A temporary lookup failure does not display a made-up balance.
 
@@ -266,6 +268,8 @@ Fishing and farming also share an active-event check: either running tournament 
 Yes. Choosing an eligible upgrade opens a confirmation before applying it. In `/discordchat tools`, place exactly one tool or weapon in the yellow slot below the chest, then choose an upgrade on the right. You see the proposed item, enchantment level, and point cost before pressing **Confirm Upgrade**. **Cancel Upgrade** or **Back** returns to the choices without spending points. Closing returns your original item; if your inventory is full, it stays stored for recovery. The yellow pane is only a guide and cannot be collected.
 
 Only confirming can apply the upgrade or spend points. Changed items, prices, settings, permissions, or an insufficient current balance invalidate the review. Leaving an allowed world or leaving Survival also blocks confirmation. A configuration reload requires a fresh review.
+
+Issued Halloween Virus keepsakes cannot receive these upgrades, even outside the event. The menu rejects them before spending points and returns the original item when closed. Ordinary kit supplies and items that only share their names or lore remain eligible.
 
 If the item cannot receive the upgrade, the tool explains why and spends no points. An enchantment already at or above the offered level is kept: selecting Unbreaking IV for an Unbreaking V item will not lower it or charge you.
 

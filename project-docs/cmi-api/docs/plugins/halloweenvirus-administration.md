@@ -8,14 +8,14 @@ For launch preparation, read [Safe rollout and acceptance](#safe-rollout-and-acc
 
 ## Activation and seasonal dates
 
-The confirmed 2026 season uses **Europe/Amsterdam** time. The hunt opens **1 October at 00:00**, includes all of Halloween weekend and 1 November, and stops **2 November at 00:00**. Claims open **25 October at 00:00**, include all of 4 November, and close **5 November at 00:00**.
+The confirmed 2026 season uses **Europe/Amsterdam** time. The hunt opens **1 October at 00:00**, includes all of Halloween weekend and 1 November, and stops **2 November at 00:00**. Claims open **25 October at 00:00**, include all of 7 November, and close **8 November at 00:00**.
 
 | Local phase | Runtime state and behavior |
 | --- | --- |
 | Before 1 October | `SCHEDULED` when automatic mode is armed; no encounters, deposits, or claims yet. |
 | 1 October–1 November | `LIVE`; hunting and deposits are available. Reward claims additionally require the 25 October opening date. |
-| 2–4 November | `CLAIMS ONLY` while claims are enabled: new encounters stop, but unused authentic sherds can be submitted and eligible rewards claimed. |
-| From 5 November | `DORMANT`; encounters, deposits, and claims are closed. Progress and item protection remain. |
+| 2–7 November | `CLAIMS ONLY` while claims are enabled: new encounters stop, but unused authentic sherds can be submitted and eligible rewards claimed. |
+| From 8 November | `DORMANT`; encounters, deposits, and claims are closed. Progress and item protection remain. |
 
 These transitions follow the saved dates and happen automatically while the server is running, or take effect immediately after a restart. They do not rewrite `event.mode`, reset players, change the event id, or repeat annually. A manual run also honors its configured end and claim deadline. Custom dates continue to govern custom schedules.
 
@@ -37,9 +37,9 @@ After reviewing the worlds, kits, reward, and participant permissions, arm the s
 
 `/hv admin auto` uses the already configured dates and enables the host's HV switch through its normal module control. It works in game and console with `onembcmi.HalloweenVirus.admin.event`; omit `/` in console. Arming a dormant, automatic, or host-disabled event before 1 October produces `SCHEDULED`. It does not replace custom dates or grant player access. If the host module is already enabled and its manual hunt is active, `auto` leaves that run unchanged.
 
-If the host module is disabled with `event.mode: manual` still saved, `auto` saves automatic mode before re-enabling the module. It therefore waits for the configured start instead of resuming an early manual hunt. During 2–4 November it restores only the claims phase, subject to the saved claim settings. A disabled module does not need a separate `stop` command first. Collection progress, existing sherd identities, custom dates, and player permissions remain unchanged.
+If the host module is disabled with `event.mode: manual` still saved, `auto` saves automatic mode before re-enabling the module. It therefore waits for the configured start instead of resuming an early manual hunt. During 2–7 November it restores only the claims phase, subject to the saved claim settings. A disabled module does not need a separate `stop` command first. Collection progress, existing sherd identities, custom dates, and player permissions remain unchanged.
 
-Use `auto` again to rearm after an explicit staff stop, including during the 2–4 November claims-only period. It accepts an elapsed hunt end and uses the current phase; after the entire season has closed it reports `DORMANT` without rewinding the dates. Loading another JAR, reaching 1 October, or restarting does not undo a staff stop. To replace the hunt dates deliberately and arm automatic scheduling, the exact confirmed 2026 ISO-instant command is:
+Use `auto` again to rearm after an explicit staff stop, including during the 2–7 November claims-only period. It accepts an elapsed hunt end and uses the current phase; after the entire season has closed it reports `DORMANT` without rewinding the dates. Loading another JAR, reaching 1 October, or restarting does not undo a staff stop. To replace the hunt dates deliberately and arm automatic scheduling, the exact confirmed 2026 ISO-instant command is:
 
 ```text
 /hv admin schedule 2026-09-30T22:00:00Z 2026-11-01T23:00:00Z
@@ -59,14 +59,18 @@ The modes are:
 
 ### Reward claim window
 
-The confirmed window is **25 October through 4 November 2026**, inclusive, in `Europe/Amsterdam`. Claims open at local midnight on the first day (`2026-10-24T22:00:00Z`) and close at local midnight following the last day (`2026-11-04T23:00:00Z`). The named time zone handles daylight-saving changes; these are calendar dates, not fixed UTC offsets. Calendar migration preserves any existing custom claim window and pause setting.
+The confirmed window is **25 October through 7 November 2026**, inclusive, in `Europe/Amsterdam`. Claims open at local midnight on the first day (`2026-10-24T22:00:00Z`) and close at local midnight following the last day (`2026-11-07T23:00:00Z`). The named time zone handles daylight-saving changes; these are calendar dates, not fixed UTC offsets. Calendar migration preserves any existing custom claim window and pause setting.
 
 ```text
-/hv admin claimwindow 2026-10-25 2026-11-04 Europe/Amsterdam
+/hv admin claimwindow 2026-10-25 2026-11-07 Europe/Amsterdam
 /hv admin claims status
 /hv admin claims pause
 /hv admin claims resume
 ```
+
+The one-time `rewards.claim-deadline-version: 1` migration extends only `halloween_virus_2026` with the exact former **25 October through 4 November, Europe/Amsterdam** claim window to **7 November**. It preserves customized claim dates/time zones, all hunt and community contribution dates, saved mode, pause switches, and every player ledger. The original configuration is saved as `config.yml.pre-claim-deadline-v1.bak` before the deadline and marker are atomically saved together; failure leaves the module unavailable until repaired. After the migration, later staff edits remain authoritative. This applies on HV load/reload and does not require a server restart when the updated JAR is already running.
+
+The same claim window governs the main 23-sherd completion reward (`hvreward`) and all three Community Challenge rewards (`hvbonus1`, `hvbonus2`, `hvbonus3`). Extending it does not extend infected-mob spawning or community contribution dates. The confirmed deadline is **8 November 2026 at 00:00 Europe/Amsterdam**, exclusive.
 
 These commands persist settings and work in game and from console with `onembcmi.HalloweenVirus.admin.event`. In console, omit `/`. The zone is optional for `claimwindow`; omitting it retains the current zone. Dates use `YYYY-MM-DD` and both endpoint days are included. Pausing claims does not stop the hunt; resuming only enables claims within their dates, with all collection, reward, permission, and inventory checks still required.
 
@@ -76,7 +80,7 @@ The player head, field guide, `/hv info`, and status commands show the current r
 
 ## Command reference
 
-Player commands are `/hv`, `/hv info`, `/hv help`, `/hv book`, `/hv journal`, `/hv notes`, `/hv seal`, `/hv outbreak`, `/hv worlds`, `/hv hints [world-key]`, `/hv collect`, `/hv claim`, `/hv effects <full|reduced|off>`, and `/hv reminders [on|off]`. The first opens the six-row collection GUI. The story book and second menu page explain the event and current world/mob hints. The field journal unlocks collection chapters; notes record eligible regional combat and the Seal provides an optional ending. `/hv outbreak` reports temporary regional focus and the weekly schedule. The two direct transaction commands apply the same checks as their GUI buttons. Player routes require an in-game player and the existing `onembcmi.HalloweenVirus.use` permission; console uses the corresponding staff status routes.
+Player commands are `/hv`, `/hv info`, `/hv help`, `/hv book`, `/hv journal`, `/hv notes`, `/hv seal`, `/hv outbreak`, `/hv worlds`, `/hv hints [world-key]`, `/hv collect`, `/hv claim`, `/hv community`, `/hv effects <full|reduced|off>`, and `/hv reminders [on|off]`. The first opens the six-row collection GUI. The story book and second menu page explain the event and current world/mob hints. The field journal unlocks collection chapters; notes record eligible regional combat and the Seal provides an optional ending. `/hv outbreak` reports temporary regional focus and the weekly schedule. The two direct transaction commands apply the same checks as their GUI buttons. Player routes require an in-game player and the existing `onembcmi.HalloweenVirus.use` permission; Community Challenges additionally require `onembcmi.HalloweenVirus.community`. Console uses the corresponding staff status routes.
 
 ### Delayed join invitations
 
@@ -96,7 +100,7 @@ Dismissal is saved by authoritative UUID and `event.id` in `ledger.yml` as `play
 
 ### Reward-claim reminder
 
-One private reminder per **player UUID and event edition** points a player with all 23 recorded sherds to `/hv` when claims are available. It uses the actual claim calendar, including **25 October through 4 November in Europe/Amsterdam**, and continues through the **2–4 November claims-only period**. Players already online beyond the join delay are checked when claims open; offline players wait for their next eligible login. Completion, permission grants, opting back in, claim resumption or a corrected reward kit can make a waiting online player eligible later without another login.
+One private reminder per **player UUID and event edition** points a player with all 23 recorded sherds to `/hv` when claims are available. It uses the actual claim calendar, including **25 October through 7 November in Europe/Amsterdam**, and continues through the **2–7 November claims-only period**. Players already online beyond the join delay are checked when claims open; offline players wait for their next eligible login. Completion, permission grants, opting back in, claim resumption or a corrected reward kit can make a waiting online player eligible later without another login.
 
 Delivery requires an online, alive player in Survival with HV access, a complete saved collection, no pending collection or reward, no delivered reward, no busy HV action, reminder opt-in and no saved reminder receipt. The module, ledger and claim settings must be ready, claims open and reward preflight clear. It waits while claims are paused or the placeholder reward is blocked. It does not require inventory space to display the notice; the normal claim checks still apply when the player chooses to claim. The message includes the current claim dates and the same `/hv`/dismissal buttons, and never executes a claim or opens a GUI automatically.
 
@@ -119,7 +123,14 @@ Chat has no client acknowledgement. If the server crashes between sending and sa
 | `/hv admin status` | Show activation, ledger, kit, world, and encounter readiness. |
 | `/hv admin report [1-168] [all\|world-key]` | Staff balance totals, default 24 hourly buckets, with natural and admin test encounters separated; requires `admin.inspect`. |
 | `/hv admin rewardtrophy [online-player\|uuid]` | Give the 2026 trophy and general story-book templates for reward-kit setup. Defaults to yourself; console must supply an online recipient. |
-| `/hv admin validate` | Check the current configuration, mapped worlds, all 24 CMI templates, and safety gates. |
+| `/hv admin bonus <1\|2\|3> [online-player\|uuid]` | Give that Community Challenge's keepsake and general story-book templates for `hvbonus1`, `hvbonus2` or `hvbonus3`. Requires `admin.rewardtrophy`; console names an online recipient. |
+| `/hv admin community status` | Inspect Community Challenge dates, targets, personal thresholds, progress and reward readiness. |
+| `/hv admin community pause` | Pause community participation without stopping the original sherd hunt. |
+| `/hv admin community resume` | Resume community participation within its configured dates. |
+| `/hv admin community cap <0-1000000>` | Set the per-player daily pumpkin cap live; `0` removes the cap. Already recorded donations remain counted. |
+| `/hv admin community inspect <player\|uuid>` | Inspect personal challenge progression and unresolved contribution/reward evidence; requires `admin.inspect`. |
+| `/hv admin community resolve <player\|uuid> <contribution\|1\|2\|3> <delivered\|retry> --confirm` | Reconcile a specific community submission or unresolved challenge reward after checking inventory evidence; requires `admin.reconcile` and the recipient online. |
+| `/hv admin validate` | Check current configuration, mapped worlds, sherd/reward CMI templates and safety gates, including the three community reward kits. |
 | `/hv admin reload` | Reload the Halloween Virus configuration and runtime. |
 | `/hv admin start` | Deliberately start the event for authorized players. |
 | `/hv admin auto` | Arm saved hunt dates and enable the HV module; preserve a manual hunt only when the module is already enabled and that hunt is active. |
@@ -157,6 +168,9 @@ Chat has no client acknowledgement. If the server crashes between sending and sa
 | `/hv admin friendly mobs <world-key> <types\|none>` | Choose comma-separated supported animal types for one logical region, or clear that region's animal list. |
 | `/hv admin claimwindow <first-day> <last-day> [time-zone]` | Set inclusive reward claim dates in `YYYY-MM-DD` format and optionally their named time zone. |
 | `/hv admin claims <status\|pause\|resume>` | Inspect or pause/resume completion claims without stopping a live hunt. |
+| `/hv admin rewarditem mark <hvreward\|hvbonus1\|hvbonus2\|hvbonus3>` | Mark one fresh held special item as a protected template for that kit. Save the marked item back into the CMI kit. Requires `admin.pdc`. |
+| `/hv admin rewarditem unmark` | Remove only the held fresh template marker. Issued rewards and sherds cannot be unmarked. Requires `admin.pdc`. |
+| `/hv admin rewarditems <kit> <inspect\|selected\|legacy>` | Inspect entry-by-entry protection or save the selection mode live. Console supported; requires `admin.pdc`. |
 | `/hv admin inspect <uuid-or-online-player>` | Inspect collection, pending operations, and reward state for that identity. |
 | `/hv admin reset <player\|uuid> [collection] [--confirm <reason>]` | Preview or clear a player's collection for the current edition; retain any claimed-reward lock. |
 | `/hv admin reset <player\|uuid> all [--confirm <reason>]` | Also clear the reward claim so the player can earn another after collecting all 23 again. |
@@ -180,9 +194,116 @@ Permission: `onembcmi.HalloweenVirus.admin.rewardtrophy`, also included in `onem
 
 Console usage is `hv admin rewardtrophy <online-player|uuid>`. In game, the optional recipient works too. Names must exactly match a real online username, case-insensitively, preserving the Floodgate prefix such as `.Player`; UUID targeting uses the actual server UUID. No external identity lookup or offline delivery occurs. Dead/offline recipients and players with a busy HV inventory transaction are rejected. If there is insufficient room for both items, neither is given and nothing drops on the ground.
 
-When finalizing `hvreward`, add these **authoring copies** through your normal CMI kit editor. The command does not edit, replace or enable any CMI kit. The small `hv_keepsake` PDC marker identifies their cosmetic design only; it is not collection authentication or a reward issuance id. These templates remain editable and reusable. **Do not stamp them or save copies already delivered by `/hv claim` back into a kit.** Normal HV claims clone the templates, preserve the book/components and add fresh issue, recipient and transaction identities for each awarded copy. That issued reward then receives the existing HV item-modification protection. Moving, storing, trading and reading follow the existing rules.
+When finalizing `hvreward`, add these **authoring copies** through your normal CMI kit editor. The command does not edit, replace or enable any CMI kit. The small `hv_keepsake` PDC marker identifies their cosmetic design only; it is not collection authentication or a reward issuance id. These templates remain editable and reusable. **Never save copies already delivered by `/hv claim` back into a kit.** In `selected` mode, mark these authoring copies with `/hv admin rewarditem mark hvreward` before saving them into CMI. The authoring marker is distinct from the issuance stamp. Normal HV claims clone the selected templates, preserve the book/components and add fresh issue, recipient and transaction identities for each protected copy. That issued reward then receives the existing HV item-modification protection. Moving, storing, trading and reading follow the existing rules.
 
 Run `/hv admin validate` after completing the whole kit. These two safe templates do not remove restrictions on other placeholder items, change the claim dates, grant public access or bypass collection requirements. This command intentionally creates the commemorative **2026** design; changing the event id does not rewrite its story/year. `/hv help`, `/hv debug commands`, `/hv debug permissions` and tab completion list the command; `/hv debug pdc` also shows the cosmetic keepsake marker.
+
+## Community Challenges
+
+The collection menu links to **Community Challenges**, also available with `/hv community`. Participation requires **both** `onembcmi.HalloweenVirus.use` and the separate **`onembcmi.HalloweenVirus.community`** permission. The community node defaults to **false, including for operators**, and is not a child granted by `onembcmi.HalloweenVirus.admin`. Existing HV participants therefore retain the original adventure while staff deliberately open the new challenges. Players without challenge access see a locked collection-menu card; they cannot open the challenge pages, receive Night Watch kill credit, accept or submit supply quests, donate pumpkins or claim challenge rewards.
+
+Players with challenge access can participate before completing their 23-sherd collection. Claiming **any** community reward still requires all 23 recorded sherds, that stage's personal minimum, its shared goal, safe prepared kit contents and an open reward claim window. The primary `hvreward` claim is independent and does not need to have been claimed first. Giving challenge access does not bypass any of these checks.
+
+The overview labels its sword, carved pumpkin and barrel **Community Challenge: #1**, **#2** and **#3**, respectively. Short hover text separates each player's contribution and minimum from the shared progress and explains the next unlock. Full requirements, dates and claim conditions remain on the individual challenge pages. The bottom-left player heads in the collection and community menus summarize the sherd collection and all three personal requirements, distinguishing locked, not started, in progress and minimum met. Partial deliveries to an active supply quest remain visible before its first Supply Credit is earned; merely accepting a quest is not a contribution. When helping players, distinguish **Minimum met** from reward availability: it satisfies the personal requirement and unlocks the next stage where applicable, but never bypasses the community goal, 23-sherd requirement or claim dates.
+
+A completed supply quest closes after awarding its saved credit. Inactive quest pages show recipe requirements rather than zeroed delivery progress. After meeting the personal minimum, players can explicitly start an **Optional Delivery**; its ingredient counters belong to the new delivery, while earned Supply Credits remain saved. Check the saved credit total when a player reports that their ingredients returned to zero after completion.
+
+The default contribution period begins **2 October 2026 at 00:00** and ends **25 October at 00:00**, in **Europe/Amsterdam**, including all of 24 October. Claims use the existing HV claim window, **25 October through 7 November**. Both the event lifecycle and community participation switch apply; installing the update does not override a dormant or disabled HV module or grant the community permission. Existing live events receive the community defaults without resetting collections, settings or kit contents. Community contributions are separate from the infected spawning end date.
+
+### Permission-controlled test and public opening
+
+After installing the complete new JAR set and restarting, grant the community node only to the intended owner and alt accounts. These **console** examples use placeholders for each account's actual server UUID; resolve those locally from trusted server records, including a Floodgate account's real server UUID. Do not substitute usernames in LuckPerms user operations. Each test account must also have its usual `onembcmi.HalloweenVirus.use` access.
+
+```text
+lp user <owner-server-uuid> permission set onembcmi.HalloweenVirus.community true
+lp user <alt-server-uuid> permission set onembcmi.HalloweenVirus.community true
+```
+
+Review the effective permission for a regular player and each tester with `lp user <actual-server-uuid> permission check onembcmi.HalloweenVirus.community`. LuckPerms wildcard and inherited grants still apply: an existing broad grant can already include this node. If a group should be excluded, use an explicit false for that intended group and verify the tester's effective permission after their individual grant. Do not assume the default can override an administrator's existing permission configuration.
+
+When testing is accepted, grant the node to each intended participant group:
+
+```text
+lp group <group-id> permission set onembcmi.HalloweenVirus.community true
+```
+
+These permission changes take effect live; no further restart or event stop/start is needed. Players can reopen `/hv` to see their access. To exclude an account deliberately, set its node to `false`; removing an individual grant alone can leave inherited group or wildcard access effective. Revocation blocks new actions and rechecks queued inventory effects before items are changed. It preserves recorded kills, donations, quest progress and claims; already committed contributions remain counted. Restoring access lets a player continue within the normal dates and requirements, without retroactive credit for kills made while excluded.
+
+Use this separate permission to test challenges while the existing public sherd hunt continues. `/hv admin bonus`, staff status, settings and recovery commands retain their existing granular admin permissions and do not require the participant community node. `community pause` is a different control: it pauses contributions for everyone, including testers, so leave participation enabled when testing selected accounts.
+
+The default progression is:
+
+1. **Regional Night Watch:** each listed world's configured quota must finish. The starting total is 1,825 eligible naturally spawned mob kills; each participant needs 10%, rounded up, or **183** personal kills from any eligible region. This unlocks pumpkin deliveries without waiting for community completion.
+2. **Light the Last Lantern:** the community needs **75,000 carved pumpkins**. A participant needs **576**, with a starting daily cap of **750**. This unlocks Autumn Relief. The cap resets at the community time zone's midnight, persists across reconnects/restarts and can be changed live through `community cap`. A value of zero means unlimited; raising the cap does not erase donations already counted for that day.
+3. **Autumn Relief Stockpile:** players accept a supply quest and deliver its whole recipe, possibly in several submissions. Finishing one gives a saved personal Supply Credit. The community must complete **three quests in each of four categories**. Repeats are optional; a credit is recorded progress, never a transferable inventory token.
+
+The [player guide](halloweenvirus.md#community-challenges) lists all starting world quotas, eligible mobs and supply recipes. Quest requirements use exact materials, including white wool, oak planks and the 26.3 poplar/shelf-mushroom/shrub materials. These are approachable alternatives for island farmers, builders, combat players and woodland explorers. They are not permanent player roles or a requirement to complete every recipe personally.
+
+Community completion never closes participation early. The bars cap at 100%, but recorded totals can exceed the target. Further kills in a completed region and further supplies in a completed category can satisfy a late player's own requirement through 24 October. A full region does not substitute for another region's missing quota. Players see that additional item deliveries are consumed for personal catch-up. Donation totals never increase the personal minimum; only an intentional staff configuration change can alter requirements.
+
+Night Watch uses the community world's mob list independently of the infected variant pool. It resolves logical world keys through the existing HV world mappings. Natural spawn origin and an eligible Survival player finishing blow are required; command/egg/plugin-created mobs, spawners, trial spawners and automatic environmental kills do not count. Staff `/hv admin spawn` encounters cannot be used to inflate the challenge. Do not assume a successful infected test-spawn is a Night Watch acceptance test. Community tracking does not spawn additional entities or scan loaded chunks for mobs.
+
+For item deliveries, the player confirms a displayed amount from their own inventory. Matching vanilla items are consumed, with exact recipe deficits and daily pumpkin allowance revalidated. Custom names, lore, enchantments, PDC and modified item data are not accepted as plain supplies. Do not place event or other custom items in a recipe as a workaround; they remain protected from accidental consumption. See the recovery guidance below before reconciling a submission that needs review.
+
+### Community settings and live controls
+
+Run `hv admin community status` from console or `/hv admin community status` in game. `pause` and `resume` operate the community participation switch; they preserve existing progress. `cap` supports an emergency last-days increase without a restart. Existing `/hv admin claims pause` and `resume` control reward availability within the dates, and `/hv admin stop` stops the event. A pause does not erase stored goals, donations or credits.
+
+Other balance changes use the existing dormant-only `/hv admin set <path> <value>` flow. Review changes first: lowering a goal or changing the personal percentage can immediately change qualification. Do not change the edition id to reset one challenge or make a player eligible again. The main settings are:
+
+| Setting | Starting value / purpose |
+| --- | --- |
+| `community.enabled` | `true`, subject to the HV event lifecycle and each participant's separate community permission. |
+| `community.timezone` | `Europe/Amsterdam`, including pumpkin day boundaries. |
+| `community.starts-on` | `2026-10-02`, inclusive local date. |
+| `community.ends-exclusive` | `2026-10-25`; the last contribution day is 24 October. |
+| `community.watch.personal-percent` | `10`; personal minimum is the configured combined kill target times this percentage, rounded up. |
+| `community.worlds.<key>.enabled` | Include this logical region's community quota. |
+| `community.worlds.<key>.target` | Required community kills in this region. |
+| `community.worlds.<key>.mobs` | Eligible mob types for its Night Watch kills. |
+| `community.pumpkins.target` | `75000`, shared total. |
+| `community.pumpkins.personal-minimum` | `576`, required personal donations and supply-stage unlock. |
+| `community.pumpkins.daily-cap` | `750`; use the dedicated live `cap` command, with `0` for unlimited. |
+| `community.quests.<key>.enabled` | Include the quest category. |
+| `community.quests.<key>.title` | Player-facing quest name. |
+| `community.quests.<key>.target` | `3`, required completed quests in this category. |
+| `community.quests.<key>.items.<MATERIAL>` | Exact material and whole quantity per accepted supply quest. |
+
+Do not blindly enable all community regions on a server missing some event worlds. Review their mappings and accessibility before the opening. A required but inaccessible region prevents full community completion. Set appropriate region targets and eligible mobs while dormant, then use validation and the GUI's live requirements as the reference.
+
+### Preparing the three challenge kits
+
+Use the following in game with two empty storage slots, or add an exact online username/server UUID when using console:
+
+```text
+/hv admin bonus 1
+/hv admin bonus 2
+/hv admin bonus 3
+```
+
+Each command creates two reusable authoring samples:
+
+| Kit to prepare | Keepsake | General story book |
+| --- | --- | --- |
+| `hvbonus1` | **Sigil of the Night Watch**, a shimmering amethyst shard | **The Watch We Kept** |
+| `hvbonus2` | **Lanternkeeper's Wax Seal**, a shimmering honeycomb | **The Last Lantern** |
+| `hvbonus3` | **Hearthkeeper's Token**, a shimmering brick | **Before the Long Night** |
+
+Each book has four short pages, author **1MoreBlock**, no player name and no executable links. The keepsakes use native glint, without combat bonuses or unsafe enchantments. Every sample has a maximum stack size of one. The `hv_keepsake` identity is cosmetic: carrying, copying or trading these samples does not earn a Supply Credit, qualify for a challenge or grant a claim.
+
+These commands use the same `onembcmi.HalloweenVirus.admin.rewardtrophy` permission and online-recipient/capacity rules as the original trophy command. They work while dormant and do not edit CMI kits, grant progress or record a real player's reward. Add the fresh samples to the corresponding kit through the CMI kit editor, alongside any reviewed extra reward items. **Never put an already-issued player reward back into a kit.** In `selected` mode, mark each fresh special sample for its matching kit with `/hv admin rewarditem mark <kit>`. The claim path replaces that authoring marker with fresh reward/recipient/transaction identity when the kit is actually awarded.
+
+Run `/hv admin validate` after editing the kits. Missing or unsafe bonus kits block the corresponding claims, not collecting sherds or contributing to the challenges. Normal above-maximum-enchantment and nested-item safeguards also apply to bonus rewards. The command samples do not bypass restrictions on other kit entries. Finalizing a kit does not automatically grant its contents to previous participants; qualifying players claim it in the appropriate challenge page during the claim window.
+
+### Community transaction recovery
+
+Use `/hv admin community inspect <player|uuid>` before recovery. Submissions and each of the three reward claims have durable transaction evidence. A pending operation is blocked from being repeated automatically; reconnecting or restarting must not consume another set of ingredients or issue another kit while the original outcome is uncertain.
+
+Community player receipts are kept with the native player inventory save. A receipt that disagrees with the ledger blocks further inventory actions for staff review, including a newer receipt left behind after rolling back only the ledger. Keep the community ledger and player inventory backups together. The recipient must be online for receipt reconciliation. A `delivered` decision can also acknowledge the latest already-completed contribution's receipt after staff verify its inventory outcome; it never credits the contribution a second time.
+
+The recovery command is `/hv admin community resolve <player|uuid> <contribution|1|2|3> <delivered|retry> --confirm`. For `contribution`, **delivered** means the recorded items really were removed for the donation, so the pending contribution should be credited; **retry** means the items were not removed and the reservation can be cleared for a fresh deliberate submission. For a numbered reward, **delivered** records the original kit as received; **retry** is only appropriate after verifying that it was not received. Check player inventory/storage and the recorded transaction before choosing. This command is not a progress grant or a way to replay an already delivered reward.
+
+Recipe requirements are recorded when a supply quest is accepted. There is one active quest per player, with no switch/cancel action that discards previously consumed deliveries. Completion grants one credit and clears that active quest; accepting another is deliberate. Changing an active recipe's ingredients or quantities blocks further submission against that mismatched recipe. Restore the original requirements to continue it; do not replace its progress by editing storage. Presentation and community targets are separate from the frozen ingredient fingerprint. Edition changes and manual file rollback are not recovery tools.
 
 ## Staff balance report
 
@@ -198,22 +319,23 @@ Statistics begin on installation of this feature, without inventing earlier hist
 
 ## Permissions
 
-`onembcmi.HalloweenVirus.use` defaults to false. Grant it deliberately to event participants; installing the module never grants public participation automatically. `onembcmi.HalloweenVirus.admin` and its granular children also default to false. Use `/hv debug permissions` for the command-specific children and descriptions registered in the running build.
+`onembcmi.HalloweenVirus.use` and `onembcmi.HalloweenVirus.community` both default to false, including for operators. Grant them deliberately; the latter adds Community Challenges to existing HV access. Installing the module never grants public participation automatically. `onembcmi.HalloweenVirus.admin` and its granular children also default to false, and the admin parent does not grant community participation. External wildcard or inherited permissions still apply. Use `/hv debug permissions` for the command-specific children and descriptions registered in the running build.
 
 | Permission | Purpose |
 | --- | --- |
-| `onembcmi.HalloweenVirus.use` | Player GUI, information, journals/notes/Seal, outbreak status, collection, claim, and preferences. |
+| `onembcmi.HalloweenVirus.use` | Original player GUI, information, journals/notes/Seal, outbreak status, collection, claim, and preferences; also required alongside the community node. |
+| `onembcmi.HalloweenVirus.community` | Additional access to challenge menus, eligible Night Watch kill credit, supply quests, pumpkin submissions and challenge reward claims. Defaults false, including for operators; not included in the HV admin parent. |
 | `onembcmi.HalloweenVirus.admin` | Parent for Halloween Virus administration. |
-| `onembcmi.HalloweenVirus.admin.event` | Start, stop, automatic arming, status, validation, reload, configuration, scheduling, spawning, drop eligibility, regional outbreaks, boss signatures, particles, boss outlines and friendly-animal controls, appearance diagnostics, cleanup, and reward claim dates/pause. |
+| `onembcmi.HalloweenVirus.admin.event` | Start, stop, automatic arming, status, validation, reload, configuration, scheduling, spawning, drop eligibility, regional outbreaks, boss signatures, particles, boss outlines and friendly-animal controls, appearance diagnostics, cleanup, reward claim dates/pause, and community status/pause/resume/cap. |
 | `onembcmi.HalloweenVirus.admin.announce` | Announce the outbreak to permitted players. |
 | `onembcmi.HalloweenVirus.admin.spawn` | Spawn bounded staff test encounters. |
-| `onembcmi.HalloweenVirus.admin.inspect` | Inspect player progress, unresolved operations and the staff balance report. |
-| `onembcmi.HalloweenVirus.admin.reconcile` | Confirm reconciliation of unresolved operations. |
+| `onembcmi.HalloweenVirus.admin.inspect` | Inspect player progress, community progress, unresolved operations and the staff balance report. |
+| `onembcmi.HalloweenVirus.admin.reconcile` | Confirm reconciliation of unresolved original or community operations and verified community contribution receipts. |
 | `onembcmi.HalloweenVirus.admin.reset` | Preview and confirm per-player collection resets. |
 | `onembcmi.HalloweenVirus.admin.reset.reward` | Additionally permit the `all` reset mode; also requires `admin.reset`. |
 | `onembcmi.HalloweenVirus.admin.debug` | Read command, permission, placeholder, configuration, and runtime diagnostics. |
-| `onembcmi.HalloweenVirus.admin.pdc` | Inspect inventory identity and deliberately stamp legacy kit sherd samples. |
-| `onembcmi.HalloweenVirus.admin.rewardtrophy` | Give reusable 2026 trophy and story-book templates to yourself or an online recipient. |
+| `onembcmi.HalloweenVirus.admin.pdc` | Inspect inventory identity, authenticate legacy sherd copies and select fresh protected reward templates. |
+| `onembcmi.HalloweenVirus.admin.rewardtrophy` | Give reusable 2026 trophy and Community Challenge keepsake/story-book templates to yourself or an online recipient. |
 
 Group-targeted LuckPerms grants use the intended group id. Individual grants use the real server UUID, including Floodgate players. Keep staff mutation permissions separate from the general player access node.
 
@@ -229,7 +351,7 @@ These values read cached event and UUID progress snapshots. They do not consume 
 | `%onembcmi_HalloweenVirus.end%` | Configured hunt end in the displayed local time zone, or dates-awaiting-review text. |
 | `%onembcmi_HalloweenVirus.collected%` | Number of distinct recorded fragments. |
 | `%onembcmi_HalloweenVirus.remaining%` | Number of missing fragment types. |
-| `%onembcmi_HalloweenVirus.claimable%` | Whether the claim window, event, progress, and reward setup allow a claim; inventory capacity is checked at execution. |
+| `%onembcmi_HalloweenVirus.claimable%` | Whether the online player can claim under the window, progress, setup and saved receipt; false for offline/asynchronous evaluation. Inventory capacity is checked at execution. |
 | `%onembcmi_HalloweenVirus.claim_window%` | Inclusive first/last claim dates and named time zone. |
 | `%onembcmi_HalloweenVirus.claims_open%` | Whether the current event state and date window permit claims. |
 | `%onembcmi_HalloweenVirus.spawning_paused%` | Whether spawning is paused or blocked by a pending/failed settings save; other activation/protection/load gates still apply. |
@@ -242,6 +364,12 @@ These values read cached event and UUID progress snapshots. They do not consume 
 | `%onembcmi_HalloweenVirus.seal_solved%` | Whether this UUID has saved the optional Seal ending for this edition; false without a player context. |
 | `%onembcmi_HalloweenVirus.outbreak_world%` | Active regional focus's logical world key, or an empty string when there is no active focus. |
 | `%onembcmi_HalloweenVirus.outbreak_ends%` | Active regional focus's exclusive end as an ISO instant, or an empty string. |
+| `%onembcmi_HalloweenVirus.community_1_percent%` | Shared Night Watch completion percentage, capped at 100; surplus in one world cannot substitute for another world's quota. |
+| `%onembcmi_HalloweenVirus.community_2_percent%` | Shared carved-pumpkin completion percentage, capped at 100. |
+| `%onembcmi_HalloweenVirus.community_3_percent%` | Shared Autumn Relief completion percentage, capped at 100; every configured quest category must reach its target. |
+| `%onembcmi_HalloweenVirus.community_kills%` | This player's recorded eligible Night Watch kills, or 0 without a player context. |
+| `%onembcmi_HalloweenVirus.community_pumpkins%` | This player's recorded carved-pumpkin donations, or 0 without a player context. |
+| `%onembcmi_HalloweenVirus.community_credits%` | This player's earned Supply Credits, or 0 without a player context. |
 
 ## Worlds, mobs, and fragment pools
 
@@ -685,7 +813,7 @@ Empty `kind`, `kit`, or `issue` fields with `infected=false` mean that copy is n
 
 Stamping requires the PDC staff permission, no pending inventory action for that player, and a hunt that is not currently active. This also permits stamping during the post-hunt claim period; it is not limited to the `DORMANT` status label. The setup recipe above explicitly stops the event first. Stamping matches the CMI template's material, plain-text title, and first lore line. Variable recipient/world/kit lore lines are ignored for matching. Metadata is preserved while the current edition and a unique issuance id are added. Already marked items retain their identity; re-stamping never refreshes a spent or old-edition item. Reward gear is not stamped by this migration.
 
-**Keep CMI kit templates unstamped.** Do not put stamped copies back into saved kits: template copies would repeat the same issuance id and the kit validator rejects marked templates. Stamping applies to physical inventory copies, not a permanent recognition registration for every future kit delivery.
+**Keep CMI kit templates free of issued-item stamps.** Do not put issued sherds or claimed rewards back into saved kits: copies would repeat issuance or transaction identities and validation rejects them. The separate, kit-bound reward-template marker described below is safe to save in a kit; it is not an issued-item identity. Stamping applies to physical inventory copies, not a permanent recognition registration for every future kit delivery.
 
 The stable PDC namespace is `1mb-cmiapi-eventhunts`. Fields include `hv_kind`, `hv_kit`, `hv_run`, `hv_issue`, `hv_recipient`, `hv_transaction`, `hv_infected`, and `hv_original`. An authentic sherd can be traded: its issuance recipient is provenance, not a restriction to the original finder. Consumed issuance ids are reserved globally in the ledger to reject replay.
 
@@ -697,7 +825,7 @@ The reward ledger uses `NONE`, `PREPARED`, `APPLYING`, and `DELIVERED`. The prep
 
 To recover, stop the affected player's attempts, inspect their UUID record and inventory/provenance evidence, and determine whether the exact items were consumed or delivered. Only then use the matching `resolve` command. `delivered` acknowledges the observed side effect; `retry` is appropriate only when evidence proves it did not occur. Retain the original transaction identity and exact payload. Never delete a record, change UUID, or reset an edition merely to make the claim button work.
 
-Ledger mutations use a serialized worker; Bukkit inventory, world, entity, and CMI item operations run on the Paper server thread. Atomic durable writes publish immutable cached snapshots for menus and placeholders. A missing or corrupt primary ledger is not silently replaced with an older backup because doing so can replay spent fragments or completion rewards. Such a failure blocks mutations pending staff reconciliation.
+Ledger mutations use a serialized worker; Bukkit inventory, world, entity, and CMI item operations run on the Paper server thread. Atomic durable writes publish immutable cached snapshots for menus and placeholders. Main reward delivery also records a native player-data receipt immediately alongside the inventory mutation; community rewards already have these receipts. This protects mixed kits whose ordinary entries deliberately carry no HV transaction tags. A conflicting receipt blocks another claim or retry even after items have been traded, used or stored. Pending deliveries keep their exact original payload and require staff reconciliation, never automatic replay. An audited `reset ... all` starts a new receipt generation; collection-only resets preserve it. Old receipts are retained so restoring an earlier ledger generation does not silently re-enable that payout. A missing or corrupt primary ledger is not silently replaced with an older backup because doing so can replay spent fragments or completion rewards. Such a failure blocks mutations pending staff reconciliation.
 
 HV configuration reloads and saves use the same serialized worker. The initial configuration read does not rewrite the file; the worker prepares and persists settings only after all older HV storage workers have drained. Menu/debug readers use stable settings snapshots while a save runs. A host reload requested during an HV settings operation waits for that operation and is coalesced with other pending reload requests; gameplay remains unavailable until the queued reload publishes validated settings. Other Event Hunts modules retain their existing reload behavior.
 
@@ -741,25 +869,109 @@ Every reset has a unique operation id and a durable audit under `resets` in `led
 | `plugins/1MB-CMIAPI/CoconutHunt/HalloweenVirus/config.yml` | Hunt schedule, reward claim dates/time zone, world rules, spawning pause/rate, regional outbreak schedule/expiry, boss signatures, encounter limits and variants, announcements, and configuration schema. |
 | `plugins/1MB-CMIAPI/CoconutHunt/HalloweenVirus/ledger.yml` | Edition/UUID collections, regional notes, Seal ending, global spent issuance ids, exact reward transactions, reset audits, drop balance, effects/reminder preferences, and reward-reminder receipts. |
 | `plugins/1MB-CMIAPI/CoconutHunt/HalloweenVirus/ledger.yml.backup` | Previous validated ledger for staff investigation; not an automatic replay/recovery source. |
+| `plugins/1MB-CMIAPI/CoconutHunt/HalloweenVirus/community-ledger.yml` | Authoritative edition/UUID community goals, personal kills/donations/credits, active supply recipes, daily pumpkin totals, contribution receipts and independent challenge reward transactions. |
+| `plugins/1MB-CMIAPI/CoconutHunt/HalloweenVirus/community-ledger.yml.backup` | Previous community ledger for staff investigation; never automatically restored over current reward evidence. |
 | `plugins/1MB-CMIAPI/CoconutHunt/HalloweenVirus/balance.yml` | Bounded hourly diagnostic counters for `/hv admin report`; independent of player progress and reward authority. |
 
 The configuration and ledger start at schema 1. Missing Halloween Virus defaults are added through the shared feature configuration service, including signature settings and the initially disabled outbreak rotation. Saved custom settings remain intact. New note/Seal fields default to empty/false without resetting collections. The separate `event.calendar-version: 1` migration applies the confirmed 2026 hunt dates only to that edition's completely blank schedule, as described above. It does not reset the ledger or restamp items. Unknown newer schemas fail closed. Existing event-module data and CMI-owned kit files remain in their established locations. Preserve the complete event directory in backups, together with the corresponding player inventories and suite build; partial rollback can duplicate an already-issued reward or strand a spent fragment.
 
 The separate one-time `event.regions-version: 1` migration first preserves the previous feature configuration as `config.yml.pre-regions-v1.bak`, then saves the regional changes atomically on the storage worker, together with any pending calendar changes. It retains world mappings, enabled flags and unrelated custom settings. The marker prevents later reloads or builds from reapplying the migration over staff edits. Do not remove or lower it to re-run setup. This does not create General World, enable it, approve its protections, alter CMI kits or write the player ledger. Keep the migration backup with the rest of the event data.
 
-Common administration paths are `event.id`, `event.starts`, `event.ends`, `rewards.claims-enabled`, `rewards.first-claim-day`, `rewards.last-claim-day`, `rewards.time-zone`, `encounters.spawning-paused`, `encounters.spawn-chance`, `encounters.signatures.*`, `outbreaks.rotation.*`, `worlds.<key>.world-id`, `worlds.<key>.enabled`, `worlds.<key>.signature-move`, and the `encounters.variants` settings shown by `/hv debug config`. Use `start`, `stop`, `auto`, and `schedule` for lifecycle control; the calendar and region migration markers are not editable gameplay settings. Use the dedicated live controls listed above. Stop the event before changing other gameplay settings. World mapping does not enable a world: review its protection and mob configuration, then explicitly enable it. Change the edition id only for a genuinely new event; it changes which fragments and player collection records are current.
+Common administration paths are `event.id`, `event.starts`, `event.ends`, `rewards.claims-enabled`, `rewards.first-claim-day`, `rewards.last-claim-day`, `rewards.time-zone`, `encounters.spawning-paused`, `encounters.spawn-chance`, `encounters.signatures.*`, `outbreaks.rotation.*`, `worlds.<key>.world-id`, `worlds.<key>.enabled`, `worlds.<key>.signature-move`, and the `encounters.variants` settings shown by `/hv debug config`. Use `start`, `stop`, `auto`, and `schedule` for lifecycle control; the calendar, region and claim-deadline migration markers are not editable gameplay settings. Use the dedicated live controls listed above. Stop the event before changing other gameplay settings. World mapping does not enable a world: review its protection and mob configuration, then explicitly enable it. Change the edition id only for a genuinely new event; it changes which fragments and player collection records are current.
 
 `announcements.automatic` defaults to false. The default interval is 900 seconds, with a five-minute minimum for automatic hints and a one-minute cooldown on manual announcements. `announcements.message` contains the introduction and `announcements.hints` provides the rotation. Delivery targets online players with event access. Edit the story in these settings without exposing raw staff commands or internal configuration details to players.
 
+## Selecting special rewards and ordinary supplies
+
+Each reward kit has its own `rewards.selection.<kit>` setting, initially `legacy` to preserve existing configurations. `legacy` protects every direct entry and continues to reject filled containers and unreviewed enhanced gear. `selected` protects only the fresh templates explicitly marked for that exact kit. Unmarked entries, including ordinary filled shulkers, remain unchanged: no HV identity, transaction tags or modification restrictions are added. Their amounts, contents and foreign plugin metadata are preserved.
+
+For each special item, take a **fresh, unissued** copy, hold one item, and run:
+
+```text
+/hv admin rewarditem mark hvbonus1
+```
+
+Save that exact marked copy back into `hvbonus1` using CMI's kit editor. Repeat for the seven selected items. Names and slot numbers are for staff review; the persistent marker determines protection even if the kit is rearranged. It does not change the item's appearance or authenticate it as an issued reward. Then run:
+
+```text
+/hv admin rewarditems hvbonus1 selected
+/hv admin rewarditems hvbonus1 inspect
+/hv admin validate
+```
+
+The entry report must show these seven as `PROTECTED`: **Sigil of the Night Watch**, **The Watch We Kept**, **One More Patrol**, **Probably Just a Sheep**, **Things That Go Clang**, **The All-Clear**, and **Graveyard Shift**. All other `hvbonus1` entries remain `ORDINARY`. A matching template is mandatory; selecting a kit with none blocks its reward instead of accidentally delivering everything unprotected. Repeat this workflow for the other kits when their special items are chosen. Never use `/hv debug pdc stamp` for reward templates; that command only authenticates individual sherd copies.
+
+For `hvbonus2`, the owner selected these seven direct entries. Preserve their existing names, lore and enchantments:
+
+| Material | Protected item | Visible enchantments |
+| --- | --- | --- |
+| `HONEYCOMB` | Lanternkeeper's Wax Seal | None shown |
+| `WRITTEN_BOOK` | The Last Lantern | None shown |
+| `SHEARS` | The Grin Maker | Efficiency IX, Unbreaking II |
+| `ORANGE_BANNER` | The Porch Is Open | None shown |
+| `JACK_O_LANTERN` | The 75,001st Smile | Channeling I |
+| `CARVED_PUMPKIN` | Mayor of Midnight | Curse of Binding V |
+| `PUMPKIN_PIE` | Carver's Overtime Pay | None shown |
+
+Use `/hv admin rewarditem mark hvbonus2` on each fresh held special item, save those exact copies back into CMI, then run `/hv admin rewarditems hvbonus2 selected` and `/hv admin rewarditems hvbonus2 inspect`. The report must show **seven protected entries**; every other entry, including the potions, enchanted golden apples and orange shulkers, remains ordinary. Run `/hv admin validate` afterwards. Efficiency IX and Curse of Binding V are intentional enhanced enchantments and must pass the reviewed integration checks; selection does not reduce their levels. Recording this list does not edit a kit or mark existing copies automatically.
+
+For `hvbonus3`, the owner selected these seven direct entries:
+
+| Material | Protected item | Visible special properties |
+| --- | --- | --- |
+| `BRICK` | Hearthkeeper's Token | Keepsake lore |
+| `WRITTEN_BOOK` | Before the Long Night | Author: 1MoreBlock |
+| `ORANGE_BUNDLE` | Someone Brought Enough | Empty |
+| `IRON_AXE` | Just 1MoreLog | Efficiency III, Unbreaking V |
+| `FISHING_ROD` | Supper Before Sundown | Breach V, Luck of the Sea II, Lure II, Unbreaking II |
+| `LEATHER_CHESTPLATE` | The Borrowed Blanket | Protection III, Blast Protection III, Projectile Protection III; Ward trim, Resin material; dye `#A64B2A` |
+| `ORANGE_CUSHION` | Saved You a Seat | Story lore |
+
+Use `/hv admin rewarditem mark hvbonus3` on each fresh held special item and save those exact copies back into CMI. Then run `/hv admin rewarditems hvbonus3 selected`, `/hv admin rewarditems hvbonus3 inspect`, and `/hv admin validate`. Expect **seven protected entries**; all other entries, including ordinary supplies and the orange shulkers and their contents, remain ordinary. The empty bundle is supported; do not fill a protected template before saving it into the kit. Cloning preserves the chestplate's dye, trim and combined enchantments. Unbreaking V and Breach V require the enhanced-item integration checks, and the rod requires the reviewed Pyro Augment guard. No enchantments are silently reduced or replaced. This records the intended selection without editing the live kit.
+
+For the main `hvreward` kit, the owner selected all nine direct entries in the bottom row:
+
+| Material | Protected item | Visible enchantments |
+| --- | --- | --- |
+| `ECHO_SHARD` | Virus Survivor 2026 | None shown |
+| `WRITTEN_BOOK` | The Autumn We Endured | None shown; author: 1MoreBlock |
+| `BOW` | Last Light of October | Power V, Flame I, Unbreaking III, Infinity I |
+| `DIAMOND_HELMET` | Eyes Beyond the Outbreak | Protection IV, Respiration III, Aqua Affinity I, Thorns I, Unbreaking III |
+| `DIAMOND_CHESTPLATE` | The Promise That Held | Protection IV, Thorns II, Unbreaking III |
+| `DIAMOND_LEGGINGS` | The Stand That Never Broke | Protection IV, Swift Sneak III, Thorns III, Unbreaking III |
+| `DIAMOND_BOOTS` | Footsteps Beyond Midnight | Protection IV, Feather Falling IV, Depth Strider III, Thorns IV, Unbreaking III |
+| `DIAMOND_PICKAXE` | Tomorrow Is Worth Digging For | Fortune III, Efficiency V, Unbreaking III |
+| `NETHERITE_SWORD` | The Twenty-Third Answer | Sharpness V, Sweeping Edge III, Looting III, Unbreaking III |
+
+All four diamond armour pieces have the Silence trim with Resin material; preserve those components, names and lore. Use `/hv admin rewarditem mark hvreward` on each fresh held special item and save those exact copies back into CMI. Then run `/hv admin rewarditems hvreward selected`, `/hv admin rewarditems hvreward inspect`, and `/hv admin validate`. Expect **nine protected entries**; the other kit entries remain ordinary, subject to the payout safety checks below. Thorns IV on the boots requires the enhanced-item integration checks. The diamond pickaxe requires the reviewed PyroMining Vessel guard even though its enchantments are within normal maximum levels. Recording this selection does not edit the live kit or authenticate its templates automatically.
+
+Across the four kits, the intended selection is **30 protected direct entries**: nine in `hvreward` and seven in each bonus kit. Each kit has its own selection mode and authoring marker; verify each separately after saving the marked templates.
+
+To correct a selection, hold the fresh template, run `/hv admin rewarditem unmark`, and save it back. Switching a kit to `legacy` explicitly restores protection for every direct entry on future claims. Neither command rewrites already-issued items, resets progress, changes deadlines or rebuilds pending reward payloads. Settings persist without a restart; CMI must have the updated kit loaded before inspection. Already issued rewards continue to have their original protection.
+
+Ordinary does not mean unchecked: every entry still undergoes bounded amount/container validation and full inventory capacity planning. Containers with unresolved loot, excessive nesting, prior issued HV identities, or nested protected templates are rejected. Put special items directly in the kit; unmarked ordinary container contents are not automatically protected. Unprotected above-maximum enchantments are rejected rather than handed out as unrestricted gear.
+
+CMI **9.8.10.3** saves readable item maps and still loads older serialized entries. HV uses CMI's loaded `Kit` API, not its YAML representation. Native tests cover readable and legacy roundtrips, template and third-party PDC, enhanced enchants, story-book contents and ordinary filled shulkers. Do not hand-edit encoded item data or rely on screenshots as authentication.
+
 ## Infected reward restrictions
 
-Infected identity persists on sherds and completion items through storage, trading, death drops, and restarts. Issued reward items retain original serialized properties and transaction provenance. Supported modification guards stay active while the seasonal event is dormant. The rate-limited warning is: “This item is infected. It cannot be repaired, merged, enchanted, or otherwise modified.”
+Infected identity persists on sherds and protected reward items through storage, trading, death drops, and restarts. Ordinary rewards selected as supplies have no HV modification restrictions. Issued reward items retain original serialized properties and transaction provenance. Supported modification guards stay active while the seasonal event is dormant. The rate-limited warning is: “This item is infected. It cannot be repaired, merged, enchanted, or otherwise modified.”
 
-Normal inventory movement, chest storage, auction-house and trade interfaces, and trash/disposal are allowed. A virtual chest interface alone is not a reason to block an item. The guard targets transformation inputs and modification commands, such as repair, enchanting, renaming, and merging. Trading preserves provenance; a buyer can submit the item despite another player's name or world in its lore. Discarding an item is intentional disposal and grants no collection credit.
+Normal inventory movement, chest storage, auction-house and trade interfaces, and trash/disposal are allowed. A virtual chest interface alone is not a reason to block an item. The guard targets transformation inputs and modification commands, such as repair, trimming, enchanting, renaming, and merging. Trading preserves provenance; a buyer can submit the item despite another player's name or world in its lore. Discarding an item is intentional disposal and grants no collection credit.
 
-Above-maximum enchantment rewards are blocked until all applicable modification routes are verified. The supplied `hvreward` is a placeholder that the owner will replace later. Its current legacy overlevel gear blocks reward issuance; this implementation does not overwrite it or substitute another prize. Collection progress can be tested and retained while completion delivery awaits the reviewed replacement. `/hv admin validate` reports the reward blocker.
+Staff-marked special templates in `selected` mode may keep intentional enhanced enchantments when their protection hooks are active. **CMI and mcMMO updates are not restricted to a version allowlist.** Preflight checks the current enabled provider, its public event classes, the actual registered protection handlers and CMI command executor. The executor guard also covers commands dispatched by another plugin through Bukkit, including repair and trim services. Normal and CMI virtual anvils, enchanting, grindstones, smithing, crafting, Mending and supported modification commands reject protected inputs. mcMMO repair, Super Repair and salvage use its public cancellable checks before item changes or material consumption. Missing hooks or an enabled replacement provider that has not been bound by a fresh runtime initialization block issuance. Use a full server restart after provider updates. Template selection does not lower or remove configured enchantments. `/hv admin validate` reports the installed versions for diagnostics, hook readiness and blocked kit entries. Compatible updates do not require marking saved templates again.
 
-Do not interpret a Bukkit inventory guard as proof that every plugin's direct `ItemStack` mutation is covered. CMI direct/plugin-dispatched modification, mcMMO repair/salvage, Pyro upgrades/augments, and other bypass routes require independent verification before special high-level gear can be issued. Preserve the guard and its data after event shutdown. Before removing the Event Hunts jar, migrate or remove infected items and replace its ongoing protections deliberately.
+**PyroFishingPro 4.9.35** Augments are blocked on protected fishing rods; **PyroMining 4.6.1** Vessels are blocked on protected pickaxes. Ordinary rods and picks remain usable even when another protected item is in the inventory. Denial happens before the apply callback, with a rate-limited chat explanation; no item, Vessel, Augment or currency is consumed. PyroLib **1.4.9/1.6.0** menu sessions are supported. The exact-version adapters are needed because these callbacks do not consistently respect cancelled inventory events and expose no cancellable apply API. The Fishing adapter authenticates the actual menu session, not its title; its isolated read of PyroLib's session map is version-gated. Unknown integration versions block affected protected reward issuance pending review.
+
+`/trim` and `/cmi trim` reject issued protected items, including boots, before opening the trim editor or applying a trim. Repair checks follow CMI's actual hand, offhand, armor and all selectors, including commands with the player name before the selector. `/welcomes` and `/points` remain available: their PyroWelcomesPro **0.5.1** repair/modification purchases are checked before points are deducted, with PyroLib **1.4.9/1.6.0**. This private menu adapter is version-gated for the same reason as the other Pyro adapters; `/hv admin validate` reports its readiness. An unsupported installed points provider blocks protected reward issuance pending review.
+
+DiscordChat's tool upgrades reject issued HV items both when previewing and confirming an upgrade, before points are spent. An item that only has a staff reward-template marker remains editable; protection applies when the actual reward is issued. Existing issued items carrying their HV identity gain these checks after the updated suite is installed, without marking the kits again.
+
+ItemSoulBind cannot add, replace or remove binding on issued protected HV items. The guard covers its held-item, inventory-wide and remote binding commands, plus automatic registration on click, equip, use, pickup and drop. Existing soulbind owner/group metadata and the separate death-recovery behavior remain intact. The player action itself is not cancelled to prevent automatic registration: protected items can still be moved, used and picked up normally. Bulk binding commands are refused when their scope includes protected items; use a held-item command for an ordinary item instead.
+
+The current installed ItemSoulBind **1.8.3** has no cancellable bind event and its registration callbacks ignore cancellation, so the guard wraps the actual public command executors and the identified registration callbacks. Readiness checks provider identity and all required registrations rather than a version-number allowlist. `/hv admin validate` reports ItemSoulBind readiness; an installed provider without complete protection blocks protected reward issuance. VoteTokens and AFKShrine soulbind purchases also reject HV issued identity before spending currency. Staff authoring markers alone remain editable; no existing soulbind data is removed.
+
+These are guards for the documented player-facing modification routes. Arbitrary trusted plugins calling `ItemStack` setters or private provider methods directly are outside that guarantee. Preserve the guard and its data after event shutdown. Before removing the Event Hunts jar, migrate or remove infected items and replace its ongoing protections deliberately.
 
 ## Safe rollout and acceptance
 
@@ -798,7 +1010,7 @@ This recipe arms the saved calendar. For an immediate test before 1 October, use
 6. Test permitted and cancelled natural spawns and cancelled damage with the representative installed plugin setup, including island worlds. Check signature warnings and balance, eligible damage unlocking notes without a kill, the Seal's correct/incorrect sequences, both reset modes, outbreak expiry/cancellation, weekly clock boundaries and pauses. Story features must not consume items or affect claims. Also test explicit `CUSTOM` staff spawns, non-player kills, two-player combat, full inventories, missing kits, failed ledger writes, stop/disable, clean restart, forced interruption between transaction phases, and loaded/unloaded chunk cleanup. Cleanup must never award fragments.
 7. Before accepting infected rewards, test anvil, enchanting, grindstone, smithing, crafting, automated crafter, Mending, CMI commands, and each installed third-party repair/upgrade route. Test AutoSell handling of event metadata as well.
 8. Measure MSPT, slow ticks, entity counts, and memory with representative farms and 30 or more players. Caps and throttles limit work, but gameplay and load acceptance require real measurements.
-9. Confirm the saved hunt dates match 1 October through 1 November and claims include 25 October through 4 November in Europe/Amsterdam, unless an intentional custom schedule is in use. Test every phase boundary, claim pause/resume, submissions after the hunt ends, and explicit stop/rearm. Verify a stopped or host-disabled event stays off across restart and that an early manual test stays manual across the calendar migration. Check `auto` preserves an enabled, active manual hunt but schedules a host-disabled saved manual hunt without briefly starting encounters. Grant the intended player groups access and run `/hv admin auto` once to arm the reviewed calendar; announce deliberately after the hunt becomes live. After local gameplay acceptance, stage the exact tested suite through the repository's normal live-handoff workflow.
+9. Confirm the saved hunt dates match 1 October through 1 November and claims include 25 October through 7 November in Europe/Amsterdam, unless an intentional custom schedule is in use. Test every phase boundary, claim pause/resume, submissions after the hunt ends, and explicit stop/rearm. Verify a stopped or host-disabled event stays off across restart and that an early manual test stays manual across the calendar migration. Check `auto` preserves an enabled, active manual hunt but schedules a host-disabled saved manual hunt without briefly starting encounters. Grant the intended player groups access and run `/hv admin auto` once to arm the reviewed calendar; announce deliberately after the hunt becomes live. After local gameplay acceptance, stage the exact tested suite through the repository's normal live-handoff workflow.
 
 Stop rollback begins with `/hv admin stop` and owned-entity cleanup. Retain configuration, the complete ledger, issuance reservations, and reward evidence. Restore the exact tested suite as a unit; do not roll back only the progress ledger or remove infected-item protection while those items remain in circulation.
 

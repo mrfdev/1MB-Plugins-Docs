@@ -12,6 +12,7 @@ Available features include:
 
 - Eight curated tool types with matching gathering sources and their own tool progression.
 - One Initial Camp and up to two Secondary Camps, each with a Local Introduction.
+- Paid travel to your own registered camps, with a confirmation and cooldown.
 - Shared player XP, Forage Points, daily limits, and skill branch progress.
 - Daily, weekly, and monthly quests, Claim All, and a one-time participation reward.
 - A permanent Herbarium with 102 botanical specimens and twelve collection rewards.
@@ -45,6 +46,10 @@ Use `/forage camp register` to open the registration page, then click its **Regi
 The biome requirement applies to every replacement Initial Camp as well. A tent made from poplar and wool outside Dappled Forest does not qualify. Other biomes' abandoned structures are useful decoration, but they cannot become your Initial Camp.
 
 Keep the composter near the center of the camp, with the shelter and campfire nearby. The default scan reaches ten blocks horizontally and six blocks above and below it. Features outside that box do not count.
+
+Camps may cross chunk borders: every required feature must be inside the workstation's footprint, and a physical inspection waits for the whole area and its placed cushions. Forage remembers a successful Initial Camp inspection so you can use your Secondary Camps while Wild is unloaded. This remembered status survives restarts and does not expire simply because you have been exploring elsewhere. Using a camp's own workstation still checks that camp's actual structure.
+
+If Forage cannot establish your Initial Camp's condition, it may ask you to visit its Dappled Forest composter and sneak-right-click it for a check-in. If it has confirmed damage, repair the missing requirements and confirm `/forage camp revalidate` there. Neither a check-in nor repairs require unclaiming the camp or repeating a completed Local Introduction. Your progress and earned rewards remain saved.
 
 ## Build the checklist
 
@@ -97,6 +102,14 @@ There are **three total, not one plus three**. Each camp belongs to one player, 
 The approved worlds are Wild, General, Cave, End, Nether, Acid, OneBlock, SkyBlock, ChunkBlock, and SkyGrid. Builders, Spawn, and Legacy are excluded. Other worlds remain unavailable until staff explicitly adds them.
 
 For example, Wild + SkyBlock + ChunkBlock uses all your slots. To establish a OneBlock camp, choose a secondary camp to unclaim first. The Initial Camp slot always remains reserved for a qualifying Wild camp.
+
+## Travel to your camps
+
+Use `/forage teleport` or `/forage teleport 1` to return to your Initial Camp. `/forage teleport 2` visits your first registered Secondary Camp, and `/forage teleport 3` visits your next Secondary Camp. These destinations are your own registrations; you do not need a spare home slot. If you release a Secondary Camp, check the destination in the confirmation before travelling again because the remaining secondary slot numbers can change. Use `/forage teleport cancel` to cancel a pending trip.
+
+Each trip normally costs **$2,500 in CMI money and 10 Forage Points**. Both are required. The confirmation shows the current price and destination before you agree. After confirming, stand still for the **five-second warm-up**. A successful trip starts a **five-minute cooldown**, shared across your camps and retained when you reconnect or the server restarts. Staff can adjust these prices and times, so follow the in-game confirmation.
+
+You can return to a registered camp that needs repairs or revalidation, even when its Local Introduction is unfinished. Travelling does not repair or validate it, complete its introduction, or open its services. Use the composter and normal camp checklist when you arrive. Forage looks for a safe place to stand within six blocks of the registered workstation; keep a clear, solid landing space nearby. If the world or safe landing is unavailable, or the server blocks the teleport, the trip cannot complete. Existing world, protection and inventory-transfer rules still apply.
 
 ## Play locally to activate each camp
 
@@ -903,6 +916,8 @@ Improvements preserve the tool's progression. Tier upgrades and enchantment purc
 
 Forage tools cannot use ordinary anvils, enchanting tables, grindstones, smithing, crafting repairs, unauthorized Mending, or other plugins' repair/enchant services. The Mending Upgrade below is the approved XP-repair route; its enchantment must be purchased through Forage. If a tool pauses for review, retain it and tell staff; renaming or stripping its identity is not a repair. Normal storage, dropping, and replacement purchases remain available.
 
+You can open CMI's `/anvil` and repair or rename ordinary items while carrying Forage tools. The protected tools stay out of the anvil: clicking, shift-clicking, dragging, and hotbar/offhand swaps cannot insert them. Use your camp's tool menus to care for those tools.
+
 <a id="mending-upgrade"></a>
 
 ### Optional Mending I
@@ -945,6 +960,8 @@ If your Initial Camp breaks, the other two are still yours, but their workstatio
 
 Forage camp ownership is not a general land claim. Follow the world's normal building and protection rules. A Forage registration does not give permission to build on someone else's island or protected land.
 
+If camp registration says **"This location is protected"**, ask staff whether that WorldGuard region is approved for Forage camps. Staff can approve a protected camp location while keeping its anti-grief protection. You must also be a WorldGuard owner or member of every named region at your workstation. Approval does not let outsiders register there, and membership does not let you use another player's Forage camp. This permits camp services only: gathering, Brush activities and Forage Dust still need an allowed gathering area. Normal camp ownership, building requirements and your Local Introduction still apply. If an approval or your region membership is removed, access pauses without deleting your camp or progress.
+
 ## Commands
 
 | Command | What it helps with |
@@ -972,6 +989,7 @@ Forage camp ownership is not a general land claim. Follow the world's normal bui
 | `/forage sources donations [page]` | The current season's resource-donation items. |
 | `/forage camp` | Inspect the nearby camp and its registration checklist. |
 | `/forage camp list` | Find your registrations and their IDs. |
+| `/forage teleport [1\|2\|3]` | Review paid travel to your own registered camp; defaults to your Initial Camp. |
 | `/forage camp register` | Open the deliberate registration action. |
 | `/forage camp revalidate` | Recheck and confirm your repaired registration. |
 | `/forage camp unclaim [registration-UUID]` | Review a release confirmation; global progress is kept. |
@@ -995,6 +1013,8 @@ Forage camp ownership is not a general land claim. Follow the world's normal bui
 **Do I have to earn every reward in the world where I claim it?** No. Each camp needs its own Local Introduction, after which global progress is available there. Items still obey the server's normal inventory-sharing rules.
 
 **Can I move my camp without resetting my character?** Yes. Unclaim the old registration and deliberately register a replacement. Global progress stays, but the new registration starts its own Local Introduction. Breaking the composter alone does not release the old slot.
+
+**Can I return to camp without using a home slot?** Yes. Use `/forage teleport [1\|2\|3]`, review the money and Forage Point cost, then confirm and stand still for the warm-up. Registered camps remain destinations when they need revalidation; travelling there does not unlock their services. The normal cooldown applies to all your camp destinations.
 
 **Does putting items into my camp chest submit them?** No. Chests and barrels are ordinary storage. Use Local Introduction, Camp Turn-Ins or Community Cleanup deliberately; each has its own item list and confirmation.
 

@@ -8,6 +8,14 @@
 - CMILib installed
 - CMI-API used at compile time
 
+## Local Test Server
+
+- Use `servers/Paper-26.3/` for current development and integration testing. The private Forage beta and Paper 26.2 rollback belong intact under `archive/servers/2026-10-19/`; ordinary builds and tests must not depend on their presence.
+- Stop Paper before `scripts/build-all.sh`. Keep the complete suite, one shared build number, runtime alignment, existing world-lock checks and recoverable replacement. Module-only JARs are development feedback, not deployable handoffs.
+- Treat live-to-test configuration refreshes as explicit maintenance, separate from JAR synchronization. Read live without modifying it, back up the local destination, and adapt world mappings, inventory groups, integration endpoints and server settings to the test environment.
+- Do not merge a live or retired server's progression, inventory snapshots, issued-item ledgers and transaction journals into unrelated test data. Preserve a coherent archived state; use fresh test progress or an isolated complete fixture when a selective merge would be unsafe.
+- Keep current Multiverse-Core and Multiverse-Inventories integration fixtures available when testing inventory persistence or cross-world transfers. A unit-test pass alone does not exercise the installed provider lifecycle.
+
 ## API Style
 
 - Prefer modern Paper APIs.
@@ -58,13 +66,21 @@ Before adding or expanding a feature plugin, confirm:
 - Staff/moderation tools redact sensitive reasons unless the sender has the explicit narrower permission.
 - Read-only tools do not execute CMI commands, alter CMI files, or mutate player state.
 - Destructive cleanup keeps playerdata out of broad cache cleaning and requires dry-run/confirm flows.
-- Every player-facing reward path calls `allowManualRewardClaim(...)` before spending or marking a claim; automatic, retry, and recovery delivery calls `prepareAutomaticRewardDelivery(...)` before commands or inventory mutation.
+- Every player-facing reward path calls `allowManualRewardClaim(...)` before spending or marking a claim. Automatic, retry, and recovery delivery uses `prepareAutomaticRewardDeliveryAsync(...)` to wait for safety storage, then rechecks its receipt, eligibility and costs before commands or inventory mutation. Keep the synchronous `prepareAutomaticRewardDelivery(...)` guard at the final action boundary where needed; a pending save must not discard an earned reward.
 
 ## Data
 
 Cache may be cleaned globally or per plugin.
 
 Player data should be long-lived and stored by UUID. If a plugin is removed, cleanup should remove only that plugin's section from the playerdata file.
+
+The Shared Library prepares the root UUID profile on Paper's asynchronous pre-login worker and retains its last validated durable snapshot while the player is online. Primary-thread `PlayerDataStore.load` returns an independent, baseline-tracked YAML copy for those retained profiles without filesystem I/O or waiting behind a background writer. Worker reads still validate current disk contents; successful durable writes publish the new snapshot. New feature code should continue using asynchronous storage with explicit readiness and session checks, including for offline players and separate profile directories.
+
+Retention is bounded to 512 pending/active UUIDs, 128 MiB of serialized UTF-16 payload in total and 4 MiB per profile (these are payload limits, not total JVM heap). Abandoned pre-login leases expire after 120 seconds; online leases remain until quit, and shutdown releases owned leases. Login lock admission waits at most 10 seconds on the login worker. If data is unreadable or cannot be retained, login requests a retry instead of creating replacement defaults. Final configuration validates the authoritative profile UUID and retained data again.
+
+The `save`/`update` contract remains durable and synchronous; it is not a background queue. Use `updateAsync`/`loadAsync` with an owned worker for blocking work. Save capacity is reserved before disk changes. Failed writes do not publish an uncommitted snapshot, and conflicting edits fail closed. Unretained reads still use the existing lock/fail-fast behavior. Retention does not remove the need for feature-specific transaction recovery or stale-callback fencing.
+
+Do not edit an online player's shared YAML file out of band: primary-thread reads use the retained durable snapshot. Prefer supported commands through the store. Manual file maintenance should happen with the server stopped; a subsequent worker load or reconnect reads and validates disk again. Corruption discovered by a worker invalidates the retained snapshot until validated recovery succeeds.
 
 The global cleanup command removes both the current top-level section shape and the future nested section shape:
 

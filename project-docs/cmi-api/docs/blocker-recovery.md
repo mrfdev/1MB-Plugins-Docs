@@ -2,7 +2,7 @@
 
 COMM-05, third in the communication roadmap. Implementation is tracked in [issue #38](https://github.com/mrfdev/1MB-Library/issues/38).
 
-When an action stops, the player should see **what stopped, why, and the next useful action**. Recovery uses the Feature Plugin's prefix, plain language, a visible **Next** line, and up to two relevant controls. Commands are printed beside navigation buttons for clients that cannot click them. A blocker does not produce a title, sound, welcome message, or automatic retry.
+When an action stops, the player should see **what stopped, why, and the next useful action**. Recovery uses the Feature Plugin's prefix, plain language, a visible **Next** line, and up to two relevant controls. Commands are printed beside navigation buttons by default; AutoSell's compact **View request** puts the full review command and UUID in hover. A blocker does not produce a title, sound, welcome message, or automatic retry.
 
 ## Player examples
 
@@ -30,7 +30,7 @@ Forage and Passport use the shared, read-only commands:
 - `/forage review page <number>` and `/passport review page <number>`: further pages.
 - `/forage review <reference>` and `/passport review <reference>`: an owned saved request, including closed requests.
 
-AutoSell retains `/autosell review [reference]` and its detailed copyable support report. Forage provides **Put reference in chat**, which opens an unsent chat draft for manual copying; Passport provides **Copy reference**, which copies directly to the clipboard. Copying puts text on the player's clipboard; it sends nothing to staff automatically. The UUID remains visible when copying is unavailable.
+AutoSell retains `/autosell review [reference]` with compact **View request** and **Put reference in chat** controls. The first hover contains the complete UUID and typed review command; the second explains copying and retains the safe support report. Its unsent draft contains only `AutoSell reference: <UUID>`. Bulk reward results preserve every completed external reference in groups of up to five full UUIDs, including when a later claim stops or needs review. Forage also provides **Put reference in chat**, retaining its original reference text. For both features, click to prepare the draft, then use Ctrl+A and Ctrl+C (Mac: Cmd+A and Cmd+C) to copy it for staff. Passport retains **Copy reference**, which copies directly to the clipboard and keeps its UUID visible in the message. Nothing is sent to staff automatically, and no reference control retries a payout.
 
 These views do not expose another player's records, raw stored commands, internal errors or transaction history. They remain available while a loaded feature's gameplay is dormant and do not require its gameplay permission, so losing access does not prevent a player from checking their own prior request. Staff inspection and reconciliation remain behind the existing admin permissions.
 
@@ -40,17 +40,21 @@ Messages distinguish requests waiting for staff from records marked complete, re
 
 Explicit command replies, GUI failures and uncertain reward outcomes bypass optional `/guidance` preferences. They remain visible with hints Off or RecordingMode quiet settings. Repeated gameplay blockers in these integrations share a separate budget of **one notice per player per 30 seconds across the suite**. They are not queued, so walking away does not produce delayed warnings. No new login summary is introduced.
 
+AutoSell additionally remembers each automatic pause reason between successful sales. It records a reason only after the shared budget permits delivery, and keys by reason rather than changing countdown text. Its **Hide until I relog** control (`/autosell reminders hide`) changes only that player's session reminder preference; **Show reminders** (`/autosell reminders show`) restores delivery and clears remembered reasons. The plain Adventure control is appended to automatic gate/cap notices without making a read-only `RecoveryMessage.Action` mutate state. Quit/join and plugin disable clear session state; world changes and configuration reloads do not. Manual replies, failed sales and payment/staff-review problems bypass this preference.
+
 Forage leaves recovery chat visible after blocked camp operations instead of immediately reopening a failing purchase page. Workstation event feedback only sends chat; it does not close an inventory inside an inventory click event. Existing shared GUI callbacks retain their deferred execution and action-time checks.
 
 ## Shared implementation and coverage
 
-`RecoveryMessage` is an immutable presentation value with required title, reason and next step. `Action.view` accepts a single command; callers must choose a read-only route whose handler revalidates state and ownership. `Action.copy` copies support text. All supplied text is rendered as literal Adventure components, so item names and report values cannot inject MiniMessage click actions. Shared labels are `recovery.next`, `recovery.open` and `recovery.copy` in each feature's translations. The shared permission response uses `missing-permission-player`; `missing-permission` remains the console response.
+`RecoveryMessage` is an immutable presentation value with required title, reason and next step. `Action.view` accepts a single command; callers must choose a read-only route whose handler revalidates state and ownership. `Action.compactView` keeps that route while omitting the printed command beside the button. `Action.copy` copies support text. `Action.chatInput` prepares an unsent, single-line draft of at most 256 characters and rejects commands or control characters. All supplied text is rendered as literal Adventure components, so item names and report values cannot inject MiniMessage click actions. Shared labels are `recovery.next`, `recovery.open`, `recovery.copy` and `recovery.chat-input` in each feature's translations. The shared permission response uses `missing-permission-player`; `missing-permission` remains the console response.
 
 `AbstractCmiApiFeaturePlugin` supplies direct recovery, repeated gameplay feedback and optional owned-request review. Its common reward-safety boundary now supplies recovery instructions to all consumers. Forage, AutoSell and Passport contain the detailed feature-specific integrations. Other bespoke errors and custom menus in the remaining Feature Plugins can adopt the pattern incrementally; they are not all migrated by this milestone.
 
 The Forage plan adapter uses its existing ordered `missing:`/`ok:` rows. It presents the first missing requirement, keeps the full checklist in the relevant menu, and distinguishes staff problems, timers, maximum upgrades, levels and points. It does not infer reward eligibility from display names or lore.
 
 AutoSell also corrects the zero-allowance boundary in its preview builder: a finite exhausted allowance admits zero items, including when building a sale for automatic execution. The same bound is used for positive remaining amounts; inventory, payment and durable transaction safeguards continue to apply.
+
+When otherwise eligible items cannot fit the remaining allowance, that cap explanation takes priority over unrelated disabled categories, items or value filters. It includes earnings, cap, remaining allowance and the Amsterdam midnight reset. AutoSell retains one dated cap-blocked automatic-attempt snapshot per profile for `/autosell admin inspect <player>`; it survives daily resets and restarts without turning read-only Preview into a historical event.
 
 ## Verification
 

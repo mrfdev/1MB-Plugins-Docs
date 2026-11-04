@@ -165,6 +165,8 @@ The player command for map visibility is `/recording set map <on|off>`. `default
 
 ## Data
 
+The Shared Library loads saved UUID data before normal login and retains a durable snapshot for online reads. RecordingMode can restore existing preferences while another feature saves the same player file. If the shared profile cannot be safely loaded, login asks the player to reconnect rather than restoring privacy settings from empty defaults. This requires the matching suite-wide Shared Library build.
+
 Shared long-lived playerdata:
 
 ```yaml

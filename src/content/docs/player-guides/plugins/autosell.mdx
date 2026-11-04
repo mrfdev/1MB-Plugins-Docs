@@ -67,6 +67,11 @@ Available features include:
       <td><code>/autosell status</code></td>
     </tr>
     <tr>
+      <td><code>/autosell reminders &lt;hide|<wbr />show&gt;</code></td>
+      <td>Player</td>
+      <td><code>/autosell reminders example</code></td>
+    </tr>
+    <tr>
       <td><code>/autosell stats</code></td>
       <td>Player/console</td>
       <td><code>/autosell stats</code></td>
@@ -120,6 +125,11 @@ Available features include:
       <td><code>/autosell toggle</code></td>
       <td>Player</td>
       <td><code>/autosell toggle</code></td>
+    </tr>
+    <tr>
+      <td><code>/autosell presets</code></td>
+      <td>Player</td>
+      <td><code>/autosell presets</code></td>
     </tr>
     <tr>
       <td><code>/autosell onlysell &lt;material&gt;</code></td>
@@ -190,6 +200,18 @@ Available features include:
 
 Quest and milestone cards share **State → Remaining → Benefit → Next**. Longer goals, schedules, and reward explanations live in Details. See [Action cards and tooltips](https://github.com/mrfdev/1MB-Plugins-Docs/blob/main/project-docs/cmi-api/docs/action-cards.md) for the controls, state meanings, and optional extra reward descriptions.
 
+### Why did selling stop before the daily cap was exactly full?
+
+AutoSell sells as many whole items as fit in the remaining allowance, including part of a stack. It can stop just below the cap when the allowance cannot cover even one selected item, or falls below the minimum sale value. The message shows today's earnings, the cap and the remaining allowance, with the reset at midnight in `Europe/Amsterdam`. Unrelated items you deliberately switched off do not take priority over this cap explanation. The near-full inventory setting controls when AutoSell checks; it does not bypass the daily cap.
+
+Use `/autosell preview` to check your current inventory. For a delayed ticket, staff can run `/autosell admin inspect <player>` to see the latest recorded cap-blocked automatic attempt: its absolute date/time, earnings, cap, remaining allowance, minimum sale, trigger mode, batch value and skipped-stack reasons. One snapshot is retained per player under `profiles.<uuid>.last-cap-block` in AutoSell's `data.yml`, survives daily resets and restarts, and is replaced when the day or recorded details change. Identical attempts retain the first timestamp. Preview does not create a history entry. Records begin with this update; earlier failures cannot be reconstructed from this snapshot.
+
+### Can I hide automatic pause reminders?
+
+AutoSell shows each automatic pause reason once between successful sales, so repeated pickups while standing still do not repeat the same movement warning after every chat cooldown. Changing countdown text or briefly opening a menu does not repeat a warning already shown. The suite's shared notification cooldown still applies.
+
+Click **Hide until I relog**, or run `/autosell reminders hide`, to hide automatic movement, cooldown, world, game-mode and daily-cap reminders for this login. AutoSell keeps running with the same selling rules and item choices. The confirmation includes **Show reminders**; `/autosell reminders show` also restores reminders and lets each reason be shown again. `/autosell status` shows whether these reminders are hidden. Logging out and back in restores them; world changes, successful sales and an AutoSell configuration reload preserve your session choice. Manual Status and Preview replies, payment failures and staff-review messages remain visible.
+
 ### How do I collect a ready milestone?
 
 Open `/autosell milestones`, select a **Ready to claim** card, then use **Claim reward** in its details. **Claim Ready Milestones** remains an explicit bulk action on the board. You can also run `/autosell milestones claim all`, or claim one with `/autosell milestones claim market_sweep`. You do not need another sale. Milestones can also be awarded automatically after a successful sale.
@@ -224,9 +246,13 @@ Unclaimed ready quests and milestones do not block normal AutoSell activity. `/a
 
 ### I received a staff-review message. What should I tell staff?
 
-Click **Copy report**, then send that text to staff yourself. It includes your player name, the held sale/reward, a plain-language explanation, the complete reference, and the staff lookup command. Copying does not send a message or retry a payout. If your client cannot copy text, share your player name and the visible reference, or take a screenshot of the message.
+Click **Put reference in chat** to prepare `AutoSell reference: <UUID>` in your chat input. It stays unsent. Use Ctrl+A, then Ctrl+C (Mac: Cmd+A, then Cmd+C), to copy it for staff, and include your player name when asking for help. The hover explains copying and retains the safe support report: your player name, the held sale/reward, its explanation, the complete reference, and the staff lookup command. The chat draft contains only the short reference text. Nothing is sent or retried automatically.
 
-Use `/autosell review` to reopen your unfinished request, or `/autosell review <reference>` to check the current status of a specific request belonging to your account. **View status** does the same thing. The main, quest, and milestone menus also show **Staff Help Needed** while a request is held; clicking it closes the menu and displays the report in chat. Some parts of a reward may already have arrived; staff will check what remains. You do not need to repeat the goal or keep clicking Claim. If no reference could be created because payment records are unavailable, give staff your player name and ask them to check `/autosell debug transactions`.
+Use `/autosell review` to reopen your unfinished request, or `/autosell review <reference>` to check the current status of a specific request belonging to your account. **View request** does the same thing; its hover contains the UUID and the complete command to type if clicking is unavailable. The main, quest, and milestone menus also show **Staff Help Needed** while a request is held; clicking it closes the menu and displays the request details and reference controls in chat. Some parts of a reward may already have arrived; staff will check what remains. You do not need to repeat the goal or keep clicking Claim. If no reference could be created because payment records are unavailable, give staff your player name and ask them to check `/autosell debug transactions`.
+
+Bulk reward results keep every completed external reward reference, including when a later claim stops or needs staff review. **Put references in chat** prepares up to five full UUIDs at a time; numbered extra groups retain the rest. Keep every group when asking staff about a batch. The draft stays within the client's chat length limit, and reward names or descriptions are never inserted into it.
+
+`/autosell recent` retains the latest completed external reward reference in each reward summary for later support requests.
 
 ### Can I reduce quest reminders?
 
@@ -236,6 +262,7 @@ Open `/guidance`, or choose **Helpful hints** in AutoSell's Filters menu. Choose
 
 - Some commands may be hidden until your group, event progress, or unlocks allow them.
 - If a command opens a menu, follow the buttons in-game; the website is only the learning guide.
+- Settings commands only change your own player preferences unless the page says otherwise.
 
 ## Full Reference
 

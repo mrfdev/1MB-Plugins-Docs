@@ -33,6 +33,16 @@ This directory contains the long-form documentation for the 1MB Library project.
 - [Credits](credits.md)
 - [Development Rules](development-rules.md)
 
+## Recent plugin verification
+
+The November 4 suite verification records build **835**, compiled for Java 25 and verified on Paper 26.3 STABLE build 241 with Oracle JDK 27. Earlier reports retain their original build numbers and acceptance limits.
+
+- [Doors candy exchange](compatibility-tests/doors-candy-trade-26.3-2026-11-01.md): physical candy payment, once-per-season gifts and recovery.
+- [Ghost Hunt point shop and MobHat](compatibility-tests/ghosthunt-point-shop-26.3-2026-11-04.md): bundles, one cosmetic choice and the extended Ghost claim deadline.
+- [Halloween post-event menus](compatibility-tests/halloween-post-event-26.3-2026-11-04.md): closed travel and claim-only views; the later Ghost shop report supersedes its Ghost deadline and empty-shop findings.
+- [Advent memory investigation](compatibility-tests/advent-memory-26.3-2026-11-04.md) and [PvPToggle persistence](compatibility-tests/pvptoggle-memory-26.3-2026-11-04.md): bounded writes and lifecycle cleanup; the original live heap issue remains unassigned.
+- [ScheduledTips targeting](compatibility-tests/scheduledtips-targeting-26.3-2026-11-04.md): the approved 62-tip catalogue, per-player audiences and weighted rotation.
+
 ## Quick Paths
 
 For server owners:
@@ -64,6 +74,7 @@ For support/debugging:
 - [Chunks](plugins/chunks.md)
 - [SellStreaks](plugins/sellstreaks.md)
 - [ScheduledTips](plugins/scheduledtips.md)
+- [Advent](plugins/advent.md)
 - [Visit](plugins/visit.md)
 - [PassportDiscovery](plugins/passportdiscovery.md)
 - [SocialGatherings](plugins/socialgatherings.md)

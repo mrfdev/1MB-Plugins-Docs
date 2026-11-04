@@ -11,6 +11,7 @@ Version 1 does not change balances, cancel economy events, edit CMI config, or r
 - Listens to `CMIUserBalanceChangeEvent` at monitor priority.
 - Tracks total observed positive and negative balance movement.
 - Tracks per-player balance movement and anomaly counts.
+- Looks up exact recorded Java or Bedrock names, including the Floodgate prefix, or the actual server UUID. Ambiguous names require a UUID.
 - Flags large positive spikes, large negative movement, sharp percent changes, and repeated high-value action/source paths.
 - Keeps bounded recent anomaly records.
 - Shows Vault loaded state for support context.
@@ -21,7 +22,7 @@ Version 1 does not change balances, cancel economy events, edit CMI config, or r
 ```text
 /economyguardian
 /economyguardian status
-/economyguardian player <player>
+/economyguardian player <player|uuid>
 /economyguardian anomalies [page]
 /economyguardian reload
 ```
@@ -39,6 +40,8 @@ Useful examples:
 /economyguardian
 /economyguardian status
 /economyguardian player mrfloris
+/economyguardian player .BedrockPlayer
+/economyguardian player 00000000-0000-0000-0009-01abcdef1234
 /economyguardian anomalies
 /economyguardian anomalies 2
 /economyguardian reload
@@ -98,6 +101,8 @@ thresholds.path-events
 thresholds.path-total
 ```
 
+Path-volume warnings include the payment that reaches both the event-count and absolute-total thresholds. With the defaults, ten deposits of 5,000 flag the tenth deposit. Both totals accumulate for each action/source pair during the current runtime; they are not a time-window or per-item detector. Concurrent CMI events update and classify each path together.
+
 ## CMI / CMILib Usage
 
 CMI-API:
@@ -108,6 +113,8 @@ CMI:
 
 - CMI remains the source of truth for balances and economy actions.
 - EconomyGuardian only observes and reports the event data CMI exposes.
+- Paper 26.3 items such as poplar need no item whitelist here. The plugin does not parse `Worth.yml` or inspect sold materials.
+- AutoSell payouts through the installed CMI Vault provider generate balance-change events. These are generic `Deposit/system` observations, without the sold material or an AutoSell-specific source label.
 
 CMILib:
 
@@ -124,6 +131,8 @@ Paper:
 ## Data
 
 EconomyGuardian keeps runtime records in memory. It exposes cache size through the shared cache path but does not write long-term economy history in version 1.
+
+Player lookup uses only those runtime records. Names match exactly, ignoring case while retaining Bedrock prefixes; partial names and nicknames are not resolved. The latest observed name replaces the lookup name after a rename, and the UUID retains the accumulated history. UUID input must use its full canonical form. Unknown or ambiguous identities do not select an account, and events without an authoritative target UUID are ignored. Lookup does not query Mojang or another profile service. Player summaries display the recorded UUID; name completion requires both `use` and `view` permissions.
 
 ## Safety
 

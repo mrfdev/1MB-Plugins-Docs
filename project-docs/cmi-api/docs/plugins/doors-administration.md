@@ -2,7 +2,7 @@
 
 This runbook preserves the complete clean-room v3 operations contract. Door Hunt now runs inside the single public `1MB-CMIAPI-EventHunts` feature JAR with `1MB-CMIAPI-Lib`; it is not installed as a second JavaPlugin. Its compatibility target data remains `plugins/1MB-CMIAPI/CoconutHunt/Doors/`. The path `plugins/OneMBTrickOrTreatDoors/` is the untouched standalone import/rollback source only; all ordinary configuration paths in this guide refer to the combined target. Never activate the standalone and combined implementations together.
 
-Use `gradle :plugins:player-fun:coconuthunt:test` for focused verification and `gradle clean refreshBuildDocs build` for the repository gate. The compatibility command and permission catalogue below remains intentionally complete.
+Use `scripts/gradle-oracle.sh :plugins:player-fun:coconuthunt:test` for focused verification and `scripts/build-all.sh` for a complete numbered local test build while the maintained Paper server is stopped. The compatibility command and permission catalogue below remains intentionally complete.
 
 # Staff technical guide
 
@@ -13,23 +13,24 @@ Halloween world and door data.
 
 ## Platform and dependencies
 
-- Target server/API: Paper `26.2.build.105-stable` for Minecraft 26.2.
+- Target server/API: Paper 26.3 STABLE; `gradle.properties` records the exact selected build and API.
 - Compile target: Java 25 bytecode (class-file major version 69).
-- Intended server runtime: Java 26; Java 25 can also load the bytecode.
-- CMI and CMILib: operationally required by the direct Treat Bag delivery of
-  the `tot01` through `tot36` item-only kits, immediate trick commands, and the
-  milestone kits described below.
-- LuckPerms: operationally required when any special CMI-kit reward is enabled.
-  The bundled provider grants persistent `cmi.kit.tot_2026_*` permissions with
-  the LuckPerms `lp` console command.
+- Compile with installed Oracle JDK 25 and run automated tests/Paper with
+  installed Oracle JDK 27. The canonical wrappers discover and validate the
+  installed patch versions on each invocation.
+- CMI and CMILib: operationally required for the actual console kit commands
+  used by saved treats, automatic candy and milestone claims, and for immediate
+  trick commands. Reward kits contain items only.
+- LuckPerms is not required for new Doors reward claims. Historical permission
+  unlock records remain migration evidence; already granted permissions are
+  not automatically revoked.
 - PlaceholderAPI 2.12.3 or newer: optional; required only when another plugin
   or staff tool consumes `%totdoors_*%` placeholders.
 - The plugin uses supported Paper/Bukkit APIs and has no NMS dependency.
 
-Paper 26.2 is the compile/API baseline, not a claim that an unreleased minor is
-already verified. The runtime health check accepts the exact target, reports a
-different build of the same release or a newer release such as 26.3 as a
-warning, and fails when Paper is older than 26.2. Supported door materials and
+Paper 26.3 is the current compile/API baseline. The runtime health check accepts
+the exact target, reports a different build or newer release as a warning, and
+fails when Paper is older than the configured target. Supported door materials and
 effects are resolved through Paper registries and generic `Door` block data, so
 new variants do not require a hard-coded material list. A newer minor still
 needs the compatibility checklist in `docs/TESTING.md` before live staging.
@@ -42,25 +43,32 @@ provider.
 
 ## Build from source
 
-Build from the CMI-API repository root with a Java 25 JDK available to Gradle:
+Build from the CMI-API repository root with the maintained JDK available to Gradle:
 
 ```sh
-gradle :plugins:player-fun:coconuthunt:test
-gradle clean refreshBuildDocs build
+scripts/gradle-oracle.sh :plugins:player-fun:coconuthunt:test
+# Stop servers/Paper-26.3 cleanly before the complete build:
+scripts/build-all.sh
 ```
 
-The focused command runs the Coconut/Ghost/Door suite. The full command applies
-the repository documentation/build gate and writes the centrally numbered host artifact:
+The focused command runs the Coconut/Ghost/Door suite. The complete workflow
+reserves one suite build number, checks the latest STABLE Paper 26.3 build,
+aligns the API, runs `gradle clean refreshBuildDocs build` and the full repository
+gate, then synchronizes every managed suite artifact to the stopped local server.
+The centrally numbered host artifact has this form:
 
 ```text
-build/libs/1MB-Lib-EventHunts-v1.0.3-NNN-j25-26.2.jar
+build/libs/1MB-Lib-EventHunts-v1.0.4-NNN-j25-26.3.jar
 ```
+
+Older migration notes refer to `1MB-Lib-EventHunts-v1.0.3-NNN-j25-26.2.jar`;
+that is the retained historical artifact format, not the current build target.
 
 Before installing a build, verify its embedded plugin and manifest information:
 
 ```sh
-unzip -p build/libs/1MB-Lib-EventHunts-v1.0.3-NNN-j25-26.2.jar plugin.yml
-unzip -p build/libs/1MB-Lib-EventHunts-v1.0.3-NNN-j25-26.2.jar META-INF/MANIFEST.MF
+unzip -p build/libs/1MB-Lib-EventHunts-v1.0.4-NNN-j25-26.3.jar plugin.yml
+unzip -p build/libs/1MB-Lib-EventHunts-v1.0.4-NNN-j25-26.3.jar META-INF/MANIFEST.MF
 ```
 
 After starting Paper, `/totdoors debug build` displays the same semantic
@@ -83,10 +91,10 @@ producing API call fails the build instead of silently entering a release.
 4. Run `gradle planProjectJarSync`, then use the stopped-server `gradle syncBuiltJarsToProjectServer` workflow, which safely replaces the legacy `1MB-CMIAPI-*` and current `1MB-Lib-*` artifact families as one managed set.
 5. Copy the complete authoritative standalone data to `plugins/OneMBTrickOrTreatDoors/`, then run `/doors admin migrate standalone --dry-run` and `/doors admin migrate standalone --confirm` while `modules.doors.enabled` remains false.
 6. Copy `data/v3-migration/CMI/Kits/halloween.yml` to
-   `plugins/CMI/Kits/halloween.yml`. Confirm the enabled kits `tot01` through
-   `tot36` exist before allowing rewards.
-7. Install CMI/CMILib. Install LuckPerms before enabling milestone permission
-   unlocks. Install PlaceholderAPI when placeholders are wanted.
+   `plugins/CMI/Kits/halloween.yml`. Confirm the kits `tot01` through `tot36`
+   exist before allowing rewards. Keep ordinary player kit access disabled.
+7. Install CMI/CMILib and the reviewed candy/milestone kit files. Install
+   PlaceholderAPI when placeholders are wanted.
 8. Start the exact Paper target with the intended Java runtime.
 9. Enable Door Hunt deliberately with `/hunt admin module doors on`, then confirm startup reports the expected build, 60 doors, 36 treats, 10 tricks, and no failed health checks.
 10. Run the post-install checks below before opening the event.
@@ -125,28 +133,32 @@ The Treat Bag upgrade also replaces the exact unchanged bundled treat message
 and reduces the exact old announcement/kit/sound treat batch to its single
 CMI-kit payload. Customized treat command lists are not rewritten and must
 satisfy the new one-kit-only validation before Door Hunt can load.
+The Treat Bag command update replaces exact old bundled treat and saved-candy
+messages with clear saved-reward guidance and a clickable `/doors treatbag`
+action. It also updates the unchanged player help to list the direct command
+alongside the broader `/doors rewards` hub. Customized messages remain untouched.
+Existing `treat-bag.allowed-worlds` values are ignored.
 
 ## Paper minor-version upgrade policy
 
-A 26.2-targeted build is expected to remain loadable on a compatible newer
-Paper minor, but a health warning is intentionally not an approval for live
-use. For Paper 26.3 or any later minor:
+A build may remain loadable on a compatible newer Paper minor, but a health
+warning is intentionally not an approval for live use. For the next Paper minor:
 
 1. Read the live Paper documentation index at
    <https://docs.papermc.io/llms.txt>, the relevant official pages, the roadmap
    and deprecations, and the exact-version API Javadocs at
    <https://jd.papermc.io/paper/>.
-2. Run the existing 26.2 artifact on a disposable copied-world server first.
+2. Run the existing artifact on a disposable copied-world server first.
    `/totdoors debug health` should identify the runtime as newer and require
    the documented smoke test; an older-than-target runtime is a hard failure.
 3. Run every item in the future-minor checklist in `docs/TESTING.md`, including
    dynamic door-material discovery, all configured sounds/particles, event
    cancellation/protection, async persistence, commands, aliases, placeholders,
-   CMI/LuckPerms delivery, and clean shutdown.
+   CMI kit command delivery, and clean shutdown.
 4. If the old artifact passes, it may be staged temporarily with the warning
    recorded. Do not rewrite its embedded target metadata or filename.
 5. Before declaring a native new target, update the Paper version/build/channel
-   variables in `build.gradle.kts`, compile against that exact API with
+   variables in `gradle.properties`, compile against that exact API with
    `-Xlint:all -Werror`, review every warning/deprecation, run all tests, build a
    new artifact, and repeat the complete smoke test.
 
@@ -211,8 +223,9 @@ The effective mode is persisted in `runtime-state.yml`:
   window. Debug can temporarily bypass the calendar for explicitly authorized
   staff testers.
 - `active`: gameplay is manually enabled regardless of dates.
-- `dormant`: gameplay is blocked. Commands stay loaded so staff can inspect and
-  reactivate the plugin. Dormant always wins over debug.
+- `dormant`: knocking is blocked. Commands stay loaded so staff can inspect and
+  reactivate the event, and saved rewards remain claimable within their separate
+  deadline. Dormant always wins over debug.
 
 Mode/schedule and season lifecycle are separate gates. Gameplay is allowed
 only when the runtime event state is playable **and** the current season is
@@ -223,6 +236,45 @@ only a player with `totdoors.admin.debug.test` may knock for rewards or use
 hints through the out-of-window debug bypass. That player also sees the private
 `debug-active` state; everyone else continues to see the real public calendar
 state and remains unable to participate.
+
+The claim period is independent of event dates and season lifecycle. Keep the
+Doors module enabled after knocking ends so players can use `/doors rewards`
+and `/doors treatbag`. Scheduled mode after its end, or event mode `dormant`,
+blocks new knocking while preserving eligible claims. Turning off
+`modules.doors.enabled`, the shared Hunt feature, or the plugin stops its claim
+runtime too; `admin prepare` does not enable player claims.
+
+For Halloween 2026, stop knocking at November 2, 00:00, and allow claims through
+all of November 7 with an exclusive November 8, 00:00 cutoff:
+
+```text
+/totdoors admin mode scheduled
+/totdoors admin schedule end 2026-11-02 00:00
+/doors admin rewards expiry show halloween-2026
+```
+
+The bundled `claims.initial-expiries.halloween-2026` value is
+`2026-11-08T00:00:00+01:00`. It initializes only a season whose claim deadline
+has never been stored. Existing deadlines and an explicitly cleared deadline
+win on reload/restart. Inspect the displayed result after upgrading; changing
+the bootstrap value does not overwrite a season setting. To deliberately set,
+extend or remove the deadline:
+
+```text
+/doors admin rewards expiry set 2026-11-08 00:00 halloween-2026
+/doors admin rewards expiry clear halloween-2026
+```
+
+Date/time arguments use `config.yml`'s configured timezone, normally
+`Europe/Amsterdam`. The cutoff is exclusive: `00:00` on November 8 includes all
+of November 7. Nonexistent or repeated local times during daylight-saving
+changes are rejected; choose an unambiguous time. Omit the season to use the
+current one. `clear` removes the deadline rather than closing claims. Extending
+or clearing an expired cutoff makes retained, unclaimed receipts eligible again;
+processed rewards remain closed and cannot be replayed. This deadline covers
+saved treats, saved candy and milestone claims, including stale menu clicks and
+claims awaiting asynchronous reservation. It does not remove world, permission,
+inventory-safety or module-readiness checks. Expiry never deletes reward records.
 
 Typical event preparation:
 
@@ -264,6 +316,155 @@ Remove runtime date overrides and return to `config.yml` dates:
 ```text
 /totdoors admin schedule reset
 ```
+
+## Prepare staff tools while Doors stays off
+
+The Event Hunts host must be running, but Door Hunt may remain disabled with
+`modules.doors.enabled=false`. Other modules, including Halloween Virus, keep
+their own switches. Prepare the Door data explicitly before inspecting or
+repairing a dormant route:
+
+```text
+/hunt admin modules
+/totdoors admin prepare
+```
+
+Wait for the preparation result before running the next command. Preparation
+loads the saved Door configuration and registry for location administration
+and private inspection; it does not
+enable Door Hunt, open a season, change its schedule or enable a debug bypass.
+It requires `totdoors.admin.prepare`. If loading fails, correct the reported
+configuration or migration problem before trying again.
+
+While the module stays disabled, use door show/list, move/unregister, status,
+schedule reports, debug health and the private inspection commands. Existing
+season, reward and statistics administration still requires the module to be
+active. You do not need to enable it for the physical route check below.
+
+An unresolved standalone import must be completed first. When staff have
+deliberately copied the authoritative v3 source to
+`plugins/OneMBTrickOrTreatDoors/`, keep Door Hunt disabled and run:
+
+```text
+/doors admin migrate standalone --dry-run
+/doors admin migrate standalone --confirm
+/totdoors admin prepare
+```
+
+Review the dry-run result before confirming. These are existing migration
+controls, not a reason to copy an unrelated test registry or player ledger to
+live. Preparation does not silently import or enable the standalone plugin.
+An empty prepared registry needs the correct import or registrations before
+there is a door #31 to move.
+
+## Relocate a missing or rebuilt door without losing its identity
+
+A move updates an existing registration and preserves its numeric ID, stable
+key and metadata. Existing season progress stays associated with that key;
+the move does not create another door, replay rewards or reset daily visits.
+The former physical door need not exist. The destination must contain a valid
+door and must not overlap another registration. A single registration remains
+single; a double registration needs a valid matching double pair.
+
+The optional cardinal direction is the side players stand on to knock, not
+the door block's facing. Omitting it preserves the existing registered side.
+Coordinate destinations accept a loaded world name and whole block coordinates;
+prefer the lower block. Staff can also look at the replacement within 12 blocks
+and use the target form:
+
+```text
+/totdoors admin door <id|key|target> move target [north|east|south|west]
+/totdoors admin door <id|key|target> move <world> <x> <y> <z> [north|east|south|west]
+```
+
+Both forms require `totdoors.admin.door.edit`; selecting a target requires a
+player. Wait for the successful save message, then inspect the saved result.
+The command changes registration data, not world blocks. No manual `doors.yml`
+edit or plugin reload is needed after a successful move.
+
+For the rebuilt single `WAXED_WEATHERED_COPPER_DOOR` at Halloween
+`1519 71 717`, the retained registered knock side is east. After preparing
+the data, inspect #31, move it and verify it:
+
+```text
+/totdoors admin door 31 show
+/totdoors admin door 31 move halloween 1519 71 717 east
+/totdoors admin door 31 show
+/totdoors admin inspect on
+/totdoors admin teleport 31
+```
+
+Then make three empty-main-hand left-clicks from the registered side. Use
+`/totdoors admin inspect off` when finished. A location-only repair does not
+require a season-roster refresh: the existing stable key keeps its membership
+and earned progress, and the historical frozen snapshot is retained.
+
+If the registration should instead be permanently removed, the explicit
+unregister alias works even when its old block has already been broken:
+
+```text
+/totdoors admin unregister 31
+```
+
+It requires `totdoors.admin.delete` and is equivalent to
+`/totdoors admin delete 31`. It removes the registration, leaving physical
+blocks and historical player data alone. Prefer `move` for a replacement of
+the same stop. Unregistering and registering again creates a new identity
+that does not inherit the old door's season membership or discoveries.
+
+## Privately inspect every registered door
+
+Use the inspection session for a quiet route check, including while Door Hunt
+is disabled, the event is dormant or its season is closed. After preparation,
+run these in game as mrfloris or another authorized operator:
+
+```text
+/totdoors admin inspect on
+/totdoors admin inspect list 1
+/totdoors admin inspect status
+/totdoors admin inspect next
+/totdoors admin inspect off
+```
+
+All inspection controls are player-only and require `totdoors.admin.inspect`.
+Sessions belong to the player's UUID and expire after 30 minutes, on logout,
+reload or module/host shutdown. Running `on` starts a fresh checklist. There
+is no username-based exemption: mrfloris uses the same permission checks as
+other staff. Operators receive the required permissions by default; coordinate
+links and `next` also require `totdoors.admin.teleport`.
+
+The private list shows eight doors per page with their coordinates, checked
+or pending state, enabled flag and current-season membership. Click a
+coordinate entry to use the normal safe teleport beside that door, or use
+`next` to travel to the first unchecked registration. Missing worlds, damaged
+doors and unsafe landing space produce an explanation instead of a successful
+teleport message. An unavailable teleport can require visiting and repairing
+the build manually.
+
+At each door, empty the main hand, close the door if the configured rules
+require it, and stand on its registered knock side. Make three left-clicks
+within the configured knock window, five seconds by default. The private
+`Door #31 works` response marks that registration checked. The inspection
+verifies the registered blocks, consistent upper/lower halves, double-door
+structure where applicable, required closed state and the knock gesture.
+Changed registrations are removed from the session's checked results so they
+can be tested again.
+
+Inspection sends messages only to the inspecting player. It does not announce
+the session, animate or open doors, play reward effects or sounds, dispatch
+trick commands, issue kits, create Treat Bag receipts, consume daily visits,
+or change player progression. The player's normal reward-knocking path is
+replaced for the duration of the session. Public module, schedule and season
+settings remain unchanged.
+
+A successful physical check does not establish event readiness or prove reward
+delivery. While the module remains disabled, review `/totdoors admin status`,
+`/totdoors admin schedule show` and `/totdoors debug health`. During deliberate
+event activation, separately review `/totdoors admin season status`,
+`/totdoors admin rewards preflight all` and `/hunt admin preflight doors`;
+the existing season/reward commands require an active module. The existing
+`/totdoors debug on` enables a calendar bypass for real staff gameplay and can
+award rewards; use `admin inspect on` for this quiet route check.
 
 ## Season lifecycle and yearly rollover
 
@@ -341,6 +542,16 @@ plugin prevents damage to the registered door and its support block, verifies
 the daily per-door limit, and durably prepares the interaction. Tricks dispatch
 their configured commands immediately. Treats save their exact CMI kit variant
 as a claim-later Treat Bag receipt instead of filling the player's Halloween-world inventory.
+Every successful result also selects one small item-only CMI candy kit from
+`hdc01` through `hdc10` for immediate delivery. Its separate `TREAT_BAG` receipt
+(`door-candy:hdcXX`) is saved atomically with the main result without incrementing
+visits or statistics again. After the main result is durably recorded, only this candy
+receipt is automatically claimed, exempt from the manual world list. CMI can
+drop overflow beside a full inventory. A disconnect before dispatch leaves the
+candy waiting for `/doors treatbag`; the main treat is never automatically
+claimed as part of candy delivery. A possibly delivered candy claim closes with
+audit evidence and does not replay or block other claims.
+Install the bundled candy definitions by copying `config/cmi/kits/HalloweenDoorCandies.yml` to `plugins/CMI/Kits/HalloweenDoorCandies.yml` before starting the server.
 Clicking a registered door while holding an item gives a customizable
 `empty-hand-required` hint. That reminder is limited to once every five seconds
 per player to prevent chat spam; held-item clicks never count as knocks.
@@ -366,6 +577,7 @@ never disclose an undiscovered door's ID, key, coordinates, or staff notes:
 /doors stats [season]
 /doors journal [season] [page]
 /doors quests [stream] [season]
+/doors treatbag [season]
 /doors rewards [season]
 ```
 
@@ -376,8 +588,11 @@ districts, earned milestones, and whether imported history is partial.
 name, district, difficulty, and successful-visit count. It deliberately omits
 coordinates. `quests` displays enabled progression streams and every milestone
 target; one season ID by itself selects that retained season, and the canonical
-two-argument form is strictly stream then season. `rewards` opens a hub with the
-season's repeatable Treat Bag and the separate durable milestone-award ledger.
+two-argument form is strictly stream then season. `treatbag` opens the existing
+**Your Halloween Treat Bag** page directly for the current or a retained season.
+`rewards` remains the broader hub with links to that season's repeatable Treat
+Bag and the separate durable milestone-award ledger. Both commands use the
+existing `totdoors.command.rewards` permission; no new permission is required.
 Every selected treat is one receipt even when the same variant is earned on
 multiple days. Disabling or changing a current progression stream does not hide
 or relabel an already-earned annual milestone kit.
@@ -418,9 +633,10 @@ unchanged.
 6. Run `/totdoors admin register`.
 7. Note the returned door ID and coordinate.
 8. Run `/totdoors admin doors 1`; click the entry to verify its safe teleport.
-9. Enable debug or active mode, then perform three empty-hand left clicks from
-   the saved side. When using debug outside the schedule, the tester must have
-   `totdoors.admin.debug.test`.
+9. Start `/totdoors admin inspect on`, then perform three empty-hand left-clicks
+   from the saved side to check the physical registration privately. End the
+   session with `/totdoors admin inspect off`. Test real rewards separately
+   after checking event, season and provider readiness.
 
 Coordinate example (must be run by a player; coordinates use the player's
 current world):
@@ -562,19 +778,196 @@ selection:
 one category must be positive. Within the chosen category,
 `tricks-and-treats.yml` selects an enabled entry by that entry's `weight`.
 
-Treat claims are allowed only in configured gameplay worlds:
+Manual Treat Bag and milestone claims use `claims.allowed-worlds`:
 
 ```yaml
-treat-bag:
-  allowed-worlds: [general, wild, cave, acid, skyblock, skygrid, oneblock]
+claims:
+  allowed-worlds: [end, nether, general, wild, cave, acid, oneblock, chunkblock, skyblock, skygrid]
 ```
 
-The player physically travels to one of these worlds and clicks the claim
-button in `/doors rewards`. Creative and spectator claims are refused. The
-plugin reads the frozen kit name through CMI, requires an enabled item-only kit,
-checks that every processed item fits, and inserts the items synchronously. It
-does not grant the player `cmi.kit.*`, invoke CMI cooldowns, or consume a receipt
-when the full kit cannot fit.
+World names are trimmed, normalized to lowercase and matched exactly, without
+wildcards or prefixes. An explicit `[]` blocks manual claims everywhere. Missing
+settings receive these defaults. The former `treat-bag.allowed-worlds` remains
+ignored and never overrides this list. Reload after editing, then test both an
+allowed world and `halloween`, which is excluded by default.
+
+This gate covers manual treats, saved candy and milestone prizes. Automatic
+`hdc01`-`hdc10` candy at the door is exempt. Survival/Adventure and normal player
+permissions are still checked when claiming. The claim menu remains viewable
+outside an allowed world, but its action does not consume a waiting reward.
+
+Doors dispatches the actual item-only CMI kit console command, with the claiming
+player resolved from the recorded UUID. It does not grant `cmi.kit.*` or insert
+kit contents itself. Keep reward templates disabled for ordinary `/kits` access;
+console delivery can use them. Set `DropOnGround: true` so CMI can drop overflow
+near the player, including near a hopper. No kit cost or internal command is
+needed. Each random receipt is independent, so earning the same `totXX` variant
+again remains claimable; milestone uniqueness is enforced by Doors per player
+and season rather than by granting a reusable kit permission.
+
+## Halloween candy exchange
+
+The optional `/doors trade` exchange accepts **256 individual candy items in
+any mixture** from the existing `hdc01` through `hdc10` templates and gives one
+`halloweencandytrade` gift. It is independent of door discoveries, Treat Bag
+receipts and milestones: it consumes physical candy, not saved treats or
+progress. Players open a preview and confirm the displayed price before any
+inventory change. The Doors overview also links to this menu.
+
+The limit is **one gift per actual player UUID per configured season**, including
+Floodgate UUIDs. Renaming a player, changing worlds, reloading, restarting or
+resetting door/progression data does not grant another gift. A new season ID
+deliberately creates a separate allowance; do not change the season merely to
+reopen the same year's trade.
+
+### Accepted candy and delivery
+
+The exchange compares complete native item metadata against the loaded CMI
+`hdc01`–`hdc10` item templates, ignoring only stack amount. This deliberate
+legacy bridge accepts the already-issued 2026 candy without rewriting it or
+requiring a new PDC field. Ordinary food, anvil-renamed substitutes, changed
+lore, different components/PDC and invalid overstacked amounts are rejected.
+An identical copy of a legacy item cannot be distinguished from the original;
+the exchange does not claim a provenance guarantee that the old items lack.
+Keep the ten candy templates unchanged while these existing candies are being
+accepted. Editing their identity after distribution can make old candy stop
+matching. Items are inspected only in the 36 normal storage/hotbar slots, not
+in offhand, armour, ender chests, bundles or nested containers.
+
+The same `claims.allowed-worlds` list applies: `end`, `nether`, `general`,
+`wild`, `cave`, `acid`, `oneblock`, `chunkblock`, `skyblock`, and `skygrid` by
+default. Players need `totdoors.command.rewards`, Survival or Adventure mode,
+an enabled Doors module and open claim period. AutoSell must be off. These
+conditions, the original online player session, configured offer, loaded candy
+templates and exact inventory snapshot are checked again at confirmation and
+before payment. If the inventory or settings change, reopen the menu.
+
+The gift is delivered through the existing verified CMI kit command path.
+`config/cmi/kits/HalloweenCandyTrade.yml` is the source of the item-only CMI kit
+`halloweencandytrade`. Keep `Enabled: false` so ordinary `/kits` access does not
+offer it, and `DropOnGround: true` so CMI drops overflow near the player. It
+contains no commands, LuckPerms grants, cost or separate maximum-usage limit;
+Doors owns the payment and once-per-season record. There is no free-space
+requirement for the gift. Preserve the vanilla use of each item and the
+`onembcmi:candy_trade_collectible` / `onembcmi:candy_trade_season` keepsake
+identity fields; those fields are not claim receipts.
+
+One successful trade gives one each of:
+
+| Gift title | Item |
+| --- | --- |
+| Sweet Victory Star | Nether star |
+| Heart of Halloween | Heavy core |
+| Lantern of the Deep | Conduit |
+| Hotel Afterparty Record | Otherside music disc |
+| Midnight Masquerade Pattern | Vex armour-trim template |
+| One More Treat | Six-page signed book by 1MoreBlock.com Staff |
+
+The book thanks players for the costumes and songs remembered by the
+shopkeepers and Halloween Hotel. It has short pages with explicit line breaks;
+the source layout is checked against the Minecraft font. Full native kit and
+release evidence is recorded in the [candy exchange compatibility report](../compatibility-tests/doors-candy-trade-26.3-2026-11-01.md).
+
+### Configuration and commands
+
+Settings live in `plugins/1MB-CMIAPI/CoconutHunt/Doors/candy-trade.yml`:
+
+```yaml
+enabled: true
+season: halloween-2026
+price: 256
+kit: halloweencandytrade
+```
+
+The offer is enabled by default but fails closed if its gift kit, candy
+templates, season or durable ledger are unavailable. The following commands
+save changes and apply them without restarting or requiring another reload:
+
+| Command | Permission | Effect |
+| --- | --- | --- |
+| `/doors admin trade status` | `totdoors.admin.rewards.view` | Show settings, deadline, claim worlds, preflight issues and trade-record totals. This is also the default for `/doors admin trade`. |
+| `/doors admin trade preflight` | `totdoors.admin.rewards.preflight` | Check the ledger, configured season, CMI gift kit and candy templates. |
+| `/doors admin trade enable <true\|false>` | `totdoors.admin.rewards.configure` | Open or close the exchange without resetting collected gifts. |
+| `/doors admin trade price <amount>` | `totdoors.admin.rewards.configure` | Set an integer price from 1 to 100000. |
+| `/doors admin trade kit <kit-id>` | `totdoors.admin.rewards.configure` | Select a safe item-only CMI kit ID; run preflight after changing it. |
+| `/doors admin trade season <season-id>` | `totdoors.admin.rewards.configure` | Select an existing season and its separate once-only allowance. |
+
+After a direct YAML edit, use `/doors reload`. Settings changes and reloads
+invalidate open confirmations. Reopen the menu to accept the current offer.
+After editing the CMI kit file, `/cmi reload` refreshes CMI's template; check
+trade preflight and reopen the preview before testing.
+
+There is no second trade-expiry setting. The configured season's reward claim
+deadline also closes candy trading. For Halloween 2026, the intended exclusive
+deadline is **2026-11-08 00:00 Europe/Amsterdam**: trading is available all day
+November 7, and unavailable at the first instant of November 8. Inspect or
+change it through the existing reward commands:
+
+```text
+/doors admin rewards expiry show halloween-2026
+/doors admin rewards expiry set 2026-11-08 00:00 halloween-2026
+```
+
+Ending the knocking schedule does not close the exchange. Keep the Doors
+module enabled while players use remaining claims/trades. Event debug mode
+does not create another trade allowance or bypass the claim deadline.
+
+### Durable records and uncertain delivery
+
+`plugins/1MB-CMIAPI/CoconutHunt/Doors/candy-trades.dat` stores the independent,
+atomic, checksummed trade ledger. Each receipt records transaction UUID,
+authoritative player UUID, season, exact price/kit, timestamps, consumed slots,
+amounts, item fingerprints and the result/audit note. Preserve this file with
+its persistence sidecars when backing up or restoring Doors. Do not delete or
+roll back only this ledger: doing so can reopen already-processed gifts.
+
+The sequence reserves the trade, persists the debit/payout boundary, removes
+the exact confirmed candy and invokes the provider. Verified delivery is
+`COMPLETED`. When the provider proves no payout, the exact debited slots can be
+restored once; only a verified refund makes that attempt `RETRYABLE`. Other
+inventory contents are preserved. A refusal before the effect boundary does
+not consume candy.
+
+The owner's policy is **at most one payout attempt when the result is
+uncertain**. An ambiguous payout or interrupted `ATTEMPTED`/`REFUNDING` record
+becomes `CLOSED` with audit evidence and no automatic payout/refund replay.
+The menu treats it as collected and chat supplies a ticket reference. A crash
+at this boundary can leave the trade closed even if the player received no
+gift; the plugin cannot atomically commit Minecraft inventory and an external
+kit command. It does not queue a mandatory staff review or block unrelated
+Treat Bag/milestone claims. Staff can investigate a player ticket using the
+reference and server audit warning. An interrupted `RESERVED` record, before
+any possible debit, becomes retryable. Store corruption fails closed and must
+not be worked around by removing the ledger.
+
+### Manual deployment
+
+This feature needs the new compiled JARs once; a YAML reload alone cannot add
+the command, GUI or transaction handling. Prepare and verify the full **68-JAR**
+managed suite through `scripts/build-all.sh` while the maintained local server
+is stopped, complete local Paper/CMI verification, then stage that exact tested
+set with `stageTestedJarsForLive`. Do not mix suite build numbers or copy a
+single module's development JAR as the release.
+
+For the owner's planned live maintenance window:
+
+1. Back up the live suite and Doors/CMI data, then stop the live server normally.
+2. Replace all managed suite JARs with the tested matching build, preserving
+   any deliberate active/disabled artifact routing. Do not leave older copies
+   beside the new files.
+3. Copy `config/cmi/kits/HalloweenCandyTrade.yml` to the live
+   `plugins/CMI/Kits/HalloweenCandyTrade.yml`. Existing candy, treat and milestone
+   kit files stay in place. The suite-JAR synchronization does not install CMI
+   configuration for you.
+4. Start the server. New `candy-trade.yml` defaults are created if absent. Check
+   `/doors admin trade preflight`, `/doors admin trade status`,
+   `/doors admin rewards expiry show halloween-2026`, and `/doors debug health`.
+5. Confirm `/doors trade` shows the six gifts and intended cost/deadline, then
+   test with accepted candy in an allowed home world. Remember that a
+   successful staff trade uses that player's real once-per-season allowance.
+
+The owner performs the live stop, file replacement and start. The development
+workflow does not write to or control the live server.
 
 ## Configure door animation
 
@@ -623,8 +1016,9 @@ Rules:
 - `display-name` appears in the plugin's selected-reward message.
 - A treat `commands` list must contain exactly one `cmi kit <kit> <player>` or
   silent `... -s` template. `<variant>` may supply the kit name.
-- Treat kits must be enabled, contain at least one item, and contain no internal
-  kit commands. Door Hunt supplies the bag message and successful-claim sound.
+- Treat kits must exist, contain at least one valid item, and contain no internal
+  kit commands or costs. Disabled CMI templates are supported; keep ordinary
+  player access disabled and allow CMI overflow with `DropOnGround: true`.
 - Extra treat commands are rejected during configuration load. Keep broadcasts,
   teleports, effects, sounds, and other immediate behavior under `tricks:`.
 - Test every CMI kit manually with a disposable player before relying on it.
@@ -685,22 +1079,19 @@ The bundled creeper and kick examples are disabled for this reason. Review mob
 griefing, full inventories, reconnects, death/world changes, and command failure
 before live use.
 
-## CMI milestone permission-kit rewards
+## CMI milestone claims
 
-Random per-door tricks/treats remain in `tricks-and-treats.yml`. Milestone
-rewards are a separate, idempotent system configured in `progression.yml` and
-`special-rewards.yml`. The bundled reward IDs point to annual CMI kit names
-such as `tot_2026_first_knock`, with matching permissions such as
-`cmi.kit.tot_2026_first_knock`.
+Random per-door results remain in `tricks-and-treats.yml`. Milestone requirements
+remain in `progression.yml`; prize definitions are in `special-rewards.yml`.
+The `cmi-kit-claim` provider uses the exact annual kit ID, such as
+`tot_2026_first_knock`, and creates a personal claim through the same CMI command
+path as a Treat Bag receipt. It does not grant a LuckPerms permission or require
+the player to open `/kits`.
 
-An earned award stores its resolved kit, permission, and provider commands.
-Later catalogue edits never replace that captured payload during reconciliation.
-Keep historical reward definitions available until all corresponding awards are
-resolved, and use new annual kit names instead of repurposing an old kit.
-
-All bundled special rewards start with `enabled: false`. This is intentional:
-first create the exact `tot_2026_*` kits in one or more top-level `.yml` files
-under `plugins/CMI/Kits/`, install CMI and LuckPerms, then run:
+All bundled special reward definitions remain disabled until staff deliberately
+enable them. Install the reviewed `config/cmi/kits/halloweenMilestones.yml` under
+`plugins/CMI/Kits/`, keep ordinary player access to those kit templates disabled,
+and inspect their actual items on the maintained test server. Then run:
 
 ```text
 /totdoors admin rewards status
@@ -708,76 +1099,84 @@ under `plugins/CMI/Kits/`, install CMI and LuckPerms, then run:
 /totdoors admin rewards preflight all
 ```
 
-Preflight is read-only and runs the kit-file scan on the bounded report worker,
-not the server thread or serialized persistence worker. A named `reward-id`
-checks that one milestone definition, its exact top-level kit, CMI, and
-LuckPerms are ready. `preflight all` additionally discovers every configured
-daily CMI variant kit referenced by the random catalogue—`tot01` through
-`tot36` in the bundled setup—and checks those alongside every special
-milestone kit across split `.yml` files. Daily kits require CMI; permission-kit
-milestones require CMI and LuckPerms. Preflight does not grant a permission,
-claim a kit, or prove kit contents are correct. Manually inspect/test every kit
-before enabling rewards, then reload and rerun `preflight all`.
+Preflight scans split kit files on the bounded report worker and validates the
+configured provider. `all` includes the regular `tot01`-`tot36` variants and the
+annual milestone kits. It does not claim a kit or prove actual item delivery.
+Test the actual CMI console path, disabled templates, overflow and repeat-claim
+prevention before enabling a prize definition.
 
-The provider command sequence uses definition placeholders:
+Enable one reviewed prize, or all reviewed prizes, without editing YAML:
+
+```text
+/totdoors admin rewards enable first-knock
+/totdoors admin rewards enable all
+/totdoors admin rewards disable first-knock
+/totdoors admin rewards disable all
+```
+
+Use the reward ID from `special-rewards.yml`, not the CMI kit ID. These commands
+persist that definition's `enabled` setting and refresh the loaded catalogue.
+Enabling queues eligible, previously earned claims for online players; it does
+not give items immediately. Offline players are checked when their profile next
+loads. Disabling prevents new claim creation for that definition; existing
+saved receipts keep their captured kit identity. The permission is
+`totdoors.admin.rewards.configure`, also available through
+`onembcmi.DoorHunt.admin.rewards.configure` or the aggregate administration node.
+
+Each milestone is earned once per player and season. A safely earned enabled
+award queues a receipt with `milestone:<id>` as its reward identity. The player
+claims it through Doors in an allowed world. Catalogue edits must not replace
+the kit captured by an existing receipt. Keep historical definitions until their
+records have been accounted for; use new annual IDs for a later event.
+
+Legacy `cmi-kit-unlock` definitions migrate to `cmi-kit-claim` while retaining the
+kit identity and enabled setting. Unattempted earned awards may become claims.
+Previously completed or possibly attempted unlock awards never issue again.
+Migration does not revoke permissions previously granted by LuckPerms; keep the
+CMI templates unavailable to ordinary direct kit use and inspect legacy access
+before changing that boundary.
+
+The definition placeholders retained for compatibility are:
 
 | Token | Meaning |
 | --- | --- |
-| `<player>` | Current online player name. |
-| `<uuid>` | Current player UUID. |
+| `<player>` | The current online name resolved from the recorded recipient UUID. |
+| `<uuid>` | The recorded recipient's actual server UUID. |
 | `<reward_id>` | Stable special-reward ID. |
 | `<display_name>` | Special reward display name. |
 | `<kit>` | Exact annual CMI kit ID. |
-| `<permission>` | Exact `cmi.kit.<kit>` permission. |
+| `<permission>` | Historical `cmi.kit.<kit>` identity; new claims do not grant it. |
 
-The default first command is `lp user <uuid> permission set <permission> true`.
-The notification command tells the player to open `/kits`; the plugin does not
-auto-claim the kit.
-
-Reward states are deliberately truthful:
-
-- `earned`: milestone is durable, but its reward is disabled/not yet prepared.
-- `disabled`: player-facing rendering of an earned reward whose definition is
-  not enabled.
-- `pending`: a durable provider batch is ready or `PREPARED` for dispatch.
-- `dispatched`: every configured console command was accepted by Bukkit. This
-  is **not** proof the permission changed or that the player claimed the kit.
-- `failed`: at least one command was not recognized; staff review is required.
-
-After fixing a disabled/failed provider, reconcile only online profiles whose
-milestone was already durably earned:
+To queue eligible awards already earned by online players after staff setup:
 
 ```text
 /totdoors admin rewards reconcile <online-player|all-online>
 ```
 
-Reconcile is not an arbitrary grant. It prepares eligible recorded awards and
-dispatches the enabled provider once under the durable state machine. Before
-retrying any ambiguous `PREPARED` external action, inspect LuckPerms and CMI
-state to avoid a duplicate side effect.
-
-Audit every stored profile, including players who are offline and no longer in
-the in-memory cache:
+Reconcile is not an arbitrary grant and does not replay an already attempted
+claim. Audit stored profiles, including offline profiles, with:
 
 ```text
 /totdoors admin rewards audit [season]
 ```
 
-The audit lists the UUIDs of ambiguous random transactions and the milestone
-IDs of ambiguous awards. After checking the player's YAML plus LuckPerms, CMI,
-inventory/economy records, and logs, staff may explicitly record the verified
-outcome without running any provider command:
+New claims persist an attempt marker before command dispatch. A possibly paid
+claim is closed as processed (`DISPATCHED`) with `deliveryAudit` evidence and
+never automatically resent. It does not block other claims. If a player reports
+missing items, inspect their reference, logs, CMI state and nearby delivery
+records before deciding whether any separate staff compensation is appropriate.
+A failure proven to occur before dispatch leaves the earned reward waiting.
+
+The retained legacy resolution commands record an external outcome only:
 
 ```text
 /totdoors admin rewards resolve award <online-player> <season> <milestone-id> <dispatched|failed> confirm
 /totdoors admin rewards resolve transaction <online-player> <transaction-uuid> <dispatched|failed> confirm
 ```
 
-Resolution requires the player to be online so their authoritative profile is
-loaded through the normal serialized save path. Mark `dispatched` only when
-external state proves the intended effect exists. Mark `failed` when it does
-not; a failed current-season milestone may then be deliberately reconciled.
-Neither resolve form retries or dispatches a command.
+The player must be online for the normal serialized profile path. Neither form
+sends commands or reopens a closed claim. Do not use a recorded failure as proof
+that a historic command had no effect.
 
 ## Statistics, leaderboards, and Markdown exports
 
@@ -861,9 +1260,14 @@ required.
 | `/doors stats [season]` | `totdoors.command.stats` | Player-only GUI for seasonal totals, streaks, districts, and baseline status; console retains text output. |
 | `/doors journal [season] [page]` | `totdoors.command.journal` | Player-only paginated GUI of discovered doors; never leaks undiscovered locations. |
 | `/doors quests [stream] [season]` | `totdoors.command.quests` | Open all enabled streams or one stream's metric/milestone progress for the current or a retained season. |
-| `/doors rewards [season]` | `totdoors.command.rewards` | Open the repeatable Treat Bag plus separate durable milestone reward states and `/kits` shortcuts. |
+| `/doors treatbag [season]` | `totdoors.command.rewards` | Open Your Halloween Treat Bag directly for the current or a retained season; claim saved treats and waiting candy gifts. |
+| `/doors trade` | `totdoors.command.rewards` | Preview and confirm the once-per-season candy exchange. |
+| `/doors rewards [season]` | `totdoors.command.rewards` | Open the broader reward hub linking the Treat Bag, separate durable milestone reward states, and `/kits` shortcuts. |
 | `/totdoors admin help` | `totdoors.admin.status` | Show preferred staff controls. |
 | `/totdoors admin status` | `totdoors.admin.status` | Show health, runtime state, current season, eligible/registered doors, streams, rewards, and dates. |
+| `/totdoors admin prepare` | `totdoors.admin.prepare` | Load saved Door data for location administration and private inspection while leaving public module, event and season settings unchanged; existing season/reward/statistics tools still require an active module. |
+| `/totdoors admin inspect <on\|off\|status\|next>` | `totdoors.admin.inspect` | Player-only private physical-door checklist; no rewards or progression. `next` also requires teleport permission. |
+| `/totdoors admin inspect list [page]` | `totdoors.admin.inspect` | Player-only checked/pending list with coordinates; clickable teleports also require `totdoors.admin.teleport`. |
 | `/hunt admin preflight [all\|coconut\|ghost\|doors]` | `onembcmi.Hunt.admin.preflight` | Run the read-only Event Hunts readiness report; the Doors target reuses this module's complete live health report. |
 | `/totdoors admin mode <scheduled\|active\|dormant>` | `totdoors.admin.mode` | Persist the operational mode. Example: `/totdoors admin mode dormant`. |
 | `/totdoors admin schedule show` | `totdoors.admin.schedule` | Show effective dates and config/override source. |
@@ -881,10 +1285,13 @@ required.
 | `/totdoors admin setupitem give [player]` | `totdoors.admin.setupitem.give` | Give the PDC-protected Door Setup Tool to self or another online player. |
 | `/totdoors admin door <id\|key\|target> [show]` | `totdoors.admin.list` | Inspect all metadata for a numeric ID, stable key, or targeted registration. |
 | `/totdoors admin door <id\|key\|target> set <name\|district\|hint\|difficulty\|enabled\|reward-pool\|notes> <value...>` | `totdoors.admin.door.edit` | Validate and atomically save one metadata field. |
+| `/totdoors admin door <id\|key\|target> move target [north\|east\|south\|west]` | `totdoors.admin.door.edit` | Player-only relocation to the targeted replacement; preserve ID, key and metadata, plus knock side when omitted. |
+| `/totdoors admin door <id\|key\|target> move <world> <x> <y> <z> [north\|east\|south\|west]` | `totdoors.admin.door.edit` | Relocate to validated block coordinates without resetting progress; selecting the existing door by `target` requires a player. |
 | `/totdoors admin register [double]` | `totdoors.admin.register` | Player-only targeted registration. Coordinate forms are also accepted. |
 | `/totdoors admin doors [page]` | `totdoors.admin.list` | List ten registrations per page with clickable player teleports. |
 | `/totdoors admin teleport <id>` | `totdoors.admin.teleport` | Player-only safe teleport beside a registration. |
 | `/totdoors admin delete <id>` | `totdoors.admin.delete` | Delete one registration. |
+| `/totdoors admin unregister <id>` | `totdoors.admin.delete` | Explicit alias for deleting one registration, including when the physical door is already missing. |
 | `/totdoors admin delete all confirm` | `totdoors.admin.delete-all` | Delete all registrations after literal confirmation. |
 | `/totdoors admin reload` | `totdoors.admin.reload` | Validate/reload config, both reward catalogues, progression, locale, doors, seasons, and runtime state asynchronously. |
 | `/totdoors admin reset <player\|uuid\|all> confirm` | `totdoors.admin.reset` | Reset one online-name/UUID profile or archive/reset all format-4 profiles. |
@@ -897,7 +1304,11 @@ required.
 | `/totdoors admin rewards status` | `totdoors.admin.rewards.view` | Show stream/milestone counts, enabled reward count, and provider availability. |
 | `/totdoors admin rewards audit [season]` | `totdoors.admin.rewards.audit` | Private all-profile scan for ambiguous immediate `PREPARED` or Treat Bag `CLAIMING` transactions and milestone awards; normal claimable treats are not warnings. |
 | `/totdoors admin rewards preflight [all\|reward-id]` | `totdoors.admin.rewards.preflight` | Read-only provider/top-level-kit validation; `all` covers configured daily CMI variant kits and every milestone kit. |
-| `/totdoors admin rewards reconcile <online-player\|all-online>` | `totdoors.admin.rewards.reconcile` | Prepare and dispatch eligible already-earned online-player unlocks. |
+| `/totdoors admin rewards <enable\|disable> <all\|reward-id>` | `totdoors.admin.rewards.configure` | Persist milestone prize availability; enabling queues eligible earned claims without paying them immediately. |
+| `/doors admin rewards expiry show [season]` | `totdoors.admin.rewards.configure` | Show the selected season's exclusive claim deadline and whether its claim period is open. |
+| `/doors admin rewards expiry set <yyyy-MM-dd> <HH:mm> [season]` | `totdoors.admin.rewards.configure` | Set or extend the deadline using the configured timezone; reject invalid or ambiguous local times. |
+| `/doors admin rewards expiry clear [season]` | `totdoors.admin.rewards.configure` | Remove the deadline while preserving all claim history. |
+| `/totdoors admin rewards reconcile <online-player\|all-online>` | `totdoors.admin.rewards.reconcile` | Queue eligible already-earned online-player milestone claims. |
 | `/totdoors admin rewards resolve award <online-player> <season> <milestone-id> <dispatched\|failed> confirm` | `totdoors.admin.rewards.resolve` | After external verification, record an ambiguous milestone outcome without dispatching. |
 | `/totdoors admin rewards resolve transaction <online-player> <transaction-uuid> <dispatched\|failed> confirm` | `totdoors.admin.rewards.resolve` | After external verification, record an ambiguous random-reward outcome without dispatching. |
 | `/totdoors debug status` | `totdoors.admin.debug.view` | Show effective debug/runtime state. |
@@ -951,9 +1362,11 @@ event; `/totdoors` remains the unambiguous fallback.
 | `totdoors.command.stats` | all players | View personal seasonal statistics. |
 | `totdoors.command.journal` | all players | View only personally discovered doors. |
 | `totdoors.command.quests` | all players | View progression streams and milestones. |
-| `totdoors.command.rewards` | all players | View and claim personal Treat Bag receipts and view separate milestone reward states. |
+| `totdoors.command.rewards` | all players | Use `/doors treatbag` and `/doors rewards` to view and claim personal Treat Bag receipts and claim earned milestone rewards. |
 | `totdoors.admin` | operators | Aggregate of every `totdoors.admin.*` node below. |
 | `totdoors.admin.status` | operators | View admin status/help. |
+| `totdoors.admin.prepare` | operators | Load Door location administration and private inspection while keeping public gameplay settings unchanged. |
+| `totdoors.admin.inspect` | operators | Start, stop and view a private physical-door inspection session and its checklist. |
 | `totdoors.admin.mode` | operators | Change scheduled/active/dormant mode. |
 | `totdoors.admin.schedule` | operators | Show and change event dates. |
 | `totdoors.admin.season.view` | operators | View current/history season state and frozen rosters. |
@@ -961,7 +1374,7 @@ event; `/totdoors` remains the unambiguous fallback.
 | `totdoors.admin.register` | operators | Register single/double doors. |
 | `totdoors.admin.list` | operators | List door IDs and coordinates. |
 | `totdoors.admin.setupitem.give` | operators | Give the PDC-protected Door Setup Tool. |
-| `totdoors.admin.door.edit` | operators | Edit validated door metadata. |
+| `totdoors.admin.door.edit` | operators | Edit validated door metadata or move an existing registration while preserving its identity. |
 | `totdoors.admin.teleport` | operators | Teleport to registered doors. |
 | `totdoors.admin.delete` | operators | Delete one registration. |
 | `totdoors.admin.delete-all` | operators | Delete every registration after confirmation. |
@@ -972,8 +1385,9 @@ event; `/totdoors` remains the unambiguous fallback.
 | `totdoors.admin.stats.export.staff` | operators | Write private staff reports containing UUIDs, coordinates, and notes. |
 | `totdoors.admin.rewards.view` | operators | View special reward/provider status. |
 | `totdoors.admin.rewards.audit` | operators | Privately scan every stored UUID profile and expose ambiguous reward references for recovery. |
-| `totdoors.admin.rewards.preflight` | operators | Scan and validate configured CMI-kit unlocks. |
-| `totdoors.admin.rewards.reconcile` | operators | Reconcile eligible durably earned unlocks for online players. |
+| `totdoors.admin.rewards.preflight` | operators | Scan and validate configured CMI-kit claims. |
+| `totdoors.admin.rewards.configure` | operators | Enable or disable milestone prize definitions and configure seasonal claim deadlines. |
+| `totdoors.admin.rewards.reconcile` | operators | Queue eligible durably earned milestone claims for online players. |
 | `totdoors.admin.rewards.resolve` | operators | Record externally verified ambiguous immediate `PREPARED` or Treat Bag `CLAIMING` outcomes without replaying delivery. |
 | `totdoors.admin.debug.view` | operators | View debug, health, build, command, permission, placeholder, and target reports. |
 | `totdoors.admin.debug.toggle` | operators | Enable/disable/toggle debug calendar bypass. |
@@ -1000,6 +1414,8 @@ no separate eCloud expansion download is required.
 | `%totdoors_event_start%` | no | Effective localized event start and timezone. |
 | `%totdoors_event_end%` | no | Effective localized event end and timezone. |
 | `%totdoors_event_timezone%` | no | Configured timezone ID. |
+| `%totdoors_claims_open%` | no | Whether the current season is within its reward claim period; other claim safety checks still apply. |
+| `%totdoors_claims_expire_at%` | no | The current season's exclusive localized claim deadline, or no expiry. |
 | `%totdoors_door_total%` | no | Number of registered door setups. |
 | `%totdoors_daily_completed%` | yes | Player's successful unique doors today; `0` when no loaded profile is available. |
 | `%totdoors_daily_total%` | no | Current live eligible-door count, not every registration. |
@@ -1021,13 +1437,19 @@ no separate eCloud expansion download is required.
 | `%totdoors_season_districts_found%` | yes | Non-`unassigned` districts where the player found at least one door. |
 | `%totdoors_milestones_earned%` | yes | Number of current-season milestone awards. |
 | `%totdoors_special_rewards_earned%` | yes | Number of current-season special rewards earned. |
-| `%totdoors_special_reward_grants_dispatched%` | yes | Provider batches recorded as dispatched; not kits claimed. |
+| `%totdoors_special_reward_grants_dispatched%` | yes | Provider batches recorded as processed; includes retained historical unlocks. |
 | `%totdoors_stream_<id>_progress%` | yes | Current value of the configured stream metric. |
 | `%totdoors_stream_<id>_next_target%` | yes | Next numeric target, or `complete`. |
 | `%totdoors_stream_<id>_next_milestone%` | yes | Next milestone ID, or `complete`. |
 | `%totdoors_stream_<id>_complete%` | yes | Whether every milestone in that configured stream is earned. |
 | `%totdoors_milestone_<id>_earned%` | yes | `true` when that configured milestone is durably earned. |
-| `%totdoors_reward_<id>_state%` | yes | `not-earned`, `disabled`, `pending`, `dispatched`, or `failed`. |
+| `%totdoors_reward_<id>_state%` | yes | `not-earned`, `disabled`, `pending`, `claimable`, `dispatched`, or `failed`. |
+
+The canonical shared-library forms for the deadline are
+`%onembcmi_DoorHunt.claims.open%` and
+`%onembcmi_DoorHunt.claims.expire.at%`. They resolve the same current-season
+values as the `totdoors` aliases and do not load player files or expose private
+reward history.
 
 No PlaceholderAPI token reveals a registration ID or coordinate. Player
 values are served from the in-memory UUID profile only; PlaceholderAPI never
@@ -1101,14 +1523,14 @@ project-owned player guide.
 
 | Path under `plugins/1MB-CMIAPI/CoconutHunt/Doors/` | Purpose |
 | --- | --- |
-| `config.yml` | Timezone, schedule defaults, interaction requirements, hint cooldown/ranges, Treat Bag claim worlds, treat/trick category weights, animation, logging, and command recognition policy. |
+| `config.yml` | Timezone, schedule defaults, interaction requirements, hint cooldown/ranges, treat/trick category weights, animation, logging, and command recognition policy. Manual reward claims use claims.allowed-worlds; automatic door candy is exempt. The former treat-bag allowlist is ignored. |
 | `runtime-state.yml` | Atomically persisted mode, debug flag, and optional start/end overrides managed by commands. |
 | `tricks-and-treats.yml` | Enabled weighted treats/tricks, variants, display names, and console command lists. |
 | `progression.yml` | Enabled metric streams, milestone IDs/targets, and special-reward references. |
-| `special-rewards.yml` | Disabled-by-default annual CMI-kit permission unlock definitions and provider commands. |
+| `special-rewards.yml` | Disabled-by-default annual CMI-kit claim definitions and retained migration identity. |
 | `translations/locale_en.yml` | Customizable English MiniMessage phrases and `[🎃 Halloween]` prefix. |
 | `doors.yml` | Format-2 IDs, stable keys, lower blocks, sides, registrars, metadata, and next ID. |
-| `seasons.yml` | Current season plus retained lifecycle timestamps and frozen door rosters. |
+| `seasons.yml` | Current season plus retained lifecycle timestamps, frozen door rosters and each season's claim deadline. An explicitly cleared deadline stays cleared across restarts. |
 | shared playerdata section `doorshunt` | Format-4 per-season visits, hints, aggregate statistics, milestone awards, immediate transactions, and Treat Bag receipts, isolated from Coconut/Ghost fields. |
 | `playerdata-archive/` | Recoverable archive folders created by reset-all. |
 | `reports/<season-id>/<timestamp>/` | Asynchronously generated staff/public/Discord Markdown exports. |
@@ -1138,8 +1560,8 @@ folder to a build that only understands an earlier format.
 
 The in-memory/file history cap applies only to the newest 100 **terminal**
 `DISPATCHED`/`FAILED` random-reward transactions. Every claimable `PREPARED`
-Treat Bag receipt and ambiguous `CLAIMING` or legacy immediate `PREPARED`
-transaction is retained beyond that cap. `/totdoors debug health` reports only
+Treat Bag receipt and in-flight `CLAIMING` or legacy immediate `PREPARED`
+transaction is retained beyond that cap until recovery classifies it. `/totdoors debug health` reports only
 ambiguous states, not ordinary waiting treats. `/totdoors admin rewards audit
 [season]` performs the complete read-only scan across offline profiles.
 
@@ -1150,21 +1572,19 @@ increments the visit before presenting success. An immediate trick moves from
 `PREPARED` to `DISPATCHED` or `FAILED` after its command batch. A treat remains
 `PREPARED` in `TREAT_BAG` mode until the player claims it.
 
-A claim is revalidated and atomically persisted as `CLAIMING` before inventory
-mutation. If readiness changes without item mutation, it safely returns to
-`PREPARED`. A successful direct CMI-kit inventory mutation finishes as
-`DISPATCHED`. An ambiguous mutation or failed final save is never replayed
-automatically; it stays reviewable so recovery cannot duplicate the treat.
+A manual claim rechecks its recipient, world, permission, kit and receipt before
+reserving it. Reservation is saved before dispatch; a separate persisted marker
+records when the CMI console attempt starts. CMI owns inventory and overflow
+delivery. A proven pre-dispatch failure releases the reservation. After a
+possibly paid attempt, the claim closes as `DISPATCHED` with its audit outcome,
+including uncertainty, rather than creating an automatic retry or review block.
 
-Milestone unlocks use the same principle: the award is first durably `EARNED`,
-then `PREPARED`, and only then dispatched. A `FAILED` award may be deliberately
-reconciled after fixing its provider. A legacy immediate `PREPARED` transaction
-and a Treat Bag receipt left in `CLAIMING` are never automatically retried.
-
-This intentionally favors duplicate prevention. If manual recovery is needed,
-inspect the player's transaction/award YAML plus LuckPerms, CMI, economy, and
-other external plugin records before granting anything. Never blindly rerun
-commands or kit delivery from an ambiguous transaction record.
+On restart a reserved receipt known not to have reached dispatch can return to
+waiting. A marked or legacy ambiguous `CLAIMING` receipt closes with audit
+information and cannot replay. Milestone receipts follow the same rules, while
+the durable milestone award prevents a second personal issuance. Other waiting
+claims remain usable. Keep audit information when investigating missing items;
+command acceptance, a kit event or a usage counter alone does not prove payout.
 
 ## Staff troubleshooting
 
@@ -1185,9 +1605,9 @@ commands or kit delivery from an ambiguous transaction record.
   roster refresh only if changing this open season's denominator is intended.
 - Missing CMI reward: run the exact CMI command manually, confirm kit spelling,
   inspect the player transaction, and check `commands.require-all-commands-recognized`.
-- Milestone unlock disabled/failed: run reward status and preflight, verify CMI,
-  LuckPerms, exact top-level `tot_2026_*` kit, and matching `cmi.kit.*`
-  permission; reconcile only after inspecting external state.
+- Milestone prize unavailable: run reward status and preflight, verify the
+  exact top-level `tot_2026_*` kit and enabled prize definition, then reconcile
+  only unattempted earned awards. Processed claims are not replayed.
 - Report export failure: check the console and permissions on `reports/`; a
   failed export cleans up its newly reserved incomplete directory.
 - Missing placeholder: verify PlaceholderAPI is enabled and health says the
@@ -1215,14 +1635,19 @@ Before merging or live staging:
    season data; prove debug cannot open a closed season.
 10. Test setup-item register/inspect/two-step unregister-break plus metadata on
     single, double, and every copper-door family in the copied world.
-11. Test `/doors`, `/doors info`, help, hint, stats, journal, quests, rewards,
+11. Test `/doors`, `/doors info`, help, hint, stats, journal, quests, treatbag, rewards,
     the clickable player-guide URL, `/halloween` quick start, golden-plate
     route markers, cooldown, streak, district completion, milestones, and the
     three-empty-hand-knock interaction. Verify ordinary players cannot inherit
-    an out-of-window debug test.
-12. Preflight every enabled `tot01`-`tot36` item-only Treat Bag kit and every
-    enabled `tot_2026_*` permission kit. Test earn-now/claim-later treats,
-    immediate tricks, milestone rewards, reconnect, full inventory, reservation
+    an out-of-window debug test. Confirm `/doors treatbag [season]` opens **Your
+    Halloween Treat Bag** directly, `/doors rewards [season]` still opens the
+    broader hub, and both enforce `totdoors.command.rewards` for current and
+    retained seasons.
+12. Preflight every configured `tot01`-`tot36` item-only Treat Bag kit, every
+    `hdc01`-`hdc10` immediate candy kit, and every
+    configured `tot_2026_*` milestone kit. Test earn-now/claim-later treats,
+    immediate tricks plus candy for both results, the manual world list,
+    milestone rewards, reconnect, full inventory, reservation
     failure, ambiguous finalization, and reconciliation cases.
 13. Export staff/public/Discord reports and inspect every privacy boundary.
 14. Restart with format-3 data, verify its upgrade to format 4, prove old

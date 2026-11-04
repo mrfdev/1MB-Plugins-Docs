@@ -16,17 +16,27 @@ Halloween Virus retains `HvPyroItemGuard` as its feature wrapper. Forage adds `F
 
 `SharedCmiItemGuard`, used by Forage and Halloween Virus, uses public virtual-anvil events and a reversible wrapper around the actual provider-owned `PluginCommand` executor. This covers Bukkit command dispatch from menus as well as player commands, including CMI repair and trim. One executor holds independent feature checks; detaching either feature keeps the other active, and the final detach restores the original executor. `SharedItemCommandGuard` resolves registered commands and configured aliases before each feature applies its own item/slot rules. The public mcMMO repair and salvage events run before item mutation or material consumption. Capabilities check provider identity and actual registrations; they do not assume that a plugin name alone proves coverage.
 
+Forage checks only the main-hand item for direct CMI-owned `/cmi itemname` and `/cmi:cmi itemname` commands without `-p:`. Reviewed CMI 9.8.10.5 and 9.8.11.0 treat the remaining arguments as name text, so carrying a Forage tool elsewhere must not prevent naming ordinary dirt or other items. The same predicate protects preprocessing, direct CMI dispatch, and points-service preflight. Explicit targets, unknown providers, and arbitrary alias expansions retain conservative inventory checks; the bounded alias resolver cannot prove a whole expansion has main-hand-only scope.
+
 `SharedPointsItemGuard` protects both features in PyroWelcomesPro 0.5.1 `/points` and `/welcomes` services. It authenticates the current shop/confirmation callback and reads its configured commands. It denies protected repair or modification purchases before the callback deducts points. PyroLib session access and the captured shop item are isolated exact-version integrations because no equivalent public pre-purchase event exists. Ordinary purchases and inventories remain usable.
 
 DiscordChat checks both features' issued PDC identities at preview and confirmation before applying its own tool enchantments or charging points. HV staff-template markers alone are not issued identity.
 
 Forage's stored approved state and durability are backstops for other code that mutates an ItemStack directly. Existing Pyro modifier data pauses an issued tool without deleting that data. No guard can stop arbitrary trusted plugin code from calling an internal setter; new provider versions and new item-service routes need explicit compatibility review.
 
-## Halloween Virus soulbind protection
+## Shared soulbind protection
 
-`HvSoulbindItemGuard` permanently guards ItemSoulBind's nine modifying command executors and the seven reviewed `ItemRegistrationListener` event registrations. Automatic registration callbacks are withheld for protected inputs without cancelling the Bukkit event, preserving normal pickup, movement and use. The separate item-protection and death-recovery listeners are not intercepted. Detachment restores only registrations still owned by this guard.
+`SharedSoulbindItemGuard` provides shared protection through the `HvSoulbindItemGuard` and `ForageSoulbindItemGuard` feature adapters. It guards ItemSoulBind's nine modifying command executors and the seven reviewed `ItemRegistrationListener` event registrations. Automatic registration callbacks are withheld for protected inputs without cancelling the Bukkit event, preserving normal pickup, movement and use. The separate item-protection and death-recovery listeners are not intercepted. Independent feature owners share each wrapper; detachment removes only that owner's check and restores the provider registration only after the final owner leaves.
 
 The provider exposes no cancellable bind event. Integration uses public Paper command/event registration APIs, exact provider ownership and listener class identity, with no private provider field access or version allowlist. Missing or replaced callbacks/executors fail readiness and block protected reward issuance. Changes to the provider's registration contract require compatibility review. Points-shop purchases use the same command-scope predicate before charging. VoteTokens and AFKShrine check HV identity immediately before their direct soulbind writes and before payments.
+
+## External command protection
+
+Forage protects recipient checks for CMI nickname, partial-name and `itemname -p:` targets. CMI shortcut commands also have a direct command-manager path outside the root executor; provider-owned aliases use local, authoritative online identities for recipient checks. CMI 9.8.10.4, 9.8.10.5 and 9.8.11.0 expose no public getter for the definition retained by their `ReflectCommand`; isolated, read-only access to that exact typed field is version- and class-loader-gated. Looking up a similarly named alias in CMI's public cache is insufficient to prove which command will execute. It retains ordinary main-hand dirt naming while a Forage tool is elsewhere in inventory.
+
+PyroMining's reviewed `mine addvessel` administrative command is also guarded at its owned command executor, including its registered aliases and direct plugin dispatch. The shared command preflight recognizes this route so a configured points purchase can be rejected before charging. It has no target-player argument and only modifies the sender's main hand; ordinary held pickaxes remain usable while a protected item is elsewhere. A separate reviewed Vessel-removal callback is withheld before Zeta charging or mutation of a protected held tool.
+
+Forage tool changes use the synchronized suite release workflow. The [25 October update record](compatibility-tests/java-cmi-update-2026-10-25.md) tracks the CMI 9.8.11.0 adapter review and runtime checks; historical provider comparisons retain their original versions and findings.
 
 ## Verification
 

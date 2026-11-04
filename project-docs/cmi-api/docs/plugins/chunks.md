@@ -181,7 +181,7 @@ There are no automatic advice messages in chat. If staff has disabled this optio
 
 ## Compile and Install
 
-Chunks is part of the 1MB Library suite and requires the matching Shared Library, CMI, CMILib, LuckPerms, Java 25, and Paper 26.2. PlaceholderAPI is optional for external placeholder use. See the [exact dependency and CMI behavior baseline](../compatibility-tests/chunks-26.2.md) for the version checks and read-only server observations. Verify dependency builds against the current release documentation before deployment; obtain paid CMI downloads through the licensed owner's normal source.
+Chunks is part of the 1MB Library suite and requires the matching Shared Library, CMI, CMILib, LuckPerms and Paper 26.3. Build with JDK 25.0.4.1 and use Java 27 for the maintained server. PlaceholderAPI is optional for external placeholder use. The [26.2 dependency and CMI behavior baseline](../compatibility-tests/chunks-26.2.md) preserves the original version checks and read-only server observations. Verify dependency builds against the current release documentation before deployment; obtain paid CMI downloads through the licensed owner's normal source.
 
 Focused development verification is allowed:
 
@@ -195,7 +195,7 @@ A distributable build is always the complete suite. **Stop the maintained Paper 
 scripts/build-all.sh
 ```
 
-The canonical workflow reserves one shared build number, aligns the latest stable Paper build within the configured **26.2** target, runs the full build and tests, and synchronizes the complete managed JAR set to `servers/Paper-26.2/plugins/`. A module-only JAR or an unnumbered `gradle build` result is development feedback, not a deployable handoff. See [compiling](../compiling.md) and [installation](../installation.md).
+The canonical workflow reserves one shared build number, aligns the latest stable Paper build within the configured **26.3** target, runs the full build and tests, and synchronizes the complete managed JAR set to `servers/Paper-26.3/plugins/`. A module-only JAR or an unnumbered `gradle build` result is development feedback, not a deployable handoff. See [compiling](../compiling.md) and [installation](../installation.md).
 
 Install Chunks with the same-build Shared Library and the required dependencies during a stopped-server deployment. Do not use a hot plugin loader. Start the test server, check feature health, grant player access intentionally, and complete the acceptance checks below. After gameplay acceptance, stage the exact tested set for manual live deployment:
 

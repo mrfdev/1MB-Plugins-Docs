@@ -2,7 +2,7 @@
 
 AntiFire is the 1MB-CMIAPI migration of the standalone `1MB-AntiFire` plugin. It prevents unwanted fire spread and block burn damage, lets temporary fire remain visible briefly before removing it, and preserves controlled permanent fireplaces.
 
-The feature targets Java 25 and Paper API 26.2. The same jar is expected to remain usable on compatible later Paper 26.x releases such as 26.2.1 or 26.3, but each Paper update should still receive a startup and behavior smoke test before live deployment.
+The feature targets Java 25 bytecode and Paper 26.3 STABLE. Each Paper update should receive a startup and behavior smoke test before live deployment.
 
 - Player guide: https://docs.1moreblock.com/player-guides/plugins/antifire/
 - Public staff and technical reference: https://github.com/mrfdev/1MB-Plugins-Docs/blob/main/project-docs/cmi-api/docs/plugins/antifire.md
@@ -11,7 +11,7 @@ The former standalone player-guide URL redirects to the canonical 1MB-CMIAPI fea
 
 ## Migration Notes
 
-- Install `1MB-Lib-AntiFire-v1.0.4-740-j25-26.3.jar`. It shares the CMI-API build number and release pipeline, but it does not require CMI, CMILib, or `1MB-CMIAPI-Lib` at runtime.
+- Install `1MB-Lib-AntiFire-v1.0.4-835-j25-26.3.jar`. It shares the CMI-API build number and release pipeline, but it does not require CMI, CMILib, or `1MB-CMIAPI-Lib` at runtime.
 - Remove or disable the old standalone `1MB-AntiFire-*.jar`; both versions own `/_antifire` and must not run together.
 - The only registered command remains `/_antifire`. No `/antifire` alias is added.
 - Runtime configuration now lives at `plugins/1MB-CMIAPI/AntiFire/config.yml`.
@@ -128,9 +128,9 @@ Boolean settings accept friendly command values such as `true`, `false`, `on`, `
 ## Build And Data
 
 ```text
-Jar: 1MB-Lib-AntiFire-v1.0.4-740-j25-26.3.jar
+Jar: 1MB-Lib-AntiFire-v1.0.4-835-j25-26.3.jar
 Java target: 25
-Paper API target: 26.2
+Paper API target: 26.3.build.206-stable
 Config: plugins/1MB-CMIAPI/AntiFire/config.yml
 Load phase: STARTUP
 Runtime dependencies: none

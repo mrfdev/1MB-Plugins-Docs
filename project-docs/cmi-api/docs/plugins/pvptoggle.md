@@ -16,6 +16,10 @@ Use `/pvp on`, `/pvp off`, or `/pvp status`. In normal worlds both players must 
 
 Recent PvP combat can start a cooldown, and designated PvP worlds can force it on. Check the message and `/pvp status`; your personal toggle does not override those world rules.
 
+### Why does my setting briefly say it is loading?
+
+Your saved preference loads in the background when you join. Wait for it to finish before changing PvP. Personal PvP stays protected while loading; forced-PvP worlds and the server's eligibility rules still apply.
+
 ### Does PvP off protect me from every kind of damage?
 
 No. It controls supported player-versus-player damage. Mobs, falls, lava, and other environmental dangers are separate.
@@ -223,13 +227,15 @@ dust-color
 dust-size
 ```
 
-`type` uses Bukkit/Paper `Particle` enum names. The Paper 26.2 enum page is:
+`type` uses Bukkit/Paper `Particle` enum names. The Paper 26.3 enum page is:
 
 ```text
-https://jd.papermc.io/paper/26.2/org/bukkit/Particle.html
+https://jd.papermc.io/paper/26.3/org/bukkit/Particle.html
 ```
 
 Particles that need extra data fall back to `DUST`, because this plugin only safely supplies data for `DUST`.
+
+Template files load in the background. A reload keeps the current templates until the replacement is ready. There may be at most 128 `.yml` files, including the four defaults, and each file may be at most 1 MiB. Excess file counts reject the reload; invalid or oversized individual files are skipped with a warning. Ring intensity is limited to 128 points and nonfinite numeric values use safe defaults. Normal default effects are unchanged.
 
 ## Behavior
 
@@ -254,6 +260,8 @@ Active PvP mode is stricter than the saved toggle. A player must have `/pvp` on 
 
 If `eligibility.auto-disable-when-ineligible: true`, the plugin turns PvP off when a player changes into creative/spectator, enables CMI vanish, enables CMI god mode, or otherwise becomes ineligible. CMI exposes vanish events, but not a public god-mode toggle event, so PvPToggle also runs a lightweight periodic eligibility check controlled by `eligibility.check-interval-ticks`.
 
+CMI can emit vanish and unvanish events without a Bukkit player when an administrator changes an offline user's vanish setting. PvPToggle ignores those events because there is no connected player to update. Online changes are processed on the next server tick only while the original player connection remains active. CMI retains ownership of the saved vanish setting; this handling does not repair errors in CMI or other plugins' listeners.
+
 World rules are respected:
 
 - If a world has the Paper/Bukkit PVP gamerule disabled and `worlds.respect-pvp-gamerule: true`, the player's state is forced off.
@@ -262,7 +270,7 @@ World rules are respected:
 ## CMI / CMILib / CMI-API Usage
 
 - Uses CMI as a hard dependency because this feature lives in the CMI-API plugin set and listens to CMI PvP combat events.
-- Listens to `CMIPvPStartEventAsync` and `CMIPvPEndEventAsync` for runtime counters and cooldown awareness.
+- Listens to `CMIPvPStartEventAsync` and `CMIPvPEndEventAsync` for runtime counters and cooldown awareness. Asynchronous observations are coalesced behind one pending server-thread drain, with at most 512 weak connection references. Reload/disable invalidates the old generation; an offline or replaced connection cannot update a new session. Direct damage protection remains in the synchronous Paper event handlers.
 - Reads CMI `PlayerCombatManager#isInCombatWithPlayer(UUID)`, `PlayerCombatManager#isInCombatWithMob(UUID)`, and matching `CMIUser` combat state for `/pvp status` and admin inspection.
 - Reads CMI `CMIUser#isVanished()` and `CMIUser#isGod()` for active PvP eligibility.
 - Tracks its own short recent PvP hit marker because CMI combat state and plugin-side damage cancellation are separate signals.
@@ -270,6 +278,12 @@ World rules are respected:
 - Uses Paper events for the actual damage cancellation layer.
 
 ## Data
+
+Profile reads and saves run on a dedicated worker. Commands briefly report that state is loading when a player's profile is not ready. Personal PvP stays protected during that read; configured forced-world and eligibility rules still apply. Offline state placeholders return an empty string on a cold lookup and provide the saved value once the background read completes. Online placeholders read the current runtime preference.
+
+The persistence queue coalesces repeated changes, retains at most 512 UUID entries, and retries failed saves with a ten-second backoff. A save error is logged without preventing player/task cleanup. Reconnects wait for accepted writes rather than loading an older disk value. Updates only change the `pvptoggle` fields and preserve other plugins' shared playerdata.
+
+Disable drains accepted saves without waiting on the server thread; reactivation waits for successful recovery. A removable JVM shutdown hook gives ordinary process exit up to ten seconds for final draining. A forced kill or prolonged storage failure can still lose pending preferences. After a storage error, fix the underlying disk problem and reload to retry a failed shutdown before reactivation.
 
 Saved player state lives under the `pvptoggle` section in:
 
@@ -293,6 +307,8 @@ pvptoggle:
 - The legacy PlaceholderAPI expansion is optional and can be disabled if it conflicts with another plugin.
 
 ## Testing
+
+The [November 4 persistence and runtime review](../compatibility-tests/pvptoggle-memory-26.3-2026-11-04.md) records build 834's 90 PvPToggle tests, full-suite verification and Paper lifecycle smoke checks. Representative player-load/heap acceptance remains separate.
 
 Recommended beta tests:
 
