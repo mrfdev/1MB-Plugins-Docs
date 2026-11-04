@@ -202,7 +202,7 @@ These guides explain third-party server features as they are configured and used
     <tr>
       <td><a href="./player-shop-gui-plus/">PlayerShopGUIPlus</a></td>
       <td>Let players list items in a shared marketplace and buy listings from other players.</td>
-      <td><code>/playershop</code>, <code>/playershop sell</code>, <code>/playershop sell 16 800</code>, <code>/playershop &lt;name&gt;</code></td>
+      <td><code>/market</code>, <code>/market info</code>, <code>/market help</code>, <code>/market sell &lt;price&gt;</code>, <a href="./player-shop-gui-plus/">+5 more</a></td>
     </tr>
     <tr>
       <td><a href="./plotsquared/">PlotSquared</a></td>

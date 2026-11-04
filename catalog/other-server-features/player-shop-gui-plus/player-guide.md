@@ -2,29 +2,13 @@
 
 Buy items from other players and offer your own items for sale on 1MoreBlock. The player market is separate from the server's `/buy` shop.
 
-**Release status, checked 1 October 2026:** build `001` is the last confirmed live version. Build `037` is running on the development test server. Publishing this guide does not deploy the plugin to live; follow the version staff have announced.
+**Local candidate `042`, 4 November 2026:** confirming a purchase automatically turns AutoSell off if necessary and tells you. It stays off until you enable it again. This candidate is not confirmed deployed; last-confirmed live remains `040`.
+
+**Release status, updated 14 October 2026:** Floris confirmed build `040` is installed on the live server and fixes the reported GUI search chat-privacy issue. Search words and `cancel` are private again. Build 040 also retains 039’s skin-profile preservation; first-menu head visual acceptance remains pending. The previous direct server inspection established build `038` on 7 October; the current deployment and privacy result are user-confirmed.
 
 | Where you are playing | Start here |
 | --- | --- |
-| Live server, last confirmed build `001` | [Current live commands](#current-live-commands-build-001). The server has a custom `/ah` shortcut. |
-| Test server, or live after staff announce the update | [The market update](#the-market-update-build-037). `/market` and `/ah` are identical native commands. |
-
-<a id="current-live-commands-build-001"></a>
-
-## Commands
-
-These are the native commands of last-confirmed live build `001`. Type `/playershop` to open the marketplace. Browse items, categories or player shops, inspect an item and its price, then confirm a purchase. Use your own shop to manage listings and **Unclaimed items** to retrieve cancelled or expired offers.
-
-| Command | What it does | Example |
-| --- | --- | --- |
-| `/playershop` | Opens the marketplace. | `/playershop` |
-| `/playershop sell` | Opens the selling menu when enabled. | `/playershop sell` |
-| `/playershop sell 16 800` | Offers 16 of your held items for 800 total, subject to the selling-menu settings. | `/playershop sell 16 800` |
-| `/playershop <name>` | Opens a player shop known to the server. | `/playershop Steve` |
-
-The native aliases are `/pshop`, `/playershops` and `/pshops`. 1MB's existing custom `/ah sell 500` shortcut lists the held stack for **500 total**; it is server configuration, not the older plugin's native syntax.
-
-The older native syntax puts **quantity before price**. Do not copy `/ah sell 500` into `/playershop sell 500`: the latter reads its single number as quantity. Missing arguments normally open the wizard, depending on settings. A complete command can list an item immediately.
+| Live server, user-confirmed build `040` | [Current commands](#commands). `/market` and `/ah` are identical native commands. GUI search input is private again. |
 
 <!-- Preserve previously published update links. -->
 <a id="the-market-update-build-006"></a>
@@ -59,9 +43,15 @@ The older native syntax puts **quantity before price**. Do not copy `/ah sell 50
 <a id="the-market-update-build-035"></a>
 <a id="the-market-update-build-036"></a>
 
-## The market update: build 037
+<a id="the-market-update-build-037"></a>
 
-The rest of this guide describes the tested update. `/market` is the main command and `/ah` is its native alias: every argument and permission works the same through either name. The old `/playershop`, `/pshop`, `/playershops` and `/pshops` roots are removed in this update.
+<a id="the-market-on-build-037"></a>
+
+<a id="the-market-on-build-038"></a>
+
+## The market on build 040
+
+The rest of this guide describes the current live command interface. `/market` is the main command and `/ah` is its native alias: every argument and permission works the same through either name. The old `/playershop`, `/pshop`, `/playershops` and `/pshops` roots are no longer registered by the plugin.
 
 ## Getting started
 
@@ -71,14 +61,16 @@ The rest of this guide describes the tested update. `/market` is the main comman
 4. Use **Your shop** to manage offers, **Unclaimed items** to collect returns and `/ah recent` for your own sales and purchases.
 5. Type `/ah help` for commands you can use, examples and this guide.
 
-## Commands after the update
+<a id="commands-after-the-update"></a>
+
+## Commands
 
 | Command | What it does | Example |
 | --- | --- | --- |
 | `/market` | Open the marketplace. | `/ah` |
 | `/market info` | Introduction, next step, help and docs. | `/ah info` |
 | `/market help` | List commands available to you. | `/ah help` |
-| `/market sell <price>` | Immediately list the entire main-hand stack for this **total** price. | `/ah sell 500` |
+| `/market sell <price>` | Immediately list the entire main-hand stack for this total price. | `/ah sell 500` |
 | `/market sell` | Open the selling wizard when enabled; otherwise show usage. | `/ah sell` |
 | `/market sell <quantity> <price>` | Offer an explicit quantity from your hand, using the configured direct/wizard behavior. | `/ah sell 16 800` |
 | `/market search <material or keyword>` | Search vanilla materials; Tab suggests material names only. | `/ah search blue` |
@@ -90,6 +82,8 @@ The rest of this guide describes the tested update. `/market` is the main comman
 Use real player names, keeping any Bedrock prefix. There are no separate `buy`, `cancel`, `claim` or `player` subcommands; buying, cancelling and collecting use menus.
 
 ## Find items and shops
+
+GUI search input, including `cancel`, is consumed privately by the market. Floris confirmed the reported global-chat leak resolved after installing build 040 on 14 October 2026.
 
 Open **Search & Browse** to choose:
 
@@ -104,7 +98,7 @@ Enchanted books remain in **Miscellaneous** for now. **Other** catches items tha
 
 For direct search, `/ah search blue` matches materials such as blue wool and blue stained glass. A complete name such as `/ah search blue_wool` selects exactly that material. Press **Tab** for vanilla material suggestions. Use underscores instead of spaces; searches ignore capitalization and accept `minecraft:blue_wool`. Paging, sorting and refresh keep your search. A valid material with no offers opens an empty menu you can refresh later.
 
-Material search ignores custom names. To find a stick called `magic box`, enter `box` in the GUI's **Search items** chat prompt, or use `/ah search stick` for all sticks. Player-created names never become command suggestions.
+Material search ignores custom names. `/ah search stick` finds all sticks, including one named `magic box`. The GUI's private **Search items** prompt can match `box`. Player-created names never become command suggestions.
 
 Type the displayed cancellation word, normally `cancel`, to leave a chat prompt. It has no slash and does not cancel a listing. An unanswered prompt closes after **two minutes** and normal chat resumes. The market buffers a limited amount of chat and reports if older messages were omitted. An accepted material-search command also ends a pending prompt.
 
@@ -112,7 +106,9 @@ Type the displayed cancellation word, normally `cancel`, to leave a chat prompt.
 
 **Buying:** inspect the item's quantity, seller and price, select a quantity and confirm the displayed cost. A partial purchase costs the corresponding proportion of the listing total. Check custom names, enchantments, damage and container contents, and leave enough inventory space.
 
-If the server's **1MB-Library AutoSell** feature is on, turn it off with `/autosell` before buying, then retry. A blocked purchase gives you no item and does not change your AutoSell preference. Contact staff if the safety check is unavailable.
+On live **040**, if **1MB-Library AutoSell** is on, turn it off with `/autosell toggle` before buying, then retry. Bare `/autosell` opens its menu so you can check the setting; leave it off if it is already disabled.
+
+In candidate **042**, confirming a valid purchase turns AutoSell off automatically and tells you: “AutoSell was turned off for this purchase. It will stay off until you run /autosell toggle.” Opening or browsing the market does not change the setting. It stays off even if the purchase subsequently fails. You can enable it again manually when ready; doing so may sell eligible items in your inventory. If the safety check fails, nothing is purchased. Contact staff if it remains unavailable.
 
 <a id="clicked-your-own-listing"></a>
 
@@ -138,7 +134,7 @@ History begins when tracking was installed. Older trades cannot be recreated fro
 
 Limits count **listing entries**, not individual items in a stack. Expired and cancelled entries occupy capacity until collected. Listing duration is time available for sale, not a deadline to collect a return.
 
-When enabled, a listing fee is charged separately from the buyer's price. Build 037 does **not** support deferred fee refunds when an item sells, is cancelled or expires. Immediate compensation for a confirmed failed trade is a different process.
+When enabled, a listing fee is charged separately from the buyer's price. Live 040 and candidate 042 do **not** support deferred fee refunds when an item sells, is cancelled or expires. Immediate compensation for a confirmed failed trade is a different process.
 
 Staff configure limits, allowed items, worlds, game modes, the cancellation word and number display. Rounded or abbreviated prices do not change transaction amounts. The [staff hidden-settings reference](/staff-reference/other-server-features/player-shop-gui-plus/#hidden-configuration-options) preserves the inherited hidden keys, defaults and examples without requiring the vendor website.
 
@@ -146,12 +142,29 @@ Staff configure limits, allowed items, worlds, game modes, the cancellation word
 
 - **No access:** use `/ah help` and ask staff to check your market/sell grants and world or game-mode restrictions. Help and info require no market access.
 - **Listing disappeared:** refresh the menu. It may have sold or expired; check your own Unclaimed items where relevant.
-- **Unknown seller or generic head:** local name/skin records may be missing. The update displays the stored player ID if no trusted name is known and learns skins locally over time. Display text never changes payment or ownership identity. The older live build can still show `none`.
+- **Unknown seller or generic head:** local name/skin records may be missing. The market displays the stored player ID if no trusted name is known and learns skins locally over time. Build 038 refreshed an already available local viewer skin before rendering, but did not resolve the reported first-menu head issue. Live 040 retains 039’s skin-profile preservation; visual acceptance of that separate issue remains pending. Display text never changes payment or ownership identity.
 - **Market paused:** staff have paused menus and trading. Offers and returns remain stored. Help, info and personal recent history still work. Deadlines stay unchanged; overdue offers move to Unclaimed after reopening.
 - **Payment, delivery or refund needs review:** contact staff with the time, item, quantity, price, message and reference ID. Do not try to bypass the hold or request duplicate replacements.
 
 ## More help
 
-Use `/ah help` in the update. The [staff reference](/staff-reference/other-server-features/player-shop-gui-plus/) covers permissions, setup, configuration, placeholders and operations.
+Use `/ah help`. The [staff reference](/staff-reference/other-server-features/player-shop-gui-plus/) covers permissions, setup, configuration, placeholders and operations.
 
 1MoreBlock maintains this custom version of [brc's PlayerShopGUIPlus](https://www.spigotmc.org/resources/playershopguiplus.37707/) for Paper 26.3. The vendor's [command reference](https://docs.brcdev.net/#/playershopgui/commands-permissions) describes its own version; use the release status above for 1MB.
+
+<a id="current-live-commands-build-001"></a>
+
+## Historical commands: build 001
+
+These were the native commands of build `001`, which is no longer the last-confirmed live version. Type `/playershop` to open the marketplace. Browse items, categories or player shops, inspect an item and its price, then confirm a purchase. Use your own shop to manage listings and **Unclaimed items** to retrieve cancelled or expired offers.
+
+| Command | What it does | Example |
+| --- | --- | --- |
+| `/playershop` | Opens the marketplace. | `/playershop` |
+| `/playershop sell` | Opens the selling menu when enabled. | `/playershop sell` |
+| `/playershop sell 16 800` | Offers 16 of your held items for 800 total, subject to the selling-menu settings. | `/playershop sell 16 800` |
+| `/playershop <name>` | Opens a player shop known to the server. | `/playershop Steve` |
+
+The native aliases are `/pshop`, `/playershops` and `/pshops`. 1MB's older custom `/ah sell 500` shortcut listed the held stack for **500 total**; it is server configuration, not the older plugin's native syntax.
+
+The older native syntax puts **quantity before price**. Do not copy `/ah sell 500` into `/playershop sell 500`: the latter reads its single number as quantity. Missing arguments normally open the wizard, depending on settings. A complete command can list an item immediately.

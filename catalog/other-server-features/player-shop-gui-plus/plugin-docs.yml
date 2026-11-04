@@ -3,11 +3,13 @@ id: player-shop-gui-plus
 name: "PlayerShopGUIPlus"
 category: other-server-feature
 summary: "Let players list items in a shared marketplace and buy listings from other players."
-# Keep the live 001 root until candidate 037 is deployed; /market and /ah are documented as pending.
-main_command: "/playershop"
+# Floris confirmed build 040 installed live and the GUI chat-privacy report resolved on 14 October.
+# Build 038 was directly inspected on 7 October; no new live hash/runtime inspection accompanies 040 confirmation.
+main_command: "/market"
 docs_url: https://docs.1moreblock.com/other-server-features/player-shop-gui-plus/
 player_guide: player-guide.md
 staff_guide: staff-guide.md
 official_project: false
 official_wiki: https://docs.brcdev.net/#/playershopgui/commands-permissions
-last_reviewed: "2026-10-01"
+# Local candidate 042 automatically prepares AutoSell safe-off on confirmed purchases; no new live deployment is confirmed.
+last_reviewed: "2026-11-04"

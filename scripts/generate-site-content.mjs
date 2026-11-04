@@ -2437,6 +2437,14 @@ async function generateAdditionalGuides(entries) {
       const body = stripDocumentPreamble(source);
       const plugin = { name: entry.manifest.name, category: 'Player Fun', file: `${entry.manifest.id}.md` };
       const commandData = extractCommandData(source);
+      if (entry.manifest.id === 'player-shop-gui-plus') {
+        // Keep the reviewed numeric prices, quantities and /ah examples from its guide.
+        commandData.tableExamples = new Map(
+          commandRowsFromMarkdownTables(extractSection(source, ['Commands']))
+            .filter((row) => row.example.startsWith('/'))
+            .map((row) => [row.command, row.example]),
+        );
+      }
       if (entry.manifest.main_command && !commandData.playerCommands.includes(entry.manifest.main_command)) {
         commandData.playerCommands.unshift(entry.manifest.main_command);
       }

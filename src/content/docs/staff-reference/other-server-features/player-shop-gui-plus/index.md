@@ -5,17 +5,21 @@ description: "Public-safe commands, permissions, configuration, integrations, an
 
 This is the public technical and operations guide for 1MoreBlock's maintained PlayerShopGUIPlus fork. For player instructions, use the [player guide](/player-guides/other-server-features/player-shop-gui-plus/). The plugin name and data directory remain `PlayerShopGUIPlus`.
 
-**Release status, reviewed 1 October 2026:** the tested candidate is build `037`; `001` remains the last confirmed live build. The candidate runs on the development test server. This guide describes 037 unless a section explicitly describes older behavior. Publishing documentation does not deploy a plugin update.
+**Local candidate `042`, 4 November 2026:** valid purchase confirmation automatically prepares AutoSell safe-off, waits for its save, notifies the player and leaves it off. Candidate artifact: `1MB-PlayerShopGuiPlus-v1.42.0-042-j25-26.3.jar`. All 55 isolated scenarios pass on Paper 26.3-241 STABLE, Oracle Java 27.0.1.0.3 and actual Library/Core 1.0.4-834. Candidate SHA-256: `025edabbb28803c9f9b7a2a0ff95058f800f4d74f42c7f77b8c9a21841e73bc6`. It has not been deployed; last-confirmed live remains `040`. Player/inventory/Vault boundaries in these tests are controlled fixtures.
+
+**Release status, updated 14 October 2026:** Floris confirmed live build `040` is installed and resolves the reported GUI search chat-privacy issue. This is user confirmation; no fresh live jar hash, startup log or runtime inspection was taken. The previous direct inspection established build `038` on 7 October. Build 040 retains 039’s observed texture-property preservation, but first-menu head visual acceptance remains pending.
 
 | Release fact | Reviewed value |
 | --- | --- |
-| Maintained artifact | `1MB-PlayerShopGuiPlus-v1.42.0-037-j25-26.3.jar` |
-| Artifact SHA-256 | `abe4b5123be3c8680b959b87200d8dafb6528a8eeab25c34331572532a54f2bc` |
-| Tested runtime | macOS, Paper 26.3-133, Java 27 |
+| Build 040 artifact | `1MB-PlayerShopGuiPlus-v1.42.0-040-j25-26.3.jar` |
+| Built artifact SHA-256; live hash not re-read | `77b0405813c584185ee9a40d1d34f13ff13b30efdbe02cf98d0cf7870fa45337` |
+| Historical live artifact, inspected 7 October | `1MB-PlayerShopGuiPlus-v1.42.0-038-j25-26.3.jar` |
+| Historical live SHA-256, 7 October | `fc940bc45963176e14c4598a6a62ed9ccbbb487aa5e1519a2338c163ba60fecb` |
+| Historical live runtime, 7 October | macOS, Paper 26.3-159, Java 27 |
 | Build | Gradle 9.8.0, Java 25 bytecode, Paper API 26.3.build.49-alpha |
-| Last confirmed live | `001`; [older commands](#older-live-build-001) |
+| Last confirmed live | `040`, user-confirmed 14 October; [current commands](#commands-in-build-037) |
 
-The current build includes durable transaction holds and the optional 1MB-Library AutoSell guard, personal history, staff logs/statistics, consistent menus and bounded background work. The 037 checks passed 37 isolated Paper scenarios and 793 saved-item round trips. Player/inventory/payment boundaries are controlled test fixtures; these results do not certify every connected client, provider, machine-crash boundary or live performance characteristic.
+Live 040 includes durable transaction holds and the optional 1MB-Library AutoSell guard, personal history, staff logs/statistics, consistent menus and bounded background work. The 037 checks passed 37 isolated Paper scenarios and 793 saved-item round trips. Player/inventory/payment boundaries are controlled test fixtures; these results do not certify every connected client, provider, machine-crash boundary or live performance characteristic.
 
 Start with [commands](#commands-in-build-037), [permissions](#permissions), [installation](#build-install-and-preserve-existing-listings), [hidden settings](#hidden-configuration-options), [placeholders](#placeholders) or [transaction recovery](#durable-transactions-and-autosell-build-036).
 
@@ -68,6 +72,14 @@ Start with [commands](#commands-in-build-037), [permissions](#permissions), [ins
 <span id="commands-in-build-034"></span>
 
 
+<a id="gui-chat-privacy-candidate-040"></a>
+
+## GUI chat privacy, build 040
+
+On 14 October 2026, Floris confirmed build 040 was installed live and fixed the reported issue. Previously, text entered through **Search & Browse → Search items**, including `cancel`, reached other players and Discord while search/cancellation still succeeded; shop-search cancellation was also reported. Floris confirmed direct material-command search stayed out of chat during the incident. The latest confirmation resolves the report without supplying a separate client/provider test checklist. `/ah search dirt` and other material-search commands remain available; they end a pending prompt and do not match custom item names.
+
+The fix cancels active market prompt input before ordinary chat broadcasters, covering the legacy and modern Paper chat stages. Ordinary deferred chat keeps its later renderer handling. Search/rename rules, permissions, the cancellation word, timeout, queue limits and stored data remain unchanged; there is no CMI or Discord configuration change. The ordering defect was reproduced in an isolated event-dispatch regression; the exact live provider responsible remains unverified.
+
 ## Performance and lifecycle safeguards, build 037
 
 Market chat prompts expire after two minutes. Pending chat rendering and rendered backlog each keep at most 100 messages per player; one drain processes up to 20 messages or two milliseconds per tick. Overflow gives a visible notice. Leaving the server releases the prompt, menu route and queued message references. These are fixed safeguards, with no new permissions or settings. `MSG.CHAT.BACKLOG` and `MSG.CHAT.TIMEOUT` in `lang.yml` customize the notices.
@@ -84,7 +96,13 @@ Listing, purchase, cancellation, expiry and individual collection require an ack
 
 `/market admin status` and `/market debug health` show pending/review counts with their existing staff permissions. Preserve the transaction UUID shown in chat/logs. The maintainer's private read-only transaction report can inspect/export an exact ID from a consistent stopped backup. Pause the market, preserve market/economy/player data together, reconcile actual balances and inventory, then review the specific repair. Restart or downgrade must never be used to clear a hold. Older jars do not enforce the new journal.
 
-The optional **1MB-CMIAPI-AutoSell** feature uses the public reward-delivery guard from **1MB-CMIAPI-Lib**. Actual suite 1.0.4-708 was tested. AutoSell on blocks purchases before payment and is checked again before delivery. Players should turn it off with `/autosell`, then try buying again. If enabled during payment, confirmed payment legs are reversed; uncertain compensation stays held. No AutoSell preference is changed. Absent AutoSell requires no new dependency; an installed but disabled/incompatible guard blocks buying with staff guidance. Install matching actual Core/AutoSell binaries and their CMI/CMILib requirements, never compile-time API contracts. This is separate from CMI AutoSell.
+The optional **1MB-CMIAPI-AutoSell** feature uses the public reward-delivery guard from **1MB-CMIAPI-Lib**, separate from CMI AutoSell. Live 040 blocks buying while AutoSell is on; affected players use `/autosell toggle` to turn it off before retrying. Bare `/autosell` opens its menu to check the setting; players whose AutoSell is already off should leave it off.
+
+Candidate **042** validates the purchase, prepares safe-off through the Library API, then waits for its acknowledged save before any payment. It sends one notice and leaves AutoSell off, even if a later purchase step fails. Opening menus and refused competing requests do not change preferences. No toggle command is dispatched. One pending transaction per buyer/shop and 32 globally remain; the extra safety wait has a 100-tick timeout, a five-second completion deadline and at most four readiness waits. Existing shop-wide reservations can briefly block another listing by the same seller. Repeated requests are refused before shop scans, item copies or provider work.
+
+The guard rechecks after events and payment callbacks. A manual re-enable stops the purchase; confirmed payments are reversed and uncertain compensation stays held. A save failure, timeout, changed session or unavailable provider refuses the purchase, and late callbacks cannot revive it. AutoSell may already be off after a failed save or timeout; check the setting before enabling it manually. This protects the purchase handoff, not items after a deliberate later re-enable.
+
+Install matching actual Core/AutoSell binaries with the asynchronous `readiness` contract, verified with **1.0.4-834**, and their CMI/CMILib requirements. Older pre-readiness integrations fail closed before changing preferences. Absent AutoSell requires no new dependency; installed but disabled/incompatible guards block buying with staff guidance. Compile-only API contracts must never be installed as plugins. Listing and collection behavior is unchanged.
 
 Keep `tax.refund.purchase`, `tax.refund.cancelled` and `tax.refund.expired` **false**. Any true flag rejects startup/reload because the legacy item format does not persist a paid-fee entitlement. Nonrefundable fees and confirmed immediate compensation remain supported; the old tax-refund permission does not override this restriction.
 
@@ -92,7 +110,7 @@ The additive `one_mb_transactions` table preserves original shop/player schemas 
 
 SQLite, the economy provider and Minecraft player files have no shared atomic commit. A finalized market receipt does not prove the other two flushed to disk. A machine crash after finalization can still need coordinated reconciliation. Actual provider cap/rounding and connected-client crash acceptance remain separate; tests use real Paper/SQLite/AutoSell with controlled player/inventory/payment boundaries.
 
-New MiniMessage keys are `MSG.TRANSACTION.UNAVAILABLE`, `BUSY`, `CHANGED`, `REVIEW` (with `%id%`), plus `MSG.BUY.AUTOSELL.ACTIVE` and `UNAVAILABLE`. Missing defaults are added without replacing custom language text.
+New MiniMessage keys are `MSG.TRANSACTION.UNAVAILABLE`, `BUSY`, `CHANGED`, `REVIEW` (with `%id%`), plus `MSG.BUY.AUTOSELL.ACTIVE`, `UNAVAILABLE` and, from candidate 042, `DISABLED`. Missing defaults are added without replacing custom language text. Build 041 also migrates the exact stock `MSG.BUY.AUTOSELL.ACTIVE` warning to name `/autosell toggle`; customized warnings are preserved.
 
 <span id="commands-in-build-035"></span>
 
@@ -162,7 +180,7 @@ Each menu's `buttons.playerDetails.enabled` defaults to `true`; an explicit `fal
 
 Generic Back and Close never confirm a purchase, cancel a listing or collect an item. Confirmation and notification screens use their existing return route when going back. Back from the price wizard returns to quantity while preserving its current setup; leaving the wizard clears that unfinished setup. Existing explicit transaction buttons, ownership checks, permissions, cooldowns and session validation remain in force. No new command, permission, dependency, item format or database migration is introduced.
 
-For deployment, preserve the previous jar and saved configuration and perform a clean stop/start. The saved YAML remains usable for a cosmetic rollback; keep current market/economy/player data rather than restoring old trades to undo a layout. Human-client appearance and real-provider acceptance remain separate from isolated Paper tests. This describes candidate 035, not a live plugin update.
+For deployment, preserve the previous jar and saved configuration and perform a clean stop/start. The saved YAML remains usable for a cosmetic rollback; keep current market/economy/player data rather than restoring old trades to undo a layout. Human-client appearance and real-provider acceptance remain separate from isolated Paper tests. This layout was introduced in 035 and remains in live 040.
 
 ### Search & Browse menus in build 028
 
@@ -174,7 +192,7 @@ Configuration is in `menu.yml`: `menu.main.buttons.browse` is the spyglass; `men
 
 For a saved menu without `menu.main.buttons.browse`, startup supplies the new main layout in memory, preserving the configured item definitions on the three surviving actions. It also supplies a missing `menu.searchBrowse` section. This does not write or erase the saved YAML. Review custom layouts before deployment. To save the new layout explicitly, back up `menu.yml`, merge the packaged `menu.main` and `menu.searchBrowse` sections while retaining intended customizations, and restart cleanly. The test clone receives only those two sections; all other saved menu sections remain unchanged. `/market admin reload` does not reload `menu.yml`.
 
-Rollback to 027 requires restoring the matching previous menu sections as well as the prior jar: that version expects the four old buttons on the main menu. Keep current market, economy and player data when reverting a visual update; do not restore an old database over later trades. The live server remains last-confirmed 001. Isolated macOS Paper tests use synthetic players and economy boundaries; connected-client acceptance of this layout is still pending.
+Rollback to 027 requires restoring the matching previous menu sections as well as the prior jar: that version expects the four old buttons on the main menu. Keep current market, economy and player data when reverting a visual update; do not restore an old database over later trades. User-installed live build 038 was directly verified on 7 October 2026. Isolated macOS Paper tests use synthetic players and economy boundaries; connected-client acceptance of this layout is still pending.
 
 ### GUI safety in build 017
 
@@ -289,7 +307,7 @@ For recovery, pause the market and preserve consistent market, economy, player-d
 
 Keep receipts and exports private and include the whole database in backups. Build 036 compacts safely RETURNED bulk-claim payloads; empty no-effect FAILED and RETURNED receipts older than seven days may be pruned during admission. Successful and unresolved evidence remains retained. Journal payload/admission budgets do not authorize deleting unresolved holds. Before downgrading to 029 or earlier, resolve all pending escrow or restore a coordinated rollback pair while accounting for later gameplay; older jars ignore this journal. Never roll back only shop data while leaving newer player inventories in place.
 
-macOS Paper tests cover capacity, whole-listing skips, repeat/stale clicks, changed sessions/permissions/inventory, SQL failures, exact custom/container items, and forced JVM crashes before and during delivery. Player/inventory boundaries are synthetic; human-client and actual-provider acceptance remain separate. This candidate documentation does not announce a live plugin update.
+macOS Paper tests cover capacity, whole-listing skips, repeat/stale clicks, changed sessions/permissions/inventory, SQL failures, exact custom/container items, and forced JVM crashes before and during delivery. Player/inventory boundaries are synthetic; human-client and actual-provider acceptance remain separate. These test records do not establish a new deployment.
 
 ## Unclaimed-items tooltip (026)
 
@@ -316,11 +334,17 @@ The refreshed defaults explicitly list 1,645 item materials verified against Pap
 
 The category-entry option `matchMaterialOnly: true` groups all variants of that material, ignoring the comparison flags for that entry only. Its default is false, retaining existing matching semantics. The refreshed player-head, potion, spawner and goat-horn entries enable it so textured heads, actual potion variants and configured spawners appear. A goat-horn entry still needs valid `musicInstrument` metadata when loaded, such as `minecraft:ponder_goat_horn`. Do not enable material-only matching for a category intended to distinguish specific provider items or metadata. Purchase comparison, item contents, ownership and payment validation are unchanged; no remote profile lookup is added.
 
-A jar upgrade preserves existing `categories.yml`. Back it up and merge the packaged categories deliberately, retaining custom entries, provider IDs, comparisons, labels and slots. Do not delete the file or replace unrelated menu/configuration files to get new defaults. Adopt this option only with 025 or newer. Install the jar with a clean restart; later category-only edits can use `/market admin reload`, then reopen the menu. The 1MB test clone has the reviewed refreshed lists. Roll back the jar and its previous category file together; no market database migration is needed. New views filter existing listings without rewriting them.
+A jar upgrade preserves existing `categories.yml`. Back it up and merge the packaged categories deliberately, retaining custom entries, provider IDs, comparisons, labels and slots. Do not delete the file or replace unrelated menu/configuration files to get new defaults. Adopt this option only with 025 or newer. Install the jar with a clean restart; later category-only edits can use `/market admin reload`, then reopen the menu. The 1MB test clone has the reviewed refreshed lists. On 7 October 2026, the reviewed saved category file was also installed on live build 037, backed up and reloaded successfully. Roll back the jar and its previous category file together; no market database migration is needed. New views filter existing listings without rewriting them.
 
 ## Local shop-owner skin cache (024)
 
-Shop heads now remember locally observed skin textures across restarts. A complete connected-player profile refreshes its UUID's cached skin. When a shop head has no saved texture, the market can reuse a valid entry from CMI's already-loaded UUID skin map. A player who has never supplied a local skin can still appear as a generic head; the cache gradually fills as players return. Reopen a menu after learning a skin. Cached skins can remain old until a newer complete player profile is observed.
+Shop heads remember locally observed skin textures across restarts. A complete connected-player profile refreshes its UUID's cached skin. When a shop head has no saved texture, the market can reuse a valid entry from CMI's already-loaded UUID skin map. A player who has never supplied a local skin can still appear as a generic head; the cache gradually fills as players return. Reopen a menu after learning a skin. Cached skins can remain old until a newer complete player profile is observed.
+
+Build 038 observes the viewing player’s already-present profile before rendering and selects viewer buttons by UUID. It passed isolated UUID/URL/model assertions, but Floris’s live Java-client check still showed generic first-menu heads. Those tests did not establish the full visible recovery.
+
+Build 039, retained by live 040, preserves the observed texture property’s literal value and signature in the existing 500-entry head cache. Vanilla Minecraft 26.3 includes that property and UUID in its skin-cache key; rebuilding it from only the URL/model creates a different cache entry even for the same skin. Unchanged properties reuse the template; changed properties replace it. The persisted UUID/name/URL/model/time records and CMI fallback remain unchanged, with no raw profile or signature written to disk. No new fetch, setting or schema migration is added.
+
+The 039 strict build/packaging and focused isolated Paper tests passed; Floris confirmed 040’s live deployment, while Java-client visual acceptance of the inherited head change remains pending. Tests of actual vanilla client classes cover 14 cache-key and nine rendering-cache cases. These establish why property preservation matters, not a guarantee of a textured first frame: the client’s SkinManager lookup cache expires entries after 15 seconds without access, and asynchronous lookups can still show a temporary default. Missing local textures continue using the existing generic fallback.
 
 ```yaml
 playerSkins:
@@ -675,7 +699,7 @@ These labels cover successive powers of 1000, from one thousand (10³) through o
 
 ### Applying changes
 
-A full, clean server restart reliably applies all settings above. The in-game reload command (`/playershop reload` on live `001`, `/market admin reload` in candidate `015`) refreshes item-name capitalization, the cancellation word, number-format settings, and language labels for subsequent formatting and input; reopen existing menus to see refreshed text. External spawner selection happens during startup and requires a restart. The 007 reload cancels outstanding market prompts; players should reopen the relevant menu afterward.
+A full, clean server restart reliably applies all settings above. The in-game reload command (`/market admin reload` in live 040; historically `/playershop reload` in build 001) refreshes item-name capitalization, the cancellation word, number-format settings, and language labels for subsequent formatting and input; reopen existing menus to see refreshed text. External spawner selection happens during startup and requires a restart. The 007 reload cancels outstanding market prompts; players should reopen the relevant menu afterward.
 
 ## Persistent maintenance mode (007)
 
@@ -720,20 +744,19 @@ Diagnostics do not print player records, UUID lists, balances, item payloads, fu
 
 ### Compile the maintained build
 
-Use the authorized private source checkout and the intended release tag. Source and jars remain private. Build 016 uses Gradle 9.8.0. Set `JAVA_HOME` to JDK 25 or 27 to launch the wrapper; an installed JDK 25 remains required for compilation, with `JAVA25_HOME` available for explicit discovery. Install Python 3.11+ for tooling checks. Dependency versions are locked, and dependency jars/POM/module metadata plus the wrapper distribution use SHA-256 verification. The wrapper launcher checksum is checked before execution. On macOS:
+Use the authorized private source checkout and the intended release. Source and jars remain private. The Gradle 9.8.0 wrapper dynamically resolves and validates installed Oracle JDK 25 for Gradle/compilation and Oracle JDK 27 for tests. On macOS it uses `/usr/libexec/java_home -F -v 25` and `-v 27`; ambient `JAVA_HOME` does not select the build. Install Python 3.11+ for tooling checks. Dependency versions are locked, and dependency jars/POM/module metadata plus the wrapper distribution use SHA-256 verification. The wrapper launcher checksum is checked before execution. On macOS:
 
 ```sh
-export JAVA_HOME="$(/usr/libexec/java_home -v 25)"
 python3 scripts/check-tooling.py
 ./gradlew --dependency-verification strict --warning-mode fail clean build smokeJars
 python3 scripts/check-tooling.py --artifact
 ```
 
-On other systems, set `JAVA_HOME` to the installed JDK 25 directory; on Windows use `gradlew.bat --dependency-verification strict --warning-mode fail clean build smokeJars` and `python` for the check scripts. The installable result is `build/libs/1MB-PlayerShopGuiPlus-v<version>.jar`; the candidate update is `1MB-PlayerShopGuiPlus-v1.42.0-037-j25-26.3.jar`. Use the maintainer's recorded checksum to verify the supplied artifact. Test probes, compile stubs, old NMS handlers, and source archives are not server plugins to install.
+For explicit installed selections, use `ONE_MB_BUILD_JAVA_HOME` (Oracle 25) and `ONE_MB_TEST_JAVA_HOME` (Oracle 27). Both are required on systems without macOS discovery; automatic JDK downloads and fallback vendors are disabled. The installable result is `build/libs/1MB-PlayerShopGuiPlus-v<version>.jar`; the local candidate is `1MB-PlayerShopGuiPlus-v1.42.0-042-j25-26.3.jar`. Use the maintainer's recorded checksum to verify the supplied artifact. Test probes, compile stubs, old NMS handlers, and source archives are not server plugins to install.
 
 For portable harness checks, run `python3 -m unittest discover -s scripts/tests -v`. After a successful strict build, `python3 scripts/test-dependency-guards.py` proves that tampered checksums, missing locks and incompatible upgrades fail, using offline disposable copies. Linux/macOS/Windows CI runs these tooling/build checks without private player data. Real Paper regression tests still require local Java 27, a prepared matching Paper bootstrap/cache, an already accepted EULA and approved provider jars; real-server coverage is currently macOS only. Tests select free loopback ports and unique directories, default to packaged configuration, accept explicit Java/server/config/provider/probe/output paths, reject stale results and stop timed-out test processes. They never use a gameplay server as their output directory. The three codec/sell/buy probes remain separate from the runtime jar. The obsolete HeadDatabase probe/task and `hdb-*` scenarios were removed in 027; `removed-headdatabase` verifies rejected legacy configuration without a provider jar.
 
-Maintainers must follow the private repository's `docs/DEVELOPMENT-TOOLING.md` before changing Gradle/dependencies. Do not disable checksum checks or automatically accept new hashes to fix a build. The initial dependency checksum set is a recorded trust baseline, not a PGP signature check or security audit; all seven archived direct dependencies and all 22 project resolution graphs match 015. Wrapper/distribution checksums came from official Gradle metadata. Paper 26.3 build 133 and compile API 49 are unchanged. No market-data migration or gameplay restart is required for tooling work.
+Maintainers must follow the private repository's `docs/DEVELOPMENT-TOOLING.md` before changing Gradle/dependencies. Do not disable checksum checks or automatically accept new hashes to fix a build. The initial dependency checksum set is a recorded trust baseline, not a PGP signature check or security audit. Wrapper/distribution checksums came from official Gradle metadata. Candidate 042 is tested on Paper 26.3-241 STABLE; the pinned compile API remains 26.3.build.49-alpha. No market-data migration or gameplay restart is required for tooling work.
 
 ### Fresh installation
 
@@ -794,7 +817,7 @@ Player names preserve case and Bedrock prefixes. Database UUID text must be cano
 
 Names load on the database worker, and Paper's existing cache is copied in small main-thread batches before shops become available. Menu rendering reads memory only. A returning player's current real username updates the existing player row asynchronously, retaining the UUID and registration date; new players use the existing registration table. A delayed startup snapshot cannot overwrite a newer join. If the name table cannot be read, a warning is logged and Paper/session names or UUID labels remain available. If saving a renamed username fails, its current-session label remains available but may revert after restart. Manual edits to offline player rows need a clean restart to reload the GUI name snapshot; normal config reload does not reread this table.
 
-Seller heads use UUID-keyed templates with complete, usable local textures. Build 024 persists those skins and optionally reuses CMI’s loaded UUID skin map; see [local skin caching](#local-shop-owner-skin-cache-024). Missing textures still produce a generic head, and chest placeholders work. Name-based menu buttons use only the local cache and reject ambiguous matches. Displaying a name never triggers online profile completion.
+Seller heads use UUID-keyed templates with complete, usable local textures. Build 024 persists those skins and optionally reuses CMI’s loaded UUID skin map; see [local skin caching](#local-shop-owner-skin-cache-024). Missing textures still produce a generic head, and chest placeholders work. Build 038 selects viewer-bound menu buttons by actual UUID. Configured name-based heads still use only the local cache and reject ambiguous matches. Displaying a name never triggers online profile completion.
 
 There is no new command, permission, placeholder, plugin dependency, item-format change or shop-data migration. `%owner%` uses the resolved name or UUID. Back up the current jar and plugin/economy data before replacing the jar; verify representative offline, renamed and Bedrock sellers after restart. Rolling back to `010` restores its old name fallback but does not require restoring stale shop data. Preserve current trades and statistics. These focused checks do not complete the broader GUI/security or financial recovery work.
 
@@ -852,7 +875,7 @@ Clean shutdown queues a final flush and closes the worker without blocking the s
 
 ### Upgrade and rollback
 
-Back up the jar and complete plugin/economy data while stopped, including `statistics.db`, `market-state.yml` and `lang.yml`. Start the current candidate normally; current listings appear immediately, and history begins recording new activity. Reload does not reset history. There is no stats-delete/reset command.
+Back up the jar and complete plugin/economy data while stopped, including `statistics.db`, `market-state.yml` and `lang.yml`. Start the current release normally; current listings appear immediately, and history begins recording new activity. Reload does not reset history. There is no stats-delete/reset command.
 
 Builds before 010 ignore `statistics.db`; builds 010/011 keep reading and writing the original event and totals tables while ignoring later additive details, audit tables and indexes. Preserve it during rollback, but record any interval spent on an older jar because that interval cannot be counted; the file cannot detect trades made by a build that does not record statistics. Returning to the current build keeps existing totals; custom names for sales recorded by 010/011 are unavailable and use material fallback. Do not restore stale shop/economy data just to restore analytics. Builds before 009 also require reviewing/restoring the prior language file because they do not support MiniMessage.
 
@@ -1006,7 +1029,7 @@ Build 033 introduced the pastel, non-italic **Your market** head on the main men
 
 Counts are **listing entries**, not individual stack quantities. The general listing limit counts all retained entries, including cancelled and expired listings. The unclaimed limit blocks new listings when reached; it does not delete overflow or older items. Collecting unlisted items frees their slots. These details describe capacity, not a guarantee that a new listing will pass the other selling checks.
 
-The viewer's actual server UUID selects their listings, cached skin and external placeholder context, including Floodgate/Bedrock players. The existing local player/CMI skin cache supplies complete textures; a missing skin remains a plain head. Rendering makes no database, balance or remote identity request. No new commands, permissions, exported placeholders or storage migration are introduced. Each menu retains its existing access checks; the informational head grants no additional access.
+The viewer's actual server UUID selects their listings, cached skin and external placeholder context, including Floodgate/Bedrock players. The existing local player/CMI skin cache supplies complete textures; a missing skin remains a plain head. Build 038 observes the connected viewer’s already-present local profile before rendering; live 040 inherits 039’s complete texture-property and signature preservation in memory. Java-client visual acceptance remains pending. Rendering does not wait for database work, query balances or request a remote identity; observed skins retain the existing background persistence path. No new commands, permissions, exported placeholders or storage migration are introduced. Each menu retains its existing access checks; the informational head grants no additional access.
 
 ## Menu configuration
 
@@ -1075,7 +1098,7 @@ Expansion callbacks run on the server thread because arbitrary expansions may ac
 
 `/market debug hooks` reports the configured allowlist count, activation/pause state and cache size without printing player values. `/market debug placeholders` documents the six local head tokens and limited external scope.
 
-The integration was tested on macOS Paper 26.3-133 / Java 27 with PlaceholderAPI 2.12.3 and synthetic players/expansions. Individual third-party expansions and human-client appearance still require acceptance. No player data schema changes. The candidate remains separate from the live 001 deployment.
+The integration was tested on macOS Paper 26.3-133 / Java 27 with PlaceholderAPI 2.12.3 and synthetic players/expansions. Individual third-party expansions and human-client appearance still require acceptance. No player data schema changes. Floris confirmed live build 040 and the GUI chat-privacy fix on 14 October; first-menu head visual acceptance remains pending after the failed live 038 check.
 
 ## Reference Links
 
