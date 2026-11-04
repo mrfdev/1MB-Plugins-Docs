@@ -149,7 +149,11 @@
       "defaultSource": "../ShopChest",
       "requiredPrivateDocs": [
         "adr",
-        "agents"
+        "agents",
+        "build.md",
+        "release-readiness.md",
+        "storefront-beta-test.md",
+        "verification"
       ]
     },
     {

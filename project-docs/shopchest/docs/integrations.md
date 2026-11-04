@@ -4,6 +4,34 @@
 
 Vault is a hard dependency. ShopChest also requires an economy provider registered through Vault; Vault alone is not enough. All creation charges, refunds, buys, sells, balance checks, and displayed currency formatting use that provider.
 
+## 1MB Library AutoSell
+
+From build 798, ShopChest blocks customer purchases while 1MB Library AutoSell is on for that
+player. The message says: “You cannot buy this while AutoSell is on. Run
+`/autosell toggle` to turn it off first.” This applies to normal and admin shops,
+single bundles and sneaking stack purchases, and confirmation clicks. Selling
+items to a shop remains available.
+
+AutoSell can sell eligible ordinary items from the player's inventory, including
+new purchases. ShopChest checks its current public reward-safety API before
+charging money or moving items. The check deliberately does not depend on the
+product's current AutoSell filter, world, cap, or cooldown. ShopChest never
+dispatches a toggle command or requests automatic disabling.
+
+If AutoSell is still saving its off state or settling a sale, the purchase waits
+for a later player retry; no payment or delivery is queued. If the installed,
+enabled AutoSell API cannot be checked, purchases fail closed with a staff-help
+message. An absent or disabled AutoSell plugin does not block purchases. This
+safety integration is automatic and has no permission bypass or config switch.
+
+The bridge recognizes `1MB-CMIAPI-AutoSell` and `1MB-Lib-AutoSell`. Its isolated
+adapter checks the public `preview(Player)` and
+`prepare(Player, RewardDeliveryMode.MANUAL_CLAIM, String)` contracts, including
+pending readiness. It uses reflection because the optional Library API is not a
+published ShopChest dependency. It never reads private fields or player data
+files. Incompatible API versions block purchases until compatibility is restored.
+The shipped English and German messages have defaults for existing language files.
+
 ## Optional Protection and World Integrations
 
 | Plugin | Verified ShopChest behavior |
@@ -65,6 +93,20 @@ comparison during normal trades. It makes one lookup only when a valid
 normal-shop proposal is being created. CMI remains responsible for interpreting
 item metadata and its worth configuration. `/shops admin debug` reports whether
 the advisory is active and which thresholds are loaded.
+
+## Local Owner Names
+
+Shop holograms resolve an owner's name by their authoritative server UUID: first
+from an online player, then CMI's existing in-memory user record when available,
+then Paper's local profile cache. This lookup does not read offline player NBT,
+query a database, or contact an external identity service. CMI is optional, and
+this cache lookup is independent of the CMI worth-warning setting.
+
+Loaded holograms share the cached name, including a UUID fallback when no local
+name is available. Names and Bedrock prefixes are preserved. An owner joining
+updates their cached name; after the last hologram releases the entry, a later
+display creation checks the local sources again. The periodic refresh applies
+name changes even when the hologram format has no stock placeholders.
 
 ## Multiworld and Proxy Behavior
 

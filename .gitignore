@@ -58,3 +58,9 @@ project-docs/cmi-api/docs/forage-26.3-revamp-todo.md
 project-docs/cmi-api/docs/plugins/forage-camp-technical.md
 project-docs/cmi-api/docs/plugins/forage-roadmap.md
 project-docs/cmi-api/docs/plugins/forage/checklist.md
+
+# Private ShopChest engineering and verification records.
+project-docs/shopchest/docs/build.md
+project-docs/shopchest/docs/release-readiness.md
+project-docs/shopchest/docs/storefront-beta-test.md
+project-docs/shopchest/docs/verification/

@@ -1,0 +1,132 @@
+---
+title: "Integrations"
+description: "Public-safe integrations for ShopChest."
+---
+
+## Required Economy Stack
+
+Vault is a hard dependency. ShopChest also requires an economy provider registered through Vault; Vault alone is not enough. All creation charges, refunds, buys, sells, balance checks, and displayed currency formatting use that provider.
+
+## 1MB Library AutoSell
+
+From build 798, ShopChest blocks customer purchases while 1MB Library AutoSell is on for that
+player. The message says: “You cannot buy this while AutoSell is on. Run
+`/autosell toggle` to turn it off first.” This applies to normal and admin shops,
+single bundles and sneaking stack purchases, and confirmation clicks. Selling
+items to a shop remains available.
+
+AutoSell can sell eligible ordinary items from the player's inventory, including
+new purchases. ShopChest checks its current public reward-safety API before
+charging money or moving items. The check deliberately does not depend on the
+product's current AutoSell filter, world, cap, or cooldown. ShopChest never
+dispatches a toggle command or requests automatic disabling.
+
+If AutoSell is still saving its off state or settling a sale, the purchase waits
+for a later player retry; no payment or delivery is queued. If the installed,
+enabled AutoSell API cannot be checked, purchases fail closed with a staff-help
+message. An absent or disabled AutoSell plugin does not block purchases. This
+safety integration is automatic and has no permission bypass or config switch.
+
+The bridge recognizes `1MB-CMIAPI-AutoSell` and `1MB-Lib-AutoSell`. Its isolated
+adapter checks the public `preview(Player)` and
+`prepare(Player, RewardDeliveryMode.MANUAL_CLAIM, String)` contracts, including
+pending readiness. It uses reflection because the optional Library API is not a
+published ShopChest dependency. It never reads private fields or player data
+files. Incompatible API versions block purchases until compatibility is restored.
+The shipped English and German messages have defaults for existing language files.
+
+## Optional Protection and World Integrations
+
+| Plugin | Verified ShopChest behavior |
+| --- | --- |
+| WorldGuard | Registers `create-shop`, `use-shop`, and `use-admin-shop` state flags and checks them during creation and trading. It also supplies the region membership used by marketplace-scoped storefront discovery. |
+| Towny | Restricts shop creation to configured plot types according to resident, mayor, and king context. |
+| PlotSquared | Registers and evaluates shop flags for supported old and newer PlotSquared API layouts. |
+| BentoBox | Registers a shop flag and checks island access. |
+| GriefPrevention | Checks claim permission before shop creation/use through its listener hook. |
+| AreaShop | Removes shops on configured region lifecycle events; its listener is used with the WorldGuard-backed integration. |
+| ASkyBlock / uSkyBlock / IslandWorld | Checks island ownership or access through the installed plugin API. |
+| AuthMe | Ignores shop interactions from players who are not authenticated. |
+
+Each hook has an `enable-*-integration` setting. Most are also listed as soft dependencies so they load before ShopChest when installed. Restart after adding, removing, updating, or toggling an integration.
+
+`shopchest.external.bypass` lets trusted staff bypass integrated region, plot, island, or claim denials while using shops. `shopchest.create.protected` separately bypasses a cancelled creation event.
+
+### `/warp shops` Discovery Scope
+
+The default `storefront-discovery.location-scope: MARKETPLACE` includes a shop
+only when WorldGuard confirms that it is in world `general` and region `shops`,
+or the configured replacements. If WorldGuard is absent, disabled, or cannot
+answer the region lookup, discovery fails closed. This affects public profiles,
+item search, Featured Listing eligibility, and advertising.
+
+`GLOBAL` is available for servers that intentionally want broader in-game
+discovery. Ordinary coordinates remain non-clickable, and the reviewed website
+snapshot remains limited to the configured `/warp shops` marketplace.
+
+## AFK Shrine Token Advertising Currency
+
+AFK Shrine Tokens are earned through the 1MB-Library `/afkshrine` trades, but
+ShopChest does not depend on an AFK Shrine API or guess an internal PDC key.
+An administrator holds one genuine token and runs
+`/shops admin advertise currency capture`. ShopChest serializes that complete
+ItemStack with amount normalized to 1 in its own data folder.
+
+At purchase time a candidate stack is also normalized to amount 1 and accepted
+only when Bukkit's `ItemStack.isSimilar` says it matches the captured template.
+Plain `LIGHT_BLUE_DYE`, renamed dyes, copied display names/lore, and items with
+missing, extra, or changed PDC/components are rejected. A missing or unreadable
+template disables purchases rather than falling back to a weaker identity.
+
+This capture boundary lets the AFK Shrine implementation evolve without making
+ShopChest depend on a guessed token schema. After an intentional token format
+change, staff should clear and recapture the new genuine item during a
+maintenance window.
+
+## CMI Worth Price Advisory
+
+CMI is an optional soft dependency. When installed and
+`cmi-worth-price-warning.enabled` is true, ShopChest uses CMI's public
+`WorthManager` API to compare proposed normal-shop unit prices with the
+product's loaded `/sell` worth. It can flag direct resale opportunities and
+unusually low or high ratios without blocking shop creation.
+
+ShopChest does not parse `Worth.yml`, schedule a file scan, or perform this
+comparison during normal trades. It makes one lookup only when a valid
+normal-shop proposal is being created. CMI remains responsible for interpreting
+item metadata and its worth configuration. `/shops admin debug` reports whether
+the advisory is active and which thresholds are loaded.
+
+## Local Owner Names
+
+Shop holograms resolve an owner's name by their authoritative server UUID: first
+from an online player, then CMI's existing in-memory user record when available,
+then Paper's local profile cache. This lookup does not read offline player NBT,
+query a database, or contact an external identity service. CMI is optional, and
+this cache lookup is independent of the CMI worth-warning setting.
+
+Loaded holograms share the cached name, including a UUID fallback when no local
+name is available. Names and Bedrock prefixes are preserved. An owner joining
+updates their cached name; after the last hologram releases the entry, a later
+display creation checks the local sources again. The periodic refresh applies
+name changes even when the hologram format has no stock placeholders.
+
+## Multiworld and Proxy Behavior
+
+Multiverse-Core and MultiWorld are soft dependencies used to improve load ordering for persisted shops in multiple worlds. Shop records include world and block coordinates.
+
+When `enable-vendor-bungee-messages` is enabled, ShopChest sends vendor notifications over the outgoing `BungeeCord` plugin channel. This is message forwarding, not shared shop storage. A network that needs common shops must configure a shared MySQL database and validate concurrent behavior in staging.
+
+## Metrics and Updates
+
+This custom fork does not include bStats or transmit usage metrics. It also
+does not contact the original Spigot resource for update information. Plugin
+updates are distributed as reviewed 1MoreBlock builds through normal server
+maintenance.
+
+ShopChest does not provide a PlaceholderAPI expansion and does not integrate with mcMMO. Hologram placeholders are internal to ShopChest; external plugins should not treat the fake display entities as players.
+
+## Reference Links
+
+- [Staff overview](/staff-reference/custom-server-plugins/shopchest/)
+- [Player guide](/player-guides/custom-server-plugins/shopchest/)

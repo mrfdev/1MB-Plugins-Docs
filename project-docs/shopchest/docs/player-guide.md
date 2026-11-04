@@ -14,15 +14,17 @@ ShopChest lets players turn supported storage containers into shops. A shop can 
 
 Supported containers are normal and trapped chests, barrels, undyed and dyed
 shulker boxes, and every copper chest oxidation and waxed variant available in
-Paper 26.2. Ender chests, hoppers, furnaces, and other inventory blocks are not
+Paper 26.3. Ender chests, hoppers, furnaces, and other inventory blocks are not
 shop containers.
 
 When an enabled buy side cannot supply the full configured purchase amount, its
 hologram price changes to `[Out of stock]`. A separately enabled sell side
 remains visible and usable. Normal chest interactions update the display on the
-next server tick. Changes made by hoppers, commands, or other plugins are also
-reconciled automatically in small batches, so a stale display should correct
-itself within a few seconds without moving an item by hand.
+next server tick. Automated transfers into and out of shops are blocked,
+including owner/admin hoppers and hopper minecarts. Restock shops manually.
+Changes made by commands or other plugins are also reconciled automatically in
+small batches, usually within a few seconds without moving an item by hand.
+Large numbers of loaded shops or a slow server can make this take longer.
 
 Enchanted books and other enchanted products list their enchantments and
 levels. Potions list their localized effects, amplifiers, and durations. Dense
@@ -73,6 +75,23 @@ By default, right-click buys from a shop and left-click sells to it. The server 
 
 The default setup charges 5 economy units to create a normal shop and allows 5 normal shops per player. Server ranks and configuration may change both values. Admin shops are not counted toward player limits and have unlimited stock and funds.
 
+### Buying with 1MB AutoSell
+
+From ShopChest build 798, buying checks that your 1MB Library AutoSell is off
+before charging you or moving items. This prevents eligible purchases from
+being sold by AutoSell afterward. If AutoSell is on, you see:
+
+> You cannot buy this while AutoSell is on. Run `/autosell toggle` to turn it off first.
+
+Run `/autosell toggle`, confirm AutoSell says it is off, then click the shop
+again. ShopChest does not turn it off for you. The check also applies to admin
+shops, sneaking stack purchases, and confirmation clicks. You can still sell
+items to shops while AutoSell is on.
+
+If AutoSell is finishing a save or sale, wait briefly and retry the purchase.
+You have not been charged. If the message says its safety check is unavailable,
+contact staff. Once AutoSell is off, do not toggle it again just to retry buying.
+
 ## Find Shops and Browse Storefronts
 
 Use an exact base item name to find normal player shops that currently have at
@@ -90,11 +109,14 @@ Item metadata is still respected when stock is counted, so a shop is in stock
 only when its container holds its exact configured item variant and full bundle
 amount.
 
-Results show four shops per page with bundle price, unit price, available full
-bundles, storefront, and coordinates. Only in-stock results are listed. A
-summary also mentions matching shops that are out of stock or could not be
-checked because their chunks are unloaded. ShopChest does not load chunks for a
-search. Admin shops, suspended storefronts, and shops that only buy items from
+Results show four shops per page with bundle price, unit price, storefront, and
+coordinates. Shops with verified stock appear first and show their available
+full bundles. A database-known offer whose chunk is unloaded still appears with
+a yellow `STOCK UNCHECKED` label and a message explaining that visiting will
+load the chunk and verify current stock. The listing and price are known, but
+ShopChest does not pretend the unseen chest inventory is current and never
+force-loads it for search. Confirmed out-of-stock shops are summarized but not
+listed. Admin shops, suspended storefronts, and shops that only buy items from
 customers are not search results.
 
 If an item cannot be resolved, ShopChest may show up to three clickable exact
@@ -146,9 +168,9 @@ listing:
 
 ```text
 /shops profile
-/shops profile JahLion
-/shops profile JahLion shops 2
-/shops profile 00000000-0000-0000-0000-000000000000
+/shops profile shopowner JahLion
+/shops profile shopowner JahLion shops 2
+/shops profile shopowner 00000000-0000-0000-0000-000000000000
 ```
 
 The overview summarizes how many public shops sell to players and buy from
@@ -171,13 +193,60 @@ support it. Only your eligible normal shops that sell to customers can be
 featured. Remove a field without affecting the others with, for example,
 `/shops profile clear description`.
 
+## Place Your Storefront Display
+
+Once you have an eligible normal shop, you can turn one Ender Chest into the
+anchor for your persistent Storefront Display:
+
+```text
+/shops profile display create
+```
+
+Right-click the chosen Ender Chest within 15 seconds. Leave the block directly
+above it empty. The panel shows your Storefront Profile name, owner name,
+advertisement wrapped across up to two lines, bounded description and
+directions, and live counts for shops selling to and buying from players. Its
+wider Ender Chest-only panel uses the server's shop-hologram theme at a smaller
+size and faces each viewer. A slowly rotating End Crystal item marks the panel
+from a distance. As a player approaches, a soft aqua particle orbit becomes denser
+around the chest and remains distinct from its native purple particles. These
+are visual-only display effects: no live End Crystal entity is spawned, so it
+cannot explode, drop, or interact with the world.
+
+Right-click anywhere on the visible profile panel to open the same public view
+as `/shops profile shopowner <owner>`. This still requires the normal
+`shopchest.profile` permission. A server-enforced three-second cooldown applies
+per viewer across all Storefront Displays; extra rapid clicks are ignored
+silently.
+
+The Ender Chest is only a display anchor. It remains an ordinary personal Ender
+Chest, is never a tradable Shop inventory, does not consume a normal-shop slot,
+and is unrelated to paid storefront advertisements. Each player may have
+exactly one Storefront Display, so choose the location carefully. Check or
+remove it with:
+
+```text
+/shops profile display status
+/shops profile display remove
+```
+
+Removing the display does not break the Ender Chest. Breaking the Ender Chest
+through an otherwise permitted block break removes the display and releases
+the one-display allowance. Its text disappears while the storefront is staff
+suspended, when the chunk is unloaded, or while the block above is obstructed;
+the saved anchor returns automatically when those temporary conditions clear.
+The landmark item is only sent to nearby players, and the orbit particles are
+sent separately to each nearby viewer. Neither effect force-loads the chunk.
+
 ## Advertise Your Storefront
 
 Storefront advertising uses AFK Shrine Tokens earned through `/afkshrine`
 trades. With the default beta settings, one Advertising Pass costs 5 exact
 tokens, lasts 7 days, and includes 3 successful public broadcasts. Passes do
 not stack, a seller can broadcast at most once every 24 hours, and the whole
-server waits at least 30 minutes between advertisements.
+server waits at least 30 minutes between advertisements. An advertisement runs
+only while at least 6 players are online; with a smaller audience it stays
+queued and does not spend the reserved broadcast.
 
 Start with `/shops advertise`. The command shows the pass or queue state and
 clickable previews. A purchase preview never charges automatically: its
@@ -198,7 +267,8 @@ you queue the advertisement and is checked again before broadcast. A temporarily
 out-of-stock primary listing waits in the queue; an invalid or expired request
 closes without spending its reserved broadcast. Cancelling a waiting request
 returns the reservation to the pass. Only a successful broadcast consumes one
-of the three uses.
+of the three uses. `/shops advertise status` shows the current audience count
+and whether the six-player minimum is met.
 
 An advertisement sends online players a title, subtitle, chat message,
 configured sound, clickable storefront profile, and `/warp shops` link. Its
@@ -220,11 +290,13 @@ the exact removed items before allowing another purchase attempt.
 - `/shops limits` - Show used and available normal-shop slots.
 - `/shops list [page]` - List every shop you created and summarize how many are ready, need attention, are out of stock, full, blocked, unavailable, or unchecked. Hover a compact row for its prices, stock, type, world, and coordinates. Known problem shops are marked `[Out of stock]`, `[Full]`, `[Blocked]`, or `[Unavailable]`; distant unloaded shops remain unchecked rather than being treated as broken. The locations are informational and do not teleport you.
 - `/shops recent [page]` - Review recent purchases and sales, including trades at your normal shops and the money you earned or spent. Hover a compact trade row for its date, per-item price, and shop location. History is available only for trades recorded by the server.
-- `/shops search <item> [page]` - Find in-stock normal player shops selling an exact base material, four per page.
-- `/shops profile [player|uuid] [shops [page]]` - View a seller's Storefront Profile and scoped public shops.
+- `/shops search <item> [page]` - Find normal player offers for an exact base material, four per page; unloaded shop stock is clearly marked unchecked.
+- `/shops profile [shops [page]]` - View your Storefront Profile and scoped public shops.
+- `/shops profile shopowner <player|uuid> [shops [page]]` - View another seller's Storefront Profile and scoped public shops; player names are suggested after `shopowner`.
 - `/shops profile set <name|advertisement|description|location> <text>` - Set one public profile field.
 - `/shops profile clear <field>` - Clear one public profile field.
 - `/shops profile featured <add|remove> <shop-id>` - Manage up to three ordered Featured Listings; use `featured clear` to remove all.
+- `/shops profile display <create|remove|status>` - Place, remove, or inspect your one persistent Ender Chest-anchored Storefront Display.
 - `/shops advertise` - Open the Advertising Pass, preview, and queue dashboard.
 - `/shops advertise status` - Show the active pass, remaining broadcasts, cooldown, and open request.
 - `/shops advertise cancel` - Cancel a waiting request and return its reserved broadcast.
@@ -247,9 +319,10 @@ Shop creation, buying, and selling are available to everyone by default. Opening
 - Normal shop creation costs 5 by default. The actual charge is shown by the server's economy formatting.
 - The default limit is 5 normal shops. `/shops limits` shows the value that applies to you.
 - The fallback click step after create, inspect, open, or remove expires after 15 seconds.
+- Storefront Display placement also expires after 15 seconds, and each player may own exactly one display.
 - There is no recurring shop fee or reward in ShopChest.
 - Creation refunds are disabled by default. When enabled, only the creator receives the configured current creation price after removing their own shop.
-- A second click may be required for a purchase or sale when confirmation is enabled.
+- A matching second click within 60 seconds may be required for a purchase or sale when confirmation is enabled. Changing direction, terms, product, or normal-versus-stack mode prompts again.
 
 ## Important Notes
 

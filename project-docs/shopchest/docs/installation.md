@@ -2,8 +2,8 @@
 
 ## Requirements
 
-- Paper 26.2 build 84 stable as the supported and verified live target
-- Java 25 to run Paper 26.2; Java 26.0.2 is compatibility smoke-tested
+- Paper 26.3 build 241 stable as the pinned stable development and compatibility target
+- Oracle JDK 27 for automated tests and disposable Paper 26.3 verification
 - Vault
 - A Vault-compatible economy provider registered before ShopChest enables
 - CMI is optional; when present, it enables the configurable worth-price advisory
@@ -14,17 +14,18 @@
   administrator currency capture before players can purchase Advertising Passes
 
 ShopChest's own classes target Java 25 bytecode for the supported Paper server.
+Paper's published minimum is Java 25; Oracle JDK 27 is this project's selected
+test runtime.
 
-> **Snapshot warning:** `1.15.3-SNAPSHOT` is an untested beta rollback
-> checkpoint, not a production release. Complete the
-> [storefront beta checklist](storefront-beta-test.md) and test-server smoke
-> checks before deploying it.
+> **Snapshot warning:** `1.15.4-SNAPSHOT` is a pre-live beta checkpoint, not a
+> production release. Complete the project's beta and release checks on a
+> controlled test server before deploying it.
 
 ## Fresh Installation
 
 1. Stop the server cleanly.
 2. Install Vault and the chosen economy plugin in the top-level `plugins/` directory.
-3. Place the generated `1MB-ShopChest-v1.15.3-SNAPSHOT-<build>-j25-26.2.jar` in `plugins/`. Remove older ShopChest jars so only one top-level jar remains.
+3. Place the generated `1MB-ShopChest-v1.15.4-SNAPSHOT-<build>-j25-26.3.jar` in `plugins/`. Remove older ShopChest jars so only one top-level jar remains.
 4. Start the server and verify that ShopChest reports its version without disabling itself.
 5. Review `plugins/ShopChest/config.yml` and `hologram-format.yml`.
 6. For the recommended `MARKETPLACE` discovery mode, verify that WorldGuard has
@@ -39,6 +40,11 @@ ShopChest's own classes target Java 25 bytecode for the supported Paper server.
 ShopChest disables itself when Vault, an economy provider, or database access
 is unavailable.
 
+No manual database creation or storefront schema upgrade is required. On a
+clean start, ShopChest creates its own shop, profile, display, and advertising
+tables; on an update, it applies the supported legacy migrations before the
+plugin becomes available. A backup is still required before every rollout.
+
 ## Updating
 
 1. Stop the server; do not hot-swap or plugin-reload the jar.
@@ -52,29 +58,45 @@ is unavailable.
 6. Run `/shops admin advertise currency status`. Recapture only when the
    authoritative token intentionally changed or the template is absent.
 
-Legacy database migrations create backup tables before converting old unprefixed shop and economy-log schemas. They do not migrate data between database engines.
+Legacy database migrations create backup tables before converting old
+unprefixed shop and economy-log schemas. They do not migrate data between
+database engines.
 
 ## Build From Source
 
 From the repository root:
 
 ```bash
-JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk-25.0.4.jdk/Contents/Home \
-  ./gradlew clean build
+./gradlew clean build :plugin:paperSmokeJars --no-build-cache
 ```
 
-The output is `plugin/build/libs/1MB-ShopChest-v1.15.3-SNAPSHOT-<build>-j25-26.2.jar`,
+The output is `plugin/build/libs/1MB-ShopChest-v1.15.4-SNAPSHOT-<build>-j25-26.3.jar`,
 where `<build>` is the shared release build in `gradle.properties`. Verification
-requires it to match the Git commit count or the single pending release
-increment. The unshaded intermediate jar is disabled, leaving one deployable
-artifact. Local `servers/`, Gradle output, logs, and test-server jars are ignored
+rejects any number below the committed release build. Before every new plugin
+compile, increment to the next unused build number, independently of Git commit
+count. Never reuse a compiled, delivered, or deployed number, including after a
+failed attempt. Running checks against an already-built JAR does not consume
+another number. The unshaded intermediate
+jar is disabled, leaving one deployable artifact. Local `servers/`, Gradle output,
+logs, and test-server jars are ignored
 and must not be committed.
+
+Every normal wrapper invocation dynamically selects and validates installed
+Oracle JDK 25 for Gradle and compilation, and Oracle JDK 27 for all automated
+tests. Plugin and test classes target Java 25 bytecode. The wrapper does not
+download JDKs or depend on the shell's default Java. Explicit installed-home
+overrides are `ONE_MB_BUILD_JAVA_HOME` and `ONE_MB_TEST_JAVA_HOME`; both are
+validated for the required Oracle vendor and Java major version.
 
 ## Compatibility Policy
 
 The project compiles against the exact stable Paper API coordinate
-`io.papermc.paper:paper-api:26.2.build.84-stable` and uses Paper APIs directly.
+`io.papermc.paper:paper-api:26.3.build.241-stable` and uses Paper APIs directly.
 It does not support Spigot or older Paper/Minecraft releases. A newer Paper
 release is considered compatible only after the platform contract tests, clean
 build, and test-server smoke checks pass; there is no version-specific NMS gate
 that would reject it preemptively.
+
+Before a live rollout, verify the exact candidate JAR with the server's intended
+dependencies and ordinary player permissions, including the AutoSell purchase
+check described in [Integrations](https://docs.1moreblock.com/staff-reference/custom-server-plugins/shopchest/integrations/#1mb-library-autosell).
