@@ -152,15 +152,17 @@ const PLAYER_GUIDE_OVERRIDES = {
   },
   servercheck: {
     staffDocument: 'servercheck.md',
-    intro: 'Review server readiness, inspect plugin dependencies, and investigate hopper and server performance.',
-    guide: 'ServerCheck brings plugin inventory, startup diagnostics, post-update smoke checks, hopper triage, and Spark performance reviews into one staff tool.',
+    intro: 'Review server readiness, inspect plugin dependencies, investigate performance, and compare world settings.',
+    guide: 'ServerCheck brings plugin inventory, startup diagnostics, post-update smoke checks, hopper triage, Spark performance reviews, and WorldSnapshot baselines into one staff tool.',
     quickStart: [
       'Use `/servercheck status` to see the runtime and module states.',
+      'Use `/servercheck worlds status` to review the current world baseline when WorldSnapshot is active.',
       'Follow the [ServerCheck staff reference](/staff-reference/plugins/servercheck/) for permissions, command examples, and upgrade steps.',
     ],
-    commands: ['/servercheck status'],
+    commands: ['/servercheck status', '/servercheck worlds status'],
     commandDescriptions: {
       '/servercheck status': 'Shows the runtime, module states, and latest smoke result. Staff permissions required.',
+      '/servercheck worlds status': 'Shows the WorldSnapshot baseline and latest comparison summary. Staff permissions required.',
     },
     includeInCommandIndex: false,
   },

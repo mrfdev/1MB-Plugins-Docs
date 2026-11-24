@@ -364,7 +364,7 @@ Build target: Paper 26.3 stable build 261 or newer, Java 25 bytecode, project ve
 Current test jar:
 
 ```text
-1MB-Lib-Appreciation-v1.0.4-865-j25-26.3.jar
+1MB-Lib-Appreciation-v1.0.4-866-j25-26.3.jar
 ```
 
 [Documentation index](README.md)

@@ -85,7 +85,7 @@ Doors has its own persisted reward store. New regular/special command templates 
 | [`plugins:server-management:warpaudit`](../plugins/server-management/warpaudit) | No LuckPerms user grant or configurable LuckPerms dispatch found; no code change needed. |
 | [`plugins:server-management:worthdrift`](../plugins/server-management/worthdrift) | Only dispatches a fixed ShopGUI+ reload; no LuckPerms user operations. |
 | [`plugins:server-management:worthhelper`](../plugins/server-management/worthhelper) | No LuckPerms user grant or configurable LuckPerms dispatch found; no code change needed. |
-| [`plugins:server-management:worldsnapshot`](../plugins/server-management/worldsnapshot) | No LuckPerms user grant or configurable LuckPerms dispatch found; no code change needed. |
+| [WorldSnapshot module](plugins/worldsnapshot.md) | No LuckPerms user grant or configurable LuckPerms dispatch found; no code change needed. |
 | [`plugins:server-management:sparkreviewer`](../plugins/server-management/sparkreviewer) | Only dispatches fixed Spark diagnostics; no LuckPerms user operations. |
 | [`plugins:server-management:hoppers`](../plugins/server-management/hoppers) | Only dispatches fixed Spark diagnostics; no LuckPerms user operations. |
 | [`plugins:server-management:diagnostics`](../plugins/server-management/diagnostics) | No LuckPerms user grant or configurable LuckPerms dispatch found; no code change needed. |

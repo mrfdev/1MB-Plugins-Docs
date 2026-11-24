@@ -1,20 +1,20 @@
-# WorldSnapshot
+# WorldSnapshot module
 
 ## Purpose
 
-WorldSnapshot is a read-only operational tool for recording what the server thinks each loaded world looks like right now.
+WorldSnapshot is a read-only [ServerCheck](servercheck.md) module for recording the settings of loaded worlds.
 
 It is meant for before-and-after checks when changing gamerules, CMI world-related settings, sleep/night behavior, teleport/respawn behavior, random teleport settings, world limits, or other operational toggles that can be hard to remember later.
 
 The normal workflow is:
 
 ```text
-/worldsnapshot
+/servercheck worlds capture
 # make a test change
-/worldsnapshot diff
+/servercheck worlds diff
 ```
 
-`/worldsnapshot` stores the current state as the baseline. `/worldsnapshot diff` compares the current server state against that baseline without changing the baseline.
+`/servercheck worlds capture` stores the current state as an in-memory baseline. `/servercheck worlds diff` compares the current settings with that baseline and leaves it available for further comparisons.
 
 ## Features
 
@@ -27,56 +27,51 @@ The normal workflow is:
 - Shows detailed entries for one world with pagination.
 - Compares the current state against the stored baseline.
 - Dumps the stored baseline to the shared cache folder.
-- Registers command, permission, placeholder, config, and debug metadata with `1MB-CMIAPI-LIB`.
+- Keeps WorldSnapshot's permissions, placeholders, config, and translations under ServerCheck.
 
 ## Commands
 
 ```text
-/worldsnapshot
-/worldsnapshot help
-/worldsnapshot status
-/worldsnapshot capture
-/worldsnapshot refresh
-/worldsnapshot list [page]
-/worldsnapshot world <world> [page]
-/worldsnapshot diff [world|all] [page]
-/worldsnapshot dump
-/worldsnapshot reload
+/servercheck worlds
+/servercheck worlds help
+/servercheck worlds status
+/servercheck worlds capture
+/servercheck worlds refresh
+/servercheck worlds list [page]
+/servercheck worlds world <world> [page]
+/servercheck worlds diff [world|all] [page]
+/servercheck worlds dump
+/servercheck worlds reload
 ```
 
-Aliases:
+Compatibility commands:
 
 ```text
+/worldsnapshot
 /wsnapshot
 /wrules
 ```
 
-Useful examples:
+Each compatibility command accepts the original subcommands. When the module is active, running a compatibility command without arguments captures a baseline. `/servercheck worlds` without arguments shows status.
+
+Module administration:
 
 ```text
-/worldsnapshot
-/worldsnapshot status
-/worldsnapshot list
-/worldsnapshot world spawn
-/worldsnapshot diff
-/worldsnapshot diff spawn
-/worldsnapshot dump
-/worldsnapshot reload
+/servercheck admin module worlds true
+/servercheck admin module worlds false
+/servercheck admin reload worlds
+/servercheck debug worlds
 ```
 
-Global library examples:
+Shared Library config commands still accept the WorldSnapshot id.
 
 ```text
-/1mblib debug plugin worldsnapshot
-/1mblib debug plugin worldsnapshot commands
-/1mblib debug plugin worldsnapshot permissions
-/1mblib debug plugin worldsnapshot placeholders
-/1mblib debug plugin worldsnapshot config
-/1mblib debug plugin worldsnapshot all
 /1mblib config worldsnapshot
 /1mblib config set worldsnapshot diff.include-volatile-runtime true
-/1mblib config set worldsnapshot snapshot.include-seed true
+/1mblib config set worldsnapshot snapshot.include-seed false
 ```
+
+`/1mblib config set worldsnapshot enabled true|false` is a compatibility route to the same module switch.
 
 ## Permissions
 
@@ -89,7 +84,7 @@ onembcmi.worldsnapshot.dump
 onembcmi.worldsnapshot.admin.reload
 ```
 
-`use` controls status/help access. `capture` controls baseline capture. `view` controls world list and per-world detail pages. `diff` controls before-and-after comparisons. `dump` controls cache report writing. `admin.reload` reloads config and translations.
+`use` opens the operational commands and status. Grant the matching action permission alongside it. `capture` controls baseline capture. `view` controls world list and per-world detail pages. `diff` controls before-and-after comparisons. `dump` controls cache report writing. `admin.reload` reloads config and translations. ServerCheck's module switch requires `onembcmi.servercheck.admin`.
 
 ## Placeholders
 
@@ -107,7 +102,9 @@ onembcmi.worldsnapshot.admin.reload
 
 ## Config
 
-Generated at:
+ServerCheck controls module activation with `modules.worldsnapshot.enabled` in `plugins/1MB-CMIAPI/ServerCheck/config.yml`. WorldSnapshot starts dormant on fresh installations. The first upgrade imports the standalone `enabled` value when ServerCheck adds its module switch.
+
+The module continues to read its feature settings from:
 
 ```text
 plugins/1MB-CMIAPI/WorldSnapshot/config.yml
@@ -116,7 +113,6 @@ plugins/1MB-CMIAPI/WorldSnapshot/config.yml
 Important config keys:
 
 ```yaml
-enabled: true
 debug: false
 capture.on-enable: true
 worlds.include: []
@@ -168,7 +164,7 @@ dump.file: worldsnapshot-report.txt
 
 `snapshot.include-volatile-runtime` controls fields that naturally change during play, such as time, storm state, player count, and loaded chunks.
 
-`diff.include-volatile-runtime` is false by default so `/worldsnapshot diff` focuses on actual configuration and rule changes.
+`capture.on-enable` captures a new baseline when the module starts active or reloads. `diff.include-volatile-runtime` is false by default so `/servercheck worlds diff` focuses on actual configuration and rule changes.
 
 ## What It Captures
 
@@ -205,7 +201,7 @@ It uses CMI as a runtime dependency and reads selected CMI YAML files from CMI's
 - teleport invulnerability per world
 - event command sections around world changes
 
-Because this is a read-only config scan, it is safe to remove the jar later without affecting CMI.
+Pausing the WorldSnapshot module leaves CMI configuration intact.
 
 ## Paper API Usage
 
@@ -213,7 +209,7 @@ WorldSnapshot uses modern Paper/Bukkit world APIs for loaded worlds, world borde
 
 ## Data And Cache
 
-WorldSnapshot stores no playerdata.
+The baseline lives in memory for current comparisons. The module retains its existing `CMIAPILIB/translations/worldsnapshot.yml` file. CMI file reads and dump writes run in the background. Capture and comparison results appear after their report is ready.
 
 Support dumps are written to:
 
@@ -236,22 +232,22 @@ The dump is plain text and contains world names, setting paths, values, and whet
 ## Testing Checklist
 
 ```text
-/worldsnapshot status
-/worldsnapshot
-/worldsnapshot list
-/worldsnapshot world <world>
-/worldsnapshot diff
-/worldsnapshot dump
-/1mblib debug plugin worldsnapshot all
+/servercheck worlds status
+/servercheck worlds capture
+/servercheck worlds list
+/servercheck worlds world <world>
+/servercheck worlds diff
+/servercheck worlds dump
+/servercheck debug worlds
 ```
 
 To test diff behavior:
 
 ```text
-/worldsnapshot
+/servercheck worlds capture
 /gamerule doDaylightCycle false
-/worldsnapshot diff <world>
+/servercheck worlds diff <world>
 /gamerule doDaylightCycle true
 ```
 
-[Back to plugin index](README.md)
+[ServerCheck reference](servercheck.md) · [Stopped-server upgrade](../installation.md#upgrade-worldsnapshot-to-servercheck)

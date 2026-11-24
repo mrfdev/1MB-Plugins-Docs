@@ -19,11 +19,11 @@ TeamMsg, ContentGuard, Placeholders, BentoBox, StaffCenter, ServerCheck, WorthAu
 - Placeholders hosts `provider`, `catalog`, `probe`, and `health`; their commands share the `/_placeholders` router.
 - BentoBox hosts `gametypes` alongside the optional island modules. GameTypes retains its placeholder namespace, legacy configuration path, `/gametype`, and the configured island menu shortcuts.
 - StaffCenter hosts the `staffcenter` dashboard, `warninglens`, and `profile`. The dashboard uses the host's runtime namespace and keeps `/staffcenter <player>`. WarningLens and Profile retain their lookup aliases, placeholder namespaces, and command roots.
-- ServerCheck hosts `pluginversions`, `updatesmoke`, `startupdoctor`, `hoppers`, and `sparkreviewer` under `/servercheck`. The modules retain their existing command roots, and Hoppers and SparkReviewer share the Spark profiling controller.
+- ServerCheck hosts `pluginversions`, `updatesmoke`, `startupdoctor`, `hoppers`, `sparkreviewer`, and `worldsnapshot` under `/servercheck`. WorldSnapshot uses the `worlds` subcommand. The modules retain their existing command roots, and Hoppers and SparkReviewer share the Spark profiling controller.
 - WorthAudit hosts `worthhelper` for recipes and trades and `worthdrift` for sales and ShopGUI+. Both use `/worthaudit`.
 - RecordingMode hosts the optional `tpauto` module under `/recording tpauto`. The `/tpauto` compatibility command and TPAuto permission, placeholder, config, and playerdata namespaces are retained.
 
-`/1mblib features` should list the parent jars. The old placeholder/debug lookup ids remain runtime aliases while their module is active. Shared config commands target the host. Use each module’s retained config file and documented reload command for its settings. Parent status commands show configured and runtime module state, and parent lifecycle shutdown unregisters every module listener, scheduler task, service, GUI, and placeholder alias together.
+`/1mblib features` should list the parent jars. The old placeholder and debug lookup ids remain runtime aliases while the host is active. Shared config commands and the plugin debug config section use the settings for the requested module id. Setting that module's legacy `enabled` key updates its lifecycle switch in the host. Other debug sections can show the host's identity. Use each module’s retained config file and documented reload command for file-based changes. Parent status commands show configured and runtime module state, and parent lifecycle shutdown unregisters every module listener, scheduler task, service, GUI, and placeholder alias together.
 
 ## Required Metadata
 
@@ -34,11 +34,11 @@ id: afkshrine
 name: AFKShrine
 category: player-fun
 version: 1.0.4
-build: 865
+build: 866
 java-target: 25
 paper-target: 26.3
 jar-prefix: 1MB-Lib
-jar-name: 1MB-Lib-AFKShrine-v1.0.4-865-j25-26.3.jar
+jar-name: 1MB-Lib-AFKShrine-v1.0.4-866-j25-26.3.jar
 repo: https://github.com/mrfdev/1MB-Library
 public-docs: https://docs.1moreblock.com
 dependencies: CMI, CMILib, 1MB-CMIAPI-LIB

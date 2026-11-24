@@ -7,11 +7,11 @@ This page introduces ServerCheck as a public staff guide. It focuses on what the
 
 ## What It Does
 
-Review server readiness, inspect plugin dependencies, and investigate hopper and server performance.
+Review server readiness, inspect plugin dependencies, investigate performance, and compare world settings.
 
 ## How Staff Use It
 
-ServerCheck brings plugin inventory, startup diagnostics, post-update smoke checks, hopper triage, and Spark performance reviews into one staff tool.
+ServerCheck brings plugin inventory, startup diagnostics, post-update smoke checks, hopper triage, Spark performance reviews, and WorldSnapshot baselines into one staff tool.
 
 Available features include:
 
@@ -31,7 +31,8 @@ Available features include:
 ## Quick Start
 
 1. Use `/servercheck status` to see the runtime and module states.
-2. Follow the [ServerCheck staff reference](/staff-reference/plugins/servercheck/) for permissions, command examples, and upgrade steps.
+2. Use `/servercheck worlds status` to review the current world baseline when WorldSnapshot is active.
+3. Follow the [ServerCheck staff reference](/staff-reference/plugins/servercheck/) for permissions, command examples, and upgrade steps.
 
 ## Commands
 
@@ -48,6 +49,11 @@ Available features include:
       <td><code>/servercheck status</code></td>
       <td>Shows the runtime, module states, and latest smoke result. Staff permissions required.</td>
       <td><code>/servercheck status</code></td>
+    </tr>
+    <tr>
+      <td><code>/servercheck worlds status</code></td>
+      <td>Shows the WorldSnapshot baseline and latest comparison summary. Staff permissions required.</td>
+      <td><code>/servercheck worlds status</code></td>
     </tr>
   </tbody>
 </table>

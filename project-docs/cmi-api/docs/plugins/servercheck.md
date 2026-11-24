@@ -1,6 +1,6 @@
 # ServerCheck
 
-ServerCheck packages PluginVersions, UpdateSmoke, StartupDoctor, Hoppers, and SparkReviewer in the `1MB-Lib-ServerCheck` JAR. Use it to check dependencies, run post-update checks, and investigate server performance. Hoppers and SparkReviewer share one Spark profiling controller.
+ServerCheck packages PluginVersions, UpdateSmoke, StartupDoctor, Hoppers, SparkReviewer, and WorldSnapshot in the `1MB-Lib-ServerCheck` JAR. Use it to check dependencies, run post-update checks, investigate server performance, and compare world settings. Hoppers and SparkReviewer share one Spark profiling controller.
 
 ## How Staff Use It
 
@@ -22,13 +22,20 @@ ServerCheck packages PluginVersions, UpdateSmoke, StartupDoctor, Hoppers, and Sp
 | `/servercheck spark capture <label>` and `/servercheck spark compare <before> <after>` | Saves and compares named performance snapshots. |
 | `/servercheck spark start [seconds] [label]` | Requests a timed Spark profile. |
 | `/servercheck spark <health\|stop\|cancel>` | Requests a Spark health report or manages a ServerCheck-owned profile. |
-| `/servercheck admin reload [versions\|smoke\|doctor\|hoppers\|spark]` | Reloads ServerCheck and its modules, or the selected module. |
-| `/servercheck admin module <versions\|smoke\|doctor\|hoppers\|spark> <true\|false>` | Enables or pauses one module. |
-| `/servercheck debug [versions\|smoke\|doctor\|hoppers\|spark]` | Inspects host or module diagnostics. |
+| `/servercheck worlds [status]` | Shows the world baseline and latest comparison summary. |
+| `/servercheck worlds capture` | Captures a read-only baseline of loaded worlds, gamerules, and selected CMI settings. |
+| `/servercheck worlds list [page]` or `/servercheck worlds world <world> [page]` | Reviews current world settings. |
+| `/servercheck worlds diff [world\|all] [page]` | Compares current settings with the baseline. |
+| `/servercheck worlds dump` | Writes a support report to the existing WorldSnapshot cache directory. |
+| `/servercheck admin reload [versions\|smoke\|doctor\|hoppers\|spark\|worlds]` | Reloads ServerCheck and its modules, or the selected module. |
+| `/servercheck admin module <versions\|smoke\|doctor\|hoppers\|spark\|worlds> <true\|false>` | Enables or pauses one module. |
+| `/servercheck debug [versions\|smoke\|doctor\|hoppers\|spark\|worlds]` | Inspects host or module diagnostics. |
 | `/servercheck info` | Explains ServerCheck. |
-| `/servercheck help [versions\|smoke\|doctor\|hoppers\|spark]` | Shows the available commands. |
+| `/servercheck help [versions\|smoke\|doctor\|hoppers\|spark\|worlds]` | Shows the available commands. |
 
 Use `/servercheck smoke run` to dispatch the configured command tests. `/servercheck status` displays the current runtime and reads the cached smoke result. `smoke checks` and `smoke report` reuse the latest smoke snapshot or collect passive diagnostics if none exists. StartupDoctor collects its own reports while active.
+
+For world changes, run `/servercheck worlds capture` before the change and `/servercheck worlds diff` afterward. The baseline lives in memory. Saved support dumps remain available on disk. The host summary shows the module's activation state.
 
 ## Profiling and passive diagnostics
 
@@ -51,17 +58,20 @@ The host summary requires `onembcmi.servercheck.use`. Host debug, reload, and mo
 | StartupDoctor | `/startupdoctor`, `/sdoctor` | `modules.startupdoctor.enabled` |
 | Hoppers | `/_hoppers` | `modules.hoppers.enabled` |
 | SparkReviewer | `/sparkreviewer`, `/sreview`, `/spreview` | `modules.sparkreviewer.enabled` |
+| WorldSnapshot | `/worldsnapshot`, `/wsnapshot`, `/wrules` | `modules.worldsnapshot.enabled` |
 
-ServerCheck imports a module's legacy `enabled` value when its lifecycle setting is first created and the old config exists. It then uses the switch in `plugins/1MB-CMIAPI/ServerCheck/config.yml`. On a fresh installation, PluginVersions and Hoppers start active. UpdateSmoke, StartupDoctor, and SparkReviewer start dormant.
+ServerCheck imports a module's legacy `enabled` value when its lifecycle setting is first created and the old config exists. It then uses the switch in `plugins/1MB-CMIAPI/ServerCheck/config.yml`. On a fresh installation, PluginVersions and Hoppers start active. UpdateSmoke, StartupDoctor, SparkReviewer, and WorldSnapshot start dormant. Each bare WorldSnapshot compatibility command captures a fresh baseline when the module is active. Both command routes use the existing `onembcmi.worldsnapshot.*` grants.
 
 ## Data
 
-Each module continues to use its existing settings under `plugins/1MB-CMIAPI/<ModuleName>/`. Their translations stay under `plugins/1MB-CMIAPI/CMIAPILIB/translations/`, and StartupDoctor and UpdateSmoke reports stay under `plugins/1MB-CMIAPI/CMIAPILIB/cache/plugins/` in their respective subdirectories. PluginVersions keeps the existing database, inventory history, manually curated URLs, and exports at their configured paths. Hoppers keeps its reports, notes, attachments, and hotspot history in `CMIAPILIB/cache/plugins/hoppers/`. SparkReviewer keeps its named snapshots and reports in `CMIAPILIB/cache/plugins/sparkreviewer/`. Existing module placeholders retain their identifiers, including the dedicated `%pluginversions_*%` expansion.
+Each module continues to use its existing settings under `plugins/1MB-CMIAPI/<ModuleName>/`. Their translations stay under `plugins/1MB-CMIAPI/CMIAPILIB/translations/`, and StartupDoctor and UpdateSmoke reports stay under `plugins/1MB-CMIAPI/CMIAPILIB/cache/plugins/` in their respective subdirectories. PluginVersions keeps the existing database, inventory history, manually curated URLs, and exports at their configured paths. Hoppers keeps its reports, notes, attachments, and hotspot history in `CMIAPILIB/cache/plugins/hoppers/`. SparkReviewer keeps its named snapshots and reports in `CMIAPILIB/cache/plugins/sparkreviewer/`. WorldSnapshot keeps its dumps in `CMIAPILIB/cache/plugins/worldsnapshot/`. Existing module placeholders retain their identifiers, including the dedicated `%pluginversions_*%` expansion.
 
 ## Upgrade
 
-Stop Paper and install the complete tested suite containing `1MB-Lib-ServerCheck`. Move the standalone Hoppers and SparkReviewer JARs out of the plugin load path. If you are upgrading from before the original ServerCheck merge, also remove the standalone PluginVersions, UpdateSmoke, and StartupDoctor JARs. Keep all existing data directories, translations, and cache reports. After restarting Paper, use `/servercheck status` to verify the imported module states. To roll back, stop Paper and restore the previous complete suite. The older JARs read the same data paths and their own configs for enablement.
+Stop Paper and install the complete tested suite containing `1MB-Lib-ServerCheck`. Move the standalone WorldSnapshot JAR out of the plugin load path. If you are upgrading from before the earlier merges, also move out the standalone Hoppers, SparkReviewer, PluginVersions, UpdateSmoke, and StartupDoctor JARs. Keep all existing data directories, translations, and cache reports. After restarting Paper, use `/servercheck status` to verify the imported module states. To roll back, stop Paper and restore the previous complete suite. Review the legacy enable settings before restarting.
 
 [PluginVersions reference](pluginversions.md) · [UpdateSmoke reference](updatesmoke.md) · [StartupDoctor reference](startupdoctor.md)
 
-[Hoppers reference](hoppers.md) · [SparkReviewer reference](sparkreviewer.md) · [Stopped-server upgrade](../installation.md#upgrade-hoppers-and-sparkreviewer-to-servercheck)
+[Hoppers reference](hoppers.md) · [SparkReviewer reference](sparkreviewer.md) · [WorldSnapshot reference](worldsnapshot.md)
+
+[WorldSnapshot upgrade](../installation.md#upgrade-worldsnapshot-to-servercheck) · [Hoppers and SparkReviewer upgrade](../installation.md#upgrade-hoppers-and-sparkreviewer-to-servercheck)

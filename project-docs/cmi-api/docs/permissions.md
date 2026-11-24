@@ -633,7 +633,9 @@ BedrockChatBridge exposes only `onembcmi.bedrockchatbridge.admin`, which default
 
 Diagnostics is owner-only removable debug tooling. Grant `onembcmi.diagnostics.use` for `/_diagnostics status`, `onembcmi.diagnostics.view` for `/_diagnostics recent` and `/_diagnostics files`, and `onembcmi.diagnostics.dump` to write point-in-time support snapshots. `onembcmi.diagnostics.admin` unlocks shared debug pages, and `onembcmi.diagnostics.admin.reload` reloads the probe config. Normal players should not receive any Diagnostics nodes. All Diagnostics permission defaults are `false`, so operator status alone does not unlock the in-game command. Console can run `_diagnostics` without a permission lock.
 
-ServerCheck keeps the PluginVersions, UpdateSmoke, and StartupDoctor module grants. `onembcmi.servercheck.use` grants the combined status view. `onembcmi.servercheck.admin` grants host diagnostics and maintenance.
+ServerCheck keeps module permissions on both its canonical and compatibility routes. `onembcmi.servercheck.use` grants the combined status view. `onembcmi.servercheck.admin` grants host diagnostics and maintenance.
+
+WorldSnapshot uses its existing `onembcmi.worldsnapshot.*` permissions on `/servercheck worlds`, `/worldsnapshot`, `/wsnapshot`, and `/wrules`. The `capture`, `view`, `diff`, and `dump` nodes each grant their respective action. The host's module enable switch requires `onembcmi.servercheck.admin`.
 
 WorthAudit keeps the WorthHelper and WorthDrift module grants. Grant the relevant module's `use` node and the individual action nodes to economy reviewers. `onembcmi.worthdrift.fix` allows shop previews and saving audit exceptions. `onembcmi.worthaudit.admin` covers host reload and shared diagnostics. Suggested CMI worth changes are review text.
 

@@ -10,61 +10,60 @@ Paper loads normal plugin jars from the top-level server `/plugins/` directory, 
 plugins/
   CMI-<version>.jar
   CMILib<version>.jar
-  1MB-Lib-Core-v1.0.4-865-j25-26.3.jar
-  1MB-Lib-AntiFire-v1.0.4-865-j25-26.3.jar
-  1MB-Lib-AFKShrine-v1.0.4-865-j25-26.3.jar
-  1MB-Lib-RecordingMode-v1.0.4-865-j25-26.3.jar
-  1MB-Lib-SellStreaks-v1.0.4-865-j25-26.3.jar
-  1MB-Lib-ScheduledTips-v1.0.4-865-j25-26.3.jar
-  1MB-Lib-Visit-v1.0.4-865-j25-26.3.jar
-  1MB-Lib-PassportDiscovery-v1.0.4-865-j25-26.3.jar
-  1MB-Lib-SocialGatherings-v1.0.4-865-j25-26.3.jar
-  1MB-Lib-JourneyMap-v1.0.4-865-j25-26.3.jar
-  1MB-Lib-KitStreaks-v1.0.4-865-j25-26.3.jar
-  1MB-Lib-Nick-v1.0.4-865-j25-26.3.jar
-  1MB-Lib-EmoteMenu-v1.0.4-865-j25-26.3.jar
-  1MB-Lib-PvPToggle-v1.0.4-865-j25-26.3.jar
-  1MB-Lib-Boosters-v1.0.4-865-j25-26.3.jar
-  1MB-Lib-NameMC-v1.0.4-865-j25-26.3.jar
-  1MB-Lib-Exchange-v1.0.4-865-j25-26.3.jar
-  1MB-Lib-VoteTokens-v1.0.4-865-j25-26.3.jar
-  1MB-Lib-DiscordChat-v1.0.4-865-j25-26.3.jar
-  1MB-Lib-BentoBox-v1.0.4-865-j25-26.3.jar
-  1MB-Lib-BirthdayLanterns-v1.0.4-865-j25-26.3.jar
-  1MB-Lib-LavaBoots-v1.0.4-865-j25-26.3.jar
-  1MB-Lib-Spawners-v1.0.4-865-j25-26.3.jar
-  1MB-Lib-Collect-v1.0.4-865-j25-26.3.jar
-  1MB-Lib-EventHunts-v1.0.4-865-j25-26.3.jar
-  1MB-Lib-DropParty-v1.0.4-865-j25-26.3.jar
-  1MB-Lib-Advent-v1.0.4-865-j25-26.3.jar
-  1MB-Lib-HideAndSheep-v1.0.4-865-j25-26.3.jar
-  1MB-Lib-Appreciation-v1.0.4-865-j25-26.3.jar
-  1MB-Lib-Forage-v1.0.4-865-j25-26.3.jar
-  1MB-Lib-AutoSell-v1.0.4-865-j25-26.3.jar
-  1MB-Lib-MobHat-v1.0.4-865-j25-26.3.jar
-  1MB-Lib-PlayerTodo-v1.0.4-865-j25-26.3.jar
-  1MB-Lib-Refer-v1.0.4-865-j25-26.3.jar
-  1MB-Lib-Menu-v1.0.4-865-j25-26.3.jar
-  1MB-Lib-StaffCenter-v1.0.4-865-j25-26.3.jar
-  1MB-Lib-ContentGuard-v1.0.4-865-j25-26.3.jar
-  1MB-Lib-TeamMsg-v1.0.4-865-j25-26.3.jar
-  1MB-Lib-CmdCostDashboard-v1.0.4-865-j25-26.3.jar
-  1MB-Lib-CMIConfig-v1.0.4-865-j25-26.3.jar
-  1MB-Lib-ConsoleNoiseRouter-v1.0.4-865-j25-26.3.jar
-  1MB-Lib-EconomyGuardian-v1.0.4-865-j25-26.3.jar
-  1MB-Lib-ServerCheck-v1.0.4-865-j25-26.3.jar
-  1MB-Lib-Placeholders-v1.0.4-865-j25-26.3.jar
-  1MB-Lib-Potions-v1.0.4-865-j25-26.3.jar
-  1MB-Lib-Upgrade-v1.0.4-865-j25-26.3.jar
-  1MB-Lib-EndCrystals-v1.0.4-865-j25-26.3.jar
-  1MB-Lib-WorldSnapshot-v1.0.4-865-j25-26.3.jar
-  1MB-Lib-EventRecorder-v1.0.4-865-j25-26.3.jar
-  1MB-Lib-BedrockChatBridge-v1.0.4-865-j25-26.3.jar
-  1MB-Lib-CMIProbe-v1.0.4-865-j25-26.3.jar
-  1MB-Lib-CMIDatabase-v1.0.4-865-j25-26.3.jar
-  1MB-Lib-PermissionProbe-v1.0.4-865-j25-26.3.jar
-  1MB-Lib-WarpAudit-v1.0.4-865-j25-26.3.jar
-  1MB-Lib-WorthAudit-v1.0.4-865-j25-26.3.jar
+  1MB-Lib-Core-v1.0.4-866-j25-26.3.jar
+  1MB-Lib-AntiFire-v1.0.4-866-j25-26.3.jar
+  1MB-Lib-AFKShrine-v1.0.4-866-j25-26.3.jar
+  1MB-Lib-RecordingMode-v1.0.4-866-j25-26.3.jar
+  1MB-Lib-SellStreaks-v1.0.4-866-j25-26.3.jar
+  1MB-Lib-ScheduledTips-v1.0.4-866-j25-26.3.jar
+  1MB-Lib-Visit-v1.0.4-866-j25-26.3.jar
+  1MB-Lib-PassportDiscovery-v1.0.4-866-j25-26.3.jar
+  1MB-Lib-SocialGatherings-v1.0.4-866-j25-26.3.jar
+  1MB-Lib-JourneyMap-v1.0.4-866-j25-26.3.jar
+  1MB-Lib-KitStreaks-v1.0.4-866-j25-26.3.jar
+  1MB-Lib-Nick-v1.0.4-866-j25-26.3.jar
+  1MB-Lib-EmoteMenu-v1.0.4-866-j25-26.3.jar
+  1MB-Lib-PvPToggle-v1.0.4-866-j25-26.3.jar
+  1MB-Lib-Boosters-v1.0.4-866-j25-26.3.jar
+  1MB-Lib-NameMC-v1.0.4-866-j25-26.3.jar
+  1MB-Lib-Exchange-v1.0.4-866-j25-26.3.jar
+  1MB-Lib-VoteTokens-v1.0.4-866-j25-26.3.jar
+  1MB-Lib-DiscordChat-v1.0.4-866-j25-26.3.jar
+  1MB-Lib-BentoBox-v1.0.4-866-j25-26.3.jar
+  1MB-Lib-BirthdayLanterns-v1.0.4-866-j25-26.3.jar
+  1MB-Lib-LavaBoots-v1.0.4-866-j25-26.3.jar
+  1MB-Lib-Spawners-v1.0.4-866-j25-26.3.jar
+  1MB-Lib-Collect-v1.0.4-866-j25-26.3.jar
+  1MB-Lib-EventHunts-v1.0.4-866-j25-26.3.jar
+  1MB-Lib-DropParty-v1.0.4-866-j25-26.3.jar
+  1MB-Lib-Advent-v1.0.4-866-j25-26.3.jar
+  1MB-Lib-HideAndSheep-v1.0.4-866-j25-26.3.jar
+  1MB-Lib-Appreciation-v1.0.4-866-j25-26.3.jar
+  1MB-Lib-Forage-v1.0.4-866-j25-26.3.jar
+  1MB-Lib-AutoSell-v1.0.4-866-j25-26.3.jar
+  1MB-Lib-MobHat-v1.0.4-866-j25-26.3.jar
+  1MB-Lib-PlayerTodo-v1.0.4-866-j25-26.3.jar
+  1MB-Lib-Refer-v1.0.4-866-j25-26.3.jar
+  1MB-Lib-Menu-v1.0.4-866-j25-26.3.jar
+  1MB-Lib-StaffCenter-v1.0.4-866-j25-26.3.jar
+  1MB-Lib-ContentGuard-v1.0.4-866-j25-26.3.jar
+  1MB-Lib-TeamMsg-v1.0.4-866-j25-26.3.jar
+  1MB-Lib-CmdCostDashboard-v1.0.4-866-j25-26.3.jar
+  1MB-Lib-CMIConfig-v1.0.4-866-j25-26.3.jar
+  1MB-Lib-ConsoleNoiseRouter-v1.0.4-866-j25-26.3.jar
+  1MB-Lib-EconomyGuardian-v1.0.4-866-j25-26.3.jar
+  1MB-Lib-ServerCheck-v1.0.4-866-j25-26.3.jar
+  1MB-Lib-Placeholders-v1.0.4-866-j25-26.3.jar
+  1MB-Lib-Potions-v1.0.4-866-j25-26.3.jar
+  1MB-Lib-Upgrade-v1.0.4-866-j25-26.3.jar
+  1MB-Lib-EndCrystals-v1.0.4-866-j25-26.3.jar
+  1MB-Lib-EventRecorder-v1.0.4-866-j25-26.3.jar
+  1MB-Lib-BedrockChatBridge-v1.0.4-866-j25-26.3.jar
+  1MB-Lib-CMIProbe-v1.0.4-866-j25-26.3.jar
+  1MB-Lib-CMIDatabase-v1.0.4-866-j25-26.3.jar
+  1MB-Lib-PermissionProbe-v1.0.4-866-j25-26.3.jar
+  1MB-Lib-WarpAudit-v1.0.4-866-j25-26.3.jar
+  1MB-Lib-WorthAudit-v1.0.4-866-j25-26.3.jar
 ```
 
 The common `1MB-Lib-` prefix keeps the project JARs together when sorted by filename.
@@ -117,7 +116,7 @@ Console, the feature's `onembcmi.<feature-id>.admin` permission, or `onembcmi.gl
 
 BentoBox keeps host activation in `BentoBox/host.yml`. A fresh installation starts GameTypes menus and leaves island markets, merchants, events, and other optional island modules dormant.
 
-ServerCheck imports the Hoppers and SparkReviewer activation settings into `ServerCheck/config.yml`. A fresh installation starts PluginVersions and Hoppers. UpdateSmoke, StartupDoctor, and SparkReviewer start dormant.
+ServerCheck imports the Hoppers, SparkReviewer, and WorldSnapshot activation settings into `ServerCheck/config.yml`. A fresh installation starts PluginVersions and Hoppers. UpdateSmoke, StartupDoctor, SparkReviewer, and WorldSnapshot start dormant.
 
 StaffCenter keeps host activation in `StaffCenter/host.yml`. A fresh installation activates Profile and leaves the dashboard and WarningLens dormant.
 
@@ -168,6 +167,15 @@ For rollback, stop Paper and restore the previous complete suite. See [ServerChe
 4. Restart Paper and check `/servercheck status`, `/servercheck hoppers status`, and `/servercheck spark status`. The old `/_hoppers`, `/sparkreviewer`, `/sreview`, and `/spreview` commands remain available.
 
 For rollback, stop Paper and restore the previous complete suite. See [ServerCheck](plugins/servercheck.md) for module controls and profiling permissions.
+
+## Upgrade WorldSnapshot to ServerCheck
+
+1. Stop Paper and keep a rollback copy of the previous complete suite.
+2. Install the complete tested suite containing the updated `1MB-Lib-ServerCheck`. Move the standalone `1MB-Lib-WorldSnapshot-*` JAR and older `1MB-CMIAPI-WorldSnapshot-*` equivalents out of the plugin load path.
+3. Keep `plugins/1MB-CMIAPI/WorldSnapshot/config.yml`, `CMIAPILIB/translations/worldsnapshot.yml`, and `CMIAPILIB/cache/plugins/worldsnapshot/`. ServerCheck imports the old `enabled` value when it first creates `modules.worldsnapshot.enabled` in `ServerCheck/config.yml`.
+4. Restart Paper and check `/servercheck status`. Run `/servercheck worlds status` for the module summary when active. `/worldsnapshot`, `/wsnapshot`, and `/wrules` remain available.
+
+For rollback, stop Paper and restore the previous complete suite. Review the standalone `WorldSnapshot/config.yml` activation setting before restarting. See the [WorldSnapshot module reference](plugins/worldsnapshot.md) for commands and data paths.
 
 ## Upgrade to the combined StaffCenter
 

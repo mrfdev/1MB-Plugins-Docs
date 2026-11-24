@@ -89,7 +89,7 @@ test('Consolidated staff tools have canonical references and redirect retired gu
   const staffRoot = path.join(generatedPlugins, '..', '..', 'staff-reference', 'plugins');
 
   for (const [host, modules, command] of [
-    ['servercheck', ['pluginversions', 'startupdoctor', 'updatesmoke', 'hoppers', 'sparkreviewer'], '/servercheck smoke run'],
+    ['servercheck', ['pluginversions', 'startupdoctor', 'updatesmoke', 'hoppers', 'sparkreviewer', 'worldsnapshot'], '/servercheck smoke run'],
     ['worthaudit', ['worthhelper', 'worthdrift'], '/worthaudit shop'],
     ['staffcenter', ['profile', 'warninglens'], '/staffcenter modules'],
   ]) {
@@ -104,19 +104,23 @@ test('Consolidated staff tools have canonical references and redirect retired gu
   }
 });
 
-test('ServerCheck exposes the performance modules through its staff guide', async () => {
+test('ServerCheck exposes its performance and world snapshot modules through the staff guide', async () => {
   const redirects = await readFile(path.join(repoRoot, 'astro.config.mjs'), 'utf8');
   const playerCommands = await readFile(path.join(generatedPlugins, '..', 'commands.mdx'), 'utf8');
   const staffGuide = await readFile(path.join(generatedPlugins, '..', '..', 'staff-reference', 'plugins', 'servercheck.md'), 'utf8');
 
-  for (const module of ['hoppers', 'sparkreviewer']) {
+  for (const module of ['hoppers', 'sparkreviewer', 'worldsnapshot']) {
     assert.ok(redirects.includes(`'/staff-reference/plugins/${module}': '/staff-reference/plugins/servercheck/'`));
     assert.match(staffGuide, new RegExp(`/docs/plugins/${module}\.md`));
   }
   assert.match(staffGuide, /\/servercheck hoppers <scan/);
   assert.match(staffGuide, /\/servercheck spark start/);
+  assert.match(staffGuide, /\/servercheck worlds capture/);
+  assert.match(staffGuide, /\/servercheck worlds diff/);
+  assert.match(staffGuide, /modules\.worldsnapshot\.enabled/);
   assert.ok(!playerCommands.includes('<code>/_hoppers'));
   assert.ok(!playerCommands.includes('<code>/sparkreviewer'));
+  assert.ok(!playerCommands.includes('<code>/worldsnapshot'));
 });
 
 test('StaffCenter keeps operator routes out of the player index and links both module references', async () => {

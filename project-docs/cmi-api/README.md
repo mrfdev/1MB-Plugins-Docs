@@ -122,64 +122,63 @@ Paper loads normal plugin jars from the top-level server `/plugins/` directory. 
 
 - `plugins/CMI-<version>.jar`
 - `plugins/CMILib<version>.jar`
-- `plugins/1MB-Lib-Core-v1.0.4-865-j25-26.3.jar`
-- `plugins/1MB-Lib-AFKShrine-v1.0.4-865-j25-26.3.jar` provides CMI AFK shrine effects, player-selectable permission-gated particle presets, highlighted welcome-back data, AFKShrine points, claim/exchange rewards, independently permissioned lore-book kits, milestones, quests, leaderboards, readiness checks, and passive staff Markdown reports
-- `plugins/1MB-Lib-RecordingMode-v1.0.4-865-j25-26.3.jar` provides recording quiet mode and the optional TPAuto module
-- `plugins/1MB-Lib-SellStreaks-v1.0.4-865-j25-26.3.jar`
-- `plugins/1MB-Lib-ScheduledTips-v1.0.4-865-j25-26.3.jar`
-- `plugins/1MB-Lib-Visit-v1.0.4-865-j25-26.3.jar` provides player-owned hidden CMI visit warps with safe welcome messages, arrival titles, particles, sounds, and top-visit perk unlocks
-- `plugins/1MB-Lib-PassportDiscovery-v1.0.4-865-j25-26.3.jar` includes `/passport warp`, replacing legacy WarpPassport for new installs
-- `plugins/1MB-Lib-SocialGatherings-v1.0.4-865-j25-26.3.jar`
-- `plugins/1MB-Lib-JourneyMap-v1.0.4-865-j25-26.3.jar`
-- `plugins/1MB-Lib-KitStreaks-v1.0.4-865-j25-26.3.jar`
-- `plugins/1MB-Lib-Nick-v1.0.4-865-j25-26.3.jar` provides safer `/nick` presets, GUI previews, cooldowns, related-name checks, history, favorites, ratings, and CMI nickname delegation
-- `plugins/1MB-Lib-EmoteMenu-v1.0.4-865-j25-26.3.jar` provides `/emotes` with a hardened light-blue GUI, Paper dialog search, target picking, and CMI CustomAlias-backed emote review
-- `plugins/1MB-Lib-PvPToggle-v1.0.4-865-j25-26.3.jar`
-- `plugins/1MB-Lib-Boosters-v1.0.4-865-j25-26.3.jar`
-- `plugins/1MB-Lib-NameMC-v1.0.4-865-j25-26.3.jar`
-- `plugins/1MB-Lib-Exchange-v1.0.4-865-j25-26.3.jar` provides `/exchange`, migrated from the old standalone 1MBTrades plugin
-- `plugins/1MB-Lib-VoteTokens-v1.0.4-865-j25-26.3.jar` provides `/votetokens` secure vote-token GUI exchanges, CMI kit rewards, hidden reward identity markers, reward setup item creation, extra-token item tools with shield presets, two-stage Jobs 6/12 purchases under Other Upgrades, and staff migration tools for old manual exchanges
-- `plugins/1MB-Lib-DiscordChat-v1.0.4-865-j25-26.3.jar` provides `/discordchat` DiscordSRV server-chat engagement tracking, continuous floor-based EXP conversion, separate streak milestone bonuses, conversation clusters, first-Discord broadcasts, community pulse, recurring bonus windows, linked-account streaks, two-step point rewards with player/global cooldowns, safe item tools, dependency-aware reward checks, opt-out reminders, milestone celebration privacy, and staff smoke/community/economy/archive/award reports
-- `plugins/1MB-Lib-BentoBox-v1.0.4-865-j25-26.3.jar` provides `/gametype` and the existing island menu shortcuts for six gametypes, plus independently activated markets, merchants, turnip farming, time capsules, events, and island expansion
-- `plugins/1MB-Lib-BirthdayLanterns-v1.0.4-865-j25-26.3.jar` provides `/birthday` collectible birthday, player anniversary, and server milestone lantern rewards with GUI claims, PDC item identity, finite wish charges, guestbook notes, presets, mail variants, and configurable CMI reward commands
-- `plugins/1MB-Lib-LavaBoots-v1.0.4-865-j25-26.3.jar` provides `/lavaboots` finite PDC-marked lava-assist boots with dyed leather event themes, charge, durability drain, offhand magma/fire-charge fuel, movement assist, short fire-resistance windows, lava vision event tiers, and repair/anvil/enchant guards
-- `plugins/1MB-Lib-Spawners-v1.0.4-865-j25-26.3.jar` provides `/spawners` CMI spawner shop GUI with Paper entity discovery, spawn egg shop icons, tier-split friendly pages, glint availability markers, blocked utility-entity filters, restricted admin-only spawner browsing, CMI placespawner permission checks, confirmation purchases, CMI-backed Vault economy payments, annual event limits, yearly stock caps, event progress, admin toggles, shift-click spawner editing, per-id disables, price overrides, category moves, future tier/group tools, DiscordSRV staff logs, setup command exports, and safe sell-section scaffolding
-- `plugins/1MB-Lib-Collect-v1.0.4-865-j25-26.3.jar` provides `/collect` seasonal event GUI with safe vanilla-only inventory-scanned item submissions, event-score bonuses, capped virtual Lucky Finds, community progress, scavenger hunts, personal milestones, hidden future weeks, daily/weekly/monthly/all-event leaderboards with highlighted top-3 player heads, Hall of Fame archives, streaks, PDC keepsake rewards, duplicate reward exchange for event score, CMI reward command hooks, DiscordSRV event feed hooks, admin debug week/day/date controls, and Discord-friendly markdown event reports
-- `plugins/1MB-Lib-EventHunts-v1.0.4-865-j25-26.3.jar` provides the shared `/hunt` Event Hunts index and themed-hunt engine: a disabled-by-default preserved `/coconut` Summer 2027 edition, enabled `/ghosthunt` Halloween 2026 weekend with four six-Ghost waves and five kit rewards, and the independently switched `/doors` event module. The legacy `CoconutHunt` data, permission, placeholder, and PDC namespaces remain unchanged.
-- `plugins/1MB-Lib-DropParty-v1.0.4-865-j25-26.3.jar` provides dormant-by-default scheduled/manual sulfur-geyser DropParties, hardened player/staff GUIs, CMI arena travel, approved exact-item eruptions, movement-based anti-idle checks, durable cross-world collection vaults, recoverable claims, stats, leaderboards, and non-destructive mini-party flares
-- `plugins/1MB-Lib-Advent-v1.0.4-865-j25-26.3.jar` provides dormant Christmas preparation, daily elf/Santa unlocks, delayed claims and seasonal activities; see [Advent](docs/plugins/advent.md).
-- `plugins/1MB-Lib-HideAndSheep-v1.0.4-865-j25-26.3.jar` provides dormant `/sheep` hunts for Woolbur, Charlie the Vote Llama's nephew, with prepared staff starts, eight costumes and custom designs, size-based decoys, first-three points, persistent statistics, world-mapped point/kit rewards, and a twenty-page story. Kit delivery requires CMI templates and active Forage's inventory save-proof service; see the [staff reference](docs/plugins/hideandsheep.md) and [player guide](docs/plugins/hideandsheep-player-guide.md).
-- `plugins/1MB-Lib-Appreciation-v1.0.4-865-j25-26.3.jar` provides dormant-by-default `/appreciate` and optional `/thanks` player appreciation menus, reviewed reasons including birthdays, limited sending quotas, recipient gift/notification/accessibility preferences, free/XP/money/scope-safe item escrow, one free thank-you reaction, nearby shared celebrations, 60-day gift returns with preserved notes, anonymous sending, recent favorites, badges, streak points, permanent unlocks, CMI notifications, placeholders, staff gift switches, anti-farming review, and guarded recovery
+- `plugins/1MB-Lib-Core-v1.0.4-866-j25-26.3.jar`
+- `plugins/1MB-Lib-AFKShrine-v1.0.4-866-j25-26.3.jar` provides CMI AFK shrine effects, player-selectable permission-gated particle presets, highlighted welcome-back data, AFKShrine points, claim/exchange rewards, independently permissioned lore-book kits, milestones, quests, leaderboards, readiness checks, and passive staff Markdown reports
+- `plugins/1MB-Lib-RecordingMode-v1.0.4-866-j25-26.3.jar` provides recording quiet mode and the optional TPAuto module
+- `plugins/1MB-Lib-SellStreaks-v1.0.4-866-j25-26.3.jar`
+- `plugins/1MB-Lib-ScheduledTips-v1.0.4-866-j25-26.3.jar`
+- `plugins/1MB-Lib-Visit-v1.0.4-866-j25-26.3.jar` provides player-owned hidden CMI visit warps with safe welcome messages, arrival titles, particles, sounds, and top-visit perk unlocks
+- `plugins/1MB-Lib-PassportDiscovery-v1.0.4-866-j25-26.3.jar` includes `/passport warp`, replacing legacy WarpPassport for new installs
+- `plugins/1MB-Lib-SocialGatherings-v1.0.4-866-j25-26.3.jar`
+- `plugins/1MB-Lib-JourneyMap-v1.0.4-866-j25-26.3.jar`
+- `plugins/1MB-Lib-KitStreaks-v1.0.4-866-j25-26.3.jar`
+- `plugins/1MB-Lib-Nick-v1.0.4-866-j25-26.3.jar` provides safer `/nick` presets, GUI previews, cooldowns, related-name checks, history, favorites, ratings, and CMI nickname delegation
+- `plugins/1MB-Lib-EmoteMenu-v1.0.4-866-j25-26.3.jar` provides `/emotes` with a hardened light-blue GUI, Paper dialog search, target picking, and CMI CustomAlias-backed emote review
+- `plugins/1MB-Lib-PvPToggle-v1.0.4-866-j25-26.3.jar`
+- `plugins/1MB-Lib-Boosters-v1.0.4-866-j25-26.3.jar`
+- `plugins/1MB-Lib-NameMC-v1.0.4-866-j25-26.3.jar`
+- `plugins/1MB-Lib-Exchange-v1.0.4-866-j25-26.3.jar` provides `/exchange`, migrated from the old standalone 1MBTrades plugin
+- `plugins/1MB-Lib-VoteTokens-v1.0.4-866-j25-26.3.jar` provides `/votetokens` secure vote-token GUI exchanges, CMI kit rewards, hidden reward identity markers, reward setup item creation, extra-token item tools with shield presets, two-stage Jobs 6/12 purchases under Other Upgrades, and staff migration tools for old manual exchanges
+- `plugins/1MB-Lib-DiscordChat-v1.0.4-866-j25-26.3.jar` provides `/discordchat` DiscordSRV server-chat engagement tracking, continuous floor-based EXP conversion, separate streak milestone bonuses, conversation clusters, first-Discord broadcasts, community pulse, recurring bonus windows, linked-account streaks, two-step point rewards with player/global cooldowns, safe item tools, dependency-aware reward checks, opt-out reminders, milestone celebration privacy, and staff smoke/community/economy/archive/award reports
+- `plugins/1MB-Lib-BentoBox-v1.0.4-866-j25-26.3.jar` provides `/gametype` and the existing island menu shortcuts for six gametypes, plus independently activated markets, merchants, turnip farming, time capsules, events, and island expansion
+- `plugins/1MB-Lib-BirthdayLanterns-v1.0.4-866-j25-26.3.jar` provides `/birthday` collectible birthday, player anniversary, and server milestone lantern rewards with GUI claims, PDC item identity, finite wish charges, guestbook notes, presets, mail variants, and configurable CMI reward commands
+- `plugins/1MB-Lib-LavaBoots-v1.0.4-866-j25-26.3.jar` provides `/lavaboots` finite PDC-marked lava-assist boots with dyed leather event themes, charge, durability drain, offhand magma/fire-charge fuel, movement assist, short fire-resistance windows, lava vision event tiers, and repair/anvil/enchant guards
+- `plugins/1MB-Lib-Spawners-v1.0.4-866-j25-26.3.jar` provides `/spawners` CMI spawner shop GUI with Paper entity discovery, spawn egg shop icons, tier-split friendly pages, glint availability markers, blocked utility-entity filters, restricted admin-only spawner browsing, CMI placespawner permission checks, confirmation purchases, CMI-backed Vault economy payments, annual event limits, yearly stock caps, event progress, admin toggles, shift-click spawner editing, per-id disables, price overrides, category moves, future tier/group tools, DiscordSRV staff logs, setup command exports, and safe sell-section scaffolding
+- `plugins/1MB-Lib-Collect-v1.0.4-866-j25-26.3.jar` provides `/collect` seasonal event GUI with safe vanilla-only inventory-scanned item submissions, event-score bonuses, capped virtual Lucky Finds, community progress, scavenger hunts, personal milestones, hidden future weeks, daily/weekly/monthly/all-event leaderboards with highlighted top-3 player heads, Hall of Fame archives, streaks, PDC keepsake rewards, duplicate reward exchange for event score, CMI reward command hooks, DiscordSRV event feed hooks, admin debug week/day/date controls, and Discord-friendly markdown event reports
+- `plugins/1MB-Lib-EventHunts-v1.0.4-866-j25-26.3.jar` provides the shared `/hunt` Event Hunts index and themed-hunt engine: a disabled-by-default preserved `/coconut` Summer 2027 edition, enabled `/ghosthunt` Halloween 2026 weekend with four six-Ghost waves and five kit rewards, and the independently switched `/doors` event module. The legacy `CoconutHunt` data, permission, placeholder, and PDC namespaces remain unchanged.
+- `plugins/1MB-Lib-DropParty-v1.0.4-866-j25-26.3.jar` provides dormant-by-default scheduled/manual sulfur-geyser DropParties, hardened player/staff GUIs, CMI arena travel, approved exact-item eruptions, movement-based anti-idle checks, durable cross-world collection vaults, recoverable claims, stats, leaderboards, and non-destructive mini-party flares
+- `plugins/1MB-Lib-Advent-v1.0.4-866-j25-26.3.jar` provides dormant Christmas preparation, daily elf/Santa unlocks, delayed claims and seasonal activities; see [Advent](docs/plugins/advent.md).
+- `plugins/1MB-Lib-HideAndSheep-v1.0.4-866-j25-26.3.jar` provides dormant `/sheep` hunts for Woolbur, Charlie the Vote Llama's nephew, with prepared staff starts, eight costumes and custom designs, size-based decoys, first-three points, persistent statistics, world-mapped point/kit rewards, and a twenty-page story. Kit delivery requires CMI templates and active Forage's inventory save-proof service; see the [staff reference](docs/plugins/hideandsheep.md) and [player guide](docs/plugins/hideandsheep-player-guide.md).
+- `plugins/1MB-Lib-Appreciation-v1.0.4-866-j25-26.3.jar` provides dormant-by-default `/appreciate` and optional `/thanks` player appreciation menus, reviewed reasons including birthdays, limited sending quotas, recipient gift/notification/accessibility preferences, free/XP/money/scope-safe item escrow, one free thank-you reaction, nearby shared celebrations, 60-day gift returns with preserved notes, anonymous sending, recent favorites, badges, streak points, permanent unlocks, CMI notifications, placeholders, staff gift switches, anti-farming review, and guarded recovery
 - Forage adds tool-based survival gathering, owned camps, daily/weekly/monthly quests, a permanent Herbarium and seasonal Community Efforts. See the [complete player guide](docs/plugins/forage-camps.md) for tools, exact sources, repairs, rewards and common questions.
-- `plugins/1MB-Lib-AutoSell-v1.0.4-865-j25-26.3.jar` provides `/autosell` opt-in CMI Worth.yml inventory cleanup with hardened GUI category/material/filter/world toggles, per-category material pages, pure-vanilla item checks, hotbar/offhand/armor protection, exact-stack sell verification, Vault/CMI payments, daily caps, broker progress, quest hub with claimable rewards and period pages, visible milestone tree with bulk-batch milestones, sell chains, daily/weekly streak bonuses, preset/manual and disabled-by-default scheduled `/rate`-visible AutoSell Happy Hour boosts, chunk-change and overheat anti-farm guards, material/world blacklists, quick blacklist actions from numbered warnings, player category/material stats, chunk heatmaps, passive tuning suggestions, admin analytics reports, and Markdown exports
-- `plugins/1MB-Lib-MobHat-v1.0.4-865-j25-26.3.jar`
-- `plugins/1MB-Lib-PlayerTodo-v1.0.4-865-j25-26.3.jar`
-- `plugins/1MB-Lib-Refer-v1.0.4-865-j25-26.3.jar`
-- `plugins/1MB-Lib-Chunks-v1.0.4-865-j25-26.3.jar` provides the `/chunks` view-distance menu, approved 4–16 presets, UUID-based LuckPerms persistence, and in-game preset administration; see [Chunks](docs/plugins/chunks.md)
-- `plugins/1MB-Lib-Menu-v1.0.4-865-j25-26.3.jar`
-- `plugins/1MB-Lib-StaffCenter-v1.0.4-865-j25-26.3.jar` hosts the CMI staff dashboard, WarningLens moderation review, and Profile identity review through `/staffcenter`. Existing `/warninglens`, `/wlens`, and `/profile` commands remain available.
-- `plugins/1MB-Lib-ContentGuard-v1.0.4-865-j25-26.3.jar` hosts independently switchable FilterLab simulation and FilterGuard enforcement modules while preserving their existing commands and configuration
-- `plugins/1MB-Lib-TeamMsg-v1.0.4-865-j25-26.3.jar` hosts independently switchable 1MBStaffMsg and NotableMsg modules while preserving `/s`, `/1mbstaffmsg`, `/n`, permissions, placeholders, prefixes, and existing config files
-- `plugins/1MB-Lib-CmdCostDashboard-v1.0.4-865-j25-26.3.jar`
-- `plugins/1MB-Lib-CMIConfig-v1.0.4-865-j25-26.3.jar`
-- `plugins/1MB-Lib-ConsoleNoiseRouter-v1.0.4-865-j25-26.3.jar`
-- `plugins/1MB-Lib-EconomyGuardian-v1.0.4-865-j25-26.3.jar`
-- `plugins/1MB-Lib-ServerCheck-v1.0.4-865-j25-26.3.jar` provides `/servercheck` with PluginVersions inventory and dependency checks, UpdateSmoke post-update checks, StartupDoctor startup diagnostics, Hoppers hotspot reviews, and SparkReviewer performance snapshots and profiling
-- `plugins/1MB-Lib-Placeholders-v1.0.4-865-j25-26.3.jar` hosts the production `%onemb_*%` provider plus independently switchable Catalog, Probe, and Health modules behind `/_placeholders`
-- `plugins/1MB-Lib-Potions-v1.0.4-865-j25-26.3.jar` provides `/_potions` for locked admin custom event potion forging plus player-safe `/potions` held-item inspection, split config/potions/particles files, PDC identity, GUI definition editing, collection bundle generation, 14-style generation, snapshotted item costs, particle/collection metadata, and runtime disable controls
-- `plugins/1MB-Lib-SchedulerCheck-v1.0.4-865-j25-26.3.jar` provides direct-console `/_scheduler` checks for CMI scheduler YAML syntax, timing values, command lists, enabled toggles, and Markdown exports
-- `plugins/1MB-Lib-Upgrade-v1.0.4-865-j25-26.3.jar` provides `/_upgrade` admin-only LuckPerms group upgrade suggestions and read-only rankup simulation from join date and playtime signals, with a review queue GUI, clickable inspect/apply actions, guarded re-checks, side-group preservation, optional cosmetic permission rewards, promotion feedback effects, Discord link reminders, and split `config.yml`/`groups.yml`
-- `plugins/1MB-Lib-EndCrystals-v1.0.4-865-j25-26.3.jar` provides `/_endcrystals`, migrated from the old standalone 1MB-EndCrystals plugin
-- `plugins/1MB-Lib-AntiFire-v1.0.4-865-j25-26.3.jar` provides independent `STARTUP` fire-spread and block-burn protection, delayed temporary-fire cleanup, `/_antifire`, automatic standalone config import, and a later read-only status/placeholder bridge into `1MB-CMIAPI-LIB`
-- `plugins/1MB-Lib-WorldSnapshot-v1.0.4-865-j25-26.3.jar`
-- `plugins/1MB-Lib-Diagnostics-v1.0.4-865-j25-26.3.jar` provides removable `/_diagnostics` probes for disconnect, AFK, player-state, packet/protocol bridge context, compact item metadata clues, server-state, plugin-version, and recent server-log context with timestamped support logs
-- `plugins/1MB-Lib-EventRecorder-v1.0.4-865-j25-26.3.jar`
-- `plugins/1MB-Lib-BedrockChatBridge-v1.0.4-865-j25-26.3.jar`
-- `plugins/1MB-Lib-CMIProbe-v1.0.4-865-j25-26.3.jar`
-- `plugins/1MB-Lib-CMIDatabase-v1.0.4-865-j25-26.3.jar`
-- `plugins/1MB-Lib-PermissionProbe-v1.0.4-865-j25-26.3.jar` provides owner-only `/_permissions` diagnosis for players, commands, plugins, feature access summaries, player access overviews, player/group comparisons, passive denied-check recording, live watch summaries, scoped reports, Markdown exports, context-aware LuckPerms source traces, expected-profile gap checks, wildcard/orphan scans, and Bukkit permission metadata
-- `plugins/1MB-Lib-WarpAudit-v1.0.4-865-j25-26.3.jar` provides read-only CMI warp and portal hygiene checks
-- `plugins/1MB-Lib-WorthAudit-v1.0.4-865-j25-26.3.jar` provides `/worthaudit` for CMI Worth.yml, Paper recipe and villager-trade review, CMI sell-event drift, and ShopGUI+ reports and previews
+- `plugins/1MB-Lib-AutoSell-v1.0.4-866-j25-26.3.jar` provides `/autosell` opt-in CMI Worth.yml inventory cleanup with hardened GUI category/material/filter/world toggles, per-category material pages, pure-vanilla item checks, hotbar/offhand/armor protection, exact-stack sell verification, Vault/CMI payments, daily caps, broker progress, quest hub with claimable rewards and period pages, visible milestone tree with bulk-batch milestones, sell chains, daily/weekly streak bonuses, preset/manual and disabled-by-default scheduled `/rate`-visible AutoSell Happy Hour boosts, chunk-change and overheat anti-farm guards, material/world blacklists, quick blacklist actions from numbered warnings, player category/material stats, chunk heatmaps, passive tuning suggestions, admin analytics reports, and Markdown exports
+- `plugins/1MB-Lib-MobHat-v1.0.4-866-j25-26.3.jar`
+- `plugins/1MB-Lib-PlayerTodo-v1.0.4-866-j25-26.3.jar`
+- `plugins/1MB-Lib-Refer-v1.0.4-866-j25-26.3.jar`
+- `plugins/1MB-Lib-Chunks-v1.0.4-866-j25-26.3.jar` provides the `/chunks` view-distance menu, approved 4–16 presets, UUID-based LuckPerms persistence, and in-game preset administration; see [Chunks](docs/plugins/chunks.md)
+- `plugins/1MB-Lib-Menu-v1.0.4-866-j25-26.3.jar`
+- `plugins/1MB-Lib-StaffCenter-v1.0.4-866-j25-26.3.jar` hosts the CMI staff dashboard, WarningLens moderation review, and Profile identity review through `/staffcenter`. Existing `/warninglens`, `/wlens`, and `/profile` commands remain available.
+- `plugins/1MB-Lib-ContentGuard-v1.0.4-866-j25-26.3.jar` hosts independently switchable FilterLab simulation and FilterGuard enforcement modules while preserving their existing commands and configuration
+- `plugins/1MB-Lib-TeamMsg-v1.0.4-866-j25-26.3.jar` hosts independently switchable 1MBStaffMsg and NotableMsg modules while preserving `/s`, `/1mbstaffmsg`, `/n`, permissions, placeholders, prefixes, and existing config files
+- `plugins/1MB-Lib-CmdCostDashboard-v1.0.4-866-j25-26.3.jar`
+- `plugins/1MB-Lib-CMIConfig-v1.0.4-866-j25-26.3.jar`
+- `plugins/1MB-Lib-ConsoleNoiseRouter-v1.0.4-866-j25-26.3.jar`
+- `plugins/1MB-Lib-EconomyGuardian-v1.0.4-866-j25-26.3.jar`
+- `plugins/1MB-Lib-ServerCheck-v1.0.4-866-j25-26.3.jar` provides `/servercheck` with PluginVersions inventory and dependency checks, UpdateSmoke post-update checks, StartupDoctor startup diagnostics, Hoppers hotspot reviews, SparkReviewer performance snapshots and profiling, and WorldSnapshot baseline comparisons
+- `plugins/1MB-Lib-Placeholders-v1.0.4-866-j25-26.3.jar` hosts the production `%onemb_*%` provider plus independently switchable Catalog, Probe, and Health modules behind `/_placeholders`
+- `plugins/1MB-Lib-Potions-v1.0.4-866-j25-26.3.jar` provides `/_potions` for locked admin custom event potion forging plus player-safe `/potions` held-item inspection, split config/potions/particles files, PDC identity, GUI definition editing, collection bundle generation, 14-style generation, snapshotted item costs, particle/collection metadata, and runtime disable controls
+- `plugins/1MB-Lib-SchedulerCheck-v1.0.4-866-j25-26.3.jar` provides direct-console `/_scheduler` checks for CMI scheduler YAML syntax, timing values, command lists, enabled toggles, and Markdown exports
+- `plugins/1MB-Lib-Upgrade-v1.0.4-866-j25-26.3.jar` provides `/_upgrade` admin-only LuckPerms group upgrade suggestions and read-only rankup simulation from join date and playtime signals, with a review queue GUI, clickable inspect/apply actions, guarded re-checks, side-group preservation, optional cosmetic permission rewards, promotion feedback effects, Discord link reminders, and split `config.yml`/`groups.yml`
+- `plugins/1MB-Lib-EndCrystals-v1.0.4-866-j25-26.3.jar` provides `/_endcrystals`, migrated from the old standalone 1MB-EndCrystals plugin
+- `plugins/1MB-Lib-AntiFire-v1.0.4-866-j25-26.3.jar` provides independent `STARTUP` fire-spread and block-burn protection, delayed temporary-fire cleanup, `/_antifire`, automatic standalone config import, and a later read-only status/placeholder bridge into `1MB-CMIAPI-LIB`
+- `plugins/1MB-Lib-Diagnostics-v1.0.4-866-j25-26.3.jar` provides removable `/_diagnostics` probes for disconnect, AFK, player-state, packet/protocol bridge context, compact item metadata clues, server-state, plugin-version, and recent server-log context with timestamped support logs
+- `plugins/1MB-Lib-EventRecorder-v1.0.4-866-j25-26.3.jar`
+- `plugins/1MB-Lib-BedrockChatBridge-v1.0.4-866-j25-26.3.jar`
+- `plugins/1MB-Lib-CMIProbe-v1.0.4-866-j25-26.3.jar`
+- `plugins/1MB-Lib-CMIDatabase-v1.0.4-866-j25-26.3.jar`
+- `plugins/1MB-Lib-PermissionProbe-v1.0.4-866-j25-26.3.jar` provides owner-only `/_permissions` diagnosis for players, commands, plugins, feature access summaries, player access overviews, player/group comparisons, passive denied-check recording, live watch summaries, scoped reports, Markdown exports, context-aware LuckPerms source traces, expected-profile gap checks, wildcard/orphan scans, and Bukkit permission metadata
+- `plugins/1MB-Lib-WarpAudit-v1.0.4-866-j25-26.3.jar` provides read-only CMI warp and portal hygiene checks
+- `plugins/1MB-Lib-WorthAudit-v1.0.4-866-j25-26.3.jar` provides `/worthaudit` for CMI Worth.yml, Paper recipe and villager-trade review, CMI sell-event drift, and ShopGUI+ reports and previews
 
 The common `1MB-Lib-` prefix keeps the JARs grouped together when sorted by name. Repository folders and build output may be organized by category, but installed runtime JARs should stay in `/plugins/` for normal Paper loading and feature isolation.
 
@@ -193,7 +192,7 @@ The complete built jar set may be copied to a live server without exposing unfin
 - `PvPToggle`, `RecordingMode`, `Visit`, `VoteTokens`, `WorthAudit`
 - the required `LIB` and standalone `AntiFire` jars
 
-Fresh ServerCheck installs activate PluginVersions and Hoppers. UpdateSmoke, StartupDoctor, and SparkReviewer start dormant. Existing module activation settings are imported independently.
+Fresh ServerCheck installs activate PluginVersions and Hoppers. UpdateSmoke, StartupDoctor, SparkReviewer, and WorldSnapshot start dormant. Existing module activation settings are imported independently.
 
 Fresh BentoBox installs activate GameTypes and leave the optional island modules dormant. Existing menu and island activation values are imported independently.
 
@@ -224,7 +223,7 @@ Runtime data should live under one central folder:
 
 The shared library owns common storage such as `database/`, `translations/`, `cache/`, `debug/`, and long-lived `playerdata/`. Feature plugins should use the shared playerdata helper for UUID file loading/saving and plugin-scoped cleanup.
 
-Every new deployable build is suite-wide: one build number is used by all active JARs (currently 60), and the complete set is synchronized to the sole maintained test server, `servers/Paper-26.3/plugins/`.
+Every new deployable build is suite-wide: one build number is used by all active JARs (currently 59), and the complete set is synchronized to the sole maintained test server, `servers/Paper-26.3/plugins/`.
 
 Run `scripts/build-all.sh` with Paper stopped to create that build. It reserves one build number, selects and verifies the latest runtime within the configured Paper version/channel, runs the full build/test gate, and deploys the complete suite to Paper. `gradle planProjectJarSync` prepares and validates the complete candidates without changing the server; `gradle syncBuiltJarsToProjectServer` performs the full build gate before replacing managed legacy/current JARs. The target is preflighted before any replacement, existing world locks are held throughout deployment, and a failure restores the prior suite. Interrupted transactions fail closed for recovery.
 
@@ -482,7 +481,7 @@ Feature jars should be produced as separate artifacts using the project filename
 1MB-Lib-<Feature>-v<version>-<build>-j25-26.3.jar
 ```
 
-After the complete build gate succeeds, the workflow synchronizes the complete managed set (currently 60 project JARs, including instance-disabled artifacts) in:
+After the complete build gate succeeds, the workflow synchronizes the complete managed set (currently 59 project JARs, including instance-disabled artifacts) in:
 
 ```text
 servers/Paper-26.3/plugins/

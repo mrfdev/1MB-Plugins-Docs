@@ -1597,7 +1597,7 @@ AntiFire publishes the values independently; `1MB-CMIAPI-Lib` registers them und
 %onembcmi_antifire.runtime.extinguished%
 ```
 
-WorldSnapshot placeholders:
+WorldSnapshot module placeholders in ServerCheck:
 
 ```text
 %onembcmi_worldsnapshot.enabled%

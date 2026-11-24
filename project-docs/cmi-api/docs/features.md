@@ -60,12 +60,11 @@ These are the first feature candidates now using the shared library scaffold:
 | Server Management | CMIConfig | Owner GUI for selected CMI/CMILib config toggles | [CMIConfig](plugins/cmiconfig.md) |
 | Server Management | ConsoleNoiseRouter | CMI console message classifier and cache dump helper | [ConsoleNoiseRouter](plugins/consolenoiserouter.md) |
 | Server Management | EconomyGuardian | Read-only CMI economy balance anomaly watcher | [EconomyGuardian](plugins/economyguardian.md) |
-| Server Management | ServerCheck | Plugin inventory, post-update smoke checks, startup diagnostics, hopper triage, and Spark performance reviews | [ServerCheck](plugins/servercheck.md) |
+| Server Management | ServerCheck | Plugin inventory, post-update smoke checks, startup diagnostics, hopper triage, Spark performance reviews, and WorldSnapshot baseline comparisons | [ServerCheck](plugins/servercheck.md) |
 | Server Management | Potions | Locked admin forge plus player-safe `/potions` held-item inspection for PDC-marked custom event potions with split config files, GUI definition editing, collection bundle generation, 14 style choices, snapshotted costs, particle presets, collections, and runtime disable controls | [Potions](plugins/potions.md) |
 | Server Management | Upgrade | Admin-only LuckPerms group upgrade suggestions from join-date and playtime signals with read-only rankup simulation, a review queue GUI, guarded click-to-apply actions, optional cosmetic rewards, promotion effects, and Discord link reminders | [Upgrade](plugins/upgrade.md) |
 | Server Management | EndCrystals | End crystal block, entity, and player-break protection migrated from the standalone EndCrystals project | [EndCrystals](plugins/endcrystals.md) |
 | Server Management | AntiFire | Runtime-independent STARTUP fire-spread and block-burn protection with delayed temporary-fire cleanup, controlled permanent fire, and later read-only library status | [AntiFire](plugins/antifire.md) |
-| Server Management | WorldSnapshot | Read-only world settings, gamerules, and CMI world-toggle snapshots | [WorldSnapshot](plugins/worldsnapshot.md) |
 | Server Management | Diagnostics | Removable owner diagnostics for disconnects, AFK context, player state, packet/protocol bridge clues, compact item metadata clues, plugin versions, and support-ready timestamped logs | [Diagnostics](plugins/diagnostics.md) |
 | Server Management | WarpAudit | Read-only CMI warp and portal audit | [WarpAudit](plugins/warpaudit.md) |
 | Server Management | WorthAudit | Staff reviews for CMI worth, Paper recipes and villager trades, CMI sell observations, and ShopGUI+ prices | [WorthAudit](plugins/worthaudit.md) |

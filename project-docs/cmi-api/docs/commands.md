@@ -299,7 +299,7 @@ Feature `/help` pages are intentionally player-facing: they list commands availa
 /1mblib debug plugin servercheck all
 /_scheduler debug all
 /1mblib debug plugin upgrade all
-/1mblib debug plugin worldsnapshot all
+/servercheck debug worlds all
 /servercheck debug spark all
 /servercheck debug hoppers all
 /1mblib debug plugin diagnostics all
@@ -370,7 +370,7 @@ Placeholders Probe module:
 ```
 
 
-ServerCheck groups plugin inventory, post-update checks, startup diagnostics, hopper triage, and Spark performance reviews.
+ServerCheck groups plugin inventory, post-update checks, startup diagnostics, hopper triage, Spark performance reviews, and world comparisons.
 
 ```text
 /servercheck status
@@ -384,6 +384,7 @@ ServerCheck groups plugin inventory, post-update checks, startup diagnostics, ho
 /servercheck debug doctor
 /servercheck debug hoppers
 /servercheck debug spark
+/servercheck debug worlds
 /servercheck info
 /servercheck help
 ```
@@ -2126,18 +2127,21 @@ AntiFire:
 
 `/_antifire info` is public. Bare `/_antifire` shows trusted help to an authorized admin and otherwise falls back to the public information page. Debug, reload, and toggle require explicit AntiFire permissions; operator status alone does not grant the default-false admin nodes. Console remains allowed. No `/antifire` alias is registered.
 
-WorldSnapshot:
+WorldSnapshot in ServerCheck. Run a bare `/worldsnapshot`, `/wsnapshot`, or `/wrules` to capture a baseline through a legacy command. Each legacy root also accepts its original subcommands.
 
 ```text
-/worldsnapshot
-/worldsnapshot status
-/worldsnapshot capture
-/worldsnapshot list
-/worldsnapshot world spawn
-/worldsnapshot diff
-/worldsnapshot diff spawn
-/worldsnapshot dump
-/worldsnapshot reload
+/servercheck worlds
+/servercheck worlds status
+/servercheck worlds capture
+/servercheck worlds list
+/servercheck worlds world spawn
+/servercheck worlds diff
+/servercheck worlds diff spawn
+/servercheck worlds dump
+/servercheck worlds reload
+/servercheck admin module worlds true
+/servercheck admin module worlds false
+/servercheck admin reload worlds
 ```
 
 WarpAudit:
