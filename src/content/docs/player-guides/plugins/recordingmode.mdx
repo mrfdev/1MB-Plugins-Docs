@@ -7,11 +7,11 @@ This page introduces RecordingMode from a public server-docs point of view. It f
 
 ## What It Does
 
-Recording mode helps players stream or record without private messages, requests, tips, or map visibility getting in the way. Turn it on before going live, then turn it off when you are done.
+RecordingMode quiets selected messages, requests, tips, and map visibility while you record or stream.
 
 ## How Players Use It
 
-Start with /recording. The sections below explain what RecordingMode is for, which commands players can try, and what to expect when your account has access.
+Use /recording to toggle your quiet settings. If staff have enabled the optional TPAuto module and granted you access, you can also opt in to automatically accepting supported incoming teleport requests.
 
 Available features include:
 
@@ -20,14 +20,13 @@ Available features include:
 - Automatic capture and restoration of the previous server message and request settings.
 - Persistent personal preferences in shared playerdata.
 - A clickable status panel showing the current recording state and each channel preference.
-- Simple on, off, toggle, status, and per-channel commands.
+- An optional TPAuto preference for supported incoming teleport requests. Muting TPA during recording pauses automatic acceptance and keeps the saved preference.
 
 ## Quick Start
 
-1. Start with `/recording` to open or view RecordingMode.
-2. Use `/recording status` to check your current progress, settings, or state.
-3. Use `/recording help` when you want the in-game help or a short explanation.
-4. Try `/recording set msg on` when you are ready to use one of the feature actions.
+1. Use `/recording status` to review your quiet settings.
+2. Use `/recording` to toggle recording mode on before you start and off when you finish.
+3. Use `/recording tpauto status` to check your personal auto-accept preference when TPAuto is available. Existing `/tpauto` commands still work.
 
 ## Commands
 
@@ -42,7 +41,7 @@ Available features include:
   <tbody>
     <tr>
       <td><code>/recording</code></td>
-      <td>Opens or shows the main RecordingMode player view.</td>
+      <td>Toggles recording mode for your account.</td>
       <td><code>/recording</code></td>
     </tr>
     <tr>
@@ -95,8 +94,37 @@ Available features include:
       <td>Manages one of your RecordingMode entries.</td>
       <td><code>/recording reset</code></td>
     </tr>
+    <tr>
+      <td><code>/recording tpauto status</code></td>
+      <td>Shows your own TPAuto preference.</td>
+      <td><code>/recording tpauto status</code></td>
+    </tr>
+    <tr>
+      <td><code>/recording tpauto on</code></td>
+      <td>Turns on automatic acceptance of supported incoming teleport requests.</td>
+      <td><code>/recording tpauto on</code></td>
+    </tr>
+    <tr>
+      <td><code>/recording tpauto off</code></td>
+      <td>Turns off automatic acceptance of incoming teleport requests.</td>
+      <td><code>/recording tpauto off</code></td>
+    </tr>
+    <tr>
+      <td><code>/recording tpauto toggle</code></td>
+      <td>Switches your saved TPAuto preference on or off.</td>
+      <td><code>/recording tpauto toggle</code></td>
+    </tr>
+    <tr>
+      <td><code>/recording tpauto reset</code></td>
+      <td>Restores your TPAuto preference to the server default.</td>
+      <td><code>/recording tpauto reset</code></td>
+    </tr>
   </tbody>
 </table>
+
+## Aliases
+
+- `/recordingmode`
 
 ## Examples
 
@@ -122,9 +150,8 @@ No. With `tips off`, RecordingMode temporarily pauses connected optional hints. 
 
 ## Good To Know
 
-- Some commands may be hidden until your group, event progress, or unlocks allow them.
-- If a command opens a menu, follow the buttons in-game; the website is only the learning guide.
-- Settings commands only change your own player preferences unless the page says otherwise.
+- TPAuto can accept any supported incoming request that the server allows. Enable it when you want that behavior.
+- Use the [RecordingMode staff reference](/staff-reference/plugins/recordingmode/) for the module switch, permissions, and upgrade steps.
 
 ## Full Reference
 

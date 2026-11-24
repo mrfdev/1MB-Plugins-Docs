@@ -1,8 +1,10 @@
-# TPAuto
+# TPAuto module for RecordingMode
 
 TPAuto adds a per-player toggle for automatically accepting incoming CMI teleport requests. It is meant for trusted roles such as streamers, event hosts, staff, or build-team leads who receive many `/tpa` or `/tpahere` requests and do not want to type `/tpaccept` for every request.
 
-TPAuto does not teleport players itself. It listens for CMI's `CMIPlayerTeleportRequestEvent`, checks the target player's saved toggle and permissions, then runs a strict `cmi tpaccept {requester}` command as the target player after a short delay. CMI remains responsible for its own request storage, cooldowns, warmups, safety checks, and teleport behavior.
+TPAuto listens for CMI's `CMIPlayerTeleportRequestEvent` and checks the target player's saved toggle and permissions. After a short delay it verifies the same request is pending before running `cmi tpaccept {requester}` as the target player. CMI remains responsible for request storage, cooldowns, warmups, safety checks, and teleport delivery.
+
+The module ships in [RecordingMode](recordingmode.md) and starts dormant on a fresh installation. While recording with TPA muted, automatic acceptance pauses and the saved TPAuto preference is retained.
 
 ## Player FAQ
 
@@ -12,13 +14,15 @@ When enabled and permitted, it automatically accepts supported incoming `/tpa` a
 
 ### How do I switch it on or off?
 
-Use `/tpauto on`, `/tpauto off`, and `/tpauto status`. Access is granted to selected roles; having ordinary teleport commands does not necessarily include TPAuto.
+Use `/recording tpauto on`, `/recording tpauto off`, and `/recording tpauto status`. The older `/tpauto` commands work too. Access is granted to selected roles; having ordinary teleport commands does not necessarily include TPAuto.
 
 ### Does it skip teleport delays or world restrictions?
 
 No. It accepts the request through the normal teleport system. That system still controls warmups, cooldowns, safety checks, and whether the teleport can proceed.
 
 ## Commands
+
+Each `/tpauto` action also works under `/recording tpauto`. The RecordingMode host switch is `/recording admin module tpauto [true|false]`.
 
 ```text
 /tpauto
@@ -97,11 +101,15 @@ papi parse mrfloris %onembcmi_tpauto.cmi.accepting_tpa%
 
 ## Config
 
-The config is written to:
+RecordingMode reads module activation from `modules.tpauto.enabled` in `plugins/1MB-CMIAPI/RecordingMode/config.yml`. The first upgrade copies the stored standalone `enabled` setting when that host switch is first created. Use the host switch for subsequent changes to module activation.
+
+TPAuto settings such as allowed request types and notifications are still written to:
 
 ```text
 plugins/1MB-CMIAPI/TPAuto/config.yml
 ```
+
+`default-enabled` sets the starting preference for a player whose UUID has no saved TPAuto data. Player commands can change their own preference once the module is active.
 
 Important settings:
 
@@ -161,18 +169,11 @@ tpauto:
 
 ## Installation
 
-Install the shared library, CMI, CMILib, and this feature jar together in `/plugins/`:
+Follow the [stopped-server upgrade steps](../installation.md#upgrade-tpauto-to-recordingmode). Install the complete tested suite including `1MB-Lib-RecordingMode`, with CMI and CMILib available. Keep the existing TPAuto settings, translations, and shared playerdata. Remove the old standalone TPAuto JAR from the plugin load path.
+
+Check the module with `/recording admin module tpauto`. Enable it with `/recording admin module tpauto true` where desired. Grant `onembcmi.tpauto.use` to the ranks that should have it, then test with two players:
 
 ```text
-1MB-Lib-Core-v1.0.4-835-j25-26.3.jar
-1MB-Lib-TPAuto-v1.0.4-835-j25-26.3.jar
-CMI.jar
-CMILib.jar
-```
-
-Restart the server, grant `onembcmi.tpauto.use` to the ranks that should have it, then test with two players:
-
-```text
-/tpauto on
+/recording tpauto on
 /tpa <playerWithTPAuto>
 ```

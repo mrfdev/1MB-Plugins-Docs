@@ -122,6 +122,13 @@ onembcmi.recordingmode.admin
 onembcmi.recordingmode.admin.inspect
 onembcmi.recordingmode.admin.reset
 onembcmi.recordingmode.admin.reload
+onembcmi.tpauto.use
+onembcmi.tpauto.status
+onembcmi.tpauto.admin
+onembcmi.tpauto.admin.inspect
+onembcmi.tpauto.admin.set
+onembcmi.tpauto.admin.reset
+onembcmi.tpauto.admin.reload
 onembcmi.sellstreaks.use
 onembcmi.sellstreaks.goals
 onembcmi.sellstreaks.top
@@ -409,13 +416,6 @@ onembcmi.refer.admin
 onembcmi.refer.admin.inspect
 onembcmi.refer.admin.reset
 onembcmi.refer.admin.reload
-onembcmi.tpauto.use
-onembcmi.tpauto.status
-onembcmi.tpauto.admin
-onembcmi.tpauto.admin.inspect
-onembcmi.tpauto.admin.set
-onembcmi.tpauto.admin.reset
-onembcmi.tpauto.admin.reload
 onembcmi.staffcenter.use
 onembcmi.staffcenter.inspect
 onembcmi.staffcenter.view.location

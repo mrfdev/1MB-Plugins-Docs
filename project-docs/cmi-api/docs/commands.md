@@ -656,7 +656,38 @@ RecordingMode:
 /recording set notablemsgs off
 /recording set tips off
 /recording set map off
+/recordingmode status
 /recording admin inspect mrfloris
+/recording admin module tpauto [true|false]
+```
+
+TPAuto module in RecordingMode:
+
+The module starts dormant on a fresh installation. Its existing `/tpauto` commands remain available as compatibility routes.
+
+```text
+/recording tpauto
+/recording tpauto on
+/recording tpauto off
+/recording tpauto toggle
+/recording tpauto status
+/recording tpauto reset
+/recording tpauto info
+/recording tpauto help
+/recording tpauto admin inspect mrfloris
+/recording tpauto admin set mrfloris on
+/recording tpauto admin reset mrfloris
+/recording tpauto admin reload
+/recording tpauto debug status
+/recording tpauto debug commands
+/recording tpauto debug permissions
+/recording tpauto debug placeholders
+/recording tpauto debug config
+/recording tpauto debug set config accept.tpa true
+/recording tpauto debug set config accept.tpahere true
+/recording tpauto debug set config accept.tpaall false
+/recording tpauto debug set config notifications.requester true
+/recording tpauto debug all
 ```
 
 Visit:
@@ -1756,33 +1787,6 @@ Refer:
 /refer debug set config requirements.referred-min-playtime-seconds 0
 /refer debug set config rewards.referrer-permission cmi.kit.refer
 /refer debug all
-```
-
-TPAuto:
-
-```text
-/tpauto
-/tpauto on
-/tpauto off
-/tpauto toggle
-/tpauto status
-/tpauto reset
-/tpauto info
-/tpauto help
-/tpauto admin inspect mrfloris
-/tpauto admin set mrfloris on
-/tpauto admin reset mrfloris
-/tpauto admin reload
-/tpauto debug status
-/tpauto debug commands
-/tpauto debug permissions
-/tpauto debug placeholders
-/tpauto debug config
-/tpauto debug set config accept.tpa true
-/tpauto debug set config accept.tpahere true
-/tpauto debug set config accept.tpaall false
-/tpauto debug set config notifications.requester true
-/tpauto debug all
 ```
 
 Menu:

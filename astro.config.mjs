@@ -30,6 +30,8 @@ const redirects = {
   '/player-guides/plugins/sparkreviewer': '/player-guides/plugins/servercheck/',
   '/staff-reference/plugins/hoppers': '/staff-reference/plugins/servercheck/',
   '/staff-reference/plugins/sparkreviewer': '/staff-reference/plugins/servercheck/',
+  '/player-guides/plugins/tpauto': '/player-guides/plugins/recordingmode/',
+  '/staff-reference/plugins/tpauto': '/staff-reference/plugins/recordingmode/',
   '/staff-reference/plugins/pluginversions': '/staff-reference/plugins/servercheck/',
   '/player-guides/plugins/worthhelper': '/player-guides/plugins/worthaudit/',
   '/player-guides/plugins/worthdrift': '/player-guides/plugins/worthaudit/',

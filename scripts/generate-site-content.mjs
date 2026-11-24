@@ -867,8 +867,28 @@ For Java players, we recommend a compatible [Fabric Loader](https://fabricmc.net
     ],
   },
   recordingmode: {
-    summary: 'Quiet selected personal messages and requests while recording or streaming.',
-    intro: 'Recording mode helps players stream or record without private messages, requests, tips, or map visibility getting in the way. Turn it on before going live, then turn it off when you are done.',
+    staffDocument: 'recordingmode.md',
+    summary: 'Quiet selected messages and requests while recording, with optional TPAuto.',
+    intro: 'RecordingMode quiets selected messages, requests, tips, and map visibility while you record or stream.',
+    guide: 'Use /recording to toggle your quiet settings. If staff have enabled the optional TPAuto module and granted you access, you can also opt in to automatically accepting supported incoming teleport requests.',
+    aliases: ['/recordingmode'],
+    quickStart: [
+      'Use `/recording status` to review your quiet settings.',
+      'Use `/recording` to toggle recording mode on before you start and off when you finish.',
+      'Use `/recording tpauto status` to check your personal auto-accept preference when TPAuto is available. Existing `/tpauto` commands still work.',
+    ],
+    commandDescriptions: {
+      '/recording': 'Toggles recording mode for your account.',
+      '/recording tpauto status': 'Shows your own TPAuto preference.',
+      '/recording tpauto on': 'Turns on automatic acceptance of supported incoming teleport requests.',
+      '/recording tpauto off': 'Turns off automatic acceptance of incoming teleport requests.',
+      '/recording tpauto toggle': 'Switches your saved TPAuto preference on or off.',
+      '/recording tpauto reset': 'Restores your TPAuto preference to the server default.',
+    },
+    notes: [
+      'TPAuto can accept any supported incoming request that the server allows. Enable it when you want that behavior.',
+      'Use the [RecordingMode staff reference](/staff-reference/plugins/recordingmode/) for the module switch, permissions, and upgrade steps.',
+    ],
   },
   schedulercheck: {
     summary: 'Owner-only CMI scheduler validator for YAML syntax, timing ranges, command risks, upcoming runs, safe toggles, created tasks, and Markdown reports.',
@@ -1046,10 +1066,6 @@ For Java players, we recommend a compatible [Fabric Loader](https://fabricmc.net
     ],
     includeInCommandIndex: false,
   },
-  tpauto: {
-    summary: 'Automatically accept teleport requests from trusted players when you want easier visits.',
-    intro: 'TPAuto lets players automatically accept incoming teleport requests when the feature is available to them. It is useful when you are hosting, building with friends, or helping visitors and do not want to accept every request manually.',
-  },
   votetokens: {
     summary: 'Trade vote tokens through safe menus, track tiers, and use eligible vote reward tools.',
     intro: 'VoteTokens gives players a safer menu for vote-token rewards. Open the menu to review trades, check progress, and use token tools when your account has access.',
@@ -1203,7 +1219,7 @@ const FEATURE_BULLET_OVERRIDES = {
     'Automatic capture and restoration of the previous server message and request settings.',
     'Persistent personal preferences in shared playerdata.',
     'A clickable status panel showing the current recording state and each channel preference.',
-    'Simple on, off, toggle, status, and per-channel commands.',
+    'An optional TPAuto preference for supported incoming teleport requests. Muting TPA during recording pauses automatic acceptance and keeps the saved preference.',
   ],
   refer: [
     'A two-step referral request and confirmation flow between two players.',
@@ -1246,13 +1262,6 @@ const FEATURE_BULLET_OVERRIDES = {
     'Sharing one selected todo entry with another player.',
     'Configurable open-item limits with permission-based larger limits.',
     'Persistent lifetime completion counts for milestones and placeholders.',
-  ],
-  tpauto: [
-    'A personal toggle for automatically accepting incoming CMI /tpa and /tpahere requests.',
-    'Trusted-role access so the feature can be limited to hosts, streamers, staff, or build teams.',
-    'Separate on, off, toggle, reset, and status controls.',
-    'Optional notifications for the requester and target after an automatic acceptance.',
-    'CMI remains responsible for request validity, cooldowns, warmups, safety checks, and the teleport itself.',
   ],
   visit: [
     'One hidden personal visit warp that other players can use through /visit <player>.',

@@ -1,0 +1,227 @@
+---
+title: "RecordingMode Administration"
+description: "Setup, permissions, recovery, and operation of RecordingMode."
+---
+
+## Purpose
+
+RecordingMode gives players a clean `/recording` toggle for video recording, streaming, screenshots, or other moments where chat interruptions should be reduced.
+
+When recording mode is enabled, the plugin applies the player's configured quiet profile to CMI options such as private messages, TPA requests, and money requests. It also filters CMI staff messages from that player when their profile disables staff messages, can hide `/n` NotableMsg chat when that feature jar is installed, can pause shared optional hints from connected features, and can hide the player from the live `/map` when `1MB-MapHide` is installed.
+
+For private messages, RecordingMode does not rely only on CMI's `acceptingPM` option. Operators or staff may inherit CMI bypass permissions, so the plugin also watches common private-message commands such as `/msg`, `/tell`, `/w`, `/pm`, `/m`, `/r`, and `/cmi msg`. When `msg` is off, it cancels outgoing private messages from the recording player and cancels incoming private-message commands targeting an active recording player.
+
+## Features
+
+- `/recording` toggles recording mode on or off.
+- Per-player preferences persist in shared playerdata.
+- Defaults can disable PMs, TPA requests, money requests, staff messages, NotableMsg `/n` messages, and shared optional hints while recording.
+- `/recording set <channel> <on|off>` controls what stays enabled while recording.
+- `/recording set staffmsgs <on|off>` controls whether `/s` staff messages stay visible while recording.
+- `/recording set notablemsgs <on|off>` is offered in tab completion when TeamMsg (or the legacy standalone NotableMsg jar) is installed and enabled.
+- `/recording set tips <on|off>` controls shared optional hints from connected providers, including ScheduledTips and AutoSell. It remains available without the ScheduledTips jar.
+- `/recording set map <on|off>` is offered in tab completion when `1MB-MapHide` is installed and enabled.
+- Previous CMI PM/TPA/money option states are captured and restored when recording mode turns off.
+- Live `/map` visibility is set through `1MB-MapHide` from console using `/bmpc hide <player>` while recording and `/bmpc show <player>` when recording mode is disabled.
+- Common private-message commands are guarded so CMI operator/staff bypasses do not leak messages through recording mode.
+- Active recording state reapplies on join when configured.
+- CMI staff messages are filtered with `CMIStaffMessageEvent` receiver removal while recording.
+- `/recording status` is a permissionless read-only route. Players see their own recording state across multiple colored lines; the direct server console sees enabled, cached-profile, and active-profile counts without being treated as a player. Preference entries have hover text explaining what on/off means, and players with `onembcmi.recordingmode.set` can click an entry to toggle it.
+- Successful `/recording set` changes refresh the status panel again after a short delay, so click-to-toggle users immediately see the new state and can toggle it back.
+- Player-facing chat output uses the shorter `Recording` prefix while debug metadata and docs keep the technical `RecordingMode` feature name.
+- Player-facing info/help text describes quiet personal messages, TPA requests, money requests, and staff messages without exposing CMI implementation details.
+- Register command, permission, placeholder, and config metadata with `1MB-CMIAPI-LIB`.
+
+## Optional TPAuto module
+
+TPAuto lets authorized players automatically accept supported incoming CMI teleport requests. Use `/recording tpauto status`, `/recording tpauto on`, or `/recording tpauto off`. The existing `/tpauto` command and its subcommands use the same module and permissions.
+
+When you are recording with TPA requests muted, that quiet setting takes precedence over TPAuto. Automatic acceptance pauses and your TPAuto preference stays saved. With CMI option restoration enabled, ending recording restores the acceptingTPA value captured before applying the quiet settings.
+
+TPAuto starts dormant on a fresh installation. An upgrade imports the standalone TPAuto `enabled` setting when `modules.tpauto.enabled` is first added to `RecordingMode/config.yml`. Use `/recording admin module tpauto` to check or `/recording admin module tpauto <true|false>` to change that switch with `onembcmi.recordingmode.admin`. The module keeps the existing `TPAuto/config.yml`, translations, `tpauto` section in shared UUID playerdata, and `onembcmi.tpauto.*` permissions.
+
+See the [TPAuto module reference](https://github.com/mrfdev/1MB-Plugins-Docs/blob/main/project-docs/cmi-api/docs/plugins/tpauto.md) and [stopped-server upgrade steps](https://github.com/mrfdev/1MB-Plugins-Docs/blob/main/project-docs/cmi-api/docs/installation.md#upgrade-tpauto-to-recordingmode).
+
+## Player FAQ
+
+### Does RecordingMode actually record my game?
+
+No. `/recording` reduces supported messages and requests while you record or stream using your own software.
+
+### Can I keep some messages while recording?
+
+Yes. Use `/recording status` to review your preferences, then commands such as `/recording set msg on` or `/recording set tips off`. Available channels depend on the installed features and your access.
+
+### What happens when I turn recording mode off?
+
+Run `/recording` again. The plugin restores your captured message and request settings where possible. Optional live-map hiding depends on the server having that integration enabled.
+
+### Will recording overwrite my hint choices?
+
+No. With `tips off`, RecordingMode temporarily pauses connected optional hints. Ending recording releases that pause and keeps your saved `/guidance` and `/tips` choices. `tips on` allows hints according to those choices; it does not force them on. Command replies and reward outcomes still follow their normal feature behavior. See [Player guidance](/player-guides/next-and-guidance/#choose-your-hints).
+
+## Commands
+
+```text
+/recording
+/recording status
+/recording help
+/recording set msg <on|off>
+/recording set tpa <on|off>
+/recording set money <on|off>
+/recording set staffmsgs <on|off>
+/recording set notablemsgs <on|off>
+/recording set tips <on|off>
+/recording set map <on|off>
+/recording reset
+/recording admin inspect <online-player>
+/recording admin reset <online-player>
+/recording admin reload
+/recording admin module tpauto [true|false]
+/recording tpauto status
+/recording tpauto on
+/recording tpauto off
+/recording tpauto toggle
+/recording tpauto reset
+```
+
+`/recordingmode` is an alias for `/recording`.
+
+Global library examples:
+
+```text
+/1mblib debug plugin recordingmode
+/1mblib debug plugin recordingmode all
+/1mblib config recordingmode
+/1mblib config set recordingmode defaults.tpa true
+/1mblib config set recordingmode defaults.bluemap false
+/1mblib translations reload
+```
+
+## Permissions
+
+```text
+onembcmi.recordingmode.use
+onembcmi.recordingmode.set
+onembcmi.recordingmode.admin
+onembcmi.recordingmode.admin.inspect
+onembcmi.recordingmode.admin.reset
+onembcmi.recordingmode.admin.reload
+```
+
+`onembcmi.recordingmode.use` and `onembcmi.recordingmode.set` default to false, so the server must grant them intentionally for toggling/help and preference changes. `/recording status` does not require either node; it never changes recording state.
+
+TPAuto commands use the [existing TPAuto permissions](https://github.com/mrfdev/1MB-Plugins-Docs/blob/main/project-docs/cmi-api/docs/plugins/tpauto.md#permissions) on both command routes.
+
+## Placeholders
+
+```text
+%onembcmi_recordingmode.enabled%
+%onembcmi_recordingmode.active%
+%onembcmi_recordingmode.preference.msg%
+%onembcmi_recordingmode.preference.tpa%
+%onembcmi_recordingmode.preference.money%
+%onembcmi_recordingmode.preference.staffmsg%
+%onembcmi_recordingmode.preference.notablemsg%
+%onembcmi_recordingmode.preference.tips%
+%onembcmi_recordingmode.preference.bluemap%
+%onembcmi_recordingmode.active.count%
+%onembcmi_recordingmode.cache.size%
+```
+
+## CMI / CMILib Usage
+
+CMI-API:
+
+- `CMIUser#getOptionState` captures existing CMI player option states.
+- `CMIUser#setOptionState` applies recording mode to `acceptingPM`, `acceptingTPA`, and `acceptingMoney`.
+- `CMIStaffMessageEvent` removes active recording players from CMI staff-message receivers when `staffmsg` is off.
+- NotableMsg reads the shared `recordingmode.preferences.notablemsg` playerdata key and skips active recording recipients when it is off.
+- ScheduledTips is controlled through the shared `ScheduledTipsControl` library service when that jar is installed.
+- Live `/map` visibility is handled through the optional `1MB-MapHide` plugin by dispatching its `/bmpc hide <player>` and `/bmpc show <player>` commands from console. RecordingMode does not compile against BlueMap or the MapHide project directly.
+
+CMILib:
+
+- CMILib is a runtime dependency through CMI and the shared library stack.
+
+Paper:
+
+- Paper command, event, YAML, and Adventure MiniMessage output APIs are used.
+- Player input is restricted to known channels and boolean values.
+
+## Config
+
+Important config paths:
+
+```text
+enabled
+modules.tpauto.enabled
+defaults.msg
+defaults.tpa
+defaults.money
+defaults.staffmsg
+defaults.notablemsg
+defaults.tips
+defaults.bluemap
+bluemap.enabled
+bluemap.plugin-name
+bluemap.command-root
+bluemap.allowed-command-roots
+bluemap.show-on-disable
+restore.previous-cmi-options
+apply-active-state-on-join
+enforce-private-messages.enabled
+enforce-private-messages.block-sender-when-msg-off
+enforce-private-messages.commands.direct
+enforce-private-messages.commands.reply
+enforce-private-messages.commands.cmi-root
+```
+
+Defaults describe whether a channel remains enabled while recording mode is active. For example, `defaults.tpa: true` means TPA requests stay enabled during recording.
+
+Player-facing channel names are intentionally narrow: `msg`, `tpa`, `money`, `staffmsgs`, `notablemsgs`, `tips`, and `map`. The saved config/playerdata keys remain `staffmsg`, `notablemsg`, and `bluemap` for compatibility with existing RecordingMode data.
+
+The player command for map visibility is `/recording set map <on|off>`. `defaults.bluemap: false` means the player is hidden from the live `/map` during recording mode. If `1MB-MapHide` is not installed or `bluemap.enabled` is false, the channel is shown as unavailable and is not tab-suggested.
+
+`bluemap.command-root` is only the command root, usually `bmpc`; RecordingMode always appends the safe `hide|show <player>` action itself instead of accepting arbitrary console command templates. The root must also exist in `bluemap.allowed-command-roots`, which defaults to only `bmpc`.
+
+`enforce-private-messages.*` provides the command-level guard for servers where CMI allows operators or staff to bypass `acceptingPM`. Keep this enabled for the strictest recording mode behavior.
+
+## Data
+
+The Shared Library loads saved UUID data before normal login and retains a durable snapshot for online reads. RecordingMode can restore existing preferences while another feature saves the same player file. If the shared profile cannot be safely loaded, login asks the player to reconnect rather than restoring privacy settings from empty defaults. This requires the matching suite-wide Shared Library build.
+
+Shared long-lived playerdata:
+
+```yaml
+uuid: "player-uuid"
+name: "PlayerName"
+recordingmode:
+  active: true
+  preferences:
+    msg: false
+    tpa: false
+    money: false
+    staffmsg: false
+    notablemsg: false
+    tips: false
+    bluemap: false
+  previous:
+    msg: true
+    tpa: true
+    money: true
+```
+
+## Security Notes
+
+- The command requires explicit permissions; player permissions default to false.
+- The only console command integration is the optional, sanitized `1MB-MapHide` bridge: `<command-root> hide|show <player>`.
+- Only known channels can be changed by players: `msg`, `tpa`, `money`, `staffmsgs`, `notablemsgs`, `tips`, and `map`.
+- Private-message command enforcement only reads the command root and target player token; it does not store private message text.
+- Staff-message filtering only removes that player from the receiver set; it does not alter the original message.
+
+## Shared Library Usage
+
+RecordingMode uses `1MB-CMIAPI-LIB` for feature registration, strict permission checks, config defaults, translation defaults, MiniMessage output styling, PlaceholderAPI routing, tab filtering, shared `PlayerDataStore` UUID load/save, plugin-scoped playerdata cleanup, and debug metadata.
+
+[Plugin index](https://github.com/mrfdev/1MB-Plugins-Docs/blob/main/project-docs/cmi-api/docs/plugins/README.md)

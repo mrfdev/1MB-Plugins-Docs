@@ -17,7 +17,7 @@ These are the first feature candidates now using the shared library scaffold:
 | Player Fun | Fireworks | Dormant admin designer, revisioned cosmetic items, bounded shows, damage protection and opt-in legacy mappings | [Fireworks](plugins/fireworks.md) |
 | Player Fun | Wiki Assistant | Deterministic local Minecraft references, reviewed concise answers, validated article links, explicit ambiguity choices, safe Wiki search fallback, and an owner-resolvable passive topic wishlist | [Wiki Assistant](plugins/wiki.md) |
 | Player Fun | AFKShrine | Visual AFK effects, permission-gated presets, highlighted return data, points, quests, separately permissioned lore-book exchanges, readiness checks, and staff reports | [AFKShrine](plugins/afkshrine.md) |
-| Player Fun | RecordingMode | Per-player recording quiet mode | [RecordingMode](plugins/recordingmode.md) |
+| Player Fun | RecordingMode | Per-player recording quiet mode and optional TPAuto for incoming CMI teleport requests | [RecordingMode](plugins/recordingmode.md) |
 | Player Fun | Chunks | `/chunks` approved 4–16 server-side view presets, remembered personal preferences, reset, and staff preset controls | [Chunks](plugins/chunks.md) |
 | Player Fun | SellStreaks | CMI sell streaks and daily market goals | [SellStreaks](plugins/sellstreaks.md) |
 | Player Fun | ScheduledTips | Per-player weighted tips with world, permission and playtime targeting, preference menus, earned hide controls, optional paid skips and live booster reminders | [ScheduledTips](plugins/scheduledtips.md) |
@@ -52,7 +52,6 @@ These are the first feature candidates now using the shared library scaffold:
 | Player Fun | MobHat | Cosmetic whitelisted mob hats with optional `/hat mob` alias support, world safety, scale handling, and experimental offset positions | [MobHat](plugins/mobhat.md) |
 | Player Fun | PlayerTodo | Per-player `/todo` notes with paging, search, completion state, and lightweight milestones | [PlayerTodo](plugins/todo.md) |
 | Player Fun | Refer | Two-step `/refer <player>` and `/refer verify` referral rewards with CMI/PlaceholderAPI playtime checks | [Refer](plugins/refer.md) |
-| Player Fun | TPAuto | Trusted-player `/tpauto` toggle for auto-accepting incoming CMI `/tpa` and `/tpahere` requests | [TPAuto](plugins/tpauto.md) |
 | Player Fun | Menu | Configurable `/menu` GUI for server discovery, travel, economy, progression, and CMI ctext info | [Menu](plugins/menu.md) |
 | Staff / Moderation | StaffCenter | `/staffcenter` for the CMI staff dashboard, WarningLens moderation context, and Profile identity review | [StaffCenter](plugins/staffcenter.md) |
 | Staff / Moderation | ContentGuard | Independently switchable FilterLab simulation and FilterGuard enforcement modules in one jar | [ContentGuard](plugins/contentguard.md) |

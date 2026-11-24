@@ -62,7 +62,7 @@ Doors has its own persisted reward store. New regular/special command templates 
 | [`plugins:player-fun:mobhat`](../plugins/player-fun/mobhat) | Checks hat permissions and routes internal MobHat commands; does not grant them. |
 | [`plugins:player-fun:todo`](../plugins/player-fun/todo) | No built-in LuckPerms user grant. Configurable command hooks guarded. |
 | [`plugins:player-fun:refer`](../plugins/player-fun/refer) | Changed `cmi.kit.refer` / `cmi.kit.referred` grants; persist both recipients. |
-| [`plugins:player-fun:tpauto`](../plugins/player-fun/tpauto) | Validated CMI teleport-accept command only; no LuckPerms user operations. |
+| [TPAuto module in RecordingMode](plugins/tpauto.md) | Validated CMI teleport-accept command only; no LuckPerms user operations. |
 | [`plugins:player-fun:menu`](../plugins/player-fun/menu) | No built-in LuckPerms user grant. Configurable command hooks guarded. |
 | [`plugins:player-fun:wiki`](../plugins/player-fun/wiki) | No LuckPerms user grant or configurable LuckPerms dispatch found; no code change needed. |
 | [`plugins:staff:staffcenter`](../plugins/staff/staffcenter) | No LuckPerms user grant or configurable LuckPerms dispatch found; no code change needed. |

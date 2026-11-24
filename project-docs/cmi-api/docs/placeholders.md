@@ -537,7 +537,7 @@ papi parse mrfloris %onembcmi_refer.pending.count%
 papi parse mrfloris %onembcmi_refer.eligible.referrer%
 ```
 
-TPAuto placeholders:
+TPAuto module placeholders in RecordingMode:
 
 ```text
 %onembcmi_tpauto.enabled%

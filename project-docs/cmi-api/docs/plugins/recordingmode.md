@@ -29,6 +29,16 @@ For private messages, RecordingMode does not rely only on CMI's `acceptingPM` op
 - Player-facing info/help text describes quiet personal messages, TPA requests, money requests, and staff messages without exposing CMI implementation details.
 - Register command, permission, placeholder, and config metadata with `1MB-CMIAPI-LIB`.
 
+## Optional TPAuto module
+
+TPAuto lets authorized players automatically accept supported incoming CMI teleport requests. Use `/recording tpauto status`, `/recording tpauto on`, or `/recording tpauto off`. The existing `/tpauto` command and its subcommands use the same module and permissions.
+
+When you are recording with TPA requests muted, that quiet setting takes precedence over TPAuto. Automatic acceptance pauses and your TPAuto preference stays saved. With CMI option restoration enabled, ending recording restores the acceptingTPA value captured before applying the quiet settings.
+
+TPAuto starts dormant on a fresh installation. An upgrade imports the standalone TPAuto `enabled` setting when `modules.tpauto.enabled` is first added to `RecordingMode/config.yml`. Use `/recording admin module tpauto` to check or `/recording admin module tpauto <true|false>` to change that switch with `onembcmi.recordingmode.admin`. The module keeps the existing `TPAuto/config.yml`, translations, `tpauto` section in shared UUID playerdata, and `onembcmi.tpauto.*` permissions.
+
+See the [TPAuto module reference](tpauto.md) and [stopped-server upgrade steps](../installation.md#upgrade-tpauto-to-recordingmode).
+
 ## Player FAQ
 
 ### Does RecordingMode actually record my game?
@@ -64,7 +74,15 @@ No. With `tips off`, RecordingMode temporarily pauses connected optional hints. 
 /recording admin inspect <online-player>
 /recording admin reset <online-player>
 /recording admin reload
+/recording admin module tpauto [true|false]
+/recording tpauto status
+/recording tpauto on
+/recording tpauto off
+/recording tpauto toggle
+/recording tpauto reset
 ```
+
+`/recordingmode` is an alias for `/recording`.
 
 Global library examples:
 
@@ -89,6 +107,8 @@ onembcmi.recordingmode.admin.reload
 ```
 
 `onembcmi.recordingmode.use` and `onembcmi.recordingmode.set` default to false, so the server must grant them intentionally for toggling/help and preference changes. `/recording status` does not require either node; it never changes recording state.
+
+TPAuto commands use the [existing TPAuto permissions](tpauto.md#permissions) on both command routes.
 
 ## Placeholders
 
@@ -132,6 +152,7 @@ Important config paths:
 
 ```text
 enabled
+modules.tpauto.enabled
 defaults.msg
 defaults.tpa
 defaults.money

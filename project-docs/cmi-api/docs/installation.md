@@ -10,62 +10,61 @@ Paper loads normal plugin jars from the top-level server `/plugins/` directory, 
 plugins/
   CMI-<version>.jar
   CMILib<version>.jar
-  1MB-Lib-Core-v1.0.4-864-j25-26.3.jar
-  1MB-Lib-AntiFire-v1.0.4-864-j25-26.3.jar
-  1MB-Lib-AFKShrine-v1.0.4-864-j25-26.3.jar
-  1MB-Lib-RecordingMode-v1.0.4-864-j25-26.3.jar
-  1MB-Lib-SellStreaks-v1.0.4-864-j25-26.3.jar
-  1MB-Lib-ScheduledTips-v1.0.4-864-j25-26.3.jar
-  1MB-Lib-Visit-v1.0.4-864-j25-26.3.jar
-  1MB-Lib-PassportDiscovery-v1.0.4-864-j25-26.3.jar
-  1MB-Lib-SocialGatherings-v1.0.4-864-j25-26.3.jar
-  1MB-Lib-JourneyMap-v1.0.4-864-j25-26.3.jar
-  1MB-Lib-KitStreaks-v1.0.4-864-j25-26.3.jar
-  1MB-Lib-Nick-v1.0.4-864-j25-26.3.jar
-  1MB-Lib-EmoteMenu-v1.0.4-864-j25-26.3.jar
-  1MB-Lib-PvPToggle-v1.0.4-864-j25-26.3.jar
-  1MB-Lib-Boosters-v1.0.4-864-j25-26.3.jar
-  1MB-Lib-NameMC-v1.0.4-864-j25-26.3.jar
-  1MB-Lib-Exchange-v1.0.4-864-j25-26.3.jar
-  1MB-Lib-VoteTokens-v1.0.4-864-j25-26.3.jar
-  1MB-Lib-DiscordChat-v1.0.4-864-j25-26.3.jar
-  1MB-Lib-BentoBox-v1.0.4-864-j25-26.3.jar
-  1MB-Lib-BirthdayLanterns-v1.0.4-864-j25-26.3.jar
-  1MB-Lib-LavaBoots-v1.0.4-864-j25-26.3.jar
-  1MB-Lib-Spawners-v1.0.4-864-j25-26.3.jar
-  1MB-Lib-Collect-v1.0.4-864-j25-26.3.jar
-  1MB-Lib-EventHunts-v1.0.4-864-j25-26.3.jar
-  1MB-Lib-DropParty-v1.0.4-864-j25-26.3.jar
-  1MB-Lib-Advent-v1.0.4-864-j25-26.3.jar
-  1MB-Lib-HideAndSheep-v1.0.4-864-j25-26.3.jar
-  1MB-Lib-Appreciation-v1.0.4-864-j25-26.3.jar
-  1MB-Lib-Forage-v1.0.4-864-j25-26.3.jar
-  1MB-Lib-AutoSell-v1.0.4-864-j25-26.3.jar
-  1MB-Lib-MobHat-v1.0.4-864-j25-26.3.jar
-  1MB-Lib-PlayerTodo-v1.0.4-864-j25-26.3.jar
-  1MB-Lib-Refer-v1.0.4-864-j25-26.3.jar
-  1MB-Lib-TPAuto-v1.0.4-864-j25-26.3.jar
-  1MB-Lib-Menu-v1.0.4-864-j25-26.3.jar
-  1MB-Lib-StaffCenter-v1.0.4-864-j25-26.3.jar
-  1MB-Lib-ContentGuard-v1.0.4-864-j25-26.3.jar
-  1MB-Lib-TeamMsg-v1.0.4-864-j25-26.3.jar
-  1MB-Lib-CmdCostDashboard-v1.0.4-864-j25-26.3.jar
-  1MB-Lib-CMIConfig-v1.0.4-864-j25-26.3.jar
-  1MB-Lib-ConsoleNoiseRouter-v1.0.4-864-j25-26.3.jar
-  1MB-Lib-EconomyGuardian-v1.0.4-864-j25-26.3.jar
-  1MB-Lib-ServerCheck-v1.0.4-864-j25-26.3.jar
-  1MB-Lib-Placeholders-v1.0.4-864-j25-26.3.jar
-  1MB-Lib-Potions-v1.0.4-864-j25-26.3.jar
-  1MB-Lib-Upgrade-v1.0.4-864-j25-26.3.jar
-  1MB-Lib-EndCrystals-v1.0.4-864-j25-26.3.jar
-  1MB-Lib-WorldSnapshot-v1.0.4-864-j25-26.3.jar
-  1MB-Lib-EventRecorder-v1.0.4-864-j25-26.3.jar
-  1MB-Lib-BedrockChatBridge-v1.0.4-864-j25-26.3.jar
-  1MB-Lib-CMIProbe-v1.0.4-864-j25-26.3.jar
-  1MB-Lib-CMIDatabase-v1.0.4-864-j25-26.3.jar
-  1MB-Lib-PermissionProbe-v1.0.4-864-j25-26.3.jar
-  1MB-Lib-WarpAudit-v1.0.4-864-j25-26.3.jar
-  1MB-Lib-WorthAudit-v1.0.4-864-j25-26.3.jar
+  1MB-Lib-Core-v1.0.4-865-j25-26.3.jar
+  1MB-Lib-AntiFire-v1.0.4-865-j25-26.3.jar
+  1MB-Lib-AFKShrine-v1.0.4-865-j25-26.3.jar
+  1MB-Lib-RecordingMode-v1.0.4-865-j25-26.3.jar
+  1MB-Lib-SellStreaks-v1.0.4-865-j25-26.3.jar
+  1MB-Lib-ScheduledTips-v1.0.4-865-j25-26.3.jar
+  1MB-Lib-Visit-v1.0.4-865-j25-26.3.jar
+  1MB-Lib-PassportDiscovery-v1.0.4-865-j25-26.3.jar
+  1MB-Lib-SocialGatherings-v1.0.4-865-j25-26.3.jar
+  1MB-Lib-JourneyMap-v1.0.4-865-j25-26.3.jar
+  1MB-Lib-KitStreaks-v1.0.4-865-j25-26.3.jar
+  1MB-Lib-Nick-v1.0.4-865-j25-26.3.jar
+  1MB-Lib-EmoteMenu-v1.0.4-865-j25-26.3.jar
+  1MB-Lib-PvPToggle-v1.0.4-865-j25-26.3.jar
+  1MB-Lib-Boosters-v1.0.4-865-j25-26.3.jar
+  1MB-Lib-NameMC-v1.0.4-865-j25-26.3.jar
+  1MB-Lib-Exchange-v1.0.4-865-j25-26.3.jar
+  1MB-Lib-VoteTokens-v1.0.4-865-j25-26.3.jar
+  1MB-Lib-DiscordChat-v1.0.4-865-j25-26.3.jar
+  1MB-Lib-BentoBox-v1.0.4-865-j25-26.3.jar
+  1MB-Lib-BirthdayLanterns-v1.0.4-865-j25-26.3.jar
+  1MB-Lib-LavaBoots-v1.0.4-865-j25-26.3.jar
+  1MB-Lib-Spawners-v1.0.4-865-j25-26.3.jar
+  1MB-Lib-Collect-v1.0.4-865-j25-26.3.jar
+  1MB-Lib-EventHunts-v1.0.4-865-j25-26.3.jar
+  1MB-Lib-DropParty-v1.0.4-865-j25-26.3.jar
+  1MB-Lib-Advent-v1.0.4-865-j25-26.3.jar
+  1MB-Lib-HideAndSheep-v1.0.4-865-j25-26.3.jar
+  1MB-Lib-Appreciation-v1.0.4-865-j25-26.3.jar
+  1MB-Lib-Forage-v1.0.4-865-j25-26.3.jar
+  1MB-Lib-AutoSell-v1.0.4-865-j25-26.3.jar
+  1MB-Lib-MobHat-v1.0.4-865-j25-26.3.jar
+  1MB-Lib-PlayerTodo-v1.0.4-865-j25-26.3.jar
+  1MB-Lib-Refer-v1.0.4-865-j25-26.3.jar
+  1MB-Lib-Menu-v1.0.4-865-j25-26.3.jar
+  1MB-Lib-StaffCenter-v1.0.4-865-j25-26.3.jar
+  1MB-Lib-ContentGuard-v1.0.4-865-j25-26.3.jar
+  1MB-Lib-TeamMsg-v1.0.4-865-j25-26.3.jar
+  1MB-Lib-CmdCostDashboard-v1.0.4-865-j25-26.3.jar
+  1MB-Lib-CMIConfig-v1.0.4-865-j25-26.3.jar
+  1MB-Lib-ConsoleNoiseRouter-v1.0.4-865-j25-26.3.jar
+  1MB-Lib-EconomyGuardian-v1.0.4-865-j25-26.3.jar
+  1MB-Lib-ServerCheck-v1.0.4-865-j25-26.3.jar
+  1MB-Lib-Placeholders-v1.0.4-865-j25-26.3.jar
+  1MB-Lib-Potions-v1.0.4-865-j25-26.3.jar
+  1MB-Lib-Upgrade-v1.0.4-865-j25-26.3.jar
+  1MB-Lib-EndCrystals-v1.0.4-865-j25-26.3.jar
+  1MB-Lib-WorldSnapshot-v1.0.4-865-j25-26.3.jar
+  1MB-Lib-EventRecorder-v1.0.4-865-j25-26.3.jar
+  1MB-Lib-BedrockChatBridge-v1.0.4-865-j25-26.3.jar
+  1MB-Lib-CMIProbe-v1.0.4-865-j25-26.3.jar
+  1MB-Lib-CMIDatabase-v1.0.4-865-j25-26.3.jar
+  1MB-Lib-PermissionProbe-v1.0.4-865-j25-26.3.jar
+  1MB-Lib-WarpAudit-v1.0.4-865-j25-26.3.jar
+  1MB-Lib-WorthAudit-v1.0.4-865-j25-26.3.jar
 ```
 
 The common `1MB-Lib-` prefix keeps the project JARs together when sorted by filename.
@@ -122,6 +121,8 @@ ServerCheck imports the Hoppers and SparkReviewer activation settings into `Serv
 
 StaffCenter keeps host activation in `StaffCenter/host.yml`. A fresh installation activates Profile and leaves the dashboard and WarningLens dormant.
 
+RecordingMode controls TPAuto from `modules.tpauto.enabled` in `RecordingMode/config.yml`. The TPAuto module starts dormant on a fresh installation. Existing installations import the standalone TPAuto switch the first time the host key is added.
+
 This is a missing-value default, not an upgrade override. Existing `enabled: true` and `enabled: false` values are preserved. The project test server can therefore keep all of its existing beta features enabled while a fresh live installation fails closed. New feature ids also default to disabled until the live allowlist is deliberately updated and tested.
 
 Use `gradle planProjectJarSync` first to validate the complete current candidate set and report how many legacy/current active files would be replaced without mutating the server. With Paper stopped, `gradle syncBuiltJarsToProjectServer` recoverably replaces both `1MB-CMIAPI-*` and `1MB-Lib-*` families as one set. After testing that exact server folder, `gradle stageTestedJarsForLive` creates a verified `build/tested-jars/live/` handoff set for manual live deployment. The staging task refuses legacy, stale, incomplete, unexpected, or duplicate identity sets and preserves the previous handoff on failure. The project does not use RCON for deployment.
@@ -176,6 +177,15 @@ For rollback, stop Paper and restore the previous complete suite. See [ServerChe
 4. After restart, check `/staffcenter modules` and exercise an authorized command in each module that should be active. Saved `/profile`, `/warninglens`, and `/wlens` shortcuts remain compatible. Use `/staffcenter profile` and `/staffcenter warnings` in new commands.
 
 For rollback, stop Paper and restore the previous complete suite. The standalone plugins continue to read their original configuration files. If you changed module switches since the upgrade, review the standalone `enabled` settings before the rollback start. See [StaffCenter](plugins/staffcenter.md) for commands and data paths.
+
+## Upgrade TPAuto to RecordingMode
+
+1. Stop Paper and back up the existing suite and `plugins/1MB-CMIAPI/`.
+2. Install the complete tested suite with the updated `1MB-Lib-RecordingMode`. Move the standalone `1MB-Lib-TPAuto-*` or older `1MB-CMIAPI-TPAuto-*` JAR out of the plugin load path.
+3. Keep the `RecordingMode/` and `TPAuto/` configuration directories, `CMIAPILIB/translations/tpauto.yml`, and `CMIAPILIB/playerdata/`. The import preserves the previous TPAuto `enabled` value when the host switch is first added. RecordingMode and TPAuto preferences continue to use their separate sections in the shared UUID files.
+4. Restart Paper. Check `/recording admin module tpauto`. If the module should be active, verify both `/recording tpauto status` and `/tpauto status` with an authorized player. Test that a recording player with TPA muted keeps that setting even when they have opted in to TPAuto.
+
+For rollback, stop Paper and restore the previous complete suite. Review the standalone `TPAuto/config.yml` activation setting before restarting. See [RecordingMode](plugins/recordingmode.md) for module controls and permissions.
 
 ## Upgrade to the combined BentoBox
 

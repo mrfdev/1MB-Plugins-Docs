@@ -154,3 +154,26 @@ test('BentoBox publishes GameTypes menus with legacy redirects and distinct plat
   assert.ok(staffGuide.includes('/docs/plugins/gametypes.md'));
   await access(path.join(generatedPlugins, '..', 'other-server-features', 'bentobox', 'index.md'));
 });
+
+test('RecordingMode publishes TPAuto as an optional module under its existing player guide', async () => {
+  const redirects = await readFile(path.join(repoRoot, 'astro.config.mjs'), 'utf8');
+  const index = await readFile(path.join(generatedPlugins, 'index.mdx'), 'utf8');
+  const playerGuide = await readFile(path.join(generatedPlugins, 'recordingmode.mdx'), 'utf8');
+  const commandIndex = await readFile(path.join(generatedPlugins, '..', 'commands.mdx'), 'utf8');
+  const staffGuide = await readFile(path.join(generatedPlugins, '..', '..', 'staff-reference', 'plugins', 'recordingmode.md'), 'utf8');
+
+  for (const section of ['player-guides', 'staff-reference']) {
+    assert.ok(redirects.includes(`'/${section}/plugins/tpauto': '/${section}/plugins/recordingmode/'`));
+  }
+  await assert.rejects(access(path.join(generatedPlugins, 'tpauto.mdx')));
+  assert.ok(index.includes('href="./recordingmode/"'));
+  assert.ok(!index.includes('href="./tpauto/"'));
+  assert.ok(playerGuide.includes('`/tpauto` commands still work'));
+  assert.ok(playerGuide.includes('Muting TPA during recording pauses automatic acceptance'));
+  assert.ok(commandIndex.includes('<code>/recording tpauto status</code>'));
+  assert.ok(!commandIndex.includes('href="../plugins/tpauto/"'));
+  assert.ok(!commandIndex.includes('<code>/recording admin module'));
+  assert.ok(staffGuide.includes('/recording admin module tpauto'));
+  assert.ok(staffGuide.includes('modules.tpauto.enabled'));
+  assert.ok(staffGuide.includes('/docs/plugins/tpauto.md'));
+});

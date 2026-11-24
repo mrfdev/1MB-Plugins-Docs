@@ -359,12 +359,12 @@ Before a private or public beta:
 12. Run `/appreciate admin audit`, verify indicators are staff-only and informational, then test every new-gift staff switch while proving old escrow remains claimable.
 13. Turn isolated debug mode off with `/appreciate debug mode false` before public use.
 
-Build target: Paper 26.3 stable build 241 or newer, Java 25 bytecode, project version `1.0.4`.
+Build target: Paper 26.3 stable build 261 or newer, Java 25 bytecode, project version `1.0.4`.
 
 Current test jar:
 
 ```text
-1MB-Lib-Appreciation-v1.0.4-835-j25-26.3.jar
+1MB-Lib-Appreciation-v1.0.4-865-j25-26.3.jar
 ```
 
 [Documentation index](README.md)
