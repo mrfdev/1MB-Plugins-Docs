@@ -1,0 +1,64 @@
+---
+title: ServerCheck Guide
+description: Learn what ServerCheck does, how staff use it, and which public staff commands are available.
+---
+
+This page introduces ServerCheck as a public staff guide. It focuses on what the tool does, how authorized staff get started, and which commands are useful.
+
+## What It Does
+
+Review the Java, Paper, CMI, and CMILib runtime, check plugin dependencies, and run post-update diagnostics.
+
+## How Staff Use It
+
+ServerCheck gives staff one place to check installed plugin versions, review startup and Paper diagnostics, and run post-update smoke tests.
+
+Available features include:
+
+- A searchable inventory of loaded plugins, versions, enabled state, and curated project links.
+- Declared dependency reports with required and optional dependents, indirect required chains, aliases, and load-order references.
+- A tested Java, Paper, CMI, CMILib, and dependency compatibility gate.
+- Plugin and server summaries for post-update support checks.
+- A persistent plugin inventory database with optional refresh behavior.
+- Manual source, download, documentation, and support URL curation.
+- URL audits that highlight missing or malformed project links.
+- Full Markdown and compact Discord-friendly export reports.
+- Startup, folder, and read-only Paper safety diagnostics.
+- Explicit post-update smoke checks for commands, placeholders, integrations, and version compatibility.
+
+## Quick Start
+
+1. Use `/servercheck status` to see the runtime and module states.
+2. Follow the [ServerCheck staff reference](/staff-reference/plugins/servercheck/) for permissions, command examples, and upgrade steps.
+
+## Commands
+
+<table class="command-table plugin-command-table">
+  <thead>
+    <tr>
+      <th>Command</th>
+      <th>What it does</th>
+      <th>Example</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>/servercheck status</code></td>
+      <td>Shows the runtime, module states, and latest smoke result. Staff permissions required.</td>
+      <td><code>/servercheck status</code></td>
+    </tr>
+  </tbody>
+</table>
+
+## Examples
+
+- No separate examples are listed yet. Use the command examples above as a starting point.
+
+## Good To Know
+
+- This is a permission-gated staff or server-management feature, not a normal player feature.
+- Review the full reference before changing settings or using any command that can write data.
+
+## Full Reference
+
+The [full synced ServerCheck reference](https://github.com/mrfdev/1MB-Plugins-Docs/blob/main/project-docs/cmi-api/docs/plugins/servercheck.md) is available for exact technical details.

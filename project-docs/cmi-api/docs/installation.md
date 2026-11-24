@@ -10,68 +10,66 @@ Paper loads normal plugin jars from the top-level server `/plugins/` directory, 
 plugins/
   CMI-<version>.jar
   CMILib<version>.jar
-  1MB-Lib-Core-v1.0.4-835-j25-26.3.jar
-  1MB-Lib-AntiFire-v1.0.4-835-j25-26.3.jar
-  1MB-Lib-AFKShrine-v1.0.4-835-j25-26.3.jar
-  1MB-Lib-RecordingMode-v1.0.4-835-j25-26.3.jar
-  1MB-Lib-SellStreaks-v1.0.4-835-j25-26.3.jar
-  1MB-Lib-ScheduledTips-v1.0.4-835-j25-26.3.jar
-  1MB-Lib-Visit-v1.0.4-835-j25-26.3.jar
-  1MB-Lib-PassportDiscovery-v1.0.4-835-j25-26.3.jar
-  1MB-Lib-SocialGatherings-v1.0.4-835-j25-26.3.jar
-  1MB-Lib-JourneyMap-v1.0.4-835-j25-26.3.jar
-  1MB-Lib-KitStreaks-v1.0.4-835-j25-26.3.jar
-  1MB-Lib-Nick-v1.0.4-835-j25-26.3.jar
-  1MB-Lib-EmoteMenu-v1.0.4-835-j25-26.3.jar
-  1MB-Lib-PvPToggle-v1.0.4-835-j25-26.3.jar
-  1MB-Lib-Boosters-v1.0.4-835-j25-26.3.jar
-  1MB-Lib-NameMC-v1.0.4-835-j25-26.3.jar
-  1MB-Lib-Exchange-v1.0.4-835-j25-26.3.jar
-  1MB-Lib-VoteTokens-v1.0.4-835-j25-26.3.jar
-  1MB-Lib-DiscordChat-v1.0.4-835-j25-26.3.jar
-  1MB-Lib-GameTypes-v1.0.4-835-j25-26.3.jar
-  1MB-Lib-BirthdayLanterns-v1.0.4-835-j25-26.3.jar
-  1MB-Lib-LavaBoots-v1.0.4-835-j25-26.3.jar
-  1MB-Lib-Spawners-v1.0.4-835-j25-26.3.jar
-  1MB-Lib-Collect-v1.0.4-835-j25-26.3.jar
-  1MB-Lib-EventHunts-v1.0.4-835-j25-26.3.jar
-  1MB-Lib-DropParty-v1.0.4-835-j25-26.3.jar
-  1MB-Lib-Advent-v1.0.4-835-j25-26.3.jar
-  1MB-Lib-HideAndSheep-v1.0.4-835-j25-26.3.jar
-  1MB-Lib-Appreciation-v1.0.4-835-j25-26.3.jar
-  1MB-Lib-Forage-v1.0.4-835-j25-26.3.jar
-  1MB-Lib-AutoSell-v1.0.4-835-j25-26.3.jar
-  1MB-Lib-MobHat-v1.0.4-835-j25-26.3.jar
-  1MB-Lib-PlayerTodo-v1.0.4-835-j25-26.3.jar
-  1MB-Lib-Refer-v1.0.4-835-j25-26.3.jar
-  1MB-Lib-TPAuto-v1.0.4-835-j25-26.3.jar
-  1MB-Lib-Menu-v1.0.4-835-j25-26.3.jar
-  1MB-Lib-StaffCenter-v1.0.4-835-j25-26.3.jar
-  1MB-Lib-Profile-v1.0.4-835-j25-26.3.jar
-  1MB-Lib-ContentGuard-v1.0.4-835-j25-26.3.jar
-  1MB-Lib-WarningLens-v1.0.4-835-j25-26.3.jar
-  1MB-Lib-TeamMsg-v1.0.4-835-j25-26.3.jar
-  1MB-Lib-CmdCostDashboard-v1.0.4-835-j25-26.3.jar
-  1MB-Lib-CMIConfig-v1.0.4-835-j25-26.3.jar
-  1MB-Lib-ConsoleNoiseRouter-v1.0.4-835-j25-26.3.jar
-  1MB-Lib-EconomyGuardian-v1.0.4-835-j25-26.3.jar
-  1MB-Lib-StartupDoctor-v1.0.4-835-j25-26.3.jar
-  1MB-Lib-UpdateSmoke-v1.0.4-835-j25-26.3.jar
-  1MB-Lib-PluginVersions-v1.0.4-835-j25-26.3.jar
-  1MB-Lib-Placeholders-v1.0.4-835-j25-26.3.jar
-  1MB-Lib-Potions-v1.0.4-835-j25-26.3.jar
-  1MB-Lib-Upgrade-v1.0.4-835-j25-26.3.jar
-  1MB-Lib-EndCrystals-v1.0.4-835-j25-26.3.jar
-  1MB-Lib-WorldSnapshot-v1.0.4-835-j25-26.3.jar
-  1MB-Lib-SparkReviewer-v1.0.4-835-j25-26.3.jar
-  1MB-Lib-Hoppers-v1.0.4-835-j25-26.3.jar
-  1MB-Lib-EventRecorder-v1.0.4-835-j25-26.3.jar
-  1MB-Lib-BedrockChatBridge-v1.0.4-835-j25-26.3.jar
-  1MB-Lib-CMIProbe-v1.0.4-835-j25-26.3.jar
-  1MB-Lib-CMIDatabase-v1.0.4-835-j25-26.3.jar
-  1MB-Lib-PermissionProbe-v1.0.4-835-j25-26.3.jar
-  1MB-Lib-WarpAudit-v1.0.4-835-j25-26.3.jar
-  1MB-Lib-WorthDrift-v1.0.4-835-j25-26.3.jar
+  1MB-Lib-Core-v1.0.4-861-j25-26.3.jar
+  1MB-Lib-AntiFire-v1.0.4-861-j25-26.3.jar
+  1MB-Lib-AFKShrine-v1.0.4-861-j25-26.3.jar
+  1MB-Lib-RecordingMode-v1.0.4-861-j25-26.3.jar
+  1MB-Lib-SellStreaks-v1.0.4-861-j25-26.3.jar
+  1MB-Lib-ScheduledTips-v1.0.4-861-j25-26.3.jar
+  1MB-Lib-Visit-v1.0.4-861-j25-26.3.jar
+  1MB-Lib-PassportDiscovery-v1.0.4-861-j25-26.3.jar
+  1MB-Lib-SocialGatherings-v1.0.4-861-j25-26.3.jar
+  1MB-Lib-JourneyMap-v1.0.4-861-j25-26.3.jar
+  1MB-Lib-KitStreaks-v1.0.4-861-j25-26.3.jar
+  1MB-Lib-Nick-v1.0.4-861-j25-26.3.jar
+  1MB-Lib-EmoteMenu-v1.0.4-861-j25-26.3.jar
+  1MB-Lib-PvPToggle-v1.0.4-861-j25-26.3.jar
+  1MB-Lib-Boosters-v1.0.4-861-j25-26.3.jar
+  1MB-Lib-NameMC-v1.0.4-861-j25-26.3.jar
+  1MB-Lib-Exchange-v1.0.4-861-j25-26.3.jar
+  1MB-Lib-VoteTokens-v1.0.4-861-j25-26.3.jar
+  1MB-Lib-DiscordChat-v1.0.4-861-j25-26.3.jar
+  1MB-Lib-GameTypes-v1.0.4-861-j25-26.3.jar
+  1MB-Lib-BirthdayLanterns-v1.0.4-861-j25-26.3.jar
+  1MB-Lib-LavaBoots-v1.0.4-861-j25-26.3.jar
+  1MB-Lib-Spawners-v1.0.4-861-j25-26.3.jar
+  1MB-Lib-Collect-v1.0.4-861-j25-26.3.jar
+  1MB-Lib-EventHunts-v1.0.4-861-j25-26.3.jar
+  1MB-Lib-DropParty-v1.0.4-861-j25-26.3.jar
+  1MB-Lib-Advent-v1.0.4-861-j25-26.3.jar
+  1MB-Lib-HideAndSheep-v1.0.4-861-j25-26.3.jar
+  1MB-Lib-Appreciation-v1.0.4-861-j25-26.3.jar
+  1MB-Lib-Forage-v1.0.4-861-j25-26.3.jar
+  1MB-Lib-AutoSell-v1.0.4-861-j25-26.3.jar
+  1MB-Lib-MobHat-v1.0.4-861-j25-26.3.jar
+  1MB-Lib-PlayerTodo-v1.0.4-861-j25-26.3.jar
+  1MB-Lib-Refer-v1.0.4-861-j25-26.3.jar
+  1MB-Lib-TPAuto-v1.0.4-861-j25-26.3.jar
+  1MB-Lib-Menu-v1.0.4-861-j25-26.3.jar
+  1MB-Lib-StaffCenter-v1.0.4-861-j25-26.3.jar
+  1MB-Lib-Profile-v1.0.4-861-j25-26.3.jar
+  1MB-Lib-ContentGuard-v1.0.4-861-j25-26.3.jar
+  1MB-Lib-WarningLens-v1.0.4-861-j25-26.3.jar
+  1MB-Lib-TeamMsg-v1.0.4-861-j25-26.3.jar
+  1MB-Lib-CmdCostDashboard-v1.0.4-861-j25-26.3.jar
+  1MB-Lib-CMIConfig-v1.0.4-861-j25-26.3.jar
+  1MB-Lib-ConsoleNoiseRouter-v1.0.4-861-j25-26.3.jar
+  1MB-Lib-EconomyGuardian-v1.0.4-861-j25-26.3.jar
+  1MB-Lib-ServerCheck-v1.0.4-861-j25-26.3.jar
+  1MB-Lib-Placeholders-v1.0.4-861-j25-26.3.jar
+  1MB-Lib-Potions-v1.0.4-861-j25-26.3.jar
+  1MB-Lib-Upgrade-v1.0.4-861-j25-26.3.jar
+  1MB-Lib-EndCrystals-v1.0.4-861-j25-26.3.jar
+  1MB-Lib-WorldSnapshot-v1.0.4-861-j25-26.3.jar
+  1MB-Lib-SparkReviewer-v1.0.4-861-j25-26.3.jar
+  1MB-Lib-Hoppers-v1.0.4-861-j25-26.3.jar
+  1MB-Lib-EventRecorder-v1.0.4-861-j25-26.3.jar
+  1MB-Lib-BedrockChatBridge-v1.0.4-861-j25-26.3.jar
+  1MB-Lib-CMIProbe-v1.0.4-861-j25-26.3.jar
+  1MB-Lib-CMIDatabase-v1.0.4-861-j25-26.3.jar
+  1MB-Lib-PermissionProbe-v1.0.4-861-j25-26.3.jar
+  1MB-Lib-WarpAudit-v1.0.4-861-j25-26.3.jar
+  1MB-Lib-WorthAudit-v1.0.4-861-j25-26.3.jar
 ```
 
 The common `1MB-Lib-` prefix keeps the project JARs together when sorted by filename.
@@ -104,14 +102,13 @@ These compatibility Paper plugin identities start enabled on a fresh installatio
 - `1MB-CMIAPI-MobHat`
 - `1MB-CMIAPI-NameMC`
 - `1MB-CMIAPI-PlayerTodo`
-- `1MB-CMIAPI-PluginVersions`
+- `1MB-CMIAPI-ServerCheck`
 - `1MB-CMIAPI-Profile`
 - `1MB-CMIAPI-PvPToggle`
 - `1MB-CMIAPI-RecordingMode`
 - `1MB-CMIAPI-Visit`
 - `1MB-CMIAPI-VoteTokens`
-- `1MB-CMIAPI-WorthDrift`
-- `1MB-CMIAPI-WorthHelper`
+- `1MB-CMIAPI-WorthAudit`
 
 All other feature jars create `config.yml` with `enabled: false` on first install. Paper keeps those jars loaded and shows them in green under `/plugins`, while their gameplay commands, listeners, scheduled tasks, placeholders, services, and integrations remain dormant. The only remaining command surface is `info`, `help`, safe shared `debug`, and the admin lifecycle control.
 
@@ -148,6 +145,18 @@ Map `rewards.worlds.<role>` to actual server worlds for `end`, `nether`, `wild`,
 ```
 
 Set the spawn in game while standing at a safe arrival point. Start can then come from the admin GUI, in-game command, or direct console. Enabling does not start an event. Players must join each round before sheep touches count. Preserve `plugins/1MB-CMIAPI/HideAndSheep/state.yml`, `participation.yml` and the corresponding provider journals; they contain progression, participation recovery and reward evidence. `/sheep debug cleanup <uuid|player>` repairs stale participation and removes the event subgroup without erasing points or ordinary ranks. See the [staff reference](plugins/hideandsheep.md) for kit-save verification and reconciliation.
+
+## Upgrade to ServerCheck and WorthAudit
+
+WorthAudit replaced WorthHelper and WorthDrift in suite build 860. ServerCheck replaced PluginVersions, UpdateSmoke, and StartupDoctor in build 861.
+
+1. Stop Paper. Keep a rollback copy of the previous complete suite and back up `plugins/1MB-CMIAPI/`.
+2. Install one complete tested suite. Move the standalone `1MB-Lib-PluginVersions-*`, `1MB-Lib-UpdateSmoke-*`, `1MB-Lib-StartupDoctor-*`, `1MB-Lib-WorthHelper-*`, and `1MB-Lib-WorthDrift-*` JARs out of the plugin load path. Remove any equivalent older `1MB-CMIAPI-*` JARs from that path as well.
+3. Keep the existing `PluginVersions/`, `UpdateSmoke/`, `StartupDoctor/`, `WorthHelper/`, and `WorthDrift/` data directories under `plugins/1MB-CMIAPI/`, along with shared translations and reports. Keep the PluginVersions database and exports at their configured locations.
+4. After restart, check `/servercheck status` and `/worthaudit status` for the imported module states. Run `/servercheck smoke run` when ready to exercise the configured post-update checks.
+5. Update saved `/worthhelper` and `/worthdrift` commands to `/worthaudit`. ServerCheck accepts the existing `/pv`, `/updatesmoke`, `/usmoke`, `/startupdoctor`, and `/sdoctor` roots.
+
+For rollback, stop Paper and restore the previous complete suite. See [ServerCheck](plugins/servercheck.md) and [WorthAudit](plugins/worthaudit.md) for configuration, permission, and command details.
 
 ## Runtime Data
 
@@ -280,6 +289,8 @@ plugins/
       config.yml
     EconomyGuardian/
       config.yml
+    ServerCheck/
+      config.yml
     StartupDoctor/
       config.yml
     UpdateSmoke/
@@ -321,8 +332,13 @@ plugins/
       config.yml
     WarpAudit/
       config.yml
+    WorthAudit/
+      config.yml
+    WorthHelper/
+      config.yml
     WorthDrift/
       config.yml
+      data.yml
 ```
 
 Cache data can be cleaned broadly. Player data is long-lived and should only be cleaned with explicit plugin-scoped commands.

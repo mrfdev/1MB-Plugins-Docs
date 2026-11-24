@@ -1,8 +1,10 @@
 # StartupDoctor
 
+StartupDoctor ships inside ServerCheck. Use `/servercheck doctor` for its commands. [ServerCheck](servercheck.md)
+
 ## Purpose
 
-StartupDoctor is a server-management plugin that creates a support-friendly startup and runtime diagnostics report for the 1MB Library stack. It is meant to answer “what versions, hooks, feature jars, folders, Paper safety controls, and runtime assumptions are actually active?” before we chase a bug in the wrong place.
+StartupDoctor captures startup and runtime diagnostics for the 1MB Library stack. Its reports show versions, hooks, feature JARs, storage, and Paper settings that staff can refer to when investigating a problem.
 
 StartupDoctor is read-only except for writing local report dumps to cache. It does not change CMI, CMILib, Paper, playerdata, permissions, economy, or feature plugin state.
 
@@ -29,36 +31,30 @@ StartupDoctor is read-only except for writing local report dumps to cache. It do
 ## Commands
 
 ```text
-/startupdoctor status
-/startupdoctor summary
-/startupdoctor report
-/startupdoctor warnings [page]
-/startupdoctor hooks
-/startupdoctor features
-/startupdoctor storage
-/startupdoctor paper [page]
-/startupdoctor paper refresh
-/startupdoctor paper export
-/startupdoctor folders [page]
-/startupdoctor folders export
-/startupdoctor dump
-/startupdoctor reload
+/servercheck doctor status
+/servercheck doctor help
+/servercheck doctor info
+/servercheck doctor summary
+/servercheck doctor report
+/servercheck doctor warnings [page]
+/servercheck doctor hooks
+/servercheck doctor features
+/servercheck doctor storage
+/servercheck doctor paper [page]
+/servercheck doctor paper refresh
+/servercheck doctor paper export
+/servercheck doctor folders [page]
+/servercheck doctor folders export
+/servercheck doctor dump
+/servercheck doctor reload
 ```
 
-Alias:
+The compatible `/startupdoctor` and `/sdoctor` roots accept the same subcommands. Use the module's debug routes to inspect or edit its own settings.
 
 ```text
-/sdoctor
-```
-
-Global library examples:
-
-```text
-/1mblib debug plugin startupdoctor
-/1mblib debug plugin startupdoctor all
-/1mblib config startupdoctor
-/1mblib config set startupdoctor checks.require-placeholderapi true
-/1mblib translations reload
+/servercheck debug doctor all
+/servercheck doctor debug config
+/servercheck doctor debug set config checks.require-placeholderapi true
 ```
 
 ## Permissions
@@ -70,6 +66,8 @@ onembcmi.startupdoctor.dump
 onembcmi.startupdoctor.admin
 onembcmi.startupdoctor.admin.reload
 ```
+
+Status, report views, exports, dumps, and reload require `onembcmi.startupdoctor.use`. Report views also require `onembcmi.startupdoctor.report`, exports and dumps require `onembcmi.startupdoctor.dump`, and reload requires `onembcmi.startupdoctor.admin.reload`. Debug routes require `onembcmi.startupdoctor.admin`.
 
 ## Placeholders
 
@@ -123,7 +121,7 @@ Paper:
 
 ## Paper Safety
 
-`/startupdoctor paper` displays the latest cached scan. StartupDoctor scans once during enable, again after its configured startup delay, and after a feature reload. Use `/startupdoctor paper refresh` to request a fresh asynchronous scan, or `/startupdoctor paper export` to refresh and write a dedicated report.
+`/servercheck doctor paper` displays the latest cached scan. StartupDoctor scans once during enable, again after its configured startup delay, and after a feature reload. Use `/servercheck doctor paper refresh` to request a fresh asynchronous scan, or `/servercheck doctor paper export` to refresh and write a dedicated report.
 
 Severity meanings:
 
@@ -173,10 +171,9 @@ StartupDoctor never applies a proposed value. Staff must review the finding agai
 
 ## Config
 
-Important config paths:
+StartupDoctor keeps its settings at `plugins/1MB-CMIAPI/StartupDoctor/config.yml` and its translations at `plugins/1MB-CMIAPI/CMIAPILIB/translations/startupdoctor.yml`. ServerCheck imports the old `enabled` value on migration. Afterward, use `/servercheck admin module doctor <true|false>` to change the module state.
 
 ```text
-enabled
 debug
 startup.capture-delay-ticks
 checks.require-placeholderapi
@@ -194,7 +191,7 @@ folder-doctor.stale-cache-days
 
 `paper-safety.enabled` controls the read-only scanner. `paper-safety.scan-world-overrides` controls whether loaded worlds' explicit `paper-world.yml` values are inspected in addition to the global and world-default files.
 
-`checks.expected-java` is the minimum supported runtime major. The JARs compile for Java 25; Java 25 and newer runtimes, including the tested Java 27 production runtime, satisfy this check.
+`checks.expected-java` is the minimum supported runtime major. The JARs target Java 25. Runtimes from Java 25 upward, including Java 27 used for testing, satisfy the default check.
 
 `folder-doctor.cache-warning-bytes` controls when a feature cache folder is reported as large. `folder-doctor.stale-cache-days` controls when a non-empty feature cache folder is reported as stale because it has not been modified recently.
 
@@ -212,6 +209,6 @@ It does not write playerdata or persistent server state.
 
 ## Shared Library Usage
 
-StartupDoctor uses `1MB-CMIAPI-LIB` for feature registration, strict permission checks, config defaults, translation defaults, MiniMessage output styling, PlaceholderAPI routing, tab filtering, shared cache paths, feature registry inspection, and debug metadata.
+StartupDoctor uses `1MB-CMIAPI-LIB` through ServerCheck for permission checks, config and translation defaults, MiniMessage output, PlaceholderAPI routing, tab filtering, shared cache paths, feature registry inspection, and debug metadata.
 
 [Plugin index](README.md)

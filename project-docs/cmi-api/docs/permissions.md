@@ -473,6 +473,8 @@ onembcmi.economyguardian.use
 onembcmi.economyguardian.view
 onembcmi.economyguardian.admin
 onembcmi.economyguardian.admin.reload
+onembcmi.servercheck.use
+onembcmi.servercheck.admin
 onembcmi.startupdoctor.use
 onembcmi.startupdoctor.report
 onembcmi.startupdoctor.dump
@@ -598,9 +600,11 @@ onembcmi.warpaudit.view
 onembcmi.warpaudit.dump
 onembcmi.warpaudit.admin
 onembcmi.warpaudit.admin.reload
+onembcmi.worthaudit.admin
 onembcmi.worthdrift.use
 onembcmi.worthdrift.view
 onembcmi.worthdrift.report
+onembcmi.worthdrift.fix
 onembcmi.worthdrift.ignore
 onembcmi.worthdrift.admin
 onembcmi.worthdrift.admin.reload
@@ -624,7 +628,9 @@ BedrockChatBridge exposes only `onembcmi.bedrockchatbridge.admin`, which default
 
 Diagnostics is owner-only removable debug tooling. Grant `onembcmi.diagnostics.use` for `/_diagnostics status`, `onembcmi.diagnostics.view` for `/_diagnostics recent` and `/_diagnostics files`, and `onembcmi.diagnostics.dump` to write point-in-time support snapshots. `onembcmi.diagnostics.admin` unlocks shared debug pages, and `onembcmi.diagnostics.admin.reload` reloads the probe config. Normal players should not receive any Diagnostics nodes. All Diagnostics permission defaults are `false`, so operator status alone does not unlock the in-game command. Console can run `_diagnostics` without a permission lock.
 
-WorthHelper is staff-only and report-first. Grant `onembcmi.worthhelper.scan`, `onembcmi.worthhelper.view`, and `onembcmi.worthhelper.export` only to trusted economy reviewers; `onembcmi.worthhelper.admin` covers shared debug/config access. The plugin does not apply CMI worth changes.
+ServerCheck keeps the PluginVersions, UpdateSmoke, and StartupDoctor module grants. `onembcmi.servercheck.use` grants the combined status view. `onembcmi.servercheck.admin` grants host diagnostics and maintenance.
+
+WorthAudit keeps the WorthHelper and WorthDrift module grants. Grant the relevant module's `use` node and the individual action nodes to economy reviewers. `onembcmi.worthdrift.fix` allows shop previews and saving audit exceptions. `onembcmi.worthaudit.admin` covers host reload and shared diagnostics. Suggested CMI worth changes are review text.
 
 Placeholders keeps the Provider, Catalog, Probe, and Health permission namespaces compatible inside one jar. Grant `onembcmi.placeholders.admin` to owner-level staff who may inspect and toggle every module and use every module operation. Existing narrower grants under `onembcmi.onembplaceholders.*`, `onembcmi.cmiplaceholders.*`, `onembcmi.placeholderprobe.*`, and `onembcmi.placeholderhealth.*` continue to work.
 

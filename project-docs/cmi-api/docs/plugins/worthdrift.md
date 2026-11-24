@@ -1,10 +1,10 @@
-# WorthDrift
+# WorthAudit sale and shop settings
 
 ## Purpose
 
-WorthDrift is a server-management plugin for watching CMI sell events and comparing the actual money paid against the configured CMI worth values. It can also compare CMI `Worth.yml` against ShopGUI+ shop YAML files so staff can find price drift before players turn economy mistakes into loops.
+The WorthDrift module in [WorthAudit](worthaudit.md) compares payment reported by CMI sell events with live CMI worth. It also compares configured `Worth.yml` prices with ShopGUI+ item listings to flag prices for staff review.
 
-WorthDrift is passive by default: it records lightweight session aggregates, reads CMI/ShopGUI+ YAML as source data, and writes support reports to cache on demand. The only write actions are explicit admin commands for generating missing ShopGUI+ item rows, fixing one drifted material at a time, or adding ShopGUI+ exceptions.
+WorthDrift keeps aggregates for the current session and writes reports to the shared cache on request. ShopGUI+ corrections and generated rows are previews. Staff can persist ignored materials and shop exceptions explicitly.
 
 ## Features
 
@@ -16,14 +16,15 @@ WorthDrift is passive by default: it records lightweight session aggregates, rea
 - Flag player concentration when one player accounts for a large share of a material's observed payment.
 - Ask CMI `WorthItem` whether an exploit recipe is known for a material.
 - Keep a bounded recent sample list for report context.
-- Read CMI `plugins/CMI/Saves/Worth.yml` as the source of truth for ShopGUI+ analysis.
-- Scan ShopGUI+ `shops/*.yml` item rows and compare configured `buyPrice` against `Worth.yml` value x 100 x quantity by default.
+- Read saved base values from CMI `plugins/CMI/Saves/Worth.yml` for ShopGUI+ analysis.
+- Scan ShopGUI+ `shops/*.yml` item rows and compare configured `buyPrice` against `Worth.yml` value × 100 × quantity by default.
+- Flag variant worth keys and metadata-sensitive shop listings for separate review.
 - Report per-row ShopGUI+ drift with material, worth value, current shop value, expected shop value, difference, percent drift, file, shop id, entry id, slot, and page.
 - Report Worth.yml materials missing from ShopGUI+, ShopGUI+ materials missing from Worth.yml, duplicate ShopGUI+ listings, and configured creative-only / illegal materials.
 - Support Markdown exports for GitHub tables or Discord-friendly bullet lists.
 - Support configured ShopGUI+ exception lists for known deliberate files, materials, or specific entries.
-- Generate valid, non-illegal missing Worth.yml items into a chosen ShopGUI+ shop file for staff review.
-- Fix one drifted ShopGUI+ material at a time, updating only confirmed drifting rows and then dispatching `shopguiplus:shopgui reload`.
+- Preview valid missing Worth.yml listings for a chosen ShopGUI+ shop file.
+- Preview corrections for one material across active ShopGUI+ shops.
 - Add ShopGUI+ file or item exceptions from command without hand-editing WorthDrift config.
 - Persist ignored material choices in the feature data folder.
 - Write timestamped support reports to the shared cache folder.
@@ -32,52 +33,47 @@ WorthDrift is passive by default: it records lightweight session aggregates, rea
 ## Commands
 
 ```text
-/worthdrift
-/worthdrift status
-/worthdrift top [page]
-/worthdrift material <material>
-/worthdrift report
-/worthdrift shopgui [-all|-missing|-drifting|-illegal-items|-not-in-worth|-duplicates] [-valid-only] [-github|-discord] [-limit <rows>]
-/worthdrift missing generate:<file.yml>
-/worthdrift fix <material>
-/worthdrift skip <file:file.yml|item:material>
-/worthdrift ignored
-/worthdrift ignore <material>
-/worthdrift reload
-```
-
-Alias:
-
-```text
-/wdrift
+/worthaudit sales
+/worthaudit status drift
+/worthaudit sales status
+/worthaudit sales top [page]
+/worthaudit sales material <material>
+/worthaudit sales report
+/worthaudit shop [-all|-missing|-drifting|-illegal-items|-not-in-worth|-duplicates] [-valid-only] [-github|-discord] [-limit <rows>]
+/worthaudit shop generate <file.yml>
+/worthaudit shop fix <material>
+/worthaudit shop skip <file:file.yml|item:material>
+/worthaudit sales ignored
+/worthaudit sales ignore <material>
+/worthaudit reload drift
 ```
 
 Useful examples:
 
 ```text
-/worthdrift status
-/worthdrift top
-/worthdrift material DIAMOND
-/worthdrift material minecraft:diamond
-/worthdrift report
-/worthdrift shopgui
-/worthdrift shopgui -drifting
-/worthdrift shopgui -missing
-/worthdrift shopgui -missing -discord -valid-only -limit 0
-/worthdrift shopgui -all -github -limit 0
-/worthdrift shopgui -illegal-items -discord
-/worthdrift shopgui -duplicates
-/worthdrift missing generate:survival_misc.yml
-/worthdrift fix OAK_LOG
-/worthdrift skip file:armor.yml
-/worthdrift skip item:SPAWNER
-/worthdrift ignore CACTUS
-/worthdrift ignored
+/worthaudit sales status
+/worthaudit sales top
+/worthaudit sales material DIAMOND
+/worthaudit sales material minecraft:diamond
+/worthaudit sales report
+/worthaudit shop
+/worthaudit shop -drifting
+/worthaudit shop -missing
+/worthaudit shop -missing -discord -valid-only -limit 0
+/worthaudit shop -all -github -limit 0
+/worthaudit shop -illegal-items -discord
+/worthaudit shop -duplicates
+/worthaudit shop generate survival_misc.yml
+/worthaudit shop fix OAK_LOG
+/worthaudit shop skip file:armor.yml
+/worthaudit shop skip item:SPAWNER
+/worthaudit sales ignore CACTUS
+/worthaudit sales ignored
 ```
 
 ## ShopGUI+ Reports
 
-CMI `Worth.yml` is treated as correct. ShopGUI+ prices are the values that should be reviewed when the report shows drift.
+The audit uses the saved base prices in CMI `Worth.yml` as the comparison input. Direct zero values are valid comparison inputs. The report flags invalid or ambiguous entries and tracks variants separately. Listings with item metadata, such as an enchanted book, are marked for manual review and excluded from base-price proposals.
 
 By default the expected ShopGUI+ value is:
 
@@ -90,49 +86,49 @@ For a normal quantity-1 row, `OAK_LOG: 1.0` in `Worth.yml` should be `buyPrice: 
 Report modes:
 
 ```text
-/worthdrift shopgui
+/worthaudit shop
 ```
 
 Writes the default review report. It includes the top likely wrong prices, drifting or missing-price rows, ShopGUI+ rows with no Worth.yml entry, and configured illegal/creative-only shop listings.
 
 ```text
-/worthdrift shopgui -drifting
+/worthaudit shop -drifting
 ```
 
 Writes only rows where the ShopGUI+ price does not match the expected value, sorted by largest absolute drift first.
 
 ```text
-/worthdrift shopgui -missing
+/worthaudit shop -missing
 ```
 
-Writes every Worth.yml material that was not found in any active ShopGUI+ `type: item` row.
+Lists saved base worth materials without an active ShopGUI+ `type: item` row, subject to the configured exceptions and row limit.
 
 ```text
-/worthdrift shopgui -missing -discord -valid-only -limit 0
+/worthaudit shop -missing -discord -valid-only -limit 0
 ```
 
-Writes every missing Worth.yml material except configured illegal/creative-only materials, using Discord-friendly bullets and no row limit.
+Lists all eligible missing base worth materials in Discord-friendly bullets. `-valid-only` excludes configured illegal or creative-only materials and `-limit 0` displays the entire result.
 
 ```text
-/worthdrift shopgui -all
+/worthaudit shop -all
 ```
 
 Writes every Worth.yml material with `in ShopGUI+ yes/no`, listing count, and status.
 
 ```text
-/worthdrift shopgui -illegal-items
+/worthaudit shop -illegal-items
 ```
 
 Writes configured illegal or creative-only materials found in ShopGUI+ and Worth.yml. ShopGUI+ buyable rows are the urgent part.
 
 ```text
-/worthdrift shopgui -not-in-worth
+/worthaudit shop -not-in-worth
 ```
 
-Writes active ShopGUI+ item rows whose material does not exist in Worth.yml.
+Lists active ShopGUI+ rows without a matching saved base worth entry. Metadata-sensitive listings appear in the report warnings for manual review.
 
 ```text
-/worthdrift shopgui -duplicates
+/worthaudit shop -duplicates
 ```
 
 Writes materials that appear in multiple ShopGUI+ item rows. This is useful because a material can be correctly priced in one shop file and wrong in another.
@@ -147,41 +143,33 @@ Markdown format flags:
 
 `-github` writes Markdown tables. `-discord` writes no-table bullet lists. `-valid-only` skips configured illegal/creative-only Worth.yml rows in missing exports and removes the illegal flag column from the missing table. `-limit <rows>` limits the main section; `-limit 0` means no row limit.
 
-## ShopGUI+ Admin Actions
+## ShopGUI+ previews and exceptions
 
 ```text
-/worthdrift missing generate:survival_misc.yml
+/worthaudit shop generate survival_misc.yml
 ```
 
-Appends every valid missing Worth.yml material to `plugins/ShopGUIPlus/shops/survival_misc.yml`. Illegal/creative-only materials, `shopguiplus.exceptions.materials`, and `shopguiplus.generate.excluded-materials` are skipped. Generated rows use `quantity: 1`, `buyPrice: Worth.yml value * shopguiplus.price-multiplier`, the configured generated `sellPrice`, and safe shop inventory slots across pages. WorthDrift validates the YAML before writing, but it does not reload ShopGUI+ automatically for generated files so staff can review the file first.
+Creates a separate YAML proposal in the WorthDrift cache when there are eligible missing rows. Each proposed item uses `quantity: 1`, the configured generated `sellPrice`, available shop inventory slots, and a `buyPrice` calculated from its positive base worth and `shopguiplus.price-multiplier`. The generator skips illegal and creative-only materials, configured exceptions, and `shopguiplus.generate.excluded-materials`. Review the proposed rows in the ShopGUI+ project before applying them to `survival_misc.yml`.
 
 ```text
-/worthdrift fix OAK_LOG
+/worthaudit shop fix OAK_LOG
 ```
 
-Finds active ShopGUI+ `shops/*.yml` rows for `OAK_LOG`, confirms which rows drift from CMI `Worth.yml`, updates only those rows to the expected `buyPrice`, and dispatches:
+Shows how many active `OAK_LOG` rows drift from the saved base worth. When it finds drift, it writes a Markdown proposal in the WorthDrift cache. Review the exact shop rows and proposed prices in the ShopGUI+ project before applying changes.
 
 ```text
-shopguiplus:shopgui reload
+/worthaudit shop skip file:armor.yml
+/worthaudit shop skip item:SPAWNER
 ```
 
-```text
-/worthdrift skip file:armor.yml
-/worthdrift skip item:SPAWNER
-```
+Adds the file to `shopguiplus.exceptions.files` or the material to `shopguiplus.exceptions.materials` in the WorthDrift configuration. The next shop audit uses the saved exception. Item exceptions apply to parsed ShopGUI+ rows, missing reports, and proposed listings.
 
-Adds the file to `shopguiplus.exceptions.files` or the material to `shopguiplus.exceptions.materials`, saves WorthDrift config, and reloads the feature files. Item exceptions are skipped from parsed ShopGUI+ rows, missing reports, and generated missing files.
-
-Global library examples:
+The shared library routes host diagnostics through WorthAudit. Edit sale and shop settings in `plugins/1MB-CMIAPI/WorthDrift/config.yml`, then reload the module with the following commands.
 
 ```text
-/1mblib debug plugin worthdrift
-/1mblib debug plugin worthdrift all
-/1mblib debug clean cache plugin worthdrift --dry-run
-/1mblib config worthdrift
-/1mblib config set worthdrift analysis.drift.percent-threshold 15
-/1mblib config set worthdrift analysis.high-unit-value 1000
-/1mblib translations reload
+/1mblib debug plugin worthaudit all
+/1mblib config worthaudit
+/worthaudit reload drift
 ```
 
 ## Permissions
@@ -195,6 +183,8 @@ onembcmi.worthdrift.ignore
 onembcmi.worthdrift.admin
 onembcmi.worthdrift.admin.reload
 ```
+
+These grants default to operators. Status requires `use`. Material details, top results, and ignored-material inspection add `view`. Sale and shop reports add `report`, shop previews and exceptions add `fix`, and persisting ignored sale materials adds `ignore`. Reloading this module accepts `onembcmi.worthdrift.admin.reload` or the WorthAudit host admin grant.
 
 ## Placeholders
 
@@ -230,9 +220,9 @@ CMI:
 - `WorthManager#getWorth(ItemStack)` resolves the configured CMI `WorthItem` for a CMILib material item stack.
 - `WorthItem#getSellPrice()` provides the configured sell value used for drift comparison.
 - `WorthItem#getExploitRecipe()` is checked as a read-only recipe-loop signal.
-- CMI remains the source of truth. WorthDrift only observes and reports.
+- CMI remains the source of truth for selling. Reported event prices are observed before CMI deposits the payment.
 - ShopGUI+ analysis reads `Worth.yml` directly so it can compare live saved worth data against ShopGUI+ YAML without needing to mutate CMI runtime state.
-- Explicit ShopGUI+ admin actions can append generated item rows, patch drifted ShopGUI+ buy prices, or update WorthDrift exception lists.
+- ShopGUI+ actions preview generated rows or price patches. Staff can update WorthDrift exception lists from the audit command.
 
 CMILib:
 
@@ -243,7 +233,7 @@ Paper:
 
 - Paper command, event, filesystem, YAML, and Adventure MiniMessage APIs are used.
 - Command input is strictly validated before material parsing.
-- Bukkit YAML APIs are used for CMI and ShopGUI+ file parsing.
+- The modules share a saved CMI worth reader. ShopGUI+ reads use Bukkit's YAML API.
 
 ## Config
 
@@ -259,7 +249,6 @@ analysis.drift.absolute-threshold
 analysis.high-unit-value
 analysis.minimum-material-events
 analysis.player-concentration-percent
-analysis.report-days
 report.file-prefix
 shopguiplus.enabled
 shopguiplus.worth-file
@@ -280,7 +269,7 @@ shopguiplus.legal-overrides
 ignored-materials
 ```
 
-Default ShopGUI+ paths:
+These are the default ShopGUI+ paths. They work with the custom ShopGUI+ JAR when its data remains under `plugins/ShopGUIPlus/`.
 
 ```text
 shopguiplus.worth-file: plugins/CMI/Saves/Worth.yml
@@ -317,10 +306,12 @@ Use exceptions for deliberate alternate pricing, old test files, temporary copie
 
 ## Data
 
-WorthDrift writes ignored material choices to:
+WorthAudit loads the existing WorthDrift settings, ignore list, and translations in place.
 
 ```text
+plugins/1MB-CMIAPI/WorthDrift/config.yml
 plugins/1MB-CMIAPI/WorthDrift/data.yml
+plugins/1MB-CMIAPI/CMIAPILIB/translations/worthdrift.yml
 ```
 
 WorthDrift writes support reports to:
@@ -329,13 +320,13 @@ WorthDrift writes support reports to:
 plugins/1MB-CMIAPI/CMIAPILIB/cache/plugins/worthdrift/
 ```
 
-It does not write playerdata or persistent economy history in version 1. Session aggregates reset on restart, while reports can be kept as cache artifacts.
+Session aggregates reset on server restart. Exported reports and previews remain in the cache for later review.
 
 ShopGUI+ reports are Markdown `.md` files in the same cache folder. Their filenames include the report mode, Markdown format, and optional valid-only filter, for example `worthdrift-shopgui-drifting-github-table-<timestamp>.md`, `worthdrift-shopgui-drifting-discord-bullets-<timestamp>.md`, or `worthdrift-shopgui-missing-discord-bullets-valid-only-<timestamp>.md`.
 
 ## Safety
 
-WorthDrift never cancels CMI sells, modifies `Worth.yml`, changes balances, or exposes arbitrary player input. Material names and generated filenames are allowlisted and normalized before being used. Reports are read-only; only `/worthdrift missing generate:<file.yml>`, `/worthdrift fix <material>`, and `/worthdrift skip <...>` write ShopGUI+ YAML or WorthDrift config, and those commands require `onembcmi.worthdrift.fix`.
+Sale observation and shop reports leave CMI sells, balances, `Worth.yml`, and ShopGUI+ files untouched. Material names and generated filenames are allowlisted and normalized. Shop previews and exception edits require `onembcmi.worthdrift.fix`. The explicit `shop skip` and `sales ignore` actions write only WorthDrift configuration or data.
 
 ## Shared Library Usage
 

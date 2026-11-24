@@ -30,7 +30,7 @@ No plugin-owned placeholders were verified. PlaceholderAPI may still expose valu
 ## Configuration and integrations
 
 - Vault/CMI handles economy.
-- 1MB-CMIAPI WorthDrift compares ShopGUIPlus prices with CMI worth data; WorthHelper supports review workflows.
+- [WorthAudit](/staff-reference/plugins/worthaudit/) compares ShopGUI+ prices with CMI worth. Use `/worthaudit shop` to generate an audit report.
 - Custom-item, soul-bind, container, and metadata matching must be tested carefully.
 - Reload should follow configuration validation because a malformed shop can affect broad economy access.
 

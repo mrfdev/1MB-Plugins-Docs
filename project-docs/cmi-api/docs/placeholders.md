@@ -1284,7 +1284,7 @@ EconomyGuardian placeholders:
 %onembcmi_economyguardian.cache.size%
 ```
 
-StartupDoctor placeholders:
+StartupDoctor module placeholders in ServerCheck:
 
 ```text
 %onembcmi_startupdoctor.enabled%
@@ -1310,7 +1310,7 @@ StartupDoctor placeholders:
 %onembcmi_startupdoctor.cache.size%
 ```
 
-UpdateSmoke placeholders:
+UpdateSmoke module placeholders in ServerCheck:
 
 ```text
 %onembcmi_updatesmoke.enabled%
@@ -1330,7 +1330,7 @@ UpdateSmoke placeholders:
 %onembcmi_updatesmoke.cache.size%
 ```
 
-PluginVersions placeholders:
+PluginVersions module placeholders in ServerCheck:
 
 ```text
 %onembcmi_pluginversions.enabled%
@@ -1681,7 +1681,7 @@ WarpAudit placeholders:
 %onembcmi_warpaudit.cache.size%
 ```
 
-WorthDrift placeholders:
+WorthDrift module placeholders in WorthAudit:
 
 ```text
 %onembcmi_worthdrift.enabled%
@@ -1703,7 +1703,7 @@ WorthDrift placeholders:
 %onembcmi_worthdrift.cache.size%
 ```
 
-WorthHelper placeholders:
+WorthHelper module placeholders in WorthAudit:
 
 ```text
 %onembcmi_worthhelper.enabled%
@@ -1712,6 +1712,9 @@ WorthHelper placeholders:
 %onembcmi_worthhelper.last.recipes%
 %onembcmi_worthhelper.last.suggestions%
 %onembcmi_worthhelper.last.missing%
+%onembcmi_worthhelper.last.trade_catalog%
+%onembcmi_worthhelper.last.trade_base_risks%
+%onembcmi_worthhelper.last.trade_discount_risks%
 %onembcmi_worthhelper.last.worth_entries%
 %onembcmi_worthhelper.cache.size%
 ```

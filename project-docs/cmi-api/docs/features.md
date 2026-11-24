@@ -63,9 +63,7 @@ These are the first feature candidates now using the shared library scaffold:
 | Server Management | CMIConfig | Owner GUI for selected CMI/CMILib config toggles | [CMIConfig](plugins/cmiconfig.md) |
 | Server Management | ConsoleNoiseRouter | CMI console message classifier and cache dump helper | [ConsoleNoiseRouter](plugins/consolenoiserouter.md) |
 | Server Management | EconomyGuardian | Read-only CMI economy balance anomaly watcher | [EconomyGuardian](plugins/economyguardian.md) |
-| Server Management | StartupDoctor | Startup/runtime diagnostics and read-only Paper safety checks | [StartupDoctor](plugins/startupdoctor.md) |
-| Server Management | UpdateSmoke | Post-update smoke checks for runtime compatibility, hooks, command registration and dispatch, placeholders, feature metadata, and key CMI/CMILib APIs | [UpdateSmoke](plugins/updatesmoke.md) |
-| Server Management | PluginVersions | Plugin version inventory, declared dependency/dependent reports, tested Java/Paper/dependency gate, URL curation, and Markdown/Discord exports | [PluginVersions](plugins/pluginversions.md) |
+| Server Management | ServerCheck | Plugin inventory and dependency reports, explicit post-update smoke checks, and startup and Paper diagnostics | [ServerCheck](plugins/servercheck.md) |
 | Server Management | Potions | Locked admin forge plus player-safe `/potions` held-item inspection for PDC-marked custom event potions with split config files, GUI definition editing, collection bundle generation, 14 style choices, snapshotted costs, particle presets, collections, and runtime disable controls | [Potions](plugins/potions.md) |
 | Server Management | Upgrade | Admin-only LuckPerms group upgrade suggestions from join-date and playtime signals with read-only rankup simulation, a review queue GUI, guarded click-to-apply actions, optional cosmetic rewards, promotion effects, and Discord link reminders | [Upgrade](plugins/upgrade.md) |
 | Server Management | EndCrystals | End crystal block, entity, and player-break protection migrated from the standalone EndCrystals project | [EndCrystals](plugins/endcrystals.md) |
@@ -75,8 +73,7 @@ These are the first feature candidates now using the shared library scaffold:
 | Server Management | Hoppers | Read-only hopper clog, world/chunk/player scopes, Spark helpers, notes, config drift, hotspot history, Markdown export, and MobFarmManager triage for TPS drops | [Hoppers](plugins/hoppers.md) |
 | Server Management | Diagnostics | Removable owner diagnostics for disconnects, AFK context, player state, packet/protocol bridge clues, compact item metadata clues, plugin versions, and support-ready timestamped logs | [Diagnostics](plugins/diagnostics.md) |
 | Server Management | WarpAudit | Read-only CMI warp and portal audit | [WarpAudit](plugins/warpaudit.md) |
-| Server Management | WorthDrift | CMI sell-event drift analyzer plus ShopGUI+ `buyPrice` vs `Worth.yml` Markdown reports | [WorthDrift](plugins/worthdrift.md) |
-| Server Management | WorthHelper | Read-only CMI Worth.yml and Paper recipe analyzer | [WorthHelper](plugins/worthhelper.md) |
+| Server Management | WorthAudit | Staff reviews for CMI worth, Paper recipes and villager trades, CMI sell observations, and ShopGUI+ prices | [WorthAudit](plugins/worthaudit.md) |
 | Generic / Dev | EventRecorder | CMI event recorder for development and testing | [EventRecorder](plugins/eventrecorder.md) |
 | Generic / Dev | BedrockChatBridge | Temporary fail-closed CMI Paper-chat bridge for Floodgate senders after verified formatter ordering | [BedrockChatBridge](plugins/bedrockchatbridge.md) |
 | Generic / Dev | CMIProbe | CMI, CMILib, event, and command smoke probe | [CMIProbe](plugins/cmiprobe.md) |

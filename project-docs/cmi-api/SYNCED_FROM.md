@@ -5,8 +5,8 @@ This namespace is a public documentation-only copy from the source project regis
 - Project: `1MB Library`
 - Project id: `cmi-api`
 - Source repository: `mrfdev/1MB-Library`
-- Source commit: `0ddcffad`
-- Source state: `clean`
+- Source commit: `e6e1da46`
+- Source state: Scoped build 860 and 861 documentation refresh from the reviewed local guides. The rest of the namespace retains its previous public baseline from source commit `0ddcffad`.
 - Public README source: `README.md`
 - Copied files: public `README.md` and `docs/`
 - Source-declared private docs exclusions: `docs/1mb-library-migration-plan.md`, `docs/adr`, `docs/agents`, `docs/archives/forage-private-beta-2026-10-17`, `docs/compatibility-baselines/live-tested-working-2026-08-15.md`, `docs/compatibility-tests/afkshrine-persistence-2026-09-26.md`, `docs/compatibility-tests/autosell-presets-2026-10-14.md`, `docs/compatibility-tests/forage-26.3-camp-templates-2026-09-27.md`, `docs/compatibility-tests/forage-26.3-camps-2026-09-27.md`, `docs/compatibility-tests/forage-26.3-plants-2026-10-06.md`, `docs/compatibility-tests/forage-camp-life-2026-10-11.md`, `docs/compatibility-tests/forage-itemname-2026-10-11.md`, `docs/compatibility-tests/forage-mcmmo-abilities-2026-10-11.md`, `docs/compatibility-tests/forage-menu-back-audit-2026-10-16.md`, `docs/compatibility-tests/forage-protection-parity-2026-10-11.md`, `docs/compatibility-tests/forage-pyro-camp-interaction-2026-10-11.md`, `docs/compatibility-tests/forage-source-guide-2026-10-11.md`, `docs/compatibility-tests/forage-station-navigation-2026-10-11.md`, `docs/compatibility-tests/forage-tool-protection-2026-10-07.md`, `docs/compatibility-tests/persistence-coordination-2026-10-19.md`, `docs/economy-review`, `docs/feature-contract-reviews`, `docs/feature-contracts.md`, `docs/fireworks-owner-review.md`, `docs/forage-26.3-revamp-todo.md`, `docs/paper-runtime-identity-migration-plan.md`, `docs/plugins/forage-camp-technical.md`, `docs/plugins/forage-roadmap.md`, `docs/plugins/forage/checklist.md`, `docs/public-documentation-url-migration-plan.md`, `docs/shared-gui-presentation-centralization-plan.md`

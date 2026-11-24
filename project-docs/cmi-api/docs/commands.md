@@ -298,9 +298,7 @@ Feature `/help` pages are intentionally player-facing: they list commands availa
 /1mblib debug plugin cmdcostdashboard all
 /1mblib debug plugin cmiconfig all
 /1mblib debug plugin economyguardian all
-/1mblib debug plugin startupdoctor all
-/1mblib debug plugin updatesmoke all
-/1mblib debug plugin pluginversions all
+/1mblib debug plugin servercheck all
 /_scheduler debug all
 /1mblib debug plugin upgrade all
 /1mblib debug plugin worldsnapshot all
@@ -309,8 +307,7 @@ Feature `/help` pages are intentionally player-facing: they list commands availa
 /1mblib debug plugin diagnostics all
 /1mblib debug plugin placeholders all
 /1mblib debug plugin warpaudit all
-/1mblib debug plugin worthdrift all
-/1mblib debug plugin worthhelper all
+/1mblib debug plugin worthaudit all
 /1mblib debug plugin cmiprobe all
 /1mblib debug plugin cmidb all
 /1mblib debug plugin afkshrine commands
@@ -374,7 +371,24 @@ Placeholders Probe module:
 /_placeholders probe reload
 ```
 
-PluginVersions:
+
+ServerCheck groups the version inventory, post-update checks, and startup diagnostics.
+
+```text
+/servercheck status
+/servercheck versions depend CMI
+/servercheck smoke run
+/servercheck doctor paper
+/servercheck admin reload doctor
+/servercheck debug
+/servercheck debug versions
+/servercheck debug smoke
+/servercheck debug doctor
+/servercheck info
+/servercheck help
+```
+
+PluginVersions compatibility commands:
 
 ```text
 /pv info
@@ -2104,16 +2118,21 @@ WarpAudit:
 /warpaudit reload
 ```
 
-WorthHelper:
+WorthAudit combines recipe, trade, sales, and shop reviews. Update saved `/worthhelper` and `/worthdrift` commands to these routes.
 
 ```text
-/worthhelper status
-/worthhelper scan
-/worthhelper missing
-/worthhelper recipes diamond_block
-/worthhelper export
-/worthhelper reload
-/worthhelper debug all
+/worthaudit status
+/worthaudit item diamond_block
+/worthaudit scan
+/worthaudit missing
+/worthaudit recipes diamond_block
+/worthaudit trades
+/worthaudit sales report
+/worthaudit shop -drifting
+/worthaudit shop fix diamond_block
+/worthaudit export
+/worthaudit reload
+/worthaudit debug all
 ```
 
 SparkReviewer:
@@ -2186,17 +2205,15 @@ Hoppers:
 
 `/_hoppers` is staff-only and has no shorter alias. Normal players have no default command access; reviewers need Hoppers permissions such as `onembcmi.hoppers.scan`, `onembcmi.hoppers.track`, `onembcmi.hoppers.watch`, `onembcmi.hoppers.trigger`, and `onembcmi.hoppers.baseline`; only trusted admins should get `onembcmi.hoppers.spark` because it dispatches Spark profiler commands. Use `/_hoppers risk` for the short active-drop summary, `/_hoppers world/chunk/players` to narrow a known location, `/_hoppers chains/containers/materials/minecarts/redstone/tickets` for passive hotspot deep dives, `/_hoppers recommend` for checked/found/recommend rows with test-plan and sorter-safety labels, `/_hoppers watch/trigger/track` during live drops, `/_hoppers baseline/compare` for longer tuning work, `/_hoppers drift/history` for cached evidence, and `/_hoppers dump` for Discord-friendly Markdown reports with `yml` code blocks.
 
-UpdateSmoke:
+UpdateSmoke within ServerCheck. The `/updatesmoke` and `/usmoke` compatibility commands remain available.
 
 ```text
-/updatesmoke
-/updatesmoke status
-/updatesmoke run
-/updatesmoke checks 2
-/updatesmoke report
-/updatesmoke report 2
-/updatesmoke reload
-/usmoke status
+/servercheck smoke status
+/servercheck smoke run
+/servercheck smoke checks 2
+/servercheck smoke report
+/servercheck smoke report 2
+/servercheck admin reload smoke
 ```
 
 DropParty:

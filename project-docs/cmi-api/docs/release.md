@@ -32,7 +32,7 @@ The Paper 26.2-focused 1.0.3 build-699 snapshot is tagged `v1.0.3-paper-26.2`. I
 
 The owner confirmed on 14 September 2026 that the current suite build **1.0.3-660** is deployed and tested on the live server. AFKShrine's tool upgrades and Note exchanges passed gameplay testing for staff and player accounts. The canonical build produced all 65 matching JARs and passed the full suite (1,681 test cases, zero failures/errors, one skipped case).
 
-New builds use the installed Oracle JDK 25 and retain Java 25 bytecode. Automated tests and the maintained test server use the installed Oracle JDK 27. The repository launcher dynamically resolves both installed patch versions and disables JDK downloads. The live Java 27 server is upgraded separately after local acceptance. The current 1.0.4 target is Paper 26.3 stable build 241 or newer within the explicitly approved STABLE channel, and Gradle compiles against `paper-api:26.3.build.241-stable`. Select the build and test JDKs using the launcher shown in the [compile instructions](compiling.md).
+New builds use the installed Oracle JDK 25 and retain Java 25 bytecode. Automated tests and the maintained test server use the installed Oracle JDK 27. The repository launcher dynamically resolves both installed patch versions and disables JDK downloads. The live Java 27 server is upgraded separately after local acceptance. The current 1.0.4 target is Paper 26.3 stable build 260 or newer within the explicitly approved STABLE channel, and Gradle compiles against `paper-api:26.3.build.260-stable`. Select the build and test JDKs using the launcher shown in the [compile instructions](compiling.md).
 
 The current source rollback point is recorded in [Live-Tested Working Baseline: 2026-08-15](compatibility-baselines/live-tested-working-2026-08-15.md). The exact pre-CMI-9.8.9.6 rollback combination is recorded in [Live-Tested Baseline: 2026-08-02](compatibility-baselines/live-tested-2026-08-02.md). The isolated replacement boot and remaining player test matrix are recorded in [CMI 9.8.9.6 Chat Compatibility Pass](compatibility-tests/cmi-9.8.9.6-chat.md).
 
@@ -42,7 +42,7 @@ For every new local test build, stop the maintained Paper 26.3 instance and run:
 scripts/build-all.sh
 ```
 
-The workflow keeps PaperScript on the explicit `paperChannel` (`STABLE` for 26.3), requests the latest build for the exact configured `paperTarget`, stages `Paper-{version}-{build}.jar`, aligns `paperApiVersion`, increments the one suite-wide build number, builds and tests every active artifact (currently 68), and synchronizes the complete set into `servers/Paper-26.3/`. It persists release metadata only after the active-plus-disabled suite set verifies by filename and bytes. `gradle verifyLocalPaperAlignment` fails when the local PaperScript state, configured channel, launcher-selected numbered JAR, checksum or compile API build differs.
+The workflow keeps PaperScript on the explicit `paperChannel` (`STABLE` for 26.3), requests the latest build for the exact configured `paperTarget`, stages `Paper-{version}-{build}.jar`, aligns `paperApiVersion`, increments the one suite-wide build number, builds and tests every active artifact (currently 66), and synchronizes the complete set into `servers/Paper-26.3/`. It persists release metadata only after the active-plus-disabled suite set verifies by filename and bytes. `gradle verifyLocalPaperAlignment` fails when the local PaperScript state, configured channel, launcher-selected numbered JAR, checksum or compile API build differs.
 
 ## Jar Naming
 
@@ -55,69 +55,70 @@ All jars should follow this shape:
 Examples:
 
 ```text
-1MB-Lib-Core-v1.0.4-835-j25-26.3.jar
-1MB-Lib-AntiFire-v1.0.4-835-j25-26.3.jar
-1MB-Lib-AFKShrine-v1.0.4-835-j25-26.3.jar
-1MB-Lib-RecordingMode-v1.0.4-835-j25-26.3.jar
-1MB-Lib-SellStreaks-v1.0.4-835-j25-26.3.jar
-1MB-Lib-ScheduledTips-v1.0.4-835-j25-26.3.jar
-1MB-Lib-Visit-v1.0.4-835-j25-26.3.jar
-1MB-Lib-PassportDiscovery-v1.0.4-835-j25-26.3.jar
-1MB-Lib-SocialGatherings-v1.0.4-835-j25-26.3.jar
-1MB-Lib-JourneyMap-v1.0.4-835-j25-26.3.jar
-1MB-Lib-KitStreaks-v1.0.4-835-j25-26.3.jar
-1MB-Lib-Nick-v1.0.4-835-j25-26.3.jar
-1MB-Lib-EmoteMenu-v1.0.4-835-j25-26.3.jar
-1MB-Lib-PvPToggle-v1.0.4-835-j25-26.3.jar
-1MB-Lib-Boosters-v1.0.4-835-j25-26.3.jar
-1MB-Lib-NameMC-v1.0.4-835-j25-26.3.jar
-1MB-Lib-Exchange-v1.0.4-835-j25-26.3.jar
-1MB-Lib-VoteTokens-v1.0.4-835-j25-26.3.jar
-1MB-Lib-DiscordChat-v1.0.4-835-j25-26.3.jar
-1MB-Lib-GameTypes-v1.0.4-835-j25-26.3.jar
-1MB-Lib-BirthdayLanterns-v1.0.4-835-j25-26.3.jar
-1MB-Lib-LavaBoots-v1.0.4-835-j25-26.3.jar
-1MB-Lib-Spawners-v1.0.4-835-j25-26.3.jar
-1MB-Lib-Collect-v1.0.4-835-j25-26.3.jar
-1MB-Lib-EventHunts-v1.0.4-835-j25-26.3.jar
-1MB-Lib-DropParty-v1.0.4-835-j25-26.3.jar
-1MB-Lib-Advent-v1.0.4-835-j25-26.3.jar
-1MB-Lib-HideAndSheep-v1.0.4-835-j25-26.3.jar
-1MB-Lib-Appreciation-v1.0.4-835-j25-26.3.jar
-1MB-Lib-Forage-v1.0.4-835-j25-26.3.jar
-1MB-Lib-MobHat-v1.0.4-835-j25-26.3.jar
-1MB-Lib-PlayerTodo-v1.0.4-835-j25-26.3.jar
-1MB-Lib-Refer-v1.0.4-835-j25-26.3.jar
-1MB-Lib-TPAuto-v1.0.4-835-j25-26.3.jar
-1MB-Lib-Menu-v1.0.4-835-j25-26.3.jar
-1MB-Lib-StaffCenter-v1.0.4-835-j25-26.3.jar
-1MB-Lib-Profile-v1.0.4-835-j25-26.3.jar
-1MB-Lib-ContentGuard-v1.0.4-835-j25-26.3.jar
-1MB-Lib-WarningLens-v1.0.4-835-j25-26.3.jar
-1MB-Lib-TeamMsg-v1.0.4-835-j25-26.3.jar
-1MB-Lib-CmdCostDashboard-v1.0.4-835-j25-26.3.jar
-1MB-Lib-CMIConfig-v1.0.4-835-j25-26.3.jar
-1MB-Lib-ConsoleNoiseRouter-v1.0.4-835-j25-26.3.jar
-1MB-Lib-EconomyGuardian-v1.0.4-835-j25-26.3.jar
-1MB-Lib-StartupDoctor-v1.0.4-835-j25-26.3.jar
-1MB-Lib-UpdateSmoke-v1.0.4-835-j25-26.3.jar
-1MB-Lib-PluginVersions-v1.0.4-835-j25-26.3.jar
-1MB-Lib-Placeholders-v1.0.4-835-j25-26.3.jar
-1MB-Lib-Potions-v1.0.4-835-j25-26.3.jar
-1MB-Lib-Upgrade-v1.0.4-835-j25-26.3.jar
-1MB-Lib-EndCrystals-v1.0.4-835-j25-26.3.jar
-1MB-Lib-WorldSnapshot-v1.0.4-835-j25-26.3.jar
-1MB-Lib-SparkReviewer-v1.0.4-835-j25-26.3.jar
-1MB-Lib-Hoppers-v1.0.4-835-j25-26.3.jar
-1MB-Lib-EventRecorder-v1.0.4-835-j25-26.3.jar
-1MB-Lib-BedrockChatBridge-v1.0.4-835-j25-26.3.jar
-1MB-Lib-CMIProbe-v1.0.4-835-j25-26.3.jar
-1MB-Lib-CMIDatabase-v1.0.4-835-j25-26.3.jar
-1MB-Lib-PermissionProbe-v1.0.4-835-j25-26.3.jar
-1MB-Lib-WarpAudit-v1.0.4-835-j25-26.3.jar
-1MB-Lib-WorthDrift-v1.0.4-835-j25-26.3.jar
-1MB-Lib-WorthHelper-v1.0.4-835-j25-26.3.jar
+1MB-Lib-Core-v1.0.4-861-j25-26.3.jar
+1MB-Lib-AntiFire-v1.0.4-861-j25-26.3.jar
+1MB-Lib-AFKShrine-v1.0.4-861-j25-26.3.jar
+1MB-Lib-RecordingMode-v1.0.4-861-j25-26.3.jar
+1MB-Lib-SellStreaks-v1.0.4-861-j25-26.3.jar
+1MB-Lib-ScheduledTips-v1.0.4-861-j25-26.3.jar
+1MB-Lib-Visit-v1.0.4-861-j25-26.3.jar
+1MB-Lib-PassportDiscovery-v1.0.4-861-j25-26.3.jar
+1MB-Lib-SocialGatherings-v1.0.4-861-j25-26.3.jar
+1MB-Lib-JourneyMap-v1.0.4-861-j25-26.3.jar
+1MB-Lib-KitStreaks-v1.0.4-861-j25-26.3.jar
+1MB-Lib-Nick-v1.0.4-861-j25-26.3.jar
+1MB-Lib-EmoteMenu-v1.0.4-861-j25-26.3.jar
+1MB-Lib-PvPToggle-v1.0.4-861-j25-26.3.jar
+1MB-Lib-Boosters-v1.0.4-861-j25-26.3.jar
+1MB-Lib-NameMC-v1.0.4-861-j25-26.3.jar
+1MB-Lib-Exchange-v1.0.4-861-j25-26.3.jar
+1MB-Lib-VoteTokens-v1.0.4-861-j25-26.3.jar
+1MB-Lib-DiscordChat-v1.0.4-861-j25-26.3.jar
+1MB-Lib-GameTypes-v1.0.4-861-j25-26.3.jar
+1MB-Lib-BirthdayLanterns-v1.0.4-861-j25-26.3.jar
+1MB-Lib-LavaBoots-v1.0.4-861-j25-26.3.jar
+1MB-Lib-Spawners-v1.0.4-861-j25-26.3.jar
+1MB-Lib-Collect-v1.0.4-861-j25-26.3.jar
+1MB-Lib-EventHunts-v1.0.4-861-j25-26.3.jar
+1MB-Lib-DropParty-v1.0.4-861-j25-26.3.jar
+1MB-Lib-Advent-v1.0.4-861-j25-26.3.jar
+1MB-Lib-HideAndSheep-v1.0.4-861-j25-26.3.jar
+1MB-Lib-Appreciation-v1.0.4-861-j25-26.3.jar
+1MB-Lib-Forage-v1.0.4-861-j25-26.3.jar
+1MB-Lib-MobHat-v1.0.4-861-j25-26.3.jar
+1MB-Lib-PlayerTodo-v1.0.4-861-j25-26.3.jar
+1MB-Lib-Refer-v1.0.4-861-j25-26.3.jar
+1MB-Lib-TPAuto-v1.0.4-861-j25-26.3.jar
+1MB-Lib-Menu-v1.0.4-861-j25-26.3.jar
+1MB-Lib-StaffCenter-v1.0.4-861-j25-26.3.jar
+1MB-Lib-Profile-v1.0.4-861-j25-26.3.jar
+1MB-Lib-ContentGuard-v1.0.4-861-j25-26.3.jar
+1MB-Lib-WarningLens-v1.0.4-861-j25-26.3.jar
+1MB-Lib-TeamMsg-v1.0.4-861-j25-26.3.jar
+1MB-Lib-CmdCostDashboard-v1.0.4-861-j25-26.3.jar
+1MB-Lib-CMIConfig-v1.0.4-861-j25-26.3.jar
+1MB-Lib-ConsoleNoiseRouter-v1.0.4-861-j25-26.3.jar
+1MB-Lib-EconomyGuardian-v1.0.4-861-j25-26.3.jar
+1MB-Lib-ServerCheck-v1.0.4-861-j25-26.3.jar
+1MB-Lib-Placeholders-v1.0.4-861-j25-26.3.jar
+1MB-Lib-Potions-v1.0.4-861-j25-26.3.jar
+1MB-Lib-Upgrade-v1.0.4-861-j25-26.3.jar
+1MB-Lib-EndCrystals-v1.0.4-861-j25-26.3.jar
+1MB-Lib-WorldSnapshot-v1.0.4-861-j25-26.3.jar
+1MB-Lib-SparkReviewer-v1.0.4-861-j25-26.3.jar
+1MB-Lib-Hoppers-v1.0.4-861-j25-26.3.jar
+1MB-Lib-EventRecorder-v1.0.4-861-j25-26.3.jar
+1MB-Lib-BedrockChatBridge-v1.0.4-861-j25-26.3.jar
+1MB-Lib-CMIProbe-v1.0.4-861-j25-26.3.jar
+1MB-Lib-CMIDatabase-v1.0.4-861-j25-26.3.jar
+1MB-Lib-PermissionProbe-v1.0.4-861-j25-26.3.jar
+1MB-Lib-WarpAudit-v1.0.4-861-j25-26.3.jar
+1MB-Lib-WorthAudit-v1.0.4-861-j25-26.3.jar
 ```
+
+## Consolidated support and economy tools
+
+Suite build 860 introduces WorthAudit. Build 861 adds ServerCheck. Follow the [stopped-server upgrade steps](installation.md#upgrade-to-servercheck-and-worthaudit) when upgrading from the five standalone JARs. Use the two replacements from the same tested suite.
 
 ## Local Build
 
@@ -133,7 +134,7 @@ For example:
 gradle :plugins:player-fun:<feature>:test
 ```
 
-`BuildConstants.java` is generated by Gradle from the canonical workflow metadata, so `/1mblib version`, `/1mblib status`, inherited feature debug output, PluginVersions debug output, support bundles, plugin.yml versions, jar filenames, and docs all use the same release source. The runtime views show both the exact compiled Paper API and the actual server API/engine. `gradle build` runs `verifyBuildMetadata` and fails when any documented 1MB jar example, semantic-version/build example, checklist metadata line, Paper requirement, or generated constant is stale.
+`BuildConstants.java` is generated by Gradle from the canonical workflow metadata, so `/1mblib version`, `/1mblib status`, inherited feature debug output, ServerCheck’s PluginVersions debug output, support bundles, plugin.yml versions, jar filenames, and docs all use the same release source. The runtime views show both the exact compiled Paper API and the actual server API/engine. `gradle build` runs `verifyBuildMetadata` and fails when any documented 1MB jar example, semantic-version/build example, checklist metadata line, Paper requirement, or generated constant is stale.
 
 ## Public Docs Sync Check
 
@@ -156,7 +157,7 @@ Then review, commit, and push the public docs repository separately.
 
 ## Copy To Project Test Server
 
-Every successful deployable build must place the complete managed set (currently 68 JARs) into the maintained instance:
+Every successful deployable build must place the complete managed set (currently 66 JARs) into the maintained instance:
 
 ```text
 servers/Paper-26.3/plugins/

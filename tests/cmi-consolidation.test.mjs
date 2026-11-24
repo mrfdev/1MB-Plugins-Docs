@@ -80,3 +80,24 @@ test('consolidated CMI guides keep accurate commands and legacy routes', async (
   assert.match(config, /'\/custom-server-plugins\/trick-or-treat-doors': '\/player-guides\/plugins\/doors\/'/);
   assert.match(config, /'\/player-guides\/custom-server-plugins\/trick-or-treat-doors': '\/player-guides\/plugins\/doors\/'/);
 });
+
+test('ServerCheck and WorthAudit have canonical staff references and redirect retired guides', async () => {
+  const redirects = await readFile(path.join(repoRoot, 'astro.config.mjs'), 'utf8');
+  const index = await readFile(path.join(generatedPlugins, 'index.mdx'), 'utf8');
+  const playerCommands = await readFile(path.join(generatedPlugins, '..', 'commands.mdx'), 'utf8');
+  const staffRoot = path.join(generatedPlugins, '..', '..', 'staff-reference', 'plugins');
+
+  for (const [host, modules, command] of [
+    ['servercheck', ['pluginversions', 'startupdoctor', 'updatesmoke'], '/servercheck smoke run'],
+    ['worthaudit', ['worthhelper', 'worthdrift'], '/worthaudit shop'],
+  ]) {
+    assert.ok(index.includes(`href="./${host}/"`));
+    assert.ok((await readFile(path.join(staffRoot, `${host}.md`), 'utf8')).includes(command));
+    assert.ok(!playerCommands.includes(`<code>/${host}`));
+    for (const module of modules) {
+      assert.ok(redirects.includes(`'/player-guides/plugins/${module}': '/player-guides/plugins/${host}/'`));
+      assert.ok(!index.includes(`href="./${module}/"`));
+      await assert.rejects(access(path.join(generatedPlugins, `${module}.mdx`)));
+    }
+  }
+});

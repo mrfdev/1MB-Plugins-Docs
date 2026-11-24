@@ -136,39 +136,33 @@ const PLAYER_GUIDE_OVERRIDES = {
       'Exact source lookup, quest/tool links, modern plant routes and five Brush activities.',
     ],
   },
-  pluginversions: {
-    staffDocument: 'pluginversions.md',
-    guide: 'Use /pv list to inspect versions, then /pv depend CMILib, Vault, ProtocolLib, or ViaVersion to see declared relationships. Review required, optional, and indirect dependents before testing a removal. The report does not establish whether an integration is active or a plugin is safe to uninstall.',
+  servercheck: {
+    staffDocument: 'servercheck.md',
+    intro: 'Review the Java, Paper, CMI, and CMILib runtime, check plugin dependencies, and run post-update diagnostics.',
+    guide: 'ServerCheck gives staff one place to check installed plugin versions, review startup and Paper diagnostics, and run post-update smoke tests.',
     quickStart: [
-      'Run `/pv list` to find the current plugin names and versions.',
-      'Run `/pv depend CMILib` or `/pv depend Vault` to inspect a dependency report.',
-      'Use `/pv depend CMILib 2` for the next player page. Console receives the full report.',
-      'Review required chains and optional features, then test any removal with a full restart on the test server.',
+      'Use `/servercheck status` to see the runtime and module states.',
+      'Follow the [ServerCheck staff reference](/staff-reference/plugins/servercheck/) for permissions, command examples, and upgrade steps.',
     ],
+    commands: ['/servercheck status'],
     commandDescriptions: {
-      '/pv depend <plugin> [page]': 'Shows the target version/state, declared required and optional dependents, indirect required chains, its own dependencies, and load-order references. Does not certify safe removal.',
+      '/servercheck status': 'Shows the runtime, module states, and latest smoke result. Staff permissions required.',
     },
-    commandTableExamples: {
-      '/pv depend <plugin> [page]': '/pv depend CMILib',
-    },
-    afterFeatures: `## Reading a Dependency Report
-
-| Category | What it means |
-| --- | --- |
-| Required by | Plugins that declare the target as required to load. |
-| Optional integration for | Plugins that may lose features without the target. Active use is not confirmed. |
-| Indirectly required by | A shortest chain of required dependencies leading to the target. |
-| Depends on | Required and optional dependencies declared by the target itself. |
-| Load-order references | Ordering declarations, not proof of API use. |
-
-Names and provided aliases match case-insensitively. Conflicting aliases are reported, and missing declared targets remain queryable. The report reads a fresh runtime snapshot and does not modify plugins or the inventory database.`,
-    notes: [
-      'Dependency reports require `pluginversions.depend`, which defaults to op and is included in `pluginversions.*`. Use `/pv depend`, without an admin subcommand.',
-      'Enabled/disabled describes Paper plugin state, not whether each optional feature is active.',
-      'No declared dependents does not mean unused or safe to remove. ViaVersion can serve player connections even without plugin dependents.',
-      'Runtime metadata excludes unloaded JARs, undeclared hooks, embedded libraries, and some Paper declarations (bootstrap-only or `join-classpath: false`).',
-      'See the [full administration reference](/staff-reference/plugins/pluginversions/) for report scope and interpretation.',
+    includeInCommandIndex: false,
+  },
+  worthaudit: {
+    staffDocument: 'worthaudit.md',
+    intro: 'Compare CMI worth with recipes, villager trades, observed sales, and ShopGUI+ prices.',
+    guide: 'WorthAudit helps economy reviewers compare CMI worth values with recipes, villager trades, observed sales, and ShopGUI+ prices.',
+    quickStart: [
+      'Use `/worthaudit status` to see which audit modules are available.',
+      'Follow the [WorthAudit staff reference](/staff-reference/plugins/worthaudit/) for permissions, saved reports, and upgrade steps.',
     ],
+    commands: ['/worthaudit status'],
+    commandDescriptions: {
+      '/worthaudit status': 'Shows the audit modules and their status. Staff permissions required.',
+    },
+    includeInCommandIndex: false,
   },
   halloweenvirus: {
     fullSourceGuide: true,
@@ -1289,7 +1283,7 @@ const FEATURE_BULLET_OVERRIDES = {
     'GitHub-table and Discord-friendly Markdown exports for each diagnostic view.',
     'Strict owner-only access without changing permissions or player data.',
   ],
-  pluginversions: [
+  servercheck: [
     'A searchable inventory of loaded plugins, versions, enabled state, and curated project links.',
     'Declared dependency reports with required and optional dependents, indirect required chains, aliases, and load-order references.',
     'A tested Java, Paper, CMI, CMILib, and dependency compatibility gate.',
@@ -1298,6 +1292,8 @@ const FEATURE_BULLET_OVERRIDES = {
     'Manual source, download, documentation, and support URL curation.',
     'URL audits that highlight missing or malformed project links.',
     'Full Markdown and compact Discord-friendly export reports.',
+    'Startup, folder, and read-only Paper safety diagnostics.',
+    'Explicit post-update smoke checks for commands, placeholders, integrations, and version compatibility.',
   ],
   potions: [
     'A locked staff forge for normal, splash, and lingering custom event potions.',
@@ -1327,14 +1323,10 @@ const FEATURE_BULLET_OVERRIDES = {
     'CMI, CMILib, PlaceholderAPI, LuckPerms, and Vault hook status.',
     'Console-friendly text output without punishment actions.',
   ],
-  updatesmoke: [
-    'A post-update compatibility checklist for Paper, Java, CMI, CMILib, PlaceholderAPI, and the 1MB feature jars.',
-    'Accepted Paper and Java matrix validation plus loaded version and dependency checks.',
-    'Required command registration and read-only command dispatch smoke checks.',
-    'Required placeholder parsing and unresolved-placeholder detection.',
-    'Selected CMI and CMILib API reachability checks.',
-    'Registered feature metadata and current build checks.',
-    'Paginated results, placeholders, and timestamped support reports without repairs or data mutation.',
+  worthaudit: [
+    'CMI worth reviews for Paper recipes and supported vanilla villager trades.',
+    'Observed CMI sales and comparisons with current worth values.',
+    'ShopGUI+ listings and price differences with Markdown and YAML previews.',
   ],
   upgrade: [
     'Join-time suggestions when a player appears eligible for the next configured LuckPerms group.',
@@ -2891,9 +2883,8 @@ ${rewriteLibraryLinks(stripDocumentPreamble(staffMarkdown), `plugins/${override.
   }
 }
 
-// Forage now publishes player guides only. Remove the former private-beta routes
-// even when generating into an older checkout, so they cannot linger in search.
-for (const retired of ['forage.md', 'forage-checklist.md']) {
+// Remove superseded staff pages when regenerating into an older checkout.
+for (const retired of ['forage.md', 'forage-checklist.md', 'pluginversions.md']) {
   await rm(path.join(contentRoot, 'staff-reference', 'plugins', retired), { force: true });
 }
 for (const [document, title, description] of [

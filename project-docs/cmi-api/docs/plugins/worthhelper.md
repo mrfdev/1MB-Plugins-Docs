@@ -1,10 +1,10 @@
-# WorthHelper
+# WorthAudit recipe and trade settings
 
 ## Purpose
 
-WorthHelper is a read-only server-management plugin for reviewing CMI `Worth.yml` values against the recipes, materials, and enabled vanilla villager-trade catalog of the running Paper server. It is meant to help staff find missing worth entries, recipe-derived price pressure, and possible craft/sell or villager-conversion loops before making manual economy changes.
+The WorthHelper module in [WorthAudit](worthaudit.md) is a staff tool for reviewing CMI `Worth.yml` values against the recipes, materials, and enabled vanilla villager-trade catalog of the running Paper server. It is meant to help staff find missing worth entries, recipe-derived price pressure, and possible craft/sell or villager-conversion loops before making manual economy changes.
 
-WorthHelper never edits `Worth.yml`, changes balances, runs `cmi setworth`, or applies suggested values. It writes reports and shows suggested commands as text only.
+The module reads the saved CMI inputs and writes audit reports. Treat suggested `cmi setworth` commands as review text for a manual economy change.
 
 ## Features
 
@@ -13,12 +13,12 @@ WorthHelper never edits `Worth.yml`, changes balances, runs `cmi setworth`, or a
 - Enumerate Paper item materials for the running server version.
 - Inspect shaped, shapeless, cooking, stonecutting, smithing, and transmute recipes where Paper exposes enough information.
 - Read the matching Minecraft server's bundled `villager_trade` JSON definitions for all 13 villager professions and the wandering trader.
-- Parse and cache the bundled trade catalog asynchronously so repeated economy scans do not reread 388 JSON resources on the server thread.
+- Parse and cache the bundled trade catalog asynchronously.
 - Resolve nested vanilla trade tags and use the bundled `trade_rebalance` overlay only when Paper reports that datapack enabled.
-- Fail closed when the running Minecraft version does not exactly match the configured supported trade schema version.
+- Gate the catalog on a supported Minecraft version and recognize the legacy `26.2` default on `26.3`.
 - Compare each fixed vanilla trade's complete base input worth against its output worth.
 - Report theoretical first-ingredient discount-floor findings separately from base-price findings.
-- Keep item-component and output-modifier trades, including enchanted equipment and explorer maps, in a metadata-sensitive review queue rather than treating their base material as an automatic exploit.
+- Put item-component and output-modifier trades, including enchanted equipment and explorer maps, in the metadata-sensitive review queue.
 - Compare current CMI worth against both the raw recipe cost and CMI's policy-adjusted target.
 - Mirror CMI `generateworth` semantics by applying the configured percentage and truncating the result to two decimal places.
 - Use cheapest priced ingredient choices when a recipe accepts alternatives.
@@ -32,46 +32,36 @@ WorthHelper never edits `Worth.yml`, changes balances, runs `cmi setworth`, or a
 ## Commands
 
 ```text
-/worthhelper
-/worthhelper status
-/worthhelper scan [page]
-/worthhelper missing [page]
-/worthhelper recipes <material> [page]
-/worthhelper trades [material] [page]
-/worthhelper export
-/worthhelper reload
-```
-
-Aliases:
-
-```text
-/whelper
-/worthhelp
+/worthaudit
+/worthaudit status helper
+/worthaudit item <material>
+/worthaudit scan [page]
+/worthaudit missing [page]
+/worthaudit recipes <material> [page]
+/worthaudit trades [material] [page]
+/worthaudit export
+/worthaudit reload helper
 ```
 
 Useful examples:
 
 ```text
-/worthhelper status
-/worthhelper scan
-/worthhelper missing
-/worthhelper recipes diamond_block
-/worthhelper recipes minecraft:iron_ingot
-/worthhelper trades
-/worthhelper trades chainmail_helmet
-/worthhelper export
+/worthaudit status helper
+/worthaudit scan
+/worthaudit missing
+/worthaudit recipes diamond_block
+/worthaudit recipes minecraft:iron_ingot
+/worthaudit trades
+/worthaudit trades chainmail_helmet
+/worthaudit export
 ```
 
-Global library examples:
+The shared library routes host diagnostics through WorthAudit. Edit recipe and trade settings in `plugins/1MB-CMIAPI/WorthHelper/config.yml`, then reload the module with the following commands.
 
 ```text
-/1mblib debug plugin worthhelper
-/1mblib debug plugin worthhelper all
-/1mblib debug plugin worthhelper config
-/1mblib config worthhelper
-/1mblib config set worthhelper analysis.minimum-percent-difference 15
-/1mblib config set worthhelper analysis.buy-multiplier 100
-/1mblib translations reload
+/1mblib debug plugin worthaudit all
+/1mblib config worthaudit
+/worthaudit reload helper
 ```
 
 ## Permissions
@@ -85,7 +75,7 @@ onembcmi.worthhelper.admin
 onembcmi.worthhelper.admin.reload
 ```
 
-All permissions default to operator in `plugin.yml`. For a live server, use LuckPerms to grant only trusted economy reviewers access and negate these nodes for groups that should not inherit operator-style access.
+These grants default to operators. Status requires `use`. Scan adds `scan`, missing materials, recipe details, and trade details add `view`, and report export adds `export`. Reloading this module accepts `onembcmi.worthhelper.admin.reload` or the WorthAudit host admin grant.
 
 ## Placeholders
 
@@ -111,11 +101,11 @@ CMI:
 - `plugins/CMI/config.yml` is read for `Worth.AutoGenerate.PriceIncrease`.
 - Recipe output distinguishes raw ingredient worth from the CMI policy target. If the config or setting cannot be read, WorthHelper reports that fact and uses an explicit `0%` fallback.
 - Suggested `cmi setworth <material> -s:<value>` commands are printed as text only for staff review.
-- CMI remains the source of truth; WorthHelper does not write or reload CMI files.
+- Compare suggestions against CMI's saved values before applying an approved change through CMI.
 
 CMILib:
 
-- CMILib is kept as a declared runtime dependency through the shared 1MB Library plugin set, but the MVP reads Worth.yml directly so it can compare the persisted values staff would review in Git.
+- CMILib remains a declared runtime dependency of WorthAudit. Recipe and trade review reads the saved `Worth.yml` values.
 
 CMI-API:
 
@@ -126,10 +116,8 @@ Paper:
 - Paper/Bukkit `Material` and `Recipe` APIs provide the item list and recipe graph.
 - Supported recipe surfaces include shaped, shapeless, furnace/cooking family, stonecutting, smithing transform/trim, smithing fallback, and transmute recipes where feasible.
 - Intentional empty cells in shaped crafting grids are ignored even when Paper exposes them as null placeholder choices.
-- Paper exposes acquired [`MerchantRecipe`](https://jd.papermc.io/paper/26.2/org/bukkit/inventory/MerchantRecipe.html) instances and enabled [`Datapack`](https://jd.papermc.io/paper/26.2/io/papermc/paper/datapack/Datapack.html) state, but it does not expose a complete public registry of every possible vanilla villager trade.
-- Paper's [datapack documentation](https://docs.papermc.io/paper/dev/lifecycle/datapacks/) distinguishes discovered packs from enabled packs; WorthHelper reads the runtime enabled-pack snapshot before selecting the bundled trade-rebalance overlay.
-- For Minecraft `26.2`, WorthHelper therefore uses an isolated, exact-version reader for the `villager_trade` JSON resources bundled with that server. This does not use NMS or reflection and it never spawns or mutates villagers.
-- The base catalog contains `388` definitions on the maintained Paper `26.2` test server. `trade_rebalance` is selected only when its enabled datapack name is reported by Paper.
+- WorthHelper builds its catalog from the server's bundled `villager_trade` resources. The reader supports Minecraft `26.2` and `26.3`, and the maintained server runs Paper `26.3`. On Minecraft `26.3`, an existing `expected-minecraft-version: '26.2'` uses the verified `26.3` schema. Other unsupported or mismatched versions show an unavailable catalog. [Paper 26.3 merchant recipes](https://jd.papermc.io/paper/26.3/org/bukkit/inventory/MerchantRecipe.html)
+- WorthHelper reads Paper's enabled-pack snapshot and selects the bundled `trade_rebalance` overlay only when it is enabled. [Paper datapack documentation](https://docs.papermc.io/paper/dev/lifecycle/datapacks/) · [Paper 26.3 Datapack API](https://jd.papermc.io/paper/26.3/io/papermc/paper/datapack/Datapack.html)
 - The bundled catalog does not claim to model custom datapack overrides. Enabled pack names and this limitation are printed in status, commands, and exports.
 
 ## Config
@@ -160,7 +148,7 @@ review.special-materials
 review.hierarchy-notes
 ```
 
-`cmi.config-file` and `cmi.worth-file` default to `plugins/CMI/config.yml` and `plugins/CMI/Saves/Worth.yml` relative to the running server root. Relative paths make the same jar work on the maintained CMI-API test server and other dedicated staging servers.
+`cmi.config-file` and `cmi.worth-file` default to `plugins/CMI/config.yml` and `plugins/CMI/Saves/Worth.yml` relative to the running server root. The host controls module activation through `modules.worthhelper.enabled` after importing the legacy `enabled` value on first setup.
 
 For a raw recipe cost of `585` and `PriceIncrease: 2`, WorthHelper reports a CMI policy target of `596.70`. This is the value used for drift classification and suggested command text; the raw `585` remains visible as recipe evidence.
 
@@ -168,11 +156,11 @@ Villager trades do not use CMI's recipe `PriceIncrease`. A fixed `1 emerald -> 1
 
 ## Data
 
-WorthHelper writes no playerdata and no economy state.
-
-Reports are written to:
+WorthAudit loads the existing WorthHelper settings and translations in place. Recipe and trade reporting writes only to the module's report cache.
 
 ```text
+plugins/1MB-CMIAPI/WorthHelper/config.yml
+plugins/1MB-CMIAPI/CMIAPILIB/translations/worthhelper.yml
 plugins/1MB-CMIAPI/CMIAPILIB/cache/plugins/worthhelper/
 ```
 
@@ -200,15 +188,15 @@ The plugin intentionally does not include an apply command. If an apply workflow
 Suggested server test flow:
 
 ```text
-/worthhelper status
-/worthhelper scan
-/worthhelper missing
-/worthhelper recipes diamond_block
-/worthhelper recipes iron_ingot
-/worthhelper trades
-/worthhelper trades chainmail_helmet
-/worthhelper export
-/worthhelper debug all
+/worthaudit status helper
+/worthaudit scan
+/worthaudit missing
+/worthaudit recipes diamond_block
+/worthaudit recipes iron_ingot
+/worthaudit trades
+/worthaudit trades chainmail_helmet
+/worthaudit export
+/worthaudit debug all
 ```
 
 Then open the exported Markdown from the shared cache folder and compare suggested commands against the private economy review baseline before changing CMI worth values manually.
