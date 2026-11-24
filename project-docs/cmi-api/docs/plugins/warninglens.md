@@ -1,10 +1,6 @@
 # WarningLens
 
-## Purpose
-
-WarningLens is a read-only staff/moderation plugin for inspecting CMI warning and punishment context. It is meant to answer “what is going on with this player?” without giving staff another place to punish, teleport, jail, mute, or edit data.
-
-The first version focuses on text output and runtime event observation so it is safe to test alongside StaffCenter.
+WarningLens is the read-only moderation review module in [StaffCenter](staffcenter.md). It reports CMI warnings, punishment state, and events observed during the current server session.
 
 ## Features
 
@@ -23,31 +19,25 @@ The first version focuses on text output and runtime event observation so it is 
 ## Commands
 
 ```text
-/warninglens status
-/warninglens hooks
-/warninglens inspect <player> [summary|punishments|warnings|all]
-/warninglens <player>
-/warninglens recent [type|all] [page]
-/warninglens stats [type|all]
-/warninglens find <text> [page]
-/warninglens dump [type|all]
-/warninglens reload
+/staffcenter warnings status
+/staffcenter warnings hooks
+/staffcenter warnings inspect <player> [summary|punishments|warnings|all]
+/staffcenter warnings <player>
+/staffcenter warnings recent [type|all] [page]
+/staffcenter warnings stats [type|all]
+/staffcenter warnings find <text> [page]
+/staffcenter warnings dump [type|all]
+/staffcenter warnings reload
 ```
 
-Alias:
+The compatible `/warninglens` and `/wlens` roots accept the same arguments and permission checks.
+
+Use the module's diagnostics to inspect or edit its own settings.
 
 ```text
-/wlens
-```
-
-Global library examples:
-
-```text
-/1mblib debug plugin warninglens
-/1mblib debug plugin warninglens all
-/1mblib config warninglens
-/1mblib config set warninglens inspect.warning-limit 15
-/1mblib translations reload
+/staffcenter warnings debug all
+/staffcenter warnings debug config
+/staffcenter warnings debug set config inspect.warning-limit 15
 ```
 
 ## Permissions
@@ -91,7 +81,6 @@ CMI-API:
 CMILib:
 
 - CMILib remains a required dependency through CMI and the shared stack.
-- Future versions may use shared GUI helpers if WarningLens gets an inventory view.
 
 CMI:
 
@@ -103,10 +92,11 @@ Paper:
 
 ## Config
 
+WarningLens keeps `plugins/1MB-CMIAPI/WarningLens/config.yml` and `plugins/1MB-CMIAPI/CMIAPILIB/translations/warninglens.yml`. StaffCenter imports the old `enabled` value when it creates the WarningLens switch. Use `/staffcenter admin module warnings <true|false>` for subsequent activation changes. Dumps stay under `plugins/1MB-CMIAPI/CMIAPILIB/cache/plugins/warninglens/`.
+
 Important config paths:
 
 ```text
-enabled
 recent.max
 inspect.warning-limit
 inspect.show-reasons
@@ -121,10 +111,10 @@ events.record.unban
 
 ## Safety
 
-Version 1 is read-only. It does not execute punishment commands, alter CMI user data, remove warnings, change jail/mute/ban state, or expose reasons unless the sender has the explicit reason-view permission. Recent searches and dumps also respect that reason visibility boundary.
+WarningLens reads CMI moderation state and records observations. Warning and punishment reasons require the reason-view permission, including in recent searches and dumps.
 
 ## Shared Library Usage
 
 WarningLens uses `1MB-CMIAPI-LIB` for feature registration, strict permission checks, config defaults, translation defaults, MiniMessage output styling, PlaceholderAPI routing, tab filtering, and debug metadata.
 
-[Plugin index](README.md)
+[StaffCenter](staffcenter.md) · [Plugin index](README.md)

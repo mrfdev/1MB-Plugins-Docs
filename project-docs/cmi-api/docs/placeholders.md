@@ -1101,7 +1101,7 @@ StaffCenter placeholders:
 %onembcmi_staffcenter.cache.size%
 ```
 
-Profile placeholders:
+Profile module placeholders in StaffCenter:
 
 ```text
 %onembcmi_profile.enabled%
@@ -1157,7 +1157,7 @@ FilterGuard module compatibility placeholders:
 %onembcmi_filterguard.cache.size%
 ```
 
-WarningLens placeholders:
+WarningLens module placeholders in StaffCenter:
 
 ```text
 %onembcmi_warninglens.enabled%

@@ -291,9 +291,7 @@ Feature `/help` pages are intentionally player-facing: they list commands availa
 /1mblib debug plugin mobhat all
 /1mblib debug plugin todo all
 /1mblib debug plugin staffcenter all
-/1mblib debug plugin profile all
 /1mblib debug plugin contentguard all
-/1mblib debug plugin warninglens all
 /1mblib debug plugin teammsg all
 /1mblib debug plugin cmdcostdashboard all
 /1mblib debug plugin cmiconfig all
@@ -1882,24 +1880,45 @@ NotableMsg module compatibility commands:
 #staff message
 ```
 
-Profile:
+StaffCenter provides the dashboard and both staff review modules. Permissions for each tool remain separate.
 
 ```text
-/profile mrfloris
-/profile .RenonXenon
-/profile lookup 00000000-0000-0000-0009-01f06566cd3b
-/profile refresh .RenonXenon
-/profile history mrfloris
-/profile bans mrfloris
-/profile export mrfloris
-/profile add name 00000000-0000-0000-0009-01f06566cd3b .RenonXenon manual-check
-/profile add ip mrfloris 203.0.113.10 proxy-log
-/profile add note mrfloris Reviewed context with senior staff.
-/profile add flag mrfloris Review old username history before trust changes.
-/profile add link mrfloris namemc https://namemc.com/profile/example
-/profile status
-/profile reload
-/profile debug all
+/staffcenter modules
+/staffcenter <player>
+/staffcenter inspect <player> [summary|moderation|economy|locations|homes|all]
+/staffcenter dashboard debug config
+/staffcenter admin module <dashboard|warnings|profile> <true|false>
+/staffcenter admin reload [dashboard|warnings|profile]
+```
+
+WarningLens moderation review within StaffCenter. The `/warninglens` and `/wlens` compatibility commands still work.
+
+```text
+/staffcenter warnings status
+/staffcenter warnings inspect <player> warnings
+/staffcenter warnings recent warn
+/staffcenter warnings stats
+/staffcenter warnings debug all
+```
+
+Profile identity review within StaffCenter. The `/profile` compatibility command still works.
+
+```text
+/staffcenter profile mrfloris
+/staffcenter profile .RenonXenon
+/staffcenter profile lookup 00000000-0000-0000-0009-01f06566cd3b
+/staffcenter profile refresh .RenonXenon
+/staffcenter profile history mrfloris
+/staffcenter profile bans mrfloris
+/staffcenter profile export mrfloris
+/staffcenter profile add name 00000000-0000-0000-0009-01f06566cd3b .RenonXenon manual-check
+/staffcenter profile add ip mrfloris 203.0.113.10 proxy-log
+/staffcenter profile add note mrfloris Reviewed context with senior staff.
+/staffcenter profile add flag mrfloris Review old username history before trust changes.
+/staffcenter profile add link mrfloris namemc https://namemc.com/profile/example
+/staffcenter profile status
+/staffcenter profile reload
+/staffcenter profile debug all
 ```
 
 EconomyGuardian:

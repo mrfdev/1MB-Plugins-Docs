@@ -54,10 +54,8 @@ These are the first feature candidates now using the shared library scaffold:
 | Player Fun | Refer | Two-step `/refer <player>` and `/refer verify` referral rewards with CMI/PlaceholderAPI playtime checks | [Refer](plugins/refer.md) |
 | Player Fun | TPAuto | Trusted-player `/tpauto` toggle for auto-accepting incoming CMI `/tpa` and `/tpahere` requests | [TPAuto](plugins/tpauto.md) |
 | Player Fun | Menu | Configurable `/menu` GUI for server discovery, travel, economy, progression, and CMI ctext info | [Menu](plugins/menu.md) |
-| Staff / Moderation | StaffCenter | Read-only CMI staff lookup center | [StaffCenter](plugins/staffcenter.md) |
-| Staff / Moderation | Profile | Staff-only Java/Bedrock identity profiler with CMI/log signals, Mojang account status, optional remote context, public ban-list review signals, manual notes, and Markdown exports | [Profile](plugins/profile.md) |
+| Staff / Moderation | StaffCenter | `/staffcenter` for the CMI staff dashboard, WarningLens moderation context, and Profile identity review | [StaffCenter](plugins/staffcenter.md) |
 | Staff / Moderation | ContentGuard | Independently switchable FilterLab simulation and FilterGuard enforcement modules in one jar | [ContentGuard](plugins/contentguard.md) |
-| Staff / Moderation | WarningLens | Read-only CMI warning lens | [WarningLens](plugins/warninglens.md) |
 | Staff / Moderation | TeamMsg | Independently switchable 1MBStaffMsg and NotableMsg communication modules in one jar | [TeamMsg](plugins/teammsg.md) |
 | Server Management | CmdCostDashboard | CMI command cost dashboard | [CmdCostDashboard](plugins/cmdcostdashboard.md) |
 | Server Management | CMIConfig | Owner GUI for selected CMI/CMILib config toggles | [CMIConfig](plugins/cmiconfig.md) |

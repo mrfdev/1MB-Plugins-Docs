@@ -136,6 +136,20 @@ const PLAYER_GUIDE_OVERRIDES = {
       'Exact source lookup, quest/tool links, modern plant routes and five Brush activities.',
     ],
   },
+  staffcenter: {
+    staffDocument: 'staffcenter.md',
+    intro: 'Review CMI player context, moderation events, and identity profiles with authorized staff permissions.',
+    guide: 'StaffCenter brings the player dashboard, WarningLens, and Profile together. Each tool has its own grants and runtime settings.',
+    quickStart: [
+      'Use `/staffcenter modules` to check the dashboard, WarningLens, and Profile states.',
+      'Open the [StaffCenter staff reference](/staff-reference/plugins/staffcenter/) for module commands, permissions, and upgrade steps.',
+    ],
+    commands: ['/staffcenter modules'],
+    commandDescriptions: {
+      '/staffcenter modules': 'Shows configured and runtime states for the staff modules. Staff permissions required.',
+    },
+    includeInCommandIndex: false,
+  },
   servercheck: {
     staffDocument: 'servercheck.md',
     intro: 'Review the Java, Paper, CMI, and CMILib runtime, check plugin dependencies, and run post-update diagnostics.',
@@ -1305,15 +1319,6 @@ const FEATURE_BULLET_OVERRIDES = {
     'A player-safe /potions inspection command for the marked item held in either hand.',
     'GUI and command editing for safe potion-definition fields without rewriting existing items.',
   ],
-  profile: [
-    'A staff-only Java, Bedrock, Floodgate, name, UUID, and account-status profile view.',
-    'Cached CMI, server-log, shared-playerdata, Geyser, and Floodgate identity signals.',
-    'Optional remote profile context with cooldowns, timeouts, and stale-cache refresh.',
-    'Permission-separated IP and public ban-list review signals.',
-    'Known-name history plus manually verified names, notes, flags, IP signals, and reference links.',
-    'Markdown exports for careful staff review and Discord sharing.',
-    'Context-only output with no automatic punishment decisions.',
-  ],
   staffcenter: [
     'A read-only player dashboard with summary, moderation, economy, location, home, or combined sections.',
     'Online state, UUID, names, AFK, vanish, jail, mute, balance, warnings, playtime, and rank context where available.',
@@ -1322,6 +1327,9 @@ const FEATURE_BULLET_OVERRIDES = {
     'Support dumps for reviewed lookup records.',
     'CMI, CMILib, PlaceholderAPI, LuckPerms, and Vault hook status.',
     'Console-friendly text output without punishment actions.',
+    'WarningLens inspection for CMI warnings, active punishments, and recent observed moderation events.',
+    'Profile review for Java and Bedrock identities, known names, staff notes, and Markdown exports.',
+    'Separate permissions for moderation reasons, IP signals, and public ban-list review.',
   ],
   worthaudit: [
     'CMI worth reviews for Paper recipes and supported vanilla villager trades.',

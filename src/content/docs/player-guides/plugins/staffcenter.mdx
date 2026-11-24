@@ -7,11 +7,11 @@ This page introduces StaffCenter as a public staff guide. It focuses on what the
 
 ## What It Does
 
-The first version should avoid punishment actions and focus on safely displaying useful server-backed player context in one place.
+Review CMI player context, moderation events, and identity profiles with authorized staff permissions.
 
 ## How Staff Use It
 
-Start with /staffcenter Steve. The sections below explain what StaffCenter is for, which commands authorized staff can use, and what its output means.
+StaffCenter brings the player dashboard, WarningLens, and Profile together. Each tool has its own grants and runtime settings.
 
 Available features include:
 
@@ -22,12 +22,14 @@ Available features include:
 - Support dumps for reviewed lookup records.
 - CMI, CMILib, PlaceholderAPI, LuckPerms, and Vault hook status.
 - Console-friendly text output without punishment actions.
+- WarningLens inspection for CMI warnings, active punishments, and recent observed moderation events.
+- Profile review for Java and Bedrock identities, known names, staff notes, and Markdown exports.
+- Separate permissions for moderation reasons, IP signals, and public ban-list review.
 
 ## Quick Start
 
-1. Start with `/staffcenter Steve` to open or view StaffCenter.
-2. Use `/staffcenter status` to check your current progress, settings, or state.
-3. Try `/staffcenter Steve` when you are ready to use one of the feature actions.
+1. Use `/staffcenter modules` to check the dashboard, WarningLens, and Profile states.
+2. Open the [StaffCenter staff reference](/staff-reference/plugins/staffcenter/) for module commands, permissions, and upgrade steps.
 
 ## Commands
 
@@ -41,39 +43,9 @@ Available features include:
   </thead>
   <tbody>
     <tr>
-      <td><code>/staffcenter &lt;player&gt;</code></td>
-      <td>Uses StaffCenter with the value you provide.</td>
-      <td><code>/staffcenter Steve</code></td>
-    </tr>
-    <tr>
-      <td><code>/staffcenter &lt;player&gt; [summary|<wbr />moderation|<wbr />economy|<wbr />locations|<wbr />homes|<wbr />all]</code></td>
-      <td>Uses StaffCenter with the value you provide.</td>
-      <td><code>/staffcenter Steve</code></td>
-    </tr>
-    <tr>
-      <td><code>/staffcenter status</code></td>
-      <td>Shows your current StaffCenter status.</td>
-      <td><code>/staffcenter status</code></td>
-    </tr>
-    <tr>
-      <td><code>/staffcenter recent [section|<wbr />all] [page]</code></td>
-      <td>Runs the StaffCenter recent action.</td>
-      <td><code>/staffcenter recent</code></td>
-    </tr>
-    <tr>
-      <td><code>/staffcenter stats [section|<wbr />all]</code></td>
-      <td>Runs the StaffCenter stats action.</td>
-      <td><code>/staffcenter stats</code></td>
-    </tr>
-    <tr>
-      <td><code>/staffcenter find &lt;text&gt; [page]</code></td>
-      <td>Runs the StaffCenter find action.</td>
-      <td><code>/staffcenter find Build a starter house</code></td>
-    </tr>
-    <tr>
-      <td><code>/staffcenter dump [section|<wbr />all]</code></td>
-      <td>Runs the StaffCenter dump action.</td>
-      <td><code>/staffcenter dump</code></td>
+      <td><code>/staffcenter modules</code></td>
+      <td>Shows configured and runtime states for the staff modules. Staff permissions required.</td>
+      <td><code>/staffcenter modules</code></td>
     </tr>
   </tbody>
 </table>
@@ -85,6 +57,9 @@ Available features include:
 - `/staffcenter stats`
 - `/staffcenter find Notch`
 - `/staffcenter dump all`
+- `/staffcenter modules`
+- `/staffcenter warnings recent warn`
+- `/staffcenter profile history Notch`
 
 ## Good To Know
 

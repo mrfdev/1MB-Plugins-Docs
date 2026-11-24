@@ -1,10 +1,8 @@
 # Profile
 
-## Purpose
+Profile is the staff-only identity review module in [StaffCenter](staffcenter.md). It builds a careful player profile from CMI/Paper data, shared playerdata, optional Floodgate/Geyser identity data, selected remote profile endpoints, and staff-entered notes.
 
-Profile is a staff-only moderation helper. It builds a careful player profile from CMI/Paper data, shared playerdata, optional Floodgate/Geyser identity data, selected remote profile endpoints, and staff-entered notes.
-
-The goal is context, not punishment automation. Profile helps senior staff answer questions such as:
+Profile gives senior staff context for manual review.
 
 - Is this target a Java player, Bedrock player, or Floodgate UUID?
 - Does the official Mojang profile API return the Java account as active, or does it need manual review?
@@ -16,32 +14,32 @@ The goal is context, not punishment automation. Profile helps senior staff answe
 
 ## Commands
 
-In command syntax, `<target>` can be a Java name, a prefixed Bedrock name such as `.RenonXenon`, or a UUID.
+The compatible `/profile` root accepts the same arguments and permission checks. In command syntax, `<target>` can be a Java name, a prefixed Bedrock name such as `.RenonXenon`, or a UUID.
 
 | Command | What It Does | Example |
 | --- | --- | --- |
-| `/profile <target>` | Opens the cached profile, then refreshes stale or incomplete remote data in the background. | `/profile mrfloris` |
-| `/profile lookup <target>` | Explicit lookup alias for a Java name, Bedrock name, or UUID. | `/profile lookup .RenonXenon` |
-| `/profile refresh <target>` | Forces a fresh local and remote review when cooldowns allow it. | `/profile refresh 00000000-0000-0000-0009-01f06566cd3b` |
-| `/profile history <target> [page]` | Shows known names collected from CMI, local/manual data, and supported remote review sources. | `/profile history mrfloris 2` |
-| `/profile bans <target> [page]` | Shows public ban-list review signals when the sender has ban-review permission. | `/profile bans CrowdBound` |
-| `/profile export <target>` | Writes a Markdown report for staff review and Discord sharing. | `/profile export .RenonXenon` |
-| `/profile add name <target> <name> [source]` | Adds a manually verified known-name entry without overwriting existing history. | `/profile add name mrfloris mr_floris old-note` |
-| `/profile add ip <target> <ip> [source]` | Adds a manually verified IP signal for senior staff review. | `/profile add ip SomeName 203.0.113.12 firewall-note` |
-| `/profile add note <target> <text>` | Adds a free-form staff note to the profile. | `/profile add note SomeName Reviewed appeal on Discord.` |
-| `/profile add flag <target> <text>` | Adds a moderation flag that should be reviewed before making decisions. | `/profile add flag SomeName Review older name history before staff trust.` |
-| `/profile add link <target> <key> <url>` | Stores a safe reference link under an allowlisted key. | `/profile add link SomeName namemc https://namemc.com/profile/example` |
-| `/profile status` | Shows runtime status, cache size, lookup counters, and provider state. | `/profile status` |
-| `/profile reload` | Reloads Profile config/messages and safely adds missing defaults. | `/profile reload` |
-| `/profile debug` | Opens the shared debug overview with build, server, category, docs, and support metadata. | `/profile debug` |
-| `/profile debug hooks [page]` | Shows required dependencies and optional hook plugin load state. | `/profile debug hooks` |
-| `/profile debug commands [page]` | Lists Profile command metadata with descriptions and permission nodes for staff. | `/profile debug commands 2` |
-| `/profile debug permissions [page]` | Lists declared Profile permission nodes. Console output is not paginated. | `/profile debug permissions` |
-| `/profile debug placeholders [page]` | Lists Profile placeholders for staff dashboards and debug menus. | `/profile debug placeholders` |
-| `/profile debug config [page]` | Lists flattened config paths, values, and whether a scalar path is settable. | `/profile debug config 3` |
-| `/profile debug set config <path> <value>` | Updates a supported scalar config path, preserves comments, and reloads the feature. | `/profile debug set config lookup.remote.enabled false` |
+| `/staffcenter profile <target>` | Opens the cached profile, then refreshes stale or incomplete remote data in the background. | `/staffcenter profile mrfloris` |
+| `/staffcenter profile lookup <target>` | Explicit lookup alias for a Java name, Bedrock name, or UUID. | `/staffcenter profile lookup .RenonXenon` |
+| `/staffcenter profile refresh <target>` | Forces a fresh local and remote review when cooldowns allow it. | `/staffcenter profile refresh 00000000-0000-0000-0009-01f06566cd3b` |
+| `/staffcenter profile history <target> [page]` | Shows known names collected from CMI, local/manual data, and supported remote review sources. | `/staffcenter profile history mrfloris 2` |
+| `/staffcenter profile bans <target> [page]` | Shows public ban-list review signals when the sender has ban-review permission. | `/staffcenter profile bans CrowdBound` |
+| `/staffcenter profile export <target>` | Writes a Markdown report for staff review and Discord sharing. | `/staffcenter profile export .RenonXenon` |
+| `/staffcenter profile add name <target> <name> [source]` | Adds a manually verified known-name entry without overwriting existing history. | `/staffcenter profile add name mrfloris mr_floris old-note` |
+| `/staffcenter profile add ip <target> <ip> [source]` | Adds a manually verified IP signal for senior staff review. | `/staffcenter profile add ip SomeName 203.0.113.12 firewall-note` |
+| `/staffcenter profile add note <target> <text>` | Adds a free-form staff note to the profile. | `/staffcenter profile add note SomeName Reviewed appeal on Discord.` |
+| `/staffcenter profile add flag <target> <text>` | Adds a moderation flag that should be reviewed before making decisions. | `/staffcenter profile add flag SomeName Review older name history before staff trust.` |
+| `/staffcenter profile add link <target> <key> <url>` | Stores a safe reference link under an allowlisted key. | `/staffcenter profile add link SomeName namemc https://namemc.com/profile/example` |
+| `/staffcenter profile status` | Shows runtime status, cache size, lookup counters, and provider state. | `/staffcenter profile status` |
+| `/staffcenter profile reload` | Reloads Profile config/messages and safely adds missing defaults. | `/staffcenter profile reload` |
+| `/staffcenter profile debug` | Opens the shared debug overview with build, server, category, docs, and support metadata. | `/staffcenter profile debug` |
+| `/staffcenter profile debug hooks [page]` | Shows required dependencies and optional hook plugin load state. | `/staffcenter profile debug hooks` |
+| `/staffcenter profile debug commands [page]` | Lists Profile command metadata with descriptions and permission nodes for staff. | `/staffcenter profile debug commands 2` |
+| `/staffcenter profile debug permissions [page]` | Lists declared Profile permission nodes. Console output is not paginated. | `/staffcenter profile debug permissions` |
+| `/staffcenter profile debug placeholders [page]` | Lists Profile placeholders for staff dashboards and debug menus. | `/staffcenter profile debug placeholders` |
+| `/staffcenter profile debug config [page]` | Lists flattened config paths, values, and whether a scalar path is settable. | `/staffcenter profile debug config 3` |
+| `/staffcenter profile debug set config <path> <value>` | Updates a supported scalar config path, preserves comments, and reloads the feature. | `/staffcenter profile debug set config lookup.remote.enabled false` |
 
-`/profile <target>` shows cached local data immediately when possible. If remote lookups are enabled and the cache is stale or incomplete, the lookup runs asynchronously and updates shared playerdata.
+`/staffcenter profile <target>` shows cached local data immediately when possible. If remote lookups are enabled and the cache is stale or incomplete, the lookup runs asynchronously and updates shared playerdata.
 
 ## Permissions
 
@@ -56,7 +54,7 @@ onembcmi.profile.admin
 onembcmi.profile.admin.reload
 ```
 
-Profile is not for normal players. Grant `onembcmi.profile.admin` only to owners or senior moderators. Grant `onembcmi.profile.view.ip` separately because IP signals are sensitive operational data. Grant `onembcmi.profile.bans` separately for senior staff who may review public ban-list signals.
+Grant the specific Profile permissions required for each staff role. `onembcmi.profile.view.ip` covers review of IP signals, and `onembcmi.profile.bans` covers public ban-list review. `onembcmi.profile.admin` includes both sensitive scopes and the other Profile grants. Reserve it for owners or senior moderators.
 
 ## Placeholders
 
@@ -73,14 +71,15 @@ Profile is not for normal players. Grant `onembcmi.profile.admin` only to owners
 %onembcmi_profile.cache.size%
 ```
 
-These placeholders are mainly for staff dashboards or debug menus. They intentionally expose only aggregate runtime state, not private profile data.
+Use these placeholders in restricted staff dashboards. They include runtime counters and the last lookup target and UUID.
 
 ## Config
+
+Profile keeps `plugins/1MB-CMIAPI/Profile/config.yml` and `plugins/1MB-CMIAPI/CMIAPILIB/translations/profile.yml`. StaffCenter imports the old `enabled` value when it creates the Profile switch. Use `/staffcenter admin module profile <true|false>` for subsequent activation changes.
 
 Important config paths:
 
 ```text
-enabled
 debug
 output.page-size
 identity.bedrock-prefix
@@ -165,7 +164,7 @@ Profile writes its own section under `profile.*` and keeps long-lived signals th
 Exports are written as Markdown to the Profile cache folder:
 
 ```text
-plugins/1MB-CMIAPI/Profile/cache/
+plugins/1MB-CMIAPI/CMIAPILIB/cache/plugins/profile/
 ```
 
 The export includes a Discord-ready `yml` code block, known names, IP signals when the sender has `onembcmi.profile.view.ip`, public ban-list signals when the sender has `onembcmi.profile.bans`, links, remote provider status, flags, notes, and a human-review marker.
@@ -237,18 +236,17 @@ Use remote, log, and public ban-list data as evidence prompts, not automatic tru
 
 ## Shared Debug
 
-Profile uses the shared debug fallback:
+Use the module's debug routes for Profile settings and diagnostics. Shared `/1mblib config` targets the host.
 
 ```text
-/profile debug
-/profile debug health
-/profile debug hooks [page]
-/profile debug commands [page]
-/profile debug permissions [page]
-/profile debug placeholders [page]
-/profile debug config [page]
-/profile debug all
-/1mblib debug plugin profile all
+/staffcenter profile debug
+/staffcenter profile debug health
+/staffcenter profile debug hooks [page]
+/staffcenter profile debug commands [page]
+/staffcenter profile debug permissions [page]
+/staffcenter profile debug placeholders [page]
+/staffcenter profile debug config [page]
+/staffcenter profile debug all
 ```
 
-[Plugin index](README.md)
+[StaffCenter](staffcenter.md) · [Plugin index](README.md)

@@ -81,7 +81,7 @@ test('consolidated CMI guides keep accurate commands and legacy routes', async (
   assert.match(config, /'\/player-guides\/custom-server-plugins\/trick-or-treat-doors': '\/player-guides\/plugins\/doors\/'/);
 });
 
-test('ServerCheck and WorthAudit have canonical staff references and redirect retired guides', async () => {
+test('Consolidated staff tools have canonical references and redirect retired guides', async () => {
   const redirects = await readFile(path.join(repoRoot, 'astro.config.mjs'), 'utf8');
   const index = await readFile(path.join(generatedPlugins, 'index.mdx'), 'utf8');
   const playerCommands = await readFile(path.join(generatedPlugins, '..', 'commands.mdx'), 'utf8');
@@ -90,6 +90,7 @@ test('ServerCheck and WorthAudit have canonical staff references and redirect re
   for (const [host, modules, command] of [
     ['servercheck', ['pluginversions', 'startupdoctor', 'updatesmoke'], '/servercheck smoke run'],
     ['worthaudit', ['worthhelper', 'worthdrift'], '/worthaudit shop'],
+    ['staffcenter', ['profile', 'warninglens'], '/staffcenter modules'],
   ]) {
     assert.ok(index.includes(`href="./${host}/"`));
     assert.ok((await readFile(path.join(staffRoot, `${host}.md`), 'utf8')).includes(command));
@@ -100,4 +101,20 @@ test('ServerCheck and WorthAudit have canonical staff references and redirect re
       await assert.rejects(access(path.join(generatedPlugins, `${module}.mdx`)));
     }
   }
+});
+
+test('StaffCenter keeps operator routes out of the player index and links both module references', async () => {
+  const redirects = await readFile(path.join(repoRoot, 'astro.config.mjs'), 'utf8');
+  const playerCommands = await readFile(path.join(generatedPlugins, '..', 'commands.mdx'), 'utf8');
+  const staffGuide = await readFile(path.join(generatedPlugins, '..', '..', 'staff-reference', 'plugins', 'staffcenter.md'), 'utf8');
+
+  for (const module of ['profile', 'warninglens']) {
+    assert.ok(redirects.includes(`'/staff-reference/plugins/${module}': '/staff-reference/plugins/staffcenter/'`));
+    assert.ok(!playerCommands.includes(`<code>/${module}`));
+    assert.ok(staffGuide.includes(`/docs/plugins/${module}.md`));
+  }
+  assert.ok(!playerCommands.includes('<code>/wlens'));
+  assert.ok(staffGuide.includes('/staffcenter warnings inspect'));
+  assert.ok(staffGuide.includes('/staffcenter profile <target>'));
+  assert.ok(staffGuide.includes('/staffcenter admin module'));
 });
