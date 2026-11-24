@@ -300,8 +300,8 @@ Feature `/help` pages are intentionally player-facing: they list commands availa
 /_scheduler debug all
 /1mblib debug plugin upgrade all
 /1mblib debug plugin worldsnapshot all
-/1mblib debug plugin sparkreviewer all
-/1mblib debug plugin hoppers all
+/servercheck debug spark all
+/servercheck debug hoppers all
 /1mblib debug plugin diagnostics all
 /1mblib debug plugin placeholders all
 /1mblib debug plugin warpaudit all
@@ -370,7 +370,7 @@ Placeholders Probe module:
 ```
 
 
-ServerCheck groups the version inventory, post-update checks, and startup diagnostics.
+ServerCheck groups plugin inventory, post-update checks, startup diagnostics, hopper triage, and Spark performance reviews.
 
 ```text
 /servercheck status
@@ -382,6 +382,8 @@ ServerCheck groups the version inventory, post-update checks, and startup diagno
 /servercheck debug versions
 /servercheck debug smoke
 /servercheck debug doctor
+/servercheck debug hoppers
+/servercheck debug spark
 /servercheck info
 /servercheck help
 ```
@@ -2166,75 +2168,75 @@ WorthAudit combines recipe, trade, sales, and shop reviews. Update saved `/worth
 /worthaudit debug all
 ```
 
-SparkReviewer:
+SparkReviewer in ServerCheck. Compatibility commands `/sparkreviewer`, `/sreview`, and `/spreview` remain available.
 
 ```text
-/sparkreviewer status
-/sparkreviewer review
-/sparkreviewer findings
-/sparkreviewer entities
-/sparkreviewer chunks
-/sparkreviewer configs
-/sparkreviewer logs
-/sparkreviewer mfm
-/sparkreviewer capture baseline
-/sparkreviewer spark health
-/sparkreviewer spark start 180 farm-test
-/sparkreviewer stress mfm-on 180
-/sparkreviewer stress mfm-off 180
-/sparkreviewer compare mfm-on mfm-off
-/sparkreviewer dump
-/sparkreviewer reload
+/servercheck spark status
+/servercheck spark review
+/servercheck spark findings
+/servercheck spark entities
+/servercheck spark chunks
+/servercheck spark configs
+/servercheck spark logs
+/servercheck spark mfm
+/servercheck spark capture baseline
+/servercheck spark health
+/servercheck spark start 180 farm-test
+/servercheck spark stress mfm-on 180
+/servercheck spark stress mfm-off 180
+/servercheck spark compare mfm-on mfm-off
+/servercheck spark dump
+/servercheck spark reload
 ```
 
-Hoppers:
+Hoppers in ServerCheck. The `/_hoppers` compatibility command remains available.
 
 ```text
-/_hoppers status
-/_hoppers scan
-/_hoppers findings
-/_hoppers recommend
-/_hoppers risk
-/_hoppers chunks
-/_hoppers regions
-/_hoppers world general chunks
-/_hoppers chunk general 12 -8
-/_hoppers players global
-/_hoppers hoppers
-/_hoppers chains
-/_hoppers containers
-/_hoppers materials
-/_hoppers minecarts
-/_hoppers redstone
-/_hoppers tickets
-/_hoppers configs
-/_hoppers deps
-/_hoppers mfm presets
-/_hoppers spark health
-/_hoppers spark profile 300 hopper-drop
-/_hoppers spark spikes 100 300 hopper-spikes
-/_hoppers emergency
-/_hoppers checklist mfm-gentle
-/_hoppers track 60
-/_hoppers track status
-/_hoppers track stop
-/_hoppers watch on
-/_hoppers watch status
-/_hoppers trigger arm
-/_hoppers trigger status
-/_hoppers baseline start 15
-/_hoppers baseline recommend
-/_hoppers compare previous latest
-/_hoppers note checked west fishing storage before clearing it
-/_hoppers notes
-/_hoppers attach spark https://spark.lucko.me/example hopper-drop
-/_hoppers drift
-/_hoppers history
-/_hoppers dump
-/_hoppers reload
+/servercheck hoppers status
+/servercheck hoppers scan
+/servercheck hoppers findings
+/servercheck hoppers recommend
+/servercheck hoppers risk
+/servercheck hoppers chunks
+/servercheck hoppers regions
+/servercheck hoppers world general chunks
+/servercheck hoppers chunk general 12 -8
+/servercheck hoppers players global
+/servercheck hoppers hoppers
+/servercheck hoppers chains
+/servercheck hoppers containers
+/servercheck hoppers materials
+/servercheck hoppers minecarts
+/servercheck hoppers redstone
+/servercheck hoppers tickets
+/servercheck hoppers configs
+/servercheck hoppers deps
+/servercheck hoppers mfm presets
+/servercheck hoppers spark health
+/servercheck hoppers spark profile 300 hopper-drop
+/servercheck hoppers spark spikes 100 300 hopper-spikes
+/servercheck hoppers emergency
+/servercheck hoppers checklist mfm-gentle
+/servercheck hoppers track 60
+/servercheck hoppers track status
+/servercheck hoppers track stop
+/servercheck hoppers watch on
+/servercheck hoppers watch status
+/servercheck hoppers trigger arm
+/servercheck hoppers trigger status
+/servercheck hoppers baseline start 15
+/servercheck hoppers baseline recommend
+/servercheck hoppers compare previous latest
+/servercheck hoppers note checked west fishing storage before clearing it
+/servercheck hoppers notes
+/servercheck hoppers attach spark https://spark.lucko.me/example hopper-drop
+/servercheck hoppers drift
+/servercheck hoppers history
+/servercheck hoppers dump
+/servercheck hoppers reload
 ```
 
-`/_hoppers` is staff-only and has no shorter alias. Normal players have no default command access; reviewers need Hoppers permissions such as `onembcmi.hoppers.scan`, `onembcmi.hoppers.track`, `onembcmi.hoppers.watch`, `onembcmi.hoppers.trigger`, and `onembcmi.hoppers.baseline`; only trusted admins should get `onembcmi.hoppers.spark` because it dispatches Spark profiler commands. Use `/_hoppers risk` for the short active-drop summary, `/_hoppers world/chunk/players` to narrow a known location, `/_hoppers chains/containers/materials/minecarts/redstone/tickets` for passive hotspot deep dives, `/_hoppers recommend` for checked/found/recommend rows with test-plan and sorter-safety labels, `/_hoppers watch/trigger/track` during live drops, `/_hoppers baseline/compare` for longer tuning work, `/_hoppers drift/history` for cached evidence, and `/_hoppers dump` for Discord-friendly Markdown reports with `yml` code blocks.
+`/servercheck hoppers` and `/_hoppers` are staff-only. Normal players have no default command access; reviewers need Hoppers permissions such as `onembcmi.hoppers.scan`, `onembcmi.hoppers.track`, `onembcmi.hoppers.watch`, `onembcmi.hoppers.trigger`, and `onembcmi.hoppers.baseline`; only trusted admins should get `onembcmi.hoppers.spark` because it controls managed Spark profiling. Use `/servercheck hoppers risk` for the short active-drop summary, `/servercheck hoppers world/chunk/players` to narrow a known location, `/servercheck hoppers chains/containers/materials/minecarts/redstone/tickets` for passive hotspot deep dives, `/servercheck hoppers recommend` for checked/found/recommend rows with test-plan and sorter-safety labels, `/servercheck hoppers watch/trigger/track` during live drops, `/servercheck hoppers baseline/compare` for longer tuning work, `/servercheck hoppers drift/history` for cached evidence, and `/servercheck hoppers dump` for Discord-friendly Markdown reports with `yml` code blocks.
 
 UpdateSmoke within ServerCheck. The `/updatesmoke` and `/usmoke` compatibility commands remain available.
 

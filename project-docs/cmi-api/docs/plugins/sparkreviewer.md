@@ -2,20 +2,20 @@
 
 ## Purpose
 
-SparkReviewer is a server-management feature plugin for performance triage.
+SparkReviewer is a [ServerCheck](servercheck.md) module for performance triage. Use `/servercheck spark` for the canonical routes.
 
 It does not replace Spark. Spark is still the source of truth for CPU profiling during an active lag event. SparkReviewer adds the workflow around Spark: named test markers, runtime snapshots, latest.log review, Paper/Bukkit/Spigot config review, MobFarmManager hopper-control clues, CMI status, entity/chunk summaries, and before/after comparison for stress tests.
 
 The normal workflow is:
 
 ```text
-/sparkreviewer review
-/sparkreviewer stress mfm-on 180
+/servercheck spark review
+/servercheck spark stress mfm-on 180
 # change only the MFM hopper-control state and reload/restart as needed
-/sparkreviewer stress mfm-off 180
-/sparkreviewer compare mfm-on mfm-off
-/sparkreviewer logs
-/sparkreviewer dump
+/servercheck spark stress mfm-off 180
+/servercheck spark compare mfm-on mfm-off
+/servercheck spark logs
+/servercheck spark dump
 ```
 
 ## Features
@@ -35,29 +35,30 @@ The normal workflow is:
 ## Commands
 
 ```text
-/sparkreviewer status
-/sparkreviewer review
-/sparkreviewer findings [page]
-/sparkreviewer entities [page]
-/sparkreviewer chunks [page]
-/sparkreviewer configs [page]
-/sparkreviewer logs [page]
-/sparkreviewer mfm [page]
-/sparkreviewer capture <label>
-/sparkreviewer compare <before> <after> [page]
-/sparkreviewer spark status
-/sparkreviewer spark health
-/sparkreviewer spark start [seconds] [label]
-/sparkreviewer spark stop [label]
-/sparkreviewer spark cancel
-/sparkreviewer stress <label> [seconds]
-/sparkreviewer dump
-/sparkreviewer reload
+/servercheck spark status
+/servercheck spark review
+/servercheck spark findings [page]
+/servercheck spark entities [page]
+/servercheck spark chunks [page]
+/servercheck spark configs [page]
+/servercheck spark logs [page]
+/servercheck spark mfm [page]
+/servercheck spark capture <label>
+/servercheck spark compare <before> <after> [page]
+/servercheck spark spark status
+/servercheck spark health
+/servercheck spark start [seconds] [label]
+/servercheck spark stop [label]
+/servercheck spark cancel
+/servercheck spark stress <label> [seconds]
+/servercheck spark dump
+/servercheck spark reload
 ```
 
-Aliases:
+Compatibility commands. The older roots still accept their existing argument forms.
 
 ```text
+/sparkreviewer
 /sreview
 /spreview
 ```
@@ -65,32 +66,31 @@ Aliases:
 Useful examples:
 
 ```text
-/sparkreviewer review
-/sparkreviewer findings
-/sparkreviewer entities
-/sparkreviewer chunks
-/sparkreviewer configs
-/sparkreviewer logs
-/sparkreviewer mfm
-/sparkreviewer spark health
-/sparkreviewer spark start 180 farm-test
-/sparkreviewer stress mfm-on 180
-/sparkreviewer stress mfm-off 180
-/sparkreviewer compare mfm-on mfm-off
-/sparkreviewer dump
+/servercheck spark review
+/servercheck spark findings
+/servercheck spark entities
+/servercheck spark chunks
+/servercheck spark configs
+/servercheck spark logs
+/servercheck spark mfm
+/servercheck spark health
+/servercheck spark start 180 farm-test
+/servercheck spark stress mfm-on 180
+/servercheck spark stress mfm-off 180
+/servercheck spark compare mfm-on mfm-off
+/servercheck spark dump
 ```
 
-Global library examples:
+Module diagnostics and configuration:
 
 ```text
-/1mblib debug plugin sparkreviewer
-/1mblib debug plugin sparkreviewer commands
-/1mblib debug plugin sparkreviewer permissions
-/1mblib debug plugin sparkreviewer placeholders
-/1mblib debug plugin sparkreviewer config
-/1mblib debug plugin sparkreviewer all
-/1mblib config sparkreviewer
-/1mblib config set sparkreviewer spark.default-seconds 300
+/servercheck debug spark
+/servercheck debug spark commands
+/servercheck debug spark permissions
+/servercheck debug spark placeholders
+/servercheck debug spark config
+/servercheck debug spark all
+/servercheck debug spark set config spark.default-seconds 300
 ```
 
 ## Permissions
@@ -106,7 +106,7 @@ onembcmi.sparkreviewer.admin
 onembcmi.sparkreviewer.admin.reload
 ```
 
-`use` controls status/help. `review` controls live review pages. `capture` writes named snapshots. `compare` reads named snapshots. `spark` can dispatch Spark profiler and health commands from console, so grant it only to trusted operators. `dump` writes cache reports. `admin` is used by the shared debug fallback. `admin.reload` reloads config and translations.
+`use` controls status/help. `review` controls live review pages. `capture` writes named snapshots. `compare` reads named snapshots. `spark` requests health reports and controls shared Spark profiling. Grant it only to trusted operators. `dump` writes cache reports. `admin` is used by the shared debug fallback. `admin.reload` reloads config and translations.
 
 ## Placeholders
 
@@ -125,16 +125,18 @@ onembcmi.sparkreviewer.admin.reload
 
 ## Config
 
-Generated at:
+The old config path remains:
 
 ```text
 plugins/1MB-CMIAPI/SparkReviewer/config.yml
 ```
 
+ServerCheck imports the legacy `enabled` value into `modules.sparkreviewer.enabled` in `ServerCheck/config.yml` when that key is first created. The module starts dormant on a fresh install.
+
 Important config keys:
 
 ```yaml
-enabled: true
+enabled: false
 debug: false
 review.capture-on-enable: false
 runtime.max-loaded-chunks-to-scan: 5000
@@ -166,7 +168,7 @@ dump.file: sparkreviewer-report.txt
 
 `runtime.max-loaded-chunks-to-scan` limits hopper/tile-entity scanning work. Entity totals still use Paper's loaded world entity lists.
 
-`spark.profiler-extra-args` can append simple safe Spark arguments such as:
+`spark.profiler-extra-args` can add reviewed options to a timed profile. Put each option and value in a separate entry.
 
 ```yaml
 spark.profiler-extra-args:
@@ -174,32 +176,28 @@ spark.profiler-extra-args:
 - "50"
 ```
 
-Arguments containing spaces are ignored for command-safety reasons.
+Supported value options are `--thread`, `--interval`, `--only-ticks-over`, and `--comment`. Supported switches are `--alloc`, `--lock`, `--alloc-live-only`, `--regex`, `--combine-all`, `--not-combined`, `--ignore-sleeping`, `--force-java-sampler`, `--save-to-file`, and `--separate-parent-calls`. Entries containing spaces are skipped. The controller rejects unknown options that reach it.
 
 ## Spark Workflow
 
-SparkReviewer dispatches these practical Spark commands:
+SparkReviewer routes explicit operations through ServerCheck’s shared Spark controller.
 
 ```text
-spark health
-spark profiler start --timeout <seconds>
-spark profiler stop
-spark profiler cancel
+/servercheck spark health
+/servercheck spark start [seconds] [label]
+/servercheck spark stop [label]
+/servercheck spark cancel
 ```
 
-`/sparkreviewer stress <label> <seconds>` does three things:
+`/servercheck spark stress <label> [seconds]` requests a timed Spark profile. Once the request is accepted, SparkReviewer captures a start snapshot and schedules the finish snapshot. Check the shared Spark activity and Spark output for the profile result.
 
-1. Saves `<label>-start`.
-2. Dispatches Spark profiler start with the configured timeout.
-3. Saves `<label>` shortly after the timeout finishes.
+See [managed profiling compatibility](servercheck.md#profiling-and-passive-diagnostics) for the bundled Spark version and ownership rules. Spark output appears in console and `logs/latest.log`. SparkReviewer scans the log for `https://spark.lucko.me/...` URLs so the profile link and the runtime snapshot can be reviewed together.
 
-Spark output still appears in console and `logs/latest.log`. SparkReviewer scans the log for `https://spark.lucko.me/...` URLs so the profile link and the runtime snapshot can be reviewed together.
-
-Paper 26.2+ bundles Spark. Check it with:
+Check Spark availability and health with:
 
 ```text
-/sparkreviewer spark status
-/sparkreviewer spark health
+/servercheck spark spark status
+/servercheck spark health
 ```
 
 If Spark is missing or not responding, review `config/paper-global.yml`:
@@ -209,7 +207,7 @@ spark:
   enabled: true
 ```
 
-SparkReviewer includes Paper's bundled Spark settings in `/sparkreviewer configs` and flags `spark.enabled: false` as a critical finding.
+SparkReviewer includes Paper's bundled Spark settings in `/servercheck spark configs` and flags `spark.enabled: false` as a critical finding.
 
 ## MFM Hopper-Control Test
 
@@ -217,15 +215,15 @@ Use this when a farm-heavy world drops TPS and MobFarmManager hopper control mig
 
 ```text
 # State A: MFM hopper control enabled
-/sparkreviewer stress mfm-on 180
+/servercheck spark stress mfm-on 180
 
 # Change exactly one thing: disable MFM hopper control, then reload/restart as that plugin requires.
 # Keep player count, farms, locations, and test duration as similar as possible.
-/sparkreviewer stress mfm-off 180
+/servercheck spark stress mfm-off 180
 
-/sparkreviewer compare mfm-on mfm-off
-/sparkreviewer logs
-/sparkreviewer dump
+/servercheck spark compare mfm-on mfm-off
+/servercheck spark logs
+/servercheck spark dump
 ```
 
 Read the result like this:
@@ -264,7 +262,7 @@ To run a one-label server workflow from the command line:
 scripts/run-spark-reviewer-workflow.sh servers/Paper-26.3 Paper-26.3-<build>.jar mfm-on 180
 ```
 
-Replace `<build>` with the maintained launcher's verified numbered Paper JAR. Run this only with the local test server stopped and the required Java 27 runtime selected. That helper starts the server with `java -jar ... nogui`, waits for startup, sends `/sparkreviewer stress <label> <seconds>` through console input, waits for the profile window, sends `/sparkreviewer dump`, stops the server, and writes an offline Markdown report. For an MFM comparison, run it once with hopper control enabled and once with hopper control disabled, then compare the two copied server folders or the plugin snapshots.
+Replace `<build>` with the maintained launcher's verified numbered Paper JAR. Run this only with the local test server stopped and the required Java 27 runtime selected. That helper starts the server with `java -jar ... nogui`, waits for startup, uses the compatible `/sparkreviewer stress <label> <seconds>` console command, waits for the profile window, sends `/sparkreviewer dump`, stops the server, and writes an offline Markdown report. For an MFM comparison, run it once with hopper control enabled and once with hopper control disabled, then compare the two copied server folders or the plugin snapshots.
 
 ## Data And Cache
 
@@ -289,13 +287,13 @@ SparkReviewer uses Paper/Bukkit APIs for loaded worlds, entities, chunks, tile e
 
 ## Optional Hooks
 
-- `spark` is optional because modern Paper can expose `/spark` even without a standalone plugin jar.
+- Spark is optional. For a supported Paper bundle, ServerCheck’s managed operations use the shared profiling controller. Native `/spark` is available on installations that expose the command.
 - `MobFarmManager` is optional. When present, SparkReviewer scans its config for farm/hopper clues.
 - `PlaceholderAPI` is optional through the shared library.
 
 ## Security Notes
 
-`/sparkreviewer spark ...` dispatches console Spark commands. Grant `onembcmi.sparkreviewer.spark` only to trusted admins.
+Grant `onembcmi.sparkreviewer.spark` only to trusted admins. The health command requests console output, and stop and cancel apply only to profiles ServerCheck can identify as its own.
 
 Log snippets are sanitized before reports are shown or dumped. IP-like values and simple `password=`, `token=`, `secret=`, and `key=` patterns are redacted by the shared text helper.
 

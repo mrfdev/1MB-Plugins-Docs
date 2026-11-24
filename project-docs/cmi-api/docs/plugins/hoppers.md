@@ -2,7 +2,7 @@
 
 ## Purpose
 
-Hoppers is a server-management feature plugin for live hopper triage during TPS drops.
+Hoppers is a [ServerCheck](servercheck.md) module for live hopper triage during TPS drops. Use `/servercheck hoppers` or the compatible `/_hoppers` command.
 
 It does not disable hoppers, move items, or change Paper/MobFarmManager settings. It gives staff a fast read-only view of loaded hopper pressure: dense hopper chunks, full hopper inventories, blocked outputs, item piles, nearby players, and exact `/cmi tppos` commands so the suspect storage or fishing setup can be inspected quickly.
 
@@ -17,21 +17,21 @@ It does not disable hoppers, move items, or change Paper/MobFarmManager settings
 - Makes in-game teleport rows clickable and hoverable in hotspot pages such as chunks, regions, hoppers, chains, containers, minecarts, redstone, tickets, chunk inspection, and history.
 - Reviews hopper-related paths in `spigot.yml`, legacy `paper.yml`, modern Paper global/world YAML files, and MobFarmManager YAML files.
 - Reviews live `InventoryMoveItemEvent` listeners so staff can tell whether Paper's `disable-move-event` setting is a lower-risk copy-test or a plugin compatibility risk.
-- Turns the researched guide takeaways into `/_hoppers recommend` rows with `looked for`, `found`, `recommend`, test-plan, and sorter-safety fields.
-- Shows a compact `/_hoppers risk` summary so staff can see whether the evidence points at storage clogs, item piles, config risk, Spark profiling, or no hopper evidence.
-- Groups hotspots by region file with `/_hoppers regions`.
-- Filters report pages by world with `/_hoppers world <world>` and inspects one loaded chunk with `/_hoppers chunk <world> <x> <z>` without force-loading it.
-- Ranks player-adjacent hopper pressure with `/_hoppers players`, using cooperative coordination wording rather than blame wording.
-- Adds read-only deep-dive pages for retained hotspots: `/_hoppers chains`, `/_hoppers containers`, `/_hoppers materials`, `/_hoppers minecarts`, `/_hoppers redstone`, and `/_hoppers tickets`.
-- Shows required and optional hook health with `/_hoppers deps`, including CMI, CMILib, 1MB-CMIAPI-LIB, Spark, MobFarmManager, PyroFishingPro, and PlaceholderAPI.
-- Shows named MobFarmManager HopperControl copy-test presets with `/_hoppers mfm`, without applying changes.
-- Provides hopper-focused Spark helper commands with log markers through `/_hoppers spark`.
-- Provides `/_hoppers emergency` and `/_hoppers checklist <id>` so staff have a passive, repeatable TPS-drop workflow without changing server state.
-- Provides `/_hoppers track` style repeated samples through `/_hoppers track [seconds]` so staff can watch the hotspot trend while TPS is dropping, including plain trend labels such as `getting worse`, `clearing`, `stable`, and `not hopper-correlated`.
-- Provides `/_hoppers watch`, a toggleable staff-only live watch mode that only broadcasts short hopper snapshots when TPS/MSPT crosses the configured threshold.
-- Provides `/_hoppers trigger`, an armed TPS/MSPT trigger that starts a passive tracking run automatically during an active drop.
-- Provides `/_hoppers baseline`, a healthy-play calibration workflow that suggests Hoppers alert thresholds from median/p95 samples without writing config.
-- Provides `/_hoppers compare`, a saved report delta view for before/after storage, MFM, Paper, or Spigot tests.
+- Turns the researched guide takeaways into `/servercheck hoppers recommend` rows with `looked for`, `found`, `recommend`, test-plan, and sorter-safety fields.
+- Shows a compact `/servercheck hoppers risk` summary so staff can see whether the evidence points at storage clogs, item piles, config risk, Spark profiling, or no hopper evidence.
+- Groups hotspots by region file with `/servercheck hoppers regions`.
+- Filters report pages by world with `/servercheck hoppers world <world>` and inspects one loaded chunk with `/servercheck hoppers chunk <world> <x> <z>` without force-loading it.
+- Ranks player-adjacent hopper pressure with `/servercheck hoppers players`, using cooperative coordination wording rather than blame wording.
+- Adds read-only deep-dive pages for retained hotspots: `/servercheck hoppers chains`, `/servercheck hoppers containers`, `/servercheck hoppers materials`, `/servercheck hoppers minecarts`, `/servercheck hoppers redstone`, and `/servercheck hoppers tickets`.
+- Shows required and optional hook health with `/servercheck hoppers deps`, including CMI, CMILib, 1MB-CMIAPI-LIB, Spark, MobFarmManager, PyroFishingPro, and PlaceholderAPI.
+- Shows named MobFarmManager HopperControl copy-test presets with `/servercheck hoppers mfm`, without applying changes.
+- Provides hopper-focused Spark helper commands with log markers through `/servercheck hoppers spark`.
+- Provides `/servercheck hoppers emergency` and `/servercheck hoppers checklist <id>` so staff have a passive, repeatable TPS-drop workflow without changing server state.
+- Provides `/servercheck hoppers track` style repeated samples through `/servercheck hoppers track [seconds]` so staff can watch the hotspot trend while TPS is dropping, including plain trend labels such as `getting worse`, `clearing`, `stable`, and `not hopper-correlated`.
+- Provides `/servercheck hoppers watch`, a toggleable staff-only live watch mode that only broadcasts short hopper snapshots when TPS/MSPT crosses the configured threshold.
+- Provides `/servercheck hoppers trigger`, an armed TPS/MSPT trigger that starts a passive tracking run automatically during an active drop.
+- Provides `/servercheck hoppers baseline`, a healthy-play calibration workflow that suggests Hoppers alert thresholds from median/p95 samples without writing config.
+- Provides `/servercheck hoppers compare`, a saved report delta view for before/after storage, MFM, Paper, or Spigot tests.
 - Supports timestamped operator notes, external Spark URL attachments, config drift since the previous dump, sanitized `latest.log` slices, and repeat-hotspot history.
 - Writes Discord-friendly Markdown reports with `yml` code blocks to the shared cache folder, including a latest report, timestamped archives, an append-only report index, notes, Spark links, config drift, log context, and hotspot history.
 - Registers command, permission, placeholder, config, and debug metadata with `1MB-CMIAPI-LIB`.
@@ -39,95 +39,95 @@ It does not disable hoppers, move items, or change Paper/MobFarmManager settings
 ## Commands
 
 ```text
-/_hoppers status
-/_hoppers scan
-/_hoppers findings [page]
-/_hoppers recommend [page]
-/_hoppers risk
-/_hoppers chunks [page]
-/_hoppers regions [page]
-/_hoppers world <world> [summary|chunks|regions|hoppers|recommend|findings]
-/_hoppers chunk <world> <x> <z>
-/_hoppers players [global|world <world>|nearby <radius>|chunk <world> <x> <z>]
-/_hoppers hoppers [page]
-/_hoppers chains [page]
-/_hoppers containers [page]
-/_hoppers materials [page]
-/_hoppers minecarts [page]
-/_hoppers redstone [page]
-/_hoppers tickets [page]
-/_hoppers configs [page]
-/_hoppers deps
-/_hoppers mfm [presets|gentle|balanced|strong]
-/_hoppers spark <status|health|profile|spikes|stop|cancel>
-/_hoppers emergency
-/_hoppers checklist <id>
-/_hoppers track [seconds]
-/_hoppers track status
-/_hoppers track stop
-/_hoppers watch <on|off|toggle|status>
-/_hoppers trigger <arm|disarm|status>
-/_hoppers baseline <start [minutes]|stop|status|recommend>
-/_hoppers compare <before> <after> [page]
-/_hoppers note <text>
-/_hoppers notes [page|clear]
-/_hoppers attach spark <url> [note]
-/_hoppers drift [page]
-/_hoppers history [page]
-/_hoppers dump
-/_hoppers reload
+/servercheck hoppers status
+/servercheck hoppers scan
+/servercheck hoppers findings [page]
+/servercheck hoppers recommend [page]
+/servercheck hoppers risk
+/servercheck hoppers chunks [page]
+/servercheck hoppers regions [page]
+/servercheck hoppers world <world> [summary|chunks|regions|hoppers|recommend|findings]
+/servercheck hoppers chunk <world> <x> <z>
+/servercheck hoppers players [global|world <world>|nearby <radius>|chunk <world> <x> <z>]
+/servercheck hoppers hoppers [page]
+/servercheck hoppers chains [page]
+/servercheck hoppers containers [page]
+/servercheck hoppers materials [page]
+/servercheck hoppers minecarts [page]
+/servercheck hoppers redstone [page]
+/servercheck hoppers tickets [page]
+/servercheck hoppers configs [page]
+/servercheck hoppers deps
+/servercheck hoppers mfm [presets|gentle|balanced|strong]
+/servercheck hoppers spark <status|health|profile|spikes|stop|cancel>
+/servercheck hoppers emergency
+/servercheck hoppers checklist <id>
+/servercheck hoppers track [seconds]
+/servercheck hoppers track status
+/servercheck hoppers track stop
+/servercheck hoppers watch <on|off|toggle|status>
+/servercheck hoppers trigger <arm|disarm|status>
+/servercheck hoppers baseline <start [minutes]|stop|status|recommend>
+/servercheck hoppers compare <before> <after> [page]
+/servercheck hoppers note <text>
+/servercheck hoppers notes [page|clear]
+/servercheck hoppers attach spark <url> [note]
+/servercheck hoppers drift [page]
+/servercheck hoppers history [page]
+/servercheck hoppers dump
+/servercheck hoppers reload
 ```
 
 Useful examples:
 
 ```text
-/_hoppers scan
-/_hoppers findings
-/_hoppers recommend
-/_hoppers risk
-/_hoppers chunks
-/_hoppers regions
-/_hoppers world general chunks
-/_hoppers chunk general 12 -8
-/_hoppers players global
-/_hoppers hoppers
-/_hoppers chains
-/_hoppers containers
-/_hoppers materials
-/_hoppers minecarts
-/_hoppers redstone
-/_hoppers tickets
-/_hoppers configs
-/_hoppers deps
-/_hoppers mfm presets
-/_hoppers spark health
-/_hoppers spark profile 300 hopper-drop
-/_hoppers spark spikes 100 300 hopper-spikes
-/_hoppers emergency
-/_hoppers checklist mfm-gentle
-/_hoppers track 60
-/_hoppers watch on
-/_hoppers trigger arm
-/_hoppers baseline start 15
-/_hoppers compare previous latest
-/_hoppers note cleared west fishing storage and reran track
-/_hoppers attach spark https://spark.lucko.me/example hopper-drop baseline
-/_hoppers drift
-/_hoppers history
-/_hoppers dump
+/servercheck hoppers scan
+/servercheck hoppers findings
+/servercheck hoppers recommend
+/servercheck hoppers risk
+/servercheck hoppers chunks
+/servercheck hoppers regions
+/servercheck hoppers world general chunks
+/servercheck hoppers chunk general 12 -8
+/servercheck hoppers players global
+/servercheck hoppers hoppers
+/servercheck hoppers chains
+/servercheck hoppers containers
+/servercheck hoppers materials
+/servercheck hoppers minecarts
+/servercheck hoppers redstone
+/servercheck hoppers tickets
+/servercheck hoppers configs
+/servercheck hoppers deps
+/servercheck hoppers mfm presets
+/servercheck hoppers spark health
+/servercheck hoppers spark profile 300 hopper-drop
+/servercheck hoppers spark spikes 100 300 hopper-spikes
+/servercheck hoppers emergency
+/servercheck hoppers checklist mfm-gentle
+/servercheck hoppers track 60
+/servercheck hoppers watch on
+/servercheck hoppers trigger arm
+/servercheck hoppers baseline start 15
+/servercheck hoppers compare previous latest
+/servercheck hoppers note cleared west fishing storage and reran track
+/servercheck hoppers attach spark https://spark.lucko.me/example hopper-drop baseline
+/servercheck hoppers drift
+/servercheck hoppers history
+/servercheck hoppers dump
 ```
 
 Global library examples:
 
 ```text
-/1mblib debug plugin hoppers
-/1mblib debug plugin hoppers commands
-/1mblib debug plugin hoppers permissions
-/1mblib debug plugin hoppers placeholders
-/1mblib debug plugin hoppers config
-/1mblib debug plugin hoppers all
-/1mblib config hoppers
-/1mblib config set hoppers scan.max-loaded-chunks-to-scan 12000
+/servercheck debug hoppers
+/servercheck debug hoppers commands
+/servercheck debug hoppers permissions
+/servercheck debug hoppers placeholders
+/servercheck debug hoppers config
+/servercheck debug hoppers all
+/servercheck hoppers debug config
+/servercheck hoppers debug set config scan.max-loaded-chunks-to-scan 12000
 ```
 
 ## Permissions
@@ -146,9 +146,9 @@ onembcmi.hoppers.admin
 onembcmi.hoppers.admin.reload
 ```
 
-Normal players receive no Hoppers command access by default. `/_hoppers` itself is registered behind `onembcmi.hoppers.use`, and every subcommand is checked again in the plugin.
+Normal players receive no Hoppers command access by default. Both routes require `onembcmi.hoppers.use`, and each subcommand enforces its own permission.
 
-`use` controls status/help/info. `scan` controls live scans, report pages, world/chunk/player scopes, report comparison, risk/dependency views, MFM preset views, config drift, hotspot history, emergency guidance, and checklists. `track` controls repeated sampling. `watch` controls staff-only watch broadcasts. `trigger` controls the passive TPS/MSPT auto-sampler. `baseline` controls healthy-play calibration. `spark` dispatches Spark helper commands from console and writes Hoppers log markers. `notes` writes operator notes and Spark URL attachments into the Hoppers cache. `dump` writes cache reports. `admin` grants full Hoppers access and shared debug. `admin.reload` reloads config and translations.
+`use` controls status/help/info. `scan` controls live scans, report pages, world/chunk/player scopes, report comparison, risk/dependency views, MFM preset views, config drift, hotspot history, emergency guidance, and checklists. `track` controls repeated sampling. `watch` controls staff-only watch broadcasts. `trigger` controls the passive TPS/MSPT auto-sampler. `baseline` controls healthy-play calibration. `spark` requests health reports and controls shared Spark profiling. Hoppers also writes log markers. `notes` writes operator notes and Spark URL attachments into the Hoppers cache. `dump` writes cache reports. `admin` grants full Hoppers access and shared debug. `admin.reload` reloads config and translations.
 
 Suggested grants:
 
@@ -257,11 +257,11 @@ baseline.sample-interval-seconds: 30
 
 `scan.nearby-player-radius` controls which player names are shown beside suspicious hopper rows.
 
-`scan.storage-chain-max-depth` limits `/_hoppers chains`. The probe follows hopper outputs only while chunks are already loaded and stops at the first non-hopper inventory, blocked output, unloaded target, or max depth.
+`scan.storage-chain-max-depth` limits `/servercheck hoppers chains`. The probe follows hopper outputs only while chunks are already loaded and stops at the first non-hopper inventory, blocked output, unloaded target, or max depth.
 
 `scan.redstone-context-radius` controls the small redstone/comparator context scan around suspicious hoppers. It helps distinguish likely sorters from simple storage without trying to simulate the contraption.
 
-`scan.material-histogram-limit` limits retained `/_hoppers materials` rows before paging.
+`scan.material-histogram-limit` limits retained `/servercheck hoppers materials` rows before paging.
 
 `dump.file` is the stable latest Markdown filename. Existing older configs may still say `hoppers-report.txt`; the plugin now writes Markdown and adds `.md` when needed.
 
@@ -273,7 +273,7 @@ baseline.sample-interval-seconds: 30
 
 `watch.only-when-tps-below-tenths` uses TPS multiplied by 10. `195` means watch mode only runs a full scan and sends staff messages when 1m TPS is below 19.5, or when average MSPT is above `thresholds.mspt-warning`. Set it to `0` if staff intentionally want every watch interval to capture.
 
-`trigger.*` controls the armed auto-sampler. The trigger checks TPS/MSPT, respects `trigger.cooldown-seconds`, and only starts `/_hoppers track <trigger.track-seconds>`.
+`trigger.*` controls the armed auto-sampler. The trigger checks TPS/MSPT, respects `trigger.cooldown-seconds`, and only starts `/servercheck hoppers track <trigger.track-seconds>`.
 
 `baseline.*` controls healthy-play calibration. Baseline reports are written to the Hoppers cache as `hoppers-baseline-latest.md` and timestamped archives.
 
@@ -282,29 +282,29 @@ baseline.sample-interval-seconds: 30
 When TPS starts dropping:
 
 ```text
-/_hoppers scan
-/_hoppers findings
-/_hoppers recommend
-/_hoppers risk
-/_hoppers chunks
-/_hoppers players global
-/_hoppers hoppers
-/_hoppers spark health
+/servercheck hoppers scan
+/servercheck hoppers findings
+/servercheck hoppers recommend
+/servercheck hoppers risk
+/servercheck hoppers chunks
+/servercheck hoppers players global
+/servercheck hoppers hoppers
+/servercheck hoppers spark health
 ```
 
-Start with the top `/_hoppers recommend` row. It says what Hoppers checked, what it found, and what to try next. If it points at a clogged hopper or chunk, click the shown `/cmi tppos ...` command in game, inspect the storage chain, and clear the full output inventory first.
+Start with the top `/servercheck hoppers recommend` row. It says what Hoppers checked, what it found, and what to try next. If it points at a clogged hopper or chunk, click the shown `/cmi tppos ...` command in game, inspect the storage chain, and clear the full output inventory first.
 
-Use `/_hoppers risk` for the short version during a panic. It summarizes the latest TPS/MSPT, whether Hoppers found hopper evidence, the top recommendation, and the safest sorter-aware next action.
+Use `/servercheck hoppers risk` for the short version during a panic. It summarizes the latest TPS/MSPT, whether Hoppers found hopper evidence, the top recommendation, and the safest sorter-aware next action.
 
 For intermittent drops:
 
 ```text
-/_hoppers track 60
-/_hoppers chunks
-/_hoppers hoppers
-/_hoppers chains
-/_hoppers containers
-/_hoppers spark spikes 100 300 hopper-spikes
+/servercheck hoppers track 60
+/servercheck hoppers chunks
+/servercheck hoppers hoppers
+/servercheck hoppers chains
+/servercheck hoppers containers
+/servercheck hoppers spark spikes 100 300 hopper-spikes
 ```
 
 Tracking samples the same read-only scan repeatedly and reports whether TPS, full hoppers, clogged hoppers, and hotspot chunks got worse over the window. The final summary includes a trend label: `storage still blocked`, `getting worse`, `clearing`, `stable`, `not hopper-correlated`, or `mixed`.
@@ -312,21 +312,21 @@ Tracking samples the same read-only scan repeatedly and reports whether TPS, ful
 For live staff monitoring during an active drop:
 
 ```text
-/_hoppers watch on
-/_hoppers watch status
-/_hoppers trigger arm
-/_hoppers trigger status
+/servercheck hoppers watch on
+/servercheck hoppers watch status
+/servercheck hoppers trigger arm
+/servercheck hoppers trigger status
 ```
 
-Watch mode performs a cheap TPS/MSPT check first. It only captures a full loaded-chunk scan and broadcasts to staff with `onembcmi.hoppers.watch` when the configured threshold is crossed. Trigger mode checks TPS/MSPT on an interval and starts a normal `/_hoppers track` run when the threshold is crossed and the cooldown has passed.
+Watch mode performs a cheap TPS/MSPT check first. It only captures a full loaded-chunk scan and broadcasts to staff with `onembcmi.hoppers.watch` when the configured threshold is crossed. Trigger mode checks TPS/MSPT on an interval and starts a normal `/servercheck hoppers track` run when the threshold is crossed and the cooldown has passed.
 
 For monthly tuning and before/after evidence:
 
 ```text
-/_hoppers baseline start 15
-/_hoppers baseline recommend
-/_hoppers dump
-/_hoppers compare previous latest
+/servercheck hoppers baseline start 15
+/servercheck hoppers baseline recommend
+/servercheck hoppers dump
+/servercheck hoppers compare previous latest
 ```
 
 Baseline calibration is for healthy-play periods. It collects repeated read-only scans, shows median/p95-derived candidate thresholds for Hoppers alerting, writes `hoppers-baseline-latest.md`, and includes separate per-world profiles. Compare reads the append-only dump index and compares summary deltas for TPS, MSPT, total hoppers, full hoppers, clogged hoppers, and item drops.
@@ -334,9 +334,9 @@ Baseline calibration is for healthy-play periods. It collects repeated read-only
 When a world or chunk is already suspected:
 
 ```text
-/_hoppers world <world> chunks
-/_hoppers chunk <world> <x> <z>
-/_hoppers players chunk <world> <x> <z>
+/servercheck hoppers world <world> chunks
+/servercheck hoppers chunk <world> <x> <z>
+/servercheck hoppers players chunk <world> <x> <z>
 ```
 
 World filters use the latest report. The exact chunk inspector only reads the chunk if it is already loaded; Hoppers will not force-load it.
@@ -344,12 +344,12 @@ World filters use the latest report. The exact chunk inspector only reads the ch
 For hotspot deep dives:
 
 ```text
-/_hoppers chains
-/_hoppers containers
-/_hoppers materials
-/_hoppers minecarts
-/_hoppers redstone
-/_hoppers tickets
+/servercheck hoppers chains
+/servercheck hoppers containers
+/servercheck hoppers materials
+/servercheck hoppers minecarts
+/servercheck hoppers redstone
+/servercheck hoppers tickets
 ```
 
 `chains` follows suspicious hopper outputs for a bounded number of already-loaded steps. `containers` summarizes inventory saturation in retained hotspot chunks. `materials` counts item types in retained suspicious hoppers and item piles in hotspot chunks. `minecarts` lists loaded hopper minecarts. `redstone` classifies nearby comparator/redstone context around suspicious hoppers. `tickets` shows whether hotspot chunks are force-loaded or have plugin chunk tickets.
@@ -357,16 +357,16 @@ For hotspot deep dives:
 For a support handoff or Discord paste:
 
 ```text
-/_hoppers note Checked west fishing station before clearing storage
-/_hoppers attach spark <spark-url> active hopper drop
-/_hoppers dump
+/servercheck hoppers note Checked west fishing station before clearing storage
+/servercheck hoppers attach spark <spark-url> active hopper drop
+/servercheck hoppers dump
 ```
 
 The dump is a Markdown report with `yml` code blocks for summary data, plugin dependency health, recommendations, top chunks, storage chain probes, container saturation, material histograms, hopper minecarts, redstone context, chunk tickets, region groups, player-adjacent pressure, suspicious hoppers, config signals, config drift since the previous dump, repeat hotspot history, attached Spark URLs, notes, sanitized `latest.log` context, MFM presets, and safe copy-test snippets.
 
 ## Recommendations
 
-`/_hoppers recommend` turns the optimization research into operational checks.
+`/servercheck hoppers recommend` turns the optimization research into operational checks.
 
 Each row contains:
 
@@ -392,32 +392,32 @@ The plugin does not apply any of these changes. It gives staff valid data to com
 
 ## Scope Commands
 
-`/_hoppers world <world>` filters the latest report to one world.
+`/servercheck hoppers world <world>` filters the latest report to one world.
 
 ```text
-/_hoppers world general
-/_hoppers world general chunks
-/_hoppers world general regions
-/_hoppers world general hoppers
-/_hoppers world general recommend
+/servercheck hoppers world general
+/servercheck hoppers world general chunks
+/servercheck hoppers world general regions
+/servercheck hoppers world general hoppers
+/servercheck hoppers world general recommend
 ```
 
-`/_hoppers chunk <world> <x> <z>` performs a fresh read-only inspection of one loaded chunk. It reports hopper counts, full/clogged outputs, item drops, hopper minecarts, tile entities, players, suspicious hopper rows, and a CMI teleport command. If the chunk is not loaded, the command says so and stops.
+`/servercheck hoppers chunk <world> <x> <z>` performs a fresh read-only inspection of one loaded chunk. It reports hopper counts, full/clogged outputs, item drops, hopper minecarts, tile entities, players, suspicious hopper rows, and a CMI teleport command. If the chunk is not loaded, the command says so and stops.
 
-`/_hoppers players` ranks player-adjacent pressure for coordination:
+`/servercheck hoppers players` ranks player-adjacent pressure for coordination:
 
 ```text
-/_hoppers players global
-/_hoppers players world general
-/_hoppers players nearby 64
-/_hoppers players chunk general 12 -8
+/servercheck hoppers players global
+/servercheck hoppers players world general
+/servercheck hoppers players nearby 64
+/servercheck hoppers players chunk general 12 -8
 ```
 
 The output is meant to help staff ask cooperative players about their storage or fishing setup. It is not proof of fault by itself.
 
 ## MFM Presets
 
-`/_hoppers mfm presets` shows named MobFarmManager HopperControl copy-test profiles:
+`/servercheck hoppers mfm presets` shows named MobFarmManager HopperControl copy-test profiles:
 
 ```yaml
 gentle:
@@ -441,44 +441,44 @@ Hoppers does not edit MFM. Use these as consistent comparison labels while captu
 
 ## Spark Workflow
 
-`/_hoppers spark` wraps the Spark commands that are useful during hopper triage:
+`/servercheck hoppers spark` wraps the Spark commands that are useful during hopper triage:
 
 ```text
-/_hoppers spark health
-/_hoppers spark profile 300 hopper-drop
-/_hoppers spark spikes 100 300 hopper-spikes
-/_hoppers spark stop hopper-drop
-/_hoppers spark cancel
+/servercheck hoppers spark health
+/servercheck hoppers spark profile 300 hopper-drop
+/servercheck hoppers spark spikes 100 300 hopper-spikes
+/servercheck hoppers spark stop hopper-drop
+/servercheck hoppers spark cancel
 ```
 
-The command dispatches Spark from console and writes a Hoppers marker to `latest.log` so the profile URL can be matched to the hopper incident. It does not replace SparkReviewer. Use SparkReviewer when you want broader runtime snapshots, saved labels, and before/after comparison.
+Hoppers uses the shared ServerCheck profiler controller and writes markers to `latest.log` to correlate the resulting report with the hopper incident. See [managed profiling compatibility](servercheck.md#profiling-and-passive-diagnostics) for the bundled Spark version and ownership rules. Use [SparkReviewer](sparkreviewer.md) for broader runtime snapshots, saved labels, and before/after comparison.
 
 After Spark prints a URL, attach it to the latest Hoppers report:
 
 ```text
-/_hoppers attach spark https://spark.lucko.me/example active hopper drop
+/servercheck hoppers attach spark https://spark.lucko.me/example active hopper drop
 ```
 
-Attached Spark URLs appear in `/_hoppers dump` and are retained as a bounded cache using `notes.max-entries`.
+Attached Spark URLs appear in `/servercheck hoppers dump` and are retained as a bounded cache using `notes.max-entries`.
 
 ## Evidence Cache
 
 Hoppers keeps a small passive evidence cache under the shared cache folder.
 
 ```text
-/_hoppers note cleared west fishing storage before rerun
-/_hoppers notes
-/_hoppers notes clear
-/_hoppers attach spark <url> [note]
-/_hoppers drift
-/_hoppers history
+/servercheck hoppers note cleared west fishing storage before rerun
+/servercheck hoppers notes
+/servercheck hoppers notes clear
+/servercheck hoppers attach spark <url> [note]
+/servercheck hoppers drift
+/servercheck hoppers history
 ```
 
-Notes are timestamped, sanitized, and appended to the report. `/_hoppers drift` compares the current hopper-related config signals against the config snapshot saved by the previous `/_hoppers dump`. `/_hoppers history` groups the bounded top-chunk history so repeat hotspot chunks stand out across multiple incidents.
+Notes are timestamped, sanitized, and appended to the report. `/servercheck hoppers drift` compares the current hopper-related config signals against the config snapshot saved by the previous `/servercheck hoppers dump`. `/servercheck hoppers history` groups the bounded top-chunk history so repeat hotspot chunks stand out across multiple incidents.
 
 ## Config Review
 
-`/_hoppers configs` scans:
+`/servercheck hoppers configs` scans:
 
 - `server.properties`
 - `spigot.yml`
@@ -497,7 +497,7 @@ Accepted, implemented, and rejected feature ideas live in [Hoppers Roadmap](hopp
 
 ### Runtime Event Listener Review
 
-`/_hoppers configs` also checks the live Bukkit handler list for `InventoryMoveItemEvent`.
+`/servercheck hoppers configs` also checks the live Bukkit handler list for `InventoryMoveItemEvent`.
 
 The runtime source appears as:
 
@@ -518,7 +518,7 @@ hopper:
   ignore-occluding-blocks: false
 ```
 
-Hoppers treats these paths specially in `/_hoppers configs`.
+Hoppers treats these paths specially in `/servercheck hoppers configs`.
 
 - `cooldown-when-full: true` is the safe value for full storage systems. Keep it enabled so full hoppers briefly cool down instead of constantly trying to pull more items.
 - `disable-move-event: false` is the safest compatibility value because protection, logging, or utility plugins may listen for hopper `InventoryMoveItemEvent` calls.
@@ -538,14 +538,14 @@ hopper-amount: 1
 hopper-can-load-chunks: false
 ```
 
-Hoppers treats these paths specially in `/_hoppers configs`.
+Hoppers treats these paths specially in `/servercheck hoppers configs`.
 
 - `hopper-transfer: 8` is vanilla transfer timing. Keep this at `8` when auto sorters matter.
 - `hopper-check: 1` checks every tick. This is sorter-responsive but can be expensive under heavy hopper load.
 - `hopper-amount: 1` moves one item per transfer. Keep this at `1` for sorter compatibility.
 - `hopper-can-load-chunks: false` is the safe value. Hoppers should not keep chunks loaded by themselves.
 
-Sorter-friendly tuning should usually leave `hopper-transfer: 8` and `hopper-amount: 1` alone. If Spark and `/_hoppers track` both point at hopper ticking, test `hopper-check: 2` or `hopper-check: 4` on a copy before trying larger values. For production, prefer MFM dynamic throttling first because it can leave normal hoppers vanilla and slow only intensive hoppers.
+Sorter-friendly tuning should usually leave `hopper-transfer: 8` and `hopper-amount: 1` alone. If Spark and `/servercheck hoppers track` both point at hopper ticking, test `hopper-check: 2` or `hopper-check: 4` on a copy before trying larger values. For production, prefer MFM dynamic throttling first because it can leave normal hoppers vanilla and slow only intensive hoppers.
 
 ### MobFarmManager HopperControl
 
@@ -559,7 +559,7 @@ HopperControl:
   AdjustEvery: 30
 ```
 
-Hoppers treats these paths specially in `/_hoppers configs`.
+Hoppers treats these paths specially in `/servercheck hoppers configs`.
 
 - `Enabled: true` means MFM can dynamically slow intensive hoppers.
 - `Default: 8` keeps normal hopper timing at vanilla speed. This is the safest value for auto sorters.
@@ -578,9 +578,11 @@ HopperControl:
 
 That keeps normal hoppers vanilla, lets MFM react sooner, and caps the slowdown at one item per second. If TPS still drops and Spark/Hoppers point at hopper ticking, test `SlowestRate: 30` next. Treat `SlowestRate: 40` as a stronger safety net, not the first sorter-friendly tuning point.
 
-If `/_hoppers hoppers` shows full hoppers with blocked output, MFM tuning will not empty them. That means the storage/output chain is full or blocked, and staff should use the shown `/cmi tppos` command to clear or expand the physical storage first.
+If `/servercheck hoppers hoppers` shows full hoppers with blocked output, MFM tuning will not empty them. That means the storage/output chain is full or blocked, and staff should use the shown `/cmi tppos` command to clear or expand the physical storage first.
 
 ## Data And Cache
+
+Hoppers keeps its settings in `plugins/1MB-CMIAPI/Hoppers/config.yml`. The host switch is `modules.hoppers.enabled` in `ServerCheck/config.yml`. Its initial value comes from the legacy config when present. Hoppers starts active on a fresh install.
 
 Hoppers writes reports under:
 
@@ -595,7 +597,7 @@ It does not write playerdata. It stores only operational evidence in cache: the 
 CMI:
 
 - Output includes exact `/cmi tppos <x> <y> <z> <world>` commands for the hottest chunks and suspicious hopper blocks; in-game rows can be clicked to run the teleport command.
-- CMI and CMILib hook status is shown in `/_hoppers status` and debug metadata.
+- CMI and CMILib hook status is shown in `/servercheck hoppers status` and debug metadata.
 
 CMILib:
 
@@ -616,15 +618,15 @@ PyroFishingPro:
 
 PlaceholderAPI:
 
-- PlaceholderAPI is optional. Hoppers exposes placeholders through the shared library when PlaceholderAPI is present, and reports the hook status in `/_hoppers deps` and dumps.
+- PlaceholderAPI is optional. Hoppers exposes placeholders through the shared library when PlaceholderAPI is present, and reports the hook status in `/servercheck hoppers deps` and dumps.
 
 Spark:
 
-- Spark remains the source of truth for CPU profiling. Use Spark, `/_hoppers spark`, or SparkReviewer alongside Hoppers if TPS is dropping but no loaded hopper clog pattern appears.
+- Spark remains the source of truth for CPU profiling. Use Spark, `/servercheck hoppers spark`, or SparkReviewer alongside Hoppers if TPS is dropping but no loaded hopper clog pattern appears.
 
 ## Security Notes
 
-- Hoppers is passive and does not change hopper behavior. It does not disable hoppers, cancel hopper transfers, clear inventories, edit server config files, or apply Paper/Spigot/MobFarmManager settings. Watch, trigger, baseline, compare, and track only read state and write staff-facing evidence. The only external command dispatch it performs is explicit staff-triggered Spark profiling through `/_hoppers spark`.
+- Hoppers is passive and does not change hopper behavior. It does not disable hoppers, cancel hopper transfers, clear inventories, edit server config files, or apply Paper/Spigot/MobFarmManager settings. Watch, trigger, baseline, compare, and track only read state and write staff-facing evidence. Explicit Spark actions under `/servercheck hoppers spark` require the module’s Spark permission and pass through the shared controller.
 - Dump output is Markdown in the shared cache folder with Discord-friendly `yml` code blocks.
 - Player names shown in nearby-player output come from currently online players near the suspicious hopper location.
 - All config/log-like output is sanitized or abbreviated before display.

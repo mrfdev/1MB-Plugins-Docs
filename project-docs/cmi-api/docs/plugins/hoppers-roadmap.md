@@ -2,26 +2,26 @@
 
 This page keeps Hoppers feature ideas out of chat history and gives future work a stable review list.
 
-Hoppers is primarily a debug and analysis tool. New features should help staff find the real cause of hopper-related TPS drops faster, preserve evidence, and avoid blind config changes.
+Hoppers is a diagnostics module in ServerCheck. Its previous `/_hoppers` command remains available for compatibility. New features should help staff find the real cause of hopper-related TPS drops faster, preserve evidence, and avoid blind config changes.
 
 ## Accepted Ideas
 
-These ideas were approved for implementation. Entries marked `implemented` are already present in the current plugin; the remaining entries stay here as durable future work.
+These ideas were approved for implementation. Entries marked `implemented` are already present in the current module; the remaining entries stay here as durable future work.
 
 ### HOP-A01: Spark Workflow Wrapper
 
-Status: implemented as `/_hoppers spark`.
+Status: implemented as `/servercheck hoppers spark`.
 
-Add `/_hoppers spark` helpers for hopper-focused Spark profiling.
+Add `/servercheck hoppers spark` helpers for hopper-focused Spark profiling.
 
 Possible commands:
 
 ```text
-/_hoppers spark health
-/_hoppers spark profile [seconds] [label]
-/_hoppers spark spikes [mspt] [seconds] [label]
-/_hoppers spark stop [label]
-/_hoppers spark cancel
+/servercheck hoppers spark health
+/servercheck hoppers spark profile [seconds] [label]
+/servercheck hoppers spark spikes [mspt] [seconds] [label]
+/servercheck hoppers spark stop [label]
+/servercheck hoppers spark cancel
 ```
 
 Purpose:
@@ -32,17 +32,17 @@ Purpose:
 
 ### HOP-A02: Toggleable Watch Mode
 
-Status: implemented as `/_hoppers watch`.
+Status: implemented as `/servercheck hoppers watch`.
 
 Add a live watch mode for admins during an active drop, with easy toggle controls.
 
 Possible commands:
 
 ```text
-/_hoppers watch on
-/_hoppers watch off
-/_hoppers watch toggle
-/_hoppers watch status
+/servercheck hoppers watch on
+/servercheck hoppers watch off
+/servercheck hoppers watch toggle
+/servercheck hoppers watch status
 ```
 
 Possible settings:
@@ -61,14 +61,14 @@ Purpose:
 
 ### HOP-A03: Report Comparison
 
-Status: implemented as `/_hoppers compare`.
+Status: implemented as `/servercheck hoppers compare`.
 
 Compare two saved Hoppers reports.
 
 Possible command:
 
 ```text
-/_hoppers compare <before> <after>
+/servercheck hoppers compare <before> <after>
 ```
 
 Purpose:
@@ -78,17 +78,17 @@ Purpose:
 
 ### HOP-A04: Player Impact Ranking With Scope
 
-Status: implemented as `/_hoppers players`.
+Status: implemented as `/servercheck hoppers players`.
 
 Rank player-adjacent hopper pressure with multiple scopes.
 
 Possible commands:
 
 ```text
-/_hoppers players global
-/_hoppers players world <world>
-/_hoppers players nearby <radius>
-/_hoppers players chunk <world> <x> <z>
+/servercheck hoppers players global
+/servercheck hoppers players world <world>
+/servercheck hoppers players nearby <radius>
+/servercheck hoppers players chunk <world> <x> <z>
 ```
 
 Purpose:
@@ -106,7 +106,7 @@ Group findings by region file.
 Possible command:
 
 ```text
-/_hoppers regions [page]
+/servercheck hoppers regions [page]
 ```
 
 Purpose:
@@ -116,17 +116,17 @@ Purpose:
 
 ### HOP-A06: World Filter
 
-Status: implemented as `/_hoppers world <world>`.
+Status: implemented as `/servercheck hoppers world <world>`.
 
 Filter report pages by world.
 
 Possible commands:
 
 ```text
-/_hoppers world <world>
-/_hoppers world <world> chunks
-/_hoppers world <world> hoppers
-/_hoppers world <world> recommend
+/servercheck hoppers world <world>
+/servercheck hoppers world <world> chunks
+/servercheck hoppers world <world> hoppers
+/servercheck hoppers world <world> recommend
 ```
 
 Purpose:
@@ -136,14 +136,14 @@ Purpose:
 
 ### HOP-A07: Exact Chunk Inspector
 
-Status: implemented as `/_hoppers chunk <world> <x> <z>`.
+Status: implemented as `/servercheck hoppers chunk <world> <x> <z>`.
 
 Inspect one loaded chunk in detail.
 
 Possible command:
 
 ```text
-/_hoppers chunk <world> <x> <z>
+/servercheck hoppers chunk <world> <x> <z>
 ```
 
 Purpose:
@@ -153,7 +153,7 @@ Purpose:
 
 ### HOP-A08: Config Risk Score
 
-Status: implemented as `/_hoppers risk`.
+Status: implemented as `/servercheck hoppers risk`.
 
 Add a single hopper config risk score with explanations.
 
@@ -201,7 +201,7 @@ Purpose:
 
 ### HOP-A11: MFM Preset Suggestions
 
-Status: implemented as `/_hoppers mfm`.
+Status: implemented as `/servercheck hoppers mfm`.
 
 Add named MobFarmManager HopperControl test presets.
 
@@ -229,16 +229,16 @@ Purpose:
 
 ### HOP-A12: Timestamped Report Notes
 
-Status: implemented as `/_hoppers note`, `/_hoppers notes`, and `/_hoppers notes clear`.
+Status: implemented as `/servercheck hoppers note`, `/servercheck hoppers notes`, and `/servercheck hoppers notes clear`.
 
 Append manual notes to the latest report.
 
 Possible commands:
 
 ```text
-/_hoppers note <text>
-/_hoppers notes
-/_hoppers notes clear
+/servercheck hoppers note <text>
+/servercheck hoppers notes
+/servercheck hoppers notes clear
 ```
 
 Requirements:
@@ -250,17 +250,17 @@ Requirements:
 
 ### HOP-A13: Baseline Calibration
 
-Status: implemented as `/_hoppers baseline`.
+Status: implemented as `/servercheck hoppers baseline`.
 
 Suggest thresholds based on observed server baseline.
 
 Possible commands:
 
 ```text
-/_hoppers baseline start <minutes>
-/_hoppers baseline stop
-/_hoppers baseline status
-/_hoppers baseline recommend
+/servercheck hoppers baseline start <minutes>
+/servercheck hoppers baseline stop
+/servercheck hoppers baseline status
+/servercheck hoppers baseline recommend
 ```
 
 How it should work:
@@ -280,14 +280,14 @@ Suggested chunk-clogged-hoppers-warning: 3 because that is above normal noise.
 
 ### HOP-A14: Emergency Action Plan
 
-Status: implemented as `/_hoppers emergency`.
+Status: implemented as `/servercheck hoppers emergency`.
 
 Add a staff checklist page for active TPS drops.
 
 Possible command:
 
 ```text
-/_hoppers emergency
+/servercheck hoppers emergency
 ```
 
 Purpose:
@@ -299,23 +299,23 @@ Purpose:
 
 ### HOP-A15: TPS Triggered Auto-Sampler
 
-Status: implemented as `/_hoppers trigger`.
+Status: implemented as `/servercheck hoppers trigger`.
 
 Arm Hoppers to start a short tracking run automatically when TPS or MSPT crosses a configured threshold.
 
 Possible command:
 
 ```text
-/_hoppers trigger arm
-/_hoppers trigger disarm
-/_hoppers trigger status
+/servercheck hoppers trigger arm
+/servercheck hoppers trigger disarm
+/servercheck hoppers trigger status
 ```
 
 The trigger performs cheap TPS/MSPT checks, respects a cooldown, and only starts the existing read-only tracking sampler.
 
 ### HOP-A16: Storage Chain Probe
 
-Status: implemented as `/_hoppers chains`.
+Status: implemented as `/servercheck hoppers chains`.
 
 Inspect the immediate output chain from a suspicious hopper for a limited number of containers.
 
@@ -327,7 +327,7 @@ Goal:
 
 ### HOP-A17: Container Saturation Summary
 
-Status: implemented as `/_hoppers containers`.
+Status: implemented as `/servercheck hoppers containers`.
 
 Count nearby containers around a hotspot and estimate how full the local storage area is.
 
@@ -335,7 +335,7 @@ Useful for fishing stations and farm storage rooms where the problem is not one 
 
 ### HOP-A18: Item Material Histogram
 
-Status: implemented as `/_hoppers materials`.
+Status: implemented as `/servercheck hoppers materials`.
 
 Show the most common item materials in suspicious hoppers and nearby item piles.
 
@@ -350,7 +350,7 @@ Complexity note:
 
 ### HOP-A19: Hopper Minecart Focus Page
 
-Status: implemented as `/_hoppers minecarts`.
+Status: implemented as `/servercheck hoppers minecarts`.
 
 Add a page specifically for hopper minecarts near item piles and hopper chunks.
 
@@ -361,7 +361,7 @@ Purpose:
 
 ### HOP-A20: Redstone And Comparator Context
 
-Status: implemented as `/_hoppers redstone`.
+Status: implemented as `/servercheck hoppers redstone`.
 
 Scan a small radius around suspicious hoppers for comparator/repeater/observer/redstone patterns.
 
@@ -380,7 +380,7 @@ How it should work:
 
 ### HOP-A21: Chunk Ticket Review
 
-Status: implemented as `/_hoppers tickets`.
+Status: implemented as `/servercheck hoppers tickets`.
 
 Report plugin chunk tickets and force-loaded chunks around hopper hotspots where Paper exposes the data.
 
@@ -391,7 +391,7 @@ Purpose:
 
 ### HOP-A22: Trend Classification
 
-Status: implemented for `/_hoppers track` summaries.
+Status: implemented for `/servercheck hoppers track` summaries.
 
 Turn tracking deltas into plain labels.
 
@@ -407,7 +407,7 @@ Examples:
 
 ### HOP-A23: Latest Log Slice Attachment
 
-Status: implemented in `/_hoppers dump` as a sanitized latest.log tail.
+Status: implemented in `/servercheck hoppers dump` as a sanitized latest.log tail.
 
 Include a sanitized `latest.log` time slice around a Hoppers scan or tracking run in the Markdown dump.
 
@@ -417,19 +417,19 @@ Purpose:
 
 ### HOP-A24: Attach External Spark URL
 
-Status: implemented as `/_hoppers attach spark <url> [note]`.
+Status: implemented as `/servercheck hoppers attach spark <url> [note]`.
 
 Allow staff to attach a Spark URL to the latest Hoppers report.
 
 Possible command:
 
 ```text
-/_hoppers attach spark <url> [note]
+/servercheck hoppers attach spark <url> [note]
 ```
 
 ### HOP-A25: Config Drift Since Last Dump
 
-Status: implemented as `/_hoppers drift` and in Markdown dumps.
+Status: implemented as `/servercheck hoppers drift` and in Markdown dumps.
 
 Compare current hopper-related config values against the values captured in the previous dump.
 
@@ -440,7 +440,7 @@ Purpose:
 
 ### HOP-A26: Hotspot History Cache
 
-Status: implemented as `/_hoppers history` and repeat-hotspot dump output.
+Status: implemented as `/servercheck hoppers history` and repeat-hotspot dump output.
 
 Keep a bounded history of top hopper chunks over time.
 
@@ -451,7 +451,7 @@ Purpose:
 
 ### HOP-A27: Per-World Baseline Profiles
 
-Status: implemented in `/_hoppers baseline recommend` and baseline Markdown reports.
+Status: implemented in `/servercheck hoppers baseline recommend` and baseline Markdown reports.
 
 Store separate healthy baselines per world.
 
@@ -461,15 +461,15 @@ Purpose:
 
 ### HOP-A28: Safe Config Test Checklist Generator
 
-Status: implemented as `/_hoppers checklist <id>`.
+Status: implemented as `/servercheck hoppers checklist <id>`.
 
 Generate a short checklist for a selected recommendation.
 
 Example:
 
 ```text
-/_hoppers checklist mfm-gentle
-/_hoppers checklist disable-move-event
+/servercheck hoppers checklist mfm-gentle
+/servercheck hoppers checklist disable-move-event
 ```
 
 Purpose:
@@ -486,7 +486,7 @@ Keep timestamped Markdown report files alongside a latest report.
 
 Requirements:
 
-- every `/_hoppers dump` writes a uniquely timestamped report
+- every `/servercheck hoppers dump` writes a uniquely timestamped report
 - keep or update a stable latest report file for quick sharing
 - append a short line to a report index so long-term testing can find older dumps
 - use the archive for future compare and config-drift commands
@@ -505,7 +505,7 @@ Purpose:
 
 ### HOP-A31: Optional Dependency Health Matrix
 
-Status: implemented as `/_hoppers deps` and dump/runtime metadata.
+Status: implemented as `/servercheck hoppers deps` and dump/runtime metadata.
 
 Show optional and required integration status in status, debug, and dumps.
 

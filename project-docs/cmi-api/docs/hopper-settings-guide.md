@@ -161,7 +161,7 @@ This is why `disable-move-event: true` is powerful but risky.
 Hoppers reports registered listeners in:
 
 ```text
-/_hoppers configs
+/servercheck hoppers configs
 ```
 
 Look for:
@@ -255,122 +255,113 @@ TPS is the result. MSPT is the cost.
 50+ MSPT means the server cannot sustain 20 TPS
 ```
 
-Paper includes Spark. Useful commands:
+Paper includes Spark. Use the SparkReviewer routes through ServerCheck to profile performance. Run `start` for profiling alone or `stress` to pair it with named snapshots.
 
 ```text
-spark health
-spark profiler start --timeout 300
-spark profiler start --only-ticks-over 100 --timeout 300
-spark profiler stop
+/servercheck spark health
+/servercheck spark start 300 hopper-test
+/servercheck spark stress hopper-test 300
+/servercheck spark logs
+/servercheck spark dump
 ```
 
-SparkReviewer wraps this with:
+Hoppers provides routes for regular and spike-focused profiles through the same controller. Run one profile at a time and attach its report URL after Spark returns it.
 
 ```text
-/sparkreviewer spark health
-/sparkreviewer spark start 300 hopper-test
-/sparkreviewer stress hopper-test 300
-/sparkreviewer logs
-/sparkreviewer dump
+/servercheck hoppers spark health
+/servercheck hoppers spark profile 300 hopper-drop
+/servercheck hoppers spark spikes 100 300 hopper-spikes
+/servercheck hoppers attach spark <spark-url> active hopper drop
 ```
 
-Hoppers also has hopper-focused shortcuts:
-
-```text
-/_hoppers spark health
-/_hoppers spark profile 300 hopper-drop
-/_hoppers spark spikes 100 300 hopper-spikes
-/_hoppers attach spark <spark-url> active hopper drop
-```
-
-Use Spark to identify whether the bottleneck is hopper ticking, plugin events, item entities, chunk loading, redstone, entities, or something else.
+Use Spark to identify the bottleneck, such as hopper ticking, plugin events, item entities, chunk loading, or redstone. For the bundled Spark version and the native `/spark` alternative, see [ServerCheck profiling compatibility](plugins/servercheck.md#profiling-and-passive-diagnostics).
 
 ## Reading Hoppers Output
 
-`/_hoppers chunks`
+`/servercheck hoppers chunks`
 
 - use this to find the hottest loaded chunks
 - start with chunks that have clogged hoppers, many full hoppers, and item piles
 
-`/_hoppers recommend`
+`/servercheck hoppers recommend`
 
 - use this after a scan to get checked/found/recommend rows
 - use it before tuning so physical clogs, Spark profiling, Paper settings, Spigot timing, MFM throttle, item piles, and simulation distance are considered in order
 - read the test-plan and sorter-safety fields before changing anything
 
-`/_hoppers risk`
+`/servercheck hoppers risk`
 
 - use this during an active drop when there is no time for a full page-by-page review
 - check whether Hoppers found hopper evidence or is pointing staff toward Spark/SparkReviewer instead
 
-`/_hoppers regions`
+`/servercheck hoppers regions`
 
 - use this when several hot chunks may belong to the same storage area or region file
 - move through one region at a time instead of chasing isolated rows blindly
 
-`/_hoppers world <world>`
+`/servercheck hoppers world <world>`
 
 - use this when staff already know the affected world
 - filter chunks, regions, hoppers, findings, and recommendations without changing the saved scan
 
-`/_hoppers chunk <world> <x> <z>`
+`/servercheck hoppers chunk <world> <x> <z>`
 
 - use this when Spark, Hoppers, or a player report points at an exact loaded chunk
 - it reads that chunk only if it is already loaded; it does not force-load offline chunks
 
-`/_hoppers players`
+`/servercheck hoppers players`
 
 - use this to see which online players are near retained hopper pressure
 - treat this as coordination data, not blame; ask players about active fishing/storage setups and work with them
 
-`/_hoppers hoppers`
+`/servercheck hoppers hoppers`
 
 - use this to teleport directly to suspicious hopper blocks
 - inspect the storage output before tuning config
 
-`/_hoppers configs`
+`/servercheck hoppers configs`
 
 - use this to review Paper, Spigot, MFM, Spark-adjacent clues, and `InventoryMoveItemEvent` listeners
 
-`/_hoppers deps`
+`/servercheck hoppers deps`
 
 - use this to confirm required and optional hook health
 - missing MobFarmManager, PyroFishingPro, PlaceholderAPI, or Spark should not stop Hoppers from starting, but it changes how much context Hoppers can provide
 
-`/_hoppers mfm`
+`/servercheck hoppers mfm`
 
 - use this to view named MFM HopperControl copy-test presets
 - Hoppers never applies the presets; staff still edit MFM manually after deciding on a measured test
 
-`/_hoppers spark`
+`/servercheck hoppers spark`
 
 - use this when Hoppers says Spark evidence is needed during an active drop
-- it dispatches Spark profiling commands and writes Hoppers markers to `latest.log`
-- attach the resulting Spark URL with `/_hoppers attach spark <url> [note]`
+- it controls managed Spark profiling and writes Hoppers markers to `latest.log`
+- attach the resulting Spark URL with `/servercheck hoppers attach spark <url> [note]`
 
-`/_hoppers emergency`
+`/servercheck hoppers emergency`
 
 - use this as the passive TPS-drop checklist
 - it keeps staff focused on measuring, teleporting to evidence, Spark profiling, and exporting a report before config changes
 
-`/_hoppers checklist <id>`
+`/servercheck hoppers checklist <id>`
 
 - use this for a short safe-testing checklist tied to a recommendation
 - current IDs include `storage`, `spark`, `mfm-gentle`, `disable-move-event`, `ignore-occluding`, `hopper-check`, `items`, and `simulation`
 
-`/_hoppers track 60`
+`/servercheck hoppers track 60`
 
 - use this during an active TPS drop
 - watch whether full/clogged hoppers and MSPT rise together
 - read the trend label at the end: `storage still blocked`, `getting worse`, `clearing`, `stable`, `not hopper-correlated`, or `mixed`
 
-`/_hoppers note`, `/_hoppers drift`, and `/_hoppers history`
+`/servercheck hoppers note`, `/servercheck hoppers drift`, and `/servercheck hoppers history`
 
 - use notes to keep staff observations beside the report instead of in chat history
 - use drift after a config test to see which hopper-related values changed since the previous dump
 - use history to find repeat hopper chunks across multiple scans or incidents
 
-`/_hoppers dump`
+`/servercheck hoppers dump`
 
 - writes a latest Markdown report and, when enabled, a timestamped archive plus report index to the Hoppers cache folder
 - includes Discord-friendly `yml` code blocks for summary, recommendations, top chunks, region groups, player-adjacent pressure, suspicious hoppers, config signals, config drift, repeat hotspot history, attached Spark URLs, notes, sanitized latest.log context, and MFM presets
@@ -414,4 +405,4 @@ hopper:
   ignore-occluding-blocks: true
 ```
 
-Only try those after reading `/_hoppers configs` and checking Spark.
+Only try those after reading `/servercheck hoppers configs` and checking Spark.

@@ -9,29 +9,32 @@ The goal is not to find one magic setting. The goal is to measure the same type 
 Run this before changing anything:
 
 ```text
-/_hoppers scan
-/_hoppers findings
-/_hoppers recommend
-/_hoppers risk
-/_hoppers chunks
-/_hoppers regions
-/_hoppers players global
-/_hoppers hoppers
-/_hoppers configs
-/_hoppers deps
-/_hoppers mfm presets
-/_hoppers emergency
-/_hoppers spark health
-/_hoppers spark profile 180 hopper-baseline
-/sparkreviewer spark health
-/sparkreviewer stress hopper-baseline 180
-/sparkreviewer logs
-/_hoppers attach spark <spark-url> hopper-baseline
-/_hoppers note Baseline captured before hopper config changes
-/_hoppers dump
-/_hoppers drift
-/_hoppers history
-/sparkreviewer dump
+/servercheck hoppers scan
+/servercheck hoppers findings
+/servercheck hoppers recommend
+/servercheck hoppers risk
+/servercheck hoppers chunks
+/servercheck hoppers regions
+/servercheck hoppers players global
+/servercheck hoppers hoppers
+/servercheck hoppers configs
+/servercheck hoppers deps
+/servercheck hoppers mfm presets
+/servercheck hoppers emergency
+/servercheck hoppers spark health
+/servercheck spark stress hopper-baseline 180
+```
+
+Use `/servercheck hoppers spark profile 180 hopper-baseline` instead when only Hoppers is active. Wait for the profile to finish and copy the Spark URL from console or `logs/latest.log`. Then collect the reports for the modules you enabled.
+
+```text
+/servercheck spark logs
+/servercheck hoppers attach spark <spark-url> hopper-baseline
+/servercheck hoppers note Baseline captured before hopper config changes
+/servercheck hoppers dump
+/servercheck hoppers drift
+/servercheck hoppers history
+/servercheck spark dump
 ```
 
 Save the Spark URL from console or `logs/latest.log`. Note:
@@ -46,16 +49,16 @@ Save the Spark URL from console or `logs/latest.log`. Note:
 - top suspicious hopper
 - whether item drops, full hoppers, or blocked outputs are increasing
 - whether Spark shows tile ticking, hopper ticking, plugin event listeners, item entities, or something else
-- top `/_hoppers recommend` row and whether it points to storage, Spark, Paper, Spigot, MFM, item piles, or simulation distance
-- `/_hoppers risk` category and sorter-safety label
-- dependency health from `/_hoppers deps`
-- MFM current values and selected preset label from `/_hoppers mfm presets`, if MFM is part of the test
-- tracking trend label from `/_hoppers track`
-- attached Spark URL from `/_hoppers attach spark`
-- any operator notes added with `/_hoppers note`
-- config drift from `/_hoppers drift` after the next dump
-- repeat hotspot status from `/_hoppers history`
-- the timestamped `/_hoppers dump` archive filename
+- top `/servercheck hoppers recommend` row and whether it points to storage, Spark, Paper, Spigot, MFM, item piles, or simulation distance
+- `/servercheck hoppers risk` category and sorter-safety label
+- dependency health from `/servercheck hoppers deps`
+- MFM current values and selected preset label from `/servercheck hoppers mfm presets`, if MFM is part of the test
+- tracking trend label from `/servercheck hoppers track`
+- attached Spark URL from `/servercheck hoppers attach spark`
+- any operator notes added with `/servercheck hoppers note`
+- config drift from `/servercheck hoppers drift` after the next dump
+- repeat hotspot status from `/servercheck hoppers history`
+- the timestamped `/servercheck hoppers dump` archive filename
 
 ## Test Rules
 
@@ -70,17 +73,17 @@ Save the Spark URL from console or `logs/latest.log`. Note:
 
 ## Scenario A: Clear Physical Storage First
 
-Use when `/_hoppers hoppers` shows full hoppers with blocked outputs.
+Use when `/servercheck hoppers hoppers` shows full hoppers with blocked outputs.
 
 Test:
 
 ```text
-/_hoppers hoppers
-/_hoppers checklist storage
+/servercheck hoppers hoppers
+/servercheck hoppers checklist storage
 # teleport to the first exact row
 /cmi tppos <x> <y> <z> <world>
-/_hoppers chunk <world> <chunkX> <chunkZ>
-/_hoppers players chunk <world> <chunkX> <chunkZ>
+/servercheck hoppers chunk <world> <chunkX> <chunkZ>
+/servercheck hoppers players chunk <world> <chunkX> <chunkZ>
 ```
 
 Action:
@@ -88,7 +91,7 @@ Action:
 - inspect the output chest/storage chain
 - clear full inventories
 - expand storage if the chain is too small
-- rerun `/_hoppers track 60`
+- rerun `/servercheck hoppers track 60`
 
 Expected result:
 
@@ -124,13 +127,13 @@ HopperControl:
 Compare against the current production state with:
 
 ```text
-/sparkreviewer stress mfm-current 180
-/_hoppers checklist mfm-gentle
-/_hoppers mfm gentle
+/servercheck spark stress mfm-current 180
+/servercheck hoppers checklist mfm-gentle
+/servercheck hoppers mfm gentle
 # change only MFM HopperControl values and reload/restart as required by MFM
-/sparkreviewer stress mfm-20-20 180
-/sparkreviewer compare mfm-current mfm-20-20
-/_hoppers track 60
+/servercheck spark stress mfm-20-20 180
+/servercheck spark compare mfm-current mfm-20-20
+/servercheck hoppers track 60
 ```
 
 Expected result:
@@ -177,8 +180,8 @@ Use only after checking event listeners.
 Run:
 
 ```text
-/_hoppers configs
-/_hoppers checklist disable-move-event
+/servercheck hoppers configs
+/servercheck hoppers checklist disable-move-event
 ```
 
 Look for:
@@ -199,11 +202,11 @@ If Hoppers reports listeners, this is risky. The listed plugins may use hopper m
 Test workflow:
 
 ```text
-/sparkreviewer stress move-event-false 180
+/servercheck spark stress move-event-false 180
 # set disable-move-event: true on a copy, restart
-/sparkreviewer stress move-event-true 180
-/sparkreviewer compare move-event-false move-event-true
-/_hoppers configs
+/servercheck spark stress move-event-true 180
+/servercheck spark compare move-event-false move-event-true
+/servercheck hoppers configs
 ```
 
 Manual checks:
@@ -287,9 +290,9 @@ Use when Hoppers shows item pile pressure near hopper chunks.
 Review:
 
 ```text
-/_hoppers chunks
-/_hoppers configs
-/_hoppers checklist items
+/servercheck hoppers chunks
+/servercheck hoppers configs
+/servercheck hoppers checklist items
 ```
 
 Candidate tests should be conservative. Large merge radius values can make items appear to vanish, merge through walls, or break farms.
@@ -297,10 +300,10 @@ Candidate tests should be conservative. Large merge radius values can make items
 Test with Spark and player observation:
 
 ```text
-/sparkreviewer stress merge-baseline 180
+/servercheck spark stress merge-baseline 180
 # adjust merge-radius.item conservatively on a copy
-/sparkreviewer stress merge-test 180
-/sparkreviewer compare merge-baseline merge-test
+/servercheck spark stress merge-test 180
+/servercheck spark compare merge-baseline merge-test
 ```
 
 If `merge-radius.item` becomes large, also review Paper's `fix-items-merging-through-walls` setting. Enabling that fix has its own performance cost, so do not use huge merge radii casually.
@@ -338,9 +341,9 @@ Lower simulation distance reduces the active ticking radius around players. That
 Measure:
 
 ```text
-/sparkreviewer review
-/_hoppers scan
-/_hoppers checklist simulation
+/servercheck spark review
+/servercheck hoppers scan
+/servercheck hoppers checklist simulation
 ```
 
 Only compare after matching mob spawn range, despawn ranges, and farm expectations.
@@ -349,22 +352,16 @@ Only compare after matching mob spawn range, despawn ranges, and farm expectatio
 
 Use when TPS is mostly fine but there are repeated lag spikes.
 
-Run directly from console or through SparkReviewer extra args if configured:
+Use the Hoppers spike profile to keep its log marker and report attachment with the investigation.
 
 ```text
-spark profiler start --only-ticks-over 100 --timeout 300
+/servercheck hoppers spark spikes 100 300 hopper-spikes
+/servercheck hoppers attach spark <spark-url> hopper-spikes
+/servercheck hoppers note Spike profile captured while top hopper chunk was loaded
+/servercheck hoppers dump
 ```
 
-Or through Hoppers so the marker and report attachment stay with the hopper investigation:
-
-```text
-/_hoppers spark spikes 100 300 hopper-spikes
-/_hoppers attach spark <spark-url> hopper-spikes
-/_hoppers note Spike profile captured while top hopper chunk was loaded
-/_hoppers dump
-```
-
-Use this when the problem is not constant hopper load but intermittent stalls.
+For installations outside [ServerCheck profiling compatibility](plugins/servercheck.md#profiling-and-passive-diagnostics), run `spark profiler start --only-ticks-over 100 --timeout 300` from the console and use the same report attachment steps.
 
 ## Decision Matrix
 
@@ -372,18 +369,18 @@ If Hoppers shows clogged full hoppers:
 
 - clear/expand storage first
 - do not start by changing hopper timing
-- expect `/_hoppers recommend` to show the CMI teleport target and storage-first action
+- expect `/servercheck hoppers recommend` to show the CMI teleport target and storage-first action
 
 If Spark shows `InventoryMoveItemEvent` overhead:
 
-- run `/_hoppers configs`
-- run `/_hoppers recommend`
+- run `/servercheck hoppers configs`
+- run `/servercheck hoppers recommend`
 - check `runtime:InventoryMoveItemEvent`
 - copy-test `disable-move-event: true` only after listener review
 
 If Spark shows hopper tile ticking and Hoppers shows many dense hopper chunks:
 
-- run `/_hoppers recommend` and export `/_hoppers dump`
+- run `/servercheck hoppers recommend` and export `/servercheck hoppers dump`
 - test MFM dynamic throttle first
 - then test `hopper-check: 2`
 - then test `hopper-check: 4`
@@ -399,7 +396,7 @@ If Spark points at a plugin, database, command, or non-hopper event:
 - do not tune hopper settings yet
 - fix the plugin hotspot first
 
-If `/_hoppers risk` says there is no hopper evidence:
+If `/servercheck hoppers risk` says there is no hopper evidence:
 
 - keep the Hoppers dump as proof of what was checked
 - capture Spark/SparkReviewer evidence during the same drop

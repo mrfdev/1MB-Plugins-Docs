@@ -19,7 +19,7 @@ The canonical command for a new deployable local test build is:
 scripts/build-all.sh
 ```
 
-This command reserves the next shared build number, updates to the latest Paper build for the exact configured `paperTarget` and `paperChannel`, aligns the Paper API coordinate, refreshes generated documentation, runs the complete build and test gate, and synchronizes every suite JAR (currently 63) into the sole maintained server, `servers/Paper-26.3/`. Paper must be stopped before the workflow starts. The selected Paper runtime identity and bytes are verified before compiling. The workflow persists the build number and Paper API coordinate only after deployment verifies successfully. If an attempt fails, correct the problem and rerun the same command; the pending transaction reuses the same proposed build number.
+This command reserves the next shared build number, updates to the latest Paper build for the exact configured `paperTarget` and `paperChannel`, aligns the Paper API coordinate, refreshes generated documentation, runs the complete build and test gate, and synchronizes every suite JAR (currently 61) into the sole maintained server, `servers/Paper-26.3/`. Paper must be stopped before the workflow starts. The selected Paper runtime identity and bytes are verified before compiling. The workflow persists the build number and Paper API coordinate only after deployment verifies successfully. If an attempt fails, correct the problem and rerun the same command; the pending transaction reuses the same proposed build number.
 
 Focused Gradle tasks are still appropriate during development. They do not create a new deployable build:
 
@@ -76,10 +76,10 @@ This is a read-only drift check against the public `1MB-Plugins-Docs` checkout. 
 Expected jar naming:
 
 ```text
-1MB-Lib-Core-v1.0.4-863-j25-26.3.jar
-1MB-Lib-AntiFire-v1.0.4-863-j25-26.3.jar
-1MB-Lib-AFKShrine-v1.0.4-863-j25-26.3.jar
-1MB-Lib-StaffCenter-v1.0.4-863-j25-26.3.jar
+1MB-Lib-Core-v1.0.4-864-j25-26.3.jar
+1MB-Lib-AntiFire-v1.0.4-864-j25-26.3.jar
+1MB-Lib-AFKShrine-v1.0.4-864-j25-26.3.jar
+1MB-Lib-StaffCenter-v1.0.4-864-j25-26.3.jar
 ```
 
 Every new deployable build synchronizes the complete managed suite into the maintained server:

@@ -152,8 +152,8 @@ const PLAYER_GUIDE_OVERRIDES = {
   },
   servercheck: {
     staffDocument: 'servercheck.md',
-    intro: 'Review the Java, Paper, CMI, and CMILib runtime, check plugin dependencies, and run post-update diagnostics.',
-    guide: 'ServerCheck gives staff one place to check installed plugin versions, review startup and Paper diagnostics, and run post-update smoke tests.',
+    intro: 'Review server readiness, inspect plugin dependencies, and investigate hopper and server performance.',
+    guide: 'ServerCheck brings plugin inventory, startup diagnostics, post-update smoke checks, hopper triage, and Spark performance reviews into one staff tool.',
     quickStart: [
       'Use `/servercheck status` to see the runtime and module states.',
       'Follow the [ServerCheck staff reference](/staff-reference/plugins/servercheck/) for permissions, command examples, and upgrade steps.',
@@ -1326,6 +1326,8 @@ const FEATURE_BULLET_OVERRIDES = {
     'Full Markdown and compact Discord-friendly export reports.',
     'Startup, folder, and read-only Paper safety diagnostics.',
     'Explicit post-update smoke checks for commands, placeholders, integrations, and version compatibility.',
+    'Loaded hopper hotspot scans, trend tracking, and retained evidence.',
+    'Spark performance snapshots and a shared controller for explicit profiles.',
   ],
   potions: [
     'A locked staff forge for normal, splash, and lingering custom event potions.',

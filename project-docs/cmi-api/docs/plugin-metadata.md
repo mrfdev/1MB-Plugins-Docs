@@ -19,7 +19,7 @@ TeamMsg, ContentGuard, Placeholders, BentoBox, StaffCenter, ServerCheck, and Wor
 - Placeholders hosts `provider`, `catalog`, `probe`, and `health`; their commands share the `/_placeholders` router.
 - BentoBox hosts `gametypes` alongside the optional island modules. GameTypes retains its placeholder namespace, legacy configuration path, `/gametype`, and the configured island menu shortcuts.
 - StaffCenter hosts the `staffcenter` dashboard, `warninglens`, and `profile`. The dashboard uses the host's runtime namespace and keeps `/staffcenter <player>`. WarningLens and Profile retain their lookup aliases, placeholder namespaces, and command roots.
-- ServerCheck hosts `pluginversions`, `updatesmoke`, and `startupdoctor` under `/servercheck`, with their existing command roots available as compatibility routes.
+- ServerCheck hosts `pluginversions`, `updatesmoke`, `startupdoctor`, `hoppers`, and `sparkreviewer` under `/servercheck`. The modules retain their existing command roots, and Hoppers and SparkReviewer share the Spark profiling controller.
 - WorthAudit hosts `worthhelper` for recipes and trades and `worthdrift` for sales and ShopGUI+. Both use `/worthaudit`.
 
 `/1mblib features` should list the parent jars. The old placeholder/debug lookup ids remain runtime aliases while their module is active. Shared config commands target the host. Use each module’s retained config file and documented reload command for its settings. Parent status commands show configured and runtime module state, and parent lifecycle shutdown unregisters every module listener, scheduler task, service, GUI, and placeholder alias together.
@@ -33,11 +33,11 @@ id: afkshrine
 name: AFKShrine
 category: player-fun
 version: 1.0.4
-build: 863
+build: 864
 java-target: 25
 paper-target: 26.3
 jar-prefix: 1MB-Lib
-jar-name: 1MB-Lib-AFKShrine-v1.0.4-863-j25-26.3.jar
+jar-name: 1MB-Lib-AFKShrine-v1.0.4-864-j25-26.3.jar
 repo: https://github.com/mrfdev/1MB-Library
 public-docs: https://docs.1moreblock.com
 dependencies: CMI, CMILib, 1MB-CMIAPI-LIB

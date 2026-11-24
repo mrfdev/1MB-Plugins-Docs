@@ -1611,7 +1611,7 @@ WorldSnapshot placeholders:
 %onembcmi_worldsnapshot.cache.size%
 ```
 
-SparkReviewer placeholders:
+SparkReviewer module placeholders in ServerCheck:
 
 ```text
 %onembcmi_sparkreviewer.enabled%
@@ -1626,7 +1626,7 @@ SparkReviewer placeholders:
 %onembcmi_sparkreviewer.cache.size%
 ```
 
-Hoppers placeholders:
+Hoppers module placeholders in ServerCheck:
 
 ```text
 %onembcmi_hoppers.enabled%

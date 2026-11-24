@@ -134,7 +134,7 @@ These active artifacts are in the complete CSV but have no proposed player-progr
 | Area | Active artifacts excluded from player-progression adoption |
 | --- | --- |
 | generic | [BedrockChatBridge](plugins/bedrockchatbridge.md), [CMIDatabase](plugins/README.md), [CMIProbe](plugins/cmiprobe.md), [EventRecorder](plugins/eventrecorder.md), [PermissionProbe](plugins/permissionprobe.md), [Placeholders](plugins/placeholders.md) |
-| server-management | [CMIConfig](plugins/cmiconfig.md), [CmdCostDashboard](plugins/cmdcostdashboard.md), [ConsoleNoiseRouter](plugins/consolenoiserouter.md), [Diagnostics](plugins/diagnostics.md), [EconomyGuardian](plugins/economyguardian.md), [Hoppers](plugins/hoppers.md), [Potions](plugins/potions.md), [SchedulerCheck](plugins/schedulercheck.md), [SparkReviewer](plugins/sparkreviewer.md), [ServerCheck](plugins/servercheck.md), [Upgrade](plugins/upgrade.md), [WarpAudit](plugins/warpaudit.md), [WorldSnapshot](plugins/worldsnapshot.md), [WorthAudit](plugins/worthaudit.md) |
+| server-management | [CMIConfig](plugins/cmiconfig.md), [CmdCostDashboard](plugins/cmdcostdashboard.md), [ConsoleNoiseRouter](plugins/consolenoiserouter.md), [Diagnostics](plugins/diagnostics.md), [EconomyGuardian](plugins/economyguardian.md), [Potions](plugins/potions.md), [SchedulerCheck](plugins/schedulercheck.md), [ServerCheck](plugins/servercheck.md), [Upgrade](plugins/upgrade.md), [WarpAudit](plugins/warpaudit.md), [WorldSnapshot](plugins/worldsnapshot.md), [WorthAudit](plugins/worthaudit.md) |
 | staff | [StaffCenter](plugins/staffcenter.md) (dashboard, [WarningLens](plugins/warninglens.md), and [Profile](plugins/profile.md)), [TeamMsg](plugins/teammsg.md) |
 
 ## Availability is a separate axis
