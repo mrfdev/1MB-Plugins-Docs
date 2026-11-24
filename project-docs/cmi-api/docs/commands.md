@@ -1200,9 +1200,15 @@ DiscordChat:
 /discordchat debug all
 ```
 
-GameTypes:
+BentoBox and its GameTypes menu module. The existing game-root menu shortcuts and `/gametype` remain available with the GameTypes grants.
 
 ```text
+/1mbbento status
+/1mbbento menu
+/1mbbento menu oneblock
+/1mbbento gametypes status
+/1mbbento module gametypes <true|false>
+/1mbbento debug enable <true|false>
 /gametype
 /gametype info
 /gametype help
@@ -1213,6 +1219,11 @@ GameTypes:
 /gametype menu acid
 /gametype menu cave
 /gametype menu skygrid
+/oneblock menu
+/cave menu
+/acid menu
+/skyblock menu
+/skygrid menu
 /chunkblock menu
 /gametype status
 /gametype reload
@@ -1222,6 +1233,7 @@ GameTypes:
 /gametype debug permissions
 /gametype debug placeholders
 /gametype debug config
+/gametype debug enable <true|false>
 /gametype debug all
 ```
 

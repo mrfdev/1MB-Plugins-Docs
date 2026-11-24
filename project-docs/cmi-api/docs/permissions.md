@@ -326,6 +326,11 @@ onembcmi.gametypes.menu
 onembcmi.gametypes.admin
 onembcmi.gametypes.admin.reload
 onembcmi.gametypes.admin.debug
+onembcmi.bentobox.use
+onembcmi.bentobox.expand
+onembcmi.bentobox.admin
+onembcmi.bentobox.admin.debug
+onembcmi.bentobox.admin.reload
 onembcmi.birthdaylanterns.use
 onembcmi.birthdaylanterns.set
 onembcmi.birthdaylanterns.claim
@@ -673,6 +678,10 @@ DropParty grants `onembcmi.dropparty.use`, `onembcmi.dropparty.join`, `onembcmi.
 Appreciation installs dormant with `enabled: false`, and its entry gate `onembcmi.appreciation.use` also defaults false for an opt-in staff, tester, or patron rollout. Only online players with that node, or the Appreciation admin parent, appear as new recipients. Both participants are rechecked before escrow funding. The supporting `onembcmi.appreciation.gift.xp`, `onembcmi.appreciation.gift.money`, `onembcmi.appreciation.gift.item`, `onembcmi.appreciation.anonymous`, `onembcmi.appreciation.claim`, and `onembcmi.appreciation.stats` nodes default true; none bypasses the entry gate for a new send. Claim remains independent so already-funded gifts stay claimable after a rollout permission is removed. All `onembcmi.appreciation.admin*` nodes default false. The parent includes `menu`, `inspect`, `recovery`, `quota`, `points`, `gifts`, `audit`, `reload`, and `debug`. `onembcmi.appreciation.admin.audit` exposes receipt-only anti-farming indicators for manual staff review; it stores no IP data and does not punish automatically. Recovery is especially sensitive: staff must inspect the receipt and independently verify the external XP, Vault, or inventory boundary before using a confirmed retry, rollback, refund, expiry-finalize, or delivery-finalize action. Operator status alone does not grant Appreciation administration.
 
 [Documentation index](README.md)
+
+## BentoBox
+
+GameTypes keeps its `onembcmi.gametypes.*` grants. The same menu permission applies to `/gametype`, `/1mbbento menu`, and configured island menu shortcuts. The `onembcmi.bentobox.*` grants cover the optional island modules and their administration.
 
 ## Next-step guidance
 

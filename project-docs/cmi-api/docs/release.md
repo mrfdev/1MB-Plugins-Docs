@@ -42,7 +42,7 @@ For every new local test build, stop the maintained Paper 26.3 instance and run:
 scripts/build-all.sh
 ```
 
-The workflow keeps PaperScript on the explicit `paperChannel` (`STABLE` for 26.3), requests the latest build for the exact configured `paperTarget`, stages `Paper-{version}-{build}.jar`, aligns `paperApiVersion`, increments the one suite-wide build number, builds and tests every active artifact (currently 64), and synchronizes the complete set into `servers/Paper-26.3/`. It persists release metadata only after the active-plus-disabled suite set verifies by filename and bytes. `gradle verifyLocalPaperAlignment` fails when the local PaperScript state, configured channel, launcher-selected numbered JAR, checksum or compile API build differs.
+The workflow keeps PaperScript on the explicit `paperChannel` (`STABLE` for 26.3), requests the latest build for the exact configured `paperTarget`, stages `Paper-{version}-{build}.jar`, aligns `paperApiVersion`, increments the one suite-wide build number, builds and tests every active artifact (currently 63), and synchronizes the complete set into `servers/Paper-26.3/`. It persists release metadata only after the active-plus-disabled suite set verifies by filename and bytes. `gradle verifyLocalPaperAlignment` fails when the local PaperScript state, configured channel, launcher-selected numbered JAR, checksum or compile API build differs.
 
 ## Jar Naming
 
@@ -55,63 +55,63 @@ All jars should follow this shape:
 Examples:
 
 ```text
-1MB-Lib-Core-v1.0.4-862-j25-26.3.jar
-1MB-Lib-AntiFire-v1.0.4-862-j25-26.3.jar
-1MB-Lib-AFKShrine-v1.0.4-862-j25-26.3.jar
-1MB-Lib-RecordingMode-v1.0.4-862-j25-26.3.jar
-1MB-Lib-SellStreaks-v1.0.4-862-j25-26.3.jar
-1MB-Lib-ScheduledTips-v1.0.4-862-j25-26.3.jar
-1MB-Lib-Visit-v1.0.4-862-j25-26.3.jar
-1MB-Lib-PassportDiscovery-v1.0.4-862-j25-26.3.jar
-1MB-Lib-SocialGatherings-v1.0.4-862-j25-26.3.jar
-1MB-Lib-JourneyMap-v1.0.4-862-j25-26.3.jar
-1MB-Lib-KitStreaks-v1.0.4-862-j25-26.3.jar
-1MB-Lib-Nick-v1.0.4-862-j25-26.3.jar
-1MB-Lib-EmoteMenu-v1.0.4-862-j25-26.3.jar
-1MB-Lib-PvPToggle-v1.0.4-862-j25-26.3.jar
-1MB-Lib-Boosters-v1.0.4-862-j25-26.3.jar
-1MB-Lib-NameMC-v1.0.4-862-j25-26.3.jar
-1MB-Lib-Exchange-v1.0.4-862-j25-26.3.jar
-1MB-Lib-VoteTokens-v1.0.4-862-j25-26.3.jar
-1MB-Lib-DiscordChat-v1.0.4-862-j25-26.3.jar
-1MB-Lib-GameTypes-v1.0.4-862-j25-26.3.jar
-1MB-Lib-BirthdayLanterns-v1.0.4-862-j25-26.3.jar
-1MB-Lib-LavaBoots-v1.0.4-862-j25-26.3.jar
-1MB-Lib-Spawners-v1.0.4-862-j25-26.3.jar
-1MB-Lib-Collect-v1.0.4-862-j25-26.3.jar
-1MB-Lib-EventHunts-v1.0.4-862-j25-26.3.jar
-1MB-Lib-DropParty-v1.0.4-862-j25-26.3.jar
-1MB-Lib-Advent-v1.0.4-862-j25-26.3.jar
-1MB-Lib-HideAndSheep-v1.0.4-862-j25-26.3.jar
-1MB-Lib-Appreciation-v1.0.4-862-j25-26.3.jar
-1MB-Lib-Forage-v1.0.4-862-j25-26.3.jar
-1MB-Lib-MobHat-v1.0.4-862-j25-26.3.jar
-1MB-Lib-PlayerTodo-v1.0.4-862-j25-26.3.jar
-1MB-Lib-Refer-v1.0.4-862-j25-26.3.jar
-1MB-Lib-TPAuto-v1.0.4-862-j25-26.3.jar
-1MB-Lib-Menu-v1.0.4-862-j25-26.3.jar
-1MB-Lib-StaffCenter-v1.0.4-862-j25-26.3.jar
-1MB-Lib-ContentGuard-v1.0.4-862-j25-26.3.jar
-1MB-Lib-TeamMsg-v1.0.4-862-j25-26.3.jar
-1MB-Lib-CmdCostDashboard-v1.0.4-862-j25-26.3.jar
-1MB-Lib-CMIConfig-v1.0.4-862-j25-26.3.jar
-1MB-Lib-ConsoleNoiseRouter-v1.0.4-862-j25-26.3.jar
-1MB-Lib-EconomyGuardian-v1.0.4-862-j25-26.3.jar
-1MB-Lib-ServerCheck-v1.0.4-862-j25-26.3.jar
-1MB-Lib-Placeholders-v1.0.4-862-j25-26.3.jar
-1MB-Lib-Potions-v1.0.4-862-j25-26.3.jar
-1MB-Lib-Upgrade-v1.0.4-862-j25-26.3.jar
-1MB-Lib-EndCrystals-v1.0.4-862-j25-26.3.jar
-1MB-Lib-WorldSnapshot-v1.0.4-862-j25-26.3.jar
-1MB-Lib-SparkReviewer-v1.0.4-862-j25-26.3.jar
-1MB-Lib-Hoppers-v1.0.4-862-j25-26.3.jar
-1MB-Lib-EventRecorder-v1.0.4-862-j25-26.3.jar
-1MB-Lib-BedrockChatBridge-v1.0.4-862-j25-26.3.jar
-1MB-Lib-CMIProbe-v1.0.4-862-j25-26.3.jar
-1MB-Lib-CMIDatabase-v1.0.4-862-j25-26.3.jar
-1MB-Lib-PermissionProbe-v1.0.4-862-j25-26.3.jar
-1MB-Lib-WarpAudit-v1.0.4-862-j25-26.3.jar
-1MB-Lib-WorthAudit-v1.0.4-862-j25-26.3.jar
+1MB-Lib-Core-v1.0.4-863-j25-26.3.jar
+1MB-Lib-AntiFire-v1.0.4-863-j25-26.3.jar
+1MB-Lib-AFKShrine-v1.0.4-863-j25-26.3.jar
+1MB-Lib-RecordingMode-v1.0.4-863-j25-26.3.jar
+1MB-Lib-SellStreaks-v1.0.4-863-j25-26.3.jar
+1MB-Lib-ScheduledTips-v1.0.4-863-j25-26.3.jar
+1MB-Lib-Visit-v1.0.4-863-j25-26.3.jar
+1MB-Lib-PassportDiscovery-v1.0.4-863-j25-26.3.jar
+1MB-Lib-SocialGatherings-v1.0.4-863-j25-26.3.jar
+1MB-Lib-JourneyMap-v1.0.4-863-j25-26.3.jar
+1MB-Lib-KitStreaks-v1.0.4-863-j25-26.3.jar
+1MB-Lib-Nick-v1.0.4-863-j25-26.3.jar
+1MB-Lib-EmoteMenu-v1.0.4-863-j25-26.3.jar
+1MB-Lib-PvPToggle-v1.0.4-863-j25-26.3.jar
+1MB-Lib-Boosters-v1.0.4-863-j25-26.3.jar
+1MB-Lib-NameMC-v1.0.4-863-j25-26.3.jar
+1MB-Lib-Exchange-v1.0.4-863-j25-26.3.jar
+1MB-Lib-VoteTokens-v1.0.4-863-j25-26.3.jar
+1MB-Lib-DiscordChat-v1.0.4-863-j25-26.3.jar
+1MB-Lib-BentoBox-v1.0.4-863-j25-26.3.jar
+1MB-Lib-BirthdayLanterns-v1.0.4-863-j25-26.3.jar
+1MB-Lib-LavaBoots-v1.0.4-863-j25-26.3.jar
+1MB-Lib-Spawners-v1.0.4-863-j25-26.3.jar
+1MB-Lib-Collect-v1.0.4-863-j25-26.3.jar
+1MB-Lib-EventHunts-v1.0.4-863-j25-26.3.jar
+1MB-Lib-DropParty-v1.0.4-863-j25-26.3.jar
+1MB-Lib-Advent-v1.0.4-863-j25-26.3.jar
+1MB-Lib-HideAndSheep-v1.0.4-863-j25-26.3.jar
+1MB-Lib-Appreciation-v1.0.4-863-j25-26.3.jar
+1MB-Lib-Forage-v1.0.4-863-j25-26.3.jar
+1MB-Lib-MobHat-v1.0.4-863-j25-26.3.jar
+1MB-Lib-PlayerTodo-v1.0.4-863-j25-26.3.jar
+1MB-Lib-Refer-v1.0.4-863-j25-26.3.jar
+1MB-Lib-TPAuto-v1.0.4-863-j25-26.3.jar
+1MB-Lib-Menu-v1.0.4-863-j25-26.3.jar
+1MB-Lib-StaffCenter-v1.0.4-863-j25-26.3.jar
+1MB-Lib-ContentGuard-v1.0.4-863-j25-26.3.jar
+1MB-Lib-TeamMsg-v1.0.4-863-j25-26.3.jar
+1MB-Lib-CmdCostDashboard-v1.0.4-863-j25-26.3.jar
+1MB-Lib-CMIConfig-v1.0.4-863-j25-26.3.jar
+1MB-Lib-ConsoleNoiseRouter-v1.0.4-863-j25-26.3.jar
+1MB-Lib-EconomyGuardian-v1.0.4-863-j25-26.3.jar
+1MB-Lib-ServerCheck-v1.0.4-863-j25-26.3.jar
+1MB-Lib-Placeholders-v1.0.4-863-j25-26.3.jar
+1MB-Lib-Potions-v1.0.4-863-j25-26.3.jar
+1MB-Lib-Upgrade-v1.0.4-863-j25-26.3.jar
+1MB-Lib-EndCrystals-v1.0.4-863-j25-26.3.jar
+1MB-Lib-WorldSnapshot-v1.0.4-863-j25-26.3.jar
+1MB-Lib-SparkReviewer-v1.0.4-863-j25-26.3.jar
+1MB-Lib-Hoppers-v1.0.4-863-j25-26.3.jar
+1MB-Lib-EventRecorder-v1.0.4-863-j25-26.3.jar
+1MB-Lib-BedrockChatBridge-v1.0.4-863-j25-26.3.jar
+1MB-Lib-CMIProbe-v1.0.4-863-j25-26.3.jar
+1MB-Lib-CMIDatabase-v1.0.4-863-j25-26.3.jar
+1MB-Lib-PermissionProbe-v1.0.4-863-j25-26.3.jar
+1MB-Lib-WarpAudit-v1.0.4-863-j25-26.3.jar
+1MB-Lib-WorthAudit-v1.0.4-863-j25-26.3.jar
 ```
 
 ## Consolidated support and economy tools
@@ -121,6 +121,10 @@ Suite build 860 introduces WorthAudit. Build 861 adds ServerCheck. Follow the [s
 ## StaffCenter consolidation
 
 `1MB-Lib-StaffCenter` ships the dashboard, WarningLens, and Profile. Follow the [StaffCenter upgrade steps](installation.md#upgrade-to-the-combined-staffcenter) to retire the two standalone JARs and keep their data. Check the imported module states and permission boundaries before staging the tested suite.
+
+## BentoBox consolidation
+
+`1MB-Lib-BentoBox` ships GameTypes menus and the optional island modules. Follow the [BentoBox upgrade steps](installation.md#upgrade-to-the-combined-bentobox) to retire the standalone GameTypes JAR, preserve both configurations and the ledger, and verify the existing island menu shortcuts.
 
 ## Local Build
 
@@ -159,7 +163,7 @@ Then review, commit, and push the public docs repository separately.
 
 ## Copy To Project Test Server
 
-Every successful deployable build must place the complete managed set (currently 64 JARs) into the maintained instance:
+Every successful deployable build must place the complete managed set (currently 63 JARs) into the maintained instance:
 
 ```text
 servers/Paper-26.3/plugins/
@@ -185,7 +189,7 @@ scripts/copy-built-jars-to-local-server.sh
 
 The task runs the complete project build gate, preflights the selected target, and holds its existing world locks during replacement. It stages candidates and backups before activation. A failure restores the prior suite; an interrupted transaction blocks later attempts until the transaction's `targets.txt`, staged candidates, `rollback/active/`, `rollback/disabled/` and active/disabled state are reviewed. Review every referenced target when recovering older multi-server transactions. Configurations, worlds, playerdata and third-party plugins remain untouched by JAR synchronization.
 
-The optional server-local `1mb-library-disabled-artifacts.txt` routes named exact suite artifact stems into `plugins-disabled/1mb-library/`. Filename and byte verification covers the complete combined set of active and deliberately disabled artifacts. See [compiling and deployment](compiling.md) for policy, recovery and the explicit repair-target override. GameTypes/BentoBox deployment remains separate.
+The optional server-local `1mb-library-disabled-artifacts.txt` routes named exact suite artifact stems into `plugins-disabled/1mb-library/`. Filename and byte verification covers the complete combined set of active and deliberately disabled artifacts. See [compiling and deployment](compiling.md) for policy, recovery and the explicit repair-target override. GameTypes ships in the BentoBox JAR.
 
 Retired local servers live under the Git-ignored `archive/` directory and are excluded from ordinary build, sync, staging and test workflows. Preserve the Forage 26.3 private-beta instance and Paper 26.2 build-699 rollback intact, with checksums, under `archive/servers/2026-10-19/`. Do not point release tasks at an archived server; the sole maintained target is `servers/Paper-26.3/`.
 

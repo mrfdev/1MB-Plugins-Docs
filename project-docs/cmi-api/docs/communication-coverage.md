@@ -2,7 +2,7 @@
 
 **CLOSE-01 completed on 2026-09-07.** Tracking: [communication completion, issue #48](https://github.com/mrfdev/1MB-Library/issues/48). This is a source-backed inventory of the current working tree associated with canonical **build 620**, not live-server acceptance. Current close-out status is in the [communication TODO](../todo.communication.md#completion-and-acceptance).
 
-The suite has **64 active distributable artifacts**: one Shared Library, 33 Player Fun, 19 Server Management, five Staff and six Generic artifacts. All 64 are accounted for in the [full 12-pattern matrix (CSV)](communication-coverage.csv). EventHunts contains Coconut, Ghost and Door Hunt internally and is counted once. MessageFont and WarpPassport are two additional source-only entries outside the active build. Here, *active artifact* means part of the build, not enabled gameplay on live.
+The build-620 audit covered **64 active distributable artifacts**: one Shared Library, 33 Player Fun, 19 Server Management, five Staff and six Generic artifacts. All 64 are accounted for in the [full 12-pattern matrix (CSV)](communication-coverage.csv). EventHunts contains Coconut, Ghost and Door Hunt internally and is counted once. MessageFont and WarpPassport are two additional source-only entries outside the active build. Here, *active artifact* means part of the build, not enabled gameplay on live.
 
 ## How to read the matrix
 
@@ -113,7 +113,7 @@ These retain their existing communication. Candidate numbers reference the twelv
 | [EmoteMenu](plugins/emotemenu.md) | Curated emote picker backed by existing CMI aliases. | 2, 3 | Selection availability and action descriptions; no required progression loop. |
 | [EndCrystals](plugins/endcrystals.md) | Protection/moderation feature with possible player-facing denied-action feedback; no progression providers. | 3 | Review only useful, appropriate recovery copy for blocked actions; retain required safety/moderation feedback. |
 | [Exchange](plugins/exchange.md) | Existing menu-driven item exchanges and trade results. | 2, 3, 4, 5, 6, 8 | Prioritise costs, item eligibility, blockers and confirmed outcomes. An affordable exchange is not an earned reward in the hub. |
-| [GameTypes](plugins/gametypes.md) | Safe routing into the relevant BentoBox game-type menu. | 2, 3 | World/access/navigation recovery first; underlying island progress belongs to its provider. |
+| [GameTypes](plugins/gametypes.md) | Safe routing into the relevant BentoBox game-type menu. | 2, 3 | World/access/navigation recovery first; underlying island progress belongs to its provider. The menu now ships with BentoBox. |
 | [LavaBoots](plugins/lavaboots.md) | Finite custom event boots with their own item behaviour. | 2, 3 | Explain remaining protection and why it stopped; no new streak or invented reward path. |
 | [MobHat](plugins/mobhat.md) | Temporary mob-cosmetic selection with its own eligibility rules. | 2, 3 | Readable selected state and blocked-selection recovery. |
 | [NameMC](plugins/namemc.md) | Existing NameMC verification/link and reward flow. | 1, 2, 3, 4, 5, 6, 8, 11 | An external verification must remain authoritative. Do not present a link, submitted request or cooldown as a delivered reward. |
@@ -171,7 +171,7 @@ SellStreaks' repeated-material count and SocialGatherings' same-type limit are n
 
 ## Evidence and completion criteria
 
-The source census covers all 64 active manifest entries and both source-only entries, with file/line matches for next, focus, first steps, welcome opt-ins, cards, previews, recovery/reward helpers and optional hint/quiet integration. It is supplemented by the actual provider implementations and plugin flow documents. The CSV includes representative source references for each active artifact; complete matches and a production-file hash snapshot are retained locally in `.scratch/communication/coverage-audit/`.
+The build-620 source census covered all 64 active manifest entries and both source-only entries, with file/line matches for next, focus, first steps, welcome opt-ins, cards, previews, recovery/reward helpers and optional hint/quiet integration. It is supplemented by the actual provider implementations and plugin flow documents. The CSV includes representative source references for each active artifact; complete matches and a production-file hash snapshot are retained locally in `.scratch/communication/coverage-audit/`.
 
 | Area | Production entry point / supporting documentation |
 | --- | --- |

@@ -10,64 +10,64 @@ Paper loads normal plugin jars from the top-level server `/plugins/` directory, 
 plugins/
   CMI-<version>.jar
   CMILib<version>.jar
-  1MB-Lib-Core-v1.0.4-862-j25-26.3.jar
-  1MB-Lib-AntiFire-v1.0.4-862-j25-26.3.jar
-  1MB-Lib-AFKShrine-v1.0.4-862-j25-26.3.jar
-  1MB-Lib-RecordingMode-v1.0.4-862-j25-26.3.jar
-  1MB-Lib-SellStreaks-v1.0.4-862-j25-26.3.jar
-  1MB-Lib-ScheduledTips-v1.0.4-862-j25-26.3.jar
-  1MB-Lib-Visit-v1.0.4-862-j25-26.3.jar
-  1MB-Lib-PassportDiscovery-v1.0.4-862-j25-26.3.jar
-  1MB-Lib-SocialGatherings-v1.0.4-862-j25-26.3.jar
-  1MB-Lib-JourneyMap-v1.0.4-862-j25-26.3.jar
-  1MB-Lib-KitStreaks-v1.0.4-862-j25-26.3.jar
-  1MB-Lib-Nick-v1.0.4-862-j25-26.3.jar
-  1MB-Lib-EmoteMenu-v1.0.4-862-j25-26.3.jar
-  1MB-Lib-PvPToggle-v1.0.4-862-j25-26.3.jar
-  1MB-Lib-Boosters-v1.0.4-862-j25-26.3.jar
-  1MB-Lib-NameMC-v1.0.4-862-j25-26.3.jar
-  1MB-Lib-Exchange-v1.0.4-862-j25-26.3.jar
-  1MB-Lib-VoteTokens-v1.0.4-862-j25-26.3.jar
-  1MB-Lib-DiscordChat-v1.0.4-862-j25-26.3.jar
-  1MB-Lib-GameTypes-v1.0.4-862-j25-26.3.jar
-  1MB-Lib-BirthdayLanterns-v1.0.4-862-j25-26.3.jar
-  1MB-Lib-LavaBoots-v1.0.4-862-j25-26.3.jar
-  1MB-Lib-Spawners-v1.0.4-862-j25-26.3.jar
-  1MB-Lib-Collect-v1.0.4-862-j25-26.3.jar
-  1MB-Lib-EventHunts-v1.0.4-862-j25-26.3.jar
-  1MB-Lib-DropParty-v1.0.4-862-j25-26.3.jar
-  1MB-Lib-Advent-v1.0.4-862-j25-26.3.jar
-  1MB-Lib-HideAndSheep-v1.0.4-862-j25-26.3.jar
-  1MB-Lib-Appreciation-v1.0.4-862-j25-26.3.jar
-  1MB-Lib-Forage-v1.0.4-862-j25-26.3.jar
-  1MB-Lib-AutoSell-v1.0.4-862-j25-26.3.jar
-  1MB-Lib-MobHat-v1.0.4-862-j25-26.3.jar
-  1MB-Lib-PlayerTodo-v1.0.4-862-j25-26.3.jar
-  1MB-Lib-Refer-v1.0.4-862-j25-26.3.jar
-  1MB-Lib-TPAuto-v1.0.4-862-j25-26.3.jar
-  1MB-Lib-Menu-v1.0.4-862-j25-26.3.jar
-  1MB-Lib-StaffCenter-v1.0.4-862-j25-26.3.jar
-  1MB-Lib-ContentGuard-v1.0.4-862-j25-26.3.jar
-  1MB-Lib-TeamMsg-v1.0.4-862-j25-26.3.jar
-  1MB-Lib-CmdCostDashboard-v1.0.4-862-j25-26.3.jar
-  1MB-Lib-CMIConfig-v1.0.4-862-j25-26.3.jar
-  1MB-Lib-ConsoleNoiseRouter-v1.0.4-862-j25-26.3.jar
-  1MB-Lib-EconomyGuardian-v1.0.4-862-j25-26.3.jar
-  1MB-Lib-ServerCheck-v1.0.4-862-j25-26.3.jar
-  1MB-Lib-Placeholders-v1.0.4-862-j25-26.3.jar
-  1MB-Lib-Potions-v1.0.4-862-j25-26.3.jar
-  1MB-Lib-Upgrade-v1.0.4-862-j25-26.3.jar
-  1MB-Lib-EndCrystals-v1.0.4-862-j25-26.3.jar
-  1MB-Lib-WorldSnapshot-v1.0.4-862-j25-26.3.jar
-  1MB-Lib-SparkReviewer-v1.0.4-862-j25-26.3.jar
-  1MB-Lib-Hoppers-v1.0.4-862-j25-26.3.jar
-  1MB-Lib-EventRecorder-v1.0.4-862-j25-26.3.jar
-  1MB-Lib-BedrockChatBridge-v1.0.4-862-j25-26.3.jar
-  1MB-Lib-CMIProbe-v1.0.4-862-j25-26.3.jar
-  1MB-Lib-CMIDatabase-v1.0.4-862-j25-26.3.jar
-  1MB-Lib-PermissionProbe-v1.0.4-862-j25-26.3.jar
-  1MB-Lib-WarpAudit-v1.0.4-862-j25-26.3.jar
-  1MB-Lib-WorthAudit-v1.0.4-862-j25-26.3.jar
+  1MB-Lib-Core-v1.0.4-863-j25-26.3.jar
+  1MB-Lib-AntiFire-v1.0.4-863-j25-26.3.jar
+  1MB-Lib-AFKShrine-v1.0.4-863-j25-26.3.jar
+  1MB-Lib-RecordingMode-v1.0.4-863-j25-26.3.jar
+  1MB-Lib-SellStreaks-v1.0.4-863-j25-26.3.jar
+  1MB-Lib-ScheduledTips-v1.0.4-863-j25-26.3.jar
+  1MB-Lib-Visit-v1.0.4-863-j25-26.3.jar
+  1MB-Lib-PassportDiscovery-v1.0.4-863-j25-26.3.jar
+  1MB-Lib-SocialGatherings-v1.0.4-863-j25-26.3.jar
+  1MB-Lib-JourneyMap-v1.0.4-863-j25-26.3.jar
+  1MB-Lib-KitStreaks-v1.0.4-863-j25-26.3.jar
+  1MB-Lib-Nick-v1.0.4-863-j25-26.3.jar
+  1MB-Lib-EmoteMenu-v1.0.4-863-j25-26.3.jar
+  1MB-Lib-PvPToggle-v1.0.4-863-j25-26.3.jar
+  1MB-Lib-Boosters-v1.0.4-863-j25-26.3.jar
+  1MB-Lib-NameMC-v1.0.4-863-j25-26.3.jar
+  1MB-Lib-Exchange-v1.0.4-863-j25-26.3.jar
+  1MB-Lib-VoteTokens-v1.0.4-863-j25-26.3.jar
+  1MB-Lib-DiscordChat-v1.0.4-863-j25-26.3.jar
+  1MB-Lib-BentoBox-v1.0.4-863-j25-26.3.jar
+  1MB-Lib-BirthdayLanterns-v1.0.4-863-j25-26.3.jar
+  1MB-Lib-LavaBoots-v1.0.4-863-j25-26.3.jar
+  1MB-Lib-Spawners-v1.0.4-863-j25-26.3.jar
+  1MB-Lib-Collect-v1.0.4-863-j25-26.3.jar
+  1MB-Lib-EventHunts-v1.0.4-863-j25-26.3.jar
+  1MB-Lib-DropParty-v1.0.4-863-j25-26.3.jar
+  1MB-Lib-Advent-v1.0.4-863-j25-26.3.jar
+  1MB-Lib-HideAndSheep-v1.0.4-863-j25-26.3.jar
+  1MB-Lib-Appreciation-v1.0.4-863-j25-26.3.jar
+  1MB-Lib-Forage-v1.0.4-863-j25-26.3.jar
+  1MB-Lib-AutoSell-v1.0.4-863-j25-26.3.jar
+  1MB-Lib-MobHat-v1.0.4-863-j25-26.3.jar
+  1MB-Lib-PlayerTodo-v1.0.4-863-j25-26.3.jar
+  1MB-Lib-Refer-v1.0.4-863-j25-26.3.jar
+  1MB-Lib-TPAuto-v1.0.4-863-j25-26.3.jar
+  1MB-Lib-Menu-v1.0.4-863-j25-26.3.jar
+  1MB-Lib-StaffCenter-v1.0.4-863-j25-26.3.jar
+  1MB-Lib-ContentGuard-v1.0.4-863-j25-26.3.jar
+  1MB-Lib-TeamMsg-v1.0.4-863-j25-26.3.jar
+  1MB-Lib-CmdCostDashboard-v1.0.4-863-j25-26.3.jar
+  1MB-Lib-CMIConfig-v1.0.4-863-j25-26.3.jar
+  1MB-Lib-ConsoleNoiseRouter-v1.0.4-863-j25-26.3.jar
+  1MB-Lib-EconomyGuardian-v1.0.4-863-j25-26.3.jar
+  1MB-Lib-ServerCheck-v1.0.4-863-j25-26.3.jar
+  1MB-Lib-Placeholders-v1.0.4-863-j25-26.3.jar
+  1MB-Lib-Potions-v1.0.4-863-j25-26.3.jar
+  1MB-Lib-Upgrade-v1.0.4-863-j25-26.3.jar
+  1MB-Lib-EndCrystals-v1.0.4-863-j25-26.3.jar
+  1MB-Lib-WorldSnapshot-v1.0.4-863-j25-26.3.jar
+  1MB-Lib-SparkReviewer-v1.0.4-863-j25-26.3.jar
+  1MB-Lib-Hoppers-v1.0.4-863-j25-26.3.jar
+  1MB-Lib-EventRecorder-v1.0.4-863-j25-26.3.jar
+  1MB-Lib-BedrockChatBridge-v1.0.4-863-j25-26.3.jar
+  1MB-Lib-CMIProbe-v1.0.4-863-j25-26.3.jar
+  1MB-Lib-CMIDatabase-v1.0.4-863-j25-26.3.jar
+  1MB-Lib-PermissionProbe-v1.0.4-863-j25-26.3.jar
+  1MB-Lib-WarpAudit-v1.0.4-863-j25-26.3.jar
+  1MB-Lib-WorthAudit-v1.0.4-863-j25-26.3.jar
 ```
 
 The common `1MB-Lib-` prefix keeps the project JARs together when sorted by filename.
@@ -94,7 +94,7 @@ These compatibility Paper plugin identities start enabled on a fresh installatio
 - `1MB-CMIAPI-EmoteMenu`
 - `1MB-CMIAPI-EndCrystals`
 - `1MB-CMIAPI-Exchange`
-- `1MB-CMIAPI-GameTypes`
+- `1MB-CMIAPI-BentoBox`
 - `1MB-CMIAPI-Hoppers`
 - `1MB-CMIAPI-Menu`
 - `1MB-CMIAPI-MobHat`
@@ -118,6 +118,8 @@ Activate or dormant a feature live with:
 ```
 
 Console, the feature's `onembcmi.<feature-id>.admin` permission, or `onembcmi.global.config.set` may use this control. It atomically persists `enabled: true|false` in `plugins/1MB-CMIAPI/<FeatureName>/config.yml`; a server restart is not required. The equivalent central command remains `/1mblib config set <feature-id> enabled <true|false>`.
+
+BentoBox keeps host activation in `BentoBox/host.yml`. A fresh installation starts GameTypes menus and leaves island markets, merchants, events, and other optional island modules dormant.
 
 StaffCenter keeps host activation in `StaffCenter/host.yml`. A fresh installation activates Profile and leaves the dashboard and WarningLens dormant.
 
@@ -167,6 +169,15 @@ For rollback, stop Paper and restore the previous complete suite. See [ServerChe
 
 For rollback, stop Paper and restore the previous complete suite. The standalone plugins continue to read their original configuration files. If you changed module switches since the upgrade, review the standalone `enabled` settings before the rollback start. See [StaffCenter](plugins/staffcenter.md) for commands and data paths.
 
+## Upgrade to the combined BentoBox
+
+1. Stop Paper. Keep a rollback copy of the previous complete suite and back up the existing 1MB Library data and the third-party BentoBox data.
+2. Install the complete tested suite containing the updated `1MB-Lib-BentoBox`. Move the standalone `1MB-Lib-GameTypes-*` JAR and any older equivalent `1MB-CMIAPI-GameTypes-*` JAR out of the plugin load path. Keep the third-party BentoBox JAR and its addons installed.
+3. Keep `BentoBox/config.yml`, `BentoBox/islands.sqlite` and any SQLite companion files, `GameTypes/config.yml`, and the existing translations under `plugins/1MB-CMIAPI/`. Preserve the matching worlds, inventories, currency and reward records. The new `BentoBox/host.yml` imports the two legacy activation switches on first startup.
+4. After restart, verify the imported states with `/1mbbento status`. From a player account, open `/oneblock menu`, `/cave menu`, and the other installed island menu shortcuts as well as `/gametype`. Optional island modules keep their existing settings and activation.
+
+For rollback, stop Paper and restore the previous complete suite. The old JARs read their original config files. Review the legacy `enabled` values if you changed either module switch after the upgrade. See the [BentoBox staff guide](plugins/bentobox.md) for activation, permissions, and data paths.
+
 ## Runtime Data
 
 Runtime data should be stored under one central folder:
@@ -182,6 +193,12 @@ plugins/
       debug/
       playerdata/
     AntiFire/
+      config.yml
+    BentoBox/
+      host.yml
+      config.yml
+      islands.sqlite
+    GameTypes/
       config.yml
     AFKShrine/
       config.yml

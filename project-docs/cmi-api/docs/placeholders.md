@@ -735,7 +735,7 @@ papi parse mrfloris %onembcmi_discordchat.suffix%
 
 For CMI chat formats, use these dot-separated prefix/suffix tokens. See the [DiscordChat CMI setup](plugins/discordchat.md#showing-cosmetics-in-cmi-chat).
 
-GameTypes placeholders:
+The GameTypes module in `1MB-Lib-BentoBox` keeps the existing placeholder namespace.
 
 ```text
 %onembcmi_gametypes_detected%

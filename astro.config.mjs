@@ -16,6 +16,8 @@ const redirects = {
   '/player-guides/plugins/filterlab': '/player-guides/plugins/contentguard/',
   '/player-guides/plugins/filterguard': '/player-guides/plugins/contentguard/',
   '/player-guides/plugins/notablemsg': '/player-guides/plugins/teammsg/',
+  '/player-guides/plugins/gametypes': '/player-guides/plugins/bentobox/',
+  '/staff-reference/plugins/gametypes': '/staff-reference/plugins/bentobox/',
   '/player-guides/plugins/profile': '/player-guides/plugins/staffcenter/',
   '/player-guides/plugins/warninglens': '/player-guides/plugins/staffcenter/',
   '/staff-reference/plugins/profile': '/staff-reference/plugins/staffcenter/',

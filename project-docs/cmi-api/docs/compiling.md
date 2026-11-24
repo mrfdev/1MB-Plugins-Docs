@@ -19,7 +19,7 @@ The canonical command for a new deployable local test build is:
 scripts/build-all.sh
 ```
 
-This command reserves the next shared build number, updates to the latest Paper build for the exact configured `paperTarget` and `paperChannel`, aligns the Paper API coordinate, refreshes generated documentation, runs the complete build and test gate, and synchronizes every suite JAR (currently 64) into the sole maintained server, `servers/Paper-26.3/`. Paper must be stopped before the workflow starts. The selected Paper runtime identity and bytes are verified before compiling. The workflow persists the build number and Paper API coordinate only after deployment verifies successfully. If an attempt fails, correct the problem and rerun the same command; the pending transaction reuses the same proposed build number.
+This command reserves the next shared build number, updates to the latest Paper build for the exact configured `paperTarget` and `paperChannel`, aligns the Paper API coordinate, refreshes generated documentation, runs the complete build and test gate, and synchronizes every suite JAR (currently 63) into the sole maintained server, `servers/Paper-26.3/`. Paper must be stopped before the workflow starts. The selected Paper runtime identity and bytes are verified before compiling. The workflow persists the build number and Paper API coordinate only after deployment verifies successfully. If an attempt fails, correct the problem and rerun the same command; the pending transaction reuses the same proposed build number.
 
 Focused Gradle tasks are still appropriate during development. They do not create a new deployable build:
 
@@ -76,10 +76,10 @@ This is a read-only drift check against the public `1MB-Plugins-Docs` checkout. 
 Expected jar naming:
 
 ```text
-1MB-Lib-Core-v1.0.4-862-j25-26.3.jar
-1MB-Lib-AntiFire-v1.0.4-862-j25-26.3.jar
-1MB-Lib-AFKShrine-v1.0.4-862-j25-26.3.jar
-1MB-Lib-StaffCenter-v1.0.4-862-j25-26.3.jar
+1MB-Lib-Core-v1.0.4-863-j25-26.3.jar
+1MB-Lib-AntiFire-v1.0.4-863-j25-26.3.jar
+1MB-Lib-AFKShrine-v1.0.4-863-j25-26.3.jar
+1MB-Lib-StaffCenter-v1.0.4-863-j25-26.3.jar
 ```
 
 Every new deployable build synchronizes the complete managed suite into the maintained server:
@@ -107,7 +107,7 @@ That artifact's matching build is placed in `plugins-disabled/1mb-library/`. Thi
 
 Transactions live under the server's `plugins-disabled/1mb-library-sync/transactions/` with their transaction ID, staged `candidates/`, and `rollback/active/` plus `rollback/disabled/`. An interrupted or unresolved transaction blocks later plan/sync attempts. Inspect its `targets.txt` record and every referenced target before recovery, including when recovering an older multi-server transaction; never delete rollback evidence blindly. A cleanup warning after successful verification means the suite is committed but retained evidence still needs inspection. Paper runtime download/alignment failures occur before plugin synchronization and leave the pending build number reusable; rerun the canonical workflow after fixing the cause.
 
-The retained copy helper defaults to Paper 26.3. Its explicit path argument, or `-PprojectJarSyncTarget=/absolute/server/plugins`, deliberately selects another repair target; it does not establish a new shared local-test build or authorize a live deployment. Live handoff staging continues to use the complete tested Paper set. GameTypes/BentoBox deployment remains separate.
+The retained copy helper defaults to Paper 26.3. Its explicit path argument, or `-PprojectJarSyncTarget=/absolute/server/plugins`, deliberately selects another repair target; it does not establish a new shared local-test build or authorize a live deployment. Live handoff staging continues to use the complete tested Paper set. GameTypes ships in the BentoBox JAR.
 
 The retired Forage 26.3 private-beta instance and Paper 26.2 build-699 rollback are preserved intact with checksum manifests under the Git-ignored `archive/servers/2026-10-19/` directory. Gradle does not build against, sync to, stage from or test against archived instances during ordinary development. `servers/Paper-26.3/` is the sole maintained synchronization target. Restore an archive to a separate disposable location only for a deliberate investigation; keep its worlds, inventories, plugin progress and transaction evidence together.
 

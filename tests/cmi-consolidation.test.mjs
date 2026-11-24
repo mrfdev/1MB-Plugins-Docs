@@ -20,7 +20,7 @@ test('consolidated CMI guides keep accurate commands and legacy routes', async (
     'utf8',
   );
   const pluginIndex = await readFile(path.join(generatedPlugins, 'index.mdx'), 'utf8');
-  const gameTypes = await readFile(path.join(generatedPlugins, 'gametypes.mdx'), 'utf8');
+  const bentoBox = await readFile(path.join(generatedPlugins, 'bentobox.md'), 'utf8');
   const staffIndex = await readFile(
     path.join(repoRoot, 'src', 'content', 'docs', 'staff-reference', 'plugins.mdx'),
     'utf8',
@@ -51,7 +51,8 @@ test('consolidated CMI guides keep accurate commands and legacy routes', async (
   );
 
   assert.match(pluginIndex, /OneBlock, ChunkBlock, SkyBlock/);
-  assert.match(gameTypes, /OneBlock, ChunkBlock, SkyBlock/);
+  assert.match(bentoBox, /\/oneblock menu/);
+  assert.match(bentoBox, /\/cave menu/);
   assert.doesNotMatch(staffIndex, /\]\(\.\/other-server-features\//);
 
   await access(path.join(generatedPlugins, 'contentguard.mdx'));
@@ -117,4 +118,24 @@ test('StaffCenter keeps operator routes out of the player index and links both m
   assert.ok(staffGuide.includes('/staffcenter warnings inspect'));
   assert.ok(staffGuide.includes('/staffcenter profile <target>'));
   assert.ok(staffGuide.includes('/staffcenter admin module'));
+});
+
+test('BentoBox publishes GameTypes menus with legacy redirects and distinct platform guides', async () => {
+  const redirects = await readFile(path.join(repoRoot, 'astro.config.mjs'), 'utf8');
+  const playerCommands = await readFile(path.join(generatedPlugins, '..', 'commands.mdx'), 'utf8');
+  const staffGuide = await readFile(path.join(generatedPlugins, '..', '..', 'staff-reference', 'plugins', 'bentobox.md'), 'utf8');
+
+  for (const section of ['player-guides', 'staff-reference']) {
+    assert.ok(redirects.includes(`'/${section}/plugins/gametypes': '/${section}/plugins/bentobox/'`));
+  }
+  await assert.rejects(access(path.join(generatedPlugins, 'gametypes.mdx')));
+  for (const command of ['/gametype', '/oneblock menu', '/cave menu', '/1mbbento menu']) {
+    assert.ok(playerCommands.includes(`<code>${command}`));
+  }
+  assert.ok(!playerCommands.includes('<code>/1mbbento debug'));
+  assert.ok(!playerCommands.includes('<code>/1mbbento module'));
+  assert.ok(staffGuide.includes('GameTypes/config.yml'));
+  assert.ok(staffGuide.includes('islands.sqlite'));
+  assert.ok(staffGuide.includes('/docs/plugins/gametypes.md'));
+  await access(path.join(generatedPlugins, '..', 'other-server-features', 'bentobox', 'index.md'));
 });

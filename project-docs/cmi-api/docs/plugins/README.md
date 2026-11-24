@@ -31,7 +31,7 @@ Every feature jar that does not implement a local debug command inherits `/<plug
 | Player Fun | [Exchange](exchange.md) | `/exchange` GUI exchanges for item, money, and EXP hand-ins, migrated from the old standalone 1MBTrades plugin. |
 | Player Fun | [VoteTokens](votetokens.md) | `/votetokens` secure vote-token GUI exchanges with tier/layer progress, CMI kit rewards, hidden reward identity markers, extra-token item tools with shield presets, two-stage Jobs 6/12 purchases under Other Upgrades, and staff migration tools for old manual exchanges. |
 | Player Fun | [DiscordChat](discordchat.md) | `/discordchat` DiscordSRV server-chat engagement tracker with quality-gated EXP, continuous floor conversion, separate streak bonuses, conversation clusters, first-Discord broadcasts, community pulse, recurring bonus windows, linked-account streaks, top lists, two-step point rewards with player/global cooldowns, safe item tools, dependency-aware reward checks, opt-out reminders, milestone celebration privacy, and staff smoke/community/economy/archive/award reports. |
-| Player Fun | [GameTypes](gametypes.md) | `/gametype` safe BentoBox menu adapter for OneBlock, ChunkBlock, SkyBlock, AcidIsland, CaveBlock, and SkyGrid, with world detection and config-driven addon buttons. |
+| Player Fun | [1MB Library BentoBox](bentobox.md) | GameTypes menus for six gametypes through `/gametype` and existing island shortcuts, with independently activated markets, merchants, turnip farming, capsules, events, and expansion. |
 | Player Fun | [BirthdayLanterns](birthdaylanterns.md) | `/birthday` collectible birthday, player anniversary, and server milestone lantern rewards with PDC item identity, finite wish charges, strict birthday/guestbook input, GUI claims, presets, mail variants, and configurable CMI reward commands. |
 | Player Fun | [LavaBoots](lavaboots.md) | `/lavaboots` finite PDC-marked lava-assist boots with dyed leather themes, charge, durability drain, offhand fuel, movement assist, short fire-resistance windows, lava vision event tiers, and repair/anvil/enchant guards. |
 | Player Fun | [Spawners](spawners.md) | `/spawners` CMI spawner shop GUI with Paper entity discovery, spawn egg shop icons, tier-split friendly pages, glint availability markers, blocked utility-entity filters, restricted admin-only spawner browsing, CMI placespawner permission checks, confirmation purchases, CMI-backed Vault economy payments, annual event limits, stock caps, event progress, admin toggles, shift-click spawner editing, per-id disables, price overrides, category moves, future tier/group tools, DiscordSRV staff logs, setup command exports, and safe sell-section scaffolding. |
@@ -116,64 +116,64 @@ Runtime jars use this shape:
 Examples:
 
 ```text
-1MB-Lib-Core-v1.0.4-862-j25-26.3.jar
-1MB-Lib-AFKShrine-v1.0.4-862-j25-26.3.jar
-1MB-Lib-RecordingMode-v1.0.4-862-j25-26.3.jar
-1MB-Lib-SellStreaks-v1.0.4-862-j25-26.3.jar
-1MB-Lib-ScheduledTips-v1.0.4-862-j25-26.3.jar
-1MB-Lib-Visit-v1.0.4-862-j25-26.3.jar
-1MB-Lib-PassportDiscovery-v1.0.4-862-j25-26.3.jar
-1MB-Lib-SocialGatherings-v1.0.4-862-j25-26.3.jar
-1MB-Lib-JourneyMap-v1.0.4-862-j25-26.3.jar
-1MB-Lib-KitStreaks-v1.0.4-862-j25-26.3.jar
-1MB-Lib-Nick-v1.0.4-862-j25-26.3.jar
-1MB-Lib-EmoteMenu-v1.0.4-862-j25-26.3.jar
-1MB-Lib-PvPToggle-v1.0.4-862-j25-26.3.jar
-1MB-Lib-Boosters-v1.0.4-862-j25-26.3.jar
-1MB-Lib-NameMC-v1.0.4-862-j25-26.3.jar
-1MB-Lib-Exchange-v1.0.4-862-j25-26.3.jar
-1MB-Lib-VoteTokens-v1.0.4-862-j25-26.3.jar
-1MB-Lib-DiscordChat-v1.0.4-862-j25-26.3.jar
-1MB-Lib-GameTypes-v1.0.4-862-j25-26.3.jar
-1MB-Lib-BirthdayLanterns-v1.0.4-862-j25-26.3.jar
-1MB-Lib-LavaBoots-v1.0.4-862-j25-26.3.jar
-1MB-Lib-Spawners-v1.0.4-862-j25-26.3.jar
-1MB-Lib-Collect-v1.0.4-862-j25-26.3.jar
-1MB-Lib-EventHunts-v1.0.4-862-j25-26.3.jar
-1MB-Lib-DropParty-v1.0.4-862-j25-26.3.jar
-1MB-Lib-Appreciation-v1.0.4-862-j25-26.3.jar
-1MB-Lib-Forage-v1.0.4-862-j25-26.3.jar
-1MB-Lib-AutoSell-v1.0.4-862-j25-26.3.jar
-1MB-Lib-Advent-v1.0.4-862-j25-26.3.jar
-1MB-Lib-HideAndSheep-v1.0.4-862-j25-26.3.jar
-1MB-Lib-MobHat-v1.0.4-862-j25-26.3.jar
-1MB-Lib-PlayerTodo-v1.0.4-862-j25-26.3.jar
-1MB-Lib-Refer-v1.0.4-862-j25-26.3.jar
-1MB-Lib-TPAuto-v1.0.4-862-j25-26.3.jar
-1MB-Lib-Menu-v1.0.4-862-j25-26.3.jar
-1MB-Lib-StaffCenter-v1.0.4-862-j25-26.3.jar
-1MB-Lib-ContentGuard-v1.0.4-862-j25-26.3.jar
-1MB-Lib-TeamMsg-v1.0.4-862-j25-26.3.jar
-1MB-Lib-CmdCostDashboard-v1.0.4-862-j25-26.3.jar
-1MB-Lib-CMIConfig-v1.0.4-862-j25-26.3.jar
-1MB-Lib-ConsoleNoiseRouter-v1.0.4-862-j25-26.3.jar
-1MB-Lib-EconomyGuardian-v1.0.4-862-j25-26.3.jar
-1MB-Lib-ServerCheck-v1.0.4-862-j25-26.3.jar
-1MB-Lib-Placeholders-v1.0.4-862-j25-26.3.jar
-1MB-Lib-Potions-v1.0.4-862-j25-26.3.jar
-1MB-Lib-SchedulerCheck-v1.0.4-862-j25-26.3.jar
-1MB-Lib-Upgrade-v1.0.4-862-j25-26.3.jar
-1MB-Lib-EndCrystals-v1.0.4-862-j25-26.3.jar
-1MB-Lib-AntiFire-v1.0.4-862-j25-26.3.jar
-1MB-Lib-WorldSnapshot-v1.0.4-862-j25-26.3.jar
-1MB-Lib-SparkReviewer-v1.0.4-862-j25-26.3.jar
-1MB-Lib-Hoppers-v1.0.4-862-j25-26.3.jar
-1MB-Lib-EventRecorder-v1.0.4-862-j25-26.3.jar
-1MB-Lib-PermissionProbe-v1.0.4-862-j25-26.3.jar
-1MB-Lib-WarpAudit-v1.0.4-862-j25-26.3.jar
-1MB-Lib-WorthAudit-v1.0.4-862-j25-26.3.jar
-1MB-Lib-CMIProbe-v1.0.4-862-j25-26.3.jar
-1MB-Lib-CMIDatabase-v1.0.4-862-j25-26.3.jar
+1MB-Lib-Core-v1.0.4-863-j25-26.3.jar
+1MB-Lib-AFKShrine-v1.0.4-863-j25-26.3.jar
+1MB-Lib-RecordingMode-v1.0.4-863-j25-26.3.jar
+1MB-Lib-SellStreaks-v1.0.4-863-j25-26.3.jar
+1MB-Lib-ScheduledTips-v1.0.4-863-j25-26.3.jar
+1MB-Lib-Visit-v1.0.4-863-j25-26.3.jar
+1MB-Lib-PassportDiscovery-v1.0.4-863-j25-26.3.jar
+1MB-Lib-SocialGatherings-v1.0.4-863-j25-26.3.jar
+1MB-Lib-JourneyMap-v1.0.4-863-j25-26.3.jar
+1MB-Lib-KitStreaks-v1.0.4-863-j25-26.3.jar
+1MB-Lib-Nick-v1.0.4-863-j25-26.3.jar
+1MB-Lib-EmoteMenu-v1.0.4-863-j25-26.3.jar
+1MB-Lib-PvPToggle-v1.0.4-863-j25-26.3.jar
+1MB-Lib-Boosters-v1.0.4-863-j25-26.3.jar
+1MB-Lib-NameMC-v1.0.4-863-j25-26.3.jar
+1MB-Lib-Exchange-v1.0.4-863-j25-26.3.jar
+1MB-Lib-VoteTokens-v1.0.4-863-j25-26.3.jar
+1MB-Lib-DiscordChat-v1.0.4-863-j25-26.3.jar
+1MB-Lib-BentoBox-v1.0.4-863-j25-26.3.jar
+1MB-Lib-BirthdayLanterns-v1.0.4-863-j25-26.3.jar
+1MB-Lib-LavaBoots-v1.0.4-863-j25-26.3.jar
+1MB-Lib-Spawners-v1.0.4-863-j25-26.3.jar
+1MB-Lib-Collect-v1.0.4-863-j25-26.3.jar
+1MB-Lib-EventHunts-v1.0.4-863-j25-26.3.jar
+1MB-Lib-DropParty-v1.0.4-863-j25-26.3.jar
+1MB-Lib-Appreciation-v1.0.4-863-j25-26.3.jar
+1MB-Lib-Forage-v1.0.4-863-j25-26.3.jar
+1MB-Lib-AutoSell-v1.0.4-863-j25-26.3.jar
+1MB-Lib-Advent-v1.0.4-863-j25-26.3.jar
+1MB-Lib-HideAndSheep-v1.0.4-863-j25-26.3.jar
+1MB-Lib-MobHat-v1.0.4-863-j25-26.3.jar
+1MB-Lib-PlayerTodo-v1.0.4-863-j25-26.3.jar
+1MB-Lib-Refer-v1.0.4-863-j25-26.3.jar
+1MB-Lib-TPAuto-v1.0.4-863-j25-26.3.jar
+1MB-Lib-Menu-v1.0.4-863-j25-26.3.jar
+1MB-Lib-StaffCenter-v1.0.4-863-j25-26.3.jar
+1MB-Lib-ContentGuard-v1.0.4-863-j25-26.3.jar
+1MB-Lib-TeamMsg-v1.0.4-863-j25-26.3.jar
+1MB-Lib-CmdCostDashboard-v1.0.4-863-j25-26.3.jar
+1MB-Lib-CMIConfig-v1.0.4-863-j25-26.3.jar
+1MB-Lib-ConsoleNoiseRouter-v1.0.4-863-j25-26.3.jar
+1MB-Lib-EconomyGuardian-v1.0.4-863-j25-26.3.jar
+1MB-Lib-ServerCheck-v1.0.4-863-j25-26.3.jar
+1MB-Lib-Placeholders-v1.0.4-863-j25-26.3.jar
+1MB-Lib-Potions-v1.0.4-863-j25-26.3.jar
+1MB-Lib-SchedulerCheck-v1.0.4-863-j25-26.3.jar
+1MB-Lib-Upgrade-v1.0.4-863-j25-26.3.jar
+1MB-Lib-EndCrystals-v1.0.4-863-j25-26.3.jar
+1MB-Lib-AntiFire-v1.0.4-863-j25-26.3.jar
+1MB-Lib-WorldSnapshot-v1.0.4-863-j25-26.3.jar
+1MB-Lib-SparkReviewer-v1.0.4-863-j25-26.3.jar
+1MB-Lib-Hoppers-v1.0.4-863-j25-26.3.jar
+1MB-Lib-EventRecorder-v1.0.4-863-j25-26.3.jar
+1MB-Lib-PermissionProbe-v1.0.4-863-j25-26.3.jar
+1MB-Lib-WarpAudit-v1.0.4-863-j25-26.3.jar
+1MB-Lib-WorthAudit-v1.0.4-863-j25-26.3.jar
+1MB-Lib-CMIProbe-v1.0.4-863-j25-26.3.jar
+1MB-Lib-CMIDatabase-v1.0.4-863-j25-26.3.jar
 ```
 
 [Documentation index](../README.md)

@@ -573,9 +573,27 @@ const PLAYER_GUIDE_OVERRIDES = {
     ],
     excludeCommandsFromIndex: ['/hunt'],
   },
-  gametypes: {
-    summary: 'Open the right island-game menu for OneBlock, ChunkBlock, SkyBlock, AcidIsland, CaveBlock, or SkyGrid.',
-    intro: 'GameTypes helps players find the correct menu for island-style game modes. Use it when you are in a BentoBox world or when you want the server to show the available game type menus.',
+  bentobox: {
+    fullSourceGuide: true,
+    playerDocument: 'bentobox-player-guide.md',
+    staffDocument: 'bentobox.md',
+    summary: 'Open island menus for OneBlock, ChunkBlock, SkyBlock, AcidIsland, CaveBlock, and SkyGrid.',
+    description: 'Use GameTypes island menus and learn about optional island activities when they are enabled.',
+    commands: [
+      '/gametype', '/gametype menu [type]', '/gametype status', '/gametype info', '/gametype help',
+      '/1mbbento menu [type]', '/1mbbento status',
+      '/oneblock menu', '/cave menu', '/acid menu', '/skyblock menu', '/skygrid menu', '/chunkblock menu',
+    ],
+    commandDescriptions: {
+      '/gametype': 'Opens your current island gametype menu or the gametype index.',
+      '/gametype menu [type]': 'Opens a selected island gametype menu.',
+      '/1mbbento menu [type]': 'Opens the same island menu as /gametype menu.',
+      '/1mbbento status': 'Shows which island activities the server has enabled.',
+    },
+    commandTableExamples: {
+      '/gametype menu [type]': '/gametype menu oneblock',
+      '/1mbbento menu [type]': '/1mbbento menu cave',
+    },
   },
   ghosthunt: {
     summary: 'Find seasonal Ghosts, collect earned wave rewards, and spend Ghost Points on bundles or one cosmetic unlock.',
@@ -1118,7 +1136,7 @@ const FEATURE_BULLET_OVERRIDES = {
     'Chunk exhaustion, daily caps, source-family rules, and other anti-farm protections.',
     'Camp-ready feedback, tool explanations, personal stats, tips, and progress placeholders.',
   ],
-  gametypes: [
+  bentobox: [
     'One menu system for OneBlock, ChunkBlock, SkyBlock, AcidIsland, CaveBlock, and SkyGrid.',
     'Automatic current-world detection with a game-type index when no island world is detected.',
     'Core island actions for travel, creation, teams, information, help, top lists, kits, and daily shops.',
