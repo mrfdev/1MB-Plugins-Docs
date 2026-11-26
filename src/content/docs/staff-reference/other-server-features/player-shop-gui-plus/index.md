@@ -5,7 +5,7 @@ description: "Public-safe commands, permissions, configuration, integrations, an
 
 This is the public technical and operations guide for 1MoreBlock's maintained PlayerShopGUIPlus fork. For player instructions, use the [player guide](/player-guides/other-server-features/player-shop-gui-plus/). The plugin name and data directory remain `PlayerShopGUIPlus`.
 
-**Local candidate `042`, 4 November 2026:** valid purchase confirmation automatically prepares AutoSell safe-off, waits for its save, notifies the player and leaves it off. Candidate artifact: `1MB-PlayerShopGuiPlus-v1.42.0-042-j25-26.3.jar`. All 55 isolated scenarios pass on Paper 26.3-241 STABLE, Oracle Java 27.0.1.0.3 and actual Library/Core 1.0.4-834. Candidate SHA-256: `025edabbb28803c9f9b7a2a0ff95058f800f4d74f42c7f77b8c9a21841e73bc6`. It has not been deployed; last-confirmed live remains `040`. Player/inventory/Vault boundaries in these tests are controlled fixtures.
+**Local candidate `042`, verified 26 November 2026.** A valid purchase confirmation prepares AutoSell safe-off, waits for its save, notifies the player, and leaves it off. The candidate artifact is `1MB-PlayerShopGuiPlus-v1.42.0-042-j25-26.3.jar`, SHA-256 `025edabbb28803c9f9b7a2a0ff95058f800f4d74f42c7f77b8c9a21841e73bc6`. Isolated checks used Paper 26.3-262 STABLE, Oracle JDK 27.0.1.1, and matching 1MB-Library Core and AutoSell 1.0.4-868. The player and transaction workflow tests use controlled player, inventory, and payment fixtures. Last-confirmed live remains `040`.
 
 **Release status, updated 14 October 2026:** Floris confirmed live build `040` is installed and resolves the reported GUI search chat-privacy issue. This is user confirmation; no fresh live jar hash, startup log or runtime inspection was taken. The previous direct inspection established build `038` on 7 October. Build 040 retains 039’s observed texture-property preservation, but first-menu head visual acceptance remains pending.
 
@@ -17,11 +17,11 @@ This is the public technical and operations guide for 1MoreBlock's maintained Pl
 | Historical live SHA-256, 7 October | `fc940bc45963176e14c4598a6a62ed9ccbbb487aa5e1519a2338c163ba60fecb` |
 | Historical live runtime, 7 October | macOS, Paper 26.3-159, Java 27 |
 | Build | Gradle 9.8.0, Java 25 bytecode, Paper API 26.3.build.49-alpha |
-| Last confirmed live | `040`, user-confirmed 14 October; [current commands](#commands-in-build-037) |
+| Last confirmed live | `040`, user-confirmed 14 October. [Current commands](#current-commands) |
 
 Live 040 includes durable transaction holds and the optional 1MB-Library AutoSell guard, personal history, staff logs/statistics, consistent menus and bounded background work. The 037 checks passed 37 isolated Paper scenarios and 793 saved-item round trips. Player/inventory/payment boundaries are controlled test fixtures; these results do not certify every connected client, provider, machine-crash boundary or live performance characteristic.
 
-Start with [commands](#commands-in-build-037), [permissions](#permissions), [installation](#build-install-and-preserve-existing-listings), [hidden settings](#hidden-configuration-options), [placeholders](#placeholders) or [transaction recovery](#durable-transactions-and-autosell-build-036).
+Start with [commands](#current-commands), [permissions](#permissions), [installation](#build-install-and-preserve-existing-listings), [hidden settings](#hidden-configuration-options), [placeholders](#placeholders) or [transaction recovery](#durable-transactions-and-autosell-build-036).
 
 <a id="commands-in-build-007"></a>
 
@@ -102,7 +102,7 @@ Candidate **042** validates the purchase, prepares safe-off through the Library 
 
 The guard rechecks after events and payment callbacks. A manual re-enable stops the purchase; confirmed payments are reversed and uncertain compensation stays held. A save failure, timeout, changed session or unavailable provider refuses the purchase, and late callbacks cannot revive it. AutoSell may already be off after a failed save or timeout; check the setting before enabling it manually. This protects the purchase handoff, not items after a deliberate later re-enable.
 
-Install matching actual Core/AutoSell binaries with the asynchronous `readiness` contract, verified with **1.0.4-834**, and their CMI/CMILib requirements. Older pre-readiness integrations fail closed before changing preferences. Absent AutoSell requires no new dependency; installed but disabled/incompatible guards block buying with staff guidance. Compile-only API contracts must never be installed as plugins. Listing and collection behavior is unchanged.
+Install matching Core and AutoSell binaries with the asynchronous `readiness` contract and their CMI/CMILib requirements. Build **1.0.4-868** was verified with CMI 9.8.12.0 and CMILib 1.6.1.4. A disabled or incompatible guard blocks buying with staff guidance. Servers without AutoSell use the ordinary purchase flow.
 
 Keep `tax.refund.purchase`, `tax.refund.cancelled` and `tax.refund.expired` **false**. Any true flag rejects startup/reload because the legacy item format does not persist a paid-fee entitlement. Nonrefundable fees and confirmed immediate compensation remain supported; the old tax-refund permission does not override this restriction.
 
@@ -116,7 +116,9 @@ New MiniMessage keys are `MSG.TRANSACTION.UNAVAILABLE`, `BUSY`, `CHANGED`, `REVI
 
 <a id="commands-in-build-036"></a>
 
-## Commands in build 037
+<a id="commands-in-build-037"></a>
+
+## Current commands
 
 `/market` is the main command; `/ah` is its native alias, using the same handler, arguments, and permissions. Root aliases `/playershop`, `/pshop`, `/playershops`, and `/pshops` are no longer registered. Existing CMI/server aliases are separate configuration and can still override native commands.
 
@@ -359,7 +361,7 @@ The private `plugins/PlayerShopGUIPlus/player-skins.db` stores up to 10,000 UUID
 
 `/market debug hooks [page]` reports skin load state, counts, persistence, CMI reuse and the disabled remote-lookup policy, without player records. Corrupt/unavailable/unsupported caches and failed writes retain the file, log a warning and leave in-memory rendering available. Repair the underlying problem while stopped and restart; newly learned skins may not persist after a warning or a crash before commit. Include the cache and any SQLite sidecars in stopped-server plugin backups. Build 023 ignores the added cache, so a cosmetic jar rollback can keep current market data; never restore old trades just to roll back heads.
 
-Isolated Paper 26.3 checks use real CMI 9.8.10.1/CMILib 1.6.0.0 API maps with synthetic profiles. They cover malformed/conflicting entries, disabled reuse, missing-entry cooldowns and restart with CMI removed. Separate tests cover observed skin changes, clone isolation, persistence and a corrupt cache. These assert server metadata; connected-client visual acceptance and other CMI versions still need verification.
+Isolated Paper 26.3-262 checks exercise the loaded maps in CMI 9.8.12.0 and CMILib 1.6.1.4 with synthetic profiles. They cover malformed or conflicting entries, disabled reuse, missing-entry cooldowns and restart with CMI removed. Separate tests cover observed skin changes, clone isolation, persistence and a corrupt cache. Connected-client visual acceptance remains open.
 
 ## Browse-shops copper chest (023)
 
@@ -508,7 +510,9 @@ The inherited `TIME.LESSTHAN` message contains `%time%`, but no active renderer 
 | Economy service | `economy.type: VAULT` requires a registered Vault economy provider. Purchases and nonzero direct-command fees require confirmed transaction support, implemented by the Vault adapter. |
 | Vault permission service | Existing registration is retained; deferred tax-refund queries/payments are disabled. |
 
-A CMI economy bridge can supply the Vault service. CMI, 1MB Library, ShopGUIPlus, and PlaceholderAPI are not direct requirements. The optional 1MB-Library Core/AutoSell guard is described above; CMI local names/skins and narrowly scoped PlaceholderAPI text are optional. There is no direct ShopGUIPlus `/buy` or sell-value lookup. Gson and NBT-API are included in the maintained jar; do not install separate copies just for this plugin.
+For CMI economy, install a compatible CMI and CMILib pair and Vault's CMI edition. Set `Economy.Enabled: true` in `plugins/CMI/config.yml` because fresh CMI configs disable economy. Restart cleanly with `economy.type: VAULT` in the market config. Check `/market debug hooks` for `CMIEconomy` as the bound current service and `/market admin status` for market readiness. [CMI first-run guide](https://www.zrips.net/cmi/first-run/) [CMI Vault setup](https://www.zrips.net/cmi/)
+
+The market can optionally reuse local CMI names and skins, resolve allowlisted PlaceholderAPI text, and guard purchases through 1MB-Library Core and AutoSell. Keep ShopGUIPlus `/buy` separate from player-market trading. Gson and NBT-API ship inside the maintained jar.
 
 | Optional integration | Purpose and limits |
 | --- | --- |
@@ -565,7 +569,7 @@ playerNames:
   cmiFallback: true
 ```
 
-The default is `true`, including when absent from an older config. CMI and its required CMILib are optional; new lookups need both installed and CMI fully loaded. Tested with CMI 9.8.10.1 and CMILib 1.6.0.0. The CMI API used to compile the plugin is not a server jar to install. Economy continues through Vault. Set `false` and run `/market admin reload` to disable both this lookup and its saved fallback names; session/Paper/plugin-table names still work. Reopen menus after changes. No new command, permission or placeholder is needed. `%owner%` and recent-sale participant labels use the shared resolver.
+The default is `true`, including when absent from an older config. New lookups need CMI fully loaded with its required CMILib. The 26 November check used CMI 9.8.12.0 and CMILib 1.6.1.4. Economy continues through Vault. Set `false` and run `/market admin reload` to disable the CMI lookup and its saved fallback names. Session, Paper cache and plugin-table names still work. Reopen menus after changes. `%owner%` and recent-sale participant labels use the shared resolver.
 
 The bridge reads the loaded UUID map and calls `getName(false)`, never CMI’s broader player lookup, its database or an online identity service. It does not fetch skins. Menus read memory only; CMI checks run on the server thread in batches of at most 20 UUIDs every 10 ticks, with a 2 ms budget. The queue holds 1,024 UUIDs. Misses become eligible again after five minutes when viewed; saved names become eligible for rechecking after 24 hours when requested. Startup queues unresolved shop owners up to that bound, then later menu/history views gradually fill remaining gaps. A first view may still show a UUID; reopen it after resolution. Unknown identities remain UUIDs.
 
@@ -575,7 +579,7 @@ Check `/market debug hooks` for readiness and cache health. An unreadable/corrup
 
 ## Paper 26.3+ maintenance (014)
 
-Paper 26.3 is the minimum version. Build 014 removes all older Minecraft adapters, Maven modules and version-specific default resources. Java 25 remains the plugin compilation target; the local test server runs Java 27. The tested server is Paper 26.3 build 133 ALPHA. Newer Paper releases use the same public API implementation and must be validated before deployment; this is not a compatibility guarantee for every future release. Bukkit-only, Spigot and Folia are not supported targets.
+Paper 26.3 is the minimum version. Build 014 removed the older Minecraft adapters, Maven modules and version-specific default resources. The market compiles to Java 25 bytecode and the maintained local Paper tests use Oracle JDK 27. Candidate 042 was tested on Paper 26.3-262 STABLE. Verify later Paper releases before deployment. The supported runtime is Paper.
 
 The market schema, serialized item field, ownership UUIDs, quantities, prices and listing states are unchanged. Keep existing plugin data and configuration. Default templates now have plain `config.yml`, `menu.yml` and `categories.yml` paths inside the jar; existing server files are preserved. Commands, permissions and placeholders are unchanged. GUI titles, item names/lore and chat prompts use current Paper/Adventure APIs. Menu decoration preserves existing item components and foreign PDC. Already-cancelled chat is ignored; chat deferred during a market prompt retains per-viewer formatting and returns when input finishes. No remote player/profile lookup is introduced.
 
@@ -734,7 +738,7 @@ Examples:
 
 `status` shows mode, saved preference, plugin/server/Java versions, loaded shop/listing counts and scheduler state. `health` reports readiness, selected economy receipt support, item readiness, durable pending/review counts and separately labelled current-process payment details. Its only database operation is `SELECT 1` on the existing storage worker and connection. Results are cached for five seconds and simultaneous requests share one probe. A four-second response deadline includes queue time; a busy or stalled query returns a warning. A timed-out pending probe is not duplicated, and a queued probe skips SQL if it has already timed out. Driver query timeout is requested at three seconds; the response deadline does not forcibly stop a driver. No reconnect, repair, schema scan, economy payment or recovery operation runs.
 
-`hooks` separates actual selected adapters/listeners from installed plugin presence/version. CMI may supply economy through Vault; build 013 adds a separate optional CMI API hook for local display names. Its status row reports CMI readiness/absence, cached and pending counts, configuration disablement and persistence failure. Build 036 adds the optional 1MB-Library AutoSell purchase guard, reported separately in hooks. An installed optional plugin is not proof that its hook is selected or compatible. `commands` checks native Bukkit registration for market/ah and their namespaced forms; external CMI aliases or chat interceptors must be inspected separately.
+`hooks` shows the selected economy adapter and its bound economy and permission services. The `1MB library / economy` row describes the economy path. The optional Core and AutoSell entries list installed versions. The purchase guard checks readiness at valid purchase confirmation. Local name/skin and PlaceholderAPI rows show their configuration, readiness and cache counts. `commands` checks native Bukkit registration for `/market`, `/ah` and their namespaced forms. Check external CMI aliases or chat interceptors separately.
 
 `permissions` includes declared nodes, current configured limit tiers and effective grants for the sender. It explains missing descriptor coverage and inherited wildcard limits. `placeholders` lists plugin-local formatting tokens and contexts, including the STYLE layout tokens added in 009; there is no exported PlaceholderAPI expansion. Build 033 adds six local player-details tokens and optional allowlisted external text only in the main-menu head.
 
@@ -748,7 +752,7 @@ Use the authorized private source checkout and the intended release. Source and 
 
 ```sh
 python3 scripts/check-tooling.py
-./gradlew --dependency-verification strict --warning-mode fail clean build smokeJars
+./gradlew --no-daemon --dependency-verification strict --warning-mode fail clean build smokeJars resolveAllDependencies
 python3 scripts/check-tooling.py --artifact
 ```
 
@@ -756,7 +760,7 @@ For explicit installed selections, use `ONE_MB_BUILD_JAVA_HOME` (Oracle 25) and 
 
 For portable harness checks, run `python3 -m unittest discover -s scripts/tests -v`. After a successful strict build, `python3 scripts/test-dependency-guards.py` proves that tampered checksums, missing locks and incompatible upgrades fail, using offline disposable copies. Linux/macOS/Windows CI runs these tooling/build checks without private player data. Real Paper regression tests still require local Java 27, a prepared matching Paper bootstrap/cache, an already accepted EULA and approved provider jars; real-server coverage is currently macOS only. Tests select free loopback ports and unique directories, default to packaged configuration, accept explicit Java/server/config/provider/probe/output paths, reject stale results and stop timed-out test processes. They never use a gameplay server as their output directory. The three codec/sell/buy probes remain separate from the runtime jar. The obsolete HeadDatabase probe/task and `hdb-*` scenarios were removed in 027; `removed-headdatabase` verifies rejected legacy configuration without a provider jar.
 
-Maintainers must follow the private repository's `docs/DEVELOPMENT-TOOLING.md` before changing Gradle/dependencies. Do not disable checksum checks or automatically accept new hashes to fix a build. The initial dependency checksum set is a recorded trust baseline, not a PGP signature check or security audit. Wrapper/distribution checksums came from official Gradle metadata. Candidate 042 is tested on Paper 26.3-241 STABLE; the pinned compile API remains 26.3.build.49-alpha. No market-data migration or gameplay restart is required for tooling work.
+Maintainers must follow the private repository's `docs/DEVELOPMENT-TOOLING.md` before changing Gradle or dependencies. Investigate checksum mismatches against the publisher and the reviewed artifacts before updating verification metadata. Wrapper and distribution checksums came from official Gradle metadata. The compile API remains pinned to 26.3.build.49-alpha.
 
 ### Fresh installation
 

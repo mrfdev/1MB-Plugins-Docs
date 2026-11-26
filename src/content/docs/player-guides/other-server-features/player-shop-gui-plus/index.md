@@ -54,7 +54,7 @@ Buy items from other players and offer your own items for sale on 1MoreBlock. Th
 
 ## The market on build 040
 
-The rest of this guide describes the current live command interface. `/market` is the main command and `/ah` is its native alias: every argument and permission works the same through either name. The old `/playershop`, `/pshop`, `/playershops` and `/pshops` roots are no longer registered by the plugin.
+`/market` is the main command. Its native alias `/ah` uses the same arguments and permissions. If `/ah` opens something else or handles a price differently, use `/market` and tell staff so they can check the server's shortcut.
 
 ## Getting started
 

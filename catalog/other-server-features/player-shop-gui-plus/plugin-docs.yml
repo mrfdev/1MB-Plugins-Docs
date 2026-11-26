@@ -12,4 +12,4 @@ staff_guide: staff-guide.md
 official_project: false
 official_wiki: https://docs.brcdev.net/#/playershopgui/commands-permissions
 # Local candidate 042 automatically prepares AutoSell safe-off on confirmed purchases; no new live deployment is confirmed.
-last_reviewed: "2026-11-04"
+last_reviewed: "2026-11-26"
